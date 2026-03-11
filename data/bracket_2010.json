@@ -1,0 +1,540 @@
+{
+  "regions": {
+    "South": [
+      {
+        "team": "Kansas",
+        "seed": 1,
+        "adj_o": 120.99474073337713,
+        "adj_d": 91.03983576895055,
+        "adj_tempo": 67.5,
+        "barthag": 0.9634265611606779
+      },
+      {
+        "team": "Lehigh",
+        "seed": 16,
+        "adj_o": 105.76682746486085,
+        "adj_d": 106.33477396181948,
+        "adj_tempo": 67.5,
+        "barthag": 0.48460799779777664
+      },
+      {
+        "team": "UNLV",
+        "seed": 8,
+        "adj_o": 111.55184048071155,
+        "adj_d": 93.30257625529032,
+        "adj_tempo": 67.5,
+        "barthag": 0.8863894002396409
+      },
+      {
+        "team": "Northern Iowa",
+        "seed": 9,
+        "adj_o": 109.48269434605294,
+        "adj_d": 90.7478361127882,
+        "adj_tempo": 67.5,
+        "barthag": 0.8964456859110352
+      },
+      {
+        "team": "Michigan State",
+        "seed": 5,
+        "adj_o": 113.51420946345124,
+        "adj_d": 93.7390024800361,
+        "adj_tempo": 67.5,
+        "barthag": 0.900362353060968
+      },
+      {
+        "team": "New Mexico State",
+        "seed": 12,
+        "adj_o": 100,
+        "adj_d": 100,
+        "adj_tempo": 67.5,
+        "barthag": 0.5
+      },
+      {
+        "team": "Maryland",
+        "seed": 4,
+        "adj_o": 118.29632552150832,
+        "adj_d": 96.7233579007435,
+        "adj_tempo": 67.5,
+        "barthag": 0.9101431906376862
+      },
+      {
+        "team": "Houston",
+        "seed": 13,
+        "adj_o": 112.53379737102672,
+        "adj_d": 102.95653620858837,
+        "adj_tempo": 67.5,
+        "barthag": 0.7355345287059231
+      },
+      {
+        "team": "Tennessee",
+        "seed": 6,
+        "adj_o": 109.47021949969111,
+        "adj_d": 91.50356097270907,
+        "adj_tempo": 67.5,
+        "barthag": 0.8871203583974833
+      },
+      {
+        "team": "San Diego State",
+        "seed": 11,
+        "adj_o": 111.4513129608087,
+        "adj_d": 95.31411440619027,
+        "adj_tempo": 67.5,
+        "barthag": 0.857992350924637
+      },
+      {
+        "team": "Georgetown",
+        "seed": 3,
+        "adj_o": 116.75173881892763,
+        "adj_d": 95.8681197337147,
+        "adj_tempo": 67.5,
+        "barthag": 0.906053884501357
+      },
+      {
+        "team": "Ohio",
+        "seed": 14,
+        "adj_o": 107.45020614246803,
+        "adj_d": 100.08819754669119,
+        "adj_tempo": 67.5,
+        "barthag": 0.693433647639364
+      },
+      {
+        "team": "Oklahoma State",
+        "seed": 7,
+        "adj_o": 114.37657845484401,
+        "adj_d": 95.05984431203984,
+        "adj_tempo": 67.5,
+        "barthag": 0.893536163552168
+      },
+      {
+        "team": "Georgia Tech",
+        "seed": 10,
+        "adj_o": 109.80681146136288,
+        "adj_d": 91.67288607972363,
+        "adj_tempo": 67.5,
+        "barthag": 0.8885191066881466
+      },
+      {
+        "team": "Ohio State",
+        "seed": 2,
+        "adj_o": 118.0115404983027,
+        "adj_d": 92.76473087986079,
+        "adj_tempo": 67.5,
+        "barthag": 0.9409348562925032
+      },
+      {
+        "team": "UC Santa Barbara",
+        "seed": 15,
+        "adj_o": 100.63490450589211,
+        "adj_d": 97.38419736536449,
+        "adj_tempo": 67.5,
+        "barthag": 0.5932953023469306
+      }
+    ],
+    "East": [
+      {
+        "team": "Syracuse",
+        "seed": 1,
+        "adj_o": 118.5478018012704,
+        "adj_d": 91.4107273110335,
+        "adj_tempo": 67.5,
+        "barthag": 0.9520958906882897
+      },
+      {
+        "team": "Vermont",
+        "seed": 16,
+        "adj_o": 103.52004727745827,
+        "adj_d": 101.28035751608417,
+        "adj_tempo": 67.5,
+        "barthag": 0.5625548193733603
+      },
+      {
+        "team": "Gonzaga",
+        "seed": 8,
+        "adj_o": 112.41824621751431,
+        "adj_d": 94.97310848962094,
+        "adj_tempo": 67.5,
+        "barthag": 0.8742723029865452
+      },
+      {
+        "team": "Florida State",
+        "seed": 9,
+        "adj_o": 104.5136840409381,
+        "adj_d": 87.28615215953411,
+        "adj_tempo": 67.5,
+        "barthag": 0.8880972552643783
+      },
+      {
+        "team": "Butler",
+        "seed": 5,
+        "adj_o": 109.80346670821098,
+        "adj_d": 89.55460967328666,
+        "adj_tempo": 67.5,
+        "barthag": 0.9124721256491637
+      },
+      {
+        "team": "UTEP",
+        "seed": 12,
+        "adj_o": 108.39354072081088,
+        "adj_d": 90.85489185738561,
+        "adj_tempo": 67.5,
+        "barthag": 0.8838911595096418
+      },
+      {
+        "team": "Vanderbilt",
+        "seed": 4,
+        "adj_o": 114.08038770680102,
+        "adj_d": 96.50451815501054,
+        "adj_tempo": 67.5,
+        "barthag": 0.872595558838917
+      },
+      {
+        "team": "Murray State",
+        "seed": 13,
+        "adj_o": 107.60705405176215,
+        "adj_d": 95.64213614657199,
+        "adj_tempo": 67.5,
+        "barthag": 0.7950332797923816
+      },
+      {
+        "team": "Xavier",
+        "seed": 6,
+        "adj_o": 116.61904925345137,
+        "adj_d": 95.84117195517028,
+        "adj_tempo": 67.5,
+        "barthag": 0.9052125801708535
+      },
+      {
+        "team": "Minnesota",
+        "seed": 11,
+        "adj_o": 114.47027632457105,
+        "adj_d": 94.74564060477687,
+        "adj_tempo": 67.5,
+        "barthag": 0.8979702631627714
+      },
+      {
+        "team": "Pittsburgh",
+        "seed": 3,
+        "adj_o": 111.78109120912151,
+        "adj_d": 93.72164229479125,
+        "adj_tempo": 67.5,
+        "barthag": 0.8835465862525638
+      },
+      {
+        "team": "Oakland",
+        "seed": 14,
+        "adj_o": 107.38638414034509,
+        "adj_d": 104.47101738553766,
+        "adj_tempo": 67.5,
+        "barthag": 0.5784765648761095
+      },
+      {
+        "team": "BYU",
+        "seed": 7,
+        "adj_o": 117.66195758357075,
+        "adj_d": 94.59062945189454,
+        "adj_tempo": 67.5,
+        "barthag": 0.9248370611778012
+      },
+      {
+        "team": "Florida",
+        "seed": 10,
+        "adj_o": 113.33684451590099,
+        "adj_d": 98.1519349195661,
+        "adj_tempo": 67.5,
+        "barthag": 0.8394643890198359
+      },
+      {
+        "team": "Kansas State",
+        "seed": 2,
+        "adj_o": 120.99474073337713,
+        "adj_d": 91.03983576895055,
+        "adj_tempo": 67.5,
+        "barthag": 0.9634265611606779
+      },
+      {
+        "team": "North Texas",
+        "seed": 15,
+        "adj_o": 102.68296241427429,
+        "adj_d": 103.53609882064515,
+        "adj_tempo": 67.5,
+        "barthag": 0.4762298189143329
+      }
+    ],
+    "Midwest": [
+      {
+        "team": "Kentucky",
+        "seed": 1,
+        "adj_o": 115.52054627295571,
+        "adj_d": 89.08702487995032,
+        "adj_tempo": 67.5,
+        "barthag": 0.9520335788658537
+      },
+      {
+        "team": "East Tennessee State",
+        "seed": 16,
+        "adj_o": 100,
+        "adj_d": 100,
+        "adj_tempo": 67.5,
+        "barthag": 0.5
+      },
+      {
+        "team": "Texas",
+        "seed": 8,
+        "adj_o": 114.07538830709568,
+        "adj_d": 94.00089761751278,
+        "adj_tempo": 67.5,
+        "barthag": 0.9025500113454981
+      },
+      {
+        "team": "Wake Forest",
+        "seed": 9,
+        "adj_o": 107.57515964588478,
+        "adj_d": 93.62808469795854,
+        "adj_tempo": 67.5,
+        "barthag": 0.8315822627179376
+      },
+      {
+        "team": "Temple",
+        "seed": 5,
+        "adj_o": 108.24606979332505,
+        "adj_d": 88.98718966531726,
+        "adj_tempo": 67.5,
+        "barthag": 0.9049105712991409
+      },
+      {
+        "team": "Cornell",
+        "seed": 12,
+        "adj_o": 118.03661388741813,
+        "adj_d": 101.90044160365896,
+        "adj_tempo": 67.5,
+        "barthag": 0.8442877711142525
+      },
+      {
+        "team": "Wisconsin",
+        "seed": 4,
+        "adj_o": 116.07163173952156,
+        "adj_d": 92.0590734055994,
+        "adj_tempo": 67.5,
+        "barthag": 0.9349560292503185
+      },
+      {
+        "team": "Wofford",
+        "seed": 13,
+        "adj_o": 104.76403860638685,
+        "adj_d": 95.01957940210326,
+        "adj_tempo": 67.5,
+        "barthag": 0.7544924195576919
+      },
+      {
+        "team": "Marquette",
+        "seed": 6,
+        "adj_o": 115.38840614367686,
+        "adj_d": 95.52540609655985,
+        "adj_tempo": 67.5,
+        "barthag": 0.8977511930117182
+      },
+      {
+        "team": "Washington",
+        "seed": 11,
+        "adj_o": 113.02096612911053,
+        "adj_d": 93.73701144046177,
+        "adj_tempo": 67.5,
+        "barthag": 0.8958016448509719
+      },
+      {
+        "team": "New Mexico",
+        "seed": 3,
+        "adj_o": 114.84410041946748,
+        "adj_d": 98.47214700223441,
+        "adj_tempo": 67.5,
+        "barthag": 0.854298539071709
+      },
+      {
+        "team": "Montana",
+        "seed": 14,
+        "adj_o": 105.47528904965627,
+        "adj_d": 101.15058391269842,
+        "adj_tempo": 67.5,
+        "barthag": 0.6180933201697976
+      },
+      {
+        "team": "Clemson",
+        "seed": 7,
+        "adj_o": 111.41007305314284,
+        "adj_d": 91.52930878451608,
+        "adj_tempo": 67.5,
+        "barthag": 0.905545806200979
+      },
+      {
+        "team": "Missouri",
+        "seed": 10,
+        "adj_o": 112.13582015523167,
+        "adj_d": 92.27488134298139,
+        "adj_tempo": 67.5,
+        "barthag": 0.9039405926694194
+      },
+      {
+        "team": "West Virginia",
+        "seed": 2,
+        "adj_o": 117.25575325662436,
+        "adj_d": 92.843135395454,
+        "adj_tempo": 67.5,
+        "barthag": 0.9361136040231695
+      },
+      {
+        "team": "Morgan State",
+        "seed": 15,
+        "adj_o": 100,
+        "adj_d": 100,
+        "adj_tempo": 67.5,
+        "barthag": 0.5
+      }
+    ],
+    "West": [
+      {
+        "team": "Duke",
+        "seed": 1,
+        "adj_o": 121.77708397715361,
+        "adj_d": 89.13951386734469,
+        "adj_tempo": 67.5,
+        "barthag": 0.9730873917022378
+      },
+      {
+        "team": "Arkansas-Pine Bluff",
+        "seed": 16,
+        "adj_o": 100,
+        "adj_d": 100,
+        "adj_tempo": 67.5,
+        "barthag": 0.5
+      },
+      {
+        "team": "California",
+        "seed": 8,
+        "adj_o": 120.44693039207272,
+        "adj_d": 97.83553043304417,
+        "adj_tempo": 67.5,
+        "barthag": 0.9161458439213956
+      },
+      {
+        "team": "Louisville",
+        "seed": 9,
+        "adj_o": 114.83872704345316,
+        "adj_d": 98.58984967761583,
+        "adj_tempo": 67.5,
+        "barthag": 0.8525126043453346
+      },
+      {
+        "team": "Texas A&M",
+        "seed": 5,
+        "adj_o": 112.27576878149998,
+        "adj_d": 91.12004393981016,
+        "adj_tempo": 67.5,
+        "barthag": 0.9169014730664137
+      },
+      {
+        "team": "Utah State",
+        "seed": 12,
+        "adj_o": 116.25521810395671,
+        "adj_d": 96.14102552360333,
+        "adj_tempo": 67.5,
+        "barthag": 0.8988649193651431
+      },
+      {
+        "team": "Purdue",
+        "seed": 4,
+        "adj_o": 109.24002336176483,
+        "adj_d": 87.68699007827075,
+        "adj_tempo": 67.5,
+        "barthag": 0.9260405209557271
+      },
+      {
+        "team": "Siena",
+        "seed": 13,
+        "adj_o": 108.7293694150452,
+        "adj_d": 96.58424953627713,
+        "adj_tempo": 67.5,
+        "barthag": 0.7961059942906682
+      },
+      {
+        "team": "Notre Dame",
+        "seed": 6,
+        "adj_o": 120.27507988613431,
+        "adj_d": 100.40330446689967,
+        "adj_tempo": 67.5,
+        "barthag": 0.8886220684660777
+      },
+      {
+        "team": "Old Dominion",
+        "seed": 11,
+        "adj_o": 108.07174333438459,
+        "adj_d": 91.31404676439888,
+        "adj_tempo": 67.5,
+        "barthag": 0.8740929389300749
+      },
+      {
+        "team": "Baylor",
+        "seed": 3,
+        "adj_o": 120.39724505289726,
+        "adj_d": 95.25553052067647,
+        "adj_tempo": 67.5,
+        "barthag": 0.9366530465591857
+      },
+      {
+        "team": "Sam Houston State",
+        "seed": 14,
+        "adj_o": 100,
+        "adj_d": 100,
+        "adj_tempo": 67.5,
+        "barthag": 0.5
+      },
+      {
+        "team": "Richmond",
+        "seed": 7,
+        "adj_o": 109.09153090026689,
+        "adj_d": 93.91939652248476,
+        "adj_tempo": 67.5,
+        "barthag": 0.8484028387641326
+      },
+      {
+        "team": "Saint Mary's",
+        "seed": 10,
+        "adj_o": 115.86974005524797,
+        "adj_d": 98.62316488078349,
+        "adj_tempo": 67.5,
+        "barthag": 0.8645193969377051
+      },
+      {
+        "team": "Villanova",
+        "seed": 2,
+        "adj_o": 117.46650949647659,
+        "adj_d": 96.59856852282806,
+        "adj_tempo": 67.5,
+        "barthag": 0.9045881925993297
+      },
+      {
+        "team": "Robert Morris",
+        "seed": 15,
+        "adj_o": 100.343890358902,
+        "adj_d": 101.38993889560652,
+        "adj_tempo": 67.5,
+        "barthag": 0.47021960194637913
+      }
+    ]
+  },
+  "final_four_matchups": [
+    [
+      0,
+      1
+    ],
+    [
+      2,
+      3
+    ]
+  ],
+  "quadrant_order": [
+    "South",
+    "Midwest",
+    "West",
+    "East"
+  ]
+}

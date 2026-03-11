@@ -1,0 +1,790 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Bracket Brain — March Madness Predictions</title>
+<meta name="description" content="NCAA tournament bracket predictions powered by Monte Carlo simulation and tempo-adjusted efficiency metrics.">
+<style>
+:root {
+  --bg: #f0f2f5; --surface: #ffffff; --surface2: #f7f8fa;
+  --border: #e2e5ea; --text: #1a1e2c; --muted: #6b7280;
+  --primary: #1a6dcc; --primary-bg: rgba(26,109,204,.08);
+  --green: #1a8754; --green-bg: rgba(26,135,84,.08);
+  --red: #c62828; --red-bg: rgba(198,40,40,.06);
+  --gold: #d97706; --connector: #cbd5e1;
+}
+*{ margin:0; padding:0; box-sizing:border-box; }
+body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+  background:var(--bg); color:var(--text); overflow-x:auto; line-height:1.4; }
+
+.header { text-align:center; padding:20px 20px 14px; background:var(--surface);
+  border-bottom:1px solid var(--border); }
+.header h1 { font-size:1.6rem; font-weight:800; letter-spacing:-.02em; }
+.header h1 .a { color:var(--primary); }
+.header .sub { color:var(--muted); font-size:.82rem; margin:2px 0 8px; }
+.header .meta { display:inline-flex; gap:14px; font-size:.72rem; color:var(--muted);
+  background:var(--surface2); padding:5px 14px; border-radius:12px; border:1px solid var(--border); }
+
+.controls { display:flex; flex-wrap:wrap; gap:10px; align-items:center; justify-content:center;
+  padding:10px 20px; background:var(--surface); border-bottom:1px solid var(--border);
+  position:sticky; top:0; z-index:100; box-shadow:0 1px 3px rgba(0,0,0,.04); }
+.select-group { display:flex; align-items:center; gap:6px; }
+.select-group label { font-size:.78rem; color:var(--muted); font-weight:500; }
+.select-group select { font-size:.78rem; padding:4px 8px; border-radius:5px;
+  border:1px solid var(--border); background:var(--surface); color:var(--text); cursor:pointer; }
+.slider-group { display:flex; align-items:center; gap:6px; }
+.slider-group label { font-size:.78rem; color:var(--muted); font-weight:500; }
+.slider-group input[type=range] { width:110px; accent-color:var(--primary); }
+.slider-group .val { font-size:.78rem; font-weight:700; color:var(--primary); min-width:28px; }
+.slider-label { font-size:.68rem; color:var(--muted); font-style:italic; }
+.btn { padding:6px 14px; border-radius:6px; border:1px solid var(--border); background:var(--surface);
+  color:var(--text); cursor:pointer; font-size:.78rem; font-weight:600; transition:all .15s; }
+.btn:hover { border-color:var(--primary); color:var(--primary); }
+.btn.primary { background:var(--primary); border-color:var(--primary); color:#fff; }
+.btn.primary:hover { background:#155db0; }
+.btn:disabled { opacity:.5; cursor:default; }
+.champ-display { margin-left:auto; font-size:.82rem; font-weight:500; }
+.champ-display .champ-name { color:var(--gold); font-weight:800; font-size:.95rem; }
+
+/* Loading overlay */
+.loading-overlay { display:none; position:fixed; inset:0; background:rgba(240,242,245,.75);
+  z-index:500; align-items:center; justify-content:center; flex-direction:column; gap:12px; }
+.loading-overlay.show { display:flex; }
+.spinner { width:36px; height:36px; border:3px solid var(--border);
+  border-top-color:var(--primary); border-radius:50%; animation:spin .7s linear infinite; }
+@keyframes spin { to { transform:rotate(360deg); } }
+.loading-text { font-size:.88rem; color:var(--muted); font-weight:500; }
+
+.bracket-wrap { display:flex; flex-direction:column; align-items:center; padding:16px 8px; min-width:1400px; }
+.bracket-top, .bracket-bottom { display:flex; gap:0; justify-content:center; width:100%; }
+.bracket-bottom { margin-top:12px; }
+.region-bracket { flex:1; max-width:660px; overflow:visible; }
+.region-label { text-align:center; font-size:.78rem; font-weight:700; text-transform:uppercase;
+  letter-spacing:.08em; color:var(--primary); padding:2px 0 6px; }
+.rounds { display:flex; gap:0; align-items:stretch; }
+.region-bracket.flipped > .rounds { flex-direction:row-reverse; }
+.round { display:flex; flex-direction:column; justify-content:space-around;
+  min-width:128px; max-width:155px; flex:1; padding:0 14px 0 2px; }
+.round.round-last { padding-right:2px; }
+.region-bracket.flipped .round { padding:0 2px 0 14px; }
+.region-bracket.flipped .round.round-last { padding-left:2px; }
+.round-header { text-align:center; font-size:.62rem; font-weight:700; text-transform:uppercase;
+  letter-spacing:.05em; color:var(--muted); padding:1px 0 4px; }
+.game-pair { display:flex; flex-direction:column; justify-content:center; position:relative; flex:1; gap:2px; }
+.round:not(.round-last) .game-pair::after {
+  content:''; position:absolute; right:-14px; top:25%; bottom:25%; width:14px;
+  border:1px solid var(--connector); border-left:none; border-radius:0 3px 3px 0; }
+.round:not(.round-last) .game-pair::before {
+  content:''; position:absolute; right:-14px; top:50%; width:14px;
+  border-top:1px solid var(--connector); transform:translateX(14px); }
+.region-bracket.flipped .round:not(.round-last) .game-pair::after {
+  right:auto; left:-14px; border:1px solid var(--connector); border-right:none;
+  border-radius:3px 0 0 3px; }
+.region-bracket.flipped .round:not(.round-last) .game-pair::before {
+  right:auto; left:-14px; transform:translateX(-14px); }
+.game { margin:1px 0; position:relative; }
+.team-slot { display:flex; align-items:center; gap:4px; padding:3px 6px;
+  background:var(--surface); border:1px solid var(--border); cursor:pointer;
+  transition:all .12s; font-size:.72rem; min-height:22px; overflow:hidden; }
+.team-slot:first-child { border-radius:3px 3px 0 0; border-bottom:none; }
+.team-slot:last-of-type { border-radius:0 0 3px 3px; }
+.team-slot:hover { border-color:var(--primary); z-index:2; background:var(--primary-bg); }
+.team-slot.picked { background:var(--green-bg); border-color:var(--green); }
+.team-slot.picked .tm { color:var(--green); font-weight:700; }
+.team-slot.locked { background:rgba(26,135,84,.12); }
+.team-slot.locked .tm::after { content:' \1F512'; font-size:.5rem; }
+.team-slot .sd { color:var(--muted); font-size:.62rem; font-weight:700; min-width:14px;
+  text-align:right; flex-shrink:0; }
+.team-slot .tm { flex:1; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; font-weight:500; }
+.team-slot.empty { opacity:.35; cursor:default; }
+.team-slot.upset-pick { border-color:var(--red); }
+.team-slot.upset-pick.picked { background:var(--red-bg); }
+.team-slot.upset-pick.picked .tm { color:var(--red); }
+.region-bracket.flipped .team-slot { flex-direction:row-reverse; text-align:right; }
+.region-bracket.flipped .team-slot .sd { text-align:left; }
+.ff-center { display:flex; flex-direction:column; align-items:center; justify-content:center;
+  min-width:200px; gap:8px; padding:10px 8px; }
+.ff-center .game { width:180px; }
+.ff-center .champ-banner { text-align:center; margin-top:10px; padding:8px; }
+.ff-center .champ-banner .trophy { font-size:1.8rem; }
+.ff-center .champ-banner .champ-team { font-size:1rem; font-weight:800; color:var(--gold); }
+.ff-label { font-size:.68rem; font-weight:700; text-transform:uppercase; letter-spacing:.06em;
+  color:var(--primary); text-align:center; margin-bottom:2px; }
+.info-btn { position:absolute; top:1px; right:1px; width:15px; height:15px; border-radius:50%;
+  background:var(--surface2); border:1px solid var(--border); color:var(--muted); font-size:.52rem;
+  cursor:pointer; display:flex; align-items:center; justify-content:center; z-index:5;
+  opacity:.4; transition:opacity .15s; line-height:1; }
+.info-btn:hover { opacity:1; border-color:var(--primary); color:var(--primary); }
+.region-bracket.flipped .info-btn { right:auto; left:1px; }
+.analysis-overlay { display:none; position:fixed; inset:0; background:rgba(0,0,0,.3); z-index:199; }
+.analysis-overlay.show { display:block; }
+.analysis-panel { display:none; position:fixed; top:50%; left:50%; transform:translate(-50%,-50%);
+  background:var(--surface); border:1px solid var(--border); border-radius:12px; padding:24px;
+  width:460px; max-width:95vw; max-height:85vh; overflow-y:auto; z-index:200;
+  box-shadow:0 20px 60px rgba(0,0,0,.12); }
+.analysis-panel.show { display:block; }
+.analysis-panel h3 { font-size:1rem; margin-bottom:14px; font-weight:700; }
+.prob-bar-wrap { display:flex; height:6px; border-radius:3px; overflow:hidden; margin:8px 0 12px;
+  background:var(--surface2); }
+.prob-bar-a { background:var(--green); border-radius:3px 0 0 3px; transition:width .3s; }
+.prob-bar-b { background:var(--red); border-radius:0 3px 3px 0; transition:width .3s; }
+.matchup-line { display:flex; justify-content:space-between; align-items:center; padding:6px 0;
+  border-bottom:1px solid var(--border); font-size:.88rem; }
+.team-side { font-weight:600; }
+.team-side.fav { color:var(--green); }
+.stat-row { display:flex; justify-content:space-between; font-size:.8rem; padding:4px 0;
+  color:var(--muted); }
+.stat-row .val { color:var(--text); font-weight:600; }
+.insight { font-size:.82rem; color:var(--muted); margin:12px 0 8px; line-height:1.5; padding:10px 12px;
+  background:var(--surface2); border-radius:8px; border:1px solid var(--border); }
+.factors { list-style:none; padding:0; }
+.factors li { font-size:.8rem; color:var(--muted); padding:3px 0; }
+.factors li::before { content:'\2022'; color:var(--primary); margin-right:6px; }
+.close-btn { position:absolute; top:12px; right:16px; background:none; border:none;
+  color:var(--muted); font-size:1.3rem; cursor:pointer; }
+.close-btn:hover { color:var(--text); }
+.conf-badge { display:inline-block; padding:2px 8px; border-radius:4px; font-size:.68rem;
+  font-weight:700; margin-left:8px; }
+.conf-lock { background:rgba(26,135,84,.1); color:var(--green); }
+.conf-strong { background:rgba(26,109,204,.1); color:var(--primary); }
+.conf-lean { background:rgba(217,119,6,.1); color:var(--gold); }
+.conf-tossup { background:rgba(198,40,40,.08); color:var(--red); }
+.odds-section { max-width:720px; margin:0 auto; padding:0 20px 20px; }
+.odds-panel { background:var(--surface); border:1px solid var(--border); border-radius:10px;
+  margin:16px 0; padding:18px; box-shadow:0 1px 3px rgba(0,0,0,.04); }
+.odds-panel h3 { font-size:.9rem; font-weight:700; margin-bottom:10px; }
+.odds-table { width:100%; border-collapse:collapse; }
+.odds-table td { padding:5px 8px; font-size:.78rem; border-bottom:1px solid var(--border); vertical-align:middle; }
+.odds-table .rank { color:var(--muted); width:24px; font-weight:600; }
+.odds-table .pct { text-align:right; font-weight:700; font-variant-numeric:tabular-nums; width:50px; }
+.odds-table .bar-cell { width:100px; padding:5px 8px; }
+.bar { height:6px; border-radius:3px; background:var(--primary); opacity:.6; min-width:2px; }
+.seed-badge { display:inline-block; background:var(--surface2); color:var(--muted); font-size:.62rem;
+  font-weight:700; padding:1px 4px; border-radius:3px; margin-right:4px; border:1px solid var(--border); }
+.footer { text-align:center; padding:18px; color:var(--muted); font-size:.72rem;
+  border-top:1px solid var(--border); background:var(--surface); }
+.error-banner { display:none; background:#fff3f3; border:1px solid #fca5a5; border-radius:8px;
+  padding:12px 18px; margin:12px 20px; font-size:.82rem; color:var(--red); }
+.error-banner.show { display:block; }
+@media (max-width:1400px) {
+  .bracket-wrap { min-width:100%; }
+  .bracket-top, .bracket-bottom { flex-direction:column; align-items:center; }
+  .region-bracket { max-width:100%; }
+  .ff-center { flex-direction:row; flex-wrap:wrap; justify-content:center; }
+}
+</style>
+</head>
+<body>
+
+<div class="loading-overlay" id="loading-overlay">
+  <div class="spinner"></div>
+  <div class="loading-text" id="loading-text">Loading bracket...</div>
+</div>
+
+<div class="header">
+  <h1>Bracket <span class="a">Brain</span></h1>
+  <p class="sub">NCAA Tournament Predictions</p>
+  <div class="meta" id="meta-bar">
+    <span id="meta-sims">—</span>
+    <span id="meta-games">Calibrated on 945 games (2010–2025)</span>
+    <span id="meta-updated">—</span>
+  </div>
+</div>
+
+<div class="error-banner" id="error-banner"></div>
+
+<div class="controls" id="controls">
+  <div class="select-group">
+    <label>Year:</label>
+    <select id="year-select" onchange="onYearChange(this.value)"></select>
+  </div>
+  <div class="slider-group">
+    <label>Chaos:</label>
+    <input type="range" id="upset-slider" min="0" max="100" value="0"
+      oninput="onUpsetChange(this.value)">
+    <span class="val" id="upset-val">0%</span>
+    <span class="slider-label" id="upset-label">All Chalk</span>
+  </div>
+  <button class="btn primary" id="sim-btn" onclick="fetchBracket()">Simulate</button>
+  <button class="btn" onclick="resetPicks()">Reset</button>
+  <div class="champ-display">
+    Champion: <span class="champ-name" id="champ-name">—</span>
+  </div>
+</div>
+
+<div class="bracket-wrap" id="bracket-wrap"></div>
+
+<div class="odds-section">
+  <div class="odds-panel">
+    <h3>Championship Odds (10,000 sims)</h3>
+    <table class="odds-table" id="odds-table"><tr><td colspan="4" style="color:var(--muted);padding:10px">Loading odds...</td></tr></table>
+  </div>
+</div>
+
+<div class="footer">
+  <p>Data: <a href="https://barttorvik.com" target="_blank" style="color:var(--primary)">Bart Torvik T-Rank</a> &middot;
+     <a href="https://evanmiya.com" target="_blank" style="color:var(--primary)">EvanMiya</a> &middot;
+     Calibrated on 945 tournament games (2010–2025)</p>
+</div>
+
+<div class="analysis-overlay" id="analysis-overlay" onclick="closeAnalysis()"></div>
+<div class="analysis-panel" id="analysis-panel">
+  <button class="close-btn" onclick="closeAnalysis()">&times;</button>
+  <div id="analysis-content"></div>
+</div>
+
+<script>
+const API = ''; // empty = same origin; set to 'http://localhost:8000' for dev
+
+// ---------------------------------------------------------------------------
+// State
+// ---------------------------------------------------------------------------
+let PICKS = [];
+let BRACKET = {};        // {region: [{team, seed}, ...]}
+let TEAM_STATS = {};     // {teamName: stats}
+let QUADRANT = ['South', 'East', 'West', 'Midwest'];
+let lockedPicks = {};
+let simPicks = {};
+let bracketState = {};
+let upsetAggression = 0.0;
+let _simTimer = null;
+let currentYear = null;
+let BAD_STATS = { adj_o: 85, adj_d: 112, adj_tempo: 64, seed: 16 };
+
+// ---------------------------------------------------------------------------
+// API helpers
+// ---------------------------------------------------------------------------
+function showLoading(msg) {
+  document.getElementById('loading-text').textContent = msg || 'Loading...';
+  document.getElementById('loading-overlay').classList.add('show');
+  document.getElementById('sim-btn').disabled = true;
+}
+
+function hideLoading() {
+  document.getElementById('loading-overlay').classList.remove('show');
+  document.getElementById('sim-btn').disabled = false;
+}
+
+function showError(msg) {
+  const el = document.getElementById('error-banner');
+  el.textContent = msg;
+  el.classList.add('show');
+  setTimeout(() => el.classList.remove('show'), 6000);
+}
+
+async function apiFetch(path) {
+  const r = await fetch(API + path);
+  if (!r.ok) {
+    const err = await r.json().catch(() => ({ detail: r.statusText }));
+    throw new Error(err.detail || r.statusText);
+  }
+  return r.json();
+}
+
+// ---------------------------------------------------------------------------
+// Init
+// ---------------------------------------------------------------------------
+async function init() {
+  showLoading('Connecting...');
+  try {
+    const health = await apiFetch('/health');
+    const years = health.available_years || [];
+    currentYear = health.current_year || years[years.length - 1];
+
+    const sel = document.getElementById('year-select');
+    sel.innerHTML = years.slice().reverse().map(y =>
+      `<option value="${y}" ${y === currentYear ? 'selected' : ''}>${y}</option>`
+    ).join('');
+
+    const updated = health.data_updated_at
+      ? new Date(health.data_updated_at).toLocaleDateString('en-US', { month:'short', day:'numeric', year:'numeric' })
+      : '—';
+    document.getElementById('meta-updated').textContent = 'Data: ' + updated;
+
+    await loadYear(currentYear);
+  } catch (e) {
+    hideLoading();
+    showError('Could not connect to API. Make sure uvicorn api:app is running. ' + e.message);
+    // Render empty bracket so page isn't blank
+    buildBracket();
+  }
+}
+
+async function loadYear(year) {
+  currentYear = year;
+  lockedPicks = {};
+  simPicks = {};
+  showLoading('Loading ' + year + ' bracket...');
+  try {
+    const data = await apiFetch(`/bracket/${year}?upset_aggression=${upsetAggression.toFixed(2)}`);
+    ingestPicks(data.picks.picks, data.picks.champion);
+    buildBracket();
+    applyPicksFromServer();
+
+    // Championship odds in background (non-blocking)
+    fetchOdds(year);
+  } catch (e) {
+    showError('Failed to load bracket: ' + e.message);
+  } finally {
+    hideLoading();
+  }
+}
+
+// ---------------------------------------------------------------------------
+// Fetch bracket picks from API (chaos slider / simulate button)
+// ---------------------------------------------------------------------------
+async function fetchBracket() {
+  if (!currentYear) return;
+  showLoading('Simulating...');
+  try {
+    const data = await apiFetch(`/bracket/${currentYear}?upset_aggression=${upsetAggression.toFixed(2)}`);
+    lockedPicks = {};
+    simPicks = {};
+    ingestPicks(data.picks.picks, data.picks.champion);
+    applyPicksFromServer();
+    renderBracket();
+  } catch (e) {
+    showError('Simulation failed: ' + e.message);
+  } finally {
+    hideLoading();
+  }
+}
+
+async function fetchOdds(year) {
+  try {
+    const mc = await apiFetch(`/bracket/${year}/monte-carlo?sims=10000`);
+    renderOdds(mc.champion_probs, mc.num_simulations);
+    document.getElementById('meta-sims').textContent =
+      mc.num_simulations.toLocaleString() + ' Monte Carlo sims';
+  } catch (e) {
+    document.getElementById('odds-table').innerHTML =
+      '<tr><td colspan="4" style="color:var(--muted)">Odds unavailable</td></tr>';
+  }
+}
+
+// ---------------------------------------------------------------------------
+// Ingest server picks into local state
+// ---------------------------------------------------------------------------
+function ingestPicks(picks, champion) {
+  PICKS = picks || [];
+  BRACKET = {};
+  TEAM_STATS = {};
+
+  // Build BRACKET from R64 picks
+  for (const p of PICKS) {
+    if (p.round !== 64) continue;
+    const region = p.region;
+    if (!BRACKET[region]) BRACKET[region] = [];
+    BRACKET[region].push({ team: p.team_a, seed: p.seed_a });
+    BRACKET[region].push({ team: p.team_b, seed: p.seed_b });
+    // Record stats from pick data
+    if (p.team_a && !TEAM_STATS[p.team_a]) {
+      TEAM_STATS[p.team_a] = { team: p.team_a, seed: p.seed_a, region };
+    }
+    if (p.team_b && !TEAM_STATS[p.team_b]) {
+      TEAM_STATS[p.team_b] = { team: p.team_b, seed: p.seed_b, region };
+    }
+  }
+
+  // Infer quadrant order from R64 regions in order
+  const seen = [];
+  for (const p of PICKS) {
+    if (p.round === 64 && !seen.includes(p.region)) seen.push(p.region);
+  }
+  if (seen.length === 4) QUADRANT = seen;
+}
+
+function applyPicksFromServer() {
+  simPicks = {};
+  for (const p of PICKS) {
+    const region = p.region;
+    const roundOf = p.round;
+    let gid = null;
+    if (region && roundOf >= 8) {
+      const same = PICKS.filter(pp => pp.region === region && pp.round === roundOf);
+      const gi = same.indexOf(p);
+      if (gi >= 0) gid = `${region}-${roundOf}-${gi}`;
+    } else if (roundOf === 4) {
+      const ff = PICKS.filter(pp => pp.round === 4);
+      const gi = ff.indexOf(p);
+      if (gi >= 0) gid = `FF-4-${gi}`;
+    } else if (roundOf === 2) {
+      gid = 'FF-2-0';
+    }
+    if (gid) simPicks[gid] = p.pick;
+  }
+  recomputeBracket();
+}
+
+// ---------------------------------------------------------------------------
+// Rendering — Championship odds table
+// ---------------------------------------------------------------------------
+function renderOdds(champProbs, numSims) {
+  const entries = Object.entries(champProbs).sort((a, b) => b[1] - a[1]);
+  const maxPct = entries[0]?.[1] || 1;
+  const rows = entries.slice(0, 20).map(([team, prob], i) => {
+    const pct = (prob * 100).toFixed(1);
+    const barW = Math.round((prob / maxPct) * 100);
+    const seed = TEAM_STATS[team]?.seed || '';
+    return `<tr>
+      <td class="rank">${i + 1}</td>
+      <td>${seed ? `<span class="seed-badge">${seed}</span>` : ''}${team}</td>
+      <td class="bar-cell"><div class="bar" style="width:${barW}%"></div></td>
+      <td class="pct">${pct}%</td>
+    </tr>`;
+  }).join('');
+  document.getElementById('odds-table').innerHTML = rows;
+}
+
+// ---------------------------------------------------------------------------
+// Bracket state machine (adapted from existing output/index.html)
+// ---------------------------------------------------------------------------
+function seedWinProb(sA, sB) { return 1 / (1 + Math.exp(-.145 * (sB - sA))); }
+
+function getNextGameId(gameId) {
+  const ffParts = gameId.match(/^FF-(\d+)-(\d+)$/);
+  if (ffParts) {
+    const roundOf = parseInt(ffParts[1]), gi = parseInt(ffParts[2]);
+    if (roundOf === 4) return 'FF-2-0';
+    return null;
+  }
+  const parts = gameId.match(/^([^-]+)-(\d+)-(\d+)$/);
+  if (!parts) return null;
+  const [, region, roundStr, giStr] = parts;
+  const roundOf = parseInt(roundStr), gi = parseInt(giStr);
+  if (roundOf === 8) {
+    const ffIdx = QUADRANT.indexOf(region);
+    if (ffIdx < 0) return null;
+    return `FF-4-${ffIdx < 2 ? ffIdx : ffIdx - 2}`;
+  }
+  const next = roundOf / 2;
+  return `${region}-${next}-${Math.floor(gi / 2)}`;
+}
+
+function recomputeBracket() {
+  bracketState = {};
+
+  // Seed R64 from BRACKET
+  for (const region of QUADRANT) {
+    const teams = BRACKET[region] || [];
+    for (let gi = 0; gi < 8; gi++) {
+      const tA = teams[gi * 2], tB = teams[gi * 2 + 1];
+      if (!tA || !tB) continue;
+      const gid = `${region}-64-${gi}`;
+      const p = PICKS.find(pp => pp.region === region && pp.round === 64 &&
+        (pp.team_a === tA.team || pp.team_b === tA.team));
+      bracketState[gid] = {
+        teamA: tA.team, seedA: tA.seed,
+        teamB: tB.team, seedB: tB.seed,
+        probA: p ? (p.team_a === tA.team ? p.win_prob : 1 - p.win_prob) : 0.5,
+        margin: p?.projected_spread || 0,
+        pick: lockedPicks[gid] || simPicks[gid] || null,
+        isLocked: !!lockedPicks[gid],
+      };
+    }
+  }
+
+  // Propagate through rounds
+  const roundSeq = [
+    ...QUADRANT.map(r => ({ type:'region', region:r, roundOf:32 })),
+    ...QUADRANT.map(r => ({ type:'region', region:r, roundOf:16 })),
+    ...QUADRANT.map(r => ({ type:'region', region:r, roundOf:8 })),
+    { type:'ff', roundOf:4 },
+    { type:'ff', roundOf:2 },
+  ];
+
+  for (const step of roundSeq) {
+    if (step.type === 'region') {
+      const { region, roundOf } = step;
+      const numGames = { 32:4, 16:2, 8:1 }[roundOf];
+      for (let gi = 0; gi < numGames; gi++) {
+        const gid = `${region}-${roundOf}-${gi}`;
+        const srcA = `${region}-${roundOf * 2}-${gi * 2}`;
+        const srcB = `${region}-${roundOf * 2}-${gi * 2 + 1}`;
+        const stA = bracketState[srcA], stB = bracketState[srcB];
+        const teamA = stA?.pick || null, teamB = stB?.pick || null;
+        const seedA = teamA ? (stA?.pick === stA?.teamA ? stA?.seedA : stA?.seedB) : null;
+        const seedB = teamB ? (stB?.pick === stB?.teamA ? stB?.seedA : stB?.seedB) : null;
+        const p = PICKS.find(pp => pp.region === region && pp.round === roundOf &&
+          (pp.team_a === teamA || pp.team_b === teamA));
+        const probA = p && teamA ? (p.team_a === teamA ? p.win_prob : 1 - p.win_prob)
+          : (seedA && seedB ? seedWinProb(seedA, seedB) : 0.5);
+        bracketState[gid] = {
+          teamA, seedA, teamB, seedB, probA,
+          margin: p?.projected_spread || (seedA && seedB ? Math.abs(seedB - seedA) : 0),
+          pick: lockedPicks[gid] || simPicks[gid] || null,
+          isLocked: !!lockedPicks[gid],
+        };
+      }
+    } else if (step.type === 'ff') {
+      const { roundOf } = step;
+      if (roundOf === 4) {
+        for (let gi = 0; gi < 2; gi++) {
+          const gid = `FF-4-${gi}`;
+          const q0 = QUADRANT[gi], q1 = QUADRANT[gi === 0 ? 3 : 2];
+          const stA = bracketState[`${q0}-8-0`], stB = bracketState[`${q1}-8-0`];
+          const teamA = stA?.pick || null, teamB = stB?.pick || null;
+          const seedA = teamA ? (stA?.pick === stA?.teamA ? stA?.seedA : stA?.seedB) : null;
+          const seedB = teamB ? (stB?.pick === stB?.teamA ? stB?.seedA : stB?.seedB) : null;
+          const p = PICKS.find(pp => pp.round === 4 &&
+            (pp.team_a === teamA || pp.team_b === teamA));
+          const probA = p && teamA ? (p.team_a === teamA ? p.win_prob : 1 - p.win_prob)
+            : (seedA && seedB ? seedWinProb(seedA, seedB) : 0.5);
+          bracketState[gid] = {
+            teamA, seedA, teamB, seedB, probA,
+            margin: p?.projected_spread || 0,
+            pick: lockedPicks[gid] || simPicks[gid] || null,
+            isLocked: !!lockedPicks[gid],
+          };
+        }
+      } else if (roundOf === 2) {
+        const stA = bracketState['FF-4-0'], stB = bracketState['FF-4-1'];
+        const teamA = stA?.pick || null, teamB = stB?.pick || null;
+        const seedA = teamA ? (stA?.pick === stA?.teamA ? stA?.seedA : stA?.seedB) : null;
+        const seedB = teamB ? (stB?.pick === stB?.teamA ? stB?.seedA : stB?.seedB) : null;
+        const p = PICKS.find(pp => pp.round === 2 &&
+          (pp.team_a === teamA || pp.team_b === teamA));
+        const probA = p && teamA ? (p.team_a === teamA ? p.win_prob : 1 - p.win_prob)
+          : (seedA && seedB ? seedWinProb(seedA, seedB) : 0.5);
+        bracketState['FF-2-0'] = {
+          teamA, seedA, teamB, seedB, probA,
+          margin: p?.projected_spread || 0,
+          pick: lockedPicks['FF-2-0'] || simPicks['FF-2-0'] || null,
+          isLocked: !!lockedPicks['FF-2-0'],
+        };
+      }
+    }
+  }
+  renderBracket();
+}
+
+// ---------------------------------------------------------------------------
+// DOM rendering
+// ---------------------------------------------------------------------------
+function renderBracket() {
+  document.querySelectorAll('.game').forEach(el => {
+    const gid = el.dataset.gameId;
+    const st = bracketState[gid];
+    const slots = el.querySelectorAll('.team-slot');
+    const infoBtn = el.querySelector('.info-btn');
+    if (st && (st.teamA || st.teamB)) {
+      const teams = [{ name: st.teamA, seed: st.seedA }, { name: st.teamB, seed: st.seedB }];
+      slots.forEach((slot, idx) => {
+        const t = teams[idx];
+        if (t.name) {
+          slot.dataset.team = t.name; slot.dataset.seed = t.seed || '';
+          slot.querySelector('.sd').textContent = t.seed || '';
+          slot.querySelector('.tm').textContent = t.name;
+          slot.classList.remove('empty');
+          slot.classList.toggle('picked', st.pick === t.name);
+          slot.classList.toggle('locked', st.isLocked && st.pick === t.name);
+          slot.onclick = (e) => { e.stopPropagation(); togglePick(gid, t.name); };
+          const isUpset = st.pick === t.name && st.probA !== null &&
+            ((idx === 0 && st.probA < .5) || (idx === 1 && st.probA >= .5));
+          const seedDiff = Math.abs((st.seedA || 0) - (st.seedB || 0));
+          slot.classList.toggle('upset-pick', isUpset && seedDiff >= 3);
+        } else {
+          slot.dataset.team = ''; slot.dataset.seed = '';
+          slot.querySelector('.sd').textContent = '';
+          slot.querySelector('.tm').textContent = '\u2014';
+          slot.classList.add('empty');
+          slot.classList.remove('picked', 'locked', 'upset-pick');
+          slot.onclick = null;
+        }
+      });
+      if (infoBtn) infoBtn.style.display = (st.teamA && st.teamB) ? 'flex' : 'none';
+    } else {
+      slots.forEach(slot => {
+        slot.dataset.team = ''; slot.dataset.seed = '';
+        slot.querySelector('.sd').textContent = '';
+        slot.querySelector('.tm').textContent = '\u2014';
+        slot.classList.add('empty');
+        slot.classList.remove('picked', 'locked', 'upset-pick');
+        slot.onclick = null;
+      });
+      if (infoBtn) infoBtn.style.display = 'none';
+    }
+  });
+  const cs = bracketState['FF-2-0'];
+  const cn = cs?.pick || '\u2014';
+  document.getElementById('champ-name').textContent = cn;
+  const b = document.getElementById('champ-banner-name');
+  if (b) b.textContent = cn;
+}
+
+// ---------------------------------------------------------------------------
+// User interaction
+// ---------------------------------------------------------------------------
+function togglePick(gameId, teamName) {
+  if (!teamName) return;
+  const currentPick = lockedPicks[gameId] || simPicks[gameId] || null;
+  if (currentPick === teamName) {
+    delete lockedPicks[gameId]; delete simPicks[gameId];
+    clearDownstream(gameId, teamName);
+  } else if (currentPick && currentPick !== teamName) {
+    const oldWinner = currentPick;
+    delete simPicks[gameId]; lockedPicks[gameId] = teamName;
+    clearDownstream(gameId, oldWinner);
+  } else {
+    lockedPicks[gameId] = teamName;
+  }
+  recomputeBracket();
+}
+
+function clearDownstream(gameId, oldWinner) {
+  if (!oldWinner) return;
+  const nextId = getNextGameId(gameId);
+  if (!nextId) return;
+  const st = bracketState[nextId];
+  if (!st) return;
+  if (st.teamA === oldWinner || st.teamB === oldWinner) {
+    const nextPick = lockedPicks[nextId] || simPicks[nextId] || null;
+    delete lockedPicks[nextId]; delete simPicks[nextId];
+    if (nextPick) clearDownstream(nextId, nextPick);
+  }
+}
+
+function resetPicks() {
+  lockedPicks = {}; simPicks = {};
+  applyPicksFromServer();
+}
+
+function onYearChange(year) {
+  loadYear(parseInt(year));
+}
+
+function onUpsetChange(val) {
+  upsetAggression = val / 100;
+  document.getElementById('upset-val').textContent = val + '%';
+  const labels = ['All Chalk', 'Slight Chaos', 'Moderate Chaos', 'Heavy Chaos', 'Maximum Chaos'];
+  document.getElementById('upset-label').textContent = labels[Math.min(4, Math.floor(val / 25))];
+  if (_simTimer) clearTimeout(_simTimer);
+  _simTimer = setTimeout(() => fetchBracket(), 500);
+}
+
+// ---------------------------------------------------------------------------
+// Bracket HTML construction
+// ---------------------------------------------------------------------------
+function buildBracket() {
+  const wrap = document.getElementById('bracket-wrap');
+  let html = '<div class="bracket-top">';
+  html += buildRegionHTML(QUADRANT[0], false);
+  html += buildFinalFourHTML();
+  html += buildRegionHTML(QUADRANT[1], true);
+  html += '</div><div class="bracket-bottom">';
+  html += buildRegionHTML(QUADRANT[3], false);
+  html += '<div class="ff-center"></div>';
+  html += buildRegionHTML(QUADRANT[2], true);
+  html += '</div>';
+  wrap.innerHTML = html;
+}
+
+function buildRegionHTML(region, flipped) {
+  const teams = BRACKET[region] || [];
+  const rounds = ['R64', 'R32', 'S16', 'E8'], gamesPerRound = [8, 4, 2, 1];
+  let html = `<div class="region-bracket ${flipped ? 'flipped' : ''}">`;
+  html += `<div class="region-label">${region}</div><div class="rounds">`;
+  rounds.forEach((rnd, ri) => {
+    const roundOf = [64, 32, 16, 8][ri];
+    const isLast = ri === rounds.length - 1;
+    html += `<div class="round ${isLast ? 'round-last' : ''}">`;
+    html += `<div class="round-header">${rnd}</div>`;
+    const numGames = gamesPerRound[ri];
+    for (let gi = 0; gi < numGames; gi++) {
+      if (gi % 2 === 0) html += '<div class="game-pair">';
+      const gid = `${region}-${roundOf}-${gi}`;
+      html += `<div class="game" data-game-id="${gid}">`;
+      if (ri === 0) {
+        const tA = teams[gi * 2], tB = teams[gi * 2 + 1];
+        html += `<div class="team-slot" data-team="${tA?.team || ''}" data-seed="${tA?.seed || ''}"><span class="sd">${tA?.seed || ''}</span><span class="tm">${tA?.team || '\u2014'}</span></div>`;
+        html += `<div class="team-slot" data-team="${tB?.team || ''}" data-seed="${tB?.seed || ''}"><span class="sd">${tB?.seed || ''}</span><span class="tm">${tB?.team || '\u2014'}</span></div>`;
+      } else {
+        html += '<div class="team-slot empty" data-team="" data-seed=""><span class="sd"></span><span class="tm">\u2014</span></div>';
+        html += '<div class="team-slot empty" data-team="" data-seed=""><span class="sd"></span><span class="tm">\u2014</span></div>';
+      }
+      html += `<div class="info-btn" style="display:${ri === 0 ? 'flex' : 'none'}" onclick="event.stopPropagation();showAnalysis('${gid}')">i</div>`;
+      html += '</div>';
+      if (gi % 2 === 1 || gi === numGames - 1) html += '</div>';
+    }
+    html += '</div>';
+  });
+  html += '</div></div>';
+  return html;
+}
+
+function buildFinalFourHTML() {
+  let html = '<div class="ff-center"><div class="ff-label">Final Four</div>';
+  ['FF-4-0', 'FF-4-1'].forEach(gid => {
+    html += `<div class="game" data-game-id="${gid}">`;
+    html += '<div class="team-slot empty" data-team="" data-seed=""><span class="sd"></span><span class="tm">\u2014</span></div>';
+    html += '<div class="team-slot empty" data-team="" data-seed=""><span class="sd"></span><span class="tm">\u2014</span></div>';
+    html += `<div class="info-btn" style="display:none" onclick="event.stopPropagation();showAnalysis('${gid}')">i</div>`;
+    html += '</div>';
+  });
+  html += '<div class="ff-label">Championship</div>';
+  html += '<div class="game" data-game-id="FF-2-0">';
+  html += '<div class="team-slot empty" data-team="" data-seed=""><span class="sd"></span><span class="tm">\u2014</span></div>';
+  html += '<div class="team-slot empty" data-team="" data-seed=""><span class="sd"></span><span class="tm">\u2014</span></div>';
+  html += '<div class="info-btn" style="display:none" onclick="event.stopPropagation();showAnalysis(\'FF-2-0\')">i</div>';
+  html += '</div>';
+  html += '<div class="champ-banner"><div class="trophy">&#127942;</div><div class="champ-team" id="champ-banner-name">\u2014</div></div>';
+  html += '</div>';
+  return html;
+}
+
+// ---------------------------------------------------------------------------
+// Analysis panel
+// ---------------------------------------------------------------------------
+function showAnalysis(gameId) {
+  const st = bracketState[gameId];
+  if (!st || !st.teamA || !st.teamB) return;
+  const panel = document.getElementById('analysis-panel');
+  const overlay = document.getElementById('analysis-overlay');
+  const content = document.getElementById('analysis-content');
+  const pA = st.probA !== null ? st.probA : .5;
+  const probA = (pA * 100).toFixed(0), probB = ((1 - pA) * 100).toFixed(0);
+  const spread = Math.abs(st.margin || 0).toFixed(1);
+  const p = Math.max(pA, 1 - pA);
+  const conf = p >= .9 ? 'lock' : p >= .75 ? 'strong' : p >= .6 ? 'lean' : 'tossup';
+  const sA = TEAM_STATS[st.teamA], sB = TEAM_STATS[st.teamB];
+  let orig = null;
+  for (const pp of PICKS) {
+    if ((pp.team_a === st.teamA && pp.team_b === st.teamB) ||
+        (pp.team_b === st.teamA && pp.team_a === st.teamB)) { orig = pp; break; }
+  }
+  const insight = orig?.insight || `Projected spread: ${spread} pts.`;
+  const factors = orig?.key_factors || [];
+  const hist = orig?.historical || null;
+  let statsHtml = '';
+  if (sA?.adj_o) statsHtml += `<div class="stat-row"><span>${st.teamA} Adj O/D</span><span class="val">${sA.adj_o.toFixed(1)} / ${(sA.adj_d||0).toFixed(1)}</span></div>`;
+  if (sB?.adj_o) statsHtml += `<div class="stat-row"><span>${st.teamB} Adj O/D</span><span class="val">${sB.adj_o.toFixed(1)} / ${(sB.adj_d||0).toFixed(1)}</span></div>`;
+  if (sA?.sos != null && sB?.sos != null) statsHtml += `<div class="stat-row"><span>SOS</span><span class="val">${sA.sos.toFixed(3)} vs ${sB.sos.toFixed(3)}</span></div>`;
+  content.innerHTML = `
+    <h3>(${st.seedA}) ${st.teamA} vs (${st.seedB}) ${st.teamB} <span class="conf-badge conf-${conf}">${conf.toUpperCase()}</span></h3>
+    <div class="matchup-line"><span class="team-side ${pA >= .5 ? 'fav' : ''}">(${st.seedA}) ${st.teamA}</span><span style="font-weight:700">${probA}%</span></div>
+    <div class="prob-bar-wrap"><div class="prob-bar-a" style="width:${probA}%"></div><div class="prob-bar-b" style="width:${probB}%"></div></div>
+    <div class="matchup-line"><span class="team-side ${pA < .5 ? 'fav' : ''}">(${st.seedB}) ${st.teamB}</span><span style="font-weight:700">${probB}%</span></div>
+    <div class="stat-row"><span>Projected Spread</span><span class="val">${spread} pts</span></div>
+    ${st.pick ? `<div class="stat-row"><span>Pick</span><span class="val" style="color:var(--green)">${st.pick}</span></div>` : ''}
+    ${statsHtml}
+    ${hist ? `<div class="stat-row"><span>Historical</span><span class="val">${hist}</span></div>` : ''}
+    <div class="insight">${insight}</div>
+    ${factors.length ? `<ul class="factors">${factors.map(f => `<li>${f}</li>`).join('')}</ul>` : ''}
+  `;
+  panel.classList.add('show');
+  overlay.classList.add('show');
+}
+
+function closeAnalysis() {
+  document.getElementById('analysis-panel').classList.remove('show');
+  document.getElementById('analysis-overlay').classList.remove('show');
+}
+
+document.addEventListener('keydown', e => { if (e.key === 'Escape') closeAnalysis(); });
+
+// Boot
+init();
+</script>
+</body>
+</html>

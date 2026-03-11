@@ -1,0 +1,45 @@
+name: Daily Data Refresh
+
+on:
+  schedule:
+    # 7am ET daily during tournament season (March 13 – April 8)
+    - cron: "0 11 13-31 3 *"   # March 13–31
+    - cron: "0 11 1-8  4 *"    # April 1–8
+  workflow_dispatch:             # allow manual trigger any time
+
+jobs:
+  refresh:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+
+      - name: Install dependencies
+        run: |
+          pip install -r requirements.txt
+          pip install fastapi uvicorn[standard] aiofiles
+
+      - name: Fetch Torvik data
+        run: python scripts/fetch_torvik.py 2026
+
+      - name: Merge team stats
+        run: python scripts/fetch_data.py --no-fetch 2026
+
+      - name: Validate bracket coverage
+        run: python scripts/validate_data.py 2026
+
+      - name: Commit updated data
+        run: |
+          git config user.name  "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add data/torvik_2026.json data/teams_merged_2026.json
+          git diff --cached --quiet || git commit -m "chore: refresh 2026 team data [$(date -u +%Y-%m-%d)]"
+          git push

@@ -1,0 +1,21 @@
+# Required for fetch scripts
+requests>=2.28.0
+
+# API server
+fastapi>=0.110.0
+uvicorn>=0.29.0
+# Optional: for parsing CSV/HTML in fetch scripts
+beautifulsoup4>=4.11.0
+pandas>=1.5.0
+
+# Optional: KenPom (requires subscription + KENPOM_EMAIL, KENPOM_PASSWORD)
+# kenpompy>=0.3.0
+
+# Optional: Claude-powered matchup analysis (requires ANTHROPIC_API_KEY)
+anthropic>=0.80.0
+
+# Optional: model calibration
+scipy>=1.10.0
+
+# Optional: if scraping Evan Miya with a browser
+# selenium>=4.0.0
