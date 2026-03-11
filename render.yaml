@@ -1,0 +1,6 @@
+services:
+  - type: web
+    name: bracket-brain
+    runtime: docker
+    healthCheckPath: /health
+    autoDeploy: true
