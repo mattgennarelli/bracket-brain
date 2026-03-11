@@ -38,6 +38,9 @@ from engine import (
     ModelConfig, DEFAULT_CONFIG,
 )
 
+# Simple in-memory cache: key -> (result, timestamp)
+_cache: dict = {}
+
 app = FastAPI(
     title="Bracket Brain",
     description="NCAA tournament prediction engine",
@@ -178,9 +181,11 @@ def get_bracket(
     year: int,
     upset_aggression: float = Query(default=0.0, ge=0.0, le=1.0),
 ):
-    bracket, ff_matchups, quadrant_order = _load_bracket_for_year(year)
+    cache_key = f"bracket_{year}_{upset_aggression:.2f}"
+    if cache_key in _cache:
+        return _cache[cache_key]
 
-    # Suppress engine's stdout prints during pick generation
+    bracket, ff_matchups, quadrant_order = _load_bracket_for_year(year)
     with contextlib.redirect_stdout(io.StringIO()):
         picks = generate_bracket_picks(
             bracket,
@@ -188,11 +193,9 @@ def get_bracket(
             quadrant_order=quadrant_order,
         )
 
-    return {
-        "year": year,
-        "upset_aggression": upset_aggression,
-        "picks": picks,
-    }
+    result = {"year": year, "upset_aggression": upset_aggression, "picks": picks}
+    _cache[cache_key] = result
+    return result
 
 
 @app.get("/bracket/{year}/monte-carlo")
@@ -200,13 +203,16 @@ def get_monte_carlo(
     year: int,
     sims: int = Query(default=10000, ge=100, le=100000),
 ):
+    cache_key = f"mc_{year}_{sims}"
+    if cache_key in _cache:
+        return _cache[cache_key]
+
     bracket, _, _ = _load_bracket_for_year(year)
     config = ModelConfig(num_sims=sims)
-
     with contextlib.redirect_stdout(io.StringIO()):
         mc = run_monte_carlo(bracket, config=config)
 
-    return {
+    result = {
         "year": year,
         "num_simulations": sims,
         "champion_probs": mc["champion_probs"],
@@ -215,3 +221,5 @@ def get_monte_carlo(
         "sweet_sixteen_probs": mc["sweet_sixteen_probs"],
         "round_of_32_probs": mc["round_of_32_probs"],
     }
+    _cache[cache_key] = result
+    return result

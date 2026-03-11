@@ -306,7 +306,6 @@ async function init() {
   } catch (e) {
     hideLoading();
     showError('Could not connect to API. Make sure uvicorn api:app is running. ' + e.message);
-    // Render empty bracket so page isn't blank
     buildBracket();
   }
 }
@@ -352,6 +351,8 @@ async function fetchBracket() {
 }
 
 async function fetchOdds(year) {
+  document.getElementById('odds-table').innerHTML =
+    '<tr><td colspan="4" style="color:var(--muted);padding:10px">Loading ' + year + ' odds...</td></tr>';
   try {
     const mc = await apiFetch(`/bracket/${year}/monte-carlo?sims=10000`);
     renderOdds(mc.champion_probs, mc.num_simulations);
@@ -647,7 +648,7 @@ function clearDownstream(gameId, oldWinner) {
 
 function resetPicks() {
   lockedPicks = {}; simPicks = {};
-  applyPicksFromServer();
+  recomputeBracket();
 }
 
 function onYearChange(year) {
