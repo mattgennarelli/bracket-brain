@@ -71,6 +71,8 @@ class ModelConfig:
     em_opp_adjust_max_bonus: float = 2.0  # em_opponent_adjust: opponent quality adjustment
     em_adj_o_weight: float = 0.3          # blend weight for EvanMiya adj_o/adj_d in base score (0=Torvik only)
     ft_foul_rate_max_bonus: float = 2.0   # margin bonus from differential FT rate (foul drawing vs committing)
+    score_scale: float = 0.942            # tournament scoring discount vs regular-season efficiency baseline
+                                          # (calibrated: model over-predicts by 8.8 pts on 187 tournament games)
 
 def _load_calibrated_config():
     """Load calibrated parameters from data/calibrated_config.json if it exists."""
@@ -294,8 +296,8 @@ def predict_game(team_a, team_b, game_site=None, config=DEFAULT_CONFIG):
         "seed_a": seed_a, "seed_b": seed_b,
         "win_prob_a": round(final_prob, 4),
         "win_prob_b": round(1 - final_prob, 4),
-        "predicted_score_a": round(score_a + factor_margin/2, 1),
-        "predicted_score_b": round(score_b - factor_margin/2, 1),
+        "predicted_score_a": round((score_a + factor_margin/2) * config.score_scale, 1),
+        "predicted_score_b": round((score_b - factor_margin/2) * config.score_scale, 1),
         "predicted_margin": round(adjusted_margin, 1),
         "base_margin": round(base_margin, 1),
         "factor_margin": round(factor_margin, 1),
