@@ -207,6 +207,14 @@ def get_monte_carlo(
     if cache_key in _cache:
         return _cache[cache_key]
 
+    # Use pre-computed file when available (sims=10000 default)
+    precomputed_path = os.path.join(DATA_DIR, f"monte_carlo_{year}.json")
+    if sims == 10000 and os.path.isfile(precomputed_path):
+        with open(precomputed_path) as f:
+            result = json.load(f)
+        _cache[cache_key] = result
+        return result
+
     bracket, _, _ = _load_bracket_for_year(year)
     config = ModelConfig(num_sims=sims)
     with contextlib.redirect_stdout(io.StringIO()):
