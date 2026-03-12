@@ -307,6 +307,10 @@ def calibrate_walk_forward(pairs):
         fold_results.append((test_year, opt, test_metrics["brier_score"]))
         print(f"  Test Brier on {test_year}: {test_metrics['brier_score']:.4f}")
 
+    fold_briers = [b for _, _, b in fold_results]
+    cv_brier = sum(fold_briers) / len(fold_briers)
+    print(f"\n  Cross-validated Brier (avg of {len(fold_briers)} folds): {cv_brier:.4f}  ← honest out-of-sample estimate")
+
     # Reduce params: drop any with |calibrated - default| < 0.05 across all folds
     defaults = {name: getattr(ModelConfig(), name) for name, _, _ in PARAM_SPEC}
     param_deltas = {name: [] for name, _, _ in PARAM_SPEC}
@@ -436,14 +440,14 @@ def main():
     opt_metrics = score_model(pairs, opt_config)
     print_report(opt_metrics, "OPTIMIZED CONFIG (all data)")
 
-    # Held-out year eval (M1 target: Brier < 0.170 on 2025)
+    # NOTE: --holdout eval uses the final model which WAS trained on holdout_year data.
+    # The honest out-of-sample estimate is the cross-validated Brier printed above.
     if holdout_year:
         holdout_pairs = [p for p in pairs if p[4] == holdout_year]
         if holdout_pairs:
             holdout_metrics = score_model(holdout_pairs, opt_config)
-            print_report(holdout_metrics, f"HELD-OUT {holdout_year} (M1 target: Brier < 0.170)")
-            if holdout_metrics["brier_score"] >= 0.170:
-                print(f"  WARNING: Held-out Brier {holdout_metrics['brier_score']:.4f} >= 0.170 target")
+            print_report(holdout_metrics, f"IN-SAMPLE CHECK: {holdout_year} (NOTE: model trained on this data)")
+            print(f"  WARNING: This is NOT a true holdout — use CV Brier above for honest estimate.")
 
     # Improvement summary
     brier_delta = default_metrics["brier_score"] - opt_metrics["brier_score"]
