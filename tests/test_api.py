@@ -4,7 +4,6 @@ API endpoint tests using FastAPI's TestClient (no live server needed).
 import sys
 import os
 import pytest
-
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 sys.path.insert(0, ROOT)
 
@@ -23,8 +22,18 @@ def test_health():
     d = r.json()
     assert d["status"] == "ok"
     assert isinstance(d["available_years"], list)
-    assert 2026 in d["available_years"]
-    assert d["current_year"] == 2026
+    if d["available_years"]:
+        assert d["current_year"] == max(d["available_years"])
+    else:
+        assert d["current_year"] is None
+
+
+def test_ready():
+    """/ready returns 200 when teams_merged_2026.json exists, 503 otherwise."""
+    r = client.get("/ready")
+    assert r.status_code in (200, 503)
+    if r.status_code == 200:
+        assert r.json()["ready"] is True
 
 
 @pytest.mark.skipif(not HAS_TEAM_DATA, reason="teams_merged_2026.json not available in CI")

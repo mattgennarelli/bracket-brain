@@ -92,17 +92,12 @@ def parse_scores(score_rec):
         except (KeyError, ValueError, TypeError):
             continue
         n = s.get("name", "")
-        if not flipped:
-            if _norm(n) == _norm(home_name):
-                home_score = val
-            elif _norm(n) == _norm(away_name):
-                away_score = val
-        else:
-            # Scores are stored as original home/away in the record
-            if _norm(n) == _norm(score_rec["away_team"]):   # original away = our home
-                home_score = val
-            elif _norm(n) == _norm(score_rec["home_team"]): # original home = our away
-                away_score = val
+        # match_score already swapped home_team/away_team when flipped,
+        # so always match by the (already-corrected) home_name/away_name
+        if _norm(n) == _norm(home_name):
+            home_score = val
+        elif _norm(n) == _norm(away_name):
+            away_score = val
 
     # Fallback: just assign by position if names didn't match
     if home_score is None and away_score is None and len(scores) == 2:
@@ -260,6 +255,7 @@ def main():
 
     settled_count = 0
     now = datetime.now(timezone.utc).isoformat()
+    settle_log_entries = []
 
     for pick in ledger["picks"]:
         if pick.get("result") is not None:
@@ -282,9 +278,35 @@ def main():
         pick["settled_at"] = now
         settled_count += 1
 
+        # Log each settle decision for debugging
+        settle_log_entries.append({
+            "pick_idx": ledger["picks"].index(pick),
+            "home_team": pick["home_team"],
+            "away_team": pick["away_team"],
+            "bet_type": pick["bet_type"],
+            "bet_side": pick.get("bet_side") or pick.get("bet_team"),
+            "result": result,
+            "home_score": home_score,
+            "away_score": away_score,
+            "settled_at": now,
+        })
+
         side = pick.get("bet_side") or pick.get("bet_team", "?")
         print(f"  [{result}] {pick['bet_type'].upper()} {side}  "
               f"({pick['home_team']} {int(home_score)}-{int(away_score)} {pick['away_team']})")
+
+    # Write settle log (even if 0 settled, for midnight run audit trail)
+    log_date = datetime.now(timezone.utc).strftime("%Y-%m-%d")
+    log_path = os.path.join(DATA_DIR, f"settle_log_{log_date}.json")
+    with open(log_path, "w") as f:
+        json.dump({
+            "date": log_date,
+            "run_at": now,
+            "settled_count": settled_count,
+            "decisions": settle_log_entries,
+        }, f, indent=2)
+    if settled_count > 0:
+        print(f"  Logged to {log_path}")
 
     if settled_count == 0:
         print("  No picks could be settled yet (games may not be complete).")

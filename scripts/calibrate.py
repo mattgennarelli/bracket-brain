@@ -5,11 +5,15 @@ Loads results_all.json + teams_merged_YYYY.json for each year, runs
 predict_game for every historical matchup, and optimizes ModelConfig
 parameters to minimize Brier score.
 
+Uses walk-forward cross-validation: train on years N-k, test on year N.
+Drops params with |calibrated - default| < 0.05 across folds; target ≤ 12 params.
+
 Output: data/calibrated_config.json
 
 Usage:
-  python scripts/calibrate.py                # optimize + report
-  python scripts/calibrate.py --report-only  # just score current params
+  python scripts/calibrate.py                # optimize + report (walk-forward)
+  python scripts/calibrate.py --report-only   # just score current params
+  python scripts/calibrate.py --holdout 2025  # hold out 2025 for final eval
 """
 import json
 import math
@@ -202,34 +206,52 @@ def score_model(pairs, config):
     }
 
 
-def calibrate(pairs):
-    """Optimize ModelConfig parameters to minimize Brier score using global search."""
-    from scipy.optimize import differential_evolution
+PARAM_SPEC = [
+    ("seed_weight", 0.0, 0.50),
+    ("base_scoring_stdev", 8.0, 18.0),
+    ("sos_max_bonus", 0.0, 8.0),
+    ("possession_edge_max_bonus", 0.0, 8.0),
+    ("ft_clutch_max_bonus", 0.0, 6.0),
+    ("experience_max_bonus", 0.0, 4.0),
+    ("coach_tourney_max_bonus", 0.0, 6.0),
+    ("pedigree_max_bonus", 0.0, 6.0),
+    ("three_pt_volatility_factor", 0.0, 3.0),
+    ("tempo_volatility_weight", 0.0, 4.0),
+    ("star_player_max_bonus", 0.0, 8.0),
+    ("momentum_max_bonus", 0.0, 5.0),
+    ("win_pct_max_bonus", 0.0, 5.0),
+    ("conf_rating_max_bonus", 0.0, 4.0),
+    ("depth_max_bonus", 0.0, 8.0),
+    ("em_opp_adjust_max_bonus", 0.0, 8.0),
+    ("em_adj_o_weight", 0.0, 1.0),
+    ("ft_foul_rate_max_bonus", 0.0, 6.0),
+]
 
-    param_spec = [
-        ("seed_weight", 0.0, 0.50),
-        ("base_scoring_stdev", 8.0, 18.0),
-        # Secondary signals — capped tightly to prevent efficiency-proxy overfitting
-        ("sos_max_bonus", 0.0, 8.0),
-        ("possession_edge_max_bonus", 0.0, 8.0),
-        ("ft_clutch_max_bonus", 0.0, 6.0),
-        ("experience_max_bonus", 0.0, 4.0),
-        ("coach_tourney_max_bonus", 0.0, 6.0),
-        ("pedigree_max_bonus", 0.0, 6.0),
-        ("three_pt_volatility_factor", 0.0, 3.0),
-        ("tempo_volatility_weight", 0.0, 4.0),
-        ("star_player_max_bonus", 0.0, 8.0),
-        ("momentum_max_bonus", 0.0, 5.0),
-        # win_pct only fires for elite (>85%) teams — small bonus, not a proxy for adj_o
-        ("win_pct_max_bonus", 0.0, 5.0),
-        ("conf_rating_max_bonus", 0.0, 4.0),
-        # EvanMiya-sourced signals — depth/stars capped to prevent dominating
-        ("depth_max_bonus", 0.0, 8.0),
-        ("em_opp_adjust_max_bonus", 0.0, 8.0),
-        ("em_adj_o_weight", 0.0, 1.0),        # how much EvanMiya efficiency shifts base score
-        # Foul drawing / committing rate edge
-        ("ft_foul_rate_max_bonus", 0.0, 6.0),
-    ]
+
+def _pairs_by_year(pairs):
+    """Group pairs by year. Returns {year: [(a,b,a_won,margin,yr,g), ...]}."""
+    by_year = {}
+    for p in pairs:
+        yr = p[4]
+        by_year.setdefault(yr, []).append(p)
+    return by_year
+
+
+def _fold_pairs(pairs_by_year, test_year):
+    """Split into train (all years before test_year) and test (test_year only)."""
+    train = []
+    test = []
+    for yr, yr_pairs in sorted(pairs_by_year.items()):
+        if yr < test_year:
+            train.extend(yr_pairs)
+        elif yr == test_year:
+            test.extend(yr_pairs)
+    return train, test
+
+
+def calibrate_single(pairs, param_spec):
+    """Optimize params on given pairs. Returns (optimized_dict, config)."""
+    from scipy.optimize import differential_evolution
 
     eval_count = [0]
     best_brier = [1.0]
@@ -247,11 +269,6 @@ def calibrate(pairs):
         return metrics["brier_score"]
 
     bounds = [(lo, hi) for _, lo, hi in param_spec]
-
-    print(f"\nOptimizing {len(param_spec)} parameters over {len(pairs)} games...")
-    defaults = {name: getattr(ModelConfig(), name) for name, _, _ in param_spec}
-    print(f"Defaults: {defaults}")
-
     result = differential_evolution(objective, bounds, seed=42,
                                     maxiter=60, tol=1e-6, popsize=12,
                                     mutation=(0.5, 1.5), recombination=0.8)
@@ -262,8 +279,86 @@ def calibrate(pairs):
         val = float(result.x[i])
         optimized[name] = round(val, 4)
         setattr(config, name, val)
+    return optimized, config
 
-    print(f"  Converged after {eval_count[0]} evaluations (Brier={result.fun:.5f})")
+
+def calibrate_walk_forward(pairs):
+    """Walk-forward: train on N-k, test on N. Reduce params; return final config."""
+    pairs_by_year = _pairs_by_year(pairs)
+    years = sorted(pairs_by_year.keys())
+    if len(years) < 3:
+        print("  Not enough years for walk-forward; falling back to single calibration.")
+        return calibrate_single(pairs, PARAM_SPEC)
+
+    # Use last 3 years as test folds (e.g. 2023, 2024, 2025)
+    test_years = years[-3:]
+    fold_results = []  # list of (test_year, train_optimized, test_brier)
+
+    for test_year in test_years:
+        train_pairs, test_pairs = _fold_pairs(pairs_by_year, test_year)
+        if not train_pairs or not test_pairs:
+            continue
+        print(f"\n--- Fold: train on years < {test_year}, test on {test_year} ({len(test_pairs)} games) ---")
+        opt, _ = calibrate_single(train_pairs, PARAM_SPEC)
+        config = ModelConfig(num_sims=1)
+        for k, v in opt.items():
+            setattr(config, k, v)
+        test_metrics = score_model(test_pairs, config)
+        fold_results.append((test_year, opt, test_metrics["brier_score"]))
+        print(f"  Test Brier on {test_year}: {test_metrics['brier_score']:.4f}")
+
+    # Reduce params: drop any with |calibrated - default| < 0.05 across all folds
+    defaults = {name: getattr(ModelConfig(), name) for name, _, _ in PARAM_SPEC}
+    param_deltas = {name: [] for name, _, _ in PARAM_SPEC}
+    for _, opt, _ in fold_results:
+        for name in opt:
+            param_deltas[name].append(abs(opt[name] - defaults.get(name, 0)))
+
+    # Keep params that move meaningfully (max_delta >= 0.05); always include seed_weight for re-derivation
+    reduced_spec = [(n, lo, hi) for n, lo, hi in PARAM_SPEC if max(param_deltas.get(n, [0])) >= 0.05]
+    seed_weight_spec = [(n, lo, hi) for n, lo, hi in PARAM_SPEC if n == "seed_weight"]
+    if seed_weight_spec and "seed_weight" not in [p[0] for p in reduced_spec]:
+        reduced_spec = seed_weight_spec + reduced_spec
+
+    if len(reduced_spec) > 12:
+        # Keep seed_weight + top 11 by max delta
+        ranked = [(n, max(param_deltas.get(n, [0]))) for n, _, _ in PARAM_SPEC]
+        ranked.sort(key=lambda x: -x[1])
+        keep = {"seed_weight"} | {n for n, _ in ranked[:11]}
+        reduced_spec = [(n, lo, hi) for n, lo, hi in PARAM_SPEC if n in keep]
+
+    print(f"\n  Reduced to {len(reduced_spec)} params (target ≤12): {[p[0] for p in reduced_spec]}")
+
+    # Final calibration on all data except holdout (if any)
+    all_train = [p for p in pairs if p[4] < max(years)]
+    print(f"\n--- Final calibration on {len(all_train)} games (all years except {max(years)}) ---")
+    optimized, config = calibrate_single(all_train, reduced_spec)
+
+    # M1: Drop params that hit bounds — use 0 at lower bound (remove signal), default at upper
+    bounds_map = {n: (lo, hi) for n, lo, hi in PARAM_SPEC}
+    for name in list(optimized.keys()):
+        lo, hi = bounds_map.get(name, (0, 1))
+        val = optimized[name]
+        if val <= lo + 0.01:
+            optimized[name] = 0.0
+            setattr(config, name, 0.0)
+            print(f"  Param {name} hit lower bound ({val}) -> removed (set to 0)")
+        elif val >= hi - 0.01:
+            default_val = defaults.get(name, getattr(ModelConfig(), name))
+            optimized[name] = round(default_val, 4)
+            setattr(config, name, default_val)
+            print(f"  Param {name} hit upper bound ({val}) -> using default {default_val}")
+
+    # Fill in dropped params with defaults
+    for name, _, _ in PARAM_SPEC:
+        if name not in optimized:
+            optimized[name] = round(defaults.get(name, getattr(ModelConfig(), name)), 4)
+            setattr(config, name, optimized[name])
+
+    # M1: Confirm seed_weight doesn't dominate (it modulates seed differential, efficiency drives base)
+    sw = optimized.get("seed_weight", 0.18)
+    print(f"\n  Seed weight: {sw:.4f} (efficiency signals drive base score; seed modulates margin)")
+
     return optimized, config
 
 
@@ -300,6 +395,11 @@ def save_config(optimized):
 
 def main():
     report_only = "--report-only" in sys.argv
+    holdout_year = None
+    for i, arg in enumerate(sys.argv):
+        if arg == "--holdout" and i + 1 < len(sys.argv):
+            holdout_year = int(sys.argv[i + 1])
+            break
 
     print("Loading historical results...")
     games = load_results()
@@ -318,18 +418,32 @@ def main():
     print_report(default_metrics, "DEFAULT CONFIG")
 
     if report_only:
+        if holdout_year:
+            holdout_pairs = [p for p in pairs if p[4] == holdout_year]
+            if holdout_pairs:
+                holdout_metrics = score_model(holdout_pairs, ModelConfig(num_sims=1))
+                print_report(holdout_metrics, f"HELD-OUT {holdout_year}")
         return
 
-    # Optimize
-    optimized, opt_config = calibrate(pairs)
+    # Walk-forward calibration
+    optimized, opt_config = calibrate_walk_forward(pairs)
     print(f"\nOptimized parameters:")
     for k, v in optimized.items():
         default_val = getattr(ModelConfig(), k)
         print(f"  {k}: {default_val} -> {v}")
 
-    # Score with optimized config
+    # Score with optimized config (full data)
     opt_metrics = score_model(pairs, opt_config)
-    print_report(opt_metrics, "OPTIMIZED CONFIG")
+    print_report(opt_metrics, "OPTIMIZED CONFIG (all data)")
+
+    # Held-out year eval (M1 target: Brier < 0.170 on 2025)
+    if holdout_year:
+        holdout_pairs = [p for p in pairs if p[4] == holdout_year]
+        if holdout_pairs:
+            holdout_metrics = score_model(holdout_pairs, opt_config)
+            print_report(holdout_metrics, f"HELD-OUT {holdout_year} (M1 target: Brier < 0.170)")
+            if holdout_metrics["brier_score"] >= 0.170:
+                print(f"  WARNING: Held-out Brier {holdout_metrics['brier_score']:.4f} >= 0.170 target")
 
     # Improvement summary
     brier_delta = default_metrics["brier_score"] - opt_metrics["brier_score"]

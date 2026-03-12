@@ -611,6 +611,9 @@ function recomputeBracket() {{
     if (pick) ffWinners[gid] = pick===tA?.team ? tA : tB;
   }});
   const cA = ffWinners['FF-4-0']||null, cB = ffWinners['FF-4-1']||null;
+  const s0 = newState['FF-4-0'], s1 = newState['FF-4-1'];
+  const champSeedA = cA && s0?.pick ? (s0.pick === s0.teamA ? s0.seedA : s0.seedB) : (cA?.seed ?? null);
+  const champSeedB = cB && s1?.pick ? (s1.pick === s1.teamA ? s1.seedA : s1.seedB) : (cB?.seed ?? null);
   let cPick = lockedPicks['FF-2-0'] || simPicks['FF-2-0'] || null;
   if (cPick && (!cA || !cB || (cPick !== cA.team && cPick !== cB.team))) {{
     delete lockedPicks['FF-2-0']; delete simPicks['FF-2-0']; cPick = null;
@@ -618,7 +621,7 @@ function recomputeBracket() {{
   let cProbA = null, cMargin = 0;
   if (cA && cB) {{ const pred = predictGame(cA, cB); cProbA = pred.probA; cMargin = pred.margin; }}
   newState['FF-2-0'] = {{ teamA:cA?cA.team:null, teamB:cB?cB.team:null,
-    seedA:cA?cA.seed:null, seedB:cB?cB.seed:null,
+    seedA:champSeedA, seedB:champSeedB,
     pick:cPick, probA:cProbA, margin:cMargin, isLocked:!!lockedPicks['FF-2-0'] }};
   bracketState = newState;
   gameAlerts = {{}};
@@ -712,9 +715,10 @@ function renderBracket() {{
       const alert = gameAlerts[gid];
       el.classList.toggle('has-alert', !!alert);
       const seedDiff = Math.abs((st.seedA||0) - (st.seedB||0));
-      const isUnderdogPick = st.pick && st.probA !== null &&
-        ((st.probA >= .5 && st.pick === st.teamB) || (st.probA < .5 && st.pick === st.teamA));
-      const hasUpsetPick = isUnderdogPick && seedDiff >= 3;
+      const hasUpsetPick = st.pick && (
+        (st.pick === st.teamA && (st.seedA||0) > (st.seedB||0)) ||
+        (st.pick === st.teamB && (st.seedB||0) > (st.seedA||0))
+      );
       const underdogIdx = st.probA !== null && st.probA >= .5 ? 1 : 0;
       const favIdx = 1 - underdogIdx;
       slots.forEach((slot, idx) => {{
@@ -725,12 +729,12 @@ function renderBracket() {{
             const onUnderdog = alert.badgeOnUnderdog !== false;
             show = (onUnderdog && idx === underdogIdx) || (!onUnderdog && idx === favIdx);
             level = alert.level || 'strong';
-            label = level === 'strong' ? '!' : level === 'mild' ? '~' : level === 'blowout' ? '' : 'Upset';
-          }} else if (hasUpsetPick && idx === underdogIdx) {{
+            label = level === 'strong' ? '!' : level === 'mild' ? '~' : level === 'blowout' ? 'Blowout' : 'Upset';
+          }} else if (hasUpsetPick && teams[idx].name === st.pick) {{
             show = true; level = 'strong'; label = 'Upset';
           }}
           badgeEl.style.display = show ? 'inline' : 'none';
-          badgeEl.textContent = label || 'Upset';
+          badgeEl.textContent = label;
           badgeEl.className = 'upset-badge ' + (level || 'strong');
         }}
       }});
@@ -750,8 +754,8 @@ function renderBracket() {{
           slot.classList.toggle('picked', st.pick === t.name);
           slot.classList.toggle('locked', st.isLocked && st.pick === t.name);
           slot.onclick = function(e) {{ e.stopPropagation(); togglePick(gid, t.name); }};
-          const isUpset = st.pick === t.name && isUnderdogPick;
-          slot.classList.toggle('upset-pick', isUpset && seedDiff >= 3);
+          const isUpset = st.pick === t.name && hasUpsetPick;
+          slot.classList.toggle('upset-pick', isUpset);
         }} else {{
           slot.dataset.team = ''; slot.dataset.seed = '';
           slot.querySelector('.sd').textContent = '';

@@ -1,12 +1,12 @@
-# Required for fetch scripts
-requests>=2.28.0
+# Core
+requests==2.32.3
+fastapi==0.115.6
+uvicorn[standard]==0.34.0
+aiofiles>=24.1.0
 
-# API server
-fastapi>=0.110.0
-uvicorn>=0.29.0
-# Optional: for parsing CSV/HTML in fetch scripts
-beautifulsoup4>=4.11.0
-pandas>=1.5.0
+# Data / fetch scripts
+beautifulsoup4==4.12.3
+pandas==2.2.3
 
 # Optional: KenPom (requires subscription + KENPOM_EMAIL, KENPOM_PASSWORD)
 # kenpompy>=0.3.0
@@ -15,7 +15,11 @@ pandas>=1.5.0
 anthropic>=0.80.0
 
 # Optional: model calibration
-scipy>=1.10.0
+scipy==1.14.1
 
 # Optional: if scraping Evan Miya with a browser
 # selenium>=4.0.0
+
+# Test dependencies (CI)
+pytest>=8.0.0
+httpx>=0.28.0

@@ -62,11 +62,16 @@ jobs:
           ODDS_API_KEY: ${{ secrets.ODDS_API_KEY }}
         run: python scripts/save_bets.py || echo "Save step failed (no games or API error)"
 
-      - name: Commit ledger
+      - name: Commit ledger and settle log
         run: |
           git config user.name  "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
           git add data/bets_ledger.json
+          # Include settle log if written (UTC date)
+          SETTLE_LOG="data/settle_log_$(date -u +%Y-%m-%d).json"
+          if [ -f "$SETTLE_LOG" ]; then
+            git add "$SETTLE_LOG"
+          fi
           if git diff --cached --quiet; then
             echo "No changes to ledger."
           else

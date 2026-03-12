@@ -3,6 +3,7 @@ Bracket Brain API — FastAPI wrapper around engine.py.
 
 Endpoints:
   GET  /health                      — server status + data freshness
+  GET  /ready                       — 503 if teams_merged_2026.json missing (for load balancers)
   GET  /teams/{year}                — all teams with stats for a given year
   POST /predict                     — predict one game
   GET  /bracket/{year}              — full bracket picks
@@ -14,11 +15,13 @@ Usage:
 """
 
 import io
+import json
+import logging
 import os
 import sys
-import json
 import contextlib
 import re
+import time
 from datetime import datetime, timezone
 from typing import Optional
 
@@ -26,7 +29,7 @@ ROOT = os.path.dirname(os.path.abspath(__file__))
 DATA_DIR = os.path.join(ROOT, "data")
 sys.path.insert(0, ROOT)
 
-from fastapi import FastAPI, HTTPException, Query
+from fastapi import FastAPI, HTTPException, Query, Request
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import FileResponse
 from fastapi.staticfiles import StaticFiles
@@ -40,8 +43,18 @@ from engine import (
 
 LEDGER_PATH = os.path.join(DATA_DIR, "bets_ledger.json")
 
-# Simple in-memory cache: key -> (result, timestamp)
+# Cache TTL: 1 hour — avoids stale Render cache on redeploy
+CACHE_TTL_SECONDS = 3600
+
+# Cache: key -> {"result": ..., "cached_at": timestamp}
 _cache: dict = {}
+
+# Structured JSON logging
+_log = logging.getLogger("api")
+_handler = logging.StreamHandler()
+_handler.setFormatter(logging.Formatter("%(message)s"))
+_log.addHandler(_handler)
+_log.setLevel(logging.INFO)
 
 app = FastAPI(
     title="Bracket Brain",
@@ -56,7 +69,39 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
+
+@app.middleware("http")
+async def log_requests(request: Request, call_next):
+    start = time.perf_counter()
+    response = await call_next(request)
+    latency_ms = round((time.perf_counter() - start) * 1000)
+    log_line = json.dumps({
+        "method": request.method,
+        "path": request.url.path,
+        "status": response.status_code,
+        "latency_ms": latency_ms,
+    })
+    _log.info(log_line)
+    return response
+
+
 WEB_DIR = os.path.join(ROOT, "web")
+
+
+def _cache_get(key: str):
+    """Return cached result if not expired, else None."""
+    entry = _cache.get(key)
+    if not entry:
+        return None
+    cached_at = entry.get("cached_at", 0)
+    if time.time() - cached_at > CACHE_TTL_SECONDS:
+        del _cache[key]
+        return None
+    return entry.get("result")
+
+
+def _cache_set(key: str, result):
+    _cache[key] = {"result": result, "cached_at": time.time()}
 
 
 @app.get("/", include_in_schema=False)
@@ -126,6 +171,15 @@ class PredictRequest(BaseModel):
 # Routes
 # ---------------------------------------------------------------------------
 
+@app.get("/ready")
+def ready():
+    """Returns 503 if teams_merged_2026.json is missing (for load balancer health checks)."""
+    path = os.path.join(DATA_DIR, "teams_merged_2026.json")
+    if not os.path.isfile(path):
+        raise HTTPException(status_code=503, detail="teams_merged_2026.json not found")
+    return {"ready": True}
+
+
 @app.get("/health")
 def health():
     years = _available_years()
@@ -184,8 +238,9 @@ def get_bracket(
     upset_aggression: float = Query(default=0.0, ge=0.0, le=1.0),
 ):
     cache_key = f"bracket_{year}_{upset_aggression:.2f}"
-    if cache_key in _cache:
-        return _cache[cache_key]
+    cached = _cache_get(cache_key)
+    if cached is not None:
+        return cached
 
     bracket, ff_matchups, quadrant_order = _load_bracket_for_year(year)
     with contextlib.redirect_stdout(io.StringIO()):
@@ -196,7 +251,7 @@ def get_bracket(
         )
 
     result = {"year": year, "upset_aggression": upset_aggression, "picks": picks}
-    _cache[cache_key] = result
+    _cache_set(cache_key, result)
     return result
 
 
@@ -225,15 +280,16 @@ def get_monte_carlo(
     sims: int = Query(default=10000, ge=100, le=100000),
 ):
     cache_key = f"mc_{year}_{sims}"
-    if cache_key in _cache:
-        return _cache[cache_key]
+    cached = _cache_get(cache_key)
+    if cached is not None:
+        return cached
 
     # Use pre-computed file when available (sims=10000 default)
     precomputed_path = os.path.join(DATA_DIR, f"monte_carlo_{year}.json")
     if sims == 10000 and os.path.isfile(precomputed_path):
         with open(precomputed_path) as f:
             result = json.load(f)
-        _cache[cache_key] = result
+        _cache_set(cache_key, result)
         return result
 
     bracket, _, _ = _load_bracket_for_year(year)
@@ -250,5 +306,5 @@ def get_monte_carlo(
         "sweet_sixteen_probs": mc["sweet_sixteen_probs"],
         "round_of_32_probs": mc["round_of_32_probs"],
     }
-    _cache[cache_key] = result
+    _cache_set(cache_key, result)
     return result

@@ -4,6 +4,7 @@ manage_bets.py — View and edit the betting picks ledger.
 Commands:
   list              Show all picks (pending and settled)
   list pending      Show only unsettled picks
+  settle <N> W|L|P  Manually set result for pick N (W=win, L=loss, P=push)
   delete <N>        Delete pick number N (from list output)
   clear-pending     Remove all unsettled picks
   clear-date YYYY-MM-DD   Remove all picks from a specific date
@@ -16,10 +17,12 @@ After editing, commit and push so Render picks it up:
 import json
 import os
 import sys
-from datetime import datetime
+from datetime import datetime, timezone
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 LEDGER_PATH = os.path.join(ROOT, "data", "bets_ledger.json")
+sys.path.insert(0, ROOT)
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 
 
 def load():
@@ -79,6 +82,35 @@ def main():
     if cmd == "list":
         filter_pending = len(args) > 1 and args[1].lower() == "pending"
         list_picks(ledger, filter_pending=filter_pending)
+
+    elif cmd == "settle":
+        if len(args) < 3:
+            print("Usage: manage_bets.py settle <N> W|L|P")
+            return
+        try:
+            idx = int(args[1])
+        except ValueError:
+            print(f"Invalid index: {args[1]}")
+            return
+        result = args[2].upper()
+        if result not in ("W", "L", "P"):
+            print(f"Result must be W, L, or P (got {args[2]})")
+            return
+        picks = ledger["picks"]
+        if idx < 0 or idx >= len(picks):
+            print(f"Index {idx} out of range (0–{len(picks)-1})")
+            return
+        pick = picks[idx]
+        if pick.get("result") is not None:
+            print(f"Pick #{idx} already settled as {pick['result']}. Overwriting.")
+        pick["result"] = result
+        pick["settled_at"] = datetime.now(timezone.utc).isoformat()
+        pick["settled_by"] = "manual"
+        from settle_bets import compute_stats
+        ledger["stats"] = compute_stats(ledger["picks"])
+        save(ledger)
+        side = pick.get("bet_side") or pick.get("bet_team", "?")
+        print(f"Settled #{idx}: [{pick.get('bet_type','?').upper()}] {side} -> {result}")
 
     elif cmd == "delete":
         if len(args) < 2:
