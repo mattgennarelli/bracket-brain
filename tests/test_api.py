@@ -5,12 +5,16 @@ import sys
 import os
 import pytest
 
-sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+sys.path.insert(0, ROOT)
 
 from fastapi.testclient import TestClient
 from api import app
 
 client = TestClient(app)
+
+# Some tests require teams_merged data which is not committed to the repo
+HAS_TEAM_DATA = os.path.isfile(os.path.join(ROOT, "data", "teams_merged_2026.json"))
 
 
 def test_health():
@@ -23,6 +27,7 @@ def test_health():
     assert d["current_year"] == 2026
 
 
+@pytest.mark.skipif(not HAS_TEAM_DATA, reason="teams_merged_2026.json not available in CI")
 def test_teams_2026():
     r = client.get("/teams/2026")
     assert r.status_code == 200
@@ -37,6 +42,7 @@ def test_teams_missing_year():
     assert r.status_code == 404
 
 
+@pytest.mark.skipif(not HAS_TEAM_DATA, reason="teams_merged_2026.json not available in CI")
 def test_predict_known_matchup():
     r = client.post("/predict", json={
         "team_a": "Duke", "team_b": "Houston", "year": 2026,
