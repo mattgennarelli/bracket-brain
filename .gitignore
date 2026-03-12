@@ -13,20 +13,20 @@ venv/
 .venv/
 env/
 
-# Data — large files not needed in repo (fetched at runtime)
+# Data — large intermediate files not needed in repo
 data/torvik_*.json
 data/evanmiya_*.json
-data/teams_merged_*.json
 data/season_games_*.json
 data/kenpom_*.csv
 data/evanmiya_*.csv
 data/torvik_*.csv
 
-# Keep bracket + results data (small, needed for backtest + UI)
+# Keep everything needed for the API to serve (Render has no local data)
 !data/bracket_*.json
 !data/results_*.json
 !data/backtest_*.json
 !data/calibrated_config.json
+!data/teams_merged_*.json
 
 # Betting — daily snapshots are local only; ledger is committed
 data/bets_????-??-??.json
