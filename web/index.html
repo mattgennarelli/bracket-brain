@@ -198,6 +198,36 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sa
 .stat-chip { font-size:.72rem; }
 .stat-chip .label { color:var(--muted); }
 .stat-chip .value { font-weight:700; margin-left:3px; }
+/* Tabs */
+.tab-nav { display:flex; gap:4px; padding:8px 20px; background:var(--surface);
+  border-bottom:1px solid var(--border); }
+.tab-btn { padding:5px 18px; border-radius:6px; border:1px solid transparent;
+  background:none; cursor:pointer; font-size:.82rem; font-weight:600; color:var(--muted);
+  transition:all .15s; }
+.tab-btn:hover { color:var(--text); background:var(--surface2); }
+.tab-btn.active { background:var(--primary-bg); color:var(--primary); border-color:rgba(26,109,204,.3); }
+.tab-panel { display:none; }
+.tab-panel.active { display:block; }
+/* Picks history table */
+.history-table { width:100%; border-collapse:collapse; font-size:.76rem; }
+.history-table th { text-align:left; padding:6px 8px; color:var(--muted); font-weight:600;
+  font-size:.68rem; text-transform:uppercase; letter-spacing:.04em; border-bottom:2px solid var(--border); }
+.history-table td { padding:5px 8px; border-bottom:1px solid var(--border); vertical-align:middle; }
+.history-table tr:last-child td { border-bottom:none; }
+.result-pill { display:inline-flex; align-items:center; justify-content:center;
+  width:24px; height:24px; border-radius:50%; font-size:.68rem; font-weight:800; }
+.result-pill.W { background:var(--green-bg); color:var(--green); border:1px solid var(--green); }
+.result-pill.L { background:var(--red-bg); color:var(--red); border:1px solid var(--red); }
+.result-pill.P { background:rgba(107,114,128,.1); color:var(--muted); border:1px solid var(--muted); }
+.result-pill.pending { background:var(--surface2); color:var(--muted); border:1px solid var(--border); font-size:.45rem; }
+.picks-stats-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(140px,1fr));
+  gap:12px; margin-bottom:16px; }
+.stat-card { background:var(--surface2); border:1px solid var(--border); border-radius:8px;
+  padding:12px 14px; }
+.stat-card .sc-label { font-size:.68rem; color:var(--muted); text-transform:uppercase;
+  letter-spacing:.04em; font-weight:600; }
+.stat-card .sc-value { font-size:1.4rem; font-weight:800; margin:2px 0; }
+.stat-card .sc-sub { font-size:.7rem; color:var(--muted); }
 .footer { text-align:center; padding:18px; color:var(--muted); font-size:.72rem;
   border-top:1px solid var(--border); background:var(--surface); }
 .error-banner { display:none; background:#fff3f3; border:1px solid #fca5a5; border-radius:8px;
@@ -249,21 +279,39 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sa
   </div>
 </div>
 
-<div class="bracket-wrap" id="bracket-wrap"></div>
+<div class="tab-nav">
+  <button class="tab-btn active" onclick="switchTab('bracket')">Bracket</button>
+  <button class="tab-btn" onclick="switchTab('odds')">Championship Odds</button>
+  <button class="tab-btn" onclick="switchTab('picks')">Picks <span id="picks-badge" style="display:none;background:var(--primary);color:#fff;border-radius:8px;font-size:.6rem;padding:1px 5px;margin-left:3px"></span></button>
+</div>
 
-<div class="odds-section">
-  <div class="odds-panel">
-    <h3>Championship Odds (10,000 sims)</h3>
-    <table class="odds-table" id="odds-table"><tr><td colspan="4" style="color:var(--muted);padding:10px">Loading odds...</td></tr></table>
-  </div>
+<div class="tab-panel active" id="tab-bracket">
+  <div class="bracket-wrap" id="bracket-wrap"></div>
+</div>
 
-  <div class="picks-panel" id="picks-panel">
-    <div class="picks-header">
-      <h3>Today's Picks</h3>
-      <span class="hit-rate-badge" id="hit-rate-badge">Loading...</span>
+<div class="tab-panel" id="tab-odds">
+  <div class="odds-section">
+    <div class="odds-panel">
+      <h3>Championship Odds (10,000 sims)</h3>
+      <table class="odds-table" id="odds-table"><tr><td colspan="4" style="color:var(--muted);padding:10px">Loading odds...</td></tr></table>
     </div>
-    <div id="picks-today-body"><div class="picks-empty">Loading...</div></div>
-    <div class="stats-row" id="picks-stats-row" style="display:none"></div>
+  </div>
+</div>
+
+<div class="tab-panel" id="tab-picks">
+  <div class="odds-section">
+    <div class="picks-panel" id="picks-panel">
+      <div id="picks-stats-cards" class="picks-stats-grid"></div>
+      <div class="picks-header">
+        <h3 id="picks-section-title">Today's Picks</h3>
+        <span class="hit-rate-badge" id="hit-rate-badge"></span>
+      </div>
+      <div id="picks-today-body"><div class="picks-empty">Loading...</div></div>
+      <div style="margin-top:20px" id="picks-history-section" style="display:none">
+        <h3 style="font-size:.9rem;font-weight:700;margin-bottom:10px">Pick History</h3>
+        <div id="picks-history-body"></div>
+      </div>
+    </div>
   </div>
 </div>
 
@@ -502,7 +550,8 @@ function getNextGameId(gameId) {
   if (roundOf === 8) {
     const ffIdx = QUADRANT.indexOf(region);
     if (ffIdx < 0) return null;
-    return `FF-4-${ffIdx < 2 ? ffIdx : ffIdx - 2}`;
+    // Top row regions (indices 0,1) → FF-4-0; bottom row (indices 2,3) → FF-4-1
+    return `FF-4-${ffIdx < 2 ? 0 : 1}`;
   }
   const next = roundOf / 2;
   return `${region}-${next}-${Math.floor(gi / 2)}`;
@@ -568,7 +617,9 @@ function recomputeBracket() {
       if (roundOf === 4) {
         for (let gi = 0; gi < 2; gi++) {
           const gid = `FF-4-${gi}`;
-          const q0 = QUADRANT[gi], q1 = QUADRANT[gi === 0 ? 3 : 2];
+          // Layout: top row = QUADRANT[0] vs QUADRANT[1], bottom row = QUADRANT[3] vs QUADRANT[2]
+          const q0 = gi === 0 ? QUADRANT[0] : QUADRANT[3];
+          const q1 = gi === 0 ? QUADRANT[1] : QUADRANT[2];
           const stA = bracketState[`${q0}-8-0`], stB = bracketState[`${q1}-8-0`];
           const teamA = stA?.pick || null, teamB = stB?.pick || null;
           const seedA = teamA ? (stA?.pick === stA?.teamA ? stA?.seedA : stA?.seedB) : null;
@@ -830,9 +881,24 @@ function closeAnalysis() {
 document.addEventListener('keydown', e => { if (e.key === 'Escape') closeAnalysis(); });
 
 // ---------------------------------------------------------------------------
-// Picks panel
+// Tab switching
+// ---------------------------------------------------------------------------
+let _picksLoaded = false;
+function switchTab(name) {
+  document.querySelectorAll('.tab-btn').forEach((b, i) => {
+    const names = ['bracket','odds','picks'];
+    b.classList.toggle('active', names[i] === name);
+  });
+  document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+  document.getElementById('tab-' + name).classList.add('active');
+  if (name === 'picks' && !_picksLoaded) { loadPicks(); _picksLoaded = true; }
+}
+
+// ---------------------------------------------------------------------------
+// Picks tab
 // ---------------------------------------------------------------------------
 async function loadPicks() {
+  document.getElementById('picks-today-body').innerHTML = '<div class="picks-empty">Loading...</div>';
   try {
     const [todayData, historyData] = await Promise.all([
       apiFetch('/bets/today').catch(() => ({ picks: [], available: false })),
@@ -842,86 +908,111 @@ async function loadPicks() {
   } catch (e) {
     document.getElementById('picks-today-body').innerHTML =
       '<div class="picks-empty">Picks unavailable</div>';
-    document.getElementById('hit-rate-badge').textContent = '—';
   }
 }
 
+function _pickRowHtml(p, showDate) {
+  const result = p.result;
+  const resultHtml = result
+    ? `<div class="bet-result ${result}">${result}</div>`
+    : `<div class="bet-result pending">?</div>`;
+  const side = p.bet_side || p.bet_team || '';
+  const bt = p.bet_type || 'ml';
+  let desc = side;
+  if (bt === 'spread' && p.bet_spread != null)
+    desc += ` ${p.bet_spread > 0 ? '+' : ''}${p.bet_spread.toFixed(1)}`;
+  if (bt === 'total') desc = `${side} ${p.vegas_total != null ? p.vegas_total.toFixed(1) : ''}`;
+  const odds = p.bet_odds != null ? `${p.bet_odds > 0 ? '+' : ''}${Math.round(p.bet_odds)}` : '';
+  const edge = p.edge != null ? `${(p.edge * 100).toFixed(1)}%` : '';
+  const stars = p.stars || '';
+  const gameStr = `${p.away_team} @ ${p.home_team}`;
+  const actualStr = result && p.actual_score_home != null
+    ? ` · ${p.home_team} ${Math.round(p.actual_score_home)}-${Math.round(p.actual_score_away)} ${p.away_team}`
+    : '';
+  return `<div class="bet-row">
+    ${resultHtml}
+    <div class="bet-info">
+      <div class="bet-main">
+        <span class="bet-type-tag ${bt}">${bt.toUpperCase()}</span>${desc}
+        ${odds ? `<span style="color:var(--muted);font-weight:400;margin-left:4px">(${odds})</span>` : ''}
+        <span class="bet-stars" style="margin-left:4px">${stars}</span>
+        ${showDate ? `<span style="color:var(--muted);font-size:.68rem;margin-left:6px">${p.date||''}</span>` : ''}
+      </div>
+      <div class="bet-sub">${gameStr}${actualStr}</div>
+      ${edge ? `<div class="bet-edge">${edge} edge</div>` : ''}
+    </div>
+  </div>`;
+}
+
 function renderPicks(todayData, historyData) {
-  const body = document.getElementById('picks-today-body');
+  const todayBody = document.getElementById('picks-today-body');
   const badge = document.getElementById('hit-rate-badge');
-  const statsRow = document.getElementById('picks-stats-row');
+  const statsCards = document.getElementById('picks-stats-cards');
+  const histSection = document.getElementById('picks-history-section');
+  const histBody = document.getElementById('picks-history-body');
+  const sectionTitle = document.getElementById('picks-section-title');
 
-  // Today's picks
-  const todayPicks = todayData.picks || [];
-  if (!todayData.available || todayPicks.length === 0) {
-    body.innerHTML = '<div class="picks-empty">No picks saved for today. Run <code>python scripts/save_bets.py</code> each morning.</div>';
-  } else {
-    body.innerHTML = todayPicks.map(p => {
-      const result = p.result;
-      const resultHtml = result
-        ? `<div class="bet-result ${result}">${result}</div>`
-        : `<div class="bet-result pending">?</div>`;
-      const side = p.bet_side || p.bet_team || '';
-      const odds = p.bet_odds != null ? `${p.bet_odds > 0 ? '+' : ''}${Math.round(p.bet_odds)}` : '';
-      const edge = p.edge != null ? `${(p.edge * 100).toFixed(1)}% edge` : '';
-      const stars = p.stars || '';
-      const bt = p.bet_type || 'ml';
-      let desc = side;
-      if (bt === 'spread' && p.bet_spread != null)
-        desc += ` ${p.bet_spread > 0 ? '+' : ''}${p.bet_spread.toFixed(1)}`;
-      if (bt === 'total') desc = `${side} ${p.vegas_total != null ? p.vegas_total.toFixed(1) : ''}`;
-      const gameStr = `${p.away_team} @ ${p.home_team}`;
-      const timeStr = p.commence_time ? (() => {
-        try {
-          const d = new Date(p.commence_time);
-          return d.toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit' });
-        } catch { return ''; }
-      })() : '';
-      const actualStr = result && p.actual_score_home != null
-        ? ` · Final: ${p.home_team} ${Math.round(p.actual_score_home)}-${Math.round(p.actual_score_away)}`
-        : '';
-      return `<div class="bet-row">
-        ${resultHtml}
-        <div class="bet-info">
-          <div class="bet-main">
-            <span class="bet-type-tag ${bt}">${bt.toUpperCase()}</span>${desc}
-            ${odds ? `<span style="color:var(--muted);font-weight:400;margin-left:4px">(${odds})</span>` : ''}
-            <span class="bet-stars" style="margin-left:4px">${stars}</span>
-          </div>
-          <div class="bet-sub">${gameStr}${timeStr ? ' · ' + timeStr : ''}${actualStr}</div>
-          <div class="bet-edge">${edge}</div>
-        </div>
-      </div>`;
-    }).join('');
-  }
-
-  // Hit rate badge from history
+  const allPicks = historyData.picks || [];
   const stats = historyData.stats || {};
-  const hr = stats.hit_rate;
   const decided = (stats.wins || 0) + (stats.losses || 0);
-  if (decided === 0) {
+
+  // Stats cards
+  const hr = stats.hit_rate;
+  const cards = [
+    { label: 'Hit Rate', value: decided ? `${(hr*100).toFixed(0)}%` : '—', sub: `${decided} decided` },
+    { label: 'Record', value: `${stats.wins||0}W-${stats.losses||0}L`, sub: `${stats.pushes||0} push${(stats.pushes||0)!==1?'es':''}` },
+    { label: 'Total Picks', value: allPicks.length, sub: `${allPicks.filter(p=>!p.result).length} pending` },
+  ];
+  const byType = stats.by_type || {};
+  Object.entries(byType).filter(([,s])=>s.picks>0).forEach(([bt,s]) => {
+    const thr = s.hit_rate != null ? `${(s.hit_rate*100).toFixed(0)}%` : '—';
+    cards.push({ label: bt.toUpperCase(), value: thr, sub: `${s.wins}W-${s.losses}L` });
+  });
+  statsCards.innerHTML = cards.map(c => `<div class="stat-card">
+    <div class="sc-label">${c.label}</div>
+    <div class="sc-value" style="${c.label==='Hit Rate'&&decided?(hr>=.55?'color:var(--green)':hr<.45?'color:var(--red)':''):''}">${c.value}</div>
+    <div class="sc-sub">${c.sub}</div>
+  </div>`).join('');
+
+  // Hit rate badge
+  if (decided) {
+    badge.textContent = `${(hr*100).toFixed(0)}% (${stats.wins}W-${stats.losses}L)`;
+    badge.className = 'hit-rate-badge ' + (hr >= .55 ? 'good' : hr < .45 ? 'bad' : '');
+  } else {
     badge.textContent = 'No results yet';
     badge.className = 'hit-rate-badge';
-  } else {
-    badge.textContent = `${(hr * 100).toFixed(0)}% (${stats.wins}W-${stats.losses}L-${stats.pushes || 0}P)`;
-    badge.className = 'hit-rate-badge ' + (hr >= 0.55 ? 'good' : hr < 0.45 ? 'bad' : '');
   }
 
-  // Per-type stats row
-  const byType = stats.by_type || {};
-  const typeChips = Object.entries(byType).filter(([, s]) => s.picks > 0).map(([bt, s]) => {
-    const thr = s.hit_rate != null ? `${(s.hit_rate * 100).toFixed(0)}%` : '—';
-    return `<div class="stat-chip"><span class="label">${bt.toUpperCase()}:</span><span class="value">${s.wins}W-${s.losses}L  ${thr}</span></div>`;
-  }).join('');
-  if (typeChips) {
-    statsRow.innerHTML = typeChips;
-    statsRow.style.display = 'flex';
+  // Today's picks
+  const today = new Date().toLocaleDateString('en-CA');
+  const todayPicks = todayData.picks || [];
+  sectionTitle.textContent = `Today's Picks (${today})`;
+  if (!todayData.available || todayPicks.length === 0) {
+    todayBody.innerHTML = '<div class="picks-empty">No picks for today. Run <code>python scripts/save_bets.py</code> each morning before games tip.</div>';
+  } else {
+    todayBody.innerHTML = todayPicks.map(p => _pickRowHtml(p, false)).join('');
+  }
+
+  // Badge on Picks tab button
+  const pendingToday = todayPicks.filter(p=>!p.result).length;
+  const picksBadge = document.getElementById('picks-badge');
+  if (pendingToday > 0) {
+    picksBadge.textContent = pendingToday;
+    picksBadge.style.display = 'inline';
+  }
+
+  // Full history (all settled + pending, newest first)
+  if (allPicks.length > 0) {
+    histSection.style.display = 'block';
+    const sorted = [...allPicks].reverse();
+    histBody.innerHTML = sorted.map(p => _pickRowHtml(p, true)).join('');
+  } else {
+    histSection.style.display = 'none';
   }
 }
 
 // Boot
 init();
-loadPicks();
 </script>
 </body>
 </html>
