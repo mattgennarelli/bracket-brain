@@ -874,5 +874,36 @@
       "actual_score_away": null,
       "settled_at": null
     }
-  ]
+  ],
+  "stats": {
+    "total_picks": 46,
+    "settled": 0,
+    "wins": 0,
+    "losses": 0,
+    "pushes": 0,
+    "hit_rate": null,
+    "by_type": {
+      "ml": {
+        "picks": 0,
+        "wins": 0,
+        "losses": 0,
+        "pushes": 0,
+        "hit_rate": null
+      },
+      "spread": {
+        "picks": 0,
+        "wins": 0,
+        "losses": 0,
+        "pushes": 0,
+        "hit_rate": null
+      },
+      "total": {
+        "picks": 0,
+        "wins": 0,
+        "losses": 0,
+        "pushes": 0,
+        "hit_rate": null
+      }
+    }
+  }
 }
