@@ -203,13 +203,12 @@ def get_bracket(
 @app.get("/bets/today")
 def get_bets_today():
     today = datetime.now().strftime("%Y-%m-%d")
-    path = os.path.join(DATA_DIR, f"bets_{today}.json")
-    if not os.path.isfile(path):
+    if not os.path.isfile(LEDGER_PATH):
         return {"date": today, "picks": [], "available": False}
-    with open(path) as f:
-        data = json.load(f)
-    data["available"] = True
-    return data
+    with open(LEDGER_PATH) as f:
+        ledger = json.load(f)
+    picks = [p for p in ledger.get("picks", []) if p.get("date") == today]
+    return {"date": today, "picks": picks, "available": bool(picks)}
 
 
 @app.get("/bets/history")

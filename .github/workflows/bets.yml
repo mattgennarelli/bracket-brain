@@ -1,0 +1,75 @@
+name: Daily Bets
+
+on:
+  schedule:
+    # Save picks: 9am ET = 2pm UTC (lines are up by then)
+    - cron: '0 14 13-31 3 *'   # March 13-31
+    - cron: '0 14 1-8  4 *'    # April 1-8
+    # Settle results: midnight ET = 5am UTC next day
+    - cron: '0 5  14-31 3 *'   # March 14-31
+    - cron: '0 5  2-9   4 *'   # April 2-9
+  workflow_dispatch:
+    inputs:
+      action:
+        description: 'Which step to run'
+        required: true
+        default: 'both'
+        type: choice
+        options: [save, settle, both]
+
+jobs:
+  bets:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+          cache: pip
+
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+
+      - name: Determine action
+        id: action
+        run: |
+          # Dispatch override takes priority
+          if [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
+            echo "action=${{ inputs.action }}" >> $GITHUB_OUTPUT
+            exit 0
+          fi
+          # Infer from cron time: 5am UTC = settle, 2pm UTC = save
+          HOUR=$(date -u +%H)
+          if [ "$HOUR" -lt 10 ]; then
+            echo "action=settle" >> $GITHUB_OUTPUT
+          else
+            echo "action=save" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Settle yesterday's picks
+        if: steps.action.outputs.action == 'settle' || steps.action.outputs.action == 'both'
+        env:
+          ODDS_API_KEY: ${{ secrets.ODDS_API_KEY }}
+        run: python scripts/settle_bets.py || echo "Settle step failed (no pending picks or API error)"
+
+      - name: Save today's picks
+        if: steps.action.outputs.action == 'save' || steps.action.outputs.action == 'both'
+        env:
+          ODDS_API_KEY: ${{ secrets.ODDS_API_KEY }}
+        run: python scripts/save_bets.py || echo "Save step failed (no games or API error)"
+
+      - name: Commit ledger
+        run: |
+          git config user.name  "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add data/bets_ledger.json
+          if git diff --cached --quiet; then
+            echo "No changes to ledger."
+          else
+            git commit -m "chore: update bets ledger $(date -u +%Y-%m-%d)"
+            git push
+          fi
