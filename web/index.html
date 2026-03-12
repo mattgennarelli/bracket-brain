@@ -162,6 +162,42 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sa
 .bar { height:6px; border-radius:3px; background:var(--primary); opacity:.6; min-width:2px; }
 .seed-badge { display:inline-block; background:var(--surface2); color:var(--muted); font-size:.62rem;
   font-weight:700; padding:1px 4px; border-radius:3px; margin-right:4px; border:1px solid var(--border); }
+/* Picks panel */
+.picks-panel { background:var(--surface); border:1px solid var(--border); border-radius:10px;
+  margin:16px 0; padding:18px; box-shadow:0 1px 3px rgba(0,0,0,.04); }
+.picks-panel h3 { font-size:.9rem; font-weight:700; margin-bottom:4px; }
+.picks-header { display:flex; align-items:center; justify-content:space-between; margin-bottom:12px; }
+.picks-header h3 { margin-bottom:0; }
+.hit-rate-badge { font-size:.72rem; font-weight:700; padding:3px 10px; border-radius:12px;
+  background:var(--surface2); border:1px solid var(--border); color:var(--muted); }
+.hit-rate-badge.good { background:var(--green-bg); border-color:var(--green); color:var(--green); }
+.hit-rate-badge.bad { background:var(--red-bg); border-color:var(--red); color:var(--red); }
+.picks-empty { color:var(--muted); font-size:.8rem; font-style:italic; padding:4px 0; }
+.bet-row { display:flex; align-items:flex-start; gap:10px; padding:8px 0;
+  border-bottom:1px solid var(--border); }
+.bet-row:last-child { border-bottom:none; }
+.bet-result { width:22px; height:22px; border-radius:50%; display:flex; align-items:center;
+  justify-content:center; font-size:.68rem; font-weight:800; flex-shrink:0; margin-top:1px; }
+.bet-result.W { background:var(--green-bg); color:var(--green); border:1px solid var(--green); }
+.bet-result.L { background:var(--red-bg); color:var(--red); border:1px solid var(--red); }
+.bet-result.P { background:rgba(107,114,128,.1); color:var(--muted); border:1px solid var(--muted); }
+.bet-result.pending { background:var(--surface2); color:var(--muted); border:1px solid var(--border);
+  font-size:.5rem; }
+.bet-info { flex:1; min-width:0; }
+.bet-main { font-size:.82rem; font-weight:600; }
+.bet-sub { font-size:.72rem; color:var(--muted); margin-top:1px; }
+.bet-edge { font-size:.7rem; font-weight:700; color:var(--primary); }
+.bet-stars { color:var(--gold); font-size:.7rem; }
+.bet-type-tag { display:inline-block; font-size:.6rem; font-weight:700; text-transform:uppercase;
+  padding:1px 5px; border-radius:3px; margin-right:4px; }
+.bet-type-tag.ml { background:rgba(26,109,204,.1); color:var(--primary); }
+.bet-type-tag.spread { background:rgba(26,135,84,.1); color:var(--green); }
+.bet-type-tag.total { background:rgba(217,119,6,.1); color:var(--gold); }
+.stats-row { display:flex; gap:16px; flex-wrap:wrap; margin-top:10px; padding-top:10px;
+  border-top:1px solid var(--border); }
+.stat-chip { font-size:.72rem; }
+.stat-chip .label { color:var(--muted); }
+.stat-chip .value { font-weight:700; margin-left:3px; }
 .footer { text-align:center; padding:18px; color:var(--muted); font-size:.72rem;
   border-top:1px solid var(--border); background:var(--surface); }
 .error-banner { display:none; background:#fff3f3; border:1px solid #fca5a5; border-radius:8px;
@@ -219,6 +255,15 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sa
   <div class="odds-panel">
     <h3>Championship Odds (10,000 sims)</h3>
     <table class="odds-table" id="odds-table"><tr><td colspan="4" style="color:var(--muted);padding:10px">Loading odds...</td></tr></table>
+  </div>
+
+  <div class="picks-panel" id="picks-panel">
+    <div class="picks-header">
+      <h3>Today's Picks</h3>
+      <span class="hit-rate-badge" id="hit-rate-badge">Loading...</span>
+    </div>
+    <div id="picks-today-body"><div class="picks-empty">Loading...</div></div>
+    <div class="stats-row" id="picks-stats-row" style="display:none"></div>
   </div>
 </div>
 
@@ -784,8 +829,99 @@ function closeAnalysis() {
 
 document.addEventListener('keydown', e => { if (e.key === 'Escape') closeAnalysis(); });
 
+// ---------------------------------------------------------------------------
+// Picks panel
+// ---------------------------------------------------------------------------
+async function loadPicks() {
+  try {
+    const [todayData, historyData] = await Promise.all([
+      apiFetch('/bets/today').catch(() => ({ picks: [], available: false })),
+      apiFetch('/bets/history').catch(() => ({ picks: [], stats: {} })),
+    ]);
+    renderPicks(todayData, historyData);
+  } catch (e) {
+    document.getElementById('picks-today-body').innerHTML =
+      '<div class="picks-empty">Picks unavailable</div>';
+    document.getElementById('hit-rate-badge').textContent = '—';
+  }
+}
+
+function renderPicks(todayData, historyData) {
+  const body = document.getElementById('picks-today-body');
+  const badge = document.getElementById('hit-rate-badge');
+  const statsRow = document.getElementById('picks-stats-row');
+
+  // Today's picks
+  const todayPicks = todayData.picks || [];
+  if (!todayData.available || todayPicks.length === 0) {
+    body.innerHTML = '<div class="picks-empty">No picks saved for today. Run <code>python scripts/save_bets.py</code> each morning.</div>';
+  } else {
+    body.innerHTML = todayPicks.map(p => {
+      const result = p.result;
+      const resultHtml = result
+        ? `<div class="bet-result ${result}">${result}</div>`
+        : `<div class="bet-result pending">?</div>`;
+      const side = p.bet_side || p.bet_team || '';
+      const odds = p.bet_odds != null ? `${p.bet_odds > 0 ? '+' : ''}${Math.round(p.bet_odds)}` : '';
+      const edge = p.edge != null ? `${(p.edge * 100).toFixed(1)}% edge` : '';
+      const stars = p.stars || '';
+      const bt = p.bet_type || 'ml';
+      let desc = side;
+      if (bt === 'spread' && p.bet_spread != null)
+        desc += ` ${p.bet_spread > 0 ? '+' : ''}${p.bet_spread.toFixed(1)}`;
+      if (bt === 'total') desc = `${side} ${p.vegas_total != null ? p.vegas_total.toFixed(1) : ''}`;
+      const gameStr = `${p.away_team} @ ${p.home_team}`;
+      const timeStr = p.commence_time ? (() => {
+        try {
+          const d = new Date(p.commence_time);
+          return d.toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit' });
+        } catch { return ''; }
+      })() : '';
+      const actualStr = result && p.actual_score_home != null
+        ? ` · Final: ${p.home_team} ${Math.round(p.actual_score_home)}-${Math.round(p.actual_score_away)}`
+        : '';
+      return `<div class="bet-row">
+        ${resultHtml}
+        <div class="bet-info">
+          <div class="bet-main">
+            <span class="bet-type-tag ${bt}">${bt.toUpperCase()}</span>${desc}
+            ${odds ? `<span style="color:var(--muted);font-weight:400;margin-left:4px">(${odds})</span>` : ''}
+            <span class="bet-stars" style="margin-left:4px">${stars}</span>
+          </div>
+          <div class="bet-sub">${gameStr}${timeStr ? ' · ' + timeStr : ''}${actualStr}</div>
+          <div class="bet-edge">${edge}</div>
+        </div>
+      </div>`;
+    }).join('');
+  }
+
+  // Hit rate badge from history
+  const stats = historyData.stats || {};
+  const hr = stats.hit_rate;
+  const decided = (stats.wins || 0) + (stats.losses || 0);
+  if (decided === 0) {
+    badge.textContent = 'No results yet';
+    badge.className = 'hit-rate-badge';
+  } else {
+    badge.textContent = `${(hr * 100).toFixed(0)}% (${stats.wins}W-${stats.losses}L-${stats.pushes || 0}P)`;
+    badge.className = 'hit-rate-badge ' + (hr >= 0.55 ? 'good' : hr < 0.45 ? 'bad' : '');
+  }
+
+  // Per-type stats row
+  const byType = stats.by_type || {};
+  const typeChips = Object.entries(byType).filter(([, s]) => s.picks > 0).map(([bt, s]) => {
+    const thr = s.hit_rate != null ? `${(s.hit_rate * 100).toFixed(0)}%` : '—';
+    return `<div class="stat-chip"><span class="label">${bt.toUpperCase()}:</span><span class="value">${s.wins}W-${s.losses}L  ${thr}</span></div>`;
+  }).join('');
+  if (typeChips) {
+    statsRow.innerHTML = typeChips;
+    statsRow.style.display = 'flex';
+  }
+}
+
 // Boot
 init();
+loadPicks();
 </script>
 </body>
 </html>

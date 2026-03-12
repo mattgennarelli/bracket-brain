@@ -38,6 +38,8 @@ from engine import (
     ModelConfig, DEFAULT_CONFIG,
 )
 
+LEDGER_PATH = os.path.join(DATA_DIR, "bets_ledger.json")
+
 # Simple in-memory cache: key -> (result, timestamp)
 _cache: dict = {}
 
@@ -196,6 +198,26 @@ def get_bracket(
     result = {"year": year, "upset_aggression": upset_aggression, "picks": picks}
     _cache[cache_key] = result
     return result
+
+
+@app.get("/bets/today")
+def get_bets_today():
+    today = datetime.now().strftime("%Y-%m-%d")
+    path = os.path.join(DATA_DIR, f"bets_{today}.json")
+    if not os.path.isfile(path):
+        return {"date": today, "picks": [], "available": False}
+    with open(path) as f:
+        data = json.load(f)
+    data["available"] = True
+    return data
+
+
+@app.get("/bets/history")
+def get_bets_history():
+    if not os.path.isfile(LEDGER_PATH):
+        return {"picks": [], "stats": {}}
+    with open(LEDGER_PATH) as f:
+        return json.load(f)
 
 
 @app.get("/bracket/{year}/monte-carlo")

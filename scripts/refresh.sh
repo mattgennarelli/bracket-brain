@@ -34,5 +34,20 @@ echo ""
 echo "--- Validating bracket coverage ---"
 python scripts/validate_data.py "$YEAR"
 
+# 5. Settle yesterday's pending picks (requires ODDS_API_KEY)
+if [ -n "${ODDS_API_KEY:-}" ]; then
+  echo ""
+  echo "--- Settling yesterday's picks ---"
+  python scripts/settle_bets.py || echo "  (settle failed — check ODDS_API_KEY)"
+
+  # 6. Save today's picks
+  echo ""
+  echo "--- Saving today's picks ---"
+  python scripts/save_bets.py || echo "  (no picks today or API error)"
+else
+  echo ""
+  echo "--- Skipping picks (no ODDS_API_KEY set) ---"
+fi
+
 echo ""
 echo "=== Done. Run: python run.py --bracket data/bracket_${YEAR}.json ==="
