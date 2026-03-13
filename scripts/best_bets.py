@@ -340,13 +340,14 @@ def total_edge(model_total, vegas_total):
     return model_total - vegas_total
 
 
-def kelly_fraction(model_prob, decimal_odds, fraction=0.25):
+def kelly_fraction(model_prob, decimal_odds, fraction=0.10):
     """Compute fractional Kelly bet size.
 
     Args:
         model_prob: our estimated probability of winning
         decimal_odds: payout in decimal format (e.g., 2.0 for even money)
-        fraction: Kelly fraction (0.25 = quarter Kelly, conservative)
+        fraction: Kelly fraction (0.10 = tenth Kelly — conservative; quarter-Kelly
+                  almost always hits the 5% cap given our high-edge thresholds)
 
     Returns:
         Fraction of bankroll to bet (0.0 if no edge), capped at 5%.
