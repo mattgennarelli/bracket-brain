@@ -1370,12 +1370,12 @@ function showAnalysis(gameId) {
        </div>`
     : `<div class="ap-score-line"><span class="spread-chip">${spreadLabel}</span></div>`;
 
-  const isUpsetPick = pickTeam !== (favA ? st.teamA : st.teamB);
+  const isUpsetPick = modelPick !== (favA ? st.teamA : st.teamB);
   const pickBoxHtml = `
     <div class="pick-box${isUpsetPick || p < 0.56 ? ' tossup' : ''}">
       <div>
         <div class="pb-label">${isUpsetPick ? 'Chaos Pick ⚡' : 'Model Pick'}</div>
-        <div class="pb-team">(${pickSeed}) ${pickTeam}</div>
+        <div class="pb-team">(${pickSeed}) ${modelPick}</div>
       </div>
       <div class="pb-prob">${(pickProb * 100).toFixed(0)}%</div>
     </div>`;
