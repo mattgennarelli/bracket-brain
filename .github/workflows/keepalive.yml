@@ -1,0 +1,21 @@
+name: Keep-Alive Ping
+
+on:
+  schedule:
+    # Every 10 minutes during tournament hours (noon–midnight ET = 17:00–05:00 UTC)
+    # March 13 – April 8
+    - cron: '*/10 17-23 13-31 3 *'   # March 13-31, afternoon/evening ET
+    - cron: '*/10 0-4   14-31 3 *'   # March 14-31, late night ET (next UTC day)
+    - cron: '*/10 17-23 1-8   4 *'   # April 1-8, afternoon/evening ET
+    - cron: '*/10 0-4   2-9   4 *'   # April 2-9, late night ET (next UTC day)
+  workflow_dispatch:
+
+jobs:
+  ping:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Ping /health
+        run: |
+          URL="${{ vars.RENDER_URL || 'https://bracket-brain.onrender.com' }}"
+          STATUS=$(curl -s -o /dev/null -w "%{http_code}" "$URL/health" --max-time 30)
+          echo "Health check: $STATUS — $URL/health"
