@@ -101,6 +101,10 @@ def match_score(pick, scores_by_key):
     return None
 
 
+def parse_scores(score_rec):
+    return parse_scores_odds(score_rec)
+
+
 def parse_scores_odds(score_rec):
     """Return (home_score, away_score) as floats, or (None, None)."""
     scores = score_rec.get("scores") or []
