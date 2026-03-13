@@ -630,7 +630,7 @@ async function loadYear(year) {
   showLoading('Loading ' + year + ' bracket...');
   try {
     const data = await apiFetch(`/bracket/${year}?upset_aggression=${upsetAggression.toFixed(2)}`);
-    ingestPicks(data.picks.picks, data.picks.champion, data.ff_pairs);
+    ingestPicks(data.picks.picks, data.picks.champion, data.ff_pairs, data.quadrant_order);
     buildBracket();
     buildMobileBracket();
     applyPicksFromServer();
@@ -655,7 +655,7 @@ async function fetchBracket() {
     const data = await apiFetch(`/bracket/${currentYear}?upset_aggression=${upsetAggression.toFixed(2)}`);
     lockedPicks = {};
     simPicks = {};
-    ingestPicks(data.picks.picks, data.picks.champion, data.ff_pairs);
+    ingestPicks(data.picks.picks, data.picks.champion, data.ff_pairs, data.quadrant_order);
     applyPicksFromServer();
     renderBracket();
   } catch (e) {
@@ -682,11 +682,14 @@ async function fetchOdds(year) {
 // ---------------------------------------------------------------------------
 // Ingest server picks into local state
 // ---------------------------------------------------------------------------
-function ingestPicks(picks, champion, ffPairs) {
+function ingestPicks(picks, champion, ffPairs, quadrantOrder) {
   PICKS = picks || [];
   BRACKET = {};
   TEAM_STATS = {};
   if (ffPairs && ffPairs.length === 2) FF_PAIRS = ffPairs;
+  // quadrantOrder = [TL, TR, BR, BL] = [#1, #2, #3, #4] overall seed regions
+  // matches buildBracket() slot order: QUADRANT[0]=TL, [1]=TR, [2]=BR, [3]=BL
+  if (quadrantOrder && quadrantOrder.length === 4) QUADRANT = quadrantOrder;
 
   // Build BRACKET from R64 picks
   for (const p of PICKS) {
@@ -704,12 +707,6 @@ function ingestPicks(picks, champion, ffPairs) {
     }
   }
 
-  // Infer quadrant order from R64 regions in order
-  const seen = [];
-  for (const p of PICKS) {
-    if (p.round === 64 && !seen.includes(p.region)) seen.push(p.region);
-  }
-  if (seen.length === 4) QUADRANT = seen;
 }
 
 function applyPicksFromServer() {
@@ -759,6 +756,24 @@ function renderOdds(champProbs, numSims) {
 // ---------------------------------------------------------------------------
 function seedWinProb(sA, sB) { return 1 / (1 + Math.exp(-.145 * (sB - sA))); }
 
+// Returns the MODEL's win probability for teamName based on pick p.
+// Uses win_prob_a/b when present (added in current engine version).
+// Falls back to seed comparison so the display is never wrong due to
+// a stale cache or a chaos-picked upset.
+function _probForTeam(p, teamName) {
+  if (!p) return 0.5;
+  if (p.win_prob_a != null && p.win_prob_b != null) {
+    return p.team_a === teamName ? p.win_prob_a : p.win_prob_b;
+  }
+  // Legacy fallback: p.win_prob = max(win_prob_a, win_prob_b).
+  // Determine statistical favorite via seed (lower seed = better).
+  const favIsA = (p.seed_a != null && p.seed_b != null)
+    ? p.seed_a <= p.seed_b
+    : p.team_a === p.pick;
+  const isTeamFav = (p.team_a === teamName) ? favIsA : !favIsA;
+  return isTeamFav ? p.win_prob : 1 - p.win_prob;
+}
+
 function getNextGameId(gameId) {
   const ffParts = gameId.match(/^FF-(\d+)-(\d+)$/);
   if (ffParts) {
@@ -795,7 +810,7 @@ function recomputeBracket() {
       bracketState[gid] = {
         teamA: tA.team, seedA: tA.seed,
         teamB: tB.team, seedB: tB.seed,
-        probA: p ? (p.team_a === tA.team ? p.win_prob_a : p.win_prob_b) : 0.5,
+        probA: _probForTeam(p, tA.team),
         margin: p?.projected_spread || 0,
         pick: lockedPicks[gid] || simPicks[gid] || null,
         isLocked: !!lockedPicks[gid],
@@ -826,7 +841,7 @@ function recomputeBracket() {
         const seedB = teamB ? (stB?.pick === stB?.teamA ? stB?.seedA : stB?.seedB) : null;
         const p = PICKS.find(pp => pp.region === region && pp.round === roundOf &&
           (pp.team_a === teamA || pp.team_b === teamA));
-        const probA = p && teamA ? (p.team_a === teamA ? p.win_prob_a : p.win_prob_b)
+        const probA = p && teamA ? _probForTeam(p, teamA)
           : (seedA && seedB ? seedWinProb(seedA, seedB) : 0.5);
         bracketState[gid] = {
           teamA, seedA, teamB, seedB, probA,
@@ -848,7 +863,7 @@ function recomputeBracket() {
           const seedB = teamB ? (stB?.pick === stB?.teamA ? stB?.seedA : stB?.seedB) : null;
           const p = PICKS.find(pp => pp.round === 4 &&
             (pp.team_a === teamA || pp.team_b === teamA));
-          const probA = p && teamA ? (p.team_a === teamA ? p.win_prob_a : p.win_prob_b)
+          const probA = p && teamA ? _probForTeam(p, teamA)
             : (seedA && seedB ? seedWinProb(seedA, seedB) : 0.5);
           bracketState[gid] = {
             teamA, seedA, teamB, seedB, probA,
@@ -864,7 +879,7 @@ function recomputeBracket() {
         const seedB = teamB ? (stB?.pick === stB?.teamA ? stB?.seedA : stB?.seedB) : null;
         const p = PICKS.find(pp => pp.round === 2 &&
           (pp.team_a === teamA || pp.team_b === teamA));
-        const probA = p && teamA ? (p.team_a === teamA ? p.win_prob_a : p.win_prob_b)
+        const probA = p && teamA ? _probForTeam(p, teamA)
           : (seedA && seedB ? seedWinProb(seedA, seedB) : 0.5);
         bracketState['FF-2-0'] = {
           teamA, seedA, teamB, seedB, probA,
