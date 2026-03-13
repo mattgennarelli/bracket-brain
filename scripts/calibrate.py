@@ -220,6 +220,7 @@ def score_model(pairs, config):
 PARAM_SPEC = [
     # seed_weight removed: efficiency model already captures seed info;
     # 0.0 ties or beats 0.18 on 2023-2025 folds (Brier diff < 0.002)
+    ("seed_weight", 0.0, 8.0),
     ("base_scoring_stdev", 8.0, 18.0),
     ("sos_max_bonus", 0.0, 8.0),
     ("possession_edge_max_bonus", 0.0, 8.0),
@@ -247,6 +248,8 @@ PARAM_SPEC = [
     # Per-round stdev inflation (Phase 2)
     ("round_stdev_inflation_e8", 1.0, 1.25),
     ("round_stdev_inflation_ff", 1.0, 1.30),
+    # Late-round dampening: pull win-probs toward 0.5 in Sweet 16+ (reduces overconfidence)
+    ("late_round_dampening", 0.0, 0.35),
 ]
 
 

@@ -282,6 +282,19 @@ def get_bets_history():
         return json.load(f)
 
 
+@app.get("/benchmark")
+def get_benchmark():
+    """Return model comparison (seed-only vs efficiency vs full) for Picks tab."""
+    path = os.path.join(DATA_DIR, "benchmark_results.json")
+    if not os.path.isfile(path):
+        return {"available": False, "message": "Run: python scripts/benchmark.py --bracket-quality"}
+
+    with open(path) as f:
+        data = json.load(f)
+    data["available"] = True
+    return data
+
+
 @app.get("/bracket/{year}/monte-carlo")
 def get_monte_carlo(
     year: int,

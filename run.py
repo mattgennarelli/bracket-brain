@@ -260,7 +260,7 @@ body {{ font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sys
 .region-bracket.flipped .round:not(.round-last) .game-pair::before {{
   right:auto; left:-14px; transform:translateX(-14px); }}
 
-.game {{ margin:1px 0; position:relative; }}
+.game {{ margin:1px 0; position:relative; cursor:pointer; }}
 .team-slot {{ display:flex; align-items:center; gap:4px; padding:3px 6px; position:relative;
   background:var(--surface); border:1px solid var(--border); cursor:pointer;
   transition:all .12s; font-size:.72rem; min-height:22px; overflow:hidden; }}
@@ -296,10 +296,10 @@ body {{ font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sys
 .ff-label {{ font-size:.68rem; font-weight:700; text-transform:uppercase; letter-spacing:.06em;
   color:var(--primary); text-align:center; margin-bottom:2px; }}
 
-.info-btn {{ position:absolute; top:1px; right:1px; width:15px; height:15px; border-radius:50%;
-  background:var(--surface2); border:1px solid var(--border); color:var(--muted); font-size:.52rem;
-  cursor:pointer; display:flex; align-items:center; justify-content:center; z-index:5;
-  opacity:.4; transition:opacity .15s; line-height:1; }}
+.info-btn {{ position:absolute; top:1px; right:1px; width:18px; height:18px; border-radius:50%;
+  background:var(--surface2); border:1px solid var(--border); color:var(--muted); font-size:.6rem;
+  cursor:pointer; display:flex; align-items:center; justify-content:center; z-index:10;
+  opacity:.75; transition:opacity .15s; line-height:1; pointer-events:auto; }}
 .info-btn:hover {{ opacity:1; border-color:var(--primary); color:var(--primary); }}
 .region-bracket.flipped .info-btn {{ right:auto; left:1px; }}
 
@@ -753,7 +753,7 @@ function renderBracket() {{
           slot.classList.remove('empty');
           slot.classList.toggle('picked', st.pick === t.name);
           slot.classList.toggle('locked', st.isLocked && st.pick === t.name);
-          slot.onclick = function(e) {{ e.stopPropagation(); togglePick(gid, t.name); }};
+          slot.onclick = null;
           const isUpset = st.pick === t.name && hasUpsetPick;
           slot.classList.toggle('upset-pick', isUpset);
         }} else {{
@@ -785,6 +785,17 @@ function renderBracket() {{
   document.getElementById('champ-name').textContent = cn;
   const b = document.getElementById('champ-banner-name');
   if (b) b.textContent = cn;
+}}
+
+function handleGameClick(e, gameId) {{
+  const slot = e.target.closest('.team-slot');
+  if (slot && !slot.classList.contains('empty') && slot.dataset.team) {{
+    e.stopPropagation();
+    togglePick(gameId, slot.dataset.team);
+  }} else {{
+    e.stopPropagation();
+    showAnalysis(gameId);
+  }}
 }}
 
 function togglePick(gameId, teamName) {{
@@ -872,7 +883,7 @@ function buildRegionHTML(region, flipped) {{
     for (let gi = 0; gi < numGames; gi++) {{
       if (gi % 2 === 0) html += '<div class="game-pair">';
       const gid = `${{region}}-${{roundOf}}-${{gi}}`;
-      html += `<div class="game" data-game-id="${{gid}}">`;
+      html += `<div class="game" data-game-id="${{gid}}" onclick="handleGameClick(event,'${{gid}}')">`;
       if (ri === 0) {{
         const tA = teams[gi*2], tB = teams[gi*2+1];
         html += `<div class="team-slot" data-team="${{tA?.team||''}}" data-seed="${{tA?.seed||''}}"><span class="sd">${{tA?.seed||''}}</span><span class="tm">${{tA?.team||'\\u2014'}}</span><span class="upset-badge" style="display:none"></span></div>`;
@@ -894,17 +905,17 @@ function buildRegionHTML(region, flipped) {{
 function buildFinalFourHTML() {{
   let html = '<div class="ff-center"><div class="ff-label">Final Four</div>';
   ['FF-4-0','FF-4-1'].forEach(gid => {{
-    html += `<div class="game" data-game-id="${{gid}}">`;
+    html += `<div class="game" data-game-id="${{gid}}" onclick="handleGameClick(event,'${{gid}}')">`;
     html += '<div class="team-slot empty" data-team="" data-seed=""><span class="sd"></span><span class="tm">\\u2014</span><span class="upset-badge" style="display:none"></span></div>';
     html += '<div class="team-slot empty" data-team="" data-seed=""><span class="sd"></span><span class="tm">\\u2014</span><span class="upset-badge" style="display:none"></span></div>';
-    html += `<div class="info-btn" style="display:none" onclick="event.stopPropagation();showAnalysis('${{gid}}')">i</div>`;
+    html += `<div class="info-btn" style="display:none" title="Matchup details">i</div>`;
     html += '</div>';
   }});
   html += '<div class="ff-label">Championship</div>';
-  html += '<div class="game" data-game-id="FF-2-0">';
+  html += '<div class="game" data-game-id="FF-2-0" onclick="handleGameClick(event,\'FF-2-0\')">';
   html += '<div class="team-slot empty" data-team="" data-seed=""><span class="sd"></span><span class="tm">\\u2014</span><span class="upset-badge" style="display:none"></span></div>';
   html += '<div class="team-slot empty" data-team="" data-seed=""><span class="sd"></span><span class="tm">\\u2014</span><span class="upset-badge" style="display:none"></span></div>';
-  html += `<div class="info-btn" style="display:none" onclick="event.stopPropagation();showAnalysis('FF-2-0')">i</div>`;
+  html += `<div class="info-btn" style="display:none" title="Matchup details">i</div>`;
   html += '</div>';
   html += '<div class="champ-banner"><div class="trophy">&#127942;</div><div class="champ-team" id="champ-banner-name">\\u2014</div></div>';
   html += '</div>';

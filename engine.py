@@ -87,6 +87,7 @@ class ModelConfig:
     round_stdev_inflation_s16: float = 1.06
     round_stdev_inflation_e8: float = 1.10
     round_stdev_inflation_ff: float = 1.12
+    late_round_dampening: float = 0.0  # Shift win-probs toward 0.5 in Sweet 16+ (0=none, 0.3=30% pull)
 
 def _load_calibrated_config():
     """Load calibrated parameters from data/calibrated_config.json if it exists."""
@@ -336,6 +337,14 @@ def predict_game(team_a, team_b, game_site=None, config=DEFAULT_CONFIG, round_na
     seed_b = team_b.get("seed", 8)
     seed_prob = _seed_win_prob(seed_a, seed_b)
     final_prob = _blend_probs(eff_prob, seed_prob, config.seed_weight)
+
+    # Late-round dampening: shift toward 0.5 (models overconfident in Sweet 16+)
+    late_rounds = ("Sweet 16", "Elite 8", "Final Four", "Championship")
+    if round_name in late_rounds:
+        damp = getattr(config, "late_round_dampening", 0.0)
+        if damp > 0:
+            final_prob = 0.5 + (final_prob - 0.5) * (1.0 - damp)
+            final_prob = max(0.001, min(0.999, final_prob))
 
     # Detect if both teams are using default/fallback stats
     a_default = (team_a.get("adj_o") == 85 and team_a.get("adj_d") == 112)

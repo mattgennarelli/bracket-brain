@@ -95,7 +95,7 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sa
   border-radius:3px 0 0 3px; }
 .region-bracket.flipped .round:not(.round-last) .game-pair::before {
   right:auto; left:-14px; transform:translateX(-14px); }
-.game { margin:1px 0; position:relative; }
+.game { margin:1px 0; position:relative; cursor:pointer; }
 .team-slot { display:flex; align-items:center; gap:4px; padding:3px 6px;
   background:var(--surface); border:1px solid var(--border); cursor:pointer;
   transition:all .12s; font-size:.72rem; min-height:22px; overflow:hidden; }
@@ -123,10 +123,10 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sa
 .ff-center .champ-banner .champ-team { font-size:1rem; font-weight:800; color:var(--gold); }
 .ff-label { font-size:.68rem; font-weight:700; text-transform:uppercase; letter-spacing:.06em;
   color:var(--primary); text-align:center; margin-bottom:2px; }
-.info-btn { position:absolute; top:1px; right:1px; width:15px; height:15px; border-radius:50%;
-  background:var(--surface2); border:1px solid var(--border); color:var(--muted); font-size:.52rem;
-  cursor:pointer; display:flex; align-items:center; justify-content:center; z-index:5;
-  opacity:.65; transition:opacity .15s; line-height:1; }
+.info-btn { position:absolute; top:1px; right:1px; width:18px; height:18px; border-radius:50%;
+  background:var(--surface2); border:1px solid var(--border); color:var(--muted); font-size:.6rem;
+  cursor:pointer; display:flex; align-items:center; justify-content:center; z-index:10;
+  opacity:.75; transition:opacity .15s; line-height:1; pointer-events:auto; }
 .info-btn:hover { opacity:1; border-color:var(--primary); color:var(--primary); }
 .region-bracket.flipped .info-btn { right:auto; left:1px; }
 .analysis-overlay { display:none; position:fixed; inset:0; background:rgba(0,0,0,.45); z-index:199; backdrop-filter:blur(2px); }
@@ -517,6 +517,11 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sa
       <div style="margin-top:20px" id="picks-history-section" style="display:none">
         <h3 style="font-size:.9rem;font-weight:700;margin-bottom:10px">Pick History</h3>
         <div id="picks-history-body"></div>
+      </div>
+      <div style="margin-top:24px;padding-top:20px;border-top:1px solid var(--border)" id="benchmark-section">
+        <h3 style="font-size:.9rem;font-weight:700;margin-bottom:10px">Model Comparison</h3>
+        <p style="font-size:.75rem;color:var(--muted);margin-bottom:10px">Walk-forward CV on 2023–2025. Lower Brier = better.</p>
+        <div id="benchmark-content"></div>
       </div>
     </div>
   </div>
@@ -919,7 +924,7 @@ function renderBracket() {
           slot.classList.remove('empty');
           slot.classList.toggle('picked', st.pick === t.name);
           slot.classList.toggle('locked', st.isLocked && st.pick === t.name);
-          slot.onclick = (e) => { e.stopPropagation(); togglePick(gid, t.name); };
+          slot.onclick = null;
           const isUpset = st.pick === t.name && st.probA !== null &&
             ((idx === 0 && st.probA < .5) || (idx === 1 && st.probA >= .5));
           const seedDiff = Math.abs((st.seedA || 0) - (st.seedB || 0));
@@ -963,6 +968,17 @@ function renderBracket() {
 // ---------------------------------------------------------------------------
 // User interaction
 // ---------------------------------------------------------------------------
+function handleGameClick(e, gameId) {
+  const slot = e.target.closest('.team-slot');
+  if (slot && !slot.classList.contains('empty') && slot.dataset.team) {
+    e.stopPropagation();
+    togglePick(gameId, slot.dataset.team);
+  } else {
+    e.stopPropagation();
+    showAnalysis(gameId);
+  }
+}
+
 function togglePick(gameId, teamName) {
   if (!teamName) return;
   const currentPick = lockedPicks[gameId] || simPicks[gameId] || null;
@@ -1042,7 +1058,7 @@ function buildRegionHTML(region, flipped) {
     for (let gi = 0; gi < numGames; gi++) {
       if (gi % 2 === 0) html += '<div class="game-pair">';
       const gid = `${region}-${roundOf}-${gi}`;
-      html += `<div class="game" data-game-id="${gid}">`;
+      html += `<div class="game" data-game-id="${gid}" onclick="handleGameClick(event,'${gid}')">`;
       if (ri === 0) {
         const tA = teams[gi * 2], tB = teams[gi * 2 + 1];
         html += `<div class="team-slot" data-team="${tA?.team || ''}" data-seed="${tA?.seed || ''}"><span class="sd">${tA?.seed || ''}</span><span class="tm">${tA?.team || '\u2014'}</span></div>`;
@@ -1051,7 +1067,7 @@ function buildRegionHTML(region, flipped) {
         html += '<div class="team-slot empty" data-team="" data-seed=""><span class="sd"></span><span class="tm">\u2014</span></div>';
         html += '<div class="team-slot empty" data-team="" data-seed=""><span class="sd"></span><span class="tm">\u2014</span></div>';
       }
-      html += `<div class="info-btn" style="display:${ri === 0 ? 'flex' : 'none'}" onclick="event.stopPropagation();showAnalysis('${gid}')">i</div>`;
+      html += `<div class="info-btn" style="display:${ri === 0 ? 'flex' : 'none'}" title="Matchup details">i</div>`;
       html += '</div>';
       if (gi % 2 === 1 || gi === numGames - 1) html += '</div>';
     }
@@ -1064,17 +1080,17 @@ function buildRegionHTML(region, flipped) {
 function buildFinalFourHTML() {
   let html = '<div class="ff-center"><div class="ff-label">Final Four</div>';
   ['FF-4-0', 'FF-4-1'].forEach(gid => {
-    html += `<div class="game" data-game-id="${gid}">`;
+    html += `<div class="game" data-game-id="${gid}" onclick="handleGameClick(event,'${gid}')">`;
     html += '<div class="team-slot empty" data-team="" data-seed=""><span class="sd"></span><span class="tm">\u2014</span></div>';
     html += '<div class="team-slot empty" data-team="" data-seed=""><span class="sd"></span><span class="tm">\u2014</span></div>';
-    html += `<div class="info-btn" style="display:none" onclick="event.stopPropagation();showAnalysis('${gid}')">i</div>`;
+    html += `<div class="info-btn" style="display:none" title="Matchup details">i</div>`;
     html += '</div>';
   });
   html += '<div class="ff-label">Championship</div>';
-  html += '<div class="game" data-game-id="FF-2-0">';
+  html += '<div class="game" data-game-id="FF-2-0" onclick="handleGameClick(event,\'FF-2-0\')">';
   html += '<div class="team-slot empty" data-team="" data-seed=""><span class="sd"></span><span class="tm">\u2014</span></div>';
   html += '<div class="team-slot empty" data-team="" data-seed=""><span class="sd"></span><span class="tm">\u2014</span></div>';
-  html += '<div class="info-btn" style="display:none" onclick="event.stopPropagation();showAnalysis(\'FF-2-0\')">i</div>';
+  html += '<div class="info-btn" style="display:none" title="Matchup details">i</div>';
   html += '</div>';
   html += '<div class="champ-banner"><div class="trophy">&#127942;</div><div class="champ-team" id="champ-banner-name">\u2014</div></div>';
   html += '</div>';
@@ -1435,15 +1451,60 @@ function switchTab(name) {
 async function loadPicks() {
   document.getElementById('picks-today-body').innerHTML = '<div class="picks-empty">Loading...</div>';
   try {
-    const [todayData, historyData] = await Promise.all([
+    const [todayData, historyData, benchmarkData] = await Promise.all([
       apiFetch('/bets/today').catch(() => ({ picks: [], available: false })),
       apiFetch('/bets/history').catch(() => ({ picks: [], stats: {} })),
+      apiFetch('/benchmark').catch(() => ({ available: false })),
     ]);
     renderPicks(todayData, historyData);
+    renderBenchmark(benchmarkData);
   } catch (e) {
     document.getElementById('picks-today-body').innerHTML =
       '<div class="picks-empty">Picks unavailable</div>';
   }
+}
+
+function renderBenchmark(data) {
+  const el = document.getElementById('benchmark-content');
+  if (!el) return;
+  if (!data || !data.available) {
+    el.innerHTML = '<div class="picks-empty" style="font-size:.8rem">Run <code>python scripts/benchmark.py --bracket-quality</code> to generate.</div>';
+    return;
+  }
+  const cv = data.cv_summary || {};
+  const bq = data.bracket_quality || {};
+  const models = ['seed-only', 'efficiency', 'full model'];
+  let html = '<table style="width:100%;font-size:.78rem;border-collapse:collapse">';
+  html += '<thead><tr><th style="text-align:left;padding:6px 8px;border-bottom:1px solid var(--border)">Model</th>';
+  html += '<th style="text-align:right;padding:6px 8px;border-bottom:1px solid var(--border)">CV Brier</th>';
+  html += '<th style="text-align:right;padding:6px 8px;border-bottom:1px solid var(--border)">Accuracy</th>';
+  if (Object.keys(bq).length) {
+    html += '<th style="text-align:right;padding:6px 8px;border-bottom:1px solid var(--border)">Champ Rank*</th>';
+    html += '<th style="text-align:right;padding:6px 8px;border-bottom:1px solid var(--border)">FF Hit*</th>';
+  }
+  html += '</tr></thead><tbody>';
+  models.forEach(m => {
+    const s = cv[m];
+    if (!s) return;
+    const best = models.reduce((lo, x) => cv[x] && cv[x].brier < (cv[lo]?.brier ?? 999) ? x : lo, models[0]);
+    html += `<tr><td style="padding:6px 8px;border-bottom:1px solid var(--border)">${m}</td>`;
+    html += `<td style="text-align:right;padding:6px 8px;border-bottom:1px solid var(--border)${m===best?';color:var(--green);font-weight:600':''}">${(s.brier||0).toFixed(4)}</td>`;
+    html += `<td style="text-align:right;padding:6px 8px;border-bottom:1px solid var(--border)">${((s.accuracy||0)*100).toFixed(1)}%</td>`;
+    if (Object.keys(bq).length) {
+      const ranks = Object.values(bq).map(y => y?.by_model?.[m]?.champion_rank).filter(x=>x!=null);
+      const hits = Object.values(bq).map(y => y?.by_model?.[m]?.ff_hit_rate).filter(x=>x!=null);
+      const avgRank = ranks.length ? (ranks.reduce((a,b)=>a+b,0)/ranks.length).toFixed(1) : '—';
+      const avgHit = hits.length ? ((hits.reduce((a,b)=>a+b,0)/hits.length)*100).toFixed(0)+'%' : '—';
+      html += `<td style="text-align:right;padding:6px 8px;border-bottom:1px solid var(--border)">${avgRank}</td>`;
+      html += `<td style="text-align:right;padding:6px 8px;border-bottom:1px solid var(--border)">${avgHit}</td>`;
+    }
+    html += '</tr>';
+  });
+  html += '</tbody></table>';
+  if (Object.keys(bq).length) {
+    html += '<p style="font-size:.68rem;color:var(--muted);margin-top:8px">* Avg champion rank (1=best) and FF hit rate in top-8 across 2023–2025</p>';
+  }
+  el.innerHTML = html;
 }
 
 let _whyOpenId = null;
