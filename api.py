@@ -405,19 +405,30 @@ def get_monte_carlo(
 def get_bets_card(year: int = Query(default=2026)):
     """Return today's full card — every NCAAB game with the model's best lean per market.
 
-    No edge threshold applied; every game is included.  Stars indicate confidence.
-    Cached 15 min (Odds API quota).
+    Reads from saved daily file (data/card_YYYY-MM-DD.json) written by save_card.py /
+    GitHub Actions.  Falls back to live Odds API fetch only if no saved file exists.
     """
+    today = datetime.now().strftime("%Y-%m-%d")
+
+    # Serve from saved daily snapshot (committed by GH Actions each morning)
+    daily_path = os.path.join(DATA_DIR, f"card_{today}.json")
+    if os.path.isfile(daily_path):
+        with open(daily_path) as f:
+            data = json.load(f)
+        games = data.get("games", [])
+        return {"date": today, "games": games, "available": bool(games)}
+
+    # Fall back to live Odds API if no saved file (e.g. before Actions runs)
     api_key = os.environ.get("ODDS_API_KEY", "")
     if not api_key:
-        return {"games": [], "available": False, "message": "No ODDS_API_KEY configured"}
+        return {"games": [], "available": False,
+                "message": "No card data yet. Run save_card.py each morning."}
 
-    cache_key = f"card_{year}"
+    cache_key = f"card_{year}_live"
     entry = _cache.get(cache_key)
     if entry and (time.time() - entry.get("cached_at", 0)) < CARD_CACHE_TTL:
         return entry.get("result", {})
 
-    today = datetime.now().strftime("%Y-%m-%d")
     games = get_full_card_json(api_key, year=year)
     result = {"date": today, "games": games, "available": bool(games)}
     _cache[cache_key] = {"result": result, "cached_at": time.time()}

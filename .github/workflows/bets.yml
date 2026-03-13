@@ -79,11 +79,12 @@ jobs:
           git config user.name  "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
           git add data/bets_ledger.json data/card_ledger.json
+          # Include daily card snapshot if written
+          CARD_DAILY="data/card_$(date -u +%Y-%m-%d).json"
+          if [ -f "$CARD_DAILY" ]; then git add "$CARD_DAILY"; fi
           # Include settle log if written (UTC date)
           SETTLE_LOG="data/settle_log_$(date -u +%Y-%m-%d).json"
-          if [ -f "$SETTLE_LOG" ]; then
-            git add "$SETTLE_LOG"
-          fi
+          if [ -f "$SETTLE_LOG" ]; then git add "$SETTLE_LOG"; fi
           if git diff --cached --quiet; then
             echo "No changes to ledger."
           else
