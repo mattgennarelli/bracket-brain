@@ -19,18 +19,24 @@
       "seed_b": 16,
       "pick": "North Carolina",
       "pick_seed": 1,
-      "win_prob": 0.9977,
-      "projected_spread": 25.9,
-      "projected_score": "89-63",
+      "win_prob": 0.9883,
+      "projected_spread": 26.5,
+      "spread_fav": "North Carolina -26.5",
+      "spread_dog": "Texas Southern +26.5",
+      "projected_score": "85-60",
       "confidence": "lock",
-      "upset_rating": 0.192,
+      "upset_rating": 0.196,
       "variability": "medium",
       "key_factors": [
         "North Carolina: 26-pt efficiency edge",
         "North Carolina: program pedigree advantage"
       ],
       "insight": "North Carolina dominates on efficiency (26-pt edge). 1-seeds are 58-2 (97%) vs 16-seeds historically.",
-      "historical": "58-2"
+      "historical": "58-2",
+      "head_to_head": {
+        "past_tournament": [],
+        "this_season": []
+      }
     },
     {
       "game_num": 2,
@@ -43,17 +49,21 @@
       "seed_b": 9,
       "pick": "Arkansas",
       "pick_seed": 8,
-      "win_prob": 0.5614,
-      "projected_spread": 1.4,
-      "projected_score": "76-74",
+      "win_prob": 0.5585,
+      "projected_spread": 1.7,
+      "spread_fav": "Arkansas -1.7",
+      "spread_dog": "Seton Hall +1.7",
+      "projected_score": "72-71",
       "confidence": "tossup",
-      "upset_rating": 0.408,
+      "upset_rating": 0.409,
       "variability": "high",
-      "key_factors": [
-        "Arkansas: program pedigree advantage"
-      ],
+      "key_factors": [],
       "insight": "Razor-thin margin \u2014 essentially a coin flip. 8-seeds are 31-29 (52%) vs 9-seeds historically.",
-      "historical": "31-29"
+      "historical": "31-29",
+      "head_to_head": {
+        "past_tournament": [],
+        "this_season": []
+      }
     },
     {
       "game_num": 3,
@@ -66,15 +76,21 @@
       "seed_b": 12,
       "pick": "Minnesota",
       "pick_seed": 5,
-      "win_prob": 0.5685,
-      "projected_spread": 1.5,
-      "projected_score": "72-71",
+      "win_prob": 0.5324,
+      "projected_spread": 1.0,
+      "spread_fav": "Minnesota -1.0",
+      "spread_dog": "Middle Tennessee +1.0",
+      "projected_score": "69-68",
       "confidence": "tossup",
-      "upset_rating": 0.415,
-      "variability": "high",
+      "upset_rating": 0.43,
+      "variability": "extreme",
       "key_factors": [],
       "insight": "Razor-thin margin \u2014 essentially a coin flip. 5-seeds are 37-23 (62%) vs 12-seeds historically.",
-      "historical": "37-23"
+      "historical": "37-23",
+      "head_to_head": {
+        "past_tournament": [],
+        "this_season": []
+      }
     },
     {
       "game_num": 4,
@@ -87,17 +103,23 @@
       "seed_b": 13,
       "pick": "Butler",
       "pick_seed": 4,
-      "win_prob": 0.8981,
-      "projected_spread": 11.6,
-      "projected_score": "82-70",
+      "win_prob": 0.8487,
+      "projected_spread": 12.0,
+      "spread_fav": "Butler -12.0",
+      "spread_dog": "Winthrop +12.0",
+      "projected_score": "79-67",
       "confidence": "strong",
-      "upset_rating": 0.242,
-      "variability": "medium",
+      "upset_rating": 0.262,
+      "variability": "high",
       "key_factors": [
         "Butler: 12-pt efficiency edge"
       ],
-      "insight": "Butler has a solid 12-pt efficiency advantage. 4-seeds are 48-12 (80%) vs 13-seeds historically.",
-      "historical": "48-12"
+      "insight": "Butler dominates on efficiency (12-pt edge). 4-seeds are 48-12 (80%) vs 13-seeds historically.",
+      "historical": "48-12",
+      "head_to_head": {
+        "past_tournament": [],
+        "this_season": []
+      }
     },
     {
       "game_num": 5,
@@ -110,18 +132,23 @@
       "seed_b": 11,
       "pick": "Cincinnati",
       "pick_seed": 6,
-      "win_prob": 0.6813,
-      "projected_spread": 4.3,
-      "projected_score": "75-70",
+      "win_prob": 0.6516,
+      "projected_spread": 4.6,
+      "spread_fav": "Cincinnati -4.6",
+      "spread_dog": "Kansas State +4.6",
+      "projected_score": "72-68",
       "confidence": "lean",
-      "upset_rating": 0.397,
+      "upset_rating": 0.409,
       "variability": "high",
       "key_factors": [
-        "Cincinnati: 4-pt efficiency edge",
-        "Cincinnati: program pedigree advantage"
+        "Cincinnati: 5-pt efficiency edge"
       ],
-      "insight": "Slight edge to Cincinnati (4.3 pts). 6-seeds are 29-31 (48%) vs 11-seeds historically.",
-      "historical": "29-31"
+      "insight": "Slight edge to Cincinnati (4.6 pts). 6-seeds are 29-31 (48%) vs 11-seeds historically.",
+      "historical": "29-31",
+      "head_to_head": {
+        "past_tournament": [],
+        "this_season": []
+      }
     },
     {
       "game_num": 6,
@@ -134,18 +161,24 @@
       "seed_b": 14,
       "pick": "UCLA",
       "pick_seed": 3,
-      "win_prob": 0.9642,
-      "projected_spread": 16.4,
-      "projected_score": "87-71",
+      "win_prob": 0.9266,
+      "projected_spread": 17.0,
+      "spread_fav": "UCLA -17.0",
+      "spread_dog": "Kent State +17.0",
+      "projected_score": "84-68",
       "confidence": "lock",
-      "upset_rating": 0.209,
+      "upset_rating": 0.224,
       "variability": "medium",
       "key_factors": [
-        "UCLA: 16-pt efficiency edge",
+        "UCLA: 17-pt efficiency edge",
         "UCLA: program pedigree advantage"
       ],
-      "insight": "UCLA dominates on efficiency (16-pt edge). 3-seeds are 52-8 (87%) vs 14-seeds historically.",
-      "historical": "52-8"
+      "insight": "UCLA dominates on efficiency (17-pt edge). 3-seeds are 52-8 (87%) vs 14-seeds historically.",
+      "historical": "52-8",
+      "head_to_head": {
+        "past_tournament": [],
+        "this_season": []
+      }
     },
     {
       "game_num": 7,
@@ -158,17 +191,23 @@
       "seed_b": 10,
       "pick": "Wichita State",
       "pick_seed": 10,
-      "win_prob": 0.796,
-      "projected_spread": 7.6,
-      "projected_score": "70-78",
+      "win_prob": 0.761,
+      "projected_spread": 8.3,
+      "spread_fav": "Wichita State -8.3",
+      "spread_dog": "Dayton +8.3",
+      "projected_score": "67-75",
       "confidence": "strong",
-      "upset_rating": 0.298,
+      "upset_rating": 0.312,
       "variability": "medium",
       "key_factors": [
         "Wichita State: 8-pt efficiency edge"
       ],
       "insight": "Wichita State has a solid 8-pt efficiency advantage. 7-seeds are 37-23 (62%) vs 10-seeds historically.",
-      "historical": "37-23"
+      "historical": "37-23",
+      "head_to_head": {
+        "past_tournament": [],
+        "this_season": []
+      }
     },
     {
       "game_num": 8,
@@ -181,18 +220,24 @@
       "seed_b": 15,
       "pick": "Kentucky",
       "pick_seed": 2,
-      "win_prob": 0.983,
-      "projected_spread": 19.3,
-      "projected_score": "85-66",
+      "win_prob": 0.9535,
+      "projected_spread": 19.6,
+      "spread_fav": "Kentucky -19.6",
+      "spread_dog": "Northern Kentucky +19.6",
+      "projected_score": "82-63",
       "confidence": "lock",
-      "upset_rating": 0.209,
+      "upset_rating": 0.221,
       "variability": "medium",
       "key_factors": [
-        "Kentucky: 19-pt efficiency edge",
+        "Kentucky: 20-pt efficiency edge",
         "Kentucky: program pedigree advantage"
       ],
-      "insight": "Kentucky dominates on efficiency (19-pt edge). 2-seeds are 53-7 (88%) vs 15-seeds historically.",
-      "historical": "53-7"
+      "insight": "Kentucky dominates on efficiency (20-pt edge). 2-seeds are 53-7 (88%) vs 15-seeds historically.",
+      "historical": "53-7",
+      "head_to_head": {
+        "past_tournament": [],
+        "this_season": []
+      }
     },
     {
       "game_num": 9,
@@ -205,18 +250,40 @@
       "seed_b": 8,
       "pick": "North Carolina",
       "pick_seed": 1,
-      "win_prob": 0.8908,
-      "projected_spread": 11.2,
-      "projected_score": "83-72",
+      "win_prob": 0.8333,
+      "projected_spread": 11.6,
+      "spread_fav": "North Carolina -11.6",
+      "spread_dog": "Arkansas +11.6",
+      "projected_score": "79-68",
       "confidence": "strong",
-      "upset_rating": 0.237,
+      "upset_rating": 0.26,
       "variability": "medium",
       "key_factors": [
-        "North Carolina: 11-pt efficiency edge",
-        "North Carolina: program pedigree advantage"
+        "North Carolina: 12-pt efficiency edge"
       ],
-      "insight": "North Carolina has a solid 11-pt efficiency advantage. 1-seeds are 25-7 (78%) vs 8-seeds historically.",
-      "historical": "25-7"
+      "insight": "North Carolina has a solid 12-pt efficiency advantage. 1-seeds are 25-7 (78%) vs 8-seeds historically.",
+      "historical": "25-7",
+      "head_to_head": {
+        "past_tournament": [
+          {
+            "year": 2015,
+            "round": 32,
+            "round_name": "Round of 32",
+            "region": "East",
+            "team_a": "Arkansas",
+            "team_b": "North Carolina",
+            "seed_a": 5,
+            "seed_b": 4,
+            "score_a": 78,
+            "score_b": 87,
+            "winner": "North Carolina",
+            "margin": 9,
+            "upset": false,
+            "game_type": "tournament"
+          }
+        ],
+        "this_season": []
+      }
     },
     {
       "game_num": 10,
@@ -229,15 +296,21 @@
       "seed_b": 4,
       "pick": "Butler",
       "pick_seed": 4,
-      "win_prob": 0.6026,
-      "projected_spread": 2.4,
-      "projected_score": "73-75",
-      "confidence": "lean",
-      "upset_rating": 0.353,
+      "win_prob": 0.5897,
+      "projected_spread": 2.7,
+      "spread_fav": "Butler -2.7",
+      "spread_dog": "Minnesota +2.7",
+      "projected_score": "69-71",
+      "confidence": "tossup",
+      "upset_rating": 0.358,
       "variability": "high",
       "key_factors": [],
-      "insight": "Slight edge to Butler (2.4 pts). 4-seeds are 20-11 (65%) vs 5-seeds historically.",
-      "historical": "20-11"
+      "insight": "Slight edge to Butler (2.7 pts). 4-seeds are 20-11 (65%) vs 5-seeds historically.",
+      "historical": "20-11",
+      "head_to_head": {
+        "past_tournament": [],
+        "this_season": []
+      }
     },
     {
       "game_num": 11,
@@ -250,21 +323,26 @@
       "seed_b": 3,
       "pick": "Cincinnati",
       "pick_seed": 6,
-      "win_prob": 0.5262,
-      "projected_spread": 0.6,
-      "projected_score": "78-78",
+      "win_prob": 0.5055,
+      "projected_spread": 0.2,
+      "spread_fav": "Cincinnati -0.2",
+      "spread_dog": "UCLA +0.2",
+      "projected_score": "74-74",
       "confidence": "tossup",
-      "upset_rating": 0.387,
+      "upset_rating": 0.395,
       "variability": "high",
-      "key_factors": [
-        "UCLA: program pedigree advantage"
-      ],
+      "key_factors": [],
       "insight": "Razor-thin margin \u2014 essentially a coin flip. 3-seeds are 17-8 (68%) vs 6-seeds historically.",
       "historical": "17-8",
+      "head_to_head": {
+        "past_tournament": [],
+        "this_season": []
+      },
       "upset_alert": {
-        "level": "strong",
-        "reason": "(3) seed favored by only -0.6 pts vs expected 3.6. Upset danger.",
-        "icon": "\ud83d\udd25"
+        "level": "mild",
+        "reason": "Margin (-0.2) 106% tighter than typical (3.6) for 3-6 seeds.",
+        "icon": "\u26a0\ufe0f",
+        "badge_on_underdog": true
       }
     },
     {
@@ -278,17 +356,40 @@
       "seed_b": 2,
       "pick": "Kentucky",
       "pick_seed": 2,
-      "win_prob": 0.6163,
-      "projected_spread": 2.6,
-      "projected_score": "73-76",
-      "confidence": "lean",
-      "upset_rating": 0.359,
-      "variability": "high",
+      "win_prob": 0.562,
+      "projected_spread": 1.9,
+      "spread_fav": "Kentucky -1.9",
+      "spread_dog": "Wichita State +1.9",
+      "projected_score": "70-71",
+      "confidence": "tossup",
+      "upset_rating": 0.381,
+      "variability": "extreme",
       "key_factors": [
         "Kentucky: program pedigree advantage"
       ],
-      "insight": "Slight edge to Kentucky (2.6 pts). 2-seeds are 16-5 (76%) vs 10-seeds historically.",
-      "historical": "16-5"
+      "insight": "Razor-thin margin \u2014 essentially a coin flip. 2-seeds are 16-5 (76%) vs 10-seeds historically.",
+      "historical": "16-5",
+      "head_to_head": {
+        "past_tournament": [
+          {
+            "year": 2014,
+            "round": 32,
+            "round_name": "Round of 32",
+            "region": "West",
+            "team_a": "Wichita State",
+            "team_b": "Kentucky",
+            "seed_a": 1,
+            "seed_b": 8,
+            "score_a": 76,
+            "score_b": 78,
+            "winner": "Kentucky",
+            "margin": 2,
+            "upset": true,
+            "game_type": "tournament"
+          }
+        ],
+        "this_season": []
+      }
     },
     {
       "game_num": 13,
@@ -301,18 +402,24 @@
       "seed_b": 4,
       "pick": "North Carolina",
       "pick_seed": 1,
-      "win_prob": 0.7986,
-      "projected_spread": 7.6,
-      "projected_score": "81-73",
-      "confidence": "strong",
-      "upset_rating": 0.264,
+      "win_prob": 0.7322,
+      "projected_spread": 7.7,
+      "spread_fav": "North Carolina -7.7",
+      "spread_dog": "Butler +7.7",
+      "projected_score": "76-68",
+      "confidence": "lean",
+      "upset_rating": 0.291,
       "variability": "medium",
       "key_factors": [
         "North Carolina: 8-pt efficiency edge",
         "North Carolina: program pedigree advantage"
       ],
       "insight": "North Carolina has a solid 8-pt efficiency advantage. 1-seeds are 21-8 (72%) vs 4-seeds historically.",
-      "historical": "21-8"
+      "historical": "21-8",
+      "head_to_head": {
+        "past_tournament": [],
+        "this_season": []
+      }
     },
     {
       "game_num": 14,
@@ -325,18 +432,38 @@
       "seed_b": 2,
       "pick": "Kentucky",
       "pick_seed": 2,
-      "win_prob": 0.6349,
-      "projected_spread": 3.1,
-      "projected_score": "72-75",
-      "confidence": "lean",
-      "upset_rating": 0.32,
+      "win_prob": 0.5875,
+      "projected_spread": 2.7,
+      "spread_fav": "Kentucky -2.7",
+      "spread_dog": "Cincinnati +2.7",
+      "projected_score": "68-70",
+      "confidence": "tossup",
+      "upset_rating": 0.339,
       "variability": "high",
-      "key_factors": [
-        "Kentucky: 3-pt efficiency edge",
-        "Kentucky: program pedigree advantage"
-      ],
-      "insight": "Slight edge to Kentucky (3.1 pts). 2-seeds are 7-2 (78%) vs 6-seeds historically.",
-      "historical": "7-2"
+      "key_factors": [],
+      "insight": "Slight edge to Kentucky (2.7 pts). 2-seeds are 7-2 (78%) vs 6-seeds historically.",
+      "historical": "7-2",
+      "head_to_head": {
+        "past_tournament": [
+          {
+            "year": 2015,
+            "round": 32,
+            "round_name": "Round of 32",
+            "region": "South",
+            "team_a": "Kentucky",
+            "team_b": "Cincinnati",
+            "seed_a": 1,
+            "seed_b": 8,
+            "score_a": 64,
+            "score_b": 51,
+            "winner": "Kentucky",
+            "margin": 13,
+            "upset": false,
+            "game_type": "tournament"
+          }
+        ],
+        "this_season": []
+      }
     },
     {
       "game_num": 15,
@@ -349,15 +476,38 @@
       "seed_b": 2,
       "pick": "North Carolina",
       "pick_seed": 1,
-      "win_prob": 0.5654,
-      "projected_spread": 1.5,
-      "projected_score": "76-74",
+      "win_prob": 0.5542,
+      "projected_spread": 1.8,
+      "spread_fav": "North Carolina -1.8",
+      "spread_dog": "Kentucky +1.8",
+      "projected_score": "70-68",
       "confidence": "tossup",
-      "upset_rating": 0.376,
+      "upset_rating": 0.38,
       "variability": "high",
       "key_factors": [],
       "insight": "Razor-thin margin \u2014 essentially a coin flip. 1-seeds are 13-8 (62%) vs 2-seeds historically.",
-      "historical": "13-8"
+      "historical": "13-8",
+      "head_to_head": {
+        "past_tournament": [
+          {
+            "year": 2011,
+            "round": 8,
+            "round_name": "Elite 8",
+            "region": "South",
+            "team_a": "Kentucky",
+            "team_b": "North Carolina",
+            "seed_a": 4,
+            "seed_b": 2,
+            "score_a": 76,
+            "score_b": 69,
+            "winner": "Kentucky",
+            "margin": 7,
+            "upset": true,
+            "game_type": "tournament"
+          }
+        ],
+        "this_season": []
+      }
     },
     {
       "game_num": 16,
@@ -370,18 +520,24 @@
       "seed_b": 16,
       "pick": "Villanova",
       "pick_seed": 1,
-      "win_prob": 0.9944,
-      "projected_spread": 23.1,
-      "projected_score": "86-62",
+      "win_prob": 0.984,
+      "projected_spread": 25.1,
+      "spread_fav": "Villanova -25.1",
+      "spread_dog": "Mount St. Mary's +25.1",
+      "projected_score": "83-59",
       "confidence": "lock",
-      "upset_rating": 0.193,
+      "upset_rating": 0.197,
       "variability": "medium",
       "key_factors": [
-        "Villanova: 23-pt efficiency edge",
+        "Villanova: 25-pt efficiency edge",
         "Villanova: program pedigree advantage"
       ],
-      "insight": "Villanova dominates on efficiency (23-pt edge). 1-seeds are 58-2 (97%) vs 16-seeds historically.",
-      "historical": "58-2"
+      "insight": "Villanova dominates on efficiency (25-pt edge). 1-seeds are 58-2 (97%) vs 16-seeds historically.",
+      "historical": "58-2",
+      "head_to_head": {
+        "past_tournament": [],
+        "this_season": []
+      }
     },
     {
       "game_num": 17,
@@ -394,18 +550,23 @@
       "seed_b": 9,
       "pick": "Wisconsin",
       "pick_seed": 8,
-      "win_prob": 0.7617,
-      "projected_spread": 6.5,
-      "projected_score": "81-74",
-      "confidence": "strong",
-      "upset_rating": 0.328,
+      "win_prob": 0.7215,
+      "projected_spread": 6.9,
+      "spread_fav": "Wisconsin -6.9",
+      "spread_dog": "Virginia Tech +6.9",
+      "projected_score": "78-71",
+      "confidence": "lean",
+      "upset_rating": 0.344,
       "variability": "medium",
       "key_factors": [
-        "Wisconsin: 6-pt efficiency edge",
-        "Wisconsin: program pedigree advantage"
+        "Wisconsin: 7-pt efficiency edge"
       ],
-      "insight": "Wisconsin has a solid 6-pt efficiency advantage. 8-seeds are 31-29 (52%) vs 9-seeds historically.",
-      "historical": "31-29"
+      "insight": "Wisconsin has a solid 7-pt efficiency advantage. 8-seeds are 31-29 (52%) vs 9-seeds historically.",
+      "historical": "31-29",
+      "head_to_head": {
+        "past_tournament": [],
+        "this_season": []
+      }
     },
     {
       "game_num": 18,
@@ -418,22 +579,28 @@
       "seed_b": 12,
       "pick": "Virginia",
       "pick_seed": 5,
-      "win_prob": 0.8815,
-      "projected_spread": 10.8,
-      "projected_score": "81-70",
+      "win_prob": 0.8165,
+      "projected_spread": 10.5,
+      "spread_fav": "Virginia -10.5",
+      "spread_dog": "UNC Wilmington +10.5",
+      "projected_score": "77-67",
       "confidence": "strong",
-      "upset_rating": 0.29,
+      "upset_rating": 0.316,
       "variability": "medium",
       "key_factors": [
-        "Virginia: 11-pt efficiency edge",
-        "Virginia: program pedigree advantage"
+        "Virginia: 10-pt efficiency edge"
       ],
-      "insight": "Virginia has a solid 11-pt efficiency advantage. 5-seeds are 37-23 (62%) vs 12-seeds historically.",
+      "insight": "Virginia has a solid 10-pt efficiency advantage. 5-seeds are 37-23 (62%) vs 12-seeds historically.",
       "historical": "37-23",
+      "head_to_head": {
+        "past_tournament": [],
+        "this_season": []
+      },
       "upset_alert": {
         "level": "blowout",
-        "reason": "Projected margin (10.8) far exceeds the 5-12 seed norm (2.3). Dominant.",
-        "icon": "\ud83d\udcaa"
+        "reason": "Projected margin (10.5) 347% above the 5-12 seed norm (2.3). Dominant.",
+        "icon": "\ud83d\udcaa",
+        "badge_on_underdog": false
       }
     },
     {
@@ -447,18 +614,31 @@
       "seed_b": 13,
       "pick": "Florida",
       "pick_seed": 4,
-      "win_prob": 0.9207,
-      "projected_spread": 12.9,
-      "projected_score": "78-65",
+      "win_prob": 0.9981,
+      "projected_spread": 36.2,
+      "spread_fav": "Florida -36.2",
+      "spread_dog": "East Tennessee State +36.2",
+      "projected_score": "80-46",
       "confidence": "lock",
-      "upset_rating": 0.233,
+      "upset_rating": 0.254,
       "variability": "medium",
       "key_factors": [
-        "Florida: 13-pt efficiency edge",
-        "Florida: program pedigree advantage"
+        "Florida: 36-pt efficiency edge",
+        "Florida: program pedigree advantage",
+        "High 3PT variance \u2014 upset risk"
       ],
-      "insight": "Florida dominates on efficiency (13-pt edge). 4-seeds are 48-12 (80%) vs 13-seeds historically.",
-      "historical": "48-12"
+      "insight": "Florida dominates on efficiency (36-pt edge). 4-seeds are 48-12 (80%) vs 13-seeds historically. 3PT-dependent offenses add variance.",
+      "historical": "48-12",
+      "head_to_head": {
+        "past_tournament": [],
+        "this_season": []
+      },
+      "upset_alert": {
+        "level": "blowout",
+        "reason": "Projected margin (36.2) 462% above the 4-13 seed norm (6.4). Dominant.",
+        "icon": "\ud83d\udcaa",
+        "badge_on_underdog": false
+      }
     },
     {
       "game_num": 20,
@@ -471,21 +651,28 @@
       "seed_b": 11,
       "pick": "SMU",
       "pick_seed": 6,
-      "win_prob": 0.8539,
-      "projected_spread": 9.6,
-      "projected_score": "83-73",
+      "win_prob": 0.8097,
+      "projected_spread": 10.2,
+      "spread_fav": "SMU -10.2",
+      "spread_dog": "USC +10.2",
+      "projected_score": "80-70",
       "confidence": "strong",
-      "upset_rating": 0.328,
+      "upset_rating": 0.345,
       "variability": "medium",
       "key_factors": [
         "SMU: 10-pt efficiency edge"
       ],
       "insight": "SMU has a solid 10-pt efficiency advantage. 6-seeds are 29-31 (48%) vs 11-seeds historically.",
       "historical": "29-31",
+      "head_to_head": {
+        "past_tournament": [],
+        "this_season": []
+      },
       "upset_alert": {
         "level": "blowout",
-        "reason": "Projected margin (9.6) far exceeds the 6-11 seed norm (-0.3). Dominant.",
-        "icon": "\ud83d\udcaa"
+        "reason": "Projected margin (10.2) 1053% above the 6-11 seed norm (-0.3). Dominant.",
+        "icon": "\ud83d\udcaa",
+        "badge_on_underdog": false
       }
     },
     {
@@ -499,18 +686,30 @@
       "seed_b": 14,
       "pick": "Baylor",
       "pick_seed": 3,
-      "win_prob": 0.9004,
-      "projected_spread": 11.7,
-      "projected_score": "82-70",
+      "win_prob": 0.9962,
+      "projected_spread": 33.3,
+      "spread_fav": "Baylor -33.3",
+      "spread_dog": "New Mexico State +33.3",
+      "projected_score": "80-48",
       "confidence": "lock",
-      "upset_rating": 0.234,
-      "variability": "medium",
+      "upset_rating": 0.248,
+      "variability": "high",
       "key_factors": [
-        "Baylor: 12-pt efficiency edge",
-        "Baylor: program pedigree advantage"
+        "Baylor: 33-pt efficiency edge",
+        "High 3PT variance \u2014 upset risk"
       ],
-      "insight": "Baylor has a solid 12-pt efficiency advantage. 3-seeds are 52-8 (87%) vs 14-seeds historically.",
-      "historical": "52-8"
+      "insight": "Baylor dominates on efficiency (33-pt edge). 3-seeds are 52-8 (87%) vs 14-seeds historically. 3PT-dependent offenses add variance.",
+      "historical": "52-8",
+      "head_to_head": {
+        "past_tournament": [],
+        "this_season": []
+      },
+      "upset_alert": {
+        "level": "blowout",
+        "reason": "Projected margin (33.3) 219% above the 3-14 seed norm (10.4). Dominant.",
+        "icon": "\ud83d\udcaa",
+        "badge_on_underdog": false
+      }
     },
     {
       "game_num": 22,
@@ -523,17 +722,21 @@
       "seed_b": 10,
       "pick": "South Carolina",
       "pick_seed": 7,
-      "win_prob": 0.5414,
-      "projected_spread": 0.9,
-      "projected_score": "76-75",
+      "win_prob": 0.5422,
+      "projected_spread": 1.2,
+      "spread_fav": "South Carolina -1.2",
+      "spread_dog": "Marquette +1.2",
+      "projected_score": "73-71",
       "confidence": "tossup",
       "upset_rating": 0.399,
       "variability": "high",
-      "key_factors": [
-        "Marquette: program pedigree advantage"
-      ],
+      "key_factors": [],
       "insight": "Razor-thin margin \u2014 essentially a coin flip. 7-seeds are 37-23 (62%) vs 10-seeds historically.",
-      "historical": "37-23"
+      "historical": "37-23",
+      "head_to_head": {
+        "past_tournament": [],
+        "this_season": []
+      }
     },
     {
       "game_num": 23,
@@ -546,18 +749,24 @@
       "seed_b": 15,
       "pick": "Duke",
       "pick_seed": 2,
-      "win_prob": 0.9804,
-      "projected_spread": 18.8,
-      "projected_score": "90-71",
+      "win_prob": 0.9478,
+      "projected_spread": 19.0,
+      "spread_fav": "Duke -19.0",
+      "spread_dog": "Troy +19.0",
+      "projected_score": "86-68",
       "confidence": "lock",
-      "upset_rating": 0.211,
+      "upset_rating": 0.224,
       "variability": "medium",
       "key_factors": [
         "Duke: 19-pt efficiency edge",
         "Duke: program pedigree advantage"
       ],
       "insight": "Duke dominates on efficiency (19-pt edge). 2-seeds are 53-7 (88%) vs 15-seeds historically.",
-      "historical": "53-7"
+      "historical": "53-7",
+      "head_to_head": {
+        "past_tournament": [],
+        "this_season": []
+      }
     },
     {
       "game_num": 24,
@@ -570,17 +779,23 @@
       "seed_b": 8,
       "pick": "Villanova",
       "pick_seed": 1,
-      "win_prob": 0.6993,
-      "projected_spread": 4.7,
-      "projected_score": "77-73",
+      "win_prob": 0.6921,
+      "projected_spread": 6.0,
+      "spread_fav": "Villanova -6.0",
+      "spread_dog": "Wisconsin +6.0",
+      "projected_score": "74-68",
       "confidence": "lean",
-      "upset_rating": 0.314,
+      "upset_rating": 0.316,
       "variability": "high",
       "key_factors": [
-        "Villanova: 5-pt efficiency edge"
+        "Villanova: 6-pt efficiency edge"
       ],
-      "insight": "Slight edge to Villanova (4.7 pts). 1-seeds are 25-7 (78%) vs 8-seeds historically.",
-      "historical": "25-7"
+      "insight": "Villanova has a solid 6-pt efficiency advantage. 1-seeds are 25-7 (78%) vs 8-seeds historically.",
+      "historical": "25-7",
+      "head_to_head": {
+        "past_tournament": [],
+        "this_season": []
+      }
     },
     {
       "game_num": 25,
@@ -593,15 +808,38 @@
       "seed_b": 4,
       "pick": "Florida",
       "pick_seed": 4,
-      "win_prob": 0.5619,
-      "projected_spread": 1.4,
-      "projected_score": "68-70",
+      "win_prob": 0.5502,
+      "projected_spread": 1.5,
+      "spread_fav": "Florida -1.5",
+      "spread_dog": "Virginia +1.5",
+      "projected_score": "65-66",
       "confidence": "tossup",
-      "upset_rating": 0.369,
+      "upset_rating": 0.374,
       "variability": "high",
       "key_factors": [],
       "insight": "Razor-thin margin \u2014 essentially a coin flip. 4-seeds are 20-11 (65%) vs 5-seeds historically.",
-      "historical": "20-11"
+      "historical": "20-11",
+      "head_to_head": {
+        "past_tournament": [
+          {
+            "year": 2012,
+            "round": 64,
+            "round_name": "Round of 64",
+            "region": "East",
+            "team_a": "Florida",
+            "team_b": "Virginia",
+            "seed_a": 7,
+            "seed_b": 10,
+            "score_a": 71,
+            "score_b": 45,
+            "winner": "Florida",
+            "margin": 26,
+            "upset": false,
+            "game_type": "tournament"
+          }
+        ],
+        "this_season": []
+      }
     },
     {
       "game_num": 26,
@@ -614,21 +852,26 @@
       "seed_b": 3,
       "pick": "SMU",
       "pick_seed": 6,
-      "win_prob": 0.5701,
-      "projected_spread": 1.6,
-      "projected_score": "77-75",
+      "win_prob": 0.5662,
+      "projected_spread": 2.0,
+      "spread_fav": "SMU -2.0",
+      "spread_dog": "Baylor +2.0",
+      "projected_score": "74-72",
       "confidence": "tossup",
-      "upset_rating": 0.369,
+      "upset_rating": 0.371,
       "variability": "high",
-      "key_factors": [
-        "Baylor: program pedigree advantage"
-      ],
-      "insight": "Razor-thin margin \u2014 essentially a coin flip. 3-seeds are 17-8 (68%) vs 6-seeds historically.",
+      "key_factors": [],
+      "insight": "Slight edge to SMU (2.0 pts). 3-seeds are 17-8 (68%) vs 6-seeds historically.",
       "historical": "17-8",
+      "head_to_head": {
+        "past_tournament": [],
+        "this_season": []
+      },
       "upset_alert": {
         "level": "strong",
-        "reason": "(3) seed favored by only -1.6 pts vs expected 3.6. Upset danger.",
-        "icon": "\ud83d\udd25"
+        "reason": "(3) seed favored by only -2.0 pts vs expected 3.6 (156% tighter). Upset danger.",
+        "icon": "\ud83d\udd25",
+        "badge_on_underdog": true
       }
     },
     {
@@ -642,18 +885,24 @@
       "seed_b": 2,
       "pick": "Duke",
       "pick_seed": 2,
-      "win_prob": 0.6927,
-      "projected_spread": 4.6,
-      "projected_score": "71-75",
+      "win_prob": 0.6391,
+      "projected_spread": 4.3,
+      "spread_fav": "Duke -4.3",
+      "spread_dog": "South Carolina +4.3",
+      "projected_score": "67-71",
       "confidence": "lean",
-      "upset_rating": 0.331,
+      "upset_rating": 0.352,
       "variability": "high",
       "key_factors": [
-        "Duke: 5-pt efficiency edge",
+        "Duke: 4-pt efficiency edge",
         "Duke: program pedigree advantage"
       ],
-      "insight": "Slight edge to Duke (4.6 pts). 2-seeds are 22-10 (69%) vs 7-seeds historically.",
-      "historical": "22-10"
+      "insight": "Slight edge to Duke (4.3 pts). 2-seeds are 22-10 (69%) vs 7-seeds historically.",
+      "historical": "22-10",
+      "head_to_head": {
+        "past_tournament": [],
+        "this_season": []
+      }
     },
     {
       "game_num": 28,
@@ -666,19 +915,20 @@
       "seed_b": 4,
       "pick": "Villanova",
       "pick_seed": 1,
-      "win_prob": 0.5327,
-      "projected_spread": 0.7,
-      "projected_score": "75-74",
+      "win_prob": 0.5801,
+      "projected_spread": 2.5,
+      "spread_fav": "Villanova -2.5",
+      "spread_dog": "Florida +2.5",
+      "projected_score": "71-68",
       "confidence": "tossup",
-      "upset_rating": 0.371,
+      "upset_rating": 0.352,
       "variability": "high",
       "key_factors": [],
-      "insight": "Razor-thin margin \u2014 essentially a coin flip. 1-seeds are 21-8 (72%) vs 4-seeds historically.",
+      "insight": "Slight edge to Villanova (2.5 pts). 1-seeds are 21-8 (72%) vs 4-seeds historically.",
       "historical": "21-8",
-      "upset_alert": {
-        "level": "mild",
-        "reason": "Margin (0.7) tighter than typical (4.0) for 1-4 seeds.",
-        "icon": "\u26a0\ufe0f"
+      "head_to_head": {
+        "past_tournament": [],
+        "this_season": []
       }
     },
     {
@@ -692,21 +942,28 @@
       "seed_b": 2,
       "pick": "Duke",
       "pick_seed": 2,
-      "win_prob": 0.559,
-      "projected_spread": 1.3,
-      "projected_score": "78-79",
+      "win_prob": 0.53,
+      "projected_spread": 0.9,
+      "spread_fav": "Duke -0.9",
+      "spread_dog": "SMU +0.9",
+      "projected_score": "73-74",
       "confidence": "tossup",
-      "upset_rating": 0.351,
+      "upset_rating": 0.362,
       "variability": "high",
       "key_factors": [
         "Duke: program pedigree advantage"
       ],
       "insight": "Razor-thin margin \u2014 essentially a coin flip. 2-seeds are 7-2 (78%) vs 6-seeds historically.",
       "historical": "7-2",
+      "head_to_head": {
+        "past_tournament": [],
+        "this_season": []
+      },
       "upset_alert": {
         "level": "mild",
-        "reason": "Margin (1.3) tighter than typical (5.2) for 2-6 seeds.",
-        "icon": "\u26a0\ufe0f"
+        "reason": "Margin (0.9) 83% tighter than typical (5.2) for 2-6 seeds.",
+        "icon": "\u26a0\ufe0f",
+        "badge_on_underdog": true
       }
     },
     {
@@ -720,15 +977,23 @@
       "seed_b": 2,
       "pick": "Villanova",
       "pick_seed": 1,
-      "win_prob": 0.6041,
-      "projected_spread": 2.4,
-      "projected_score": "80-78",
+      "win_prob": 0.6197,
+      "projected_spread": 3.9,
+      "spread_fav": "Villanova -3.9",
+      "spread_dog": "Duke +3.9",
+      "projected_score": "74-71",
       "confidence": "lean",
-      "upset_rating": 0.36,
+      "upset_rating": 0.354,
       "variability": "high",
-      "key_factors": [],
-      "insight": "Slight edge to Villanova (2.4 pts). 1-seeds are 13-8 (62%) vs 2-seeds historically.",
-      "historical": "13-8"
+      "key_factors": [
+        "Villanova: 4-pt efficiency edge"
+      ],
+      "insight": "Slight edge to Villanova (3.9 pts). 1-seeds are 13-8 (62%) vs 2-seeds historically.",
+      "historical": "13-8",
+      "head_to_head": {
+        "past_tournament": [],
+        "this_season": []
+      }
     },
     {
       "game_num": 31,
@@ -741,18 +1006,24 @@
       "seed_b": 16,
       "pick": "Kansas",
       "pick_seed": 1,
-      "win_prob": 0.9913,
-      "projected_spread": 21.7,
-      "projected_score": "84-63",
+      "win_prob": 0.9748,
+      "projected_spread": 22.9,
+      "spread_fav": "Kansas -22.9",
+      "spread_dog": "UC Davis +22.9",
+      "projected_score": "82-60",
       "confidence": "lock",
-      "upset_rating": 0.194,
+      "upset_rating": 0.201,
       "variability": "medium",
       "key_factors": [
-        "Kansas: 22-pt efficiency edge",
+        "Kansas: 23-pt efficiency edge",
         "Kansas: program pedigree advantage"
       ],
-      "insight": "Kansas dominates on efficiency (22-pt edge). 1-seeds are 58-2 (97%) vs 16-seeds historically.",
-      "historical": "58-2"
+      "insight": "Kansas dominates on efficiency (23-pt edge). 1-seeds are 58-2 (97%) vs 16-seeds historically.",
+      "historical": "58-2",
+      "head_to_head": {
+        "past_tournament": [],
+        "this_season": []
+      }
     },
     {
       "game_num": 32,
@@ -765,15 +1036,21 @@
       "seed_b": 9,
       "pick": "Miami (FL)",
       "pick_seed": 8,
-      "win_prob": 0.5314,
-      "projected_spread": 0.7,
-      "projected_score": "72-71",
+      "win_prob": 0.5345,
+      "projected_spread": 1.0,
+      "spread_fav": "Miami (FL) -1.0",
+      "spread_dog": "Michigan State +1.0",
+      "projected_score": "69-68",
       "confidence": "tossup",
-      "upset_rating": 0.42,
+      "upset_rating": 0.419,
       "variability": "high",
       "key_factors": [],
       "insight": "Razor-thin margin \u2014 essentially a coin flip. 8-seeds are 31-29 (52%) vs 9-seeds historically.",
-      "historical": "31-29"
+      "historical": "31-29",
+      "head_to_head": {
+        "past_tournament": [],
+        "this_season": []
+      }
     },
     {
       "game_num": 33,
@@ -786,17 +1063,23 @@
       "seed_b": 12,
       "pick": "Iowa State",
       "pick_seed": 5,
-      "win_prob": 0.7951,
-      "projected_spread": 7.5,
-      "projected_score": "83-75",
+      "win_prob": 0.755,
+      "projected_spread": 8.1,
+      "spread_fav": "Iowa State -8.1",
+      "spread_dog": "Nevada +8.1",
+      "projected_score": "80-72",
       "confidence": "strong",
-      "upset_rating": 0.325,
+      "upset_rating": 0.341,
       "variability": "high",
       "key_factors": [
         "Iowa State: 8-pt efficiency edge"
       ],
       "insight": "Iowa State has a solid 8-pt efficiency advantage. 5-seeds are 37-23 (62%) vs 12-seeds historically.",
-      "historical": "37-23"
+      "historical": "37-23",
+      "head_to_head": {
+        "past_tournament": [],
+        "this_season": []
+      }
     },
     {
       "game_num": 34,
@@ -809,18 +1092,23 @@
       "seed_b": 13,
       "pick": "Purdue",
       "pick_seed": 4,
-      "win_prob": 0.8304,
-      "projected_spread": 8.7,
-      "projected_score": "79-70",
+      "win_prob": 0.7751,
+      "projected_spread": 8.8,
+      "spread_fav": "Purdue -8.8",
+      "spread_dog": "Vermont +8.8",
+      "projected_score": "76-67",
       "confidence": "strong",
-      "upset_rating": 0.269,
+      "upset_rating": 0.291,
       "variability": "high",
       "key_factors": [
-        "Purdue: 9-pt efficiency edge",
-        "Purdue: program pedigree advantage"
+        "Purdue: 9-pt efficiency edge"
       ],
       "insight": "Purdue has a solid 9-pt efficiency advantage. 4-seeds are 48-12 (80%) vs 13-seeds historically.",
-      "historical": "48-12"
+      "historical": "48-12",
+      "head_to_head": {
+        "past_tournament": [],
+        "this_season": []
+      }
     },
     {
       "game_num": 35,
@@ -833,15 +1121,21 @@
       "seed_b": 11,
       "pick": "Creighton",
       "pick_seed": 6,
-      "win_prob": 0.5697,
+      "win_prob": 0.5535,
       "projected_spread": 1.6,
-      "projected_score": "74-72",
+      "spread_fav": "Creighton -1.6",
+      "spread_dog": "Rhode Island +1.6",
+      "projected_score": "71-70",
       "confidence": "tossup",
-      "upset_rating": 0.441,
+      "upset_rating": 0.448,
       "variability": "high",
       "key_factors": [],
       "insight": "Razor-thin margin \u2014 essentially a coin flip. 6-seeds are 29-31 (48%) vs 11-seeds historically.",
-      "historical": "29-31"
+      "historical": "29-31",
+      "head_to_head": {
+        "past_tournament": [],
+        "this_season": []
+      }
     },
     {
       "game_num": 36,
@@ -854,18 +1148,23 @@
       "seed_b": 14,
       "pick": "Oregon",
       "pick_seed": 3,
-      "win_prob": 0.9545,
-      "projected_spread": 15.4,
-      "projected_score": "86-70",
+      "win_prob": 0.9144,
+      "projected_spread": 16.0,
+      "spread_fav": "Oregon -16.0",
+      "spread_dog": "Iona +16.0",
+      "projected_score": "82-67",
       "confidence": "lock",
-      "upset_rating": 0.213,
+      "upset_rating": 0.229,
       "variability": "medium",
       "key_factors": [
-        "Oregon: 15-pt efficiency edge",
-        "Oregon: program pedigree advantage"
+        "Oregon: 16-pt efficiency edge"
       ],
-      "insight": "Oregon dominates on efficiency (15-pt edge). 3-seeds are 52-8 (87%) vs 14-seeds historically.",
-      "historical": "52-8"
+      "insight": "Oregon dominates on efficiency (16-pt edge). 3-seeds are 52-8 (87%) vs 14-seeds historically.",
+      "historical": "52-8",
+      "head_to_head": {
+        "past_tournament": [],
+        "this_season": []
+      }
     },
     {
       "game_num": 37,
@@ -878,17 +1177,23 @@
       "seed_b": 10,
       "pick": "Michigan",
       "pick_seed": 7,
-      "win_prob": 0.6126,
-      "projected_spread": 2.6,
-      "projected_score": "87-84",
-      "confidence": "lean",
-      "upset_rating": 0.371,
+      "win_prob": 0.5692,
+      "projected_spread": 2.0,
+      "spread_fav": "Michigan -2.0",
+      "spread_dog": "Oklahoma State +2.0",
+      "projected_score": "83-81",
+      "confidence": "tossup",
+      "upset_rating": 0.388,
       "variability": "high",
       "key_factors": [
         "Michigan: program pedigree advantage"
       ],
-      "insight": "Slight edge to Michigan (2.6 pts). 7-seeds are 37-23 (62%) vs 10-seeds historically.",
-      "historical": "37-23"
+      "insight": "Slight edge to Michigan (2.0 pts). 7-seeds are 37-23 (62%) vs 10-seeds historically.",
+      "historical": "37-23",
+      "head_to_head": {
+        "past_tournament": [],
+        "this_season": []
+      }
     },
     {
       "game_num": 38,
@@ -901,18 +1206,24 @@
       "seed_b": 15,
       "pick": "Louisville",
       "pick_seed": 2,
-      "win_prob": 0.9824,
-      "projected_spread": 19.2,
-      "projected_score": "84-65",
+      "win_prob": 0.9562,
+      "projected_spread": 20.0,
+      "spread_fav": "Louisville -20.0",
+      "spread_dog": "Jacksonville State +20.0",
+      "projected_score": "81-62",
       "confidence": "lock",
-      "upset_rating": 0.21,
+      "upset_rating": 0.22,
       "variability": "medium",
       "key_factors": [
-        "Louisville: 19-pt efficiency edge",
+        "Louisville: 20-pt efficiency edge",
         "Louisville: program pedigree advantage"
       ],
-      "insight": "Louisville dominates on efficiency (19-pt edge). 2-seeds are 53-7 (88%) vs 15-seeds historically.",
-      "historical": "53-7"
+      "insight": "Louisville dominates on efficiency (20-pt edge). 2-seeds are 53-7 (88%) vs 15-seeds historically.",
+      "historical": "53-7",
+      "head_to_head": {
+        "past_tournament": [],
+        "this_season": []
+      }
     },
     {
       "game_num": 39,
@@ -925,18 +1236,24 @@
       "seed_b": 8,
       "pick": "Kansas",
       "pick_seed": 1,
-      "win_prob": 0.7802,
-      "projected_spread": 7.0,
-      "projected_score": "78-71",
-      "confidence": "strong",
-      "upset_rating": 0.281,
+      "win_prob": 0.7273,
+      "projected_spread": 7.3,
+      "spread_fav": "Kansas -7.3",
+      "spread_dog": "Miami (FL) +7.3",
+      "projected_score": "74-68",
+      "confidence": "lean",
+      "upset_rating": 0.302,
       "variability": "high",
       "key_factors": [
         "Kansas: 7-pt efficiency edge",
         "Kansas: program pedigree advantage"
       ],
       "insight": "Kansas has a solid 7-pt efficiency advantage. 1-seeds are 25-7 (78%) vs 8-seeds historically.",
-      "historical": "25-7"
+      "historical": "25-7",
+      "head_to_head": {
+        "past_tournament": [],
+        "this_season": []
+      }
     },
     {
       "game_num": 40,
@@ -949,17 +1266,21 @@
       "seed_b": 4,
       "pick": "Purdue",
       "pick_seed": 4,
-      "win_prob": 0.5469,
+      "win_prob": 0.5351,
       "projected_spread": 1.1,
-      "projected_score": "76-77",
+      "spread_fav": "Purdue -1.1",
+      "spread_dog": "Iowa State +1.1",
+      "projected_score": "73-73",
       "confidence": "tossup",
-      "upset_rating": 0.375,
+      "upset_rating": 0.38,
       "variability": "high",
-      "key_factors": [
-        "Purdue: program pedigree advantage"
-      ],
+      "key_factors": [],
       "insight": "Razor-thin margin \u2014 essentially a coin flip. 4-seeds are 20-11 (65%) vs 5-seeds historically.",
-      "historical": "20-11"
+      "historical": "20-11",
+      "head_to_head": {
+        "past_tournament": [],
+        "this_season": []
+      }
     },
     {
       "game_num": 41,
@@ -972,17 +1293,23 @@
       "seed_b": 3,
       "pick": "Oregon",
       "pick_seed": 3,
-      "win_prob": 0.6415,
-      "projected_spread": 3.3,
-      "projected_score": "74-77",
+      "win_prob": 0.6203,
+      "projected_spread": 3.7,
+      "spread_fav": "Oregon -3.7",
+      "spread_dog": "Creighton +3.7",
+      "projected_score": "70-73",
       "confidence": "lean",
-      "upset_rating": 0.34,
+      "upset_rating": 0.349,
       "variability": "high",
       "key_factors": [
-        "Oregon: 3-pt efficiency edge"
+        "Oregon: 4-pt efficiency edge"
       ],
-      "insight": "Slight edge to Oregon (3.3 pts). 3-seeds are 17-8 (68%) vs 6-seeds historically.",
-      "historical": "17-8"
+      "insight": "Slight edge to Oregon (3.7 pts). 3-seeds are 17-8 (68%) vs 6-seeds historically.",
+      "historical": "17-8",
+      "head_to_head": {
+        "past_tournament": [],
+        "this_season": []
+      }
     },
     {
       "game_num": 42,
@@ -995,15 +1322,38 @@
       "seed_b": 2,
       "pick": "Louisville",
       "pick_seed": 2,
-      "win_prob": 0.5677,
-      "projected_spread": 1.5,
-      "projected_score": "77-79",
+      "win_prob": 0.5414,
+      "projected_spread": 1.3,
+      "spread_fav": "Louisville -1.3",
+      "spread_dog": "Michigan +1.3",
+      "projected_score": "73-75",
       "confidence": "tossup",
-      "upset_rating": 0.381,
+      "upset_rating": 0.392,
       "variability": "high",
       "key_factors": [],
       "insight": "Razor-thin margin \u2014 essentially a coin flip. 2-seeds are 22-10 (69%) vs 7-seeds historically.",
-      "historical": "22-10"
+      "historical": "22-10",
+      "head_to_head": {
+        "past_tournament": [
+          {
+            "year": 2013,
+            "round": 2,
+            "round_name": "Championship",
+            "region": "Championship",
+            "team_a": "Louisville",
+            "team_b": "Michigan",
+            "seed_a": 1,
+            "seed_b": 4,
+            "score_a": 82,
+            "score_b": 76,
+            "winner": "Louisville",
+            "margin": 6,
+            "upset": false,
+            "game_type": "tournament"
+          }
+        ],
+        "this_season": []
+      }
     },
     {
       "game_num": 43,
@@ -1016,15 +1366,38 @@
       "seed_b": 4,
       "pick": "Kansas",
       "pick_seed": 1,
-      "win_prob": 0.609,
-      "projected_spread": 2.5,
-      "projected_score": "78-75",
-      "confidence": "lean",
-      "upset_rating": 0.34,
+      "win_prob": 0.5844,
+      "projected_spread": 2.6,
+      "spread_fav": "Kansas -2.6",
+      "spread_dog": "Purdue +2.6",
+      "projected_score": "73-70",
+      "confidence": "tossup",
+      "upset_rating": 0.35,
       "variability": "high",
       "key_factors": [],
-      "insight": "Slight edge to Kansas (2.5 pts). 1-seeds are 21-8 (72%) vs 4-seeds historically.",
-      "historical": "21-8"
+      "insight": "Slight edge to Kansas (2.6 pts). 1-seeds are 21-8 (72%) vs 4-seeds historically.",
+      "historical": "21-8",
+      "head_to_head": {
+        "past_tournament": [
+          {
+            "year": 2012,
+            "round": 32,
+            "round_name": "Round of 32",
+            "region": "West",
+            "team_a": "Purdue",
+            "team_b": "Kansas",
+            "seed_a": 10,
+            "seed_b": 2,
+            "score_a": 60,
+            "score_b": 63,
+            "winner": "Kansas",
+            "margin": 3,
+            "upset": false,
+            "game_type": "tournament"
+          }
+        ],
+        "this_season": []
+      }
     },
     {
       "game_num": 44,
@@ -1037,15 +1410,38 @@
       "seed_b": 2,
       "pick": "Louisville",
       "pick_seed": 2,
-      "win_prob": 0.5994,
+      "win_prob": 0.5721,
       "projected_spread": 2.3,
-      "projected_score": "74-76",
+      "spread_fav": "Louisville -2.3",
+      "spread_dog": "Oregon +2.3",
+      "projected_score": "69-71",
       "confidence": "tossup",
-      "upset_rating": 0.374,
+      "upset_rating": 0.385,
       "variability": "high",
       "key_factors": [],
       "insight": "Slight edge to Louisville (2.3 pts). 2-seeds are 11-8 (58%) vs 3-seeds historically.",
-      "historical": "11-8"
+      "historical": "11-8",
+      "head_to_head": {
+        "past_tournament": [
+          {
+            "year": 2013,
+            "round": 16,
+            "round_name": "Sweet 16",
+            "region": "South",
+            "team_a": "Louisville",
+            "team_b": "Oregon",
+            "seed_a": 1,
+            "seed_b": 12,
+            "score_a": 77,
+            "score_b": 69,
+            "winner": "Louisville",
+            "margin": 8,
+            "upset": false,
+            "game_type": "tournament"
+          }
+        ],
+        "this_season": []
+      }
     },
     {
       "game_num": 45,
@@ -1058,15 +1454,21 @@
       "seed_b": 2,
       "pick": "Kansas",
       "pick_seed": 1,
-      "win_prob": 0.5078,
-      "projected_spread": 0.2,
-      "projected_score": "76-76",
+      "win_prob": 0.5101,
+      "projected_spread": 0.3,
+      "spread_fav": "Kansas -0.3",
+      "spread_dog": "Louisville +0.3",
+      "projected_score": "70-70",
       "confidence": "tossup",
-      "upset_rating": 0.399,
+      "upset_rating": 0.398,
       "variability": "high",
       "key_factors": [],
       "insight": "Razor-thin margin \u2014 essentially a coin flip. 1-seeds are 13-8 (62%) vs 2-seeds historically.",
-      "historical": "13-8"
+      "historical": "13-8",
+      "head_to_head": {
+        "past_tournament": [],
+        "this_season": []
+      }
     },
     {
       "game_num": 46,
@@ -1079,18 +1481,23 @@
       "seed_b": 16,
       "pick": "Gonzaga",
       "pick_seed": 1,
-      "win_prob": 0.997,
-      "projected_spread": 25.1,
-      "projected_score": "89-64",
+      "win_prob": 0.9914,
+      "projected_spread": 27.8,
+      "spread_fav": "Gonzaga -27.8",
+      "spread_dog": "South Dakota State +27.8",
+      "projected_score": "87-60",
       "confidence": "lock",
-      "upset_rating": 0.192,
+      "upset_rating": 0.194,
       "variability": "medium",
       "key_factors": [
-        "Gonzaga: 25-pt efficiency edge",
-        "Gonzaga: program pedigree advantage"
+        "Gonzaga: 28-pt efficiency edge"
       ],
-      "insight": "Gonzaga dominates on efficiency (25-pt edge). 1-seeds are 58-2 (97%) vs 16-seeds historically.",
-      "historical": "58-2"
+      "insight": "Gonzaga dominates on efficiency (28-pt edge). 1-seeds are 58-2 (97%) vs 16-seeds historically.",
+      "historical": "58-2",
+      "head_to_head": {
+        "past_tournament": [],
+        "this_season": []
+      }
     },
     {
       "game_num": 47,
@@ -1103,15 +1510,21 @@
       "seed_b": 9,
       "pick": "Vanderbilt",
       "pick_seed": 9,
-      "win_prob": 0.5715,
+      "win_prob": 0.5571,
       "projected_spread": 1.7,
-      "projected_score": "72-73",
+      "spread_fav": "Vanderbilt -1.7",
+      "spread_dog": "Northwestern +1.7",
+      "projected_score": "69-70",
       "confidence": "tossup",
-      "upset_rating": 0.404,
+      "upset_rating": 0.41,
       "variability": "high",
       "key_factors": [],
       "insight": "Razor-thin margin \u2014 essentially a coin flip. 8-seeds are 31-29 (52%) vs 9-seeds historically.",
-      "historical": "31-29"
+      "historical": "31-29",
+      "head_to_head": {
+        "past_tournament": [],
+        "this_season": []
+      }
     },
     {
       "game_num": 48,
@@ -1124,17 +1537,23 @@
       "seed_b": 12,
       "pick": "Notre Dame",
       "pick_seed": 5,
-      "win_prob": 0.7694,
-      "projected_spread": 6.7,
-      "projected_score": "78-71",
-      "confidence": "strong",
-      "upset_rating": 0.335,
+      "win_prob": 0.7324,
+      "projected_spread": 7.2,
+      "spread_fav": "Notre Dame -7.2",
+      "spread_dog": "Princeton +7.2",
+      "projected_score": "75-68",
+      "confidence": "lean",
+      "upset_rating": 0.35,
       "variability": "high",
       "key_factors": [
         "Notre Dame: 7-pt efficiency edge"
       ],
       "insight": "Notre Dame has a solid 7-pt efficiency advantage. 5-seeds are 37-23 (62%) vs 12-seeds historically.",
-      "historical": "37-23"
+      "historical": "37-23",
+      "head_to_head": {
+        "past_tournament": [],
+        "this_season": []
+      }
     },
     {
       "game_num": 49,
@@ -1147,17 +1566,23 @@
       "seed_b": 13,
       "pick": "West Virginia",
       "pick_seed": 4,
-      "win_prob": 0.9018,
-      "projected_spread": 11.8,
-      "projected_score": "78-66",
-      "confidence": "lock",
-      "upset_rating": 0.24,
-      "variability": "medium",
+      "win_prob": 0.855,
+      "projected_spread": 12.4,
+      "spread_fav": "West Virginia -12.4",
+      "spread_dog": "Bucknell +12.4",
+      "projected_score": "75-64",
+      "confidence": "strong",
+      "upset_rating": 0.259,
+      "variability": "high",
       "key_factors": [
         "West Virginia: 12-pt efficiency edge"
       ],
-      "insight": "West Virginia has a solid 12-pt efficiency advantage. 4-seeds are 48-12 (80%) vs 13-seeds historically.",
-      "historical": "48-12"
+      "insight": "West Virginia dominates on efficiency (12-pt edge). 4-seeds are 48-12 (80%) vs 13-seeds historically.",
+      "historical": "48-12",
+      "head_to_head": {
+        "past_tournament": [],
+        "this_season": []
+      }
     },
     {
       "game_num": 50,
@@ -1170,15 +1595,21 @@
       "seed_b": 11,
       "pick": "Xavier",
       "pick_seed": 11,
-      "win_prob": 0.5602,
-      "projected_spread": 1.4,
-      "projected_score": "76-78",
+      "win_prob": 0.5535,
+      "projected_spread": 1.6,
+      "spread_fav": "Xavier -1.6",
+      "spread_dog": "Maryland +1.6",
+      "projected_score": "73-74",
       "confidence": "tossup",
-      "upset_rating": 0.445,
+      "upset_rating": 0.448,
       "variability": "high",
       "key_factors": [],
       "insight": "Razor-thin margin \u2014 essentially a coin flip. 6-seeds are 29-31 (48%) vs 11-seeds historically.",
-      "historical": "29-31"
+      "historical": "29-31",
+      "head_to_head": {
+        "past_tournament": [],
+        "this_season": []
+      }
     },
     {
       "game_num": 51,
@@ -1191,17 +1622,23 @@
       "seed_b": 14,
       "pick": "Florida State",
       "pick_seed": 3,
-      "win_prob": 0.8896,
-      "projected_spread": 11.1,
-      "projected_score": "82-71",
+      "win_prob": 0.8346,
+      "projected_spread": 11.4,
+      "spread_fav": "Florida State -11.4",
+      "spread_dog": "Florida Gulf Coast +11.4",
+      "projected_score": "78-68",
       "confidence": "strong",
-      "upset_rating": 0.238,
+      "upset_rating": 0.26,
       "variability": "high",
       "key_factors": [
         "Florida State: 11-pt efficiency edge"
       ],
       "insight": "Florida State has a solid 11-pt efficiency advantage. 3-seeds are 52-8 (87%) vs 14-seeds historically.",
-      "historical": "52-8"
+      "historical": "52-8",
+      "head_to_head": {
+        "past_tournament": [],
+        "this_season": []
+      }
     },
     {
       "game_num": 52,
@@ -1214,17 +1651,23 @@
       "seed_b": 10,
       "pick": "Saint Mary's",
       "pick_seed": 7,
-      "win_prob": 0.8113,
-      "projected_spread": 8.1,
-      "projected_score": "78-70",
+      "win_prob": 0.7625,
+      "projected_spread": 8.3,
+      "spread_fav": "Saint Mary's -8.3",
+      "spread_dog": "VCU +8.3",
+      "projected_score": "75-67",
       "confidence": "strong",
-      "upset_rating": 0.291,
+      "upset_rating": 0.311,
       "variability": "medium",
       "key_factors": [
         "Saint Mary's: 8-pt efficiency edge"
       ],
       "insight": "Saint Mary's has a solid 8-pt efficiency advantage. 7-seeds are 37-23 (62%) vs 10-seeds historically.",
-      "historical": "37-23"
+      "historical": "37-23",
+      "head_to_head": {
+        "past_tournament": [],
+        "this_season": []
+      }
     },
     {
       "game_num": 53,
@@ -1237,18 +1680,24 @@
       "seed_b": 15,
       "pick": "Arizona",
       "pick_seed": 2,
-      "win_prob": 0.9593,
-      "projected_spread": 15.9,
-      "projected_score": "83-67",
+      "win_prob": 0.9224,
+      "projected_spread": 16.6,
+      "spread_fav": "Arizona -16.6",
+      "spread_dog": "North Dakota +16.6",
+      "projected_score": "80-64",
       "confidence": "lock",
-      "upset_rating": 0.219,
+      "upset_rating": 0.234,
       "variability": "medium",
       "key_factors": [
-        "Arizona: 16-pt efficiency edge",
+        "Arizona: 17-pt efficiency edge",
         "Arizona: program pedigree advantage"
       ],
-      "insight": "Arizona dominates on efficiency (16-pt edge). 2-seeds are 53-7 (88%) vs 15-seeds historically.",
-      "historical": "53-7"
+      "insight": "Arizona dominates on efficiency (17-pt edge). 2-seeds are 53-7 (88%) vs 15-seeds historically.",
+      "historical": "53-7",
+      "head_to_head": {
+        "past_tournament": [],
+        "this_season": []
+      }
     },
     {
       "game_num": 54,
@@ -1261,18 +1710,23 @@
       "seed_b": 9,
       "pick": "Gonzaga",
       "pick_seed": 1,
-      "win_prob": 0.8614,
-      "projected_spread": 9.9,
-      "projected_score": "76-66",
+      "win_prob": 0.8552,
+      "projected_spread": 12.7,
+      "spread_fav": "Gonzaga -12.7",
+      "spread_dog": "Vanderbilt +12.7",
+      "projected_score": "74-62",
       "confidence": "strong",
-      "upset_rating": 0.222,
+      "upset_rating": 0.224,
       "variability": "medium",
       "key_factors": [
-        "Gonzaga: 10-pt efficiency edge",
-        "Gonzaga: program pedigree advantage"
+        "Gonzaga: 13-pt efficiency edge"
       ],
-      "insight": "Gonzaga has a solid 10-pt efficiency advantage. 1-seeds are 25-3 (89%) vs 9-seeds historically.",
-      "historical": "25-3"
+      "insight": "Gonzaga dominates on efficiency (13-pt edge). 1-seeds are 25-3 (89%) vs 9-seeds historically.",
+      "historical": "25-3",
+      "head_to_head": {
+        "past_tournament": [],
+        "this_season": []
+      }
     },
     {
       "game_num": 55,
@@ -1285,17 +1739,23 @@
       "seed_b": 4,
       "pick": "West Virginia",
       "pick_seed": 4,
-      "win_prob": 0.6341,
+      "win_prob": 0.6002,
       "projected_spread": 3.1,
-      "projected_score": "73-76",
+      "spread_fav": "West Virginia -3.1",
+      "spread_dog": "Notre Dame +3.1",
+      "projected_score": "69-73",
       "confidence": "lean",
-      "upset_rating": 0.34,
+      "upset_rating": 0.354,
       "variability": "high",
       "key_factors": [
         "West Virginia: 3-pt efficiency edge"
       ],
       "insight": "Slight edge to West Virginia (3.1 pts). 4-seeds are 20-11 (65%) vs 5-seeds historically.",
-      "historical": "20-11"
+      "historical": "20-11",
+      "head_to_head": {
+        "past_tournament": [],
+        "this_season": []
+      }
     },
     {
       "game_num": 56,
@@ -1308,21 +1768,20 @@
       "seed_b": 3,
       "pick": "Florida State",
       "pick_seed": 3,
-      "win_prob": 0.5645,
-      "projected_spread": 1.4,
-      "projected_score": "76-77",
+      "win_prob": 0.5589,
+      "projected_spread": 1.8,
+      "spread_fav": "Florida State -1.8",
+      "spread_dog": "Xavier +1.8",
+      "projected_score": "72-74",
       "confidence": "tossup",
-      "upset_rating": 0.437,
+      "upset_rating": 0.45,
       "variability": "extreme",
-      "key_factors": [
-        "Xavier: program pedigree advantage"
-      ],
-      "insight": "Razor-thin margin \u2014 essentially a coin flip. 3-seeds are 16-12 (57%) vs 11-seeds historically.",
-      "historical": "16-12",
-      "upset_alert": {
-        "level": "strong",
-        "reason": "(3) seed favored by only 1.4 pts vs expected 5.5. Upset danger.",
-        "icon": "\ud83d\udd25"
+      "key_factors": [],
+      "insight": "Razor-thin margin \u2014 essentially a coin flip. 3-seeds are 15-13 (54%) vs 11-seeds historically.",
+      "historical": "15-13",
+      "head_to_head": {
+        "past_tournament": [],
+        "this_season": []
       }
     },
     {
@@ -1336,21 +1795,28 @@
       "seed_b": 2,
       "pick": "Saint Mary's",
       "pick_seed": 7,
-      "win_prob": 0.5333,
+      "win_prob": 0.5256,
       "projected_spread": 0.8,
-      "projected_score": "77-76",
+      "spread_fav": "Saint Mary's -0.8",
+      "spread_dog": "Arizona +0.8",
+      "projected_score": "73-72",
       "confidence": "tossup",
-      "upset_rating": 0.395,
+      "upset_rating": 0.398,
       "variability": "high",
       "key_factors": [
         "Arizona: program pedigree advantage"
       ],
       "insight": "Razor-thin margin \u2014 essentially a coin flip. 2-seeds are 22-10 (69%) vs 7-seeds historically.",
       "historical": "22-10",
+      "head_to_head": {
+        "past_tournament": [],
+        "this_season": []
+      },
       "upset_alert": {
-        "level": "strong",
-        "reason": "(2) seed favored by only -0.8 pts vs expected 3.8. Upset danger.",
-        "icon": "\ud83d\udd25"
+        "level": "mild",
+        "reason": "Margin (-0.8) 121% tighter than typical (3.8) for 2-7 seeds.",
+        "icon": "\u26a0\ufe0f",
+        "badge_on_underdog": true
       }
     },
     {
@@ -1364,18 +1830,40 @@
       "seed_b": 4,
       "pick": "Gonzaga",
       "pick_seed": 1,
-      "win_prob": 0.6932,
-      "projected_spread": 4.6,
-      "projected_score": "73-68",
+      "win_prob": 0.7156,
+      "projected_spread": 7.1,
+      "spread_fav": "Gonzaga -7.1",
+      "spread_dog": "West Virginia +7.1",
+      "projected_score": "69-62",
       "confidence": "lean",
-      "upset_rating": 0.306,
-      "variability": "high",
+      "upset_rating": 0.298,
+      "variability": "medium",
       "key_factors": [
-        "Gonzaga: 5-pt efficiency edge",
-        "Gonzaga: program pedigree advantage"
+        "Gonzaga: 7-pt efficiency edge"
       ],
-      "insight": "Slight edge to Gonzaga (4.6 pts). 1-seeds are 21-8 (72%) vs 4-seeds historically.",
-      "historical": "21-8"
+      "insight": "Gonzaga has a solid 7-pt efficiency advantage. 1-seeds are 21-8 (72%) vs 4-seeds historically.",
+      "historical": "21-8",
+      "head_to_head": {
+        "past_tournament": [
+          {
+            "year": 2012,
+            "round": 64,
+            "round_name": "Round of 64",
+            "region": "Midwest",
+            "team_a": "Gonzaga",
+            "team_b": "West Virginia",
+            "seed_a": 7,
+            "seed_b": 10,
+            "score_a": 77,
+            "score_b": 54,
+            "winner": "Gonzaga",
+            "margin": 23,
+            "upset": false,
+            "game_type": "tournament"
+          }
+        ],
+        "this_season": []
+      }
     },
     {
       "game_num": 59,
@@ -1388,19 +1876,22 @@
       "seed_b": 7,
       "pick": "Saint Mary's",
       "pick_seed": 7,
-      "win_prob": 0.6223,
-      "projected_spread": 2.9,
-      "projected_score": "74-77",
+      "win_prob": 0.6005,
+      "projected_spread": 3.2,
+      "spread_fav": "Saint Mary's -3.2",
+      "spread_dog": "Florida State +3.2",
+      "projected_score": "69-72",
       "confidence": "lean",
-      "upset_rating": 0.409,
+      "upset_rating": 0.417,
       "variability": "high",
-      "key_factors": [],
-      "insight": "Slight edge to Saint Mary's (2.9 pts). 3-seeds are 4-4 (50%) vs 7-seeds historically.",
+      "key_factors": [
+        "Saint Mary's: 3-pt efficiency edge"
+      ],
+      "insight": "Slight edge to Saint Mary's (3.2 pts). 3-seeds are 4-4 (50%) vs 7-seeds historically.",
       "historical": "4-4",
-      "upset_alert": {
-        "level": "mild",
-        "reason": "Margin (-2.9) tighter than typical (0.0) for 3-7 seeds.",
-        "icon": "\u26a0\ufe0f"
+      "head_to_head": {
+        "past_tournament": [],
+        "this_season": []
       }
     },
     {
@@ -1414,18 +1905,23 @@
       "seed_b": 7,
       "pick": "Gonzaga",
       "pick_seed": 1,
-      "win_prob": 0.7645,
-      "projected_spread": 6.6,
-      "projected_score": "76-70",
+      "win_prob": 0.756,
+      "projected_spread": 8.9,
+      "spread_fav": "Gonzaga -8.9",
+      "spread_dog": "Saint Mary's +8.9",
+      "projected_score": "71-63",
       "confidence": "strong",
-      "upset_rating": 0.315,
+      "upset_rating": 0.319,
       "variability": "high",
       "key_factors": [
-        "Gonzaga: 7-pt efficiency edge",
-        "Gonzaga: program pedigree advantage"
+        "Gonzaga: 9-pt efficiency edge"
       ],
-      "insight": "Gonzaga has a solid 7-pt efficiency advantage.",
-      "historical": "2-1"
+      "insight": "Gonzaga has a solid 9-pt efficiency advantage.",
+      "historical": "2-1",
+      "head_to_head": {
+        "past_tournament": [],
+        "this_season": []
+      }
     },
     {
       "game_num": 61,
@@ -1438,15 +1934,23 @@
       "seed_b": 1,
       "pick": "Gonzaga",
       "pick_seed": 1,
-      "win_prob": 0.5889,
-      "projected_spread": 2.1,
-      "projected_score": "72-75",
-      "confidence": "tossup",
+      "win_prob": 0.6087,
+      "projected_spread": 3.6,
+      "spread_fav": "Gonzaga -3.6",
+      "spread_dog": "Villanova +3.6",
+      "projected_score": "65-69",
+      "confidence": "lean",
       "upset_rating": 0.0,
       "variability": "high",
-      "key_factors": [],
-      "insight": "Slight edge to Gonzaga (2.1 pts). 1-seeds are 9-0 (100%) vs 1-seeds historically.",
-      "historical": "9-0"
+      "key_factors": [
+        "Gonzaga: 4-pt efficiency edge"
+      ],
+      "insight": "Slight edge to Gonzaga (3.6 pts). 1-seeds are 9-0 (100%) vs 1-seeds historically.",
+      "historical": "9-0",
+      "head_to_head": {
+        "past_tournament": [],
+        "this_season": []
+      }
     },
     {
       "game_num": 62,
@@ -1459,15 +1963,70 @@
       "seed_b": 1,
       "pick": "North Carolina",
       "pick_seed": 1,
-      "win_prob": 0.5952,
-      "projected_spread": 2.2,
-      "projected_score": "76-78",
+      "win_prob": 0.5606,
+      "projected_spread": 2.0,
+      "spread_fav": "North Carolina -2.0",
+      "spread_dog": "Kansas +2.0",
+      "projected_score": "70-71",
       "confidence": "tossup",
       "upset_rating": 0.0,
       "variability": "high",
       "key_factors": [],
-      "insight": "Slight edge to North Carolina (2.2 pts). 1-seeds are 9-0 (100%) vs 1-seeds historically.",
-      "historical": "9-0"
+      "insight": "Slight edge to North Carolina (2.0 pts). 1-seeds are 9-0 (100%) vs 1-seeds historically.",
+      "historical": "9-0",
+      "head_to_head": {
+        "past_tournament": [
+          {
+            "year": 2022,
+            "round": 2,
+            "round_name": "Championship",
+            "region": "Championship",
+            "team_a": "North Carolina",
+            "team_b": "Kansas",
+            "seed_a": 8,
+            "seed_b": 1,
+            "score_a": 69,
+            "score_b": 72,
+            "winner": "Kansas",
+            "margin": 3,
+            "upset": false,
+            "game_type": "tournament"
+          },
+          {
+            "year": 2013,
+            "round": 32,
+            "round_name": "Round of 32",
+            "region": "Midwest",
+            "team_a": "Kansas",
+            "team_b": "North Carolina",
+            "seed_a": 1,
+            "seed_b": 8,
+            "score_a": 70,
+            "score_b": 58,
+            "winner": "Kansas",
+            "margin": 12,
+            "upset": false,
+            "game_type": "tournament"
+          },
+          {
+            "year": 2012,
+            "round": 8,
+            "round_name": "Elite 8",
+            "region": "West",
+            "team_a": "North Carolina",
+            "team_b": "Kansas",
+            "seed_a": 1,
+            "seed_b": 2,
+            "score_a": 67,
+            "score_b": 80,
+            "winner": "Kansas",
+            "margin": 13,
+            "upset": true,
+            "game_type": "tournament"
+          }
+        ],
+        "this_season": []
+      }
     },
     {
       "game_num": 63,
@@ -1480,23 +2039,36 @@
       "seed_b": 1,
       "pick": "Gonzaga",
       "pick_seed": 1,
-      "win_prob": 0.5769,
-      "projected_spread": 1.8,
-      "projected_score": "74-72",
-      "confidence": "tossup",
+      "win_prob": 0.6399,
+      "projected_spread": 4.7,
+      "spread_fav": "Gonzaga -4.7",
+      "spread_dog": "North Carolina +4.7",
+      "projected_score": "68-64",
+      "confidence": "lean",
       "upset_rating": 0.0,
       "variability": "high",
-      "key_factors": [],
-      "insight": "Razor-thin margin \u2014 essentially a coin flip. 1-seeds are 9-0 (100%) vs 1-seeds historically.",
-      "historical": "9-0"
+      "key_factors": [
+        "Gonzaga: 5-pt efficiency edge"
+      ],
+      "insight": "Slight edge to Gonzaga (4.7 pts). 1-seeds are 9-0 (100%) vs 1-seeds historically.",
+      "historical": "9-0",
+      "head_to_head": {
+        "past_tournament": [],
+        "this_season": []
+      }
     }
   ],
   "metrics": {
-    "brier_score": 0.14985407920634922,
-    "log_loss": 0.4473239145439674,
-    "accuracy": 0.7301587301587301,
+    "brier_score": 0.1541270711111111,
+    "log_loss": 0.4592226386389119,
+    "accuracy": 0.746031746031746,
     "n_games": 63,
-    "correct": 46,
+    "correct": 47,
+    "total_bias": -7.796825396825396,
+    "total_mae": 14.78095238095238,
+    "over_rate": 0.31746031746031744,
+    "margin_bias": 1.7682539682539684,
+    "n_scored": 63,
     "r64_correct": 27,
     "r64_total": 32
   },
@@ -1507,8 +2079,8 @@
       "total": 32
     },
     "Round of 32": {
-      "accuracy": 0.625,
-      "correct": 10,
+      "accuracy": 0.6875,
+      "correct": 11,
       "total": 16
     },
     "Sweet 16": {

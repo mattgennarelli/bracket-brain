@@ -162,12 +162,18 @@ def score_all_games(actual_games, teams, config):
     correct = 0
     n = 0
     round_stats = {}
+    total_errors = []
+    over_picks = 0
+    total_games_with_scores = 0
+    margin_errors_signed = []
 
     for g in actual_games:
         a = _lookup(g["team_a"], g["seed_a"], teams)
         b = _lookup(g["team_b"], g["seed_b"], teams)
+        rname = g.get("round_name", f"Round of {g['round']}")
         try:
-            result = predict_game(enrich_team(a), enrich_team(b), config=config)
+            result = predict_game(enrich_team(a), enrich_team(b), config=config,
+                                  round_name=rname)
         except Exception:
             continue
         prob_a = max(0.001, min(0.999, result["win_prob_a"]))
@@ -179,13 +185,23 @@ def score_all_games(actual_games, teams, config):
             correct += 1
         n += 1
 
-        rname = g.get("round_name", f"Round of {g['round']}")
         if rname not in round_stats:
             round_stats[rname] = {"correct": 0, "total": 0, "brier": 0.0}
         round_stats[rname]["total"] += 1
         round_stats[rname]["brier"] += (prob_a - a_won) ** 2
         if (prob_a >= 0.5) == bool(a_won):
             round_stats[rname]["correct"] += 1
+
+        # Total / margin bias tracking
+        if g.get("score_a") is not None and g.get("score_b") is not None:
+            actual_total = g["score_a"] + g["score_b"]
+            predicted_total = result["predicted_score_a"] + result["predicted_score_b"]
+            total_errors.append(predicted_total - actual_total)
+            if predicted_total > actual_total:
+                over_picks += 1
+            total_games_with_scores += 1
+            actual_margin_signed = g["score_a"] - g["score_b"]
+            margin_errors_signed.append(result["predicted_margin"] - actual_margin_signed)
 
     return {
         "brier_score": brier_sum / n if n else 1.0,
@@ -194,6 +210,11 @@ def score_all_games(actual_games, teams, config):
         "n_games": n,
         "correct": correct,
         "round_stats": round_stats,
+        "total_bias": sum(total_errors) / len(total_errors) if total_errors else 0,
+        "total_mae": sum(abs(e) for e in total_errors) / len(total_errors) if total_errors else 0,
+        "over_rate": over_picks / total_games_with_scores if total_games_with_scores else 0,
+        "margin_bias": sum(margin_errors_signed) / len(margin_errors_signed) if margin_errors_signed else 0,
+        "n_scored": total_games_with_scores,
     }
 
 
@@ -259,6 +280,14 @@ def run_year(year: int, config=DEFAULT_CONFIG, upset_aggression: float = 0.0,
                 continue
             acc = rs["correct"] / rs["total"] if rs["total"] else 0
             print(f"      {rname:16s}: {acc:.0%} ({rs['correct']}/{rs['total']})")
+
+        # Score / total bias
+        if metrics.get("n_scored", 0) > 0:
+            print(f"\n    Score prediction ({metrics['n_scored']} games with scores):")
+            print(f"      Total bias:   {metrics['total_bias']:+.1f} pts (predicted − actual)")
+            print(f"      Total MAE:    {metrics['total_mae']:.1f} pts")
+            print(f"      OVER rate:    {metrics['over_rate']:.1%} (model predicted > actual)")
+            print(f"      Margin bias:  {metrics['margin_bias']:+.1f} pts")
 
         # Check champion
         actual_champ_game = [g for g in actual_games if g["round"] == 2]

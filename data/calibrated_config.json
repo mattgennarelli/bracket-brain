@@ -11,7 +11,7 @@
   "conf_rating_max_bonus": 1.3006,
   "depth_max_bonus": 5.73,
   "ft_foul_rate_max_bonus": 0.0001,
-  "seed_weight": 0.18,
+  "seed_weight": 0.0,
   "base_scoring_stdev": 11.0,
   "pedigree_max_bonus": 1.0,
   "star_player_max_bonus": 1.5,

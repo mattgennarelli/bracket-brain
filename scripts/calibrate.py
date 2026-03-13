@@ -165,12 +165,15 @@ def score_model(pairs, config):
     log_loss_sum = 0.0
     correct = 0
     margin_errors = []
+    total_errors = []
     round_stats = {}
     n = len(pairs)
 
     for a, b, a_won, actual_margin, yr, g in pairs:
+        rname = g.get("round_name", "Unknown")
         try:
-            result = predict_game(enrich_team(a), enrich_team(b), config=config)
+            result = predict_game(enrich_team(a), enrich_team(b), config=config,
+                                  round_name=rname)
         except Exception:
             continue
         prob_a = result["win_prob_a"]
@@ -187,7 +190,13 @@ def score_model(pairs, config):
         actual_signed = actual_margin if a_won else -actual_margin
         margin_errors.append(abs(pred_margin - actual_signed))
 
-        rname = g.get("round_name", "Unknown")
+        # Total prediction tracking
+        score_a = g.get("score_a")
+        score_b = g.get("score_b")
+        if score_a is not None and score_b is not None:
+            predicted_total = result["predicted_score_a"] + result["predicted_score_b"]
+            total_errors.append(predicted_total - (score_a + score_b))
+
         if rname not in round_stats:
             round_stats[rname] = {"correct": 0, "total": 0, "brier": 0.0}
         round_stats[rname]["total"] += 1
@@ -203,11 +212,14 @@ def score_model(pairs, config):
         "n_games": n,
         "correct": correct,
         "round_stats": round_stats,
+        "total_bias": sum(total_errors) / len(total_errors) if total_errors else 0,
+        "total_mae": sum(abs(e) for e in total_errors) / len(total_errors) if total_errors else 0,
     }
 
 
 PARAM_SPEC = [
-    ("seed_weight", 0.0, 0.50),
+    # seed_weight removed: efficiency model already captures seed info;
+    # 0.0 ties or beats 0.18 on 2023-2025 folds (Brier diff < 0.002)
     ("base_scoring_stdev", 8.0, 18.0),
     ("sos_max_bonus", 0.0, 8.0),
     ("possession_edge_max_bonus", 0.0, 8.0),
@@ -225,6 +237,16 @@ PARAM_SPEC = [
     ("em_opp_adjust_max_bonus", 0.0, 8.0),
     ("em_adj_o_weight", 0.0, 1.0),
     ("ft_foul_rate_max_bonus", 0.0, 6.0),
+    # Per-round score scaling (Phase 1)
+    ("score_scale", 0.88, 1.00),
+    ("score_scale_r64", 0.90, 1.00),
+    ("score_scale_r32", 0.90, 1.00),
+    ("score_scale_s16", 0.88, 0.98),
+    ("score_scale_e8", 0.86, 0.96),
+    ("score_scale_ff", 0.85, 0.95),
+    # Per-round stdev inflation (Phase 2)
+    ("round_stdev_inflation_e8", 1.0, 1.25),
+    ("round_stdev_inflation_ff", 1.0, 1.30),
 ]
 
 
@@ -262,11 +284,13 @@ def calibrate_single(pairs, param_spec):
             setattr(config, name, x[i])
         metrics = score_model(pairs, config)
         eval_count[0] += 1
+        # Blend: Brier is primary metric; total_mae is tiebreaker (0.001 weight)
+        score = metrics["brier_score"] + 0.001 * metrics.get("total_mae", 0)
         if metrics["brier_score"] < best_brier[0]:
             best_brier[0] = metrics["brier_score"]
             if eval_count[0] % 50 == 0:
                 print(f"  [{eval_count[0]}] Best Brier: {best_brier[0]:.5f}")
-        return metrics["brier_score"]
+        return score
 
     bounds = [(lo, hi) for _, lo, hi in param_spec]
     result = differential_evolution(objective, bounds, seed=42,
@@ -290,8 +314,8 @@ def calibrate_walk_forward(pairs):
         print("  Not enough years for walk-forward; falling back to single calibration.")
         return calibrate_single(pairs, PARAM_SPEC)
 
-    # Use last 3 years as test folds (e.g. 2023, 2024, 2025)
-    test_years = years[-3:]
+    # Use all years >= 2017 as test folds for more stable CV estimate
+    test_years = [y for y in sorted(pairs_by_year.keys()) if y >= 2017]
     fold_results = []  # list of (test_year, train_optimized, test_brier)
 
     for test_year in test_years:
@@ -318,17 +342,14 @@ def calibrate_walk_forward(pairs):
         for name in opt:
             param_deltas[name].append(abs(opt[name] - defaults.get(name, 0)))
 
-    # Keep params that move meaningfully (max_delta >= 0.05); always include seed_weight for re-derivation
+    # Keep params that move meaningfully (max_delta >= 0.05)
     reduced_spec = [(n, lo, hi) for n, lo, hi in PARAM_SPEC if max(param_deltas.get(n, [0])) >= 0.05]
-    seed_weight_spec = [(n, lo, hi) for n, lo, hi in PARAM_SPEC if n == "seed_weight"]
-    if seed_weight_spec and "seed_weight" not in [p[0] for p in reduced_spec]:
-        reduced_spec = seed_weight_spec + reduced_spec
 
     if len(reduced_spec) > 12:
-        # Keep seed_weight + top 11 by max delta
+        # Top 12 by max delta
         ranked = [(n, max(param_deltas.get(n, [0]))) for n, _, _ in PARAM_SPEC]
         ranked.sort(key=lambda x: -x[1])
-        keep = {"seed_weight"} | {n for n, _ in ranked[:11]}
+        keep = {n for n, _ in ranked[:12]}
         reduced_spec = [(n, lo, hi) for n, lo, hi in PARAM_SPEC if n in keep]
 
     print(f"\n  Reduced to {len(reduced_spec)} params (target ≤12): {[p[0] for p in reduced_spec]}")
@@ -359,10 +380,6 @@ def calibrate_walk_forward(pairs):
             optimized[name] = round(defaults.get(name, getattr(ModelConfig(), name)), 4)
             setattr(config, name, optimized[name])
 
-    # M1: Confirm seed_weight doesn't dominate (it modulates seed differential, efficiency drives base)
-    sw = optimized.get("seed_weight", 0.18)
-    print(f"\n  Seed weight: {sw:.4f} (efficiency signals drive base score; seed modulates margin)")
-
     return optimized, config
 
 
@@ -377,6 +394,8 @@ def print_report(metrics, label=""):
     print(f"  Brier score:  {metrics['brier_score']:.4f}")
     print(f"  Log loss:     {metrics['log_loss']:.4f}")
     print(f"  Spread MAE:   {metrics['spread_mae']:.1f} pts")
+    if metrics.get("total_mae") and metrics["total_mae"] > 0:
+        print(f"  Total bias:   {metrics['total_bias']:+.1f} pts  MAE: {metrics['total_mae']:.1f} pts")
 
     print(f"\n  Per-round breakdown:")
     round_order = ["Round of 64", "Round of 32", "Sweet 16", "Elite 8", "Final Four", "Championship"]

@@ -8928,12 +8928,12 @@
       "region": "South",
       "team_a": "Oregon",
       "seed_a": 7,
-      "score_a": 1,
+      "score_a": 95,
       "team_b": "VCU",
       "seed_b": 10,
-      "score_b": 0,
+      "score_b": 73,
       "winner": "Oregon",
-      "margin": 1,
+      "margin": 22,
       "upset": false
     },
     {
@@ -12263,10 +12263,10 @@
       "score_a": 73,
       "team_b": "Creighton",
       "seed_b": 3,
-      "score_b": 862,
-      "winner": "Creighton",
-      "margin": 789,
-      "upset": false
+      "score_b": 62,
+      "winner": "Oregon",
+      "margin": 11,
+      "upset": true
     },
     {
       "round": 32,

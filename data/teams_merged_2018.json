@@ -21762,7 +21762,11 @@
     "em_depth_score": 0.39,
     "em_adj_o": 109.1461,
     "em_adj_d": 90.1547,
-    "team": "New Mexico State"
+    "team": "New Mexico State",
+    "adj_o": 107.3,
+    "adj_d": 94.6,
+    "adj_tempo": 68.0,
+    "_adj_source": "em_regression"
   },
   {
     "star_score": 0.6,
@@ -21828,7 +21832,11 @@
     "em_depth_score": 0.362,
     "em_adj_o": 114.6572,
     "em_adj_d": 97.143,
-    "team": "College of Charleston"
+    "team": "College of Charleston",
+    "adj_o": 110.4,
+    "adj_d": 102.5,
+    "adj_tempo": 68.0,
+    "_adj_source": "em_regression"
   },
   {
     "star_score": 0.505,
@@ -21850,7 +21858,11 @@
     "em_depth_score": 0.352,
     "em_adj_o": 108.4083,
     "em_adj_d": 94.8439,
-    "team": "Georgia State"
+    "team": "Georgia State",
+    "adj_o": 108.5,
+    "adj_d": 100.1,
+    "adj_tempo": 68.0,
+    "_adj_source": "em_regression"
   },
   {
     "star_score": 0.649,
@@ -22026,7 +22038,11 @@
     "em_depth_score": 0.244,
     "em_adj_o": 102.8252,
     "em_adj_d": 100.832,
-    "team": "Cal State Fullerton"
+    "team": "Cal State Fullerton",
+    "adj_o": 102.2,
+    "adj_d": 103.8,
+    "adj_tempo": 68.0,
+    "_adj_source": "em_regression"
   },
   {
     "star_score": 0.509,

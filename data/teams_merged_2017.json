@@ -21806,7 +21806,11 @@
     "em_depth_score": 0.433,
     "em_adj_o": 106.9041,
     "em_adj_d": 90.8656,
-    "team": "East Tennessee State"
+    "team": "East Tennessee State",
+    "adj_o": 105.9,
+    "adj_d": 98.0,
+    "adj_tempo": 68.0,
+    "_adj_source": "em_regression"
   },
   {
     "star_score": 0.65,
@@ -21828,7 +21832,11 @@
     "em_depth_score": 0.36,
     "em_adj_o": 112.6275,
     "em_adj_d": 94.2208,
-    "team": "New Mexico State"
+    "team": "New Mexico State",
+    "adj_o": 110.0,
+    "adj_d": 102.5,
+    "adj_tempo": 68.0,
+    "_adj_source": "em_regression"
   },
   {
     "star_score": 0.658,

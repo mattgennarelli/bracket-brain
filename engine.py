@@ -29,12 +29,15 @@ CALIBRATION:
 """
 
 import json
+import logging
 import math
 import os
 import random
 import re
 from collections import defaultdict
 from dataclasses import dataclass
+
+_logger = logging.getLogger("bracketbrain")
 
 # ===========================================================================
 # CONFIGURATION
@@ -46,7 +49,7 @@ class ModelConfig:
     base_scoring_stdev: float = 11.0
     national_avg_efficiency: float = 100.0
     national_avg_tempo: float = 67.5
-    seed_weight: float = 0.18
+    seed_weight: float = 0.0   # Removed from calibration: efficiency already captures seed info
     three_pt_volatility_factor: float = 0.15
     tempo_volatility_weight: float = 0.3
     experience_max_bonus: float = 2.5
@@ -73,6 +76,17 @@ class ModelConfig:
     ft_foul_rate_max_bonus: float = 2.0   # margin bonus from differential FT rate (foul drawing vs committing)
     score_scale: float = 0.942            # tournament scoring discount vs regular-season efficiency baseline
                                           # (calibrated: model over-predicts by 8.8 pts on 187 tournament games)
+    score_scale_r64: float = 0.960
+    score_scale_r32: float = 0.950
+    score_scale_s16: float = 0.935
+    score_scale_e8: float = 0.920
+    score_scale_ff: float = 0.910
+    factor_margin_cap: float = 6.0
+    round_stdev_inflation_r64: float = 1.00
+    round_stdev_inflation_r32: float = 1.03
+    round_stdev_inflation_s16: float = 1.06
+    round_stdev_inflation_e8: float = 1.10
+    round_stdev_inflation_ff: float = 1.12
 
 def _load_calibrated_config():
     """Load calibrated parameters from data/calibrated_config.json if it exists."""
@@ -237,7 +251,33 @@ def calc_conf_bonus(team, config=DEFAULT_CONFIG):
 # CORE PREDICTION
 # ===========================================================================
 
-def predict_game(team_a, team_b, game_site=None, config=DEFAULT_CONFIG):
+def _get_round_score_scale(round_name, config):
+    """Map round name to per-round score_scale config field."""
+    mapping = {
+        "Round of 64": config.score_scale_r64,
+        "Round of 32": config.score_scale_r32,
+        "Sweet 16": config.score_scale_s16,
+        "Elite 8": config.score_scale_e8,
+        "Final Four": config.score_scale_ff,
+        "Championship": config.score_scale_ff,
+    }
+    return mapping.get(round_name, config.score_scale)
+
+
+def _get_round_stdev_inflation(round_name, config):
+    """Map round name to per-round stdev inflation factor."""
+    mapping = {
+        "Round of 64": config.round_stdev_inflation_r64,
+        "Round of 32": config.round_stdev_inflation_r32,
+        "Sweet 16": config.round_stdev_inflation_s16,
+        "Elite 8": config.round_stdev_inflation_e8,
+        "Final Four": config.round_stdev_inflation_ff,
+        "Championship": config.round_stdev_inflation_ff,
+    }
+    return mapping.get(round_name, 1.0)
+
+
+def predict_game(team_a, team_b, game_site=None, config=DEFAULT_CONFIG, round_name=None):
     score_a, score_b, poss = _predict_base_score(team_a, team_b, config)
     base_margin = score_a - score_b
 
@@ -272,12 +312,18 @@ def predict_game(team_a, team_b, game_site=None, config=DEFAULT_CONFIG):
         factors_b[name] = fn(team_b)
 
     factor_margin = sum(factors_a.values()) - sum(factors_b.values())
+
+    # Soft-cap factor margin to prevent intangible stacking
+    cap = config.factor_margin_cap
+    factor_margin = math.tanh(factor_margin / cap) * cap
+
     extra_margin = possession_margin + ft_margin + foul_rate_margin + sos_margin
     adjusted_margin = base_margin + factor_margin + extra_margin
 
     # Variance (3PT volatility)
     vol = (calc_game_volatility(team_a, config) + calc_game_volatility(team_b, config)) / 2
-    game_stdev = config.base_scoring_stdev * math.sqrt(poss / config.national_avg_tempo) * vol
+    round_inflation = _get_round_stdev_inflation(round_name, config)
+    game_stdev = config.base_scoring_stdev * math.sqrt(poss / config.national_avg_tempo) * vol * round_inflation
 
     # Win probability
     if game_stdev == 0:
@@ -291,13 +337,34 @@ def predict_game(team_a, team_b, game_site=None, config=DEFAULT_CONFIG):
     seed_prob = _seed_win_prob(seed_a, seed_b)
     final_prob = _blend_probs(eff_prob, seed_prob, config.seed_weight)
 
-    return {
+    # Detect if both teams are using default/fallback stats
+    a_default = (team_a.get("adj_o") == 85 and team_a.get("adj_d") == 112)
+    b_default = (team_b.get("adj_o") == 85 and team_b.get("adj_d") == 112)
+    warning = None
+    if a_default and b_default:
+        _logger.warning(
+            f"Both teams ({team_a.get('team')} and {team_b.get('team')}) have default stats — "
+            "returning 50/50"
+        )
+        final_prob = 0.5
+        warning = "both teams have default stats"
+
+    # Per-round score scale with tempo adjustment
+    round_scale = _get_round_score_scale(round_name, config)
+    avg_tempo = (team_a.get("adj_tempo", config.national_avg_tempo) +
+                 team_b.get("adj_tempo", config.national_avg_tempo)) / 2
+    tempo_ratio = avg_tempo / config.national_avg_tempo
+    tempo_adjust = 0.5 * (tempo_ratio - 1.0)
+    effective_scale = round_scale * (1.0 + tempo_adjust)
+    effective_scale = max(0.88, min(1.0, effective_scale))
+
+    result = {
         "team_a": team_a["team"], "team_b": team_b["team"],
         "seed_a": seed_a, "seed_b": seed_b,
         "win_prob_a": round(final_prob, 4),
         "win_prob_b": round(1 - final_prob, 4),
-        "predicted_score_a": round((score_a + factor_margin/2) * config.score_scale, 1),
-        "predicted_score_b": round((score_b - factor_margin/2) * config.score_scale, 1),
+        "predicted_score_a": round((score_a + factor_margin/2) * effective_scale, 1),
+        "predicted_score_b": round((score_b - factor_margin/2) * effective_scale, 1),
         "predicted_margin": round(adjusted_margin, 1),
         "base_margin": round(base_margin, 1),
         "factor_margin": round(factor_margin, 1),
@@ -311,6 +378,9 @@ def predict_game(team_a, team_b, game_site=None, config=DEFAULT_CONFIG):
         "factors_a": {k: round(v, 2) for k, v in factors_a.items()},
         "factors_b": {k: round(v, 2) for k, v in factors_b.items()},
     }
+    if warning:
+        result["warning"] = warning
+    return result
 
 def _record_path_win(winner, loser):
     """Update winner's tournament path stats after beating loser."""
@@ -525,6 +595,46 @@ def enrich_team(team):
     # Map blk_rate → block_rate (Torvik adv field name)
     if "block_rate" not in t and "blk_rate" in t:
         t["block_rate"] = t["blk_rate"]
+    # Seed-based efficiency fallback: use historical per-seed averages when
+    # Torvik adj_o/adj_d are missing (common for 12-16 seeds from small programs).
+    # Averages derived from teams_merged data across 2010-2025 tournaments.
+    _SEED_EFF_DEFAULTS = {
+        1:  (120.9, 91.5),
+        2:  (118.1, 93.8),
+        3:  (115.6, 95.7),
+        4:  (113.8, 96.9),
+        5:  (112.6, 97.5),
+        6:  (112.0, 98.2),
+        7:  (111.4, 98.7),
+        8:  (111.0, 99.3),
+        9:  (110.8, 99.6),
+        10: (111.2, 99.0),
+        11: (110.9, 99.1),
+        12: (110.5, 97.9),
+        13: (109.0, 100.2),
+        14: (107.2, 101.4),
+        15: (105.3, 102.9),
+        16: (102.2, 104.9),
+    }
+    adj_o = t.get("adj_o")
+    adj_d = t.get("adj_d")
+    if adj_o is None or adj_d is None or (adj_o == 85 and adj_d == 112):
+        seed = t.get("seed")
+        defaults = _SEED_EFF_DEFAULTS.get(int(seed)) if seed is not None else None
+        if defaults:
+            if adj_o is None or adj_o == 85:
+                t["adj_o"] = defaults[0]
+            if adj_d is None or adj_d == 112:
+                t["adj_d"] = defaults[1]
+            _logger.debug(
+                f"Team '{t.get('team', 'UNKNOWN')}' (seed {seed}): using seed-based "
+                f"efficiency fallback adj_o={t['adj_o']}, adj_d={t['adj_d']}"
+            )
+        else:
+            _logger.warning(
+                f"Team '{t.get('team', 'UNKNOWN')}' has no real efficiency data and "
+                "no seed for fallback — prediction will be unreliable."
+            )
     return t
 
 # ===========================================================================
@@ -1437,7 +1547,7 @@ def generate_bracket_picks(bracket, config=DEFAULT_CONFIG, upset_aggression=0.0,
             if not a or not b:
                 continue
             game_num += 1
-            result = predict_game(a, b, config=config)
+            result = predict_game(a, b, config=config, round_name="Round of 64")
             pick_a = _should_pick_upset(result["win_prob_a"], a["seed"], b["seed"], upset_aggression)
             pick_team = a if pick_a else b
             picks.append(_make_pick_dict(game_num, 64, "Round of 64", region, a, b, result, pick_team, **_h2h_kw))
@@ -1452,7 +1562,7 @@ def generate_bracket_picks(bracket, config=DEFAULT_CONFIG, upset_aggression=0.0,
                 a, b = teams_in[i], teams_in[i + 1]
                 nonlocal game_num
                 game_num += 1
-                result = predict_game(a, b, config=config)
+                result = predict_game(a, b, config=config, round_name=round_name)
                 pick_a = _should_pick_upset(result["win_prob_a"], a["seed"], b["seed"], upset_aggression)
                 pick_team = a if pick_a else b
                 picks.append(_make_pick_dict(game_num, round_of, round_name, region, a, b, result, pick_team, **_h2h_kw))
@@ -1478,7 +1588,7 @@ def generate_bracket_picks(bracket, config=DEFAULT_CONFIG, upset_aggression=0.0,
             ff_winners.append(a or b)
             continue
         game_num += 1
-        result = predict_game(a, b, config=config)
+        result = predict_game(a, b, config=config, round_name="Final Four")
         pick_a = _should_pick_upset(result["win_prob_a"], a["seed"], b["seed"], upset_aggression)
         pick_team = a if pick_a else b
         picks.append(_make_pick_dict(game_num, 4, "Final Four", None, a, b, result, pick_team))
@@ -1489,7 +1599,7 @@ def generate_bracket_picks(bracket, config=DEFAULT_CONFIG, upset_aggression=0.0,
     if len(ff_winners) >= 2:
         a, b = ff_winners[0], ff_winners[1]
         game_num += 1
-        result = predict_game(a, b, config=config)
+        result = predict_game(a, b, config=config, round_name="Championship")
         pick_a = _should_pick_upset(result["win_prob_a"], a["seed"], b["seed"], upset_aggression)
         pick_team = a if pick_a else b
         picks.append(_make_pick_dict(game_num, 2, "Championship", None, a, b, result, pick_team, **_h2h_kw))

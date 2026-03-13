@@ -1,0 +1,79 @@
+{
+  "years": [
+    2023,
+    2024,
+    2025
+  ],
+  "bins": [
+    {
+      "bin": "50-55%",
+      "n_games": 17,
+      "predicted_midpoint": 0.525,
+      "actual_win_rate": 0.471,
+      "calibration_error": -0.0544
+    },
+    {
+      "bin": "55-60%",
+      "n_games": 24,
+      "predicted_midpoint": 0.575,
+      "actual_win_rate": 0.458,
+      "calibration_error": -0.1167
+    },
+    {
+      "bin": "60-65%",
+      "n_games": 21,
+      "predicted_midpoint": 0.625,
+      "actual_win_rate": 0.667,
+      "calibration_error": 0.0417
+    },
+    {
+      "bin": "65-70%",
+      "n_games": 25,
+      "predicted_midpoint": 0.675,
+      "actual_win_rate": 0.64,
+      "calibration_error": -0.035
+    },
+    {
+      "bin": "70-75%",
+      "n_games": 19,
+      "predicted_midpoint": 0.725,
+      "actual_win_rate": 0.632,
+      "calibration_error": -0.0934
+    },
+    {
+      "bin": "75-80%",
+      "n_games": 22,
+      "predicted_midpoint": 0.775,
+      "actual_win_rate": 0.955,
+      "calibration_error": 0.1795
+    },
+    {
+      "bin": "80-85%",
+      "n_games": 11,
+      "predicted_midpoint": 0.825,
+      "actual_win_rate": 1.0,
+      "calibration_error": 0.175
+    },
+    {
+      "bin": "85-90%",
+      "n_games": 15,
+      "predicted_midpoint": 0.875,
+      "actual_win_rate": 1.0,
+      "calibration_error": 0.125
+    },
+    {
+      "bin": "90-95%",
+      "n_games": 14,
+      "predicted_midpoint": 0.925,
+      "actual_win_rate": 0.786,
+      "calibration_error": -0.1393
+    },
+    {
+      "bin": "95-100%",
+      "n_games": 21,
+      "predicted_midpoint": 0.975,
+      "actual_win_rate": 0.952,
+      "calibration_error": -0.0226
+    }
+  ]
+}

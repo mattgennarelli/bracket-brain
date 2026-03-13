@@ -21784,7 +21784,11 @@
     "em_depth_score": 0.439,
     "em_adj_o": 115.9647,
     "em_adj_d": 96.5757,
-    "team": "New Mexico State"
+    "team": "New Mexico State",
+    "adj_o": 111.6,
+    "adj_d": 101.6,
+    "adj_tempo": 68.0,
+    "_adj_source": "em_regression"
   },
   {
     "star_score": 0.715,
@@ -21850,7 +21854,11 @@
     "em_depth_score": 0.288,
     "em_adj_o": 111.2543,
     "em_adj_d": 100.6559,
-    "team": "Louisiana-Lafayette"
+    "team": "Louisiana-Lafayette",
+    "adj_o": 109.1,
+    "adj_d": 105.7,
+    "adj_tempo": 68.0,
+    "_adj_source": "em_regression"
   },
   {
     "star_score": 0.499,
@@ -21916,7 +21924,11 @@
     "em_depth_score": 0.218,
     "em_adj_o": 109.0501,
     "em_adj_d": 97.9822,
-    "team": "Weber State"
+    "team": "Weber State",
+    "adj_o": 105.4,
+    "adj_d": 104.2,
+    "adj_tempo": 68.0,
+    "_adj_source": "em_regression"
   },
   {
     "star_score": 0.485,

@@ -31,7 +31,7 @@ except ImportError:
     print("ERROR: 'requests' not installed.")
     sys.exit(1)
 
-from best_bets import _normalize_team_for_match
+from best_bets import _normalize_team_for_match, _american_to_decimal
 
 LEDGER_PATH = os.path.join(DATA_DIR, "bets_ledger.json")
 ODDS_API_BASE = "https://api.the-odds-api.com/v4"
@@ -163,11 +163,21 @@ def settle_pick(pick, home_score, away_score):
 # Stats
 # ---------------------------------------------------------------------------
 
+def _american_to_decimal_safe(odds):
+    """Convert American odds to decimal format, defaulting to -110 on failure."""
+    try:
+        return _american_to_decimal(float(odds))
+    except (TypeError, ValueError):
+        return 1.909  # default -110
+
+
 def compute_stats(picks):
-    """Compute hit rate stats from a list of pick dicts."""
+    """Compute hit rate and ROI stats from a list of pick dicts."""
     by_type = {t: {"picks": 0, "wins": 0, "losses": 0, "pushes": 0}
                for t in ("ml", "spread", "total")}
     total_settled = wins = losses = pushes = 0
+    total_wagered = 0.0
+    net_units = 0.0
 
     for p in picks:
         r = p.get("result")
@@ -188,6 +198,19 @@ def compute_stats(picks):
             by_type[bt]["pushes"] += 1
             pushes += 1
 
+        # Kelly-weighted ROI tracking
+        kelly_u = p.get("kelly_units", 1.0)  # default 1 unit if no kelly sizing
+        decimal_odds = _american_to_decimal_safe(p.get("bet_odds"))
+        if r == "W":
+            net_units += kelly_u * (decimal_odds - 1)
+            total_wagered += kelly_u
+        elif r == "L":
+            net_units -= kelly_u
+            total_wagered += kelly_u
+        # Push: no change to net_units, but still counts as wagered
+        elif r == "P":
+            total_wagered += kelly_u
+
     def hit_rate(d):
         decided = d["wins"] + d["losses"]
         return round(d["wins"] / decided, 4) if decided else None
@@ -195,7 +218,6 @@ def compute_stats(picks):
     for bt in by_type:
         by_type[bt]["hit_rate"] = hit_rate(by_type[bt])
 
-    decided = wins + losses
     return {
         "total_picks": len([p for p in picks if p.get("result") is not None or True]),
         "settled": total_settled,
@@ -204,6 +226,9 @@ def compute_stats(picks):
         "pushes": pushes,
         "hit_rate": round(wins / (wins + losses), 4) if (wins + losses) else None,
         "by_type": by_type,
+        "total_wagered": round(total_wagered, 2),
+        "net_units": round(net_units, 2),
+        "roi_pct": round(net_units / total_wagered * 100, 2) if total_wagered > 0 else 0.0,
     }
 
 
@@ -327,6 +352,9 @@ def _print_stats(stats):
     decided = stats.get("wins", 0) + stats.get("losses", 0)
     print(f"\n  Overall: {stats['wins']}W-{stats['losses']}L-{stats['pushes']}P  "
           f"({decided} decided)  Hit rate: {hr_str}")
+    if stats.get("total_wagered", 0) > 0:
+        print(f"  Units wagered: {stats['total_wagered']:.1f}  "
+              f"Net: {stats['net_units']:+.1f}  ROI: {stats['roi_pct']:+.1f}%")
     for bt, s in stats.get("by_type", {}).items():
         if s["picks"] == 0:
             continue

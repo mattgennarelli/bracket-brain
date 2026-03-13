@@ -54,9 +54,10 @@ MARKETS = "h2h,spreads,totals"
 ODDS_FORMAT = "american"
 
 # Default edge thresholds to flag as a "bet"
-DEFAULT_ML_EDGE = 0.07      # 7% win probability edge over implied odds
-DEFAULT_SPREAD_EDGE = 5.0   # model cover margin must exceed 5 pts
-DEFAULT_TOTAL_EDGE = 8.0    # model total differs from Vegas total by 8+ pts
+DEFAULT_ML_EDGE = 0.10      # 10% win probability edge over implied odds (raised from 7%)
+DEFAULT_SPREAD_EDGE = 7.0   # model cover margin must exceed 7 pts (raised from 5)
+DEFAULT_TOTAL_EDGE = 10.0   # model total differs from Vegas total by 10+ pts (raised from 8)
+DEFAULT_MIN_MODEL_CONFIDENCE = 0.58  # skip ML bets when model probability < 58%
 
 
 # ---------------------------------------------------------------------------
@@ -337,6 +338,33 @@ def total_edge(model_total, vegas_total):
     return model_total - vegas_total
 
 
+def kelly_fraction(model_prob, decimal_odds, fraction=0.25):
+    """Compute fractional Kelly bet size.
+
+    Args:
+        model_prob: our estimated probability of winning
+        decimal_odds: payout in decimal format (e.g., 2.0 for even money)
+        fraction: Kelly fraction (0.25 = quarter Kelly, conservative)
+
+    Returns:
+        Fraction of bankroll to bet (0.0 if no edge), capped at 5%.
+    """
+    if decimal_odds <= 1.0:
+        return 0.0
+    edge = model_prob * decimal_odds - 1.0
+    if edge <= 0:
+        return 0.0
+    full_kelly = edge / (decimal_odds - 1.0)
+    sized = full_kelly * fraction
+    return min(sized, 0.05)  # hard cap at 5% of bankroll
+
+
+def cover_prob(cover_margin, stdev=11.0):
+    """Probability of covering given cover margin (positive = covers) and game stdev."""
+    from math import erf, sqrt
+    return 0.5 * (1.0 + erf(cover_margin / (stdev * sqrt(2))))
+
+
 def payout_str(american_odds):
     """Format American odds with sign."""
     if american_odds is None:
@@ -398,20 +426,30 @@ def get_best_bets_json(api_key, year=None, ml_min=None, spread_min=None, total_m
             "model_total": model_total,
         }
 
+        min_conf = DEFAULT_MIN_MODEL_CONFIDENCE
+
         # ML bets
         h_edge, a_edge = ml_edge(model_prob_home, game["ml_home"], game["ml_away"])
         if h_edge is not None:
             raw_h = _american_to_prob(game["ml_home"])
             raw_a = _american_to_prob(game["ml_away"])
             ih, ia = _devig(raw_h, raw_a)
-            if h_edge >= min_ml:
+            if h_edge >= min_ml and model_prob_home >= min_conf:
+                dec_h = _american_to_decimal(game["ml_home"])
+                k_h = kelly_fraction(model_prob_home, dec_h)
                 bets.append(({**base, "bet_type": "ml", "bet_side": home_name,
                              "bet_odds": game["ml_home"], "implied_prob": ih,
-                             "model_prob": model_prob_home}, h_edge))
-            if a_edge >= min_ml:
+                             "model_prob": model_prob_home,
+                             "kelly_size": round(k_h, 4),
+                             "kelly_units": round(k_h * 100, 2)}, h_edge))
+            if a_edge >= min_ml and (1 - model_prob_home) >= min_conf:
+                dec_a = _american_to_decimal(game["ml_away"])
+                k_a = kelly_fraction(1 - model_prob_home, dec_a)
                 bets.append(({**base, "bet_type": "ml", "bet_side": away_name,
                              "bet_odds": game["ml_away"], "implied_prob": ia,
-                             "model_prob": 1 - model_prob_home}, a_edge))
+                             "model_prob": 1 - model_prob_home,
+                             "kelly_size": round(k_a, 4),
+                             "kelly_units": round(k_a * 100, 2)}, a_edge))
 
         # Spread bets
         sp_edge_val = spread_edge(model_margin, game["spread_home"])
@@ -419,23 +457,35 @@ def get_best_bets_json(api_key, year=None, ml_min=None, spread_min=None, total_m
             if sp_edge_val > 0:
                 bet_team = home_name
                 bet_spread = game["spread_home"]
+                cp = cover_prob(sp_edge_val)
             else:
                 bet_team = away_name
                 bet_spread = -game["spread_home"]
+                cp = cover_prob(abs(sp_edge_val))
+            dec_sp = _american_to_decimal(game["spread_line"]) if game["spread_line"] else 1.909
+            k_sp = kelly_fraction(cp, dec_sp)
             bets.append(({**base, "bet_type": "spread",
                          "bet_team": bet_team, "bet_spread": bet_spread,
                          "bet_odds": game["spread_line"],
                          "vegas_spread": game["spread_home"],
                          "cover_margin": abs(sp_edge_val),
-                         "model_margin": model_margin}, abs(sp_edge_val)))
+                         "model_margin": model_margin,
+                         "kelly_size": round(k_sp, 4),
+                         "kelly_units": round(k_sp * 100, 2)}, abs(sp_edge_val)))
 
         # Total bets
         tot_e = total_edge(model_total, game["total_line"])
         if tot_e is not None and abs(tot_e) >= min_total:
             side = "OVER" if tot_e > 0 else "UNDER"
+            # cover_margin for total: how far our prediction exceeds the line
+            cp_tot = cover_prob(abs(tot_e))
+            dec_tot = 1.909  # typical -110 for totals
+            k_tot = kelly_fraction(cp_tot, dec_tot)
             bets.append(({**base, "bet_type": "total", "bet_side": side,
                          "vegas_total": game["total_line"],
-                         "model_total": model_total}, tot_e))
+                         "model_total": model_total,
+                         "kelly_size": round(k_tot, 4),
+                         "kelly_units": round(k_tot * 100, 2)}, tot_e))
 
     # Sort by commence_time, then by edge magnitude
     bets.sort(key=lambda x: (x[0]["commence_time"], -abs(x[1])))
@@ -506,10 +556,11 @@ def print_report(bets, thresholds):
         odds = payout_str(g["bet_odds"])
         impl = g["implied_prob"]
         model_p = g["model_prob"]
+        kelly_u = g.get("kelly_units", 0)
         stars = star_rating(abs(edge), [ml_thresh, ml_thresh * 1.5, ml_thresh * 2.5])
         print(f"  {stars:4s} {side} ({odds})")
         print(f"       {g['away_team']} @ {g['home_team']}  {format_time(g['commence_time'])}")
-        print(f"       Model: {model_p:.1%}  Vegas implied: {impl:.1%}  Edge: {edge:+.1%}")
+        print(f"       Model: {model_p:.1%}  Vegas implied: {impl:.1%}  Edge: {edge:+.1%}  Kelly: {kelly_u:.1f} units")
 
     # --- Spread ---
     header("SPREAD")
@@ -521,10 +572,11 @@ def print_report(bets, thresholds):
         model_m = g["model_margin"]
         odds = payout_str(g["bet_odds"])
         cover = g["cover_margin"]
+        kelly_u = g.get("kelly_units", 0)
         stars = star_rating(edge, [sp_thresh, sp_thresh * 1.5, sp_thresh * 2.0])
         print(f"  {stars:4s} {team} {spread:+.1f} ({odds})")
         print(f"       {g['away_team']} @ {g['home_team']}  {format_time(g['commence_time'])}")
-        print(f"       Model margin: {model_m:+.1f}  Spread: {spread:+.1f}  Covers by: {cover:.1f} pts")
+        print(f"       Model margin: {model_m:+.1f}  Spread: {spread:+.1f}  Covers by: {cover:.1f} pts  Kelly: {kelly_u:.1f} units")
 
     # --- Totals ---
     header("OVER / UNDER")
@@ -534,10 +586,11 @@ def print_report(bets, thresholds):
         side = g["bet_side"]
         line = g["vegas_total"]
         model_t = g["model_total"]
+        kelly_u = g.get("kelly_units", 0)
         stars = star_rating(abs(edge), [tot_thresh, tot_thresh * 1.4, tot_thresh * 2.0])
         print(f"  {stars:4s} {side} {line:.1f}")
         print(f"       {g['away_team']} @ {g['home_team']}  {format_time(g['commence_time'])}")
-        print(f"       Model total: {model_t:.1f}  Vegas: {line:.1f}  Edge: {edge:+.1f} pts")
+        print(f"       Model total: {model_t:.1f}  Vegas: {line:.1f}  Edge: {edge:+.1f} pts  Kelly: {kelly_u:.1f} units")
 
     total_flagged = len(ml_bets) + len(sp_bets) + len(tot_bets)
     print(f"\n  {total_flagged} qualifying bet(s) found.")
@@ -562,6 +615,8 @@ def main():
                         help=f"Min total edge in pts (default: {DEFAULT_TOTAL_EDGE})")
     parser.add_argument("--all", action="store_true",
                         help="Print all games, not just qualifying bets")
+    parser.add_argument("--min-confidence", type=float, default=DEFAULT_MIN_MODEL_CONFIDENCE,
+                        help=f"Min model probability for ML bets (default: {DEFAULT_MIN_MODEL_CONFIDENCE:.0%})")
     args = parser.parse_args()
 
     if not args.api_key:
@@ -646,20 +701,30 @@ def main():
             if game["total_line"]:
                 print(f"    Vegas total: {game['total_line']:.1f}  model: {model_total:.1f}")
 
+        min_conf = getattr(args, "min_confidence", DEFAULT_MIN_MODEL_CONFIDENCE)
+
         # --- ML bets ---
         h_edge, a_edge = ml_edge(model_prob_home, game["ml_home"], game["ml_away"])
         if h_edge is not None:
             raw_h = _american_to_prob(game["ml_home"])
             raw_a = _american_to_prob(game["ml_away"])
             ih, ia = _devig(raw_h, raw_a)
-            if h_edge >= args.ml_edge:
+            if h_edge >= args.ml_edge and model_prob_home >= min_conf:
+                dec_h = _american_to_decimal(game["ml_home"])
+                k_h = kelly_fraction(model_prob_home, dec_h)
                 bets.append(({**base, "bet_type": "ml", "bet_side": home_name,
                                "bet_odds": game["ml_home"], "implied_prob": ih,
-                               "model_prob": model_prob_home}, h_edge))
-            if a_edge >= args.ml_edge:
+                               "model_prob": model_prob_home,
+                               "kelly_size": round(k_h, 4),
+                               "kelly_units": round(k_h * 100, 2)}, h_edge))
+            if a_edge >= args.ml_edge and (1 - model_prob_home) >= min_conf:
+                dec_a = _american_to_decimal(game["ml_away"])
+                k_a = kelly_fraction(1 - model_prob_home, dec_a)
                 bets.append(({**base, "bet_type": "ml", "bet_side": away_name,
                                "bet_odds": game["ml_away"], "implied_prob": ia,
-                               "model_prob": 1 - model_prob_home}, a_edge))
+                               "model_prob": 1 - model_prob_home,
+                               "kelly_size": round(k_a, 4),
+                               "kelly_units": round(k_a * 100, 2)}, a_edge))
 
         # --- Spread bets ---
         sp_edge = spread_edge(model_margin, game["spread_home"])
@@ -668,24 +733,34 @@ def main():
                 # Home team covers their spread
                 bet_team = home_name
                 bet_spread = game["spread_home"]          # e.g. -7.5 (home favored)
+                cp_sp = cover_prob(sp_edge)
             else:
                 # Away team covers their spread
                 bet_team = away_name
                 bet_spread = -game["spread_home"]         # flip: e.g. +30.5 if home is -30.5
+                cp_sp = cover_prob(abs(sp_edge))
+            dec_sp = _american_to_decimal(game["spread_line"]) if game["spread_line"] else 1.909
+            k_sp = kelly_fraction(cp_sp, dec_sp)
             bets.append(({**base, "bet_type": "spread",
                            "bet_team": bet_team, "bet_spread": bet_spread,
                            "bet_odds": game["spread_line"],
                            "vegas_spread": game["spread_home"],
                            "cover_margin": abs(sp_edge),  # pts by which bet team beats spread
-                           "model_margin": model_margin}, abs(sp_edge)))
+                           "model_margin": model_margin,
+                           "kelly_size": round(k_sp, 4),
+                           "kelly_units": round(k_sp * 100, 2)}, abs(sp_edge)))
 
         # --- Total bets ---
         tot_e = total_edge(model_total, game["total_line"])
         if tot_e is not None and abs(tot_e) >= args.total_edge:
             side = "OVER" if tot_e > 0 else "UNDER"
+            cp_tot = cover_prob(abs(tot_e))
+            k_tot = kelly_fraction(cp_tot, 1.909)
             bets.append(({**base, "bet_type": "total", "bet_side": side,
                            "vegas_total": game["total_line"],
-                           "model_total": model_total}, tot_e))
+                           "model_total": model_total,
+                           "kelly_size": round(k_tot, 4),
+                           "kelly_units": round(k_tot * 100, 2)}, tot_e))
 
     if started:
         print(f"  Skipped {started} game(s) already in progress.")

@@ -780,10 +780,10 @@
       "score_a": 73,
       "team_b": "Creighton",
       "seed_b": 3,
-      "score_b": 862,
-      "winner": "Creighton",
-      "margin": 789,
-      "upset": false
+      "score_b": 62,
+      "winner": "Oregon",
+      "margin": 11,
+      "upset": true
     },
     {
       "round": 32,

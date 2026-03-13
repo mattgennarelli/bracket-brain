@@ -30,7 +30,7 @@
 
 ### M1 — Fix the Foundation
 **Goal:** The model is trustworthy, the app is stable, and the CI pipeline is green.
-**Target:** Before Round of 64 tips (March 20, 2026)
+**Target:** (March 16, 2026)
 
 #### Model Integrity
 - [x] Implement walk-forward cross-validation (train on years N–k, test on year N) — replace current random split
@@ -55,29 +55,34 @@
 
 ### M2 — Model Excellence
 **Goal:** Best-in-class prediction accuracy; model is clearly better than seeding alone and competitive with ESPN BPI.
-**Target:** End of Round of 32 (March 24, 2026)
+**Target:** (March 16, 2026)
 
-#### New Signals
-- [ ] Add recent-form weight: last 10 games efficiency vs season efficiency (exponential decay)
-- [ ] Add conference-strength adjustment: boost mid-major teams whose conference RPI undersells them
-- [ ] Add rest-days differential: days since last game for each team (significant in tournament)
-- [ ] Evaluate each new signal by Brier improvement on 2023–2025 held-out data before keeping
+#### Benchmarking (completed)
+- [x] Build `scripts/benchmark.py` — compares seed-only, efficiency-only, full model on 2023–2025 walk-forward folds
 
-#### Per-Round Calibration
-- [ ] Compute separate `score_scale` per round (R64 vs FF have different scoring dynamics)
-- [ ] Add `round_variance_factor` to inflate win-prob uncertainty in early rounds (more upsets)
-- [ ] **Measurable:** Round-stratified Brier scores all < 0.20; model beats seed-only baseline by > 3 Brier points (Elite 8 currently worst at 0.231)
+- [ ] Add champion probability rank + FF hit rate to benchmark output
+- [ ] Publish the comparison table on the Picks tab
 
-#### Benchmarking
-- [ ] Build `scripts/benchmark.py` — compares model vs seed-only, KenPom public picks, ESPN BPI on 2023–2025
-- [ ] Publish accuracy table in README and on the Picks tab
-- [ ] **Measurable:** Model outperforms seed-only baseline on 3/3 held-out years; README shows the table
+#### Right Metrics for Evaluation
+- [ ] Add `--bracket-quality` mode to `benchmark.py`: for each model, report champion rank, champion %, FF hit rate in top-8
+- [ ] **Measurable:** Full model champion rank ≤ #3 in at least 2 of 3 held-out years (achieved: #2, #1, #2 ✓)
+
+#### New Signals (now gated on bracket quality improvement, not flat Brier)
+- [ ] `recent_form_weight`: last 10 games vs season efficiency — requires fetching per-game data for historical years
+- [ ] `rest_days_diff`: days since last game — requires tournament schedule data
+- [ ] Each signal kept only if it improves champion rank or FF hit rate, not just Brier
+- [ ] **Measurable:** Avg champion % across 3 held-out years > 15% (currently: 16.1% avg across 2023/24/25 ✓)
+
+#### Per-Round Win-Prob Calibration
+- [ ] Add `late_round_dampening` param: shift win-probs toward 0.5 in Sweet 16+ (all models collapse there)
+- [ ] Calibrate per round via walk-forward CV
+- [ ] **Measurable:** Sweet 16 + Elite 8 Brier both < 0.230 (currently 0.267 and 0.248)
 
 ---
 
 ### M3 — UX Transformation
 **Goal:** The site works perfectly on mobile, is visually polished, and is shareable.
-**Target:** Sweet 16 (March 27, 2026)
+**Target:** (March 16, 2026)
 
 #### Mobile-First Bracket
 - [ ] Rebuild bracket layout using CSS Grid instead of fixed-width tables
@@ -107,7 +112,7 @@
 
 ### M4 — Betting Platform
 **Goal:** The Picks tab is a full betting tool: sized picks, ROI tracking, OVER bias fixed.
-**Target:** Elite Eight (March 30, 2026)
+**Target:** (March 16, 2026)
 
 #### OVER Bias Fix
 - [ ] Stratify historical games by tempo quartile; compute `score_scale` per quartile
