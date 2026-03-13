@@ -795,7 +795,7 @@ function recomputeBracket() {
       bracketState[gid] = {
         teamA: tA.team, seedA: tA.seed,
         teamB: tB.team, seedB: tB.seed,
-        probA: p ? (p.pick === tA.team ? p.win_prob : 1 - p.win_prob) : 0.5,
+        probA: p ? (p.team_a === tA.team ? p.win_prob_a : p.win_prob_b) : 0.5,
         margin: p?.projected_spread || 0,
         pick: lockedPicks[gid] || simPicks[gid] || null,
         isLocked: !!lockedPicks[gid],
@@ -826,7 +826,7 @@ function recomputeBracket() {
         const seedB = teamB ? (stB?.pick === stB?.teamA ? stB?.seedA : stB?.seedB) : null;
         const p = PICKS.find(pp => pp.region === region && pp.round === roundOf &&
           (pp.team_a === teamA || pp.team_b === teamA));
-        const probA = p && teamA ? (p.pick === teamA ? p.win_prob : 1 - p.win_prob)
+        const probA = p && teamA ? (p.team_a === teamA ? p.win_prob_a : p.win_prob_b)
           : (seedA && seedB ? seedWinProb(seedA, seedB) : 0.5);
         bracketState[gid] = {
           teamA, seedA, teamB, seedB, probA,
@@ -848,7 +848,7 @@ function recomputeBracket() {
           const seedB = teamB ? (stB?.pick === stB?.teamA ? stB?.seedA : stB?.seedB) : null;
           const p = PICKS.find(pp => pp.round === 4 &&
             (pp.team_a === teamA || pp.team_b === teamA));
-          const probA = p && teamA ? (p.team_a === teamA ? p.win_prob : 1 - p.win_prob)
+          const probA = p && teamA ? (p.team_a === teamA ? p.win_prob_a : p.win_prob_b)
             : (seedA && seedB ? seedWinProb(seedA, seedB) : 0.5);
           bracketState[gid] = {
             teamA, seedA, teamB, seedB, probA,
@@ -864,7 +864,7 @@ function recomputeBracket() {
         const seedB = teamB ? (stB?.pick === stB?.teamA ? stB?.seedA : stB?.seedB) : null;
         const p = PICKS.find(pp => pp.round === 2 &&
           (pp.team_a === teamA || pp.team_b === teamA));
-        const probA = p && teamA ? (p.pick === teamA ? p.win_prob : 1 - p.win_prob)
+        const probA = p && teamA ? (p.team_a === teamA ? p.win_prob_a : p.win_prob_b)
           : (seedA && seedB ? seedWinProb(seedA, seedB) : 0.5);
         bracketState['FF-2-0'] = {
           teamA, seedA, teamB, seedB, probA,
@@ -1104,8 +1104,11 @@ function showAnalysis(gameId) {
   const insight = orig?.insight || '';
   const keyFactors = orig?.key_factors || [];
   const upsetAlert = orig?.upset_alert;
-  const pickTeam = favA ? st.teamA : st.teamB;
-  const pickSeed = favA ? st.seedA : st.seedB;
+  // Use the model's actual pick (may differ from statistical favorite under chaos)
+  const modelPick = orig?.pick || (favA ? st.teamA : st.teamB);
+  const pickTeam = modelPick;
+  const pickSeed = modelPick === st.teamA ? st.seedA : st.seedB;
+  const pickProb = modelPick === st.teamA ? pA : pB;
 
   // ── Signal comparison bar helper ───────────────────────────────────────────
   function signalBar(valA, valB, label, fmtA, fmtB, higherBetter = true) {
@@ -1226,21 +1229,23 @@ function showAnalysis(gameId) {
       </div>
     </div>` : '';
 
+  const spreadLabel = orig?.spread_fav || `${favA ? st.teamA : st.teamB} −${spread}`;
   const scoreHtml = (scoreA && scoreB)
     ? `<div class="ap-score-line">
         <strong>${scoreA.toFixed(0)}</strong><span>–</span><strong>${scoreB.toFixed(0)}</strong>
-        <span class="spread-chip">${favA ? st.teamA : st.teamB} −${spread}</span>
+        <span class="spread-chip">${spreadLabel}</span>
         ${total ? `<span>O/U ${total.toFixed(0)}</span>` : ''}
        </div>`
-    : `<div class="ap-score-line"><span class="spread-chip">${favA ? st.teamA : st.teamB} −${spread}</span></div>`;
+    : `<div class="ap-score-line"><span class="spread-chip">${spreadLabel}</span></div>`;
 
+  const isUpsetPick = pickTeam !== (favA ? st.teamA : st.teamB);
   const pickBoxHtml = `
-    <div class="pick-box${p < 0.56 ? ' tossup' : ''}">
+    <div class="pick-box${isUpsetPick ? ' tossup' : (p < 0.56 ? ' tossup' : '')}">
       <div>
-        <div class="pb-label">Model Pick</div>
+        <div class="pb-label">${isUpsetPick ? 'Chaos Pick ⚡' : 'Model Pick'}</div>
         <div class="pb-team">(${pickSeed}) ${pickTeam}</div>
       </div>
-      <div class="pb-prob">${(p * 100).toFixed(0)}%</div>
+      <div class="pb-prob">${(pickProb * 100).toFixed(0)}%</div>
     </div>`;
 
   const insightHtml = insight
