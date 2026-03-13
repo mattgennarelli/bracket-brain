@@ -57,6 +57,8 @@ def main():
     parser.add_argument("--ml-edge", type=float, default=DEFAULT_ML_EDGE)
     parser.add_argument("--spread-edge", type=float, default=DEFAULT_SPREAD_EDGE)
     parser.add_argument("--total-edge", type=float, default=DEFAULT_TOTAL_EDGE)
+    parser.add_argument("--no-totals", action="store_true",
+                        help="Skip total bets (use during conference tournaments; model is calibrated for NCAA tourney only)")
     args = parser.parse_args()
 
     if not args.api_key:
@@ -66,12 +68,15 @@ def main():
     today = datetime.now().strftime("%Y-%m-%d")
     print(f"Fetching picks for {today}...")
 
+    total_min = 9999 if args.no_totals else args.total_edge
+    if args.no_totals:
+        print("  Totals disabled (--no-totals): model is calibrated for NCAA tournament only.")
     bets = get_best_bets_json(
         args.api_key,
         year=args.year,
         ml_min=args.ml_edge,
         spread_min=args.spread_edge,
-        total_min=args.total_edge,
+        total_min=total_min,
     )
 
     if not bets:

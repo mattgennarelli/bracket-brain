@@ -473,11 +473,11 @@ def get_best_bets_json(api_key, year=None, ml_min=None, spread_min=None, total_m
                          "kelly_size": round(k_sp, 4),
                          "kelly_units": round(k_sp * 100, 2)}, abs(sp_edge_val)))
 
-        # Total bets — disabled: score_scale calibrated on tournament games only;
-        # applying to regular-season totals produces systematic OVER bias (+14.7 pts).
-        # Re-enable after recalibrating score_scale on regular-season data.
+        # Total bets — calibrated for NCAA tournament games (-1.8 pts avg error, 46% OVER
+        # rate across 69 games 2023-2025). Do NOT run against regular-season or conference
+        # tournament games: mid-major adj_o/d produces +14.7pt OVER bias outside the tourney.
         tot_e = total_edge(model_total, game["total_line"])
-        if False and tot_e is not None and abs(tot_e) >= min_total:  # noqa: disabled
+        if tot_e is not None and abs(tot_e) >= min_total:
             side = "OVER" if tot_e > 0 else "UNDER"
             # cover_margin for total: how far our prediction exceeds the line
             cp_tot = cover_prob(abs(tot_e))
