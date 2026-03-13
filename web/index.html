@@ -238,6 +238,12 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sa
 .pick-box .pb-prob { font-size:1.4rem; font-weight:900; color:var(--green); }
 .pick-box.tossup .pb-prob { color:var(--gold); }
 
+/* Roster card */
+.roster-card { background:var(--surface2); border:1px solid var(--border); border-radius:8px; padding:9px 11px; }
+.rc-name { font-size:.78rem; font-weight:800; color:var(--text); margin-bottom:4px; }
+.rc-item { font-size:.72rem; color:var(--muted); line-height:1.55; }
+.rc-item:first-of-type { margin-top:2px; }
+
 /* Insight quote */
 .ap-insight { font-size:.82rem; color:var(--muted); line-height:1.6; padding:10px 12px;
   background:var(--surface2); border-radius:8px; border-left:3px solid var(--primary);
@@ -1094,126 +1100,222 @@ function showAnalysis(gameId) {
   const conf = p >= .9 ? 'lock' : p >= .75 ? 'strong' : p >= .6 ? 'lean' : 'tossup';
   const confLabel = p >= .9 ? 'Lock' : p >= .75 ? 'Strong' : p >= .6 ? 'Lean' : 'Toss-up';
 
-  // Round label from gameId
   const roundMap = { '64': 'Round of 64', '32': 'Round of 32', '16': 'Sweet 16',
     '8': 'Elite Eight', '4': 'Final Four', '2': 'Championship' };
   const roundNum = gameId.replace(/^FF-/, '').split('-')[1] || '';
-  const roundLabel = (gameId.startsWith('FF') ? (roundNum === '2' ? 'Championship' : 'Final Four')
-    : (roundMap[roundNum] || 'Tournament'));
+  const roundLabel = gameId.startsWith('FF')
+    ? (roundNum === '2' ? 'Championship' : 'Final Four')
+    : (roundMap[roundNum] || 'Tournament');
 
-  // Find original pick record with full data
   let orig = null;
   for (const pp of PICKS) {
     if ((pp.team_a === st.teamA && pp.team_b === st.teamB) ||
         (pp.team_b === st.teamA && pp.team_a === st.teamB)) { orig = pp; break; }
   }
 
-  const statsA = orig?.stats_a || {};
-  const statsB = orig?.stats_b || {};
-  const factorsA = orig?.factors_a || {};
-  const factorsB = orig?.factors_b || {};
+  const sA = orig?.stats_a || {};
+  const sB = orig?.stats_b || {};
+  const fA = orig?.factors_a || {};
+  const fB = orig?.factors_b || {};
+
+  // Normalise so sA always corresponds to st.teamA
+  const flipped = orig && orig.team_a !== st.teamA;
+  const statsA = flipped ? (orig?.stats_b || {}) : sA;
+  const statsB = flipped ? (orig?.stats_a || {}) : sB;
+  const factorsA = flipped ? (orig?.factors_b || {}) : fA;
+  const factorsB = flipped ? (orig?.factors_a || {}) : fB;
+
   const spread = Math.abs(st.margin || 0).toFixed(1);
-  const scoreA = orig?.predicted_score_a;
-  const scoreB = orig?.predicted_score_b;
-  const total = orig?.predicted_total;
+  const scoreA = flipped ? orig?.predicted_score_b : orig?.predicted_score_a;
+  const scoreB = flipped ? orig?.predicted_score_a : orig?.predicted_score_b;
+  const total  = orig?.predicted_total;
   const insight = orig?.insight || '';
   const keyFactors = orig?.key_factors || [];
   const upsetAlert = orig?.upset_alert;
-  // Use the model's actual pick (may differ from statistical favorite under chaos)
   const modelPick = orig?.pick || (favA ? st.teamA : st.teamB);
-  const pickTeam = modelPick;
   const pickSeed = modelPick === st.teamA ? st.seedA : st.seedB;
   const pickProb = modelPick === st.teamA ? pA : pB;
 
-  // ── Signal comparison bar helper ───────────────────────────────────────────
-  function signalBar(valA, valB, label, fmtA, fmtB, higherBetter = true) {
-    const sum = Math.abs(valA) + Math.abs(valB);
-    if (sum < 0.001) return '';
-    const pctA = Math.round(Math.abs(valA) / sum * 100);
-    const pctB = 100 - pctA;
-    const aLeads = higherBetter ? valA > valB : valA < valB;
-    const bLeads = higherBetter ? valB > valA : valB < valA;
+  // ── Helpers ────────────────────────────────────────────────────────────────
+  const pct = v => v != null ? (v * 100).toFixed(1) + '%' : null;
+  const fmt1 = v => v != null ? v.toFixed(1) : null;
+  const fmtPM = v => v != null ? (v >= 0 ? '+' : '') + v.toFixed(1) : null;
+
+  function sigBar(vA, vB, label, dA, dB, higher = true) {
+    if (vA == null || vB == null) return '';
+    const offset = higher ? Math.min(vA, vB, 0) * -1 + 0.01 : 0;
+    const nA = higher ? vA + offset : (1 / (vA + 0.001));
+    const nB = higher ? vB + offset : (1 / (vB + 0.001));
+    const sum = nA + nB; if (sum < 0.001) return '';
+    const pA2 = Math.round(nA / sum * 100), pB2 = 100 - pA2;
+    const aL = higher ? vA > vB : vA < vB;
+    const bL = higher ? vB > vA : vB < vA;
     return `<div class="signal-row">
       <span class="signal-label">${label}</span>
       <div style="flex:1">
         <div class="signal-bars">
-          <div class="signal-bar-a" style="width:${pctA}%;background:var(--green)"></div>
-          <div class="signal-bar-b" style="width:${pctB}%;background:var(--red)"></div>
+          <div class="signal-bar-a" style="width:${pA2}%;background:var(--green)"></div>
+          <div class="signal-bar-b" style="width:${pB2}%;background:var(--red)"></div>
         </div>
         <div class="signal-vals">
-          <span class="signal-val-a${aLeads ? ' lead' : ''}">${fmtA}</span>
-          <span class="signal-val-b${bLeads ? ' lead' : ''}">${fmtB}</span>
+          <span class="signal-val-a${aL?' lead':''}">${dA}</span>
+          <span class="signal-val-b${bL?' lead':''}">${dB}</span>
         </div>
-      </div>
-    </div>`;
+      </div></div>`;
   }
 
-  // ── Signals ────────────────────────────────────────────────────────────────
-  const adjOA = statsA.adj_o || 0, adjDA = statsA.adj_d || 0;
-  const adjOB = statsB.adj_o || 0, adjDB = statsB.adj_d || 0;
-  const netA = adjOA - adjDA, netB = adjOB - adjDB;
-  const sosA = statsA.sos || 0, sosB = statsB.sos || 0;
-  const tempoA = statsA.adj_tempo || 0, tempoB = statsB.adj_tempo || 0;
-  const winA = statsA.win_pct || 0, winB = statsB.win_pct || 0;
-  const intangA = (factorsA.experience_bonus||0) + (factorsA.coach_bonus||0) + (factorsA.momentum_bonus||0);
-  const intangB = (factorsB.experience_bonus||0) + (factorsB.coach_bonus||0) + (factorsB.momentum_bonus||0);
-
-  const effSig = adjOA > 0 ? signalBar(netA + 20, netB + 20, 'Net Efficiency',
-    (netA >= 0 ? '+' : '') + netA.toFixed(1), (netB >= 0 ? '+' : '') + netB.toFixed(1)) : '';
-  const sosSig = (Math.abs(sosA) + Math.abs(sosB) > 0.001) ? signalBar(
-    sosA + 0.5, sosB + 0.5, 'Strength of Sched', sosA.toFixed(3), sosB.toFixed(3)) : '';
-  const tempoSig = (tempoA > 0 && tempoB > 0) ? signalBar(
-    tempoA, tempoB, 'Tempo (poss/40)', tempoA.toFixed(1), tempoB.toFixed(1)) : '';
-  const intangSig = (Math.abs(intangA) + Math.abs(intangB) > 0.01) ? signalBar(
-    Math.max(intangA, 0) + 0.1, Math.max(intangB, 0) + 0.1, 'Intangibles',
-    (intangA >= 0 ? '+' : '') + intangA.toFixed(1), (intangB >= 0 ? '+' : '') + intangB.toFixed(1)) : '';
-  const winSig = (winA > 0 || winB > 0) ? signalBar(
-    winA, winB, 'Win Rate',
-    (winA * 100).toFixed(0) + '%', (winB * 100).toFixed(0) + '%') : '';
-
-  // ── Stat tiles ─────────────────────────────────────────────────────────────
-  function tile(label, vA, vB, fA, fB, higher = true) {
-    if (vA == null || vB == null) return '';
+  function tile(label, vA, vB, dA, dB, higher = true) {
+    if (vA == null || vB == null || dA == null || dB == null) return '';
     const aW = higher ? vA > vB : vA < vB;
     const bW = higher ? vB > vA : vB < vA;
     return `<div class="stat-tile">
       <div class="st-label">${label}</div>
-      <div class="st-value" style="${aW ? 'color:var(--green)' : bW ? 'color:var(--red)' : ''}">${fA}</div>
-      <div class="st-sub">vs ${fB}</div>
+      <div class="st-value" style="${aW?'color:var(--green)':bW?'color:var(--red)':''}">${dA}</div>
+      <div class="st-sub">vs ${dB}</div>
     </div>`;
   }
 
-  const statsSection = adjOA > 0 ? `<div class="ap-section">
-    <div class="ap-section-title">Team Stats — <span style="color:var(--green)">${st.teamA}</span> vs <span style="color:var(--red)">${st.teamB}</span></div>
-    <div class="stat-grid">
-      ${tile('Adj. Offense', adjOA, adjOB, adjOA.toFixed(1), adjOB.toFixed(1))}
-      ${tile('Adj. Defense', adjDA, adjDB, adjDA.toFixed(1), adjDB.toFixed(1), false)}
-      ${winA > 0 ? tile('Win Rate', winA, winB, (winA*100).toFixed(0)+'%', (winB*100).toFixed(0)+'%') : ''}
-      ${tempoA > 0 ? tile('Tempo', tempoA, tempoB, tempoA.toFixed(1), tempoB.toFixed(1)) : ''}
-      ${statsA.barthag != null ? tile('Barthag', statsA.barthag, statsB.barthag, statsA.barthag.toFixed(3), (statsB.barthag||0).toFixed(3)) : ''}
-      ${statsA.three_rate != null ? tile('3PT Rate', statsA.three_rate, statsB.three_rate, (statsA.three_rate*100).toFixed(0)+'%', ((statsB.three_rate||0)*100).toFixed(0)+'%') : ''}
-    </div>
-  </div>` : '';
+  // ── Roster cards (star player + record) ────────────────────────────────────
+  function rosterCard(name, stats, seed) {
+    const record = (stats.wins != null && stats.losses != null)
+      ? `${stats.wins}–${stats.losses}` : null;
+    const exp = stats.avg_experience != null
+      ? `${stats.avg_experience.toFixed(1)}yr avg exp` : null;
+    const star = stats.top_player
+      ? `★ ${stats.top_player}${stats.top_player_bpr != null ? ' (' + stats.top_player_bpr.toFixed(1) + ' BPR)' : ''}` : null;
+    const depth = stats.em_depth_score != null
+      ? `Depth: ${stats.em_depth_score.toFixed(2)}` : null;
+    const parts = [record, exp, star, depth].filter(Boolean);
+    return parts.length ? `<div class="roster-card">
+      <div class="rc-name">(${seed}) ${name}</div>
+      ${parts.map(p2 => `<div class="rc-item">${p2}</div>`).join('')}
+    </div>` : '';
+  }
 
-  // ── Sections assembly ──────────────────────────────────────────────────────
-  const signalsSection = (effSig || sosSig || intangSig || winSig || tempoSig) ? `
+  const rosterSection = (statsA.top_player || statsB.top_player || statsA.wins != null || statsA.avg_experience != null) ? `
     <div class="ap-section">
-      <div class="ap-section-title">Team Comparison</div>
-      <div style="display:flex;justify-content:space-between;font-size:.7rem;margin-bottom:8px">
+      <div class="ap-section-title">Roster & Experience</div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px">
+        ${rosterCard(st.teamA, statsA, st.seedA)}
+        ${rosterCard(st.teamB, statsB, st.seedB)}
+      </div>
+    </div>` : '';
+
+  // ── Scoring / efficiency overview ──────────────────────────────────────────
+  const adjOA = statsA.adj_o || 0, adjDA = statsA.adj_d || 0;
+  const adjOB = statsB.adj_o || 0, adjDB = statsB.adj_d || 0;
+  const netA = adjOA - adjDA, netB = adjOB - adjDB;
+  const tempoA = statsA.adj_tempo, tempoB = statsB.adj_tempo;
+
+  const effSection = adjOA > 0 ? `
+    <div class="ap-section">
+      <div class="ap-section-title">Efficiency</div>
+      <div style="display:flex;justify-content:space-between;font-size:.7rem;color:var(--muted);margin-bottom:6px">
         <span style="color:var(--green);font-weight:700">${st.teamA}</span>
         <span style="color:var(--red);font-weight:700">${st.teamB}</span>
       </div>
-      ${effSig}${sosSig}${intangSig}${winSig}${tempoSig}
+      ${sigBar(netA + 20, netB + 20, 'Net Eff', fmtPM(netA), fmtPM(netB))}
+      ${sigBar(adjOA, adjOB, 'Adj. Offense', fmt1(adjOA), fmt1(adjOB))}
+      ${sigBar(adjDA, adjDB, 'Adj. Defense', fmt1(adjDA), fmt1(adjDB), false)}
+      ${tempoA && tempoB ? sigBar(tempoA, tempoB, 'Pace (poss/40)', fmt1(tempoA), fmt1(tempoB)) : ''}
     </div>` : '';
 
-  const factorsSection = keyFactors.length ? `
+  // ── Shooting ───────────────────────────────────────────────────────────────
+  const efgA = statsA.efg_pct, efgB = statsB.efg_pct;
+  const efgDA = statsA.efg_d,  efgDB = statsB.efg_d;
+  const tpA  = statsA.three_pt_pct, tpB  = statsB.three_pt_pct;
+  const trA  = statsA.three_pt_rate, trB  = statsB.three_pt_rate;
+  const twA  = statsA.two_pt_pct,  twB  = statsB.two_pt_pct;
+  const ftA  = statsA.ft_pct,  ftB  = statsB.ft_pct;
+  const ftRA = statsA.ft_rate, ftRB = statsB.ft_rate;
+  const shootingSection = (efgA != null || tpA != null) ? `
     <div class="ap-section">
-      <div class="ap-section-title">Key Factors</div>
+      <div class="ap-section-title">Shooting</div>
+      <div style="display:flex;justify-content:space-between;font-size:.7rem;color:var(--muted);margin-bottom:6px">
+        <span style="color:var(--green);font-weight:700">${st.teamA}</span>
+        <span style="color:var(--red);font-weight:700">${st.teamB}</span>
+      </div>
+      ${sigBar(efgA, efgB,   'eFG%',       pct(efgA), pct(efgB))}
+      ${sigBar(efgDA, efgDB, 'Def eFG%',   pct(efgDA), pct(efgDB), false)}
+      ${sigBar(tpA, tpB,    '3PT%',        pct(tpA), pct(tpB))}
+      ${sigBar(trA, trB,    '3PT rate',    pct(trA), pct(trB))}
+      ${sigBar(twA, twB,    '2PT%',        pct(twA), pct(twB))}
+      ${sigBar(ftA, ftB,    'FT%',         pct(ftA), pct(ftB))}
+      ${sigBar(ftRA, ftRB,  'FT rate',     pct(ftRA), pct(ftRB))}
+    </div>` : '';
+
+  // ── Rebounding & ball control ──────────────────────────────────────────────
+  const orbA = statsA.orb_rate, orbB = statsB.orb_rate;
+  const dopA = statsA.opp_orb_rate, dopB = statsB.opp_orb_rate;
+  const toA  = statsA.to_rate, toB  = statsB.to_rate;
+  const todA = statsA.to_rate_d, todB = statsB.to_rate_d;
+  const blkA = statsA.blk_rate, blkB = statsB.blk_rate;
+  const astA = statsA.ast_rate, astB = statsB.ast_rate;
+  const rebSection = (orbA != null || blkA != null) ? `
+    <div class="ap-section">
+      <div class="ap-section-title">Rebounding & Defense</div>
+      <div style="display:flex;justify-content:space-between;font-size:.7rem;color:var(--muted);margin-bottom:6px">
+        <span style="color:var(--green);font-weight:700">${st.teamA}</span>
+        <span style="color:var(--red);font-weight:700">${st.teamB}</span>
+      </div>
+      ${sigBar(orbA, orbB, 'Off Reb%',  pct(orbA), pct(orbB))}
+      ${sigBar(dopA, dopB, 'Opp OReb%', pct(dopA), pct(dopB), false)}
+      ${sigBar(blkA, blkB, 'Block rate', pct(blkA), pct(blkB))}
+      ${sigBar(toA, toB,   'TO rate',    pct(toA), pct(toB), false)}
+      ${sigBar(todA, todB, 'Force TOs',  pct(todA), pct(todB))}
+      ${sigBar(astA, astB, 'Assist rate', pct(astA), pct(astB))}
+    </div>` : '';
+
+  // ── Scoring output tiles ───────────────────────────────────────────────────
+  const ppgA = statsA.ppg, ppgB = statsB.ppg;
+  const oapA = statsA.opp_ppg, oapB = statsB.opp_ppg;
+  const scoringSection = (ppgA != null || adjOA > 0) ? `
+    <div class="ap-section">
+      <div class="ap-section-title">Scoring Output — <span style="color:var(--green)">${st.teamA}</span> vs <span style="color:var(--red)">${st.teamB}</span></div>
+      <div class="stat-grid">
+        ${tile('PPG', ppgA, ppgB, fmt1(ppgA), fmt1(ppgB))}
+        ${tile('OPPG', oapA, oapB, fmt1(oapA), fmt1(oapB), false)}
+        ${tile('Adj. O', adjOA, adjOB, fmt1(adjOA), fmt1(adjOB))}
+        ${tile('Adj. D', adjDA, adjDB, fmt1(adjDA), fmt1(adjDB), false)}
+        ${statsA.barthag != null ? tile('Barthag', statsA.barthag, statsB.barthag, statsA.barthag.toFixed(3), (statsB.barthag||0).toFixed(3)) : ''}
+        ${statsA.sos != null ? tile('SOS', statsA.sos, statsB.sos, statsA.sos.toFixed(3), (statsB.sos||0).toFixed(3)) : ''}
+        ${statsA.wab != null ? tile('WAB', statsA.wab, statsB.wab, fmt1(statsA.wab), fmt1(statsB.wab||0)) : ''}
+        ${tempoA != null ? tile('Tempo', tempoA, tempoB, fmt1(tempoA), fmt1(tempoB)) : ''}
+      </div>
+    </div>` : '';
+
+  // ── Key factors & intangibles ──────────────────────────────────────────────
+  const intangA = (factorsA.experience_bonus||0) + (factorsA.coach_bonus||0) + (factorsA.momentum_bonus||0);
+  const intangB = (factorsB.experience_bonus||0) + (factorsB.coach_bonus||0) + (factorsB.momentum_bonus||0);
+
+  // Build key edge callouts
+  const edges = [];
+  if (adjOA > 0 && adjOB > 0) {
+    const offEdge = adjOA - adjOB, defEdge = adjDB - adjDA; // positive = teamA advantage
+    if (Math.abs(offEdge) >= 5) edges.push(`${offEdge > 0 ? st.teamA : st.teamB} has a ${Math.abs(offEdge).toFixed(0)}-pt offensive edge`);
+    if (Math.abs(defEdge) >= 5) edges.push(`${defEdge > 0 ? st.teamA : st.teamB} has a ${Math.abs(defEdge).toFixed(0)}-pt defensive edge`);
+  }
+  if (tpA != null && tpB != null && Math.abs(tpA - tpB) > 0.04)
+    edges.push(`${tpA > tpB ? st.teamA : st.teamB} shoots ${pct(Math.abs(tpA-tpB))} better from three`);
+  if (orbA != null && orbB != null && Math.abs(orbA - orbB) > 0.04)
+    edges.push(`${orbA > orbB ? st.teamA : st.teamB} dominates the offensive glass`);
+  if (blkA != null && blkB != null && Math.abs(blkA - blkB) > 0.03)
+    edges.push(`${blkA > blkB ? st.teamA : st.teamB} has a significant shot-blocking edge`);
+  if (statsA.avg_experience != null && statsB.avg_experience != null) {
+    const expDiff = statsA.avg_experience - statsB.avg_experience;
+    if (Math.abs(expDiff) > 0.4) edges.push(`${expDiff > 0 ? st.teamA : st.teamB} is significantly more experienced`);
+  }
+  const allFactors = [...keyFactors, ...edges.filter(e => !keyFactors.some(kf => kf.includes(e.split(' ')[0])))];
+
+  const factorsSection = allFactors.length ? `
+    <div class="ap-section">
+      <div class="ap-section-title">Key Edges & Factors</div>
       <ul class="factor-list">
-        ${keyFactors.map(f => `<li><span class="fi">→</span>${f}</li>`).join('')}
+        ${allFactors.map(f => `<li><span class="fi">→</span>${f}</li>`).join('')}
       </ul>
     </div>` : '';
 
+  // ── Historical ─────────────────────────────────────────────────────────────
   const histWin = orig?.historical_win_pct;
   const histMargin = orig?.historical_avg_margin;
   const hist = orig?.historical;
@@ -1235,13 +1337,12 @@ function showAnalysis(gameId) {
       ${hist ? `<div class="ap-insight" style="margin-top:8px">${hist}</div>` : ''}
     </div>` : '';
 
+  // ── Fixed pieces ───────────────────────────────────────────────────────────
   const upsetHtml = upsetAlert ? `
     <div class="upset-banner">
       <span class="ub-icon">⚠️</span>
-      <div class="ub-text">
-        <span class="ub-label">Upset Alert — </span>
-        Lower seed has statistical profiles suggesting real upset potential. Treat this as high-variance.
-      </div>
+      <div class="ub-text"><span class="ub-label">Upset Alert — </span>
+        Lower seed has statistical profiles suggesting real upset potential.</div>
     </div>` : '';
 
   const spreadLabel = orig?.spread_fav || `${favA ? st.teamA : st.teamB} −${spread}`;
@@ -1255,7 +1356,7 @@ function showAnalysis(gameId) {
 
   const isUpsetPick = pickTeam !== (favA ? st.teamA : st.teamB);
   const pickBoxHtml = `
-    <div class="pick-box${isUpsetPick ? ' tossup' : (p < 0.56 ? ' tossup' : '')}">
+    <div class="pick-box${isUpsetPick || p < 0.56 ? ' tossup' : ''}">
       <div>
         <div class="pb-label">${isUpsetPick ? 'Chaos Pick ⚡' : 'Model Pick'}</div>
         <div class="pb-team">(${pickSeed}) ${pickTeam}</div>
@@ -1263,8 +1364,7 @@ function showAnalysis(gameId) {
       <div class="pb-prob">${(pickProb * 100).toFixed(0)}%</div>
     </div>`;
 
-  const insightHtml = insight
-    ? `<div class="ap-insight">${insight}</div>` : '';
+  const insightHtml = insight ? `<div class="ap-insight">${insight}</div>` : '';
 
   content.innerHTML = `
     <div class="ap-header">
@@ -1276,14 +1376,14 @@ function showAnalysis(gameId) {
       <div class="ap-prob-section">
         <div class="ap-teams-row">
           <div class="ap-team">
-            <div class="ap-team-name${favA ? ' fav' : ''}">${st.teamA}</div>
+            <div class="ap-team-name${favA?' fav':''}">${st.teamA}</div>
             <div class="ap-team-seed">Seed #${st.seedA}</div>
-            <div class="ap-prob-pct${favA ? ' fav' : ' dog'}">${probA}%</div>
+            <div class="ap-prob-pct${favA?' fav':' dog'}">${probA}%</div>
           </div>
           <div class="ap-team right">
-            <div class="ap-team-name${!favA ? ' fav' : ''}">${st.teamB}</div>
+            <div class="ap-team-name${!favA?' fav':''}">${st.teamB}</div>
             <div class="ap-team-seed">Seed #${st.seedB}</div>
-            <div class="ap-prob-pct${!favA ? ' fav' : ' dog'}">${probB}%</div>
+            <div class="ap-prob-pct${!favA?' fav':' dog'}">${probB}%</div>
           </div>
         </div>
         <div class="ap-bar-track">
@@ -1295,9 +1395,12 @@ function showAnalysis(gameId) {
       ${upsetHtml}
       ${pickBoxHtml}
       ${insightHtml}
-      ${signalsSection}
       ${factorsSection}
-      ${statsSection}
+      ${rosterSection}
+      ${effSection}
+      ${shootingSection}
+      ${rebSection}
+      ${scoringSection}
       ${histSection}
     </div>
   `;

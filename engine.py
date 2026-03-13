@@ -1480,6 +1480,51 @@ def _make_pick_dict(game_num, round_of, round_name, region, a, b, result, pick_t
     fav_team = a["team"] if result["win_prob_a"] >= 0.5 else b["team"]
     dog_team = b["team"] if result["win_prob_a"] >= 0.5 else a["team"]
     h2h = get_head_to_head(a["team"], b["team"], data_dir=data_dir, current_year=year or 2026)
+    def _team_stats(t):
+        def _r(v, d=1): return round(v, d) if v is not None else None
+        wins  = t.get("wins")
+        games = t.get("games")
+        losses = (games - wins) if (wins is not None and games is not None) else None
+        return {
+            # Core efficiency
+            "adj_o":        _r(t.get("adj_o"), 1),
+            "adj_d":        _r(t.get("adj_d"), 1),
+            "adj_tempo":    _r(t.get("adj_tempo"), 1),
+            "win_pct":      _r(t.get("win_pct"), 3),
+            "wins":         wins,
+            "losses":       losses,
+            "barthag":      _r(t.get("barthag"), 3),
+            "sos":          _r(t.get("sos"), 3),
+            "conf_rating":  t.get("conf_rating"),
+            "em_depth_score": _r(t.get("em_depth_score"), 3),
+            # Scoring
+            "ppg":          _r(t.get("ppg"), 1),
+            "opp_ppg":      _r(t.get("opp_ppg"), 1),
+            # Shooting
+            "efg_pct":      _r(t.get("efg_pct"), 3),
+            "efg_d":        _r(t.get("efg_d"), 3),   # opp eFG% (lower = better D)
+            "three_pt_pct": _r(t.get("three_pt_pct"), 3),
+            "three_pt_pct_d": _r(t.get("three_pt_pct_d"), 3),
+            "three_pt_rate": _r(t.get("three_pt_rate") or t.get("three_rate"), 3),
+            "two_pt_pct":   _r(t.get("two_pt_pct"), 3),
+            "ft_pct":       _r(t.get("ft_pct"), 3),
+            "ft_rate":      _r(t.get("ft_rate"), 3),
+            # Rebounding & ball control
+            "orb_rate":     _r(t.get("orb_rate"), 3),
+            "opp_orb_rate": _r(t.get("opp_orb_rate"), 3),
+            "to_rate":      _r(t.get("to_rate"), 3),
+            "to_rate_d":    _r(t.get("to_rate_d"), 3),
+            # Defense
+            "blk_rate":     _r(t.get("blk_rate"), 3),
+            "ast_rate":     _r(t.get("ast_rate"), 3),
+            # Roster
+            "avg_experience": _r(t.get("avg_experience"), 2),
+            "top_player":   t.get("top_player"),
+            "top_player_bpr": _r(t.get("top_player_bpr"), 2),
+            "em_depth_score": _r(t.get("em_depth_score"), 3),
+            "star_score":   _r(t.get("star_score"), 2),
+        }
+
     d = {
         "game_num": game_num,
         "round": round_of,
@@ -1489,21 +1534,47 @@ def _make_pick_dict(game_num, round_of, round_name, region, a, b, result, pick_t
         "team_b": b["team"], "seed_b": b["seed"],
         "pick": pick_team["team"],
         "pick_seed": pick_team["seed"],
-        "win_prob": round(max(result["win_prob_a"], result["win_prob_b"]), 4),
+        # Win probabilities (both sides, not just the higher)
+        "win_prob":   round(max(result["win_prob_a"], result["win_prob_b"]), 4),
+        "win_prob_a": round(result["win_prob_a"], 4),
+        "win_prob_b": round(result["win_prob_b"], 4),
+        # Score prediction
         "projected_spread": spread_amt,
         "spread_fav": f"{fav_team} -{spread_amt}",
         "spread_dog": f"{dog_team} +{spread_amt}",
         "projected_score": f"{result['predicted_score_a']:.0f}-{result['predicted_score_b']:.0f}",
+        "predicted_score_a": round(result["predicted_score_a"], 1),
+        "predicted_score_b": round(result["predicted_score_b"], 1),
+        "predicted_total":   round(result["predicted_score_a"] + result["predicted_score_b"], 1),
+        # Margin decomposition
+        "base_margin":        round(result["base_margin"], 1),
+        "factor_margin":      round(result["factor_margin"], 1),
+        "possession_margin":  round(result.get("possession_margin", 0), 2),
+        "ft_margin":          round(result.get("ft_margin", 0), 2),
+        "sos_margin":         round(result.get("sos_margin", 0), 2),
+        # Model signal probabilities
+        "efficiency_prob":    round(result["efficiency_prob"], 4),
+        "seed_prob":          round(result["seed_prob"], 4),
+        "volatility":         round(result.get("volatility", 1.0), 3),
+        "game_stdev":         round(result.get("game_stdev", 11.0), 1),
+        # Per-factor bonuses
+        "factors_a": result["factors_a"],
+        "factors_b": result["factors_b"],
+        # Team efficiency stats (for display in panel)
+        "stats_a": _team_stats(a),
+        "stats_b": _team_stats(b),
+        # Labels / narrative
         "confidence": _confidence_tier(result["win_prob_a"]),
         "upset_rating": _upset_rating(a["seed"], b["seed"], result["win_prob_a"], result.get("volatility", 1.0)),
         "variability": _variability_label(result.get("volatility", 1.0), abs(a["seed"] - b["seed"]), result["win_prob_a"]),
         "key_factors": _generate_key_factors(result, a, b),
         "insight": _generate_insight(result, hist, a, b),
         "historical": f"{hist['higher_seed_wins']}-{hist['lower_seed_wins']}" if hist else None,
+        "historical_win_pct": round(hist["higher_seed_win_pct"], 3) if hist else None,
+        "historical_avg_margin": round(hist["avg_margin"], 1) if hist else None,
         "head_to_head": h2h,
+        "upset_alert": upset_alert,
     }
-    if upset_alert:
-        d["upset_alert"] = upset_alert
     return d
 
 
