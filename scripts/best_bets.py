@@ -411,6 +411,11 @@ def get_best_bets_json(api_key, year=None, ml_min=None, spread_min=None, total_m
         away_stats = lookup_team(away_name, teams)
         if home_stats is None or away_stats is None:
             continue
+        # Skip if either team has no efficiency data — model output would be fabricated
+        if home_stats.get("adj_o") is None or home_stats.get("adj_d") is None:
+            continue
+        if away_stats.get("adj_o") is None or away_stats.get("adj_d") is None:
+            continue
 
         home_stats["team"] = home_name
         away_stats["team"] = away_name
