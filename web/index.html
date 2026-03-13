@@ -334,7 +334,10 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sa
 .result-pill.L { background:var(--red-bg); color:var(--red); border:1px solid var(--red); }
 .result-pill.P { background:rgba(107,114,128,.1); color:var(--muted); border:1px solid var(--muted); }
 .result-pill.pending { background:var(--surface2); color:var(--muted); border:1px solid var(--border); font-size:.45rem; }
-.picks-stats-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(140px,1fr));
+.filter-btn { background:var(--surface2); border:1px solid var(--border); border-radius:5px;
+  padding:2px 8px; font-size:.7rem; color:var(--muted); cursor:pointer; }
+.filter-btn.active { background:var(--primary); border-color:var(--primary); color:#fff; }
+.picks-stats-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(120px,1fr));
   gap:12px; margin-bottom:16px; }
 .stat-card { background:var(--surface2); border:1px solid var(--border); border-radius:8px;
   padding:12px 14px; }
@@ -514,8 +517,23 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sa
         <span class="hit-rate-badge" id="hit-rate-badge"></span>
       </div>
       <div id="picks-today-body"><div class="picks-empty">Loading...</div></div>
-      <div style="margin-top:20px" id="picks-history-section" style="display:none">
-        <h3 style="font-size:.9rem;font-weight:700;margin-bottom:10px">Pick History</h3>
+      <div style="margin-top:20px;display:none" id="picks-history-section">
+        <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px;margin-bottom:10px">
+          <h3 style="font-size:.9rem;font-weight:700;margin:0">Pick History</h3>
+          <div style="display:flex;gap:6px;flex-wrap:wrap">
+            <div style="display:flex;gap:3px">
+              <button class="filter-btn active" data-filter="bt" data-val="all" onclick="setPickFilter('bt','all')">All</button>
+              <button class="filter-btn" data-filter="bt" data-val="ml" onclick="setPickFilter('bt','ml')">ML</button>
+              <button class="filter-btn" data-filter="bt" data-val="spread" onclick="setPickFilter('bt','spread')">Spread</button>
+            </div>
+            <div style="display:flex;gap:3px">
+              <button class="filter-btn active" data-filter="result" data-val="all" onclick="setPickFilter('result','all')">All</button>
+              <button class="filter-btn" data-filter="result" data-val="W" onclick="setPickFilter('result','W')">W</button>
+              <button class="filter-btn" data-filter="result" data-val="L" onclick="setPickFilter('result','L')">L</button>
+              <button class="filter-btn" data-filter="result" data-val="pending" onclick="setPickFilter('result','pending')">Pending</button>
+            </div>
+          </div>
+        </div>
         <div id="picks-history-body"></div>
       </div>
       <div style="margin-top:24px;padding-top:20px;border-top:1px solid var(--border)" id="benchmark-section">
@@ -1552,7 +1570,8 @@ function _pickRowHtml(p, showDate) {
     ${whyLines.map(l => `<div>• ${l}</div>`).join('')}
   </div>` : '';
 
-  return `<div class="bet-row">
+  const resultKey = result || 'pending';
+  return `<div class="bet-row" data-bt="${bt}" data-result="${resultKey}">
     ${resultHtml}
     <div class="bet-info">
       <div class="bet-main">
@@ -1586,9 +1605,14 @@ function renderPicks(todayData, historyData) {
 
   // Stats cards
   const hr = stats.hit_rate;
+  const roi = stats.roi_pct;
+  const netU = stats.net_units;
+  const wagered = stats.total_wagered;
   const cards = [
-    { label: 'Hit Rate', value: decided ? `${(hr*100).toFixed(0)}%` : '—', sub: `${decided} decided` },
+    { label: 'Hit Rate', value: decided ? `${(hr*100).toFixed(0)}%` : '—', sub: `${decided} decided`, color: decided?(hr>=.55?'var(--green)':hr<.45?'var(--red)':''):'' },
     { label: 'Record', value: `${stats.wins||0}W-${stats.losses||0}L`, sub: `${stats.pushes||0} push${(stats.pushes||0)!==1?'es':''}` },
+    { label: 'Net Units', value: wagered ? `${netU>=0?'+':''}${netU.toFixed(1)}u` : '—', sub: wagered ? `${wagered.toFixed(1)}u wagered` : 'no settled picks', color: wagered?(netU>0?'var(--green)':netU<0?'var(--red)':''):'' },
+    { label: 'ROI', value: wagered ? `${roi>=0?'+':''}${roi.toFixed(1)}%` : '—', sub: 'on settled picks', color: wagered?(roi>0?'var(--green)':roi<0?'var(--red)':''):'' },
     { label: 'Total Picks', value: allPicks.length, sub: `${allPicks.filter(p=>!p.result).length} pending` },
   ];
   const byType = stats.by_type || {};
@@ -1598,7 +1622,7 @@ function renderPicks(todayData, historyData) {
   });
   statsCards.innerHTML = cards.map(c => `<div class="stat-card">
     <div class="sc-label">${c.label}</div>
-    <div class="sc-value" style="${c.label==='Hit Rate'&&decided?(hr>=.55?'color:var(--green)':hr<.45?'color:var(--red)':''):''}">${c.value}</div>
+    <div class="sc-value" style="${c.color ? `color:${c.color}` : ''}">${c.value}</div>
     <div class="sc-sub">${c.sub}</div>
   </div>`).join('');
 
@@ -1634,9 +1658,29 @@ function renderPicks(todayData, historyData) {
     histSection.style.display = 'block';
     const sorted = [...allPicks].reverse();
     histBody.innerHTML = sorted.map(p => _pickRowHtml(p, true)).join('');
+    _applyPickFilters();
   } else {
     histSection.style.display = 'none';
   }
+}
+
+let _pickFilters = { bt: 'all', result: 'all' };
+
+function _applyPickFilters() {
+  document.querySelectorAll('#picks-history-body .bet-row').forEach(row => {
+    const btMatch = _pickFilters.bt === 'all' || row.dataset.bt === _pickFilters.bt;
+    const rMatch  = _pickFilters.result === 'all' || row.dataset.result === _pickFilters.result;
+    row.style.display = (btMatch && rMatch) ? '' : 'none';
+  });
+}
+
+function setPickFilter(type, val) {
+  _pickFilters[type] = val;
+  // Update button active states
+  document.querySelectorAll(`[data-filter="${type}"]`).forEach(btn => {
+    btn.classList.toggle('active', btn.dataset.val === val);
+  });
+  _applyPickFilters();
 }
 
 // ---------------------------------------------------------------------------

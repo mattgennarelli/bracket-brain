@@ -1,26 +1,28 @@
 # Bracket Brain — Roadmap
 
-> Last updated: 2026-03-12
+> Last updated: 2026-03-13
 
 ---
 
 ## Current State Assessment
 
 ### What's Working
-- **Prediction engine** — Torvik + EvanMiya efficiency blend, walk-forward calibrated (12 params); in-sample Brier 0.171 (74.2% / 945 games), cross-validated Brier **0.161** (avg of 2023/2024/2025 folds: 0.194 / 0.171 / 0.118)
-- **Bracket simulation** — 63-game bracket with correct FF seeding, Monte Carlo pre-computed for all years
-- **Betting picks** — daily save (9am ET) + auto-settle (midnight ET) via GitHub Actions; ledger committed to repo
-- **Picks tab** — hit rate, record by type, result badges, full history
+- **Prediction engine** — Torvik + EvanMiya efficiency blend, walk-forward calibrated (12 params); CV Brier **0.161** (2023/2024/2025 folds); champion rank #1/#1/#4 across held-out years
+- **Bracket simulation** — 63-game bracket with correct FF seeding and quadrant ordering; Monte Carlo pre-computed for all years
+- **Betting picks** — daily save (9am ET) + auto-settle (midnight ET) via GitHub Actions; ledger committed to repo; Kelly sizing (quarter-Kelly, 5% cap) on every pick
+- **Picks tab** — hit rate, record by type, net units, ROI%, result badges, full history with filters, "Why this pick?" expandable, model comparison benchmark table
+- **Analysis panel** — 40+ stats per team across 6 sections: efficiency signals, shooting (eFG/3PT/FT), rebounding/defense, scoring output, roster cards, key edges
+- **Mobile** — round-tab mobile bracket view with touch-friendly cards and sticky nav
+- **Shareable links** — URL-encoded bracket state, clipboard copy, cross-device restore
 - **Data pipeline** — daily Torvik refresh via curl (bypasses Cloudflare), teams_merged committed for Render
+- **Keep-alive** — GitHub Actions pings /health every 10 min 24/7 to eliminate Render cold starts
 
 ### Known Problems
-- **Cold start** — Render free tier takes 30s to wake up; users bounce before the bracket loads
-- **Mobile** — bracket SVG/table layout is completely broken on small screens
-- **OVER bias** — 30/46 picks (65%) are OVER even after score_scale fix; tempo scaling incomplete
-- **Overfitting risk** — walk-forward validation done, params reduced to 12; held-out sample is only 63 games/year so variance is high
-- **No explainability** — picks and predictions show numbers but not *why*
-- **Picks UX** — no Kelly sizing shown, no PnL in units, no per-round breakdown
+- **Total bets disabled** — score_scale calibrated on tournament games only; +14.7pt OVER bias on regular-season games; re-enable after recalibrating on regular-season data
+- **2026 advanced stats missing** — shooting/rebounding/roster sections empty until bracket is set (Selection Sunday); Torvik-only data active
+- **Overfitting risk** — held-out sample is only 63 games/year; CV variance is high
 - **No distribution** — no SEO, no social sharing, no way for the site to grow
+- **Lighthouse not audited** — mobile score and accessibility score unverified
 
 ---
 
@@ -146,22 +148,23 @@
 - [ ] **Measurable:** Backtested OVER rate 50–58% on 2023–2025 tournament games
 
 #### Kelly Criterion Sizing
-- [ ] Add `kelly_fraction` to each pick (full Kelly × 0.25 for safety)
-- [ ] Display Kelly size on each pick card (e.g., "Bet 2.1 units")
-- [ ] Add `max_kelly` cap (5 units) to prevent outsized single-game exposure
-- [ ] **Measurable:** All picks show kelly size; backtested Kelly growth > flat-bet growth on 2023–2025
+- [x] Add `kelly_fraction` to each pick (full Kelly × 0.25 for safety)
+- [x] Display Kelly size on each pick card ("Bet 2.1u")
+- [x] Add `max_kelly` cap (5% of bankroll) to prevent outsized single-game exposure
+- [ ] **Measurable:** Backtested Kelly growth > flat-bet growth on 2023–2025 (deferred — need settled results)
 
 #### ROI Tracking
-- [ ] Track `units_won` / `units_lost` per pick (using kelly size or flat 1 unit)
-- [ ] Picks tab stat cards: ROI%, total units wagered, units won/lost, by bet type
+- [x] Track `units_won` / `units_lost` per pick via Kelly-weighted settle logic
+- [x] Picks tab stat cards: ROI%, net units, total wagered, by bet type hit rates
 - [ ] Monthly/tournament-level PnL chart (simple bar chart, no external lib)
-- [ ] **Measurable:** Stat cards update in real-time after settle runs; ROI visible per bet type
+- [x] **Measurable:** Stat cards update in real-time after settle runs ✓
 
 #### Picks Card View
-- [ ] Redesign picks list as cards (not table rows): game matchup prominent, bet info secondary
-- [ ] Color-code by result: green WIN, red LOSS, yellow PUSH, grey PENDING
-- [ ] Filter controls: by date range, bet type, result, min edge
-- [ ] **Measurable:** Picks card view renders correctly on mobile; filter state persists in URL param
+- [x] Card design with game matchup prominent, bet info secondary, color-coded result badges
+- [x] Color-code by result: green WIN, red LOSS, grey PENDING
+- [x] Filter controls: by bet type (ML/Spread), by result (W/L/Pending)
+- [ ] Filter by date range or min edge (deferred)
+- [ ] **Measurable:** Filter state persists in URL param (deferred)
 
 ---
 
@@ -222,8 +225,8 @@
 
 #### Eliminate Cold Starts
 - [ ] Upgrade Render to Starter ($7/month) — always-on, no sleep
-- [ ] Add keep-alive ping: GitHub Actions cron hits `/health` every 10 min during tournament
-- [ ] Interim: show "Waking up (est. 30s)…" progress banner on first load when API is cold
+- [x] Add keep-alive ping: GitHub Actions cron hits `/health` every 10 min, 24/7
+- [x] Interim: show "Waking up (est. 30s)…" progress banner on first load when API is cold
 - [ ] **Measurable:** P95 first-byte latency < 500ms during tournament week
 
 #### PostgreSQL Ledger
