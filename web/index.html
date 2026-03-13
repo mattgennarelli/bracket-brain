@@ -538,6 +538,7 @@ let PICKS = [];
 let BRACKET = {};        // {region: [{team, seed}, ...]}
 let TEAM_STATS = {};     // {teamName: stats}
 let QUADRANT = ['South', 'East', 'West', 'Midwest'];
+let FF_PAIRS = [['South','East'],['Midwest','West']]; // [[TL,BL],[TR,BR]] — overwritten by API
 let lockedPicks = {};
 let simPicks = {};
 let bracketState = {};
@@ -629,7 +630,7 @@ async function loadYear(year) {
   showLoading('Loading ' + year + ' bracket...');
   try {
     const data = await apiFetch(`/bracket/${year}?upset_aggression=${upsetAggression.toFixed(2)}`);
-    ingestPicks(data.picks.picks, data.picks.champion);
+    ingestPicks(data.picks.picks, data.picks.champion, data.ff_pairs);
     buildBracket();
     buildMobileBracket();
     applyPicksFromServer();
@@ -654,7 +655,7 @@ async function fetchBracket() {
     const data = await apiFetch(`/bracket/${currentYear}?upset_aggression=${upsetAggression.toFixed(2)}`);
     lockedPicks = {};
     simPicks = {};
-    ingestPicks(data.picks.picks, data.picks.champion);
+    ingestPicks(data.picks.picks, data.picks.champion, data.ff_pairs);
     applyPicksFromServer();
     renderBracket();
   } catch (e) {
@@ -681,10 +682,11 @@ async function fetchOdds(year) {
 // ---------------------------------------------------------------------------
 // Ingest server picks into local state
 // ---------------------------------------------------------------------------
-function ingestPicks(picks, champion) {
+function ingestPicks(picks, champion, ffPairs) {
   PICKS = picks || [];
   BRACKET = {};
   TEAM_STATS = {};
+  if (ffPairs && ffPairs.length === 2) FF_PAIRS = ffPairs;
 
   // Build BRACKET from R64 picks
   for (const p of PICKS) {
@@ -769,10 +771,10 @@ function getNextGameId(gameId) {
   const [, region, roundStr, giStr] = parts;
   const roundOf = parseInt(roundStr), gi = parseInt(giStr);
   if (roundOf === 8) {
-    const ffIdx = QUADRANT.indexOf(region);
-    if (ffIdx < 0) return null;
-    // Top row regions (indices 0,1) → FF-4-0; bottom row (indices 2,3) → FF-4-1
-    return `FF-4-${ffIdx < 2 ? 0 : 1}`;
+    // Route to whichever FF semifinal contains this region
+    if (FF_PAIRS[0].includes(region)) return 'FF-4-0';
+    if (FF_PAIRS[1].includes(region)) return 'FF-4-1';
+    return null;
   }
   const next = roundOf / 2;
   return `${region}-${next}-${Math.floor(gi / 2)}`;
@@ -838,9 +840,8 @@ function recomputeBracket() {
       if (roundOf === 4) {
         for (let gi = 0; gi < 2; gi++) {
           const gid = `FF-4-${gi}`;
-          // Layout: top row = QUADRANT[0] vs QUADRANT[1], bottom row = QUADRANT[3] vs QUADRANT[2]
-          const q0 = gi === 0 ? QUADRANT[0] : QUADRANT[3];
-          const q1 = gi === 0 ? QUADRANT[1] : QUADRANT[2];
+          const q0 = FF_PAIRS[gi][0];
+          const q1 = FF_PAIRS[gi][1];
           const stA = bracketState[`${q0}-8-0`], stB = bracketState[`${q1}-8-0`];
           const teamA = stA?.pick || null, teamB = stB?.pick || null;
           const seedA = teamA ? (stA?.pick === stA?.teamA ? stA?.seedA : stA?.seedB) : null;

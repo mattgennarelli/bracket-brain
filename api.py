@@ -250,7 +250,15 @@ def get_bracket(
             quadrant_order=quadrant_order,
         )
 
-    result = {"year": year, "upset_aggression": upset_aggression, "picks": picks}
+    # ff_pairs: [(TL_region, BL_region), (TR_region, BR_region)]
+    qo = quadrant_order
+    result = {
+        "year": year,
+        "upset_aggression": upset_aggression,
+        "picks": picks,
+        "quadrant_order": qo,
+        "ff_pairs": [[qo[0], qo[3]], [qo[1], qo[2]]],
+    }
     _cache_set(cache_key, result)
     return result
 
