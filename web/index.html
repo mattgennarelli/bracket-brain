@@ -697,7 +697,7 @@ function recomputeBracket() {
       bracketState[gid] = {
         teamA: tA.team, seedA: tA.seed,
         teamB: tB.team, seedB: tB.seed,
-        probA: p ? (p.team_a === tA.team ? p.win_prob : 1 - p.win_prob) : 0.5,
+        probA: p ? (p.pick === tA.team ? p.win_prob : 1 - p.win_prob) : 0.5,
         margin: p?.projected_spread || 0,
         pick: lockedPicks[gid] || simPicks[gid] || null,
         isLocked: !!lockedPicks[gid],
@@ -728,7 +728,7 @@ function recomputeBracket() {
         const seedB = teamB ? (stB?.pick === stB?.teamA ? stB?.seedA : stB?.seedB) : null;
         const p = PICKS.find(pp => pp.region === region && pp.round === roundOf &&
           (pp.team_a === teamA || pp.team_b === teamA));
-        const probA = p && teamA ? (p.team_a === teamA ? p.win_prob : 1 - p.win_prob)
+        const probA = p && teamA ? (p.pick === teamA ? p.win_prob : 1 - p.win_prob)
           : (seedA && seedB ? seedWinProb(seedA, seedB) : 0.5);
         bracketState[gid] = {
           teamA, seedA, teamB, seedB, probA,
@@ -767,7 +767,7 @@ function recomputeBracket() {
         const seedB = teamB ? (stB?.pick === stB?.teamA ? stB?.seedA : stB?.seedB) : null;
         const p = PICKS.find(pp => pp.round === 2 &&
           (pp.team_a === teamA || pp.team_b === teamA));
-        const probA = p && teamA ? (p.team_a === teamA ? p.win_prob : 1 - p.win_prob)
+        const probA = p && teamA ? (p.pick === teamA ? p.win_prob : 1 - p.win_prob)
           : (seedA && seedB ? seedWinProb(seedA, seedB) : 0.5);
         bracketState['FF-2-0'] = {
           teamA, seedA, teamB, seedB, probA,
