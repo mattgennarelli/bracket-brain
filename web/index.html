@@ -129,39 +129,135 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sa
   opacity:.65; transition:opacity .15s; line-height:1; }
 .info-btn:hover { opacity:1; border-color:var(--primary); color:var(--primary); }
 .region-bracket.flipped .info-btn { right:auto; left:1px; }
-.analysis-overlay { display:none; position:fixed; inset:0; background:rgba(0,0,0,.3); z-index:199; }
+.analysis-overlay { display:none; position:fixed; inset:0; background:rgba(0,0,0,.45); z-index:199; backdrop-filter:blur(2px); }
 .analysis-overlay.show { display:block; }
 .analysis-panel { display:none; position:fixed; top:50%; left:50%; transform:translate(-50%,-50%);
-  background:var(--surface); border:1px solid var(--border); border-radius:12px; padding:24px;
-  width:460px; max-width:95vw; max-height:85vh; overflow-y:auto; z-index:200;
-  box-shadow:0 20px 60px rgba(0,0,0,.12); }
+  background:var(--surface); border:1px solid var(--border); border-radius:16px;
+  width:520px; max-width:96vw; max-height:88vh; overflow-y:auto; z-index:200;
+  box-shadow:0 24px 80px rgba(0,0,0,.18); }
 .analysis-panel.show { display:block; }
-.analysis-panel h3 { font-size:1rem; margin-bottom:14px; font-weight:700; }
-.prob-bar-wrap { display:flex; height:6px; border-radius:3px; overflow:hidden; margin:8px 0 12px;
-  background:var(--surface2); }
-.prob-bar-a { background:var(--green); border-radius:3px 0 0 3px; transition:width .3s; }
-.prob-bar-b { background:var(--red); border-radius:0 3px 3px 0; transition:width .3s; }
+.ap-header { padding:20px 20px 14px; border-bottom:1px solid var(--border); position:sticky; top:0;
+  background:var(--surface); z-index:1; border-radius:16px 16px 0 0; }
+.ap-header h3 { font-size:.95rem; font-weight:800; margin:0 30px 4px 0; line-height:1.3; }
+.ap-header .ap-round { font-size:.68rem; color:var(--muted); text-transform:uppercase; letter-spacing:.06em; font-weight:600; }
+.ap-body { padding:16px 20px 20px; }
+.close-btn { position:absolute; top:14px; right:16px; background:none; border:none;
+  color:var(--muted); font-size:1.4rem; cursor:pointer; line-height:1; padding:2px 4px; border-radius:4px; }
+.close-btn:hover { color:var(--text); background:var(--surface2); }
+.conf-badge { display:inline-flex; align-items:center; padding:2px 8px; border-radius:4px;
+  font-size:.63rem; font-weight:800; letter-spacing:.04em; }
+.conf-lock   { background:rgba(26,135,84,.12); color:var(--green); }
+.conf-strong { background:rgba(26,109,204,.12); color:var(--primary); }
+.conf-lean   { background:rgba(217,119,6,.12); color:var(--gold); }
+.conf-tossup { background:rgba(198,40,40,.1); color:var(--red); }
+
+/* Win probability display */
+.ap-prob-section { margin-bottom:16px; }
+.ap-teams-row { display:flex; justify-content:space-between; align-items:flex-end; margin-bottom:6px; }
+.ap-team { flex:1; }
+.ap-team.right { text-align:right; }
+.ap-team-name { font-size:.88rem; font-weight:700; }
+.ap-team-name.fav { color:var(--green); }
+.ap-team-seed { font-size:.68rem; color:var(--muted); font-weight:600; }
+.ap-prob-pct { font-size:1.6rem; font-weight:900; line-height:1; }
+.ap-prob-pct.fav { color:var(--green); }
+.ap-prob-pct.dog { color:var(--muted); }
+.ap-bar-track { height:8px; border-radius:4px; overflow:hidden; background:var(--surface2);
+  display:flex; margin-bottom:4px; }
+.ap-bar-a { background:var(--green); transition:width .4s; }
+.ap-bar-b { background:var(--red); transition:width .4s; }
+.ap-score-line { display:flex; justify-content:center; gap:6px; font-size:.82rem;
+  color:var(--muted); margin-top:4px; align-items:center; }
+.ap-score-line strong { color:var(--text); font-weight:700; }
+.ap-score-line .spread-chip { background:var(--surface2); border:1px solid var(--border);
+  border-radius:4px; padding:1px 7px; font-size:.72rem; font-weight:600; color:var(--text); }
+
+/* Section labels */
+.ap-section { margin-bottom:14px; }
+.ap-section-title { font-size:.65rem; font-weight:800; text-transform:uppercase; letter-spacing:.07em;
+  color:var(--muted); margin-bottom:8px; padding-bottom:4px; border-bottom:1px solid var(--border); }
+
+/* Signal comparison bars */
+.signal-row { display:flex; align-items:center; gap:8px; margin-bottom:7px; font-size:.78rem; }
+.signal-label { width:100px; color:var(--muted); font-weight:500; flex-shrink:0; }
+.signal-bars { flex:1; display:flex; gap:2px; height:8px; }
+.signal-bar-a { border-radius:2px 0 0 2px; transition:width .3s; min-width:2px; }
+.signal-bar-b { border-radius:0 2px 2px 0; transition:width .3s; min-width:2px; }
+.signal-vals { display:flex; justify-content:space-between; font-size:.7rem; margin-top:2px;
+  color:var(--muted); }
+.signal-val-a { font-weight:700; }
+.signal-val-b { font-weight:700; }
+.signal-val-a.lead { color:var(--green); }
+.signal-val-b.lead { color:var(--green); }
+
+/* Key factors list */
+.factor-list { list-style:none; padding:0; margin:0; }
+.factor-list li { display:flex; gap:8px; font-size:.8rem; padding:5px 0;
+  border-bottom:1px solid var(--border); color:var(--muted); line-height:1.4; }
+.factor-list li:last-child { border-bottom:none; }
+.factor-list li .fi { flex-shrink:0; font-size:.75rem; margin-top:1px; }
+
+/* Perspectives */
+.perspective-row { background:var(--surface2); border:1px solid var(--border); border-radius:8px;
+  padding:10px 12px; margin-bottom:6px; }
+.perspective-header { display:flex; justify-content:space-between; align-items:center;
+  margin-bottom:3px; font-size:.76rem; }
+.perspective-name { font-weight:700; color:var(--text); }
+.perspective-pick { font-size:.68rem; font-weight:800; padding:2px 6px; border-radius:3px; }
+.perspective-pick.pick-a { background:var(--green-bg); color:var(--green); }
+.perspective-pick.pick-b { background:rgba(26,109,204,.1); color:var(--primary); }
+.perspective-pick.pick-toss { background:rgba(217,119,6,.1); color:var(--gold); }
+.perspective-arg { font-size:.76rem; color:var(--muted); line-height:1.5; }
+
+/* Historical / H2H */
+.stat-grid { display:grid; grid-template-columns:1fr 1fr; gap:8px; }
+.stat-tile { background:var(--surface2); border:1px solid var(--border); border-radius:8px;
+  padding:8px 10px; }
+.stat-tile .st-label { font-size:.62rem; text-transform:uppercase; letter-spacing:.05em;
+  color:var(--muted); font-weight:600; margin-bottom:2px; }
+.stat-tile .st-value { font-size:1rem; font-weight:800; color:var(--text); }
+.stat-tile .st-sub { font-size:.66rem; color:var(--muted); margin-top:1px; }
+
+/* Upset alert banner */
+.upset-banner { display:flex; gap:10px; align-items:flex-start; padding:10px 12px;
+  background:rgba(198,40,40,.07); border:1px solid rgba(198,40,40,.2);
+  border-radius:8px; margin-bottom:12px; font-size:.8rem; }
+.upset-banner .ub-icon { font-size:1.1rem; flex-shrink:0; }
+.upset-banner .ub-text { color:var(--muted); line-height:1.45; }
+.upset-banner .ub-label { font-weight:700; color:var(--red); }
+
+/* Pick recommendation box */
+.pick-box { display:flex; align-items:center; justify-content:space-between;
+  background:var(--green-bg); border:1px solid var(--green); border-radius:10px;
+  padding:12px 16px; margin-top:4px; }
+.pick-box.tossup { background:rgba(217,119,6,.08); border-color:rgba(217,119,6,.3); }
+.pick-box .pb-label { font-size:.7rem; text-transform:uppercase; letter-spacing:.06em;
+  font-weight:700; color:var(--muted); margin-bottom:1px; }
+.pick-box .pb-team { font-size:1rem; font-weight:800; color:var(--green); }
+.pick-box.tossup .pb-team { color:var(--gold); }
+.pick-box .pb-prob { font-size:1.4rem; font-weight:900; color:var(--green); }
+.pick-box.tossup .pb-prob { color:var(--gold); }
+
+/* Insight quote */
+.ap-insight { font-size:.82rem; color:var(--muted); line-height:1.6; padding:10px 12px;
+  background:var(--surface2); border-radius:8px; border-left:3px solid var(--primary);
+  margin-bottom:14px; font-style:italic; }
+
+/* Stat row kept for fallback */
+.stat-row { display:flex; justify-content:space-between; font-size:.8rem; padding:4px 0; color:var(--muted); }
+.stat-row .val { color:var(--text); font-weight:600; }
 .matchup-line { display:flex; justify-content:space-between; align-items:center; padding:6px 0;
   border-bottom:1px solid var(--border); font-size:.88rem; }
 .team-side { font-weight:600; }
 .team-side.fav { color:var(--green); }
-.stat-row { display:flex; justify-content:space-between; font-size:.8rem; padding:4px 0;
-  color:var(--muted); }
-.stat-row .val { color:var(--text); font-weight:600; }
+.prob-bar-wrap { display:flex; height:6px; border-radius:3px; overflow:hidden; margin:8px 0 12px; background:var(--surface2); }
+.prob-bar-a { background:var(--green); border-radius:3px 0 0 3px; transition:width .3s; }
+.prob-bar-b { background:var(--red); border-radius:0 3px 3px 0; transition:width .3s; }
 .insight { font-size:.82rem; color:var(--muted); margin:12px 0 8px; line-height:1.5; padding:10px 12px;
   background:var(--surface2); border-radius:8px; border:1px solid var(--border); }
 .factors { list-style:none; padding:0; }
 .factors li { font-size:.8rem; color:var(--muted); padding:3px 0; }
 .factors li::before { content:'\2022'; color:var(--primary); margin-right:6px; }
-.close-btn { position:absolute; top:12px; right:16px; background:none; border:none;
-  color:var(--muted); font-size:1.3rem; cursor:pointer; }
-.close-btn:hover { color:var(--text); }
-.conf-badge { display:inline-block; padding:2px 8px; border-radius:4px; font-size:.68rem;
-  font-weight:700; margin-left:8px; }
-.conf-lock { background:rgba(26,135,84,.1); color:var(--green); }
-.conf-strong { background:rgba(26,109,204,.1); color:var(--primary); }
-.conf-lean { background:rgba(217,119,6,.1); color:var(--gold); }
-.conf-tossup { background:rgba(198,40,40,.08); color:var(--red); }
 .odds-section { max-width:720px; margin:0 auto; padding:0 20px 20px; }
 .odds-panel { background:var(--surface); border:1px solid var(--border); border-radius:10px;
   margin:16px 0; padding:18px; box-shadow:0 1px 3px rgba(0,0,0,.04); }
@@ -972,35 +1068,217 @@ function showAnalysis(gameId) {
   const panel = document.getElementById('analysis-panel');
   const overlay = document.getElementById('analysis-overlay');
   const content = document.getElementById('analysis-content');
-  const pA = st.probA !== null ? st.probA : .5;
-  const probA = (pA * 100).toFixed(0), probB = ((1 - pA) * 100).toFixed(0);
-  const spread = Math.abs(st.margin || 0).toFixed(1);
-  const p = Math.max(pA, 1 - pA);
+
+  const pA = st.probA != null ? st.probA : 0.5;
+  const pB = 1 - pA;
+  const probA = (pA * 100).toFixed(0);
+  const probB = (pB * 100).toFixed(0);
+  const p = Math.max(pA, pB);
+  const favA = pA >= pB;
   const conf = p >= .9 ? 'lock' : p >= .75 ? 'strong' : p >= .6 ? 'lean' : 'tossup';
-  const sA = TEAM_STATS[st.teamA], sB = TEAM_STATS[st.teamB];
+  const confLabel = p >= .9 ? 'Lock' : p >= .75 ? 'Strong' : p >= .6 ? 'Lean' : 'Toss-up';
+
+  // Round label from gameId
+  const roundMap = { '64': 'Round of 64', '32': 'Round of 32', '16': 'Sweet 16',
+    '8': 'Elite Eight', '4': 'Final Four', '2': 'Championship' };
+  const roundNum = gameId.replace(/^FF-/, '').split('-')[1] || '';
+  const roundLabel = (gameId.startsWith('FF') ? (roundNum === '2' ? 'Championship' : 'Final Four')
+    : (roundMap[roundNum] || 'Tournament'));
+
+  // Find original pick record with full data
   let orig = null;
   for (const pp of PICKS) {
     if ((pp.team_a === st.teamA && pp.team_b === st.teamB) ||
         (pp.team_b === st.teamA && pp.team_a === st.teamB)) { orig = pp; break; }
   }
-  const insight = orig?.insight || `Projected spread: ${spread} pts.`;
-  const factors = orig?.key_factors || [];
-  const hist = orig?.historical || null;
-  let statsHtml = '';
-  if (sA?.adj_o) statsHtml += `<div class="stat-row"><span>${st.teamA} Adj O/D</span><span class="val">${sA.adj_o.toFixed(1)} / ${(sA.adj_d||0).toFixed(1)}</span></div>`;
-  if (sB?.adj_o) statsHtml += `<div class="stat-row"><span>${st.teamB} Adj O/D</span><span class="val">${sB.adj_o.toFixed(1)} / ${(sB.adj_d||0).toFixed(1)}</span></div>`;
-  if (sA?.sos != null && sB?.sos != null) statsHtml += `<div class="stat-row"><span>SOS</span><span class="val">${sA.sos.toFixed(3)} vs ${sB.sos.toFixed(3)}</span></div>`;
+
+  const statsA = orig?.stats_a || {};
+  const statsB = orig?.stats_b || {};
+  const factorsA = orig?.factors_a || {};
+  const factorsB = orig?.factors_b || {};
+  const spread = Math.abs(st.margin || 0).toFixed(1);
+  const scoreA = orig?.predicted_score_a;
+  const scoreB = orig?.predicted_score_b;
+  const total = orig?.predicted_total;
+  const insight = orig?.insight || '';
+  const keyFactors = orig?.key_factors || [];
+  const upsetAlert = orig?.upset_alert;
+  const pickTeam = favA ? st.teamA : st.teamB;
+  const pickSeed = favA ? st.seedA : st.seedB;
+
+  // ── Signal comparison bar helper ───────────────────────────────────────────
+  function signalBar(valA, valB, label, fmtA, fmtB, higherBetter = true) {
+    const sum = Math.abs(valA) + Math.abs(valB);
+    if (sum < 0.001) return '';
+    const pctA = Math.round(Math.abs(valA) / sum * 100);
+    const pctB = 100 - pctA;
+    const aLeads = higherBetter ? valA > valB : valA < valB;
+    const bLeads = higherBetter ? valB > valA : valB < valA;
+    return `<div class="signal-row">
+      <span class="signal-label">${label}</span>
+      <div style="flex:1">
+        <div class="signal-bars">
+          <div class="signal-bar-a" style="width:${pctA}%;background:var(--green)"></div>
+          <div class="signal-bar-b" style="width:${pctB}%;background:var(--red)"></div>
+        </div>
+        <div class="signal-vals">
+          <span class="signal-val-a${aLeads ? ' lead' : ''}">${fmtA}</span>
+          <span class="signal-val-b${bLeads ? ' lead' : ''}">${fmtB}</span>
+        </div>
+      </div>
+    </div>`;
+  }
+
+  // ── Signals ────────────────────────────────────────────────────────────────
+  const adjOA = statsA.adj_o || 0, adjDA = statsA.adj_d || 0;
+  const adjOB = statsB.adj_o || 0, adjDB = statsB.adj_d || 0;
+  const netA = adjOA - adjDA, netB = adjOB - adjDB;
+  const sosA = statsA.sos || 0, sosB = statsB.sos || 0;
+  const tempoA = statsA.adj_tempo || 0, tempoB = statsB.adj_tempo || 0;
+  const winA = statsA.win_pct || 0, winB = statsB.win_pct || 0;
+  const intangA = (factorsA.experience_bonus||0) + (factorsA.coach_bonus||0) + (factorsA.momentum_bonus||0);
+  const intangB = (factorsB.experience_bonus||0) + (factorsB.coach_bonus||0) + (factorsB.momentum_bonus||0);
+
+  const effSig = adjOA > 0 ? signalBar(netA + 20, netB + 20, 'Net Efficiency',
+    (netA >= 0 ? '+' : '') + netA.toFixed(1), (netB >= 0 ? '+' : '') + netB.toFixed(1)) : '';
+  const sosSig = (Math.abs(sosA) + Math.abs(sosB) > 0.001) ? signalBar(
+    sosA + 0.5, sosB + 0.5, 'Strength of Sched', sosA.toFixed(3), sosB.toFixed(3)) : '';
+  const tempoSig = (tempoA > 0 && tempoB > 0) ? signalBar(
+    tempoA, tempoB, 'Tempo (poss/40)', tempoA.toFixed(1), tempoB.toFixed(1)) : '';
+  const intangSig = (Math.abs(intangA) + Math.abs(intangB) > 0.01) ? signalBar(
+    Math.max(intangA, 0) + 0.1, Math.max(intangB, 0) + 0.1, 'Intangibles',
+    (intangA >= 0 ? '+' : '') + intangA.toFixed(1), (intangB >= 0 ? '+' : '') + intangB.toFixed(1)) : '';
+  const winSig = (winA > 0 || winB > 0) ? signalBar(
+    winA, winB, 'Win Rate',
+    (winA * 100).toFixed(0) + '%', (winB * 100).toFixed(0) + '%') : '';
+
+  // ── Stat tiles ─────────────────────────────────────────────────────────────
+  function tile(label, vA, vB, fA, fB, higher = true) {
+    if (vA == null || vB == null) return '';
+    const aW = higher ? vA > vB : vA < vB;
+    const bW = higher ? vB > vA : vB < vA;
+    return `<div class="stat-tile">
+      <div class="st-label">${label}</div>
+      <div class="st-value" style="${aW ? 'color:var(--green)' : bW ? 'color:var(--red)' : ''}">${fA}</div>
+      <div class="st-sub">vs ${fB}</div>
+    </div>`;
+  }
+
+  const statsSection = adjOA > 0 ? `<div class="ap-section">
+    <div class="ap-section-title">Team Stats — <span style="color:var(--green)">${st.teamA}</span> vs <span style="color:var(--red)">${st.teamB}</span></div>
+    <div class="stat-grid">
+      ${tile('Adj. Offense', adjOA, adjOB, adjOA.toFixed(1), adjOB.toFixed(1))}
+      ${tile('Adj. Defense', adjDA, adjDB, adjDA.toFixed(1), adjDB.toFixed(1), false)}
+      ${winA > 0 ? tile('Win Rate', winA, winB, (winA*100).toFixed(0)+'%', (winB*100).toFixed(0)+'%') : ''}
+      ${tempoA > 0 ? tile('Tempo', tempoA, tempoB, tempoA.toFixed(1), tempoB.toFixed(1)) : ''}
+      ${statsA.barthag != null ? tile('Barthag', statsA.barthag, statsB.barthag, statsA.barthag.toFixed(3), (statsB.barthag||0).toFixed(3)) : ''}
+      ${statsA.three_rate != null ? tile('3PT Rate', statsA.three_rate, statsB.three_rate, (statsA.three_rate*100).toFixed(0)+'%', ((statsB.three_rate||0)*100).toFixed(0)+'%') : ''}
+    </div>
+  </div>` : '';
+
+  // ── Sections assembly ──────────────────────────────────────────────────────
+  const signalsSection = (effSig || sosSig || intangSig || winSig || tempoSig) ? `
+    <div class="ap-section">
+      <div class="ap-section-title">Team Comparison</div>
+      <div style="display:flex;justify-content:space-between;font-size:.7rem;margin-bottom:8px">
+        <span style="color:var(--green);font-weight:700">${st.teamA}</span>
+        <span style="color:var(--red);font-weight:700">${st.teamB}</span>
+      </div>
+      ${effSig}${sosSig}${intangSig}${winSig}${tempoSig}
+    </div>` : '';
+
+  const factorsSection = keyFactors.length ? `
+    <div class="ap-section">
+      <div class="ap-section-title">Key Factors</div>
+      <ul class="factor-list">
+        ${keyFactors.map(f => `<li><span class="fi">→</span>${f}</li>`).join('')}
+      </ul>
+    </div>` : '';
+
+  const histWin = orig?.historical_win_pct;
+  const histMargin = orig?.historical_avg_margin;
+  const hist = orig?.historical;
+  const histSection = (histWin != null || hist) ? `
+    <div class="ap-section">
+      <div class="ap-section-title">Historical Context</div>
+      ${histWin != null ? `<div class="stat-grid">
+        <div class="stat-tile">
+          <div class="st-label">Seed #${st.seedA} Win%</div>
+          <div class="st-value">${(histWin * 100).toFixed(0)}%</div>
+          <div class="st-sub">vs seed #${st.seedB} historically</div>
+        </div>
+        ${histMargin != null ? `<div class="stat-tile">
+          <div class="st-label">Avg. Margin</div>
+          <div class="st-value">${histMargin >= 0 ? '+' : ''}${histMargin.toFixed(1)}</div>
+          <div class="st-sub">pts (seed #${st.seedA} POV)</div>
+        </div>` : ''}
+      </div>` : ''}
+      ${hist ? `<div class="ap-insight" style="margin-top:8px">${hist}</div>` : ''}
+    </div>` : '';
+
+  const upsetHtml = upsetAlert ? `
+    <div class="upset-banner">
+      <span class="ub-icon">⚠️</span>
+      <div class="ub-text">
+        <span class="ub-label">Upset Alert — </span>
+        Lower seed has statistical profiles suggesting real upset potential. Treat this as high-variance.
+      </div>
+    </div>` : '';
+
+  const scoreHtml = (scoreA && scoreB)
+    ? `<div class="ap-score-line">
+        <strong>${scoreA.toFixed(0)}</strong><span>–</span><strong>${scoreB.toFixed(0)}</strong>
+        <span class="spread-chip">${favA ? st.teamA : st.teamB} −${spread}</span>
+        ${total ? `<span>O/U ${total.toFixed(0)}</span>` : ''}
+       </div>`
+    : `<div class="ap-score-line"><span class="spread-chip">${favA ? st.teamA : st.teamB} −${spread}</span></div>`;
+
+  const pickBoxHtml = `
+    <div class="pick-box${p < 0.56 ? ' tossup' : ''}">
+      <div>
+        <div class="pb-label">Model Pick</div>
+        <div class="pb-team">(${pickSeed}) ${pickTeam}</div>
+      </div>
+      <div class="pb-prob">${(p * 100).toFixed(0)}%</div>
+    </div>`;
+
+  const insightHtml = insight
+    ? `<div class="ap-insight">${insight}</div>` : '';
+
   content.innerHTML = `
-    <h3>(${st.seedA}) ${st.teamA} vs (${st.seedB}) ${st.teamB} <span class="conf-badge conf-${conf}">${conf.toUpperCase()}</span></h3>
-    <div class="matchup-line"><span class="team-side ${pA >= .5 ? 'fav' : ''}">(${st.seedA}) ${st.teamA}</span><span style="font-weight:700">${probA}%</span></div>
-    <div class="prob-bar-wrap"><div class="prob-bar-a" style="width:${probA}%"></div><div class="prob-bar-b" style="width:${probB}%"></div></div>
-    <div class="matchup-line"><span class="team-side ${pA < .5 ? 'fav' : ''}">(${st.seedB}) ${st.teamB}</span><span style="font-weight:700">${probB}%</span></div>
-    <div class="stat-row"><span>Projected Spread</span><span class="val">${spread} pts</span></div>
-    ${st.pick ? `<div class="stat-row"><span>Pick</span><span class="val" style="color:var(--green)">${st.pick}</span></div>` : ''}
-    ${statsHtml}
-    ${hist ? `<div class="stat-row"><span>Historical</span><span class="val">${hist}</span></div>` : ''}
-    <div class="insight">${insight}</div>
-    ${factors.length ? `<ul class="factors">${factors.map(f => `<li>${f}</li>`).join('')}</ul>` : ''}
+    <div class="ap-header">
+      <div class="ap-round">${roundLabel}</div>
+      <h3>(${st.seedA}) ${st.teamA} vs (${st.seedB}) ${st.teamB}
+        <span class="conf-badge conf-${conf}">${confLabel}</span></h3>
+    </div>
+    <div class="ap-body">
+      <div class="ap-prob-section">
+        <div class="ap-teams-row">
+          <div class="ap-team">
+            <div class="ap-team-name${favA ? ' fav' : ''}">${st.teamA}</div>
+            <div class="ap-team-seed">Seed #${st.seedA}</div>
+            <div class="ap-prob-pct${favA ? ' fav' : ' dog'}">${probA}%</div>
+          </div>
+          <div class="ap-team right">
+            <div class="ap-team-name${!favA ? ' fav' : ''}">${st.teamB}</div>
+            <div class="ap-team-seed">Seed #${st.seedB}</div>
+            <div class="ap-prob-pct${!favA ? ' fav' : ' dog'}">${probB}%</div>
+          </div>
+        </div>
+        <div class="ap-bar-track">
+          <div class="ap-bar-a" style="width:${probA}%"></div>
+          <div class="ap-bar-b" style="width:${probB}%"></div>
+        </div>
+        ${scoreHtml}
+      </div>
+      ${upsetHtml}
+      ${pickBoxHtml}
+      ${insightHtml}
+      ${signalsSection}
+      ${factorsSection}
+      ${statsSection}
+      ${histSection}
+    </div>
   `;
   panel.classList.add('show');
   overlay.classList.add('show');

@@ -99,10 +99,10 @@
 - [x] **Measurable:** A bracket link opens identically on a different browser/device ✓
 
 #### Explainability
-- [x] Analysis panel already shows insight + key_factors + efficiency stats — info btn opacity raised to 65%
+- [x] Analysis panel redesigned: rich matchup panel with probability display, signal comparison bars, stat tiles, key factors, historical context, upset alert, model pick box, insight quote
 - [x] Mobile bracket: every card has "ⓘ See Analysis" button opening the full panel
 - [x] "Why this pick?" expandable on every betting card: model prob vs implied, edge, Kelly size, insight text
-- [ ] **Measurable:** Every matchup card has a reachable explanation; every pick card shows "Why?" ✓
+- [x] **Measurable:** Every matchup card has a reachable explanation; every pick card shows "Why?" ✓
 
 #### Visual Polish
 - [x] Design system: CSS variables extended with `--shadow`; full dark mode via `prefers-color-scheme`
