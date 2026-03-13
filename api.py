@@ -22,12 +22,13 @@ import sys
 import contextlib
 import re
 import time
-from datetime import datetime, timezone
+from datetime import datetime, timezone, timedelta
 from typing import Optional
 
 ROOT = os.path.dirname(os.path.abspath(__file__))
 DATA_DIR = os.path.join(ROOT, "data")
 sys.path.insert(0, ROOT)
+sys.path.insert(0, os.path.join(ROOT, "scripts"))
 
 from fastapi import FastAPI, HTTPException, Query, Request
 from fastapi.middleware.cors import CORSMiddleware
@@ -40,11 +41,14 @@ from engine import (
     generate_bracket_picks, load_teams_merged, _normalize_team_for_match,
     ModelConfig, DEFAULT_CONFIG,
 )
+from espn_scores import fetch_scores_for_picks, _scores_key as espn_scores_key
 
 LEDGER_PATH = os.path.join(DATA_DIR, "bets_ledger.json")
 
 # Cache TTL: 1 hour — avoids stale Render cache on redeploy
 CACHE_TTL_SECONDS = 3600
+# Scores cache: 90 seconds for live score freshness
+SCORES_CACHE_TTL = 90
 
 # Cache: key -> {"result": ..., "cached_at": timestamp}
 _cache: dict = {}
@@ -271,6 +275,7 @@ def get_bets_today():
     with open(LEDGER_PATH) as f:
         ledger = json.load(f)
     picks = [p for p in ledger.get("picks", []) if p.get("date") == today]
+    picks = sorted(picks, key=lambda p: p.get("commence_time", ""))
     return {"date": today, "picks": picks, "available": bool(picks)}
 
 
@@ -280,6 +285,67 @@ def get_bets_history():
         return {"picks": [], "stats": {}}
     with open(LEDGER_PATH) as f:
         return json.load(f)
+
+
+@app.get("/bets/scores")
+def get_bets_scores():
+    """
+    Fetch live/final scores from ESPN for games we have picks on.
+    Returns { "home_team|away_team": { home_score, away_score, completed, status_detail, display_clock } }.
+    Cached 90s to avoid hammering ESPN.
+    """
+    cache_key = "bets_scores"
+    entry = _cache.get(cache_key)
+    if entry and (time.time() - entry.get("cached_at", 0)) < SCORES_CACHE_TTL:
+        return entry.get("result", {})
+
+    if not os.path.isfile(LEDGER_PATH):
+        return {"scores": {}}
+
+    with open(LEDGER_PATH) as f:
+        ledger = json.load(f)
+
+    picks = ledger.get("picks", [])
+    # Focus on recent picks (today + last 2 days)
+    today = datetime.now().strftime("%Y-%m-%d")
+    recent = [p for p in picks if p.get("date") and p.get("date") >= _days_ago(2)]
+
+    scores_by_key = fetch_scores_for_picks(recent, days=2)
+
+    # Build response keyed by pick's home_team|away_team for frontend lookup
+    result = {"scores": {}}
+    for p in recent:
+        key = espn_scores_key(p.get("home_team", ""), p.get("away_team", ""))
+        rec = scores_by_key.get(key)
+        if rec:
+            pick_key = f"{p['home_team']}|{p['away_team']}"
+            result["scores"][pick_key] = {
+                "home_score": rec.get("home_score"),
+                "away_score": rec.get("away_score"),
+                "completed": rec.get("completed", False),
+                "status_detail": rec.get("status_detail", ""),
+                "display_clock": rec.get("display_clock", ""),
+                "period": rec.get("period", 0),
+            }
+            # Also add flipped key in case frontend looks up away|home
+            pick_key_flip = f"{p['away_team']}|{p['home_team']}"
+            result["scores"][pick_key_flip] = {
+                "home_score": rec.get("away_score"),
+                "away_score": rec.get("home_score"),
+                "completed": rec.get("completed", False),
+                "status_detail": rec.get("status_detail", ""),
+                "display_clock": rec.get("display_clock", ""),
+                "period": rec.get("period", 0),
+            }
+
+    _cache[cache_key] = {"result": result, "cached_at": time.time()}
+    return result
+
+
+def _days_ago(n):
+    """Return YYYY-MM-DD for n days ago."""
+    d = datetime.now(timezone.utc) - timedelta(days=n)
+    return d.strftime("%Y-%m-%d")
 
 
 @app.get("/benchmark")

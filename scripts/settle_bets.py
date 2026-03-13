@@ -4,32 +4,33 @@ settle_bets.py — Fetch completed game scores and settle pending picks.
 Run after each day's games are complete (or each morning to settle yesterday):
   python scripts/settle_bets.py
 
-Checks the last 3 days of scores from The Odds API, matches against any
-pending picks in data/bets_ledger.json, and marks each as W / L / P (push).
+Uses ESPN first (free), then Odds API as fallback for unmatched picks (mid-majors).
+Matches against pending picks in data/bets_ledger.json and marks each as W / L / P (push).
 Updates the ledger and prints a running hit rate.
 
 Usage:
-  export ODDS_API_KEY=your_key
-  python scripts/settle_bets.py
-  python scripts/settle_bets.py --days 3     # check up to 3 days back (max)
+  python scripts/settle_bets.py                    # ESPN + Odds API fallback (if ODDS_API_KEY set)
+  python scripts/settle_bets.py --source odds       # Odds API only (requires ODDS_API_KEY)
+  python scripts/settle_bets.py --days 3           # check up to 3 days back
+  python scripts/settle_bets.py --debug            # log unmatched picks
 """
 
 import argparse
 import json
 import os
 import sys
-from datetime import datetime, timezone
+from datetime import datetime, timedelta, timezone
 
 SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
 ROOT = os.path.dirname(SCRIPT_DIR)
 DATA_DIR = os.path.join(ROOT, "data")
 sys.path.insert(0, SCRIPT_DIR)
+sys.path.insert(0, ROOT)
 
 try:
     import requests
 except ImportError:
-    print("ERROR: 'requests' not installed.")
-    sys.exit(1)
+    requests = None
 
 from best_bets import _normalize_team_for_match, _american_to_decimal
 
@@ -42,13 +43,34 @@ SPORT_KEY = "basketball_ncaab"
 # Scores fetch
 # ---------------------------------------------------------------------------
 
-def fetch_scores(api_key, days_from=1):
-    """Fetch completed NCAAB scores. days_from: 0=today, 1=yesterday, 2=2 days ago (max 3)."""
+def fetch_scores_odds(api_key, days_from=1):
+    """Fetch completed NCAAB scores from Odds API. days_from: 0=today, 1=yesterday, etc (max 3)."""
+    if not requests:
+        return []
     url = f"{ODDS_API_BASE}/sports/{SPORT_KEY}/scores/"
     params = {"apiKey": api_key, "daysFrom": days_from, "dateFormat": "iso"}
     resp = requests.get(url, params=params, timeout=15)
     resp.raise_for_status()
     return [g for g in resp.json() if g.get("completed")]
+
+
+def fetch_scores_espn(picks, days=3):
+    """Fetch completed NCAAB scores from ESPN (free, no API key)."""
+    from espn_scores import fetch_espn_scoreboard, build_scores_by_key
+
+    dates_set = set()
+    for p in picks:
+        d = p.get("date")
+        if d:
+            dates_set.add(d.replace("-", ""))
+    now = datetime.now(timezone.utc)
+    for i in range(days + 1):
+        dt = now - timedelta(days=i)
+        dates_set.add(dt.strftime("%Y%m%d"))
+    dates = sorted(dates_set)
+    games = fetch_espn_scoreboard(dates)
+    completed = [g for g in games if g.get("completed")]
+    return build_scores_by_key(completed)
 
 
 # ---------------------------------------------------------------------------
@@ -74,11 +96,12 @@ def match_score(pick, scores_by_key):
         rec = scores_by_key[key_flipped]
         # Flip scores so home/away align with pick
         return {**rec, "home_team": rec["away_team"], "away_team": rec["home_team"],
+                "home_score": rec.get("away_score"), "away_score": rec.get("home_score"),
                 "_scores_flipped": True}
     return None
 
 
-def parse_scores(score_rec):
+def parse_scores_odds(score_rec):
     """Return (home_score, away_score) as floats, or (None, None)."""
     scores = score_rec.get("scores") or []
     home_name = score_rec["home_team"]
@@ -108,6 +131,13 @@ def parse_scores(score_rec):
             pass
 
     return home_score, away_score
+
+
+def get_scores_from_record(score_rec):
+    """Extract (home_score, away_score) from score record. Handles ESPN and Odds API formats."""
+    if score_rec.get("home_score") is not None and score_rec.get("away_score") is not None:
+        return (float(score_rec["home_score"]), float(score_rec["away_score"]))
+    return parse_scores_odds(score_rec)
 
 
 # ---------------------------------------------------------------------------
@@ -238,13 +268,17 @@ def compute_stats(picks):
 
 def main():
     parser = argparse.ArgumentParser(description="Settle pending bets with actual scores")
+    parser.add_argument("--source", choices=["espn", "odds"], default="espn",
+                        help="Score source: espn (free) or odds (requires API key). Default uses ESPN first, then Odds API fallback.")
     parser.add_argument("--api-key", default=os.environ.get("ODDS_API_KEY", ""))
-    parser.add_argument("--days", type=int, default=2,
-                        help="How many days back to fetch scores (0-3, default 2)")
+    parser.add_argument("--days", type=int, default=3,
+                        help="How many days back to fetch scores (default 3)")
+    parser.add_argument("--debug", action="store_true",
+                        help="Log unmatched picks")
     args = parser.parse_args()
 
-    if not args.api_key:
-        print("ERROR: No API key. Set ODDS_API_KEY or pass --api-key.")
+    if args.source == "odds" and not args.api_key:
+        print("ERROR: Odds API requires ODDS_API_KEY. Use --source espn for free ESPN scores.")
         sys.exit(1)
 
     if not os.path.isfile(LEDGER_PATH):
@@ -260,36 +294,41 @@ def main():
         _print_stats(compute_stats(ledger["picks"]))
         return
 
-    print(f"Found {len(pending)} pending pick(s). Fetching scores...")
-
-    # Collect completed scores for the last N days
-    all_scores = []
-    for d in range(0, min(args.days + 1, 4)):
-        try:
-            scores = fetch_scores(args.api_key, days_from=d)
-            all_scores.extend(scores)
-        except Exception as e:
-            print(f"  Warning: could not fetch scores for daysFrom={d}: {e}")
-
-    scores_by_key = {}
-    for g in all_scores:
-        k = _scores_key(g["home_team"], g["away_team"])
-        scores_by_key[k] = g
-
-    print(f"  {len(all_scores)} completed game(s) found in the last {args.days+1} day(s)")
-
     settled_count = 0
     now = datetime.now(timezone.utc).isoformat()
     settle_log_entries = []
+
+    if args.source == "odds":
+        # Odds API only
+        print(f"Found {len(pending)} pending pick(s). Fetching scores from Odds API...")
+        all_scores = []
+        for d in range(0, min(args.days + 1, 4)):
+            try:
+                scores = fetch_scores_odds(args.api_key, days_from=d)
+                all_scores.extend(scores)
+            except Exception as e:
+                print(f"  Warning: could not fetch scores for daysFrom={d}: {e}")
+        scores_by_key = {}
+        for g in all_scores:
+            k = _scores_key(g["home_team"], g["away_team"])
+            scores_by_key[k] = g
+        print(f"  {len(all_scores)} completed game(s) found")
+    else:
+        # Phase 1: ESPN (free)
+        print(f"Found {len(pending)} pending pick(s). Fetching scores from ESPN...")
+        scores_by_key = fetch_scores_espn(pending, days=args.days)
+        print(f"  {len(scores_by_key)} completed game(s) from ESPN")
 
     for pick in ledger["picks"]:
         if pick.get("result") is not None:
             continue
         score_rec = match_score(pick, scores_by_key)
         if not score_rec:
+            if args.debug:
+                print(f"  [UNMATCHED] {pick['away_team']} @ {pick['home_team']} (no ESPN game)")
             continue
 
-        home_score, away_score = parse_scores(score_rec)
+        home_score, away_score = get_scores_from_record(score_rec)
         if home_score is None or away_score is None:
             continue
 
@@ -303,7 +342,6 @@ def main():
         pick["settled_at"] = now
         settled_count += 1
 
-        # Log each settle decision for debugging
         settle_log_entries.append({
             "pick_idx": ledger["picks"].index(pick),
             "home_team": pick["home_team"],
@@ -319,6 +357,62 @@ def main():
         side = pick.get("bet_side") or pick.get("bet_team", "?")
         print(f"  [{result}] {pick['bet_type'].upper()} {side}  "
               f"({pick['home_team']} {int(home_score)}-{int(away_score)} {pick['away_team']})")
+
+    # Phase 2: Odds API fallback for still-pending (mid-major games ESPN may not have)
+    still_pending = [p for p in ledger["picks"] if p.get("result") is None]
+    if still_pending and args.api_key and args.source == "espn":
+        print(f"\n  {len(still_pending)} pick(s) still pending. Trying Odds API fallback...")
+        all_odds = []
+        for d in range(0, min(args.days + 1, 4)):
+            try:
+                scores = fetch_scores_odds(args.api_key, days_from=d)
+                all_odds.extend(scores)
+            except Exception as e:
+                print(f"  Warning: could not fetch Odds API for daysFrom={d}: {e}")
+        for g in all_odds:
+            k = _scores_key(g["home_team"], g["away_team"])
+            if k not in scores_by_key:
+                scores_by_key[k] = g
+        print(f"  {len(all_odds)} game(s) from Odds API")
+
+        for pick in ledger["picks"]:
+            if pick.get("result") is not None:
+                continue
+            score_rec = match_score(pick, scores_by_key)
+            if not score_rec:
+                if args.debug:
+                    print(f"  [UNMATCHED] {pick['away_team']} @ {pick['home_team']} (no Odds API game)")
+                continue
+
+            home_score, away_score = get_scores_from_record(score_rec)
+            if home_score is None or away_score is None:
+                continue
+
+            result = settle_pick(pick, home_score, away_score)
+            if result is None:
+                continue
+
+            pick["result"] = result
+            pick["actual_score_home"] = home_score
+            pick["actual_score_away"] = away_score
+            pick["settled_at"] = now
+            settled_count += 1
+
+            settle_log_entries.append({
+                "pick_idx": ledger["picks"].index(pick),
+                "home_team": pick["home_team"],
+                "away_team": pick["away_team"],
+                "bet_type": pick["bet_type"],
+                "bet_side": pick.get("bet_side") or pick.get("bet_team"),
+                "result": result,
+                "home_score": home_score,
+                "away_score": away_score,
+                "settled_at": now,
+            })
+
+            side = pick.get("bet_side") or pick.get("bet_team", "?")
+            print(f"  [{result}] {pick['bet_type'].upper()} {side}  "
+                  f"({pick['home_team']} {int(home_score)}-{int(away_score)} {pick['away_team']})")
 
     # Write settle log (even if 0 settled, for midnight run audit trail)
     log_date = datetime.now(timezone.utc).strftime("%Y-%m-%d")

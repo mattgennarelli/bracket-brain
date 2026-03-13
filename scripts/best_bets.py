@@ -199,6 +199,8 @@ _ODDS_MANUAL = {
     "uc san diego":       "uc san diego",
     "stephen f austin":   "stephen f austin",
     "st bonaventure":     "st bonaventure",
+    "st johns red storm": "St. John's",   # Odds API uses mascot; _prep expands St->State wrongly
+    "state johns red storm": "St. John's",
     "texas am":           "texas a&m",
     "texas a m":          "texas a&m",
     "vmi":                "virginia military",

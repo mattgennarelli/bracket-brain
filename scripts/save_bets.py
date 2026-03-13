@@ -87,14 +87,8 @@ def main():
             json.dump({"date": today, "picks": [], "fetched_at": datetime.now(timezone.utc).isoformat()}, f, indent=2)
         return
 
-    # Filter to ★★ or better — single-star picks are noise at this model size
-    before_filter = len(bets)
-    bets = [b for b in bets if b.get("stars", "") in ("★★", "★★★")]
-    if before_filter != len(bets):
-        print(f"  Filtered {before_filter - len(bets)} single-star pick(s) — saving ★★+ only")
-
     if not bets:
-        print("No ★★+ picks today.")
+        print("No qualifying picks today.")
         daily_path = os.path.join(DATA_DIR, f"bets_{today}.json")
         with open(daily_path, "w") as f:
             json.dump({"date": today, "picks": [], "fetched_at": datetime.now(timezone.utc).isoformat()}, f, indent=2)

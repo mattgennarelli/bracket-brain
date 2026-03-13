@@ -297,6 +297,10 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sa
 .bet-result.P { background:rgba(107,114,128,.1); color:var(--muted); border:1px solid var(--muted); }
 .bet-result.pending { background:var(--surface2); color:var(--muted); border:1px solid var(--border);
   font-size:.5rem; }
+.live-badge { font-size:.65rem; font-weight:600; color:var(--primary); margin-left:4px; }
+.history-date-group { margin-bottom:16px; }
+.history-date-group:last-child { margin-bottom:0; }
+.history-date-header { font-size:.75rem; font-weight:600; color:var(--muted); margin-bottom:6px; padding-bottom:4px; border-bottom:1px solid var(--border); }
 .bet-info { flex:1; min-width:0; }
 .bet-main { font-size:.82rem; font-weight:600; }
 .bet-sub { font-size:.72rem; color:var(--muted); margin-top:1px; }
@@ -525,12 +529,19 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sa
               <button class="filter-btn active" data-filter="bt" data-val="all" onclick="setPickFilter('bt','all')">All</button>
               <button class="filter-btn" data-filter="bt" data-val="ml" onclick="setPickFilter('bt','ml')">ML</button>
               <button class="filter-btn" data-filter="bt" data-val="spread" onclick="setPickFilter('bt','spread')">Spread</button>
+              <button class="filter-btn" data-filter="bt" data-val="total" onclick="setPickFilter('bt','total')">Total</button>
             </div>
             <div style="display:flex;gap:3px">
               <button class="filter-btn active" data-filter="result" data-val="all" onclick="setPickFilter('result','all')">All</button>
               <button class="filter-btn" data-filter="result" data-val="W" onclick="setPickFilter('result','W')">W</button>
               <button class="filter-btn" data-filter="result" data-val="L" onclick="setPickFilter('result','L')">L</button>
               <button class="filter-btn" data-filter="result" data-val="pending" onclick="setPickFilter('result','pending')">Pending</button>
+            </div>
+            <div style="display:flex;gap:3px">
+              <button class="filter-btn active" data-filter="stars" data-val="all" onclick="setPickFilter('stars','all')">★ All</button>
+              <button class="filter-btn" data-filter="stars" data-val="3" onclick="setPickFilter('stars','3')">★★★</button>
+              <button class="filter-btn" data-filter="stars" data-val="2" onclick="setPickFilter('stars','2')">★★</button>
+              <button class="filter-btn" data-filter="stars" data-val="1" onclick="setPickFilter('stars','1')">★</button>
             </div>
           </div>
         </div>
@@ -1466,20 +1477,38 @@ function switchTab(name) {
 // ---------------------------------------------------------------------------
 // Picks tab
 // ---------------------------------------------------------------------------
+let _picksScoresInterval = null;
+
 async function loadPicks() {
   document.getElementById('picks-today-body').innerHTML = '<div class="picks-empty">Loading...</div>';
   try {
-    const [todayData, historyData, benchmarkData] = await Promise.all([
+    const [todayData, historyData, benchmarkData, scoresData] = await Promise.all([
       apiFetch('/bets/today').catch(() => ({ picks: [], available: false })),
       apiFetch('/bets/history').catch(() => ({ picks: [], stats: {} })),
       apiFetch('/benchmark').catch(() => ({ available: false })),
+      apiFetch('/bets/scores').catch(() => ({ scores: {} })),
     ]);
-    renderPicks(todayData, historyData);
+    renderPicks(todayData, historyData, scoresData?.scores || {});
     renderBenchmark(benchmarkData);
+    _startPicksScoresPoll(todayData, historyData);
   } catch (e) {
     document.getElementById('picks-today-body').innerHTML =
       '<div class="picks-empty">Picks unavailable</div>';
   }
+}
+
+function _startPicksScoresPoll(todayData, historyData) {
+  if (_picksScoresInterval) clearInterval(_picksScoresInterval);
+  const pending = (todayData?.picks || []).filter(p => !p.result);
+  if (pending.length === 0) return;
+  _picksScoresInterval = setInterval(async () => {
+    if (document.getElementById('tab-picks')?.classList?.contains('active')) {
+      try {
+        const scoresData = await apiFetch('/bets/scores').catch(() => ({ scores: {} }));
+        renderPicks(todayData, historyData, scoresData?.scores || {});
+      } catch (_) {}
+    }
+  }, 90000);
 }
 
 function renderBenchmark(data) {
@@ -1538,7 +1567,15 @@ function toggleWhy(id) {
   _whyOpenId = isOpen ? null : id;
 }
 
-function _pickRowHtml(p, showDate) {
+function _formatCommenceTime(commenceTime) {
+  if (!commenceTime) return '';
+  try {
+    const d = new Date(commenceTime);
+    return d.toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit', hour12: true, timeZone: 'America/New_York' }) + ' ET';
+  } catch { return ''; }
+}
+
+function _pickRowHtml(p, showDate, scoreOverlay) {
   const result = p.result;
   const resultHtml = result
     ? `<div class="bet-result ${result}">${result}</div>`
@@ -1554,9 +1591,19 @@ function _pickRowHtml(p, showDate) {
   const stars = p.stars || '';
   const kelly = p.kelly_units != null ? p.kelly_units.toFixed(2) : null;
   const gameStr = `${p.away_team} @ ${p.home_team}`;
-  const actualStr = result && p.actual_score_home != null
-    ? ` · ${p.home_team} ${Math.round(p.actual_score_home)}-${Math.round(p.actual_score_away)} ${p.away_team}`
-    : '';
+  const timeStr = _formatCommenceTime(p.commence_time);
+  let actualStr = '';
+  if (result && p.actual_score_home != null) {
+    actualStr = ` · ${p.home_team} ${Math.round(p.actual_score_home)}-${Math.round(p.actual_score_away)} ${p.away_team}`;
+  } else if (scoreOverlay && scoreOverlay.home_score != null && scoreOverlay.away_score != null) {
+    const h = Math.round(scoreOverlay.home_score);
+    const a = Math.round(scoreOverlay.away_score);
+    actualStr = ` · ${p.home_team} ${h}-${a} ${p.away_team}`;
+    if (!scoreOverlay.completed) {
+      const live = scoreOverlay.display_clock || (scoreOverlay.period === 1 ? '1H' : scoreOverlay.period === 2 ? '2H' : '');
+      actualStr += live ? ` <span class="live-badge">LIVE ${live}</span>` : ' <span class="live-badge">LIVE</span>';
+    }
+  }
   // "Why this pick?" explanation
   const modelProb = p.model_prob != null ? `${(p.model_prob * 100).toFixed(1)}%` : null;
   const impliedProb = p.implied_prob != null ? `${(p.implied_prob * 100).toFixed(1)}%` : null;
@@ -1571,14 +1618,15 @@ function _pickRowHtml(p, showDate) {
   </div>` : '';
 
   const resultKey = result || 'pending';
-  return `<div class="bet-row" data-bt="${bt}" data-result="${resultKey}">
+  const starCount = (stars.match(/★/g) || []).length;
+  return `<div class="bet-row" data-bt="${bt}" data-result="${resultKey}" data-stars="${starCount}">
     ${resultHtml}
     <div class="bet-info">
       <div class="bet-main">
         <span class="bet-type-tag ${bt}">${bt.toUpperCase()}</span>${desc}
         ${odds ? `<span style="color:var(--muted);font-weight:400;margin-left:4px">(${odds})</span>` : ''}
         <span class="bet-stars" style="margin-left:4px">${stars}</span>
-        ${showDate ? `<span style="color:var(--muted);font-size:.68rem;margin-left:6px">${p.date||''}</span>` : ''}
+        ${timeStr ? `<span style="color:var(--muted);font-size:.68rem;margin-left:6px">${timeStr}</span>` : ''}
       </div>
       <div class="bet-sub">${gameStr}${actualStr}</div>
       <div style="display:flex;align-items:center;gap:10px;margin-top:2px;flex-wrap:wrap">
@@ -1591,7 +1639,8 @@ function _pickRowHtml(p, showDate) {
   </div>`;
 }
 
-function renderPicks(todayData, historyData) {
+function renderPicks(todayData, historyData, scores) {
+  scores = scores || {};
   const todayBody = document.getElementById('picks-today-body');
   const badge = document.getElementById('hit-rate-badge');
   const statsCards = document.getElementById('picks-stats-cards');
@@ -1620,6 +1669,21 @@ function renderPicks(todayData, historyData) {
     const thr = s.hit_rate != null ? `${(s.hit_rate*100).toFixed(0)}%` : '—';
     cards.push({ label: bt.toUpperCase(), value: thr, sub: `${s.wins}W-${s.losses}L` });
   });
+  // Per-star-tier breakdown from local picks data
+  [3,2,1].forEach(n => {
+    const stars = '★'.repeat(n);
+    const tier = allPicks.filter(p => (p.stars||'').replace(/[^★]/g,'').length === n);
+    const settled = tier.filter(p => p.result === 'W' || p.result === 'L');
+    const wins = settled.filter(p => p.result === 'W').length;
+    if (tier.length === 0) return;
+    const hr = settled.length ? wins / settled.length : null;
+    cards.push({
+      label: stars,
+      value: hr != null ? `${(hr*100).toFixed(0)}%` : '—',
+      sub: `${wins}W-${settled.length-wins}L / ${tier.length} picks`,
+      color: hr != null ? (hr >= .55 ? 'var(--green)' : hr < .45 ? 'var(--red)' : '') : '',
+    });
+  });
   statsCards.innerHTML = cards.map(c => `<div class="stat-card">
     <div class="sc-label">${c.label}</div>
     <div class="sc-value" style="${c.color ? `color:${c.color}` : ''}">${c.value}</div>
@@ -1642,7 +1706,12 @@ function renderPicks(todayData, historyData) {
   if (!todayData.available || todayPicks.length === 0) {
     todayBody.innerHTML = '<div class="picks-empty">No picks for today. Run <code>python scripts/save_bets.py</code> each morning before games tip.</div>';
   } else {
-    todayBody.innerHTML = todayPicks.map(p => _pickRowHtml(p, false)).join('');
+    todayBody.innerHTML = todayPicks.map(p => {
+      const key = `${p.home_team}|${p.away_team}`;
+      const keyFlip = `${p.away_team}|${p.home_team}`;
+      const scoreOverlay = scores[key] || scores[keyFlip];
+      return _pickRowHtml(p, false, scoreOverlay);
+    }).join('');
   }
 
   // Badge on Picks tab button
@@ -1653,24 +1722,57 @@ function renderPicks(todayData, historyData) {
     picksBadge.style.display = 'inline';
   }
 
-  // Full history (all settled + pending, newest first)
+  // Full history (all settled + pending, grouped by date, newest first)
   if (allPicks.length > 0) {
     histSection.style.display = 'block';
     const sorted = [...allPicks].reverse();
-    histBody.innerHTML = sorted.map(p => _pickRowHtml(p, true)).join('');
+    const byDate = {};
+    sorted.forEach(p => {
+      const d = p.date || '';
+      if (!byDate[d]) byDate[d] = [];
+      byDate[d].push(p);
+    });
+    let html = '';
+    Object.keys(byDate).sort().reverse().forEach(date => {
+      const label = date ? _formatHistoryDate(date) : 'Other';
+      html += `<div class="history-date-group" data-date="${date}"><div class="history-date-header">${label}</div>`;
+      byDate[date].forEach(p => {
+        const key = `${p.home_team}|${p.away_team}`;
+        const keyFlip = `${p.away_team}|${p.home_team}`;
+        const scoreOverlay = scores[key] || scores[keyFlip];
+        html += _pickRowHtml(p, true, scoreOverlay);
+      });
+      html += '</div>';
+    });
+    histBody.innerHTML = html;
     _applyPickFilters();
   } else {
     histSection.style.display = 'none';
   }
 }
 
-let _pickFilters = { bt: 'all', result: 'all' };
+function _formatHistoryDate(isoDate) {
+  if (!isoDate) return '';
+  try {
+    const d = new Date(isoDate + 'T12:00:00');
+    const months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+    return `${months[d.getMonth()]} ${d.getDate()}`;
+  } catch { return isoDate; }
+}
+
+let _pickFilters = { bt: 'all', result: 'all', stars: 'all' };
 
 function _applyPickFilters() {
   document.querySelectorAll('#picks-history-body .bet-row').forEach(row => {
-    const btMatch = _pickFilters.bt === 'all' || row.dataset.bt === _pickFilters.bt;
-    const rMatch  = _pickFilters.result === 'all' || row.dataset.result === _pickFilters.result;
-    row.style.display = (btMatch && rMatch) ? '' : 'none';
+    const btMatch    = _pickFilters.bt === 'all' || row.dataset.bt === _pickFilters.bt;
+    const rMatch     = _pickFilters.result === 'all' || row.dataset.result === _pickFilters.result;
+    const starsMatch = _pickFilters.stars === 'all' || row.dataset.stars === _pickFilters.stars;
+    row.style.display = (btMatch && rMatch && starsMatch) ? '' : 'none';
+  });
+  // Hide date group headers when all rows in that group are filtered out
+  document.querySelectorAll('#picks-history-body .history-date-group').forEach(group => {
+    const visible = group.querySelectorAll('.bet-row:not([style*="none"])').length;
+    group.style.display = visible ? '' : 'none';
   });
 }
 

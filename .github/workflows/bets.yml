@@ -5,9 +5,10 @@ on:
     # Save picks: 9am ET = 2pm UTC (lines are up by then)
     - cron: '0 14 13-31 3 *'   # March 13-31
     - cron: '0 14 1-8  4 *'    # April 1-8
-    # Settle results: midnight ET = 5am UTC next day
-    - cron: '0 5  14-31 3 *'   # March 14-31
-    - cron: '0 5  2-9   4 *'   # April 2-9
+    # Settle: every 15 min from 12pm–2am ET (catches games within ~15 min of final buzzer)
+    # 12pm ET = 17:00 UTC, 2am ET = 07:00 UTC next day
+    - cron: '*/15 17-23,0-7 14-31 3 *'   # March
+    - cron: '*/15 17-23,0-7 2-9 4 *'     # April
   workflow_dispatch:
     inputs:
       action:
@@ -42,12 +43,13 @@ jobs:
             echo "action=${{ inputs.action }}" >> $GITHUB_OUTPUT
             exit 0
           fi
-          # Infer from cron time: 5am UTC = settle, 2pm UTC = save
+          # Infer from cron time: 2pm UTC = save, else settle (17-23 or 0-7 = settle)
           HOUR=$(date -u +%H)
-          if [ "$HOUR" -lt 10 ]; then
-            echo "action=settle" >> $GITHUB_OUTPUT
-          else
+          MINUTE=$(date -u +%M)
+          if [ "$HOUR" -eq 14 ] && [ "$MINUTE" -eq 0 ]; then
             echo "action=save" >> $GITHUB_OUTPUT
+          else
+            echo "action=settle" >> $GITHUB_OUTPUT
           fi
 
       - name: Settle yesterday's picks
