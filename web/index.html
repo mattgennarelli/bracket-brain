@@ -349,6 +349,28 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sa
   letter-spacing:.04em; font-weight:600; }
 .stat-card .sc-value { font-size:1.4rem; font-weight:800; margin:2px 0; }
 .stat-card .sc-sub { font-size:.7rem; color:var(--muted); }
+/* Matchup card (Full Card tab) */
+.card-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(320px,1fr)); gap:14px; }
+.matchup-card { background:var(--surface2); border:1px solid var(--border); border-radius:10px;
+  overflow:hidden; }
+.mc-header { display:flex; justify-content:space-between; align-items:center;
+  padding:10px 14px; background:var(--surface); border-bottom:1px solid var(--border); }
+.mc-teams { font-weight:700; font-size:.85rem; }
+.mc-time { font-size:.68rem; color:var(--muted); }
+.mc-nodata { padding:10px 14px; font-size:.72rem; color:var(--muted); font-style:italic; }
+.mc-pick { display:flex; align-items:center; gap:7px; padding:7px 14px;
+  border-bottom:1px solid var(--border); flex-wrap:wrap; }
+.mc-pick:last-child { border-bottom:none; }
+.mc-side { font-size:.8rem; font-weight:600; flex:1; min-width:80px; }
+.mc-proj { font-size:.68rem; color:var(--muted); flex-basis:100%; margin-top:1px; }
+.mc-odds { font-size:.72rem; color:var(--muted); }
+.mc-result { font-size:.65rem; font-weight:700; padding:1px 5px; border-radius:4px;
+  margin-left:auto; }
+.mc-result.W { background:#d1fae5; color:#065f46; }
+.mc-result.L { background:#fee2e2; color:#991b1b; }
+.mc-result.P { background:#e0e7ff; color:#3730a3; }
+.mc-result.pending { background:var(--surface); color:var(--muted); border:1px solid var(--border); }
+.mc-score { font-size:.68rem; color:var(--muted); font-style:italic; }
 .footer { text-align:center; padding:18px; color:var(--muted); font-size:.72rem;
   border-top:1px solid var(--border); background:var(--surface); }
 .error-banner { display:none; background:#fff3f3; border:1px solid #fca5a5; border-radius:8px;
@@ -493,6 +515,7 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sa
   <button class="tab-btn active" onclick="switchTab('bracket')">Bracket</button>
   <button class="tab-btn" onclick="switchTab('odds')">Championship Odds</button>
   <button class="tab-btn" onclick="switchTab('picks')">Picks <span id="picks-badge" style="display:none;background:var(--primary);color:#fff;border-radius:8px;font-size:.6rem;padding:1px 5px;margin-left:3px"></span></button>
+  <button class="tab-btn" onclick="switchTab('card')">Full Card <span id="card-badge" style="display:none;background:var(--primary);color:#fff;border-radius:8px;font-size:.6rem;padding:1px 5px;margin-left:3px"></span></button>
 </div>
 
 <div class="tab-panel active" id="tab-bracket">
@@ -551,6 +574,23 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sa
         <h3 style="font-size:.9rem;font-weight:700;margin-bottom:10px">Model Comparison</h3>
         <p style="font-size:.75rem;color:var(--muted);margin-bottom:10px">Walk-forward CV on 2023–2025. Lower Brier = better.</p>
         <div id="benchmark-content"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="tab-panel" id="tab-card">
+  <div class="odds-section">
+    <div class="picks-panel" id="card-panel">
+      <div id="card-stats-row" class="picks-stats-grid"></div>
+      <div class="picks-header">
+        <h3 id="card-section-title">Today's Full Card</h3>
+        <span class="hit-rate-badge" id="card-hit-badge"></span>
+      </div>
+      <div id="card-games-body"><div class="picks-empty">Loading...</div></div>
+      <div style="margin-top:20px;display:none" id="card-history-section">
+        <h3 style="font-size:.9rem;font-weight:700;margin-bottom:10px">Card History</h3>
+        <div id="card-history-body"></div>
       </div>
     </div>
   </div>
@@ -1464,14 +1504,16 @@ document.addEventListener('keydown', e => { if (e.key === 'Escape') closeAnalysi
 // Tab switching
 // ---------------------------------------------------------------------------
 let _picksLoaded = false;
+let _cardLoaded = false;
 function switchTab(name) {
   document.querySelectorAll('.tab-btn').forEach((b, i) => {
-    const names = ['bracket','odds','picks'];
+    const names = ['bracket','odds','picks','card'];
     b.classList.toggle('active', names[i] === name);
   });
   document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
   document.getElementById('tab-' + name).classList.add('active');
   if (name === 'picks' && !_picksLoaded) { loadPicks(); _picksLoaded = true; }
+  if (name === 'card' && !_cardLoaded) { loadCard(); _cardLoaded = true; }
 }
 
 // ---------------------------------------------------------------------------
@@ -1509,6 +1551,195 @@ function _startPicksScoresPoll(todayData, historyData) {
       } catch (_) {}
     }
   }, 90000);
+}
+
+// ---------------------------------------------------------------------------
+// Full Card tab
+// ---------------------------------------------------------------------------
+let _cardScoresInterval = null;
+
+async function loadCard() {
+  document.getElementById('card-games-body').innerHTML = '<div class="picks-empty">Loading today\'s card...</div>';
+  try {
+    const [cardData, historyData, scoresData] = await Promise.all([
+      apiFetch('/bets/card').catch(() => ({ games: [], available: false })),
+      apiFetch('/bets/card/history').catch(() => ({ picks: [], stats: {} })),
+      apiFetch('/bets/card/scores').catch(() => ({ scores: {} })),
+    ]);
+    renderCard(cardData, historyData, scoresData?.scores || {});
+    _startCardScoresPoll(cardData, historyData);
+  } catch (e) {
+    document.getElementById('card-games-body').innerHTML = `<div class="picks-empty">Error loading card: ${e.message}</div>`;
+  }
+}
+
+function _startCardScoresPoll(cardData, historyData) {
+  if (_cardScoresInterval) clearInterval(_cardScoresInterval);
+  const hasGames = (cardData?.games || []).length > 0;
+  if (!hasGames) return;
+  _cardScoresInterval = setInterval(async () => {
+    if (document.getElementById('tab-card')?.classList?.contains('active')) {
+      try {
+        const scoresData = await apiFetch('/bets/card/scores').catch(() => ({ scores: {} }));
+        renderCard(cardData, historyData, scoresData?.scores || {});
+      } catch (_) {}
+    }
+  }, 90000);
+}
+
+function renderCard(cardData, historyData, scores) {
+  scores = scores || {};
+  const gamesBody = document.getElementById('card-games-body');
+  const statsRow = document.getElementById('card-stats-row');
+  const badge = document.getElementById('card-hit-badge');
+  const histSection = document.getElementById('card-history-section');
+  const histBody = document.getElementById('card-history-body');
+  const title = document.getElementById('card-section-title');
+
+  const allPicks = historyData.picks || [];
+  const stats = historyData.stats || {};
+  const decided = (stats.wins || 0) + (stats.losses || 0);
+  const today = new Date().toLocaleDateString('en-CA');
+  title.textContent = `Today's Full Card (${today})`;
+
+  // Stats cards
+  const hr = stats.hit_rate;
+  const roi = stats.roi_pct;
+  const netU = stats.net_units;
+  const wagered = stats.total_wagered;
+  const statCards = [
+    { label: 'Hit Rate', value: decided ? `${(hr*100).toFixed(0)}%` : '—', sub: `${decided} decided`, color: decided?(hr>=.55?'var(--green)':hr<.45?'var(--red)':''):'' },
+    { label: 'Record', value: `${stats.wins||0}W-${stats.losses||0}L`, sub: `${stats.pushes||0} push${(stats.pushes||0)!==1?'es':''}` },
+    { label: 'Net Units', value: wagered ? `${netU>=0?'+':''}${netU.toFixed(1)}u` : '—', sub: wagered ? `${wagered.toFixed(1)}u wagered` : 'no settled picks', color: wagered?(netU>0?'var(--green)':netU<0?'var(--red)':''):'' },
+    { label: 'ROI', value: wagered ? `${roi>=0?'+':''}${roi.toFixed(1)}%` : '—', sub: 'on settled picks', color: wagered?(roi>0?'var(--green)':roi<0?'var(--red)':''):'' },
+    { label: 'Total Picks', value: allPicks.length, sub: `${allPicks.filter(p=>!p.result).length} pending` },
+  ];
+  statsRow.innerHTML = statCards.map(c => `<div class="stat-card">
+    <div class="sc-label">${c.label}</div>
+    <div class="sc-value" style="${c.color?`color:${c.color}`:''}"}>${c.value}</div>
+    <div class="sc-sub">${c.sub}</div>
+  </div>`).join('');
+
+  // Hit rate badge
+  if (decided) {
+    badge.textContent = `${(hr*100).toFixed(0)}% (${stats.wins}W-${stats.losses}L)`;
+    badge.className = 'hit-rate-badge ' + (hr >= .55 ? 'good' : hr < .45 ? 'bad' : '');
+  } else {
+    badge.textContent = 'No results yet';
+    badge.className = 'hit-rate-badge';
+  }
+
+  // Today's card — game grid
+  const games = cardData?.games || [];
+  if (!cardData?.available || games.length === 0) {
+    gamesBody.innerHTML = '<div class="picks-empty">No games today, or the card hasn\'t been fetched yet.<br>Run <code>python scripts/save_card.py</code> each morning.</div>';
+  } else {
+    const todayCardPicks = allPicks.filter(p => p.date === today);
+    const resultByKey = {};
+    todayCardPicks.forEach(p => {
+      const side = p.bet_side || p.bet_team || '';
+      const k = `${p.home_team}|${p.away_team}|${p.bet_type}|${side}`;
+      resultByKey[k] = p;
+    });
+
+    gamesBody.innerHTML = `<div class="card-grid">${games.map(game => _matchupCardHtml(game, resultByKey, scores)).join('')}</div>`;
+  }
+
+  // Card badge on tab button
+  const cardBadge = document.getElementById('card-badge');
+  if (games.length > 0) {
+    cardBadge.textContent = games.length;
+    cardBadge.style.display = 'inline';
+  }
+
+  // History
+  const histPicks = allPicks.filter(p => p.date !== today);
+  if (histPicks.length > 0) {
+    histSection.style.display = 'block';
+    const byDate = {};
+    [...histPicks].reverse().forEach(p => {
+      const d = p.date || '';
+      if (!byDate[d]) byDate[d] = [];
+      byDate[d].push(p);
+    });
+    let html = '';
+    Object.keys(byDate).sort().reverse().forEach(date => {
+      const label = date ? _formatHistoryDate(date) : 'Other';
+      html += `<div class="history-date-group"><div class="history-date-header">${label}</div>`;
+      byDate[date].forEach(p => {
+        const key = `${p.home_team}|${p.away_team}`;
+        const scoreOverlay = scores[key] || scores[`${p.away_team}|${p.home_team}`];
+        html += _pickRowHtml(p, true, scoreOverlay);
+      });
+      html += '</div>';
+    });
+    histBody.innerHTML = html;
+  } else {
+    histSection.style.display = 'none';
+  }
+}
+
+function _matchupCardHtml(game, resultByKey, scores) {
+  const timeStr = _formatCommenceTime(game.commence_time);
+  const scoreKey = `${game.home_team}|${game.away_team}`;
+  const scoreRec = scores[scoreKey] || scores[`${game.away_team}|${game.home_team}`];
+
+  let scoreStr = '';
+  if (scoreRec && scoreRec.home_score != null) {
+    const h = Math.round(scoreRec.home_score), a = Math.round(scoreRec.away_score);
+    scoreStr = scoreRec.completed
+      ? ` · <span class="mc-score">Final: ${game.home_team} ${h}-${a}</span>`
+      : ` · <span class="mc-score live-badge">LIVE ${game.home_team} ${h}-${a} ${scoreRec.display_clock||''}</span>`;
+  }
+
+  const header = `<div class="mc-header">
+    <span class="mc-teams">${game.away_team} <span style="color:var(--muted);font-weight:400">@</span> ${game.home_team}${scoreStr}</span>
+    <span class="mc-time">${timeStr}</span>
+  </div>`;
+
+  if (!game.data_available) {
+    return `<div class="matchup-card">${header}<div class="mc-nodata">Insufficient team data for model projection</div></div>`;
+  }
+
+  const picks = game.picks || [];
+  const rows = picks.map(p => {
+    const bt = p.bet_type;
+    const side = p.bet_side || p.bet_team || '';
+    const rKey = `${game.home_team}|${game.away_team}|${bt}|${side}`;
+    const settled = resultByKey[rKey];
+    const result = settled?.result || null;
+
+    let desc = side;
+    if (bt === 'spread' && p.bet_spread != null)
+      desc += ` ${p.bet_spread >= 0 ? '+' : ''}${p.bet_spread.toFixed(1)}`;
+    if (bt === 'total' && p.vegas_total != null)
+      desc = `${side} ${p.vegas_total.toFixed(1)}`;
+    const odds = p.bet_odds != null ? `(${p.bet_odds > 0 ? '+' : ''}${Math.round(p.bet_odds)})` : '';
+    const stars = p.stars || '';
+
+    let proj = '';
+    if (bt === 'ml' && p.model_prob != null && p.implied_prob != null)
+      proj = `Model ${(p.model_prob*100).toFixed(1)}% vs mkt ${(p.implied_prob*100).toFixed(1)}%`;
+    else if (bt === 'spread' && p.model_margin != null && p.vegas_spread != null)
+      proj = `Model margin ${p.model_margin >= 0 ? '+' : ''}${p.model_margin.toFixed(1)} vs line ${p.vegas_spread >= 0 ? '+' : ''}${p.vegas_spread.toFixed(1)}`;
+    else if (bt === 'total' && p.model_total != null && p.vegas_total != null)
+      proj = `Model ${p.model_total.toFixed(1)} vs line ${p.vegas_total.toFixed(1)}`;
+
+    const resultLabel = result
+      ? `<span class="mc-result ${result}">${result}</span>`
+      : `<span class="mc-result pending">?</span>`;
+
+    return `<div class="mc-pick">
+      <span class="bet-type-tag ${bt}">${bt.toUpperCase()}</span>
+      <span class="mc-side">${desc}</span>
+      <span class="mc-odds">${odds}</span>
+      ${stars ? `<span style="font-size:.75rem">${stars}</span>` : ''}
+      ${resultLabel}
+      ${proj ? `<span class="mc-proj">${proj}</span>` : ''}
+    </div>`;
+  }).join('');
+
+  return `<div class="matchup-card">${header}${rows || '<div class="mc-nodata">No picks generated</div>'}</div>`;
 }
 
 function renderBenchmark(data) {

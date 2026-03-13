@@ -52,23 +52,33 @@ jobs:
             echo "action=settle" >> $GITHUB_OUTPUT
           fi
 
-      - name: Settle yesterday's picks
+      - name: Settle yesterday's picks (best bets)
         if: steps.action.outputs.action == 'settle' || steps.action.outputs.action == 'both'
         env:
           ODDS_API_KEY: ${{ secrets.ODDS_API_KEY }}
         run: python scripts/settle_bets.py || echo "Settle step failed (no pending picks or API error)"
 
-      - name: Save today's picks
+      - name: Settle yesterday's card picks
+        if: steps.action.outputs.action == 'settle' || steps.action.outputs.action == 'both'
+        run: python scripts/settle_card.py || echo "Card settle step failed (no pending picks)"
+
+      - name: Save today's picks (best bets)
         if: steps.action.outputs.action == 'save' || steps.action.outputs.action == 'both'
         env:
           ODDS_API_KEY: ${{ secrets.ODDS_API_KEY }}
         run: python scripts/save_bets.py || echo "Save step failed (no games or API error)"
 
+      - name: Save today's full card
+        if: steps.action.outputs.action == 'save' || steps.action.outputs.action == 'both'
+        env:
+          ODDS_API_KEY: ${{ secrets.ODDS_API_KEY }}
+        run: python scripts/save_card.py || echo "Card save step failed (no games or API error)"
+
       - name: Commit ledger and settle log
         run: |
           git config user.name  "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add data/bets_ledger.json
+          git add data/bets_ledger.json data/card_ledger.json
           # Include settle log if written (UTC date)
           SETTLE_LOG="data/settle_log_$(date -u +%Y-%m-%d).json"
           if [ -f "$SETTLE_LOG" ]; then

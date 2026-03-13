@@ -42,8 +42,12 @@ from engine import (
     ModelConfig, DEFAULT_CONFIG,
 )
 from espn_scores import fetch_scores_for_picks, _scores_key as espn_scores_key
+from best_bets import get_full_card_json
 
 LEDGER_PATH = os.path.join(DATA_DIR, "bets_ledger.json")
+CARD_LEDGER_PATH = os.path.join(DATA_DIR, "card_ledger.json")
+# Cache: card endpoint hits the Odds API — 15 min TTL during game days
+CARD_CACHE_TTL = 900
 
 # Cache TTL: 1 hour — avoids stale Render cache on redeploy
 CACHE_TTL_SECONDS = 3600
@@ -394,4 +398,72 @@ def get_monte_carlo(
         "round_of_32_probs": mc["round_of_32_probs"],
     }
     _cache_set(cache_key, result)
+    return result
+
+
+@app.get("/bets/card")
+def get_bets_card(year: int = Query(default=2026)):
+    """Return today's full card — every NCAAB game with the model's best lean per market.
+
+    No edge threshold applied; every game is included.  Stars indicate confidence.
+    Cached 15 min (Odds API quota).
+    """
+    api_key = os.environ.get("ODDS_API_KEY", "")
+    if not api_key:
+        return {"games": [], "available": False, "message": "No ODDS_API_KEY configured"}
+
+    cache_key = f"card_{year}"
+    entry = _cache.get(cache_key)
+    if entry and (time.time() - entry.get("cached_at", 0)) < CARD_CACHE_TTL:
+        return entry.get("result", {})
+
+    today = datetime.now().strftime("%Y-%m-%d")
+    games = get_full_card_json(api_key, year=year)
+    result = {"date": today, "games": games, "available": bool(games)}
+    _cache[cache_key] = {"result": result, "cached_at": time.time()}
+    return result
+
+
+@app.get("/bets/card/history")
+def get_bets_card_history():
+    """Return card ledger — all card picks with results and stats."""
+    if not os.path.isfile(CARD_LEDGER_PATH):
+        return {"picks": [], "stats": {}}
+    with open(CARD_LEDGER_PATH) as f:
+        return json.load(f)
+
+
+@app.get("/bets/card/scores")
+def get_bets_card_scores():
+    """Live/final scores from ESPN for today's card games.  Cached 90s."""
+    cache_key = "card_scores"
+    entry = _cache.get(cache_key)
+    if entry and (time.time() - entry.get("cached_at", 0)) < SCORES_CACHE_TTL:
+        return entry.get("result", {})
+
+    if not os.path.isfile(CARD_LEDGER_PATH):
+        return {"scores": {}}
+
+    with open(CARD_LEDGER_PATH) as f:
+        ledger = json.load(f)
+
+    picks = ledger.get("picks", [])
+    recent = [p for p in picks if p.get("date") and p.get("date") >= _days_ago(2)]
+    scores_by_key = fetch_scores_for_picks(recent, days=2)
+
+    result = {"scores": {}}
+    for p in recent:
+        key = espn_scores_key(p.get("home_team", ""), p.get("away_team", ""))
+        rec = scores_by_key.get(key)
+        if rec:
+            pick_key = f"{p['home_team']}|{p['away_team']}"
+            result["scores"][pick_key] = {
+                "home_score": rec.get("home_score"),
+                "away_score": rec.get("away_score"),
+                "completed": rec.get("completed", False),
+                "status_detail": rec.get("status_detail", ""),
+                "display_clock": rec.get("display_clock", ""),
+                "period": rec.get("period", 0),
+            }
+    _cache[cache_key] = {"result": result, "cached_at": time.time()}
     return result

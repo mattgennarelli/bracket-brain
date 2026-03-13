@@ -513,6 +513,159 @@ def get_best_bets_json(api_key, year=None, ml_min=None, spread_min=None, total_m
     return out
 
 
+def get_full_card_json(api_key, year=None):
+    """Return every game today with the model's best lean for each market.
+
+    Unlike get_best_bets_json, NO edge threshold is applied — every game is
+    included, and the model's preferred side for ML/spread/total is always
+    returned.  Stars are assigned by the same threshold rules so the UI can
+    highlight high-confidence leans.
+
+    Returns a list of game dicts, each with:
+        home_team, away_team, commence_time, model_prob_home,
+        model_margin, model_total, data_available, picks (list of 1-3)
+    """
+    if not api_key:
+        return []
+    year = year or datetime.now().year
+
+    raw_games = fetch_today_odds(api_key)
+    if not raw_games:
+        return []
+
+    teams = load_team_stats(year)
+    config = ModelConfig()
+    now_utc = datetime.now(timezone.utc)
+    out = []
+
+    for raw in raw_games:
+        game = parse_game(raw)
+        try:
+            commence = datetime.fromisoformat(game["commence_time"].replace("Z", "+00:00"))
+            if commence <= now_utc:
+                continue
+        except Exception:
+            pass
+
+        home_name = game["home_team"]
+        away_name = game["away_team"]
+        home_stats = lookup_team(home_name, teams)
+        away_stats = lookup_team(away_name, teams)
+
+        # Mark games where we lack efficiency data
+        data_ok = (
+            home_stats is not None and away_stats is not None
+            and home_stats.get("adj_o") is not None and home_stats.get("adj_d") is not None
+            and away_stats.get("adj_o") is not None and away_stats.get("adj_d") is not None
+        )
+
+        game_rec = {
+            "home_team": home_name,
+            "away_team": away_name,
+            "commence_time": game["commence_time"],
+            "data_available": data_ok,
+            "picks": [],
+        }
+
+        if not data_ok:
+            out.append(game_rec)
+            continue
+
+        home_stats["team"] = home_name
+        away_stats["team"] = away_name
+        result = run_model(home_stats, away_stats, config)
+        model_prob_home = result["win_prob_a"]
+        model_margin = result["predicted_margin"]
+        model_total = result["predicted_score_a"] + result["predicted_score_b"]
+
+        game_rec["model_prob_home"] = round(model_prob_home, 4)
+        game_rec["model_margin"] = round(model_margin, 1)
+        game_rec["model_total"] = round(model_total, 1)
+
+        # ML pick — always take the side with higher model probability
+        if game["ml_home"] is not None and game["ml_away"] is not None:
+            raw_h = _american_to_prob(game["ml_home"])
+            raw_a = _american_to_prob(game["ml_away"])
+            ih, ia = _devig(raw_h, raw_a)
+            h_edge, a_edge = ml_edge(model_prob_home, game["ml_home"], game["ml_away"])
+            if model_prob_home >= 0.5:
+                bet_side, bet_odds, model_p, implied_p, edge_val = \
+                    home_name, game["ml_home"], model_prob_home, ih, (h_edge or 0)
+            else:
+                bet_side, bet_odds, model_p, implied_p, edge_val = \
+                    away_name, game["ml_away"], 1 - model_prob_home, ia, (a_edge or 0)
+            dec = _american_to_decimal(bet_odds)
+            k = kelly_fraction(model_p, dec)
+            stars = star_rating(abs(edge_val), [DEFAULT_ML_EDGE, DEFAULT_ML_EDGE * 1.5, DEFAULT_ML_EDGE * 2.5])
+            game_rec["picks"].append({
+                "bet_type": "ml",
+                "bet_side": bet_side,
+                "bet_odds": bet_odds,
+                "model_prob": round(model_p, 4),
+                "implied_prob": round(implied_p, 4),
+                "edge": round(edge_val, 4),
+                "stars": stars,
+                "kelly_units": round(k * 100, 2),
+                "model_margin": round(model_margin, 1),
+                "model_total": round(model_total, 1),
+                "vegas_spread": game["spread_home"],
+                "vegas_total": game["total_line"],
+            })
+
+        # Spread pick — take the side the model favors vs the line
+        if game["spread_home"] is not None:
+            sp_edge_val = spread_edge(model_margin, game["spread_home"])
+            if sp_edge_val is not None:
+                if sp_edge_val > 0:
+                    bet_team, bet_spread = home_name, game["spread_home"]
+                else:
+                    bet_team, bet_spread = away_name, -game["spread_home"]
+                cp = cover_prob(abs(sp_edge_val))
+                dec_sp = _american_to_decimal(game["spread_line"]) if game["spread_line"] else 1.909
+                k_sp = kelly_fraction(cp, dec_sp)
+                stars = star_rating(abs(sp_edge_val), [DEFAULT_SPREAD_EDGE, DEFAULT_SPREAD_EDGE * 1.5, DEFAULT_SPREAD_EDGE * 2.0])
+                game_rec["picks"].append({
+                    "bet_type": "spread",
+                    "bet_team": bet_team,
+                    "bet_spread": round(bet_spread, 1),
+                    "bet_odds": game["spread_line"],
+                    "edge": round(sp_edge_val, 2),
+                    "stars": stars,
+                    "kelly_units": round(k_sp * 100, 2),
+                    "cover_margin": round(abs(sp_edge_val), 1),
+                    "model_margin": round(model_margin, 1),
+                    "vegas_spread": game["spread_home"],
+                    "model_total": round(model_total, 1),
+                    "vegas_total": game["total_line"],
+                })
+
+        # Total pick — over if model_total > vegas, under if model_total < vegas
+        if game["total_line"] is not None:
+            tot_e = total_edge(model_total, game["total_line"])
+            if tot_e is not None:
+                side = "OVER" if tot_e > 0 else "UNDER"
+                cp_tot = cover_prob(abs(tot_e))
+                k_tot = kelly_fraction(cp_tot, 1.909)
+                stars = star_rating(abs(tot_e), [DEFAULT_TOTAL_EDGE, DEFAULT_TOTAL_EDGE * 1.4, DEFAULT_TOTAL_EDGE * 2.0])
+                game_rec["picks"].append({
+                    "bet_type": "total",
+                    "bet_side": side,
+                    "bet_odds": -110,
+                    "edge": round(tot_e, 2),
+                    "stars": stars,
+                    "kelly_units": round(k_tot * 100, 2),
+                    "model_total": round(model_total, 1),
+                    "vegas_total": game["total_line"],
+                    "model_margin": round(model_margin, 1),
+                    "vegas_spread": game["spread_home"],
+                })
+
+        out.append(game_rec)
+
+    out.sort(key=lambda g: g.get("commence_time", ""))
+    return out
+
+
 def star_rating(edge_abs, thresholds):
     """Return ★ rating string based on edge magnitude."""
     if edge_abs >= thresholds[2]:
