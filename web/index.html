@@ -1666,22 +1666,37 @@ function renderPicks(todayData, historyData, scores) {
   ];
   const byType = stats.by_type || {};
   Object.entries(byType).filter(([,s])=>s.picks>0).forEach(([bt,s]) => {
-    const thr = s.hit_rate != null ? `${(s.hit_rate*100).toFixed(0)}%` : '—';
-    cards.push({ label: bt.toUpperCase(), value: thr, sub: `${s.wins}W-${s.losses}L` });
+    const roi = s.roi_pct != null ? `${s.roi_pct >= 0 ? '+' : ''}${s.roi_pct.toFixed(1)}%` : '—';
+    const hr  = s.hit_rate != null ? `${(s.hit_rate*100).toFixed(0)}%` : '?';
+    cards.push({
+      label: bt.toUpperCase(),
+      value: roi,
+      sub: `${s.wins}W-${s.losses}L (${hr} hit)`,
+      color: s.roi_pct != null ? (s.roi_pct > 0 ? 'var(--green)' : s.roi_pct < 0 ? 'var(--red)' : '') : '',
+    });
   });
-  // Per-star-tier breakdown from local picks data
+  // Per-star-tier: odds-weighted ROI (not just hit rate)
   [3,2,1].forEach(n => {
-    const stars = '★'.repeat(n);
+    const starLabel = '★'.repeat(n);
     const tier = allPicks.filter(p => (p.stars||'').replace(/[^★]/g,'').length === n);
     const settled = tier.filter(p => p.result === 'W' || p.result === 'L');
-    const wins = settled.filter(p => p.result === 'W').length;
     if (tier.length === 0) return;
-    const hr = settled.length ? wins / settled.length : null;
+    let net = 0, wagered = 0;
+    settled.forEach(p => {
+      const ku = p.kelly_units || 1;
+      const dec = p.bet_odds != null
+        ? (p.bet_odds > 0 ? p.bet_odds/100+1 : 100/Math.abs(p.bet_odds)+1)
+        : 1.909;
+      if (p.result === 'W') { net += ku * (dec - 1); wagered += ku; }
+      else { net -= ku; wagered += ku; }
+    });
+    const roi = wagered ? net / wagered * 100 : null;
+    const winsN = settled.filter(p => p.result === 'W').length;
     cards.push({
-      label: stars,
-      value: hr != null ? `${(hr*100).toFixed(0)}%` : '—',
-      sub: `${wins}W-${settled.length-wins}L / ${tier.length} picks`,
-      color: hr != null ? (hr >= .55 ? 'var(--green)' : hr < .45 ? 'var(--red)' : '') : '',
+      label: starLabel,
+      value: wagered ? `${roi >= 0 ? '+' : ''}${roi.toFixed(1)}% ROI` : '—',
+      sub: `${winsN}W-${settled.length-winsN}L / ${tier.length} picks`,
+      color: wagered ? (roi > 0 ? 'var(--green)' : roi < 0 ? 'var(--red)' : '') : '',
     });
   });
   statsCards.innerHTML = cards.map(c => `<div class="stat-card">

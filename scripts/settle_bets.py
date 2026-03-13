@@ -206,8 +206,9 @@ def _american_to_decimal_safe(odds):
 
 
 def compute_stats(picks):
-    """Compute hit rate and ROI stats from a list of pick dicts."""
-    by_type = {t: {"picks": 0, "wins": 0, "losses": 0, "pushes": 0}
+    """Compute hit rate and odds-weighted ROI stats from a list of pick dicts."""
+    by_type = {t: {"picks": 0, "wins": 0, "losses": 0, "pushes": 0,
+                   "net_units": 0.0, "total_wagered": 0.0}
                for t in ("ml", "spread", "total")}
     total_settled = wins = losses = pushes = 0
     total_wagered = 0.0
@@ -219,7 +220,8 @@ def compute_stats(picks):
             continue
         bt = p.get("bet_type", "ml")
         if bt not in by_type:
-            by_type[bt] = {"picks": 0, "wins": 0, "losses": 0, "pushes": 0}
+            by_type[bt] = {"picks": 0, "wins": 0, "losses": 0, "pushes": 0,
+                           "net_units": 0.0, "total_wagered": 0.0}
         by_type[bt]["picks"] += 1
         total_settled += 1
         if r == "W":
@@ -232,18 +234,23 @@ def compute_stats(picks):
             by_type[bt]["pushes"] += 1
             pushes += 1
 
-        # Kelly-weighted ROI tracking
-        kelly_u = p.get("kelly_units", 1.0)  # default 1 unit if no kelly sizing
+        # Odds-weighted ROI tracking (Kelly-sized stakes × actual payout)
+        kelly_u = p.get("kelly_units", 1.0)
         decimal_odds = _american_to_decimal_safe(p.get("bet_odds"))
         if r == "W":
-            net_units += kelly_u * (decimal_odds - 1)
+            pnl = kelly_u * (decimal_odds - 1)
+            net_units += pnl
             total_wagered += kelly_u
+            by_type[bt]["net_units"] += pnl
+            by_type[bt]["total_wagered"] += kelly_u
         elif r == "L":
             net_units -= kelly_u
             total_wagered += kelly_u
-        # Push: no change to net_units, but still counts as wagered
+            by_type[bt]["net_units"] -= kelly_u
+            by_type[bt]["total_wagered"] += kelly_u
         elif r == "P":
             total_wagered += kelly_u
+            by_type[bt]["total_wagered"] += kelly_u
 
     def hit_rate(d):
         decided = d["wins"] + d["losses"]
@@ -251,6 +258,10 @@ def compute_stats(picks):
 
     for bt in by_type:
         by_type[bt]["hit_rate"] = hit_rate(by_type[bt])
+        w = by_type[bt]["total_wagered"]
+        by_type[bt]["roi_pct"] = round(by_type[bt]["net_units"] / w * 100, 2) if w > 0 else None
+        by_type[bt]["net_units"] = round(by_type[bt]["net_units"], 2)
+        by_type[bt]["total_wagered"] = round(by_type[bt]["total_wagered"], 2)
 
     return {
         "total_picks": len([p for p in picks if p.get("result") is not None or True]),
