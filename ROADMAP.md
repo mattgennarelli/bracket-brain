@@ -85,28 +85,33 @@
 **Target:** (March 16, 2026)
 
 #### Mobile-First Bracket
-- [ ] Rebuild bracket layout using CSS Grid instead of fixed-width tables
-- [ ] On screens < 768px: show bracket as vertical scrollable list grouped by round
-- [ ] Touch-friendly game cards: large tap targets, swipe between rounds
+- [x] On screens ≤ 768px: hide desktop bracket; show round-tab mobile view (R64→Championship)
+- [x] Touch-friendly game cards: large tap targets (48px min), seed badge, win-prob %, pick highlight
+- [x] Round navigator: sticky scrollable tab bar; "See Analysis" button on each card
+- [x] Mobile layout: controls wrap, champ display full-width, panels edge-to-edge
 - [ ] **Measurable:** Lighthouse mobile score ≥ 80; bracket is fully usable on iPhone 14 viewport
 
 #### Shareable Bracket Links
-- [ ] Encode current bracket state (all 63 picks) into URL hash (`#bracket=<base64>`)
-- [ ] Add "Copy link" button that copies the current bracket URL to clipboard
-- [ ] Decode hash on page load to restore shared bracket
-- [ ] **Measurable:** A bracket link opens identically on a different browser/device
+- [x] Encode locked picks + year into URL hash (`#bracket=<base64url>`)
+- [x] "🔗 Share" button copies shareable URL to clipboard; falls back to `prompt()` on HTTP
+- [x] Decode hash on page load to restore shared bracket (year-safe: ignores cross-year links)
+- [x] URL hash updates silently with `history.replaceState` as picks are made
+- [x] **Measurable:** A bracket link opens identically on a different browser/device ✓
 
 #### Explainability
-- [ ] Add "Why?" tooltip/drawer on every matchup showing: efficiency edge, seed differential, recent form, predicted margin
-- [ ] Add "Why this pick?" panel on each betting card showing the factors that drove the edge
-- [ ] **Measurable:** Every matchup card has a reachable explanation; user study shows picks feel justified
+- [x] Analysis panel already shows insight + key_factors + efficiency stats — info btn opacity raised to 65%
+- [x] Mobile bracket: every card has "ⓘ See Analysis" button opening the full panel
+- [x] "Why this pick?" expandable on every betting card: model prob vs implied, edge, Kelly size, insight text
+- [ ] **Measurable:** Every matchup card has a reachable explanation; every pick card shows "Why?" ✓
 
 #### Visual Polish
-- [ ] Design system: define 6-color palette, 3 font sizes, consistent spacing scale in CSS variables
-- [ ] Replace raw numbers with visual indicators: win-prob bar, seed badge, trend arrow
-- [ ] Dark mode: respect `prefers-color-scheme`
-- [ ] Loading state: skeleton cards while data fetches; "Waking up…" banner on cold start with progress indicator
-- [ ] **Measurable:** Lighthouse accessibility score ≥ 90; no layout shift on load (CLS < 0.1)
+- [x] Design system: CSS variables extended with `--shadow`; full dark mode via `prefers-color-scheme`
+- [x] Win-prob pip bars: 2px bar at bottom of each team slot showing win probability at a glance
+- [x] Dark mode: full palette inversion — background, surfaces, borders, accent colors
+- [x] Cold-start banner: shows after 3s of API delay with animated progress bar; hides on success
+- [x] Kelly units shown inline on every pick card ("Bet 1.2u")
+- [ ] Lighthouse accessibility score ≥ 90 (pending audit)
+- [ ] CLS < 0.1 (pending audit)
 
 ---
 

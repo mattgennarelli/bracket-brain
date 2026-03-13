@@ -13,6 +13,18 @@
   --green: #1a8754; --green-bg: rgba(26,135,84,.08);
   --red: #c62828; --red-bg: rgba(198,40,40,.06);
   --gold: #d97706; --connector: #cbd5e1;
+  --shadow: 0 1px 4px rgba(0,0,0,.06);
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #0f1117; --surface: #1a1d26; --surface2: #22263a;
+    --border: #2e3347; --text: #e8eaf0; --muted: #8b93a8;
+    --primary: #4d93e8; --primary-bg: rgba(77,147,232,.12);
+    --green: #34c47a; --green-bg: rgba(52,196,122,.12);
+    --red: #e05252; --red-bg: rgba(224,82,82,.1);
+    --gold: #f5a623; --connector: #2e3347;
+    --shadow: 0 1px 4px rgba(0,0,0,.3);
+  }
 }
 *{ margin:0; padding:0; box-sizing:border-box; }
 body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
@@ -114,7 +126,7 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sa
 .info-btn { position:absolute; top:1px; right:1px; width:15px; height:15px; border-radius:50%;
   background:var(--surface2); border:1px solid var(--border); color:var(--muted); font-size:.52rem;
   cursor:pointer; display:flex; align-items:center; justify-content:center; z-index:5;
-  opacity:.4; transition:opacity .15s; line-height:1; }
+  opacity:.65; transition:opacity .15s; line-height:1; }
 .info-btn:hover { opacity:1; border-color:var(--primary); color:var(--primary); }
 .region-bracket.flipped .info-btn { right:auto; left:1px; }
 .analysis-overlay { display:none; position:fixed; inset:0; background:rgba(0,0,0,.3); z-index:199; }
@@ -239,6 +251,89 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sa
   .region-bracket { max-width:100%; }
   .ff-center { flex-direction:row; flex-wrap:wrap; justify-content:center; }
 }
+
+/* ── Cold-start banner ── */
+.cold-banner { display:none; align-items:center; justify-content:center; gap:10px;
+  background:rgba(217,119,6,.08); border-bottom:1px solid rgba(217,119,6,.25);
+  padding:8px 20px; font-size:.8rem; color:var(--gold); }
+.cold-banner.show { display:flex; }
+.cold-banner .cold-progress { flex:1; max-width:160px; height:4px; border-radius:2px;
+  background:var(--border); overflow:hidden; }
+.cold-bar { height:100%; background:var(--gold); border-radius:2px;
+  animation:cold-fill 30s linear forwards; }
+@keyframes cold-fill { from { width:0% } to { width:100% } }
+
+/* ── Share button ── */
+.btn.share { gap:4px; }
+
+/* ── Skeleton loading ── */
+.skeleton { background: linear-gradient(90deg, var(--surface2) 25%, var(--border) 50%, var(--surface2) 75%);
+  background-size:200% 100%; animation:shimmer 1.4s infinite; border-radius:4px; }
+@keyframes shimmer { 0% { background-position:200% 0 } 100% { background-position:-200% 0 } }
+.skeleton-line { height:16px; margin:6px 0; }
+.skeleton-card { height:52px; margin:6px 0; border-radius:6px; }
+
+/* ── Mobile bracket ── */
+.mobile-bracket { display:none; }
+.mobile-round-tabs { display:flex; overflow-x:auto; gap:4px; padding:10px 14px;
+  background:var(--surface); border-bottom:1px solid var(--border);
+  scrollbar-width:none; -webkit-overflow-scrolling:touch; position:sticky; top:0; z-index:90; }
+.mobile-round-tabs::-webkit-scrollbar { display:none; }
+.mobile-round-tab { flex-shrink:0; padding:6px 14px; border-radius:20px;
+  border:1px solid var(--border); background:var(--surface2);
+  font-size:.78rem; font-weight:600; color:var(--muted); cursor:pointer;
+  transition:all .15s; white-space:nowrap; }
+.mobile-round-tab.active { background:var(--primary); border-color:var(--primary); color:#fff; }
+.mobile-bracket-body { padding:0 0 24px; }
+.mobile-game-card { background:var(--surface); border:1px solid var(--border);
+  border-radius:10px; margin:10px 14px; overflow:hidden; box-shadow:var(--shadow); }
+.mobile-region-tag { font-size:.6rem; font-weight:700; text-transform:uppercase;
+  letter-spacing:.07em; color:var(--primary); padding:6px 12px 2px; }
+.mobile-team-row { display:flex; align-items:center; gap:10px; padding:11px 12px;
+  cursor:pointer; min-height:48px; transition:background .12s; }
+.mobile-team-row:not(.empty):active { background:var(--surface2); }
+.mobile-team-row.picked { background:var(--green-bg); }
+.mobile-team-row.picked .mobile-tm { color:var(--green); font-weight:700; }
+.mobile-team-row.picked .mobile-prob { color:var(--green); }
+.mobile-team-row.upset-pick.picked { background:var(--red-bg); }
+.mobile-team-row.upset-pick.picked .mobile-tm { color:var(--red); }
+.mobile-team-row.upset-pick.picked .mobile-prob { color:var(--red); }
+.mobile-team-row.empty { opacity:.4; cursor:default; }
+.mobile-seed-badge { width:26px; height:26px; border-radius:6px; background:var(--surface2);
+  border:1px solid var(--border); display:flex; align-items:center; justify-content:center;
+  font-size:.68rem; font-weight:800; color:var(--muted); flex-shrink:0; }
+.mobile-team-row.picked .mobile-seed-badge { background:var(--green-bg); border-color:var(--green); color:var(--green); }
+.mobile-tm { flex:1; font-size:.9rem; font-weight:500; }
+.mobile-prob { font-size:.75rem; font-weight:700; color:var(--muted); min-width:32px; text-align:right; }
+.mobile-prob-bar { height:3px; background:var(--border); }
+.mobile-prob-fill { height:100%; background:var(--green); transition:width .3s; }
+.mobile-divider { height:1px; background:var(--border); margin:0 12px; position:relative; }
+.mobile-divider::after { content:'vs'; position:absolute; top:50%; left:50%;
+  transform:translate(-50%,-50%); font-size:.6rem; color:var(--muted);
+  background:var(--surface); padding:0 6px; font-weight:700; letter-spacing:.04em; }
+.mobile-analysis-btn { display:flex; align-items:center; justify-content:center; gap:4px;
+  padding:8px 12px; background:var(--surface2); border-top:1px solid var(--border);
+  font-size:.72rem; color:var(--muted); cursor:pointer; transition:color .15s; }
+.mobile-analysis-btn:hover { color:var(--primary); }
+
+/* ── Win-prob mini-bar on bracket team slots ── */
+.team-slot .prob-pip { position:absolute; bottom:0; left:0; height:2px;
+  background:var(--primary); opacity:.4; transition:width .3s; pointer-events:none; }
+.team-slot.picked .prob-pip { background:var(--green); opacity:.7; }
+
+@media (max-width: 768px) {
+  .bracket-wrap { display:none !important; }
+  .mobile-bracket { display:block; }
+  .controls { flex-wrap:wrap; gap:8px; padding:8px 14px; }
+  .champ-display { width:100%; text-align:center; margin-left:0; margin-top:2px; }
+  .slider-group input[type=range] { width:90px; }
+  .analysis-panel { width:95vw; padding:16px; max-height:90vh; }
+  .tab-nav { padding:8px 14px; gap:2px; }
+  .tab-btn { padding:5px 12px; font-size:.76rem; }
+  .odds-section { padding:0 0 20px; }
+  .picks-panel { border-radius:0; margin:0; border-left:none; border-right:none; }
+  .picks-stats-grid { grid-template-columns:repeat(2,1fr); }
+}
 </style>
 </head>
 <body>
@@ -246,6 +341,11 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sa
 <div class="loading-overlay" id="loading-overlay">
   <div class="spinner"></div>
   <div class="loading-text" id="loading-text">Loading bracket...</div>
+</div>
+
+<div class="cold-banner" id="cold-banner">
+  <span>⏳ Server warming up… usually takes 20–30s on first visit.</span>
+  <div class="cold-progress"><div class="cold-bar" id="cold-bar"></div></div>
 </div>
 
 <div class="header">
@@ -274,6 +374,7 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sa
   </div>
   <button class="btn primary" id="sim-btn" onclick="fetchBracket()">Simulate</button>
   <button class="btn" onclick="resetPicks()">Reset</button>
+  <button class="btn share" id="share-btn" onclick="shareBracket()" title="Copy shareable bracket link">🔗 Share</button>
   <div class="champ-display">
     Champion: <span class="champ-name" id="champ-name">—</span>
   </div>
@@ -287,6 +388,10 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sa
 
 <div class="tab-panel active" id="tab-bracket">
   <div class="bracket-wrap" id="bracket-wrap"></div>
+  <div class="mobile-bracket" id="mobile-bracket">
+    <div class="mobile-round-tabs" id="mobile-round-tabs"></div>
+    <div class="mobile-bracket-body" id="mobile-bracket-body"></div>
+  </div>
 </div>
 
 <div class="tab-panel" id="tab-odds">
@@ -345,6 +450,13 @@ let _simTimer = null;
 let currentYear = null;
 let BAD_STATS = { adj_o: 85, adj_d: 112, adj_tempo: 64, seed: 16 };
 
+// Mobile bracket state
+const ROUND_ORDER = [64, 32, 16, 8, 4, 2];
+const ROUND_LABELS = { 64:'R64', 32:'R32', 16:'S16', 8:'E8', 4:'Final Four', 2:'Championship' };
+let mobileRound = 64;
+
+function isMobile() { return window.innerWidth <= 768; }
+
 // ---------------------------------------------------------------------------
 // API helpers
 // ---------------------------------------------------------------------------
@@ -380,8 +492,16 @@ async function apiFetch(path) {
 // ---------------------------------------------------------------------------
 async function init() {
   showLoading('Connecting...');
+
+  // Cold-start detection: if health endpoint takes > 3s, show warm-up banner
+  let coldTimer = setTimeout(() => {
+    document.getElementById('cold-banner').classList.add('show');
+  }, 3000);
+
   try {
     const health = await apiFetch('/health');
+    clearTimeout(coldTimer);
+    document.getElementById('cold-banner').classList.remove('show');
     const years = health.available_years || [];
     currentYear = health.current_year || years[years.length - 1];
 
@@ -397,9 +517,12 @@ async function init() {
 
     await loadYear(currentYear);
   } catch (e) {
+    clearTimeout(coldTimer);
+    document.getElementById('cold-banner').classList.remove('show');
     hideLoading();
     showError('Could not connect to API. Make sure uvicorn api:app is running. ' + e.message);
     buildBracket();
+    buildMobileBracket();
   }
 }
 
@@ -412,7 +535,9 @@ async function loadYear(year) {
     const data = await apiFetch(`/bracket/${year}?upset_aggression=${upsetAggression.toFixed(2)}`);
     ingestPicks(data.picks.picks, data.picks.champion);
     buildBracket();
+    buildMobileBracket();
     applyPicksFromServer();
+    restoreFromHash();  // restore shared bracket state if URL hash present
 
     // Championship odds in background (non-blocking)
     fetchOdds(year);
@@ -681,6 +806,11 @@ function renderBracket() {
             ((idx === 0 && st.probA < .5) || (idx === 1 && st.probA >= .5));
           const seedDiff = Math.abs((st.seedA || 0) - (st.seedB || 0));
           slot.classList.toggle('upset-pick', isUpset && seedDiff >= 3);
+          // Win-prob pip bar
+          let pip = slot.querySelector('.prob-pip');
+          if (!pip) { pip = document.createElement('div'); pip.className = 'prob-pip'; slot.style.position = 'relative'; slot.appendChild(pip); }
+          const prob = idx === 0 ? st.probA : (1 - st.probA);
+          pip.style.width = prob != null ? (prob * 100).toFixed(0) + '%' : '50%';
         } else {
           slot.dataset.team = ''; slot.dataset.seed = '';
           slot.querySelector('.sd').textContent = '';
@@ -708,6 +838,8 @@ function renderBracket() {
   document.getElementById('champ-name').textContent = cn;
   const b = document.getElementById('champ-banner-name');
   if (b) b.textContent = cn;
+  // Keep mobile bracket in sync
+  renderMobileBracket();
 }
 
 // ---------------------------------------------------------------------------
@@ -727,6 +859,7 @@ function togglePick(gameId, teamName) {
     lockedPicks[gameId] = teamName;
   }
   recomputeBracket();
+  _syncHash();
 }
 
 function clearDownstream(gameId, oldWinner) {
@@ -911,6 +1044,19 @@ async function loadPicks() {
   }
 }
 
+let _whyOpenId = null;
+function toggleWhy(id) {
+  const el = document.getElementById('why-' + id);
+  if (!el) return;
+  const isOpen = el.style.display !== 'none';
+  if (_whyOpenId && _whyOpenId !== id) {
+    const prev = document.getElementById('why-' + _whyOpenId);
+    if (prev) prev.style.display = 'none';
+  }
+  el.style.display = isOpen ? 'none' : 'block';
+  _whyOpenId = isOpen ? null : id;
+}
+
 function _pickRowHtml(p, showDate) {
   const result = p.result;
   const resultHtml = result
@@ -925,10 +1071,24 @@ function _pickRowHtml(p, showDate) {
   const odds = p.bet_odds != null ? `${p.bet_odds > 0 ? '+' : ''}${Math.round(p.bet_odds)}` : '';
   const edge = p.edge != null ? `${(p.edge * 100).toFixed(1)}%` : '';
   const stars = p.stars || '';
+  const kelly = p.kelly_units != null ? p.kelly_units.toFixed(2) : null;
   const gameStr = `${p.away_team} @ ${p.home_team}`;
   const actualStr = result && p.actual_score_home != null
     ? ` · ${p.home_team} ${Math.round(p.actual_score_home)}-${Math.round(p.actual_score_away)} ${p.away_team}`
     : '';
+  // "Why this pick?" explanation
+  const modelProb = p.model_prob != null ? `${(p.model_prob * 100).toFixed(1)}%` : null;
+  const impliedProb = p.implied_prob != null ? `${(p.implied_prob * 100).toFixed(1)}%` : null;
+  const rowId = `${p.date||'x'}-${bt}-${side}`.replace(/[^a-z0-9]/gi, '_');
+  const whyLines = [];
+  if (modelProb && impliedProb) whyLines.push(`Model probability: <strong>${modelProb}</strong> vs market implied: <strong>${impliedProb}</strong>`);
+  if (edge) whyLines.push(`Edge: <strong>${edge}</strong> — the model sees more value than the market`);
+  if (kelly) whyLines.push(`Kelly sizing: <strong>${kelly} units</strong> (quarter-Kelly, capped at 5%)`);
+  if (p.insight) whyLines.push(p.insight);
+  const whyHtml = whyLines.length ? `<div id="why-${rowId}" style="display:none;margin-top:6px;padding:8px 10px;background:var(--surface2);border-radius:6px;border:1px solid var(--border);font-size:.75rem;color:var(--muted);line-height:1.6">
+    ${whyLines.map(l => `<div>• ${l}</div>`).join('')}
+  </div>` : '';
+
   return `<div class="bet-row">
     ${resultHtml}
     <div class="bet-info">
@@ -939,7 +1099,12 @@ function _pickRowHtml(p, showDate) {
         ${showDate ? `<span style="color:var(--muted);font-size:.68rem;margin-left:6px">${p.date||''}</span>` : ''}
       </div>
       <div class="bet-sub">${gameStr}${actualStr}</div>
-      ${edge ? `<div class="bet-edge">${edge} edge</div>` : ''}
+      <div style="display:flex;align-items:center;gap:10px;margin-top:2px;flex-wrap:wrap">
+        ${edge ? `<div class="bet-edge">${edge} edge</div>` : ''}
+        ${kelly ? `<div style="font-size:.7rem;color:var(--muted)">Bet <strong style="color:var(--text)">${kelly}u</strong></div>` : ''}
+        ${whyLines.length ? `<button onclick="toggleWhy('${rowId}')" style="background:none;border:none;font-size:.7rem;color:var(--primary);cursor:pointer;padding:0">Why this pick? ›</button>` : ''}
+      </div>
+      ${whyHtml}
     </div>
   </div>`;
 }
@@ -1011,6 +1176,152 @@ function renderPicks(todayData, historyData) {
   }
 }
 
+// ---------------------------------------------------------------------------
+// Shareable bracket links
+// ---------------------------------------------------------------------------
+function encodeBracket() {
+  try {
+    const data = JSON.stringify({ y: currentYear, p: lockedPicks });
+    return btoa(data).replace(/=/g, '').replace(/\+/g, '-').replace(/\//g, '_');
+  } catch { return ''; }
+}
+
+function decodeBracket(hash) {
+  try {
+    const padded = hash.replace(/-/g, '+').replace(/_/g, '/');
+    const pad = padded.length % 4 ? padded + '='.repeat(4 - padded.length % 4) : padded;
+    return JSON.parse(atob(pad));
+  } catch { return null; }
+}
+
+function shareBracket() {
+  const hash = encodeBracket();
+  if (!hash) return;
+  const url = location.origin + location.pathname + '#bracket=' + hash;
+  const btn = document.getElementById('share-btn');
+  if (navigator.clipboard && navigator.clipboard.writeText) {
+    navigator.clipboard.writeText(url).then(() => {
+      btn.textContent = '✓ Copied!';
+      setTimeout(() => { btn.textContent = '🔗 Share'; }, 2200);
+    }).catch(() => prompt('Copy this link:', url));
+  } else {
+    prompt('Copy this link:', url);
+  }
+}
+
+function restoreFromHash() {
+  const m = location.hash.match(/#bracket=([A-Za-z0-9\-_]+)/);
+  if (!m) return;
+  const data = decodeBracket(m[1]);
+  if (!data || !data.p) return;
+  // Only restore if year matches current
+  if (data.y && data.y !== currentYear) return;
+  lockedPicks = data.p;
+  recomputeBracket();
+}
+
+// Update URL hash silently when picks change (without adding history entry)
+function _syncHash() {
+  if (!currentYear || !Object.keys(lockedPicks).length) {
+    history.replaceState(null, '', location.pathname + location.search);
+    return;
+  }
+  const hash = encodeBracket();
+  if (hash) history.replaceState(null, '', '#bracket=' + hash);
+}
+
+// ---------------------------------------------------------------------------
+// Mobile bracket
+// ---------------------------------------------------------------------------
+function buildMobileBracket() {
+  const tabsEl = document.getElementById('mobile-round-tabs');
+  if (!tabsEl) return;
+  tabsEl.innerHTML = ROUND_ORDER.map(r =>
+    `<button class="mobile-round-tab${r === mobileRound ? ' active' : ''}"
+       onclick="setMobileRound(${r})">${ROUND_LABELS[r]}</button>`
+  ).join('');
+  renderMobileBracket();
+}
+
+function setMobileRound(round) {
+  mobileRound = round;
+  document.querySelectorAll('.mobile-round-tab').forEach((btn, i) => {
+    btn.classList.toggle('active', ROUND_ORDER[i] === round);
+  });
+  renderMobileBracket();
+}
+
+function renderMobileBracket() {
+  const body = document.getElementById('mobile-bracket-body');
+  if (!body) return;
+
+  const r = mobileRound;
+  const games = [];
+
+  if (r === 4) {
+    [0, 1].forEach(gi => {
+      const gid = `FF-4-${gi}`;
+      if (bracketState[gid]) games.push({ gid, st: bracketState[gid], region: 'Final Four' });
+    });
+  } else if (r === 2) {
+    const gid = 'FF-2-0';
+    if (bracketState[gid]) games.push({ gid, st: bracketState[gid], region: 'Championship' });
+  } else {
+    const numGames = { 64: 8, 32: 4, 16: 2, 8: 1 }[r] || 0;
+    for (const region of QUADRANT) {
+      for (let gi = 0; gi < numGames; gi++) {
+        const gid = `${region}-${r}-${gi}`;
+        if (bracketState[gid]) games.push({ gid, st: bracketState[gid], region });
+      }
+    }
+  }
+
+  let html = '';
+  for (const { gid, st, region } of games) {
+    const pA = st.probA != null ? st.probA : 0.5;
+    const probAStr = (pA * 100).toFixed(0) + '%';
+    const probBStr = ((1 - pA) * 100).toFixed(0) + '%';
+    const seedDiff = Math.abs((st.seedA || 0) - (st.seedB || 0));
+    const isUpsetA = st.pick === st.teamA && pA < 0.5 && seedDiff >= 3;
+    const isUpsetB = st.pick === st.teamB && pA >= 0.5 && seedDiff >= 3;
+    const emptyA = !st.teamA, emptyB = !st.teamB;
+
+    const teamAEsc = (st.teamA || '').replace(/'/g, "\\'");
+    const teamBEsc = (st.teamB || '').replace(/'/g, "\\'");
+
+    html += `<div class="mobile-game-card">
+      <div class="mobile-region-tag">${region}</div>
+      <div class="mobile-team-row ${st.pick === st.teamA ? 'picked' : ''} ${isUpsetA ? 'upset-pick' : ''} ${emptyA ? 'empty' : ''}"
+           onclick="${emptyA ? '' : `togglePick('${gid}','${teamAEsc}')`}">
+        <div class="mobile-seed-badge">${st.seedA || '—'}</div>
+        <div class="mobile-tm">${st.teamA || '—'}</div>
+        <div class="mobile-prob">${st.teamA ? probAStr : ''}</div>
+      </div>
+      <div class="mobile-prob-bar">
+        <div class="mobile-prob-fill" style="width:${st.teamA ? probAStr : '50%'}"></div>
+      </div>
+      <div class="mobile-divider"></div>
+      <div class="mobile-team-row ${st.pick === st.teamB ? 'picked' : ''} ${isUpsetB ? 'upset-pick' : ''} ${emptyB ? 'empty' : ''}"
+           onclick="${emptyB ? '' : `togglePick('${gid}','${teamBEsc}')`}">
+        <div class="mobile-seed-badge">${st.seedB || '—'}</div>
+        <div class="mobile-tm">${st.teamB || '—'}</div>
+        <div class="mobile-prob">${st.teamB ? probBStr : ''}</div>
+      </div>
+      <div class="mobile-analysis-btn" onclick="showAnalysis('${gid}')">ⓘ See Analysis</div>
+    </div>`;
+  }
+
+  if (!html) {
+    const needed = { 32: 'R64', 16: 'R32', 8: 'S16', 4: 'E8', 2: 'Final Four' }[r];
+    html = `<div style="padding:32px 20px;text-align:center;color:var(--muted);font-size:.85rem">
+      ${needed ? `Complete ${needed} to see these matchups` : 'No matchups yet'}
+    </div>`;
+  }
+
+  body.innerHTML = html;
+}
+
+// ---------------------------------------------------------------------------
 // Boot
 init();
 </script>
