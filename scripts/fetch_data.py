@@ -111,6 +111,28 @@ def load_evanmiya(year):
     return out
 
 
+def load_injuries(year):
+    """Load injury data from fetch_injuries.py output. Returns dict team -> list of injury dicts."""
+    path = os.path.join(DATA_DIR, f"injuries_{year}.json")
+    if not os.path.isfile(path):
+        return {}
+    data = load_json(path)
+    if not isinstance(data, dict):
+        return {}
+    return data
+
+
+def merge_injuries(merged, injuries_data):
+    """Overlay injuries onto merged teams. Matches by normalized team name."""
+    if not injuries_data:
+        return
+    merged_keys = set(merged.keys())
+    for team_name, inj_list in injuries_data.items():
+        key = _find_torvik_key(team_name, merged_keys) or normalize_team(team_name)
+        if key in merged and isinstance(inj_list, list):
+            merged[key]["injuries"] = inj_list
+
+
 def load_momentum(year):
     """Load momentum data from compute_momentum.py output. Returns dict team -> {momentum, ...}."""
     path = os.path.join(DATA_DIR, f"momentum_{year}.json")

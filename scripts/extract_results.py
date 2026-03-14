@@ -33,7 +33,7 @@ DANVK_BASE = "https://raw.githubusercontent.com/danvk/march-madness-data/master/
 SR_BASE = "https://www.sports-reference.com/cbb/postseason/men"
 REGION_NAMES = ["South", "East", "Midwest", "West"]
 REGION_ORDER = ["East", "Midwest", "South", "West"]
-ALL_YEARS = [y for y in range(2010, 2026) if y != 2020]
+ALL_YEARS = [y for y in range(2008, 2026) if y != 2020]
 
 ROUND_LABELS = {64: "Round of 64", 32: "Round of 32", 16: "Sweet 16", 8: "Elite 8",
                 4: "Final Four", 2: "Championship"}

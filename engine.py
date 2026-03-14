@@ -624,6 +624,50 @@ def _calc_upset_tolerance_bonus(team_a, team_b, margin, config, round_name=None)
         if dog["orb_rate"] > fav["orb_rate"]:
             indicators += 1
 
+    # 11. coach_tourney_score: dog > fav (March-proven coach)
+    cd = dog.get("coach_tourney_score")
+    cf = fav.get("coach_tourney_score")
+    if cd is not None and cf is not None:
+        total += 1
+        if cd > cf:
+            indicators += 1
+
+    # 12. experience: dog > fav (tournament-tested roster)
+    ed = dog.get("experience")
+    ef = fav.get("experience")
+    if ed is not None and ef is not None:
+        total += 1
+        if ed > ef:
+            indicators += 1
+
+    # 13. pedigree_score: dog > fav (program history)
+    pd = dog.get("pedigree_score")
+    pf = fav.get("pedigree_score")
+    if pd is not None and pf is not None:
+        total += 1
+        if pd > pf:
+            indicators += 1
+
+    # 14. three_pct: dog > fav (better 3PT shooting)
+    tp_d = dog.get("three_pct") or dog.get("three_pt_pct")
+    tp_f = fav.get("three_pct") or fav.get("three_pt_pct")
+    if tp_d is not None and tp_f is not None:
+        _d = tp_d / 100.0 if tp_d > 1.5 else tp_d
+        _f = tp_f / 100.0 if tp_f > 1.5 else tp_f
+        total += 1
+        if _d > _f:
+            indicators += 1
+
+    # 15. three_pct_d: dog < fav (better 3PT defense, lower opp 3PT%)
+    tpd_d = dog.get("three_pct_d") or dog.get("three_pt_pct_d")
+    tpd_f = fav.get("three_pct_d") or fav.get("three_pt_pct_d")
+    if tpd_d is not None and tpd_f is not None:
+        _d = tpd_d / 100.0 if tpd_d > 1.5 else tpd_d
+        _f = tpd_f / 100.0 if tpd_f > 1.5 else tpd_f
+        total += 1
+        if _d < _f:
+            indicators += 1
+
     if total == 0:
         return 0.0
 
@@ -1263,7 +1307,7 @@ def enrich_bracket_with_teams(bracket, teams_merged):
             team_obj["barthag"] = merged.get("barthag") if merged.get("barthag") is not None else _BAD_DEFAULTS["barthag"]
             for k in ("to_rate", "orb_rate", "ft_pct", "ft_rate", "sos", "luck",
                       "kp_adj_o", "kp_adj_d", "star_score",
-                      "three_rate", "three_pct", "two_pt_pct", "block_rate",
+                      "three_rate", "three_pct", "three_pt_pct", "three_pt_pct_d", "two_pt_pct", "block_rate",
                       "wab", "elite_sos", "qual_o", "qual_d", "qual_barthag",
                       "conf_adj_o", "conf_adj_d", "win_pct", "conf_win_pct", "conf_rating", "conf_strength_score",
                       "momentum", "adj_o_recent", "adj_d_recent", "injuries",

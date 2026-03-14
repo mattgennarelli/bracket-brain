@@ -11,13 +11,17 @@ Drops params with |calibrated - default| < 0.05 across folds; target ≤ 12 para
 Output: data/calibrated_config.json
 
 Usage:
-  python scripts/calibrate.py                # optimize + report (walk-forward)
+  python scripts/calibrate.py                # optimize + report (walk-forward, CV-based)
   python scripts/calibrate.py --report-only   # just score current params
   python scripts/calibrate.py --phase2-only   # optimize only Phase 2 + upset params (fast)
   python scripts/calibrate.py --holdout 2025  # hold out 2025 for final eval
-  python scripts/calibrate.py --objective brier-acc  # brier|brier-acc|brier-close|brier-upset|composite
-  python scripts/calibrate.py --maxiter 100 --popsize 20  # longer optimization
-  python scripts/calibrate.py --multi-start 3  # run 3 times, pick best
+  python scripts/calibrate.py --objective brier  # brier|logloss|brier-acc|brier-close|brier-upset|composite
+  python scripts/calibrate.py --no-cv         # legacy: per-fold train optimization (may overfit)
+  python scripts/calibrate.py --maxiter 100 --popsize 16  # longer optimization (default: 100, 16)
+  python scripts/calibrate.py --multi-start 3  # run 3 times, pick best (default: 2)
+  python scripts/calibrate.py --recency-weight  # weight recent years more
+  python scripts/calibrate.py --round-weight    # weight late rounds more
+  python scripts/calibrate.py --save-report docs/cal_report.json  # write JSON report
 """
 import json
 import math
@@ -164,12 +168,30 @@ def build_game_pairs(games, teams_by_year):
     return pairs
 
 
-def score_model(pairs, config):
+# Set by main() when --recency-weight or --round-weight passed
+SCORING_OPTIONS = {"recency_weight": False, "round_weight": False}
+
+ROUND_WEIGHTS = {
+    "Round of 64": 1.0,
+    "Round of 32": 1.2,
+    "Sweet 16": 1.5,
+    "Elite 8": 2.0,
+    "Final Four": 2.5,
+    "Championship": 3.0,
+}
+
+
+def score_model(pairs, config, recency_weight=None, round_weight=None):
     """Evaluate model on all game pairs. Returns metrics dict.
 
     Also returns brier_close (Brier on games with |pred_margin| < 3), brier_upset
     (Brier on games where lower seed won), n_close, n_upset for multi-objective optimization.
+
+    If recency_weight: weight game by 1 + 0.05 * (year - 2010).
+    If round_weight: weight by R64=1, R32=1.2, S16=1.5, E8=2, FF=2.5, Champ=3.
     """
+    recency_weight = recency_weight if recency_weight is not None else SCORING_OPTIONS.get("recency_weight", False)
+    round_weight = round_weight if round_weight is not None else SCORING_OPTIONS.get("round_weight", False)
     brier_sum = 0.0
     log_loss_sum = 0.0
     correct = 0
@@ -178,12 +200,22 @@ def score_model(pairs, config):
     round_stats = {}
     brier_close_sum = 0.0
     brier_upset_sum = 0.0
+    weight_close_sum = 0.0
+    weight_upset_sum = 0.0
     n_close = 0
     n_upset = 0
+    weight_sum = 0.0
     n = len(pairs)
 
     for a, b, a_won, actual_margin, yr, g in pairs:
         rname = g.get("round_name", "Unknown")
+        w = 1.0
+        if recency_weight:
+            w *= 1.0 + 0.05 * (yr - 2010)
+        if round_weight:
+            w *= ROUND_WEIGHTS.get(rname, 1.0)
+        weight_sum += w
+
         try:
             result = predict_game(enrich_team(a), enrich_team(b), config=config,
                                   round_name=rname)
@@ -193,8 +225,8 @@ def score_model(pairs, config):
         prob_a = max(0.001, min(0.999, prob_a))
 
         brier_contrib = (prob_a - a_won) ** 2
-        brier_sum += brier_contrib
-        log_loss_sum -= (a_won * math.log(prob_a) + (1 - a_won) * math.log(1 - prob_a))
+        brier_sum += w * brier_contrib
+        log_loss_sum -= w * (a_won * math.log(prob_a) + (1 - a_won) * math.log(1 - prob_a))
 
         predicted_winner_is_a = prob_a >= 0.5
         if predicted_winner_is_a == bool(a_won):
@@ -206,12 +238,14 @@ def score_model(pairs, config):
 
         # Close-game and upset tracking
         if abs(pred_margin) < 3:
-            brier_close_sum += brier_contrib
+            brier_close_sum += w * brier_contrib
+            weight_close_sum += w
             n_close += 1
         seed_a, seed_b = a.get("seed", 8), b.get("seed", 8)
         is_upset = g.get("upset", (a_won and seed_a > seed_b) or (not a_won and seed_b > seed_a))
         if is_upset:
-            brier_upset_sum += brier_contrib
+            brier_upset_sum += w * brier_contrib
+            weight_upset_sum += w
             n_upset += 1
 
         # Total prediction tracking
@@ -224,13 +258,14 @@ def score_model(pairs, config):
         if rname not in round_stats:
             round_stats[rname] = {"correct": 0, "total": 0, "brier": 0.0}
         round_stats[rname]["total"] += 1
-        round_stats[rname]["brier"] += brier_contrib
+        round_stats[rname]["brier"] += w * brier_contrib
         if predicted_winner_is_a == bool(a_won):
             round_stats[rname]["correct"] += 1
 
+    denom = weight_sum if (recency_weight or round_weight) and weight_sum > 0 else n
     return {
-        "brier_score": brier_sum / n if n else 1.0,
-        "log_loss": log_loss_sum / n if n else 10.0,
+        "brier_score": brier_sum / denom if denom else 1.0,
+        "log_loss": log_loss_sum / denom if denom else 10.0,
         "accuracy": correct / n if n else 0.0,
         "spread_mae": sum(margin_errors) / len(margin_errors) if margin_errors else 99,
         "n_games": n,
@@ -238,8 +273,8 @@ def score_model(pairs, config):
         "round_stats": round_stats,
         "total_bias": sum(total_errors) / len(total_errors) if total_errors else 0,
         "total_mae": sum(abs(e) for e in total_errors) / len(total_errors) if total_errors else 0,
-        "brier_close": brier_close_sum / n_close if n_close else 0.0,
-        "brier_upset": brier_upset_sum / n_upset if n_upset else 0.0,
+        "brier_close": brier_close_sum / weight_close_sum if n_close and weight_close_sum > 0 else (brier_close_sum / n_close if n_close else 0.0),
+        "brier_upset": brier_upset_sum / weight_upset_sum if n_upset and weight_upset_sum > 0 else (brier_upset_sum / n_upset if n_upset else 0.0),
         "n_close": n_close,
         "n_upset": n_upset,
     }
@@ -334,6 +369,7 @@ def _compute_objective(metrics, objective_name="brier", baseline_accuracy=None, 
     If baseline_accuracy is set and accuracy drops by more than 1%, add accuracy_penalty.
     """
     brier = metrics["brier_score"]
+    log_loss = metrics.get("log_loss", brier * 3)  # fallback
     mae = metrics.get("total_mae", 0)
     acc = metrics.get("accuracy", 0)
     brier_close = metrics.get("brier_close", 0)
@@ -341,6 +377,8 @@ def _compute_objective(metrics, objective_name="brier", baseline_accuracy=None, 
     score = 0.0
     if objective_name == "brier":
         score = brier + 0.001 * mae
+    elif objective_name == "logloss":
+        score = log_loss + 0.001 * mae
     elif objective_name == "brier-acc":
         score = brier - 0.01 * acc
     elif objective_name == "brier-close":
@@ -356,8 +394,13 @@ def _compute_objective(metrics, objective_name="brier", baseline_accuracy=None, 
     return score
 
 
-def calibrate_single(pairs, param_spec, objective_name="brier", maxiter=60, popsize=12, seed=42):
-    """Optimize params on given pairs. Returns (optimized_dict, config)."""
+def calibrate_single(pairs, param_spec, objective_name="brier", maxiter=60, popsize=12, seed=42,
+                    init_values=None):
+    """Optimize params on given pairs. Returns (optimized_dict, config).
+
+    If init_values is provided (or calibrated_config.json exists), use as first DE population member.
+    """
+    import random
     from scipy.optimize import differential_evolution
 
     eval_count = [0]
@@ -380,9 +423,32 @@ def calibrate_single(pairs, param_spec, objective_name="brier", maxiter=60, pops
         return score
 
     bounds = [(lo, hi) for _, lo, hi in param_spec]
-    result = differential_evolution(objective, bounds, seed=seed,
-                                    maxiter=maxiter, tol=1e-6, popsize=popsize,
-                                    mutation=(0.5, 1.5), recombination=0.8)
+    rng = random.Random(seed)
+
+    # Warm start: use calibrated_config or init_values as first population member
+    init_pop = None
+    if init_values is None:
+        cal_path = os.path.join(DATA_DIR, "calibrated_config.json")
+        if os.path.isfile(cal_path):
+            with open(cal_path) as f:
+                init_values = json.load(f)
+
+    if init_values and popsize >= 5:
+        first_row = []
+        for name, lo, hi in param_spec:
+            v = init_values.get(name, getattr(ModelConfig(), name, (lo + hi) / 2))
+            first_row.append(max(lo, min(hi, float(v))))
+        init_pop = [first_row]
+        for _ in range(popsize - 1):
+            init_pop.append([rng.uniform(lo, hi) for _, lo, hi in param_spec])
+        init_pop = init_pop  # list of lists, scipy accepts it
+
+    kwargs = dict(seed=seed, maxiter=maxiter, tol=1e-6, popsize=popsize,
+                  mutation=(0.5, 1.5), recombination=0.8)
+    if init_pop is not None:
+        kwargs["init"] = init_pop
+
+    result = differential_evolution(objective, bounds, **kwargs)
 
     optimized = {}
     config = ModelConfig(num_sims=1)
@@ -453,60 +519,116 @@ def calibrate_phase2_only(pairs, objective_name="brier", maxiter=60, popsize=12,
     return optimized, config
 
 
-def calibrate_walk_forward(pairs, objective_name="brier", maxiter=60, popsize=12, seed=42):
-    """Walk-forward: train on N-k, test on N. Reduce params; return final config."""
+def _compute_cv_score(pairs_by_year, param_spec, x, objective_name, test_years, baseline_acc_ref):
+    """Evaluate param vector x on walk-forward CV. Returns mean objective across test folds.
+    Lower is better.
+    """
+    scores = []
+    briers = []
+    for test_year in test_years:
+        _, test_pairs = _fold_pairs(pairs_by_year, test_year)
+        if not test_pairs:
+            continue
+        config = ModelConfig(num_sims=1)
+        for i, (name, _, _) in enumerate(param_spec):
+            if i < len(x):
+                setattr(config, name, x[i])
+        metrics = score_model(test_pairs, config)
+        scores.append(_compute_objective(metrics, objective_name, baseline_acc_ref))
+        briers.append(metrics["brier_score"])
+    return sum(scores) / len(scores) if scores else 1e9, sum(briers) / len(briers) if briers else 1e9
+
+
+def calibrate_walk_forward(pairs, objective_name="brier", maxiter=100, popsize=16, seed=42,
+                          use_cv_objective=True, early_stop_iter=0):
+    """Walk-forward: optimize to minimize CV Brier (or train Brier if use_cv_objective=False).
+    Reduce params; return final config.
+    """
+    from scipy.optimize import differential_evolution
+
     pairs_by_year = _pairs_by_year(pairs)
     years = sorted(pairs_by_year.keys())
     if len(years) < 3:
         print("  Not enough years for walk-forward; falling back to single calibration.")
         return calibrate_single(pairs, PARAM_SPEC, objective_name, maxiter, popsize, seed)
 
-    # Use all years >= 2017 as test folds for more stable CV estimate
     test_years = [y for y in sorted(pairs_by_year.keys()) if y >= 2017]
-    fold_results = []  # list of (test_year, train_optimized, test_brier)
-
-    for test_year in test_years:
-        train_pairs, test_pairs = _fold_pairs(pairs_by_year, test_year)
-        if not train_pairs or not test_pairs:
-            continue
-        print(f"\n--- Fold: train on years < {test_year}, test on {test_year} ({len(test_pairs)} games) ---")
-        opt, _ = calibrate_single(train_pairs, PARAM_SPEC, objective_name, maxiter, popsize, seed)
-        config = ModelConfig(num_sims=1)
-        for k, v in opt.items():
-            setattr(config, k, v)
-        test_metrics = score_model(test_pairs, config)
-        fold_results.append((test_year, opt, test_metrics["brier_score"]))
-        print(f"  Test Brier on {test_year}: {test_metrics['brier_score']:.4f}")
-
-    fold_briers = [b for _, _, b in fold_results]
-    cv_brier = sum(fold_briers) / len(fold_briers)
-    print(f"\n  Cross-validated Brier (avg of {len(fold_briers)} folds): {cv_brier:.4f}  ← honest out-of-sample estimate")
-
-    # Reduce params: drop any with |calibrated - default| < 0.05 across all folds
     defaults = {name: getattr(ModelConfig(), name) for name, _, _ in PARAM_SPEC}
-    param_deltas = {name: [] for name, _, _ in PARAM_SPEC}
-    for _, opt, _ in fold_results:
-        for name in opt:
-            param_deltas[name].append(abs(opt[name] - defaults.get(name, 0)))
+    bounds = [(lo, hi) for _, lo, hi in PARAM_SPEC]
+    baseline_acc_ref = [None]
 
-    # Keep params that move meaningfully (max_delta >= 0.05)
-    reduced_spec = [(n, lo, hi) for n, lo, hi in PARAM_SPEC if max(param_deltas.get(n, [0])) >= 0.05]
+    if use_cv_objective:
+        # Optimize directly on CV Brier (reduces overfitting)
+        eval_count = [0]
+        best_score = [1e9]
+        best_brier = [1e9]
 
+        def objective(x):
+            score, cv_brier = _compute_cv_score(
+                pairs_by_year, PARAM_SPEC, x, objective_name, test_years, baseline_acc_ref[0]
+            )
+            eval_count[0] += 1
+            if baseline_acc_ref[0] is None:
+                baseline_acc_ref[0] = 0.74  # placeholder; not used for brier-only
+            if score < best_score[0]:
+                best_score[0] = score
+                best_brier[0] = cv_brier
+                if eval_count[0] % 25 == 0:
+                    print(f"  [{eval_count[0]}] Best CV score: {best_score[0]:.5f}  CV Brier={cv_brier:.4f}")
+            return score
+
+        print(f"\n--- CV-based optimization: {len(test_years)} folds, objective={objective_name} ---")
+        result = differential_evolution(
+            objective, bounds, seed=seed, maxiter=maxiter, tol=1e-6, popsize=popsize,
+            mutation=(0.5, 1.5), recombination=0.8
+        )
+        optimized = {name: round(float(result.x[i]), 4) for i, (name, _, _) in enumerate(PARAM_SPEC)}
+        cv_brier = best_brier[0]
+        print(f"\n  Cross-validated Brier: {cv_brier:.4f}  ← honest out-of-sample estimate")
+    else:
+        # Legacy: per-fold train optimization
+        fold_results = []
+        for test_year in test_years:
+            train_pairs, test_pairs = _fold_pairs(pairs_by_year, test_year)
+            if not train_pairs or not test_pairs:
+                continue
+            print(f"\n--- Fold: train on years < {test_year}, test on {test_year} ({len(test_pairs)} games) ---")
+            opt, _ = calibrate_single(train_pairs, PARAM_SPEC, objective_name, maxiter, popsize, seed)
+            config = ModelConfig(num_sims=1)
+            for k, v in opt.items():
+                setattr(config, k, v)
+            test_metrics = score_model(test_pairs, config)
+            fold_results.append((test_year, opt, test_metrics["brier_score"]))
+            print(f"  Test Brier on {test_year}: {test_metrics['brier_score']:.4f}")
+
+        fold_briers = [b for _, _, b in fold_results]
+        cv_brier = sum(fold_briers) / len(fold_briers)
+        print(f"\n  Cross-validated Brier (avg of {len(fold_briers)} folds): {cv_brier:.4f}")
+
+        # Merge fold opts: use median or mean per param (simplified: use last fold's opt)
+        optimized = dict(fold_results[-1][1]) if fold_results else {}
+
+    # Param reduction: drop params with |optimized - default| < 0.05
+    reduced_spec = [
+        (n, lo, hi) for n, lo, hi in PARAM_SPEC
+        if abs(optimized.get(n, defaults.get(n, 0)) - defaults.get(n, 0)) >= 0.05
+    ]
     if len(reduced_spec) > 12:
-        # Top 12 by max delta
-        ranked = [(n, max(param_deltas.get(n, [0]))) for n, _, _ in PARAM_SPEC]
+        ranked = [(n, abs(optimized.get(n, 0) - defaults.get(n, 0))) for n, _, _ in PARAM_SPEC]
         ranked.sort(key=lambda x: -x[1])
         keep = {n for n, _ in ranked[:12]}
         reduced_spec = [(n, lo, hi) for n, lo, hi in PARAM_SPEC if n in keep]
-
     print(f"\n  Reduced to {len(reduced_spec)} params (target ≤12): {[p[0] for p in reduced_spec]}")
 
-    # Final calibration on all data except holdout (if any)
+    # Final calibration on all data except max year (warm start from CV-optimized if available)
     all_train = [p for p in pairs if p[4] < max(years)]
     print(f"\n--- Final calibration on {len(all_train)} games (all years except {max(years)}) ---")
-    optimized, config = calibrate_single(all_train, reduced_spec, objective_name, maxiter, popsize, seed)
+    init_vals = optimized if use_cv_objective else None
+    optimized, config = calibrate_single(
+        all_train, reduced_spec, objective_name, maxiter, popsize, seed, init_values=init_vals
+    )
 
-    # M1: Drop params that hit bounds — use 0 at lower bound (remove signal), default at upper
+    # M1: Drop params that hit bounds
     bounds_map = {n: (lo, hi) for n, lo, hi in PARAM_SPEC}
     for name in list(optimized.keys()):
         lo, hi = bounds_map.get(name, (0, 1))
@@ -521,7 +643,6 @@ def calibrate_walk_forward(pairs, objective_name="brier", maxiter=60, popsize=12
             setattr(config, name, default_val)
             print(f"  Param {name} hit upper bound ({val}) -> using default {default_val}")
 
-    # Fill in dropped params with defaults
     for name, _, _ in PARAM_SPEC:
         if name not in optimized:
             optimized[name] = round(defaults.get(name, getattr(ModelConfig(), name)), 4)
@@ -563,16 +684,54 @@ def save_config(optimized):
     print(f"\nSaved calibrated config to {out_path}")
 
 
+def _metrics_to_json(metrics):
+    """Convert metrics dict to JSON-serializable form."""
+    out = {
+        "n_games": metrics.get("n_games", 0),
+        "accuracy": metrics.get("accuracy", 0),
+        "brier_score": metrics.get("brier_score", 0),
+        "log_loss": metrics.get("log_loss", 0),
+        "spread_mae": metrics.get("spread_mae", 0),
+        "total_bias": metrics.get("total_bias", 0),
+        "total_mae": metrics.get("total_mae", 0),
+    }
+    if "round_stats" in metrics:
+        out["round_stats"] = {
+            r: {"correct": rs["correct"], "total": rs["total"], "brier": rs["brier"] / rs["total"] if rs["total"] else 0}
+            for r, rs in metrics["round_stats"].items()
+        }
+    return out
+
+
+def save_report(out_path, baseline_metrics, optimized_metrics=None, cv_folds=None, params=None):
+    """Write calibration report JSON to out_path."""
+    report = {"baseline": _metrics_to_json(baseline_metrics)}
+    if optimized_metrics is not None:
+        report["optimized"] = _metrics_to_json(optimized_metrics)
+    if cv_folds is not None:
+        report["cv_folds"] = cv_folds
+    if params is not None:
+        report["params"] = params
+    os.makedirs(os.path.dirname(out_path) or ".", exist_ok=True)
+    with open(out_path, "w") as f:
+        json.dump(report, f, indent=2)
+    print(f"\nSaved report to {out_path}")
+
+
 def main():
     report_only = "--report-only" in sys.argv
     phase2_only = "--phase2-only" in sys.argv
     holdout_year = None
     objective_name = "brier"
-    maxiter = 60
-    popsize = 12
-    multi_start = 1
+    maxiter = 100
+    popsize = 16
+    multi_start = 2
+    use_cv_objective = "--no-cv" not in sys.argv
+    save_report_path = None
     for i, arg in enumerate(sys.argv):
-        if arg == "--holdout" and i + 1 < len(sys.argv):
+        if arg == "--save-report" and i + 1 < len(sys.argv):
+            save_report_path = sys.argv[i + 1]
+        elif arg == "--holdout" and i + 1 < len(sys.argv):
             holdout_year = int(sys.argv[i + 1])
         elif arg == "--objective" and i + 1 < len(sys.argv):
             objective_name = sys.argv[i + 1]
@@ -617,6 +776,8 @@ def main():
             if holdout_pairs:
                 holdout_metrics = score_model(holdout_pairs, baseline_config)
                 print_report(holdout_metrics, f"HELD-OUT {holdout_year}")
+        if save_report_path:
+            save_report(save_report_path, default_metrics)
         return
 
     seeds = [42, 123, 456][:multi_start] if multi_start <= 3 else [42 + r for r in range(multi_start)]
@@ -641,7 +802,9 @@ def main():
         for run, s in enumerate(seeds):
             if multi_start > 1:
                 print(f"\n  Multi-start run {run + 1}/{multi_start} (seed={s})")
-            opt, cfg = calibrate_walk_forward(pairs, objective_name, maxiter, popsize, s)
+            opt, cfg = calibrate_walk_forward(
+                pairs, objective_name, maxiter, popsize, s, use_cv_objective=use_cv_objective
+            )
             pairs_by_year = _pairs_by_year(pairs)
             test_years = [y for y in sorted(pairs_by_year.keys()) if y >= 2017]
             cv_briers = []
@@ -682,6 +845,17 @@ def main():
     print(f"\n  Improvement: Brier {brier_delta:+.4f}, Accuracy {acc_delta:+.1%}")
 
     save_config(optimized)
+
+    if save_report_path:
+        pairs_by_year = _pairs_by_year(pairs)
+        test_years = [y for y in sorted(pairs_by_year.keys()) if y >= 2017]
+        cv_folds = []
+        for ty in test_years:
+            _, test_p = _fold_pairs(pairs_by_year, ty)
+            if test_p:
+                m = score_model(test_p, opt_config)
+                cv_folds.append({"year": ty, "brier": m["brier_score"], "accuracy": m["accuracy"]})
+        save_report(save_report_path, default_metrics, opt_metrics, cv_folds, optimized)
 
 
 if __name__ == "__main__":

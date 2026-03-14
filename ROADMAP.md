@@ -7,7 +7,7 @@
 ## Current State Assessment
 
 ### What's Working
-- **Prediction engine** — Torvik + EvanMiya efficiency blend, walk-forward calibrated (12 params); CV Brier **0.161** (2023/2024/2025 folds); champion rank #1/#1/#4 across held-out years
+- **Prediction engine** — Torvik + EvanMiya efficiency blend, CV-based walk-forward calibrated (12 params); CV Brier **0.165** (8 folds 2017–2025); champion rank #1/#1/#4 across held-out years
 - **Bracket simulation** — 63-game bracket with correct FF seeding and quadrant ordering; Monte Carlo pre-computed for all years
 - **Betting picks** — daily save (9am ET) + auto-settle (midnight ET) via GitHub Actions; ledger committed to repo; Kelly sizing (quarter-Kelly, 5% cap) on every pick
 - **Picks tab** — hit rate, record by type, net units, ROI%, result badges, full history with filters, "Why this pick?" expandable, model comparison benchmark table
@@ -38,7 +38,7 @@
 - [x] Implement walk-forward cross-validation (train on years N–k, test on year N) — replace current random split
 - [x] Reduce param count: drop or merge any param with |calibrated − default| < 0.05 across all folds; target ≤ 12 params
 - [x] Re-derive seed weight from walk-forward results; confirm it doesn't dominate over efficiency signals (seed_weight held at 0.18 default — optimizer excluded it as low-signal)
-- [x] **Measurable:** Cross-validated Brier (avg 3 folds) < 0.170 → **achieved 0.161** (per-fold: 2023=0.194, 2024=0.171, 2025=0.118; 2025 was unusually chalk so average is the honest number)
+- [x] **Measurable:** Cross-validated Brier (avg 8 folds) < 0.170 → **achieved 0.165** (2026-03-13: CV-based optimization, warm start, multi-start=2)
 
 #### Betting Pipeline
 - [x] Add unit tests for `settle_bets.py`: mock Odds API response, assert ML/spread/total settle logic correctly

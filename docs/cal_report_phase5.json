@@ -1,0 +1,161 @@
+{
+  "baseline": {
+    "n_games": 945,
+    "accuracy": 0.7343915343915344,
+    "brier_score": 0.1684809175449739,
+    "log_loss": 0.5080642965903439,
+    "spread_mae": 8.377354497354498,
+    "total_bias": -1.3161904761904761,
+    "total_mae": 13.333756613756613,
+    "round_stats": {
+      "Round of 64": {
+        "correct": 365,
+        "total": 480,
+        "brier": 0.15772476758333331
+      },
+      "Round of 32": {
+        "correct": 178,
+        "total": 240,
+        "brier": 0.16577483595833317
+      },
+      "Sweet 16": {
+        "correct": 78,
+        "total": 120,
+        "brier": 0.19363486916666678
+      },
+      "Elite 8": {
+        "correct": 38,
+        "total": 60,
+        "brier": 0.21672600466666667
+      },
+      "Final Four": {
+        "correct": 25,
+        "total": 30,
+        "brier": 0.1554033723333334
+      },
+      "Championship": {
+        "correct": 10,
+        "total": 15,
+        "brier": 0.18791815066666664
+      }
+    }
+  },
+  "optimized": {
+    "n_games": 945,
+    "accuracy": 0.7417989417989418,
+    "brier_score": 0.1682131494074076,
+    "log_loss": 0.5057438828837492,
+    "spread_mae": 8.315555555555555,
+    "total_bias": -1.3166137566137566,
+    "total_mae": 13.335661375661376,
+    "round_stats": {
+      "Round of 64": {
+        "correct": 368,
+        "total": 480,
+        "brier": 0.15569486110416664
+      },
+      "Round of 32": {
+        "correct": 185,
+        "total": 240,
+        "brier": 0.16516924633333324
+      },
+      "Sweet 16": {
+        "correct": 79,
+        "total": 120,
+        "brier": 0.19965057416666676
+      },
+      "Elite 8": {
+        "correct": 37,
+        "total": 60,
+        "brier": 0.21996819966666661
+      },
+      "Final Four": {
+        "correct": 21,
+        "total": 30,
+        "brier": 0.1622751016666667
+      },
+      "Championship": {
+        "correct": 11,
+        "total": 15,
+        "brier": 0.17085732066666667
+      }
+    }
+  },
+  "cv_folds": [
+    {
+      "year": 2017,
+      "brier": 0.14861643650793643,
+      "accuracy": 0.7142857142857143
+    },
+    {
+      "year": 2018,
+      "brier": 0.1783013173015872,
+      "accuracy": 0.7301587301587301
+    },
+    {
+      "year": 2019,
+      "brier": 0.13811671111111112,
+      "accuracy": 0.746031746031746
+    },
+    {
+      "year": 2021,
+      "brier": 0.1831347003174603,
+      "accuracy": 0.7301587301587301
+    },
+    {
+      "year": 2022,
+      "brier": 0.18556584698412704,
+      "accuracy": 0.746031746031746
+    },
+    {
+      "year": 2023,
+      "brier": 0.1853670115873016,
+      "accuracy": 0.7142857142857143
+    },
+    {
+      "year": 2024,
+      "brier": 0.18109797920634924,
+      "accuracy": 0.7301587301587301
+    },
+    {
+      "year": 2025,
+      "brier": 0.1247845174603174,
+      "accuracy": 0.8253968253968254
+    }
+  ],
+  "params": {
+    "base_scoring_stdev": 9.4842,
+    "ft_clutch_max_bonus": 2.23,
+    "coach_tourney_max_bonus": 3.5015,
+    "three_pt_volatility_factor": 2.6023,
+    "tempo_volatility_weight": 2.7965,
+    "star_player_max_bonus": 0.0505,
+    "momentum_max_bonus": 0.6883,
+    "win_pct_max_bonus": 2.5446,
+    "depth_max_bonus": 2.5591,
+    "em_opp_adjust_max_bonus": 0.3692,
+    "ft_foul_rate_max_bonus": 0.0185,
+    "upset_tolerance_max_bonus": 2.7989,
+    "seed_weight": 0.0,
+    "sos_max_bonus": 2.5,
+    "possession_edge_max_bonus": 4.0,
+    "experience_max_bonus": 2.5,
+    "pedigree_max_bonus": 1.0,
+    "conf_rating_max_bonus": 0.3,
+    "em_adj_o_weight": 0.3,
+    "score_scale": 0.942,
+    "score_scale_r64": 0.96,
+    "score_scale_r32": 0.95,
+    "score_scale_s16": 0.935,
+    "score_scale_e8": 0.92,
+    "score_scale_ff": 0.91,
+    "round_stdev_inflation_r64": 1.0,
+    "round_stdev_inflation_r32": 1.03,
+    "round_stdev_inflation_s16": 1.06,
+    "round_stdev_inflation_e8": 1.1,
+    "round_stdev_inflation_ff": 1.12,
+    "late_round_dampening": 0.0,
+    "upset_spread_threshold": 6.0,
+    "close_game_stdev_boost": 0.0
+  }
+}
