@@ -111,6 +111,32 @@ def load_evanmiya(year):
     return out
 
 
+def load_momentum(year):
+    """Load momentum data from compute_momentum.py output. Returns dict team -> {momentum, ...}."""
+    path = os.path.join(DATA_DIR, f"momentum_{year}.json")
+    if not os.path.isfile(path):
+        return {}
+    data = load_json(path)
+    if not isinstance(data, dict):
+        return {}
+    return data
+
+
+def merge_momentum(merged, momentum_data):
+    """Overlay momentum onto merged teams. Matches by normalized team name."""
+    if not momentum_data:
+        return
+    merged_keys = set(merged.keys())
+    for team_name, mom in momentum_data.items():
+        key = _find_torvik_key(team_name, merged_keys) or normalize_team(team_name)
+        if key in merged and isinstance(mom, dict):
+            merged[key]["momentum"] = mom.get("momentum", 0)
+            if mom.get("adj_o_recent") is not None:
+                merged[key]["adj_o_recent"] = mom["adj_o_recent"]
+            if mom.get("adj_d_recent") is not None:
+                merged[key]["adj_d_recent"] = mom["adj_d_recent"]
+
+
 def _find_torvik_key(team_name, torvik_keys):
     """Find the Torvik key that matches this team (handles 'Michigan State' vs 'Michigan St.' etc)."""
     norm = _normalize_team_for_match(team_name)
@@ -122,6 +148,31 @@ def _find_torvik_key(team_name, torvik_keys):
         if _normalize_team_for_match(k) == norm:
             return k
     return None
+
+
+def compute_conf_strength_scores(merged):
+    """Derive conf_strength_score (0-1) from Torvik conf_adj_o/conf_adj_d.
+
+    Teams in stronger conferences have conf_adj_o > adj_o (conference adjustment boosts them).
+    Formula: raw = (conf_adj_o - adj_o + adj_d - conf_adj_d) / 20.
+    Normalize across all teams so min=0, max=1.
+    """
+    raw_scores = []
+    for team, row in merged.items():
+        conf_o = row.get("conf_adj_o")
+        conf_d = row.get("conf_adj_d")
+        adj_o = row.get("adj_o")
+        adj_d = row.get("adj_d")
+        if conf_o is not None and conf_d is not None and adj_o is not None and adj_d is not None:
+            raw = (conf_o - adj_o + adj_d - conf_d) / 20.0
+            raw_scores.append((team, raw))
+    if not raw_scores:
+        return
+    vals = [r for _, r in raw_scores]
+    lo, hi = min(vals), max(vals)
+    span = hi - lo if hi > lo else 1.0
+    for team, raw in raw_scores:
+        merged[team]["conf_strength_score"] = round(max(0.0, min(1.0, (raw - lo) / span)), 4)
 
 
 def merge_sources(torvik, kenpom, evanmiya):
@@ -147,6 +198,7 @@ def merge_sources(torvik, kenpom, evanmiya):
             merged[key] = {}
         for k, v in row.items():
             merged[key][k] = v
+    compute_conf_strength_scores(merged)
     return merged
 
 
@@ -210,6 +262,16 @@ def main():
         print(f"Evan Miya: {len(evanmiya)} teams (star_score overlay)")
 
     merged = merge_sources(torvik, kenpom, evanmiya)
+
+    momentum_data = load_momentum(year)
+    if momentum_data:
+        merge_momentum(merged, momentum_data)
+        print(f"Momentum: {len(momentum_data)} teams (recent form overlay)")
+
+    injuries_data = load_injuries(year)
+    if injuries_data:
+        merge_injuries(merged, injuries_data)
+        print(f"Injuries: {len(injuries_data)} teams with injury data")
     # Output list of dicts with team name in each row
     out_list = []
     for team, row in merged.items():

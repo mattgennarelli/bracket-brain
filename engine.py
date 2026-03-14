@@ -88,6 +88,13 @@ class ModelConfig:
     round_stdev_inflation_e8: float = 1.10
     round_stdev_inflation_ff: float = 1.12
     late_round_dampening: float = 0.0  # Shift win-probs toward 0.5 in Sweet 16+ (0=none, 0.3=30% pull)
+    # Close-game upset tolerance: shift margin toward underdog when game is close and underdog has favorable indicators
+    upset_spread_threshold: float = 6.0   # games with |margin| < this get bonus consideration
+    upset_tolerance_max_bonus: float = 3.0  # max pts to shift toward underdog
+    upset_seed_gate: bool = False  # if True, only apply bonus when underdog is lower seed (true upset)
+    upset_proximity_power: float = 0.5  # 0.5=sqrt, 1.0=linear, 0.25=more aggressive on very close games
+    upset_spread_threshold_r64: float = 0.0  # 0=use main threshold; else round-specific for R64
+    close_game_stdev_boost: float = 0.0  # inflate stdev when |margin|<2 (0=off, 0.2=20% boost)
 
 def _load_calibrated_config():
     """Load calibrated parameters from data/calibrated_config.json if it exists."""
@@ -215,11 +222,28 @@ def calc_size_bonus(team, config=DEFAULT_CONFIG):
     orb = max(0, min(1, (team.get("orb_rate", 28.0) - 22) / 16))
     return (two_pt * 0.4 + block * 0.3 + orb * 0.3) * config.size_max_bonus
 
+# Status -> severity multiplier for injury penalty (out=full, doubtful=0.7, etc.)
+_INJURY_SEVERITY = {"out": 1.0, "doubtful": 0.7, "questionable": 0.4, "probable": 0.1}
+
+
 def calc_injury_penalty(team, config=DEFAULT_CONFIG):
+    """Compute penalty from injuries. Uses injury_impact (precomputed) or injuries list.
+
+    injuries[] entries: status (out/doubtful/questionable/probable), bpr_share or importance.
+    Penalty = sum(bpr_share * severity_multiplier) * injury_penalty_per_level, capped at 10.
+    """
+    if "injury_impact" in team and team["injury_impact"] is not None:
+        return min(team["injury_impact"], 10.0)
     if "injury_level" in team:
         return team["injury_level"] * config.injury_penalty_per_level
     injuries = team.get("injuries", [])
-    total = sum(i.get("severity",1) * i.get("importance",0.5) * config.injury_penalty_per_level for i in injuries)
+    total = 0.0
+    for i in injuries:
+        severity = _INJURY_SEVERITY.get(
+            str(i.get("status", "out")).lower(), 1.0
+        )
+        weight = i.get("bpr_share") or i.get("importance", 0.5)
+        total += severity * weight * config.injury_penalty_per_level
     return min(total, 10.0)
 
 def calc_luck_regression(team, config=DEFAULT_CONFIG):
@@ -237,7 +261,14 @@ def calc_win_pct_bonus(team, config=DEFAULT_CONFIG):
 
 
 def calc_conf_bonus(team, config=DEFAULT_CONFIG):
-    """Teams from stronger conferences get small bonus (conf_rating 1 = top tier)."""
+    """Teams from stronger conferences get small bonus.
+
+    Prefers conf_strength_score (0-1 continuous from Torvik conf_adj) when present.
+    Otherwise uses conf_rating (1=top, 2=mid, 3=lower tier from EvanMiya).
+    """
+    conf_strength = team.get("conf_strength_score")
+    if conf_strength is not None and 0 <= conf_strength <= 1:
+        return conf_strength * config.conf_rating_max_bonus
     conf_rating = team.get("conf_rating")
     if conf_rating is None:
         return 0.0
@@ -291,7 +322,7 @@ def predict_game(team_a, team_b, game_site=None, config=DEFAULT_CONFIG, round_na
     # All factor adjustments
     factor_names = ["experience", "coach", "pedigree", "preseason", "proximity",
                     "momentum", "star_player", "depth", "size", "injuries",
-                    "luck_regression", "win_pct"]
+                    "luck_regression", "win_pct", "conf"]
     calc_fns = [
         lambda t: calc_experience_bonus(t, config),
         lambda t: calc_coach_bonus(t, config),
@@ -305,6 +336,7 @@ def predict_game(team_a, team_b, game_site=None, config=DEFAULT_CONFIG, round_na
         lambda t: -calc_injury_penalty(t, config),
         lambda t: calc_luck_regression(t, config),
         lambda t: calc_win_pct_bonus(t, config),
+        lambda t: calc_conf_bonus(t, config),
     ]
 
     factors_a, factors_b = {}, {}
@@ -321,10 +353,17 @@ def predict_game(team_a, team_b, game_site=None, config=DEFAULT_CONFIG, round_na
     extra_margin = possession_margin + ft_margin + foul_rate_margin + sos_margin
     adjusted_margin = base_margin + factor_margin + extra_margin
 
+    # Close-game upset tolerance: shift toward underdog when game is close and underdog has favorable indicators
+    upset_bonus = _calc_upset_tolerance_bonus(team_a, team_b, adjusted_margin, config, round_name)
+    adjusted_margin += upset_bonus
+
     # Variance (3PT volatility)
     vol = (calc_game_volatility(team_a, config) + calc_game_volatility(team_b, config)) / 2
     round_inflation = _get_round_stdev_inflation(round_name, config)
     game_stdev = config.base_scoring_stdev * math.sqrt(poss / config.national_avg_tempo) * vol * round_inflation
+    close_boost = getattr(config, "close_game_stdev_boost", 0.0)
+    if close_boost > 0 and abs(adjusted_margin) < 2:
+        game_stdev *= (1.0 + close_boost)
 
     # Win probability
     if game_stdev == 0:
@@ -380,6 +419,7 @@ def predict_game(team_a, team_b, game_site=None, config=DEFAULT_CONFIG, round_na
         "possession_margin": round(possession_margin, 2),
         "ft_margin": round(ft_margin, 2),
         "sos_margin": round(sos_margin, 2),
+        "upset_tolerance_bonus": round(upset_bonus, 2),
         "efficiency_prob": round(eff_prob, 4),
         "seed_prob": round(seed_prob, 4),
         "game_stdev": round(game_stdev, 1),
@@ -487,6 +527,111 @@ def _calc_ft_edge_margin(team_a, team_b, base_margin, config):
     close_factor = max(0.0, 1.0 - min(abs(base_margin) / 8.0, 1.0))
     raw = diff * config.ft_clutch_max_bonus * close_factor
     return raw
+
+
+def _calc_upset_tolerance_bonus(team_a, team_b, margin, config, round_name=None):
+    """Shift margin toward underdog when game is close and underdog has favorable indicators.
+
+    Applies only when 0 < |margin| < threshold. Uses 10 binary indicators (dog vs fav)
+    plus configurable proximity curve. Optional seed gate: only apply when underdog is lower seed.
+    """
+    threshold = getattr(config, "upset_spread_threshold", 6.0)
+    threshold_r64 = getattr(config, "upset_spread_threshold_r64", 0.0)
+    if round_name == "Round of 64" and threshold_r64 > 0:
+        threshold = threshold_r64
+    max_bonus = getattr(config, "upset_tolerance_max_bonus", 3.0)
+    if max_bonus <= 0 or threshold <= 0:
+        return 0.0
+    dog_margin = abs(margin)
+    if dog_margin <= 0 or dog_margin >= threshold:
+        return 0.0
+
+    seed_gate = getattr(config, "upset_seed_gate", False)
+    if seed_gate:
+        seed_a, seed_b = team_a.get("seed", 8), team_b.get("seed", 8)
+        # Only apply when model favorite is higher seed (lower number) = true upset scenario
+        model_fav_higher_seed = (margin > 0 and seed_a < seed_b) or (margin < 0 and seed_b < seed_a)
+        if not model_fav_higher_seed:
+            return 0.0
+
+    fav = team_a if margin > 0 else team_b
+    dog = team_b if margin > 0 else team_a
+
+    indicators = 0
+    total = 0
+
+    # 1. barthag: dog > fav
+    if dog.get("barthag") is not None and fav.get("barthag") is not None:
+        total += 1
+        if dog["barthag"] > fav["barthag"]:
+            indicators += 1
+
+    # 2. sos: dog > fav (tougher schedule)
+    if dog.get("sos") is not None and fav.get("sos") is not None:
+        total += 1
+        if dog["sos"] > fav["sos"]:
+            indicators += 1
+
+    # 3. wab: dog > fav
+    if dog.get("wab") is not None and fav.get("wab") is not None:
+        total += 1
+        if dog["wab"] > fav["wab"]:
+            indicators += 1
+
+    # 4. adj_o: dog > fav
+    if dog.get("adj_o") is not None and fav.get("adj_o") is not None:
+        total += 1
+        if dog["adj_o"] > fav["adj_o"]:
+            indicators += 1
+
+    # 5. efg_pct: dog > fav
+    if dog.get("efg_pct") is not None and fav.get("efg_pct") is not None:
+        total += 1
+        if dog["efg_pct"] > fav["efg_pct"]:
+            indicators += 1
+
+    # 6. three_rate / three_pt_rate: dog > fav
+    tr_d = dog.get("three_rate") or dog.get("three_pt_rate")
+    tr_f = fav.get("three_rate") or fav.get("three_pt_rate")
+    if tr_d is not None and tr_f is not None:
+        total += 1
+        if tr_d > tr_f:
+            indicators += 1
+
+    # 7. ft_rate or ft_pct: dog > fav
+    ft_d = dog.get("ft_rate") or dog.get("ft_pct")
+    ft_f = fav.get("ft_rate") or fav.get("ft_pct")
+    if ft_d is not None and ft_f is not None:
+        total += 1
+        if ft_d > ft_f:
+            indicators += 1
+
+    # 8. adj_d: dog < fav (lower = better defense)
+    if dog.get("adj_d") is not None and fav.get("adj_d") is not None:
+        total += 1
+        if dog["adj_d"] < fav["adj_d"]:
+            indicators += 1
+
+    # 9. to_rate: dog < fav (lower = fewer TOs, protects ball better)
+    if dog.get("to_rate") is not None and fav.get("to_rate") is not None:
+        total += 1
+        if dog["to_rate"] < fav["to_rate"]:
+            indicators += 1
+
+    # 10. orb_rate: dog > fav (second-chance points create upset variance)
+    if dog.get("orb_rate") is not None and fav.get("orb_rate") is not None:
+        total += 1
+        if dog["orb_rate"] > fav["orb_rate"]:
+            indicators += 1
+
+    if total == 0:
+        return 0.0
+
+    indicator_score = indicators / total
+    power = getattr(config, "upset_proximity_power", 0.5)
+    proximity = max(0.0, 1.0 - dog_margin / threshold) ** power
+    bonus = max_bonus * indicator_score * proximity
+    return -bonus if margin > 0 else bonus
 
 
 def _calc_path_quality_margin(team_a, team_b, config):
@@ -1120,7 +1265,8 @@ def enrich_bracket_with_teams(bracket, teams_merged):
                       "kp_adj_o", "kp_adj_d", "star_score",
                       "three_rate", "three_pct", "two_pt_pct", "block_rate",
                       "wab", "elite_sos", "qual_o", "qual_d", "qual_barthag",
-                      "conf_adj_o", "conf_adj_d", "win_pct", "conf_win_pct", "conf_rating",
+                      "conf_adj_o", "conf_adj_d", "win_pct", "conf_win_pct", "conf_rating", "conf_strength_score",
+                      "momentum", "adj_o_recent", "adj_d_recent", "injuries",
                       "em_o_rate", "em_d_rate", "em_rel_rating", "em_roster_rank",
                       "em_tempo", "top_player", "top_player_bpr"):
                 if k in merged and merged[k] is not None:

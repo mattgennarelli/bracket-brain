@@ -1,0 +1,14 @@
+{
+  "Duke": {
+    "momentum": -0.875,
+    "games_used": 2,
+    "win_pct_last": 0.5,
+    "win_pct_season": 0.9375
+  },
+  "North Carolina": {
+    "momentum": -0.5,
+    "games_used": 2,
+    "win_pct_last": 0.5,
+    "win_pct_season": 0.75
+  }
+}

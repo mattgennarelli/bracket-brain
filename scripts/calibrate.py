@@ -13,19 +13,24 @@ Output: data/calibrated_config.json
 Usage:
   python scripts/calibrate.py                # optimize + report (walk-forward)
   python scripts/calibrate.py --report-only   # just score current params
+  python scripts/calibrate.py --phase2-only   # optimize only Phase 2 + upset params (fast)
   python scripts/calibrate.py --holdout 2025  # hold out 2025 for final eval
+  python scripts/calibrate.py --objective brier-acc  # brier|brier-acc|brier-close|brier-upset|composite
+  python scripts/calibrate.py --maxiter 100 --popsize 20  # longer optimization
+  python scripts/calibrate.py --multi-start 3  # run 3 times, pick best
 """
 import json
 import math
 import os
 import sys
+from dataclasses import replace
 
 SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
 ROOT = os.path.dirname(SCRIPT_DIR)
 DATA_DIR = os.path.join(ROOT, "data")
 sys.path.insert(0, ROOT)
 
-from engine import predict_game, ModelConfig, _normalize_team_for_match, enrich_team
+from engine import predict_game, ModelConfig, DEFAULT_CONFIG, _normalize_team_for_match, enrich_team
 
 
 def load_results():
@@ -160,13 +165,21 @@ def build_game_pairs(games, teams_by_year):
 
 
 def score_model(pairs, config):
-    """Evaluate model on all game pairs. Returns metrics dict."""
+    """Evaluate model on all game pairs. Returns metrics dict.
+
+    Also returns brier_close (Brier on games with |pred_margin| < 3), brier_upset
+    (Brier on games where lower seed won), n_close, n_upset for multi-objective optimization.
+    """
     brier_sum = 0.0
     log_loss_sum = 0.0
     correct = 0
     margin_errors = []
     total_errors = []
     round_stats = {}
+    brier_close_sum = 0.0
+    brier_upset_sum = 0.0
+    n_close = 0
+    n_upset = 0
     n = len(pairs)
 
     for a, b, a_won, actual_margin, yr, g in pairs:
@@ -179,7 +192,8 @@ def score_model(pairs, config):
         prob_a = result["win_prob_a"]
         prob_a = max(0.001, min(0.999, prob_a))
 
-        brier_sum += (prob_a - a_won) ** 2
+        brier_contrib = (prob_a - a_won) ** 2
+        brier_sum += brier_contrib
         log_loss_sum -= (a_won * math.log(prob_a) + (1 - a_won) * math.log(1 - prob_a))
 
         predicted_winner_is_a = prob_a >= 0.5
@@ -189,6 +203,16 @@ def score_model(pairs, config):
         pred_margin = result["predicted_margin"]
         actual_signed = actual_margin if a_won else -actual_margin
         margin_errors.append(abs(pred_margin - actual_signed))
+
+        # Close-game and upset tracking
+        if abs(pred_margin) < 3:
+            brier_close_sum += brier_contrib
+            n_close += 1
+        seed_a, seed_b = a.get("seed", 8), b.get("seed", 8)
+        is_upset = g.get("upset", (a_won and seed_a > seed_b) or (not a_won and seed_b > seed_a))
+        if is_upset:
+            brier_upset_sum += brier_contrib
+            n_upset += 1
 
         # Total prediction tracking
         score_a = g.get("score_a")
@@ -200,7 +224,7 @@ def score_model(pairs, config):
         if rname not in round_stats:
             round_stats[rname] = {"correct": 0, "total": 0, "brier": 0.0}
         round_stats[rname]["total"] += 1
-        round_stats[rname]["brier"] += (prob_a - a_won) ** 2
+        round_stats[rname]["brier"] += brier_contrib
         if predicted_winner_is_a == bool(a_won):
             round_stats[rname]["correct"] += 1
 
@@ -214,6 +238,10 @@ def score_model(pairs, config):
         "round_stats": round_stats,
         "total_bias": sum(total_errors) / len(total_errors) if total_errors else 0,
         "total_mae": sum(abs(e) for e in total_errors) / len(total_errors) if total_errors else 0,
+        "brier_close": brier_close_sum / n_close if n_close else 0.0,
+        "brier_upset": brier_upset_sum / n_upset if n_upset else 0.0,
+        "n_close": n_close,
+        "n_upset": n_upset,
     }
 
 
@@ -246,10 +274,36 @@ PARAM_SPEC = [
     ("score_scale_e8", 0.86, 0.96),
     ("score_scale_ff", 0.85, 0.95),
     # Per-round stdev inflation (Phase 2)
+    ("round_stdev_inflation_r64", 1.0, 1.15),
+    ("round_stdev_inflation_r32", 1.0, 1.15),
+    ("round_stdev_inflation_s16", 1.0, 1.20),
     ("round_stdev_inflation_e8", 1.0, 1.25),
     ("round_stdev_inflation_ff", 1.0, 1.30),
     # Late-round dampening: pull win-probs toward 0.5 in Sweet 16+ (reduces overconfidence)
     ("late_round_dampening", 0.0, 0.35),
+    # Close-game upset tolerance
+    ("upset_spread_threshold", 2.0, 8.0),
+    ("upset_tolerance_max_bonus", 0.0, 5.0),
+    ("close_game_stdev_boost", 0.0, 0.3),
+]
+
+# Phase 2 only: score scaling, stdev inflation, late-round dampening, close-game upset tolerance
+PARAM_SPEC_PHASE2 = [
+    ("score_scale", 0.88, 1.00),
+    ("score_scale_r64", 0.90, 1.00),
+    ("score_scale_r32", 0.90, 1.00),
+    ("score_scale_s16", 0.88, 0.98),
+    ("score_scale_e8", 0.86, 0.96),
+    ("score_scale_ff", 0.85, 0.95),
+    ("round_stdev_inflation_r64", 1.0, 1.15),
+    ("round_stdev_inflation_r32", 1.0, 1.15),
+    ("round_stdev_inflation_s16", 1.0, 1.20),
+    ("round_stdev_inflation_e8", 1.0, 1.25),
+    ("round_stdev_inflation_ff", 1.0, 1.30),
+    ("late_round_dampening", 0.0, 0.35),
+    ("upset_spread_threshold", 2.0, 8.0),
+    ("upset_tolerance_max_bonus", 0.0, 5.0),
+    ("close_game_stdev_boost", 0.0, 0.3),
 ]
 
 
@@ -274,30 +328,60 @@ def _fold_pairs(pairs_by_year, test_year):
     return train, test
 
 
-def calibrate_single(pairs, param_spec):
+def _compute_objective(metrics, objective_name="brier", baseline_accuracy=None, accuracy_penalty=0.05):
+    """Compute optimization score from metrics. Lower is better.
+
+    If baseline_accuracy is set and accuracy drops by more than 1%, add accuracy_penalty.
+    """
+    brier = metrics["brier_score"]
+    mae = metrics.get("total_mae", 0)
+    acc = metrics.get("accuracy", 0)
+    brier_close = metrics.get("brier_close", 0)
+    brier_upset = metrics.get("brier_upset", 0)
+    score = 0.0
+    if objective_name == "brier":
+        score = brier + 0.001 * mae
+    elif objective_name == "brier-acc":
+        score = brier - 0.01 * acc
+    elif objective_name == "brier-close":
+        score = brier + 0.5 * brier_close
+    elif objective_name == "brier-upset":
+        score = brier + 0.3 * brier_upset
+    elif objective_name == "composite":
+        score = 0.7 * brier - 0.02 * acc + 0.2 * brier_close
+    else:
+        score = brier + 0.001 * mae
+    if baseline_accuracy is not None and acc < baseline_accuracy - 0.01:
+        score += accuracy_penalty
+    return score
+
+
+def calibrate_single(pairs, param_spec, objective_name="brier", maxiter=60, popsize=12, seed=42):
     """Optimize params on given pairs. Returns (optimized_dict, config)."""
     from scipy.optimize import differential_evolution
 
     eval_count = [0]
-    best_brier = [1.0]
+    best_score = [1e9]
+    baseline_acc = [None]
 
     def objective(x):
         config = ModelConfig(num_sims=1)
         for i, (name, _, _) in enumerate(param_spec):
             setattr(config, name, x[i])
         metrics = score_model(pairs, config)
+        if baseline_acc[0] is None:
+            baseline_acc[0] = metrics["accuracy"]
         eval_count[0] += 1
-        # Blend: Brier is primary metric; total_mae is tiebreaker (0.001 weight)
-        score = metrics["brier_score"] + 0.001 * metrics.get("total_mae", 0)
-        if metrics["brier_score"] < best_brier[0]:
-            best_brier[0] = metrics["brier_score"]
+        score = _compute_objective(metrics, objective_name, baseline_acc[0])
+        if score < best_score[0]:
+            best_score[0] = score
             if eval_count[0] % 50 == 0:
-                print(f"  [{eval_count[0]}] Best Brier: {best_brier[0]:.5f}")
+                print(f"  [{eval_count[0]}] Best score: {best_score[0]:.5f}  Brier={metrics['brier_score']:.4f}")
         return score
 
     bounds = [(lo, hi) for _, lo, hi in param_spec]
-    result = differential_evolution(objective, bounds, seed=42,
-                                    maxiter=60, tol=1e-6, popsize=12,
+    result = differential_evolution(objective, bounds, seed=seed,
+                                    maxiter=maxiter, tol=1e-6, popsize=popsize,
                                     mutation=(0.5, 1.5), recombination=0.8)
 
     optimized = {}
@@ -309,13 +393,73 @@ def calibrate_single(pairs, param_spec):
     return optimized, config
 
 
-def calibrate_walk_forward(pairs):
+def calibrate_phase2_only(pairs, objective_name="brier", maxiter=60, popsize=12, seed=42):
+    """Optimize only Phase 2 + upset params, starting from current calibrated_config."""
+    from scipy.optimize import differential_evolution
+
+    cal_path = os.path.join(DATA_DIR, "calibrated_config.json")
+    baseline = ModelConfig(num_sims=1)
+    if os.path.isfile(cal_path):
+        with open(cal_path) as f:
+            cal = json.load(f)
+        for k, v in cal.items():
+            if hasattr(baseline, k):
+                setattr(baseline, k, v)
+
+    eval_count = [0]
+    best_score = [1e9]
+    baseline_acc = [None]
+
+    def objective(x):
+        config = replace(baseline, num_sims=1)
+        for i, (name, _, _) in enumerate(PARAM_SPEC_PHASE2):
+            setattr(config, name, x[i])
+        metrics = score_model(pairs, config)
+        if baseline_acc[0] is None:
+            baseline_acc[0] = metrics["accuracy"]
+        eval_count[0] += 1
+        score = _compute_objective(metrics, objective_name, baseline_acc[0])
+        if score < best_score[0]:
+            best_score[0] = score
+            if eval_count[0] % 50 == 0:
+                print(f"  [{eval_count[0]}] Best score: {best_score[0]:.5f}  Brier={metrics['brier_score']:.4f}")
+        return score
+
+    bounds = [(lo, hi) for _, lo, hi in PARAM_SPEC_PHASE2]
+    result = differential_evolution(objective, bounds, seed=seed,
+                                    maxiter=maxiter, tol=1e-6, popsize=popsize,
+                                    mutation=(0.5, 1.5), recombination=0.8)
+
+    # Merge phase2 optimized params into baseline (from calibrated_config or ModelConfig)
+    optimized = {}
+    if os.path.isfile(cal_path):
+        with open(cal_path) as f:
+            optimized = dict(json.load(f))
+    else:
+        all_param_names = list(dict.fromkeys([p[0] for p in PARAM_SPEC] + [p[0] for p in PARAM_SPEC_PHASE2]))
+        for name in all_param_names:
+            if hasattr(ModelConfig(), name):
+                val = getattr(ModelConfig(), name)
+                if isinstance(val, (int, float)):
+                    optimized[name] = round(float(val), 4)
+    for i, (name, _, _) in enumerate(PARAM_SPEC_PHASE2):
+        optimized[name] = round(float(result.x[i]), 4)
+
+    config = replace(baseline, num_sims=1)
+    for k, v in optimized.items():
+        if hasattr(config, k):
+            setattr(config, k, v)
+
+    return optimized, config
+
+
+def calibrate_walk_forward(pairs, objective_name="brier", maxiter=60, popsize=12, seed=42):
     """Walk-forward: train on N-k, test on N. Reduce params; return final config."""
     pairs_by_year = _pairs_by_year(pairs)
     years = sorted(pairs_by_year.keys())
     if len(years) < 3:
         print("  Not enough years for walk-forward; falling back to single calibration.")
-        return calibrate_single(pairs, PARAM_SPEC)
+        return calibrate_single(pairs, PARAM_SPEC, objective_name, maxiter, popsize, seed)
 
     # Use all years >= 2017 as test folds for more stable CV estimate
     test_years = [y for y in sorted(pairs_by_year.keys()) if y >= 2017]
@@ -326,7 +470,7 @@ def calibrate_walk_forward(pairs):
         if not train_pairs or not test_pairs:
             continue
         print(f"\n--- Fold: train on years < {test_year}, test on {test_year} ({len(test_pairs)} games) ---")
-        opt, _ = calibrate_single(train_pairs, PARAM_SPEC)
+        opt, _ = calibrate_single(train_pairs, PARAM_SPEC, objective_name, maxiter, popsize, seed)
         config = ModelConfig(num_sims=1)
         for k, v in opt.items():
             setattr(config, k, v)
@@ -360,7 +504,7 @@ def calibrate_walk_forward(pairs):
     # Final calibration on all data except holdout (if any)
     all_train = [p for p in pairs if p[4] < max(years)]
     print(f"\n--- Final calibration on {len(all_train)} games (all years except {max(years)}) ---")
-    optimized, config = calibrate_single(all_train, reduced_spec)
+    optimized, config = calibrate_single(all_train, reduced_spec, objective_name, maxiter, popsize, seed)
 
     # M1: Drop params that hit bounds — use 0 at lower bound (remove signal), default at upper
     bounds_map = {n: (lo, hi) for n, lo, hi in PARAM_SPEC}
@@ -421,11 +565,32 @@ def save_config(optimized):
 
 def main():
     report_only = "--report-only" in sys.argv
+    phase2_only = "--phase2-only" in sys.argv
     holdout_year = None
+    objective_name = "brier"
+    maxiter = 60
+    popsize = 12
+    multi_start = 1
     for i, arg in enumerate(sys.argv):
         if arg == "--holdout" and i + 1 < len(sys.argv):
             holdout_year = int(sys.argv[i + 1])
-            break
+        elif arg == "--objective" and i + 1 < len(sys.argv):
+            objective_name = sys.argv[i + 1]
+        elif arg == "--maxiter" and i + 1 < len(sys.argv):
+            try:
+                maxiter = int(sys.argv[i + 1])
+            except ValueError:
+                pass
+        elif arg == "--popsize" and i + 1 < len(sys.argv):
+            try:
+                popsize = int(sys.argv[i + 1])
+            except ValueError:
+                pass
+        elif arg == "--multi-start" and i + 1 < len(sys.argv):
+            try:
+                multi_start = int(sys.argv[i + 1])
+            except ValueError:
+                pass
 
     print("Loading historical results...")
     games = load_results()
@@ -439,23 +604,63 @@ def main():
     pairs = build_game_pairs(games, teams_by_year)
     print(f"  {len(pairs)} matchable games")
 
-    # Score with default config
-    default_metrics = score_model(pairs, ModelConfig(num_sims=1))
-    print_report(default_metrics, "DEFAULT CONFIG")
+    # Score with baseline (calibrated_config.json if exists, else engine defaults)
+    cal_path = os.path.join(DATA_DIR, "calibrated_config.json")
+    baseline_config = replace(DEFAULT_CONFIG, num_sims=1)
+    baseline_label = "CURRENT BASELINE" if os.path.isfile(cal_path) else "DEFAULT CONFIG"
+    default_metrics = score_model(pairs, baseline_config)
+    print_report(default_metrics, baseline_label)
 
     if report_only:
         if holdout_year:
             holdout_pairs = [p for p in pairs if p[4] == holdout_year]
             if holdout_pairs:
-                holdout_metrics = score_model(holdout_pairs, ModelConfig(num_sims=1))
+                holdout_metrics = score_model(holdout_pairs, baseline_config)
                 print_report(holdout_metrics, f"HELD-OUT {holdout_year}")
         return
 
-    # Walk-forward calibration
-    optimized, opt_config = calibrate_walk_forward(pairs)
+    seeds = [42, 123, 456][:multi_start] if multi_start <= 3 else [42 + r for r in range(multi_start)]
+    if phase2_only:
+        print(f"\n--- Phase 2 only: objective={objective_name}, maxiter={maxiter}, popsize={popsize} ---")
+        best_opt = None
+        best_score = 1e9
+        for run, s in enumerate(seeds):
+            if multi_start > 1:
+                print(f"\n  Multi-start run {run + 1}/{multi_start} (seed={s})")
+            opt, cfg = calibrate_phase2_only(pairs, objective_name, maxiter, popsize, s)
+            m = score_model(pairs, cfg)
+            sc = _compute_objective(m, objective_name)
+            if sc < best_score:
+                best_score = sc
+                best_opt = (opt, cfg)
+        optimized, opt_config = best_opt
+    else:
+        # Walk-forward calibration
+        best_opt = None
+        best_cv_brier = 1e9
+        for run, s in enumerate(seeds):
+            if multi_start > 1:
+                print(f"\n  Multi-start run {run + 1}/{multi_start} (seed={s})")
+            opt, cfg = calibrate_walk_forward(pairs, objective_name, maxiter, popsize, s)
+            pairs_by_year = _pairs_by_year(pairs)
+            test_years = [y for y in sorted(pairs_by_year.keys()) if y >= 2017]
+            cv_briers = []
+            for ty in test_years:
+                train_p, test_p = _fold_pairs(pairs_by_year, ty)
+                if not test_p:
+                    continue
+                c = replace(cfg, num_sims=1)
+                for k, v in opt.items():
+                    setattr(c, k, v)
+                cv_briers.append(score_model(test_p, c)["brier_score"])
+            cv_b = sum(cv_briers) / len(cv_briers) if cv_briers else 1e9
+            if cv_b < best_cv_brier:
+                best_cv_brier = cv_b
+                best_opt = (opt, cfg)
+        optimized, opt_config = best_opt
     print(f"\nOptimized parameters:")
     for k, v in optimized.items():
-        default_val = getattr(ModelConfig(), k)
+        default_val = getattr(DEFAULT_CONFIG, k)
         print(f"  {k}: {default_val} -> {v}")
 
     # Score with optimized config (full data)
