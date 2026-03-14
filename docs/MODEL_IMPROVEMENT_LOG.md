@@ -36,13 +36,16 @@
 
 ---
 
-## Phase 1: Data Extension (2008–2009) — SKIPPED
+## Phase 1: Data Extension (2008–2009) — COMPLETED (2026-03-14)
 
 **Results extraction:** Success. Extracted 63 games each for 2008 and 2009 (126 total). Combined: 1,071 games across 17 years.
 
-**Torvik / teams_merged:** Failed. Torvik CSV format for 2008 and 2009 differs from 2010+; column mapping produced mostly "Unknown" teams. Manual fix would require downloading CSV from barttorvik.com and using `--from-csv`.
+**Torvik / teams_merged:** User added `torvik_2008_raw.csv` and `torvik_2009_raw.csv`. Processed with:
+- `python scripts/fetch_torvik.py --from-csv data/torvik_2008_raw.csv 2008`
+- `python scripts/fetch_torvik.py --from-csv data/torvik_2009_raw.csv 2009`
+- `python scripts/fetch_data.py --no-fetch 2008` and `2009`
 
-**Decision:** Proceed without 2008/2009 data. Calibration remains on 945 matchable games (years with teams_merged). Results files kept for future use if Torvik format is fixed or manual fetch is done.
+**Result:** 1,071 matchable games (up from 945). Calibration now uses 18 years: 2008–2026.
 
 ---
 

@@ -1553,10 +1553,10 @@
       "away_team": "Vanderbilt Commodores",
       "commence_time": "2026-03-14T17:00:00Z",
       "date": "2026-03-13",
-      "result": null,
-      "actual_score_home": null,
-      "actual_score_away": null,
-      "settled_at": null
+      "result": "L",
+      "actual_score_home": 74.0,
+      "actual_score_away": 91.0,
+      "settled_at": "2026-03-14T23:57:38.987288+00:00"
     },
     {
       "bet_type": "spread",
@@ -1575,10 +1575,10 @@
       "away_team": "Vanderbilt Commodores",
       "commence_time": "2026-03-14T17:00:00Z",
       "date": "2026-03-13",
-      "result": null,
-      "actual_score_home": null,
-      "actual_score_away": null,
-      "settled_at": null
+      "result": "L",
+      "actual_score_home": 74.0,
+      "actual_score_away": 91.0,
+      "settled_at": "2026-03-14T23:57:38.987343+00:00"
     },
     {
       "bet_type": "total",
@@ -1595,10 +1595,10 @@
       "away_team": "Vanderbilt Commodores",
       "commence_time": "2026-03-14T17:00:00Z",
       "date": "2026-03-13",
-      "result": null,
-      "actual_score_home": null,
-      "actual_score_away": null,
-      "settled_at": null
+      "result": "W",
+      "actual_score_home": 74.0,
+      "actual_score_away": 91.0,
+      "settled_at": "2026-03-14T23:57:38.987368+00:00"
     },
     {
       "bet_type": "ml",
@@ -1617,10 +1617,10 @@
       "away_team": "Wisconsin Badgers",
       "commence_time": "2026-03-14T17:00:11Z",
       "date": "2026-03-13",
-      "result": null,
-      "actual_score_home": null,
-      "actual_score_away": null,
-      "settled_at": null
+      "result": "W",
+      "actual_score_home": 68.0,
+      "actual_score_away": 65.0,
+      "settled_at": "2026-03-14T23:57:38.987400+00:00"
     },
     {
       "bet_type": "spread",
@@ -1639,10 +1639,10 @@
       "away_team": "Wisconsin Badgers",
       "commence_time": "2026-03-14T17:00:11Z",
       "date": "2026-03-13",
-      "result": null,
-      "actual_score_home": null,
-      "actual_score_away": null,
-      "settled_at": null
+      "result": "W",
+      "actual_score_home": 68.0,
+      "actual_score_away": 65.0,
+      "settled_at": "2026-03-14T23:57:38.987430+00:00"
     },
     {
       "bet_type": "total",
@@ -1659,10 +1659,10 @@
       "away_team": "Wisconsin Badgers",
       "commence_time": "2026-03-14T17:00:11Z",
       "date": "2026-03-13",
-      "result": null,
-      "actual_score_home": null,
-      "actual_score_away": null,
-      "settled_at": null
+      "result": "L",
+      "actual_score_home": 68.0,
+      "actual_score_away": 65.0,
+      "settled_at": "2026-03-14T23:57:38.987450+00:00"
     },
     {
       "bet_type": "ml",
@@ -2001,10 +2001,10 @@
       "away_team": "Vanderbilt Commodores",
       "commence_time": "2026-03-14T17:00:00Z",
       "date": "2026-03-14",
-      "result": null,
-      "actual_score_home": null,
-      "actual_score_away": null,
-      "settled_at": null
+      "result": "L",
+      "actual_score_home": 74.0,
+      "actual_score_away": 91.0,
+      "settled_at": "2026-03-14T23:57:38.987754+00:00"
     },
     {
       "bet_type": "spread",
@@ -2023,10 +2023,10 @@
       "away_team": "Vanderbilt Commodores",
       "commence_time": "2026-03-14T17:00:00Z",
       "date": "2026-03-14",
-      "result": null,
-      "actual_score_home": null,
-      "actual_score_away": null,
-      "settled_at": null
+      "result": "L",
+      "actual_score_home": 74.0,
+      "actual_score_away": 91.0,
+      "settled_at": "2026-03-14T23:57:38.987785+00:00"
     },
     {
       "bet_type": "total",
@@ -2043,10 +2043,10 @@
       "away_team": "Vanderbilt Commodores",
       "commence_time": "2026-03-14T17:00:00Z",
       "date": "2026-03-14",
-      "result": null,
-      "actual_score_home": null,
-      "actual_score_away": null,
-      "settled_at": null
+      "result": "W",
+      "actual_score_home": 74.0,
+      "actual_score_away": 91.0,
+      "settled_at": "2026-03-14T23:57:38.987805+00:00"
     },
     {
       "bet_type": "ml",
@@ -2129,10 +2129,10 @@
       "away_team": "Wisconsin Badgers",
       "commence_time": "2026-03-14T17:00:11Z",
       "date": "2026-03-14",
-      "result": null,
-      "actual_score_home": null,
-      "actual_score_away": null,
-      "settled_at": null
+      "result": "W",
+      "actual_score_home": 68.0,
+      "actual_score_away": 65.0,
+      "settled_at": "2026-03-14T23:57:38.987890+00:00"
     },
     {
       "bet_type": "spread",
@@ -2151,10 +2151,10 @@
       "away_team": "Wisconsin Badgers",
       "commence_time": "2026-03-14T17:00:11Z",
       "date": "2026-03-14",
-      "result": null,
-      "actual_score_home": null,
-      "actual_score_away": null,
-      "settled_at": null
+      "result": "L",
+      "actual_score_home": 68.0,
+      "actual_score_away": 65.0,
+      "settled_at": "2026-03-14T23:57:38.987920+00:00"
     },
     {
       "bet_type": "total",
@@ -2171,10 +2171,10 @@
       "away_team": "Wisconsin Badgers",
       "commence_time": "2026-03-14T17:00:11Z",
       "date": "2026-03-14",
-      "result": null,
-      "actual_score_home": null,
-      "actual_score_away": null,
-      "settled_at": null
+      "result": "L",
+      "actual_score_home": 68.0,
+      "actual_score_away": 65.0,
+      "settled_at": "2026-03-14T23:57:38.987939+00:00"
     },
     {
       "bet_type": "ml",
@@ -2257,10 +2257,10 @@
       "away_team": "Ole Miss Rebels",
       "commence_time": "2026-03-14T19:30:00Z",
       "date": "2026-03-14",
-      "result": null,
-      "actual_score_home": null,
-      "actual_score_away": null,
-      "settled_at": null
+      "result": "W",
+      "actual_score_home": 93.0,
+      "actual_score_away": 90.0,
+      "settled_at": "2026-03-14T23:57:38.988022+00:00"
     },
     {
       "bet_type": "spread",
@@ -2279,10 +2279,10 @@
       "away_team": "Ole Miss Rebels",
       "commence_time": "2026-03-14T19:30:00Z",
       "date": "2026-03-14",
-      "result": null,
-      "actual_score_home": null,
-      "actual_score_away": null,
-      "settled_at": null
+      "result": "W",
+      "actual_score_home": 93.0,
+      "actual_score_away": 90.0,
+      "settled_at": "2026-03-14T23:57:38.988046+00:00"
     },
     {
       "bet_type": "total",
@@ -2299,10 +2299,10 @@
       "away_team": "Ole Miss Rebels",
       "commence_time": "2026-03-14T19:30:00Z",
       "date": "2026-03-14",
-      "result": null,
-      "actual_score_home": null,
-      "actual_score_away": null,
-      "settled_at": null
+      "result": "W",
+      "actual_score_home": 93.0,
+      "actual_score_away": 90.0,
+      "settled_at": "2026-03-14T23:57:38.988062+00:00"
     },
     {
       "bet_type": "ml",
@@ -2321,10 +2321,10 @@
       "away_team": "Purdue Boilermakers",
       "commence_time": "2026-03-14T19:30:00Z",
       "date": "2026-03-14",
-      "result": null,
-      "actual_score_home": null,
-      "actual_score_away": null,
-      "settled_at": null
+      "result": "W",
+      "actual_score_home": 66.0,
+      "actual_score_away": 73.0,
+      "settled_at": "2026-03-14T23:57:38.988082+00:00"
     },
     {
       "bet_type": "spread",
@@ -2343,10 +2343,10 @@
       "away_team": "Purdue Boilermakers",
       "commence_time": "2026-03-14T19:30:00Z",
       "date": "2026-03-14",
-      "result": null,
-      "actual_score_home": null,
-      "actual_score_away": null,
-      "settled_at": null
+      "result": "W",
+      "actual_score_home": 66.0,
+      "actual_score_away": 73.0,
+      "settled_at": "2026-03-14T23:57:38.988102+00:00"
     },
     {
       "bet_type": "total",
@@ -2363,10 +2363,10 @@
       "away_team": "Purdue Boilermakers",
       "commence_time": "2026-03-14T19:30:00Z",
       "date": "2026-03-14",
-      "result": null,
-      "actual_score_home": null,
-      "actual_score_away": null,
-      "settled_at": null
+      "result": "L",
+      "actual_score_home": 66.0,
+      "actual_score_away": 73.0,
+      "settled_at": "2026-03-14T23:57:38.988116+00:00"
     },
     {
       "bet_type": "ml",
@@ -3011,45 +3011,45 @@
   ],
   "stats": {
     "total_picks": 141,
-    "settled": 27,
-    "wins": 16,
-    "losses": 11,
+    "settled": 45,
+    "wins": 26,
+    "losses": 19,
     "pushes": 0,
-    "hit_rate": 0.5926,
+    "hit_rate": 0.5778,
     "by_type": {
       "ml": {
-        "picks": 9,
-        "wins": 8,
-        "losses": 1,
+        "picks": 15,
+        "wins": 12,
+        "losses": 3,
         "pushes": 0,
-        "net_units": 0.48,
-        "total_wagered": 0.75,
-        "hit_rate": 0.8889,
-        "roi_pct": 64.52
+        "net_units": 0.77,
+        "total_wagered": 3.49,
+        "hit_rate": 0.8,
+        "roi_pct": 22.13
       },
       "spread": {
-        "picks": 9,
-        "wins": 3,
-        "losses": 6,
+        "picks": 15,
+        "wins": 6,
+        "losses": 9,
         "pushes": 0,
-        "net_units": -0.56,
-        "total_wagered": 3.14,
-        "hit_rate": 0.3333,
-        "roi_pct": -17.92
+        "net_units": -2.82,
+        "total_wagered": 10.67,
+        "hit_rate": 0.4,
+        "roi_pct": -26.46
       },
       "total": {
-        "picks": 9,
-        "wins": 5,
-        "losses": 4,
+        "picks": 15,
+        "wins": 8,
+        "losses": 7,
         "pushes": 0,
-        "net_units": -1.52,
-        "total_wagered": 20.78,
-        "hit_rate": 0.5556,
-        "roi_pct": -7.3
+        "net_units": -3.26,
+        "total_wagered": 42.61,
+        "hit_rate": 0.5333,
+        "roi_pct": -7.66
       }
     },
-    "total_wagered": 24.67,
-    "net_units": -1.6,
-    "roi_pct": -6.47
+    "total_wagered": 56.77,
+    "net_units": -5.31,
+    "roi_pct": -9.36
   }
 }

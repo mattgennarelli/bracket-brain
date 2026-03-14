@@ -322,10 +322,10 @@
       "edge": 0.19600264048747462,
       "stars": "\u2605\u2605",
       "date": "2026-03-13",
-      "result": null,
-      "actual_score_home": null,
-      "actual_score_away": null,
-      "settled_at": null
+      "result": "W",
+      "actual_score_home": 88.0,
+      "actual_score_away": 76.0,
+      "settled_at": "2026-03-14T23:57:16.474859+00:00"
     },
     {
       "home_team": "Toledo Rockets",
@@ -404,10 +404,10 @@
       "edge": 12.300000000000011,
       "stars": "\u2605",
       "date": "2026-03-13",
-      "result": null,
-      "actual_score_home": null,
-      "actual_score_away": null,
-      "settled_at": null
+      "result": "L",
+      "actual_score_home": 88.0,
+      "actual_score_away": 76.0,
+      "settled_at": "2026-03-14T23:57:16.474859+00:00"
     },
     {
       "home_team": "VCU Rams",
@@ -534,10 +534,10 @@
       "edge": 14.300000000000011,
       "stars": "\u2605\u2605",
       "date": "2026-03-14",
-      "result": null,
-      "actual_score_home": null,
-      "actual_score_away": null,
-      "settled_at": null
+      "result": "W",
+      "actual_score_home": 88.0,
+      "actual_score_away": 76.0,
+      "settled_at": "2026-03-14T23:57:16.474859+00:00"
     },
     {
       "home_team": "Yale Bulldogs",
@@ -556,10 +556,10 @@
       "edge": 0.15021145038167938,
       "stars": "\u2605\u2605",
       "date": "2026-03-14",
-      "result": null,
-      "actual_score_home": null,
-      "actual_score_away": null,
-      "settled_at": null
+      "result": "W",
+      "actual_score_home": 88.0,
+      "actual_score_away": 76.0,
+      "settled_at": "2026-03-14T23:57:16.474859+00:00"
     },
     {
       "home_team": "Michigan Wolverines",
@@ -576,10 +576,10 @@
       "edge": 11.699999999999989,
       "stars": "\u2605",
       "date": "2026-03-14",
-      "result": null,
-      "actual_score_home": null,
-      "actual_score_away": null,
-      "settled_at": null
+      "result": "L",
+      "actual_score_home": 68.0,
+      "actual_score_away": 65.0,
+      "settled_at": "2026-03-14T23:57:16.474859+00:00"
     },
     {
       "home_team": "Arizona Wildcats",
@@ -691,22 +691,22 @@
     }
   ],
   "stats": {
-    "total_picks": 25,
-    "settled": 23,
-    "wins": 9,
-    "losses": 14,
+    "total_picks": 33,
+    "settled": 28,
+    "wins": 12,
+    "losses": 16,
     "pushes": 0,
-    "hit_rate": 0.3913,
+    "hit_rate": 0.4286,
     "by_type": {
       "ml": {
-        "picks": 14,
-        "wins": 6,
+        "picks": 16,
+        "wins": 8,
         "losses": 8,
         "pushes": 0,
-        "net_units": -9.34,
-        "total_wagered": 30.0,
-        "hit_rate": 0.4286,
-        "roi_pct": -31.13
+        "net_units": -4.68,
+        "total_wagered": 38.91,
+        "hit_rate": 0.5,
+        "roi_pct": -12.03
       },
       "spread": {
         "picks": 5,
@@ -719,18 +719,18 @@
         "roi_pct": -70.03
       },
       "total": {
-        "picks": 4,
-        "wins": 1,
-        "losses": 3,
+        "picks": 7,
+        "wins": 2,
+        "losses": 5,
         "pushes": 0,
-        "net_units": -10.46,
-        "total_wagered": 20.0,
-        "hit_rate": 0.25,
-        "roi_pct": -52.28
+        "net_units": -15.91,
+        "total_wagered": 35.0,
+        "hit_rate": 0.2857,
+        "roi_pct": -45.46
       }
     },
-    "total_wagered": 63.0,
-    "net_units": -28.9,
-    "roi_pct": -45.87
+    "total_wagered": 86.91,
+    "net_units": -29.7,
+    "roi_pct": -34.17
   }
 }
