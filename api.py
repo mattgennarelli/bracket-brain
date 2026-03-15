@@ -23,7 +23,7 @@ import contextlib
 import re
 import time
 from datetime import datetime, timezone, timedelta
-from typing import Optional
+from typing import Optional, Dict
 
 ROOT = os.path.dirname(os.path.abspath(__file__))
 DATA_DIR = os.path.join(ROOT, "data")
@@ -34,11 +34,12 @@ from fastapi import FastAPI, HTTPException, Query, Request
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import FileResponse
 from fastapi.staticfiles import StaticFiles
-from pydantic import BaseModel
+from pydantic import BaseModel, Field
 
 from engine import (
     predict_game, enrich_team, run_monte_carlo, load_bracket,
     generate_bracket_picks, load_teams_merged, _normalize_team_for_match,
+    get_matchup_analysis_display,
     ModelConfig, DEFAULT_CONFIG,
 )
 from espn_scores import fetch_scores_for_picks, _scores_key as espn_scores_key
@@ -175,6 +176,11 @@ class PredictRequest(BaseModel):
     seed_b: Optional[int] = None
 
 
+class SimulateRequest(BaseModel):
+    upset_aggression: float = 0.0
+    locked_picks: Dict[str, str] = Field(default_factory=dict)  # game_id -> team_name
+
+
 # ---------------------------------------------------------------------------
 # Routes
 # ---------------------------------------------------------------------------
@@ -269,6 +275,50 @@ def get_bracket(
     }
     _cache_set(cache_key, result)
     return result
+
+
+@app.post("/bracket/{year}/simulate")
+def simulate_bracket(year: int, req: SimulateRequest):
+    """Generate bracket picks respecting locked picks. Use when user has manually
+    locked some picks and wants to re-simulate the rest."""
+    bracket, ff_matchups, quadrant_order = _load_bracket_for_year(year)
+    with contextlib.redirect_stdout(io.StringIO()):
+        bracket_result = generate_bracket_picks(
+            bracket,
+            upset_aggression=req.upset_aggression,
+            quadrant_order=quadrant_order,
+            data_dir=DATA_DIR,
+            year=year,
+            locked_picks=req.locked_picks,
+        )
+    qo = quadrant_order
+    return {
+        "year": year,
+        "upset_aggression": req.upset_aggression,
+        "picks": bracket_result,
+        "quadrant_order": qo,
+        "ff_pairs": [[qo[0], qo[3]], [qo[1], qo[2]]],
+    }
+
+
+@app.get("/analyze")
+def analyze_matchup_endpoint(
+    team_a: str = Query(...),
+    team_b: str = Query(...),
+    year: int = Query(default=2026),
+    seed_a: Optional[int] = Query(default=None),
+    seed_b: Optional[int] = Query(default=None),
+):
+    """Return full matchup analysis for display. Used when matchup is not in
+    pre-generated picks (e.g. downstream game after user changed an upstream pick)."""
+    raw_a = _lookup_team(team_a, year)
+    raw_b = _lookup_team(team_b, year)
+    if seed_a is not None:
+        raw_a = dict(raw_a, seed=seed_a)
+    if seed_b is not None:
+        raw_b = dict(raw_b, seed=seed_b)
+    analysis = get_matchup_analysis_display(raw_a, raw_b, data_dir=DATA_DIR, year=year)
+    return analysis
 
 
 @app.get("/bets/today")

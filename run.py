@@ -942,8 +942,18 @@ function showAnalysis(gameId) {{
   for (const pp of PICKS) {{
     if ((pp.team_a===st.teamA&&pp.team_b===st.teamB)||(pp.team_b===st.teamA&&pp.team_a===st.teamB)) {{ orig=pp; break; }}
   }}
-  const insight = orig?.insight || `Favorite ${{spreadFav}}, Underdog ${{spreadDog}}.`;
-  const factors = orig?.key_factors || [];
+  const margin = Math.abs(st.margin || 0);
+  let insight = orig?.insight;
+  let factors = orig?.key_factors || [];
+  if (!orig) {{
+    insight = `Favorite ${{spreadFav}}, Underdog ${{spreadDog}}.`;
+    if (margin >= 12) insight += ' ' + (pA >= .5 ? st.teamA : st.teamB) + ' dominates on efficiency.';
+    else if (margin >= 5) insight += ' Solid efficiency edge to the favorite.';
+    else if (margin >= 2) insight += ' Slight edge to the favorite.';
+    else insight += ' Razor-thin margin — essentially a coin flip.';
+    if (margin >= 5) factors = [(pA >= .5 ? st.teamA : st.teamB) + ': ' + margin.toFixed(1) + '-pt efficiency edge'];
+    else if (st.seedA && st.seedB && Math.abs(st.seedA - st.seedB) >= 3) factors = ['Seed differential suggests upset potential'];
+  }}
   const hist = orig?.historical || null;
   let statsHtml = '';
   if (sA) {{

@@ -159,6 +159,39 @@ def merge_momentum(merged, momentum_data):
                 merged[key]["adj_d_recent"] = mom["adj_d_recent"]
 
 
+CONF_TOURNEY_MOMENTUM = {
+    "champion": 1.0,
+    "finalist": 0.7,
+    "semifinal": 0.4,
+    "quarterfinal": 0.2,
+    "early": 0.0,
+}
+
+
+def load_conf_tourney(year):
+    """Load conf tourney results from fetch_conf_tourney.py output. Returns dict team -> result."""
+    path = os.path.join(DATA_DIR, f"conf_tourney_{year}.json")
+    if not os.path.isfile(path):
+        return {}
+    data = load_json(path)
+    if not isinstance(data, dict):
+        return {}
+    teams = data.get("teams", {})
+    return {k: v for k, v in teams.items() if not str(k).startswith("_") and isinstance(v, str)}
+
+
+def merge_conf_tourney_momentum(merged, conf_data):
+    """Overlay conf tourney momentum onto merged teams. Matches by normalized team name."""
+    if not conf_data:
+        return
+    merged_keys = set(merged.keys())
+    for team_name, result in conf_data.items():
+        key = _find_torvik_key(team_name, merged_keys) or normalize_team(team_name)
+        if key in merged:
+            momentum = CONF_TOURNEY_MOMENTUM.get(result.strip().lower(), 0.0)
+            merged[key]["conf_tourney_momentum"] = momentum
+
+
 def _find_torvik_key(team_name, torvik_keys):
     """Find the Torvik key that matches this team (handles 'Michigan State' vs 'Michigan St.' etc)."""
     norm = _normalize_team_for_match(team_name)
@@ -178,6 +211,9 @@ def compute_conf_strength_scores(merged):
     Teams in stronger conferences have conf_adj_o > adj_o (conference adjustment boosts them).
     Formula: raw = (conf_adj_o - adj_o + adj_d - conf_adj_d) / 20.
     Normalize across all teams so min=0, max=1.
+
+    M1.2: Alternative grading could use raw conf_adj, KenPom conf ratings, or
+    conference-level aggregates. Current formula measures per-team conference boost.
     """
     raw_scores = []
     for team, row in merged.items():
@@ -289,6 +325,11 @@ def main():
     if momentum_data:
         merge_momentum(merged, momentum_data)
         print(f"Momentum: {len(momentum_data)} teams (recent form overlay)")
+
+    conf_tourney_data = load_conf_tourney(year)
+    if conf_tourney_data:
+        merge_conf_tourney_momentum(merged, conf_tourney_data)
+        print(f"Conf tourney: {len(conf_tourney_data)} teams (momentum overlay)")
 
     injuries_data = load_injuries(year)
     if injuries_data:

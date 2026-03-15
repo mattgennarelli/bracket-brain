@@ -707,7 +707,7 @@
       "result": "L",
       "actual_score_home": 86.0,
       "actual_score_away": 75.0,
-      "settled_at": "2026-03-15T19:25:45.869041+00:00"
+      "settled_at": "2026-03-15T19:24:16.836410+00:00"
     },
     {
       "home_team": "VCU Rams",
@@ -747,7 +747,7 @@
       "result": "W",
       "actual_score_home": 72.0,
       "actual_score_away": 80.0,
-      "settled_at": "2026-03-15T21:41:02.459669+00:00"
+      "settled_at": "2026-03-15T21:39:23.123185+00:00"
     },
     {
       "home_team": "Michigan Wolverines",
@@ -770,7 +770,7 @@
       "result": "L",
       "actual_score_home": 72.0,
       "actual_score_away": 80.0,
-      "settled_at": "2026-03-15T21:41:02.459669+00:00"
+      "settled_at": "2026-03-15T21:39:23.123185+00:00"
     },
     {
       "home_team": "Michigan Wolverines",
@@ -792,16 +792,76 @@
       "result": "L",
       "actual_score_home": 72.0,
       "actual_score_away": 80.0,
-      "settled_at": "2026-03-15T21:41:02.459669+00:00"
+      "settled_at": "2026-03-15T21:39:23.123185+00:00"
+    },
+    {
+      "home_team": "Arkansas Razorbacks",
+      "away_team": "Vanderbilt Commodores",
+      "commence_time": "2026-03-15T17:00:00Z",
+      "model_prob_home": 0.4376,
+      "model_margin": -1.9,
+      "model_total": 179.3,
+      "bet_type": "total",
+      "bet_side": "OVER",
+      "vegas_total": 164.5,
+      "kelly_size": 0.05,
+      "kelly_units": 5.0,
+      "edge": 14.800000000000011,
+      "stars": "\u2605\u2605",
+      "date": "2026-03-15",
+      "result": "L",
+      "actual_score_home": 86.0,
+      "actual_score_away": 75.0,
+      "settled_at": "2026-03-15T19:24:16.836410+00:00"
+    },
+    {
+      "home_team": "VCU Rams",
+      "away_team": "Dayton Flyers",
+      "commence_time": "2026-03-15T17:00:37Z",
+      "model_prob_home": 0.5976,
+      "model_margin": 2.9,
+      "model_total": 151.1,
+      "bet_type": "total",
+      "bet_side": "OVER",
+      "vegas_total": 138.5,
+      "kelly_size": 0.05,
+      "kelly_units": 5.0,
+      "edge": 12.599999999999994,
+      "stars": "\u2605",
+      "date": "2026-03-15",
+      "result": null,
+      "actual_score_home": null,
+      "actual_score_away": null,
+      "settled_at": null
+    },
+    {
+      "home_team": "Michigan Wolverines",
+      "away_team": "Purdue Boilermakers",
+      "commence_time": "2026-03-15T19:30:00Z",
+      "model_prob_home": 0.6947,
+      "model_margin": 6.1,
+      "model_total": 160.3,
+      "bet_type": "total",
+      "bet_side": "OVER",
+      "vegas_total": 149.5,
+      "kelly_size": 0.05,
+      "kelly_units": 5.0,
+      "edge": 10.800000000000011,
+      "stars": "\u2605",
+      "date": "2026-03-15",
+      "result": "W",
+      "actual_score_home": 72.0,
+      "actual_score_away": 80.0,
+      "settled_at": "2026-03-15T21:39:23.123185+00:00"
     }
   ],
   "stats": {
-    "total_picks": 38,
-    "settled": 37,
-    "wins": 17,
-    "losses": 20,
+    "total_picks": 41,
+    "settled": 39,
+    "wins": 18,
+    "losses": 21,
     "pushes": 0,
-    "hit_rate": 0.4595,
+    "hit_rate": 0.4615,
     "by_type": {
       "ml": {
         "picks": 21,
@@ -824,18 +884,18 @@
         "roi_pct": -78.36
       },
       "total": {
-        "picks": 10,
-        "wins": 3,
-        "losses": 7,
+        "picks": 12,
+        "wins": 4,
+        "losses": 8,
         "pushes": 0,
-        "net_units": -21.37,
-        "total_wagered": 50.0,
-        "hit_rate": 0.3,
-        "roi_pct": -42.73
+        "net_units": -21.82,
+        "total_wagered": 60.0,
+        "hit_rate": 0.3333,
+        "roi_pct": -36.37
       }
     },
-    "total_wagered": 125.26,
-    "net_units": -36.88,
-    "roi_pct": -29.44
+    "total_wagered": 135.26,
+    "net_units": -37.34,
+    "roi_pct": -27.6
   }
 }

@@ -14,9 +14,9 @@
 - Different runs produce different params at zero due to optimizer variance (multi-start, random seed)
 
 **Actions:**
-- [ ] **M1.1** Run calibration with fixed non-zero floor (e.g. min 0.1) for possession/conf to test whether bounds are the cause
-- [ ] **M1.2** Evaluate conference strength grading: `conf_strength_score` is derived from Torvik `(conf_adj_o - adj_o + adj_d - conf_adj_d) / 20` then min-max normalized. Document whether this correctly ranks conferences and consider alternatives (e.g. raw conf_adj, KenPom conf ratings)
-- [ ] **M1.3** Add a short note in `MODEL_IMPROVEMENT_LOG.md` that possession/conf are intentionally kept despite calibration driving them low; revisit after M1.1–M1.2
+- [x] **M1.1** Run calibration with fixed non-zero floor (e.g. min 0.1) for possession/conf — added `--min-floor 0.1` flag
+- [x] **M1.2** Document conference strength grading in `fetch_data.py`; formula measures per-team conference boost; alternatives: raw conf_adj, KenPom conf ratings
+- [x] **M1.3** Add a short note in `MODEL_IMPROVEMENT_LOG.md` that possession/conf are intentionally kept despite calibration driving them low; revisit after M1.1–M1.2
 
 ---
 
@@ -77,10 +77,10 @@
 **Goal:** Confirm the added 2008/2009 Torvik and results data is correct.
 
 **Actions:**
-- [ ] **M5.1** Spot-check: verify 5–10 teams from `torvik_2008.json` / `torvik_2009.json` against Torvik/BartTorvik historical pages (barthag, adj_o, adj_d)
-- [ ] **M5.2** Cross-check `results_2008.json` / `results_2009.json` against NCAA official brackets (winners, seeds, regions)
-- [ ] **M5.3** Run calibration with 2008/2009 excluded; compare CV Brier and round-level stats to full dataset — large swings may indicate data issues
-- [ ] **M5.4** Document validation results in `MODEL_IMPROVEMENT_LOG.md` or `docs/data_validation.md`
+- [x] **M5.1** Spot-check: verify 5–10 teams from `torvik_2008.json` / `torvik_2009.json` against Torvik/BartTorvik historical pages (barthag, adj_o, adj_d)
+- [x] **M5.2** Cross-check `results_2008.json` / `results_2009.json` against NCAA official brackets (winners, seeds, regions)
+- [x] **M5.3** Run calibration with 2008/2009 excluded; compare CV Brier and round-level stats to full dataset — large swings may indicate data issues
+- [x] **M5.4** Document validation results in `MODEL_IMPROVEMENT_LOG.md` or `docs/data_validation.md`
 
 ---
 
@@ -91,9 +91,9 @@
 **Definition:** `eff_rank` = 1-indexed rank of team by barthag among all tournament teams (1 = best). Underseeded = `eff_rank < seed` (e.g. eff_rank 6, seed 12 → team is better than seed suggests).
 
 **Actions:**
-- [ ] **M6.1** Compute `eff_rank` when building bracket: rank all 68 teams by barthag descending, assign rank 1 to best. Store in team dict during `enrich_bracket_with_teams` or equivalent
-- [ ] **M6.2** Add indicator #16 in `_calc_upset_tolerance_bonus`: if `dog.get("eff_rank")` and `dog.get("seed")` exist and `dog["eff_rank"] < dog["seed"]`, count as indicator (dog is underseeded)
-- [ ] **M6.3** Ensure `eff_rank` is available in `teams_merged` or bracket enrichment for all years with Torvik data
+- [x] **M6.1** Compute `eff_rank` when building bracket: rank all 68 teams by barthag descending, assign rank 1 to best. Store in team dict during `enrich_bracket_with_teams` or equivalent
+- [x] **M6.2** Add indicator #16 in `_calc_upset_tolerance_bonus`: if `dog.get("eff_rank")` and `dog.get("seed")` exist and `dog["eff_rank"] < dog["seed"]`, count as indicator (dog is underseeded)
+- [x] **M6.3** Ensure `eff_rank` is available in `teams_merged` or bracket enrichment for all years with Torvik data
 - [ ] **M6.4** Re-run calibration and benchmark; check if upset Brier or champion rank improves
 
 ---

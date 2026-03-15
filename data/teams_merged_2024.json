@@ -57,7 +57,8 @@
     "em_poss_weighted_bpr": 7.318,
     "em_depth_score": 0.895,
     "em_adj_o": 131.5717,
-    "em_adj_d": 82.5553
+    "em_adj_d": 82.5553,
+    "conf_tourney_momentum": 1.0
   },
   {
     "team": "Houston",
@@ -117,7 +118,8 @@
     "em_poss_weighted_bpr": 6.521,
     "em_depth_score": 0.871,
     "em_adj_o": 122.9348,
-    "em_adj_d": 76.6504
+    "em_adj_d": 76.6504,
+    "conf_tourney_momentum": 0.7
   },
   {
     "team": "Purdue",
@@ -237,7 +239,8 @@
     "em_poss_weighted_bpr": 5.789,
     "em_depth_score": 0.884,
     "em_adj_o": 120.4907,
-    "em_adj_d": 85.1457
+    "em_adj_d": 85.1457,
+    "conf_tourney_momentum": 1.0
   },
   {
     "team": "Iowa St.",
@@ -297,7 +300,8 @@
     "em_poss_weighted_bpr": 5.277,
     "em_depth_score": 0.707,
     "em_adj_o": 115.9864,
-    "em_adj_d": 81.5583
+    "em_adj_d": 81.5583,
+    "conf_tourney_momentum": 1.0
   },
   {
     "team": "Arizona",
@@ -537,7 +541,8 @@
     "em_poss_weighted_bpr": 5.635,
     "em_depth_score": 0.742,
     "em_adj_o": 122.3243,
-    "em_adj_d": 89.8286
+    "em_adj_d": 89.8286,
+    "conf_tourney_momentum": 0.7
   },
   {
     "team": "Creighton",
@@ -657,7 +662,8 @@
     "em_poss_weighted_bpr": 4.955,
     "em_depth_score": 0.72,
     "em_adj_o": 118.8743,
-    "em_adj_d": 88.4381
+    "em_adj_d": 88.4381,
+    "conf_tourney_momentum": 0.7
   },
   {
     "team": "Gonzaga",
@@ -717,7 +723,8 @@
     "em_poss_weighted_bpr": 5.696,
     "em_depth_score": 0.743,
     "em_adj_o": 125.5379,
-    "em_adj_d": 89.3195
+    "em_adj_d": 89.3195,
+    "conf_tourney_momentum": 0.7
   },
   {
     "team": "Illinois",
@@ -777,7 +784,8 @@
     "em_poss_weighted_bpr": 5.158,
     "em_depth_score": 0.69,
     "em_adj_o": 125.5646,
-    "em_adj_d": 95.5696
+    "em_adj_d": 95.5696,
+    "conf_tourney_momentum": 1.0
   },
   {
     "team": "Alabama",
@@ -897,7 +905,8 @@
     "em_poss_weighted_bpr": 4.603,
     "em_depth_score": 0.653,
     "em_adj_o": 116.3867,
-    "em_adj_d": 86.4027
+    "em_adj_d": 86.4027,
+    "conf_tourney_momentum": 1.0
   },
   {
     "team": "St. John's",
@@ -1317,7 +1326,8 @@
     "em_poss_weighted_bpr": 4.441,
     "em_depth_score": 0.616,
     "em_adj_o": 121.1569,
-    "em_adj_d": 97.4811
+    "em_adj_d": 97.4811,
+    "conf_tourney_momentum": 0.7
   },
   {
     "team": "Colorado",
@@ -1377,7 +1387,8 @@
     "em_poss_weighted_bpr": 4.506,
     "em_depth_score": 0.594,
     "em_adj_o": 120.6182,
-    "em_adj_d": 93.598
+    "em_adj_d": 93.598,
+    "conf_tourney_momentum": 0.7
   },
   {
     "team": "BYU",
@@ -1497,7 +1508,8 @@
     "em_poss_weighted_bpr": 4.288,
     "em_depth_score": 0.605,
     "em_adj_o": 119.4974,
-    "em_adj_d": 94.062
+    "em_adj_d": 94.062,
+    "conf_tourney_momentum": 0.7
   },
   {
     "team": "Nebraska",
@@ -1737,7 +1749,8 @@
     "em_poss_weighted_bpr": 4.2,
     "em_depth_score": 0.627,
     "em_adj_o": 117.2553,
-    "em_adj_d": 89.9479
+    "em_adj_d": 89.9479,
+    "conf_tourney_momentum": 1.0
   },
   {
     "team": "Pittsburgh",
@@ -2495,7 +2508,8 @@
     "ft_pct": 80.1,
     "opp_ft_pct": 74.2,
     "ppp_off": 1.182,
-    "ppp_def": 1.026
+    "ppp_def": 1.026,
+    "conf_tourney_momentum": 0.7
   },
   {
     "team": "Colorado St.",
@@ -2555,7 +2569,8 @@
     "em_poss_weighted_bpr": 3.707,
     "em_depth_score": 0.55,
     "em_adj_o": 115.5006,
-    "em_adj_d": 93.4041
+    "em_adj_d": 93.4041,
+    "conf_tourney_momentum": 0.7
   },
   {
     "team": "Boise St.",
@@ -2855,7 +2870,8 @@
     "em_poss_weighted_bpr": 3.851,
     "em_depth_score": 0.556,
     "em_adj_o": 115.684,
-    "em_adj_d": 93.3073
+    "em_adj_d": 93.3073,
+    "conf_tourney_momentum": 1.0
   },
   {
     "team": "Oklahoma",
@@ -3035,7 +3051,8 @@
     "em_poss_weighted_bpr": 3.013,
     "em_depth_score": 0.454,
     "em_adj_o": 116.011,
-    "em_adj_d": 95.7271
+    "em_adj_d": 95.7271,
+    "conf_tourney_momentum": 1.0
   },
   {
     "team": "Oregon",
@@ -3095,7 +3112,8 @@
     "em_poss_weighted_bpr": 3.3,
     "em_depth_score": 0.547,
     "em_adj_o": 115.3498,
-    "em_adj_d": 91.5817
+    "em_adj_d": 91.5817,
+    "conf_tourney_momentum": 1.0
   },
   {
     "team": "Virginia Tech",
@@ -3755,7 +3773,8 @@
     "em_poss_weighted_bpr": 3.075,
     "em_depth_score": 0.472,
     "em_adj_o": 113.5299,
-    "em_adj_d": 91.5061
+    "em_adj_d": 91.5061,
+    "conf_tourney_momentum": 1.0
   },
   {
     "team": "North Texas",
@@ -4415,7 +4434,8 @@
     "em_poss_weighted_bpr": 3.019,
     "em_depth_score": 0.457,
     "em_adj_o": 115.6355,
-    "em_adj_d": 91.5543
+    "em_adj_d": 91.5543,
+    "conf_tourney_momentum": 1.0
   },
   {
     "team": "Penn St.",
@@ -4655,7 +4675,8 @@
     "em_poss_weighted_bpr": 2.602,
     "em_depth_score": 0.455,
     "em_adj_o": 111.5796,
-    "em_adj_d": 94.3357
+    "em_adj_d": 94.3357,
+    "conf_tourney_momentum": 1.0
   },
   {
     "team": "Mississippi",
@@ -4895,7 +4916,8 @@
     "em_poss_weighted_bpr": 2.51,
     "em_depth_score": 0.427,
     "em_adj_o": 110.5476,
-    "em_adj_d": 93.9598
+    "em_adj_d": 93.9598,
+    "conf_tourney_momentum": 0.7
   },
   {
     "team": "Indiana",
@@ -5195,7 +5217,8 @@
     "em_poss_weighted_bpr": 2.997,
     "em_depth_score": 0.464,
     "em_adj_o": 117.3516,
-    "em_adj_d": 93.9928
+    "em_adj_d": 93.9928,
+    "conf_tourney_momentum": 1.0
   },
   {
     "team": "UCLA",
@@ -5315,7 +5338,8 @@
     "em_poss_weighted_bpr": 2.299,
     "em_depth_score": 0.5,
     "em_adj_o": 116.9413,
-    "em_adj_d": 93.0037
+    "em_adj_d": 93.0037,
+    "conf_tourney_momentum": 1.0
   },
   {
     "team": "Memphis",
@@ -5555,7 +5579,8 @@
     "em_poss_weighted_bpr": 2.767,
     "em_depth_score": 0.49,
     "em_adj_o": 114.6048,
-    "em_adj_d": 93.5911
+    "em_adj_d": 93.5911,
+    "conf_tourney_momentum": 1.0
   },
   {
     "team": "Louisiana Tech",
@@ -5893,7 +5918,30 @@
     "ft_pct": 72.3,
     "opp_ft_pct": 70.3,
     "ppp_off": 1.144,
-    "ppp_def": 1.052
+    "ppp_def": 1.052,
+    "star_score": 0.566,
+    "em_obpr": 7.38065836374675,
+    "em_dbpr": 1.22712519166914,
+    "em_bpr": 8.60778355541589,
+    "em_opponent_adjust": 15.1456092288043,
+    "em_pace_adjust": -55.9087780858521,
+    "em_off_rank": 51.0,
+    "em_def_rank": 140.0,
+    "em_tempo_rank": 47.0,
+    "em_home_rank": 328.0,
+    "em_tempo": 71.2325452189499,
+    "em_runs_per_game": 0.575757575757576,
+    "em_runs_conceded": 0.393939393939394,
+    "em_runs_margin": 0.181818181818182,
+    "top_player": "Reyne Smith",
+    "top_player_bpr": 4.3563,
+    "em_top5_bpr": 20.192,
+    "em_star_concentration": 0.216,
+    "em_poss_weighted_bpr": 2.705,
+    "em_depth_score": 0.518,
+    "em_adj_o": 118.6195,
+    "em_adj_d": 99.5917,
+    "conf_tourney_momentum": 1.0
   },
   {
     "team": "Appalachian St.",
@@ -6433,7 +6481,8 @@
     "em_poss_weighted_bpr": 2.398,
     "em_depth_score": 0.361,
     "em_adj_o": 114.0245,
-    "em_adj_d": 100.4234
+    "em_adj_d": 100.4234,
+    "conf_tourney_momentum": 1.0
   },
   {
     "team": "Hofstra",
@@ -6733,7 +6782,8 @@
     "em_poss_weighted_bpr": 1.852,
     "em_depth_score": 0.403,
     "em_adj_o": 107.8417,
-    "em_adj_d": 88.6189
+    "em_adj_d": 88.6189,
+    "conf_tourney_momentum": 1.0
   },
   {
     "team": "UT Arlington",
@@ -6793,7 +6843,8 @@
     "em_poss_weighted_bpr": 1.49,
     "em_depth_score": 0.318,
     "em_adj_o": 110.8915,
-    "em_adj_d": 99.0247
+    "em_adj_d": 99.0247,
+    "conf_tourney_momentum": 0.7
   },
   {
     "team": "Seattle",
@@ -7453,7 +7504,8 @@
     "em_poss_weighted_bpr": 1.855,
     "em_depth_score": 0.354,
     "em_adj_o": 111.9868,
-    "em_adj_d": 99.8837
+    "em_adj_d": 99.8837,
+    "conf_tourney_momentum": 1.0
   },
   {
     "team": "UNC Wilmington",
@@ -7791,7 +7843,8 @@
     "em_poss_weighted_bpr": 2.055,
     "em_depth_score": 0.282,
     "em_adj_o": 111.4832,
-    "em_adj_d": 96.3099
+    "em_adj_d": 96.3099,
+    "conf_tourney_momentum": 1.0
   },
   {
     "team": "Missouri",
@@ -8009,7 +8062,8 @@
     "ft_pct": 70.2,
     "opp_ft_pct": 76.1,
     "ppp_off": 1.123,
-    "ppp_def": 1.097
+    "ppp_def": 1.097,
+    "conf_tourney_momentum": 0.7
   },
   {
     "team": "Tarleton St.",
@@ -8107,7 +8161,8 @@
     "em_poss_weighted_bpr": 1.778,
     "em_depth_score": 0.195,
     "em_adj_o": 109.639,
-    "em_adj_d": 93.7636
+    "em_adj_d": 93.7636,
+    "conf_tourney_momentum": 1.0
   },
   {
     "team": "South Dakota St.",
@@ -8167,7 +8222,8 @@
     "em_poss_weighted_bpr": 1.527,
     "em_depth_score": 0.268,
     "em_adj_o": 112.6767,
-    "em_adj_d": 100.7149
+    "em_adj_d": 100.7149,
+    "conf_tourney_momentum": 1.0
   },
   {
     "team": "UC San Diego",
@@ -9241,7 +9297,8 @@
     "em_poss_weighted_bpr": 0.327,
     "em_depth_score": 0.252,
     "em_adj_o": 98.7221,
-    "em_adj_d": 94.3022
+    "em_adj_d": 94.3022,
+    "conf_tourney_momentum": 0.7
   },
   {
     "team": "Stony Brook",
@@ -9301,7 +9358,8 @@
     "em_poss_weighted_bpr": 0.818,
     "em_depth_score": 0.26,
     "em_adj_o": 106.0591,
-    "em_adj_d": 96.4852
+    "em_adj_d": 96.4852,
+    "conf_tourney_momentum": 0.7
   },
   {
     "team": "UC Davis",
@@ -9459,7 +9517,8 @@
     "em_poss_weighted_bpr": 1.306,
     "em_depth_score": 0.322,
     "em_adj_o": 115.9865,
-    "em_adj_d": 103.7743
+    "em_adj_d": 103.7743,
+    "conf_tourney_momentum": 0.7
   },
   {
     "team": "Colgate",
@@ -9519,7 +9578,8 @@
     "em_poss_weighted_bpr": 1.476,
     "em_depth_score": 0.358,
     "em_adj_o": 107.898,
-    "em_adj_d": 96.7322
+    "em_adj_d": 96.7322,
+    "conf_tourney_momentum": 1.0
   },
   {
     "team": "Winthrop",
@@ -9917,7 +9977,8 @@
     "em_poss_weighted_bpr": 1.107,
     "em_depth_score": 0.267,
     "em_adj_o": 109.1077,
-    "em_adj_d": 100.3057
+    "em_adj_d": 100.3057,
+    "conf_tourney_momentum": 0.7
   },
   {
     "team": "Bryant",
@@ -10037,7 +10098,8 @@
     "em_poss_weighted_bpr": 1.066,
     "em_depth_score": 0.138,
     "em_adj_o": 111.0498,
-    "em_adj_d": 99.4491
+    "em_adj_d": 99.4491,
+    "conf_tourney_momentum": 0.7
   },
   {
     "team": "Utah Valley",
@@ -10533,7 +10595,8 @@
     "em_poss_weighted_bpr": 0.839,
     "em_depth_score": 0.266,
     "em_adj_o": 102.3802,
-    "em_adj_d": 101.3311
+    "em_adj_d": 101.3311,
+    "conf_tourney_momentum": 0.7
   },
   {
     "team": "Longwood",
@@ -10593,7 +10656,8 @@
     "em_poss_weighted_bpr": 0.789,
     "em_depth_score": 0.293,
     "em_adj_o": 102.4843,
-    "em_adj_d": 95.9119
+    "em_adj_d": 95.9119,
+    "conf_tourney_momentum": 1.0
   },
   {
     "team": "East Tennessee St.",
@@ -10751,7 +10815,8 @@
     "em_poss_weighted_bpr": 0.785,
     "em_depth_score": 0.256,
     "em_adj_o": 103.7566,
-    "em_adj_d": 100.1204
+    "em_adj_d": 100.1204,
+    "conf_tourney_momentum": 0.7
   },
   {
     "team": "Stephen F. Austin",
@@ -11187,7 +11252,8 @@
     "em_poss_weighted_bpr": 1.028,
     "em_depth_score": 0.303,
     "em_adj_o": 111.2288,
-    "em_adj_d": 102.0549
+    "em_adj_d": 102.0549,
+    "conf_tourney_momentum": 0.7
   },
   {
     "team": "Illinois St.",
@@ -11939,7 +12005,8 @@
     "em_poss_weighted_bpr": 0.049,
     "em_depth_score": 0.013,
     "em_adj_o": 104.2638,
-    "em_adj_d": 103.4506
+    "em_adj_d": 103.4506,
+    "conf_tourney_momentum": 1.0
   },
   {
     "team": "Radford",
@@ -12659,7 +12726,8 @@
     "em_poss_weighted_bpr": 0.236,
     "em_depth_score": 0.162,
     "em_adj_o": 101.126,
-    "em_adj_d": 93.2615
+    "em_adj_d": 93.2615,
+    "conf_tourney_momentum": 1.0
   },
   {
     "team": "UC Riverside",
@@ -12779,7 +12847,8 @@
     "em_poss_weighted_bpr": 0.126,
     "em_depth_score": 0.207,
     "em_adj_o": 98.1125,
-    "em_adj_d": 91.5345
+    "em_adj_d": 91.5345,
+    "conf_tourney_momentum": 0.7
   },
   {
     "team": "Wofford",
@@ -13171,7 +13240,29 @@
     "ft_pct": 71.7,
     "opp_ft_pct": 71.8,
     "ppp_off": 0.983,
-    "ppp_def": 1.042
+    "ppp_def": 1.042,
+    "star_score": 0.324,
+    "em_obpr": -4.51312220044526,
+    "em_dbpr": 0.338348947933622,
+    "em_bpr": -4.17477325251164,
+    "em_opponent_adjust": -4.49764170461626,
+    "em_pace_adjust": -52.4892063777833,
+    "em_off_rank": 267.0,
+    "em_def_rank": 160.0,
+    "em_tempo_rank": 249.0,
+    "em_home_rank": 258.0,
+    "em_tempo": 67.6448737085155,
+    "em_runs_per_game": 0.344827586206897,
+    "em_runs_conceded": 0.586206896551724,
+    "em_runs_margin": -0.241379310344828,
+    "top_player": "Donovan Oday",
+    "top_player_bpr": 1.216,
+    "em_top5_bpr": 3.957,
+    "em_star_concentration": 0.307,
+    "em_poss_weighted_bpr": -0.321,
+    "em_depth_score": 0.277,
+    "em_adj_o": 104.2909,
+    "em_adj_d": 95.3842
   },
   {
     "team": "Air Force",
@@ -13569,7 +13660,8 @@
     "em_poss_weighted_bpr": 0.669,
     "em_depth_score": 0.231,
     "em_adj_o": 112.0098,
-    "em_adj_d": 109.0315
+    "em_adj_d": 109.0315,
+    "conf_tourney_momentum": 1.0
   },
   {
     "team": "Nicholls St.",
@@ -13607,7 +13699,8 @@
     "ft_pct": 72.7,
     "opp_ft_pct": 68.5,
     "ppp_off": 1.046,
-    "ppp_def": 1.072
+    "ppp_def": 1.072,
+    "conf_tourney_momentum": 0.7
   },
   {
     "team": "Milwaukee",
@@ -13667,7 +13760,8 @@
     "em_poss_weighted_bpr": 0.592,
     "em_depth_score": 0.286,
     "em_adj_o": 110.782,
-    "em_adj_d": 108.2135
+    "em_adj_d": 108.2135,
+    "conf_tourney_momentum": 0.7
   },
   {
     "team": "Cal St. Northridge",
@@ -13705,7 +13799,29 @@
     "ft_pct": 67.5,
     "opp_ft_pct": 73.1,
     "ppp_off": 1.007,
-    "ppp_def": 1.016
+    "ppp_def": 1.016,
+    "star_score": 0.461,
+    "em_obpr": -6.61434702338086,
+    "em_dbpr": -0.0737553039904051,
+    "em_bpr": -6.68810232737127,
+    "em_opponent_adjust": -4.75590613923276,
+    "em_pace_adjust": -6.27554452120767,
+    "em_off_rank": 301.0,
+    "em_def_rank": 172.0,
+    "em_tempo_rank": 12.0,
+    "em_home_rank": 354.0,
+    "em_tempo": 73.3139322488006,
+    "em_runs_per_game": 0.46875,
+    "em_runs_conceded": 0.46875,
+    "em_runs_margin": 0.0,
+    "top_player": "Keonte Jones",
+    "top_player_bpr": 2.9942,
+    "em_top5_bpr": 3.77,
+    "em_star_concentration": 0.794,
+    "em_poss_weighted_bpr": -0.157,
+    "em_depth_score": 0.082,
+    "em_adj_o": 99.9235,
+    "em_adj_d": 97.5629
   },
   {
     "team": "North Florida",
@@ -14817,7 +14933,8 @@
     "em_poss_weighted_bpr": 0.588,
     "em_depth_score": 0.237,
     "em_adj_o": 105.4908,
-    "em_adj_d": 106.7574
+    "em_adj_d": 106.7574,
+    "conf_tourney_momentum": 0.7
   },
   {
     "team": "Ball St.",
@@ -15291,7 +15408,8 @@
     "em_poss_weighted_bpr": -0.417,
     "em_depth_score": 0.1,
     "em_adj_o": 101.5284,
-    "em_adj_d": 99.5951
+    "em_adj_d": 99.5951,
+    "conf_tourney_momentum": 0.7
   },
   {
     "team": "Georgia Southern",
@@ -15711,7 +15829,8 @@
     "em_poss_weighted_bpr": -0.55,
     "em_depth_score": 0.217,
     "em_adj_o": 102.7098,
-    "em_adj_d": 97.762
+    "em_adj_d": 97.762,
+    "conf_tourney_momentum": 0.7
   },
   {
     "team": "Nebraska Omaha",
@@ -15831,7 +15950,8 @@
     "em_poss_weighted_bpr": 0.026,
     "em_depth_score": 0.222,
     "em_adj_o": 107.3882,
-    "em_adj_d": 109.0726
+    "em_adj_d": 109.0726,
+    "conf_tourney_momentum": 1.0
   },
   {
     "team": "Central Connecticut",
@@ -16327,7 +16447,8 @@
     "em_poss_weighted_bpr": 0.102,
     "em_depth_score": 0.006,
     "em_adj_o": 110.6832,
-    "em_adj_d": 111.9474
+    "em_adj_d": 111.9474,
+    "conf_tourney_momentum": 0.7
   },
   {
     "team": "Wagner",
@@ -16387,7 +16508,8 @@
     "em_poss_weighted_bpr": -0.626,
     "em_depth_score": 0.0,
     "em_adj_o": 99.2284,
-    "em_adj_d": 101.3043
+    "em_adj_d": 101.3043,
+    "conf_tourney_momentum": 1.0
   },
   {
     "team": "DePaul",
@@ -17073,7 +17195,8 @@
     "ft_pct": 70.9,
     "opp_ft_pct": 71.9,
     "ppp_off": 0.964,
-    "ppp_def": 1.005
+    "ppp_def": 1.005,
+    "conf_tourney_momentum": 0.7
   },
   {
     "team": "American",
@@ -20513,31 +20636,6 @@
     "team": "Indiana State"
   },
   {
-    "star_score": 0.566,
-    "em_obpr": 7.38065836374675,
-    "em_dbpr": 1.22712519166914,
-    "em_bpr": 8.60778355541589,
-    "em_opponent_adjust": 15.1456092288043,
-    "em_pace_adjust": -55.9087780858521,
-    "em_off_rank": 51.0,
-    "em_def_rank": 140.0,
-    "em_tempo_rank": 47.0,
-    "em_home_rank": 328.0,
-    "em_tempo": 71.2325452189499,
-    "em_runs_per_game": 0.575757575757576,
-    "em_runs_conceded": 0.393939393939394,
-    "em_runs_margin": 0.181818181818182,
-    "top_player": "Reyne Smith",
-    "top_player_bpr": 4.3563,
-    "em_top5_bpr": 20.192,
-    "em_star_concentration": 0.216,
-    "em_poss_weighted_bpr": 2.705,
-    "em_depth_score": 0.518,
-    "em_adj_o": 118.6195,
-    "em_adj_d": 99.5917,
-    "team": "College of Charleston"
-  },
-  {
     "star_score": 0.625,
     "em_obpr": 3.67844356558209,
     "em_dbpr": -0.191646183522921,
@@ -20685,11 +20783,8 @@
     "em_depth_score": 0.313,
     "em_adj_o": 106.587,
     "em_adj_d": 100.1005,
-    "team": "Long Beach State",
-    "adj_o": 106.3,
-    "adj_d": 104.8,
-    "adj_tempo": 68.0,
-    "_adj_source": "em_regression"
+    "conf_tourney_momentum": 1.0,
+    "team": "Long Beach State"
   },
   {
     "star_score": 0.415,
@@ -21017,31 +21112,6 @@
     "team": "Missouri-Kansas City"
   },
   {
-    "star_score": 0.324,
-    "em_obpr": -4.51312220044526,
-    "em_dbpr": 0.338348947933622,
-    "em_bpr": -4.17477325251164,
-    "em_opponent_adjust": -4.49764170461626,
-    "em_pace_adjust": -52.4892063777833,
-    "em_off_rank": 267.0,
-    "em_def_rank": 160.0,
-    "em_tempo_rank": 249.0,
-    "em_home_rank": 258.0,
-    "em_tempo": 67.6448737085155,
-    "em_runs_per_game": 0.344827586206897,
-    "em_runs_conceded": 0.586206896551724,
-    "em_runs_margin": -0.241379310344828,
-    "top_player": "Donovan Oday",
-    "top_player_bpr": 1.216,
-    "em_top5_bpr": 3.957,
-    "em_star_concentration": 0.307,
-    "em_poss_weighted_bpr": -0.321,
-    "em_depth_score": 0.277,
-    "em_adj_o": 104.2909,
-    "em_adj_d": 95.3842,
-    "team": "Cal State Fullerton"
-  },
-  {
     "star_score": 0.399,
     "em_obpr": -4.67970909977345,
     "em_dbpr": 0.124090949032183,
@@ -21192,31 +21262,6 @@
     "team": "Ball State"
   },
   {
-    "star_score": 0.461,
-    "em_obpr": -6.61434702338086,
-    "em_dbpr": -0.0737553039904051,
-    "em_bpr": -6.68810232737127,
-    "em_opponent_adjust": -4.75590613923276,
-    "em_pace_adjust": -6.27554452120767,
-    "em_off_rank": 301.0,
-    "em_def_rank": 172.0,
-    "em_tempo_rank": 12.0,
-    "em_home_rank": 354.0,
-    "em_tempo": 73.3139322488006,
-    "em_runs_per_game": 0.46875,
-    "em_runs_conceded": 0.46875,
-    "em_runs_margin": 0.0,
-    "top_player": "Keonte Jones",
-    "top_player_bpr": 2.9942,
-    "em_top5_bpr": 3.77,
-    "em_star_concentration": 0.794,
-    "em_poss_weighted_bpr": -0.157,
-    "em_depth_score": 0.082,
-    "em_adj_o": 99.9235,
-    "em_adj_d": 97.5629,
-    "team": "Cal State Northridge"
-  },
-  {
     "star_score": 0.387,
     "em_obpr": -3.9352413337444,
     "em_dbpr": -3.23584471314632,
@@ -21264,6 +21309,7 @@
     "em_depth_score": 0.0,
     "em_adj_o": 98.5187,
     "em_adj_d": 103.5811,
+    "conf_tourney_momentum": 1.0,
     "team": "Grambling"
   },
   {

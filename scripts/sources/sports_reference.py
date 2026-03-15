@@ -159,3 +159,74 @@ def scrape_sports_reference(year, data_dir):
 
     print(f"  Scraped {total} teams from Sports-Reference ({year})")
     return output
+
+
+SR_CONF_BASE = "https://www.sports-reference.com/cbb/seasons/men"
+
+
+def scrape_conf_tourney_results(year):
+    """
+    Scrape conference tournament champions and runners-up from Sports-Reference.
+    Returns dict team_name -> "champion" | "finalist".
+    Main page has Champ and Runner-up columns; semifinalists would require per-conference pages.
+    """
+    if requests is None or BeautifulSoup is None:
+        print("  Install: pip install requests beautifulsoup4")
+        return None
+
+    url = f"{SR_CONF_BASE}/{year}-conference-tournaments.html"
+    headers = {"User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36"}
+    try:
+        r = requests.get(url, headers=headers, timeout=20)
+        r.raise_for_status()
+        soup = BeautifulSoup(r.text, "html.parser")
+    except Exception as e:
+        print(f"  Sports-Reference conf tourney fetch failed: {e}")
+        return None
+
+    # Find the Conference Tournament Champions table (SR uses various id patterns)
+    table = soup.find("table", id="conference-tournaments")
+    if not table:
+        table = soup.find("table", id="conference-tournament")
+    if not table:
+        table = soup.find("table", id="all_conference-tournament")
+    if not table:
+        for t in soup.find_all("table"):
+            tid = (t.get("id") or "").lower()
+            if "conference" in tid and "tournament" in tid:
+                table = t
+                break
+    if not table:
+        for t in soup.find_all("table"):
+            if t.find("td", string=lambda s: s and "Champ" in str(s)):
+                table = t
+                break
+    if not table:
+        print("  Could not find conference tournament table")
+        return None
+
+    teams = {}
+    tbody = table.find("tbody") or table
+    rows = tbody.find_all("tr")
+    for row in rows:
+        cells = row.find_all("td")
+        # Columns: Conference (th), Dates, Champ, Runner-up -> 3 td: [Dates, Champ, Runner-up]
+        if len(cells) < 3:
+            continue
+        champ_cell = cells[1] if len(cells) > 1 else None
+        runner_cell = cells[2] if len(cells) > 2 else None
+        if champ_cell:
+            a = champ_cell.find("a")
+            if a:
+                name = _norm(a.get_text())
+                if name:
+                    teams[name] = "champion"
+        if runner_cell:
+            a = runner_cell.find("a")
+            if a:
+                name = _norm(a.get_text())
+                if name and name not in teams:
+                    teams[name] = "finalist"
+
+    print(f"  Scraped {len(teams)} conf tourney teams ({year}): {sum(1 for v in teams.values() if v == 'champion')} champs, {sum(1 for v in teams.values() if v == 'finalist')} finalists")
+    return teams

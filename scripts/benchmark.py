@@ -183,7 +183,7 @@ def _efficiency_only_config(full_config):
                  "preseason_max_bonus", "proximity_max_bonus", "momentum_max_bonus",
                  "star_player_max_bonus", "size_max_bonus", "depth_max_bonus",
                  "em_opp_adjust_max_bonus", "ft_foul_rate_max_bonus", "win_pct_max_bonus",
-                 "conf_rating_max_bonus"]:
+                 "conf_rating_max_bonus", "conf_tourney_max_bonus"]:
         if hasattr(c, attr):
             setattr(c, attr, 0.0)
     c.three_pt_volatility_factor = 0.0
@@ -405,9 +405,9 @@ def main():
     with open(os.path.join(DATA_DIR, "calibrated_config.json")) as f:
         full_config = ModelConfig(**json.load(f))
 
-    # Test years: last 3 (or single year)
+    # Test years: all years with data (or single year via --year)
     all_years = sorted(pairs_by_year.keys())
-    test_years = [single_year] if single_year else all_years[-15:]
+    test_years = [single_year] if single_year else all_years
 
     cv_results = {}
     bracket_quality_by_year = {}

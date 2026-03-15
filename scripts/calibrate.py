@@ -15,7 +15,10 @@ Usage:
   python scripts/calibrate.py --report-only   # just score current params
   python scripts/calibrate.py --phase2-only   # optimize only Phase 2 + upset params (fast)
   python scripts/calibrate.py --holdout 2025  # hold out 2025 for final eval
-  python scripts/calibrate.py --objective brier  # brier|logloss|brier-acc|brier-close|brier-upset|composite
+  python scripts/calibrate.py --exclude-years 2008,2009  # exclude years for data validation
+  python scripts/calibrate.py --min-floor 0.1  # M1.1: force possession/conf >= 0.1
+  python scripts/calibrate.py --objective brier  # brier|logloss|brier+f4|brier-acc|brier-close|brier-upset|composite
+  python scripts/calibrate.py --objective brier+f4 --brier-f4-weights 0.6,0.4  # Brier + bracket quality
   python scripts/calibrate.py --no-cv         # legacy: per-fold train optimization (may overfit)
   python scripts/calibrate.py --maxiter 100 --popsize 16  # longer optimization (default: 100, 16)
   python scripts/calibrate.py --multi-start 3  # run 3 times, pick best (default: 2)
@@ -35,6 +38,7 @@ DATA_DIR = os.path.join(ROOT, "data")
 sys.path.insert(0, ROOT)
 
 from engine import predict_game, ModelConfig, DEFAULT_CONFIG, _normalize_team_for_match, enrich_team
+from engine import run_monte_carlo, load_bracket
 
 
 def load_results():
@@ -115,6 +119,25 @@ def build_game_pairs(games, teams_by_year):
         yr = g.get("year")
         by_year.setdefault(yr, []).append(g)
 
+    # Precompute eff_rank (1-indexed barthag rank among tournament teams) per year
+    eff_rank_by_year = {}
+    for yr, yr_games in by_year.items():
+        if yr not in teams_by_year:
+            continue
+        yt = teams_by_year[yr]
+        team_barthags = []
+        seen_keys = set()
+        for g in yr_games:
+            for name, seed in [(g["team_a"], g["seed_a"]), (g["team_b"], g["seed_b"])]:
+                t = _lookup_team(name, seed, yt)
+                if t.get("barthag") is not None:
+                    key = _normalize_team_for_match(name)
+                    if key and key not in seen_keys:
+                        seen_keys.add(key)
+                        team_barthags.append((key, t["barthag"]))
+        team_barthags.sort(key=lambda x: -x[1])
+        eff_rank_by_year[yr] = {key: i + 1 for i, (key, _) in enumerate(team_barthags)}
+
     # Replay rounds in order, capturing path state BEFORE each game is processed.
     # game_path_snapshot[(yr, game_key)] = {team_name: path_dict_snapshot}
     game_path_snapshot = {}
@@ -152,6 +175,12 @@ def build_game_pairs(games, teams_by_year):
         yt = teams_by_year[yr]
         a = _lookup_team(g["team_a"], g["seed_a"], yt)
         b = _lookup_team(g["team_b"], g["seed_b"], yt)
+        # Attach eff_rank (efficiency rank by barthag among tournament teams)
+        rank_map = eff_rank_by_year.get(yr, {})
+        for team_dict, name in ((a, g["team_a"]), (b, g["team_b"])):
+            key = _normalize_team_for_match(name)
+            if key and key in rank_map:
+                team_dict["eff_rank"] = rank_map[key]
         # Attach pre-game path snapshot
         game_key = (g["team_a"], g["team_b"], g.get("round_name", ""))
         snap = game_path_snapshot.get((yr, game_key), {})
@@ -297,6 +326,7 @@ PARAM_SPEC = [
     ("momentum_max_bonus", 0.0, 5.0),
     ("win_pct_max_bonus", 0.0, 5.0),
     ("conf_rating_max_bonus", 0.0, 4.0),
+    ("conf_tourney_max_bonus", 0.0, 2.0),
     ("depth_max_bonus", 0.0, 8.0),
     ("em_opp_adjust_max_bonus", 0.0, 8.0),
     ("em_adj_o_weight", 0.0, 1.0),
@@ -363,6 +393,99 @@ def _fold_pairs(pairs_by_year, test_year):
     return train, test
 
 
+def _get_actual_champion_and_ff(games, year):
+    """Extract actual champion and Final Four teams from results for a year."""
+    year_games = [g for g in games if g.get("year") == year]
+    champ = None
+    ff_teams = set()
+    for g in year_games:
+        rn = g.get("round_name", "")
+        if rn == "Championship":
+            champ = g.get("winner")
+        elif rn == "Final Four":
+            ff_teams.add(g.get("team_a"))
+            ff_teams.add(g.get("team_b"))
+    return champ, ff_teams
+
+
+def _normalize_team_for_bq(name):
+    """Normalize for bracket-quality matching."""
+    if not name:
+        return ""
+    n = name.strip().lower()
+    aliases = {"uconn": "connecticut", "unc": "north carolina", "st. mary's": "saint mary's"}
+    return aliases.get(n, n)
+
+
+def _compute_bracket_quality_for_config(config, bracket_years, games, data_dir, num_sims=500):
+    """Run Monte Carlo for config on bracket years, return penalty (lower is better).
+    Penalty = (avg_champ_rank - 1)/15 + (1 - avg_champ_pct) + (1 - avg_ff_hit).
+    """
+    import io
+    import contextlib
+
+    champ_ranks = []
+    champ_pcts = []
+    ff_hits = []
+
+    for year in bracket_years:
+        path = os.path.join(data_dir, f"bracket_{year}.json")
+        if not os.path.isfile(path):
+            continue
+        try:
+            bracket, _, _ = load_bracket(path, data_dir=data_dir, year=year)
+        except Exception:
+            continue
+        if not bracket:
+            continue
+
+        champ, actual_ff = _get_actual_champion_and_ff(games, year)
+        if not champ:
+            continue
+
+        def _match(pred_name, actual_name):
+            pa = _normalize_team_for_bq(pred_name)
+            pb = _normalize_team_for_bq(actual_name)
+            return pa == pb or pa in pb or pb in pa
+
+        cfg = replace(config, num_sims=num_sims)
+        with io.StringIO() as buf:
+            with contextlib.redirect_stdout(buf):
+                mc = run_monte_carlo(bracket, config=cfg)
+        champ_probs = mc["champion_probs"]
+        ff_probs = mc["final_four_probs"]
+
+        champ_rank = len(champ_probs) + 1
+        champ_pct = 0.0
+        for i, t in enumerate(champ_probs.keys()):
+            if _match(t, champ):
+                champ_rank = i + 1
+                champ_pct = champ_probs.get(t, 0.0)
+                break
+
+        top8_ff = list(ff_probs.keys())[:8]
+        hits = 0
+        for actual in actual_ff:
+            for pred in top8_ff:
+                if _match(pred, actual):
+                    hits += 1
+                    break
+        ff_hit = hits / 4.0 if actual_ff else 0.0
+
+        champ_ranks.append(champ_rank)
+        champ_pcts.append(champ_pct)
+        ff_hits.append(ff_hit)
+
+    if not champ_ranks:
+        return 0.0
+
+    avg_rank = sum(champ_ranks) / len(champ_ranks)
+    avg_pct = sum(champ_pcts) / len(champ_pcts)
+    avg_ff = sum(ff_hits) / len(ff_hits)
+    penalty = (avg_rank - 1) / 15.0 + (1.0 - avg_pct) + (1.0 - avg_ff)
+    return max(0.0, penalty)
+
+
 def _compute_objective(metrics, objective_name="brier", baseline_accuracy=None, accuracy_penalty=0.05):
     """Compute optimization score from metrics. Lower is better.
 
@@ -394,11 +517,15 @@ def _compute_objective(metrics, objective_name="brier", baseline_accuracy=None, 
     return score
 
 
+FLOOR_PARAMS = {"possession_edge_max_bonus", "conf_rating_max_bonus"}
+
+
 def calibrate_single(pairs, param_spec, objective_name="brier", maxiter=60, popsize=12, seed=42,
-                    init_values=None):
+                    init_values=None, min_floor=0.0):
     """Optimize params on given pairs. Returns (optimized_dict, config).
 
     If init_values is provided (or calibrated_config.json exists), use as first DE population member.
+    If min_floor > 0, apply as lower bound for possession_edge_max_bonus and conf_rating_max_bonus.
     """
     import random
     from scipy.optimize import differential_evolution
@@ -422,7 +549,11 @@ def calibrate_single(pairs, param_spec, objective_name="brier", maxiter=60, pops
                 print(f"  [{eval_count[0]}] Best score: {best_score[0]:.5f}  Brier={metrics['brier_score']:.4f}")
         return score
 
-    bounds = [(lo, hi) for _, lo, hi in param_spec]
+    bounds = []
+    for name, lo, hi in param_spec:
+        if min_floor > 0 and name in FLOOR_PARAMS:
+            lo = max(lo, min_floor)
+        bounds.append((lo, hi))
     rng = random.Random(seed)
 
     # Warm start: use calibrated_config or init_values as first population member
@@ -435,12 +566,13 @@ def calibrate_single(pairs, param_spec, objective_name="brier", maxiter=60, pops
 
     if init_values and popsize >= 5:
         first_row = []
-        for name, lo, hi in param_spec:
+        for i, (name, _, _) in enumerate(param_spec):
+            lo, hi = bounds[i]
             v = init_values.get(name, getattr(ModelConfig(), name, (lo + hi) / 2))
             first_row.append(max(lo, min(hi, float(v))))
         init_pop = [first_row]
         for _ in range(popsize - 1):
-            init_pop.append([rng.uniform(lo, hi) for _, lo, hi in param_spec])
+            init_pop.append([rng.uniform(lo, hi) for lo, hi in bounds])
         init_pop = init_pop  # list of lists, scipy accepts it
 
     kwargs = dict(seed=seed, maxiter=maxiter, tol=1e-6, popsize=popsize,
@@ -519,30 +651,46 @@ def calibrate_phase2_only(pairs, objective_name="brier", maxiter=60, popsize=12,
     return optimized, config
 
 
-def _compute_cv_score(pairs_by_year, param_spec, x, objective_name, test_years, baseline_acc_ref):
-    """Evaluate param vector x on walk-forward CV. Returns mean objective across test folds.
+def _compute_cv_score(pairs_by_year, param_spec, x, objective_name, test_years, baseline_acc_ref,
+                      games=None, brier_f4_weights=(0.6, 0.4)):
+    """Evaluate param vector x on walk-forward CV. Returns (score, cv_brier).
     Lower is better.
+    For objective brier+f4: score = w1*cv_brier + w2*bracket_quality_penalty.
     """
+    config = ModelConfig(num_sims=1)
+    for i, (name, _, _) in enumerate(param_spec):
+        if i < len(x):
+            setattr(config, name, x[i])
+
     scores = []
     briers = []
     for test_year in test_years:
         _, test_pairs = _fold_pairs(pairs_by_year, test_year)
         if not test_pairs:
             continue
-        config = ModelConfig(num_sims=1)
-        for i, (name, _, _) in enumerate(param_spec):
-            if i < len(x):
-                setattr(config, name, x[i])
         metrics = score_model(test_pairs, config)
         scores.append(_compute_objective(metrics, objective_name, baseline_acc_ref))
         briers.append(metrics["brier_score"])
-    return sum(scores) / len(scores) if scores else 1e9, sum(briers) / len(briers) if briers else 1e9
+
+    cv_brier = sum(briers) / len(briers) if briers else 1e9
+    base_score = sum(scores) / len(scores) if scores else 1e9
+
+    if objective_name == "brier+f4" and games:
+        w1, w2 = brier_f4_weights[0], brier_f4_weights[1]
+        bracket_years = [y for y in test_years if os.path.isfile(os.path.join(DATA_DIR, f"bracket_{y}.json"))]
+        if bracket_years:
+            bq_penalty = _compute_bracket_quality_for_config(config, bracket_years, games, DATA_DIR, num_sims=500)
+            combined = w1 * cv_brier + w2 * bq_penalty
+            return combined, cv_brier
+    return base_score, cv_brier
 
 
 def calibrate_walk_forward(pairs, objective_name="brier", maxiter=100, popsize=16, seed=42,
-                          use_cv_objective=True, early_stop_iter=0):
+                          use_cv_objective=True, early_stop_iter=0, min_floor=0.0,
+                          games=None, brier_f4_weights=(0.6, 0.4)):
     """Walk-forward: optimize to minimize CV Brier (or train Brier if use_cv_objective=False).
     Reduce params; return final config.
+    If min_floor > 0, apply as lower bound for possession_edge_max_bonus and conf_rating_max_bonus.
     """
     from scipy.optimize import differential_evolution
 
@@ -550,11 +698,15 @@ def calibrate_walk_forward(pairs, objective_name="brier", maxiter=100, popsize=1
     years = sorted(pairs_by_year.keys())
     if len(years) < 3:
         print("  Not enough years for walk-forward; falling back to single calibration.")
-        return calibrate_single(pairs, PARAM_SPEC, objective_name, maxiter, popsize, seed)
+        return calibrate_single(pairs, PARAM_SPEC, objective_name, maxiter, popsize, seed, min_floor=min_floor)
 
     test_years = [y for y in sorted(pairs_by_year.keys()) if y >= 2017]
     defaults = {name: getattr(ModelConfig(), name) for name, _, _ in PARAM_SPEC}
-    bounds = [(lo, hi) for _, lo, hi in PARAM_SPEC]
+    bounds = []
+    for name, lo, hi in PARAM_SPEC:
+        if min_floor > 0 and name in FLOOR_PARAMS:
+            lo = max(lo, min_floor)
+        bounds.append((lo, hi))
     baseline_acc_ref = [None]
 
     if use_cv_objective:
@@ -565,7 +717,8 @@ def calibrate_walk_forward(pairs, objective_name="brier", maxiter=100, popsize=1
 
         def objective(x):
             score, cv_brier = _compute_cv_score(
-                pairs_by_year, PARAM_SPEC, x, objective_name, test_years, baseline_acc_ref[0]
+                pairs_by_year, PARAM_SPEC, x, objective_name, test_years, baseline_acc_ref[0],
+                games=games, brier_f4_weights=brier_f4_weights
             )
             eval_count[0] += 1
             if baseline_acc_ref[0] is None:
@@ -625,7 +778,7 @@ def calibrate_walk_forward(pairs, objective_name="brier", maxiter=100, popsize=1
     print(f"\n--- Final calibration on {len(all_train)} games (all years except {max(years)}) ---")
     init_vals = optimized if use_cv_objective else None
     optimized, config = calibrate_single(
-        all_train, reduced_spec, objective_name, maxiter, popsize, seed, init_values=init_vals
+        all_train, reduced_spec, objective_name, maxiter, popsize, seed, init_values=init_vals, min_floor=min_floor
     )
 
     # M1: Drop params that hit bounds
@@ -722,17 +875,27 @@ def main():
     report_only = "--report-only" in sys.argv
     phase2_only = "--phase2-only" in sys.argv
     holdout_year = None
+    exclude_years = None
     objective_name = "brier"
     maxiter = 100
     popsize = 16
     multi_start = 2
     use_cv_objective = "--no-cv" not in sys.argv
     save_report_path = None
+    min_floor = 0.0
+    brier_f4_weights = (0.6, 0.4)
     for i, arg in enumerate(sys.argv):
         if arg == "--save-report" and i + 1 < len(sys.argv):
             save_report_path = sys.argv[i + 1]
         elif arg == "--holdout" and i + 1 < len(sys.argv):
             holdout_year = int(sys.argv[i + 1])
+        elif arg == "--exclude-years" and i + 1 < len(sys.argv):
+            exclude_years = [int(y.strip()) for y in sys.argv[i + 1].split(",") if y.strip()]
+        elif arg == "--min-floor" and i + 1 < len(sys.argv):
+            try:
+                min_floor = float(sys.argv[i + 1])
+            except ValueError:
+                pass
         elif arg == "--objective" and i + 1 < len(sys.argv):
             objective_name = sys.argv[i + 1]
         elif arg == "--maxiter" and i + 1 < len(sys.argv):
@@ -750,10 +913,23 @@ def main():
                 multi_start = int(sys.argv[i + 1])
             except ValueError:
                 pass
+        elif arg == "--brier-f4-weights" and i + 1 < len(sys.argv):
+            parts = sys.argv[i + 1].split(",")
+            if len(parts) >= 2:
+                try:
+                    w1, w2 = float(parts[0].strip()), float(parts[1].strip())
+                    if w1 > 0 and w2 > 0:
+                        brier_f4_weights = (w1, w2)
+                except ValueError:
+                    pass
 
     print("Loading historical results...")
     games = load_results()
-    print(f"  {len(games)} games")
+    if exclude_years:
+        games = [g for g in games if g.get("year") not in exclude_years]
+        print(f"  {len(games)} games (excluded years: {exclude_years})")
+    else:
+        print(f"  {len(games)} games")
 
     print("Loading team stats...")
     teams_by_year = load_all_teams()
@@ -803,7 +979,9 @@ def main():
             if multi_start > 1:
                 print(f"\n  Multi-start run {run + 1}/{multi_start} (seed={s})")
             opt, cfg = calibrate_walk_forward(
-                pairs, objective_name, maxiter, popsize, s, use_cv_objective=use_cv_objective
+                pairs, objective_name, maxiter, popsize, s, use_cv_objective=use_cv_objective, min_floor=min_floor,
+                games=games if objective_name == "brier+f4" else None,
+                brier_f4_weights=brier_f4_weights
             )
             pairs_by_year = _pairs_by_year(pairs)
             test_years = [y for y in sorted(pairs_by_year.keys()) if y >= 2017]

@@ -65,6 +65,7 @@ class ModelConfig:
     luck_regression_factor: float = 0.5
     win_pct_max_bonus: float = 1.0
     conf_rating_max_bonus: float = 0.3
+    conf_tourney_max_bonus: float = 0.5  # conference tournament momentum (champion/finalist/etc)
     # New: possessions / FT / schedule strength
     possession_edge_max_bonus: float = 4.0
     ft_clutch_max_bonus: float = 3.0
@@ -279,6 +280,15 @@ def calc_conf_bonus(team, config=DEFAULT_CONFIG):
         return config.conf_rating_max_bonus * 0.5
     return 0.0
 
+
+def calc_conf_tourney_bonus(team, config=DEFAULT_CONFIG):
+    """Bonus for conference tournament momentum (won conf tourney, made final, etc)."""
+    m = team.get("conf_tourney_momentum")
+    if m is None:
+        return 0.0
+    return m * config.conf_tourney_max_bonus
+
+
 # ===========================================================================
 # CORE PREDICTION
 # ===========================================================================
@@ -322,7 +332,7 @@ def predict_game(team_a, team_b, game_site=None, config=DEFAULT_CONFIG, round_na
     # All factor adjustments
     factor_names = ["experience", "coach", "pedigree", "preseason", "proximity",
                     "momentum", "star_player", "depth", "size", "injuries",
-                    "luck_regression", "win_pct", "conf"]
+                    "luck_regression", "win_pct", "conf", "conf_tourney"]
     calc_fns = [
         lambda t: calc_experience_bonus(t, config),
         lambda t: calc_coach_bonus(t, config),
@@ -337,6 +347,7 @@ def predict_game(team_a, team_b, game_site=None, config=DEFAULT_CONFIG, round_na
         lambda t: calc_luck_regression(t, config),
         lambda t: calc_win_pct_bonus(t, config),
         lambda t: calc_conf_bonus(t, config),
+        lambda t: calc_conf_tourney_bonus(t, config),
     ]
 
     factors_a, factors_b = {}, {}
@@ -666,6 +677,14 @@ def _calc_upset_tolerance_bonus(team_a, team_b, margin, config, round_name=None)
         _f = tpd_f / 100.0 if tpd_f > 1.5 else tpd_f
         total += 1
         if _d < _f:
+            indicators += 1
+
+    # 16. underseeded: dog eff_rank < dog seed (efficiency says dog is better than seed suggests)
+    ed = dog.get("eff_rank")
+    sd = dog.get("seed")
+    if ed is not None and sd is not None:
+        total += 1
+        if ed < sd:
             indicators += 1
 
     if total == 0:
@@ -1235,6 +1254,13 @@ _NAME_ALIASES = {
     "cal state fullerton": "cal st fullerton",
     "cal state northridge": "cal st northridge",
     "miss valley st": "mississippi valley st",
+    # Sports Reference / conf tourney variants
+    "ualr": "arkansas little rock",
+    "college of charleston": "charleston",
+    "mass lowell": "massachusetts lowell",
+    "masslowell": "massachusetts lowell",
+    "s dakota st": "south dakota st",
+    "uta": "ut arlington",
 }
 
 
@@ -1317,13 +1343,24 @@ def enrich_bracket_with_teams(bracket, teams_merged):
                       "three_rate", "three_pct", "three_pt_pct", "three_pt_pct_d", "two_pt_pct", "block_rate",
                       "wab", "elite_sos", "qual_o", "qual_d", "qual_barthag",
                       "conf_adj_o", "conf_adj_d", "win_pct", "conf_win_pct", "conf_rating", "conf_strength_score",
-                      "momentum", "adj_o_recent", "adj_d_recent", "injuries",
+                      "momentum", "conf_tourney_momentum", "adj_o_recent", "adj_d_recent", "injuries",
                       "em_o_rate", "em_d_rate", "em_rel_rating", "em_roster_rank",
                       "em_tempo", "top_player", "top_player_bpr"):
                 if k in merged and merged[k] is not None:
                     team_obj[k] = merged[k]
             enriched += 1
             enriched_names.add(tname)
+
+    # Compute eff_rank (1-indexed barthag rank among all bracket teams)
+    all_teams = []
+    for region in bracket.values():
+        for team_obj in region.values():
+            b = team_obj.get("barthag")
+            if b is not None:
+                all_teams.append((team_obj, b))
+    all_teams.sort(key=lambda x: -x[1])
+    for i, (team_obj, _) in enumerate(all_teams):
+        team_obj["eff_rank"] = i + 1
 
     for region in bracket.values():
         for team_obj in region.values():
@@ -1607,6 +1644,41 @@ def _generate_key_factors(result, team_a, team_b):
     return factors[:4]
 
 
+def get_matchup_analysis_display(team_a, team_b, data_dir=None, year=None, config=DEFAULT_CONFIG):
+    """Return matchup analysis in pick-compatible format for API/frontend display.
+    team_a, team_b can be team names (str) or team dicts. Returns dict with stats_a,
+    stats_b, key_factors, insight, head_to_head, upset_alert, win_prob_a, etc.
+    """
+    a = enrich_team(team_a) if isinstance(team_a, dict) else enrich_team({"team": team_a})
+    b = enrich_team(team_b) if isinstance(team_b, dict) else enrich_team({"team": team_b})
+    a.setdefault("seed", 8)
+    b.setdefault("seed", 8)
+    result = predict_game(a, b, config=config)
+    hist = get_seed_matchup_history(a.get("seed", 8), b.get("seed", 8))
+    h2h = get_head_to_head(a["team"], b["team"], data_dir=data_dir, current_year=year or 2026)
+    upset_alert = _compute_upset_alert(
+        a["seed"], b["seed"], result["predicted_margin"],
+        result["win_prob_a"], hist)
+    pick_team = a if result["win_prob_a"] >= 0.5 else b
+    pick_dict = _make_pick_dict(0, 64, "Round of 64", None, a, b, result, pick_team,
+                                data_dir=data_dir, year=year or 2026)
+    pick_dict["upset_alert"] = upset_alert
+    return pick_dict
+
+
+def _game_id_for_pick(region, round_of, game_index, quadrant_order=None):
+    """Map (region, round, index) to frontend game_id.
+    Region games: {region}-{round}-{gi}
+    Final Four: FF-4-0, FF-4-1 (order from quadrant_order)
+    Championship: FF-2-0
+    """
+    if round_of == 4:
+        return f"FF-4-{game_index}"
+    if round_of == 2:
+        return "FF-2-0"
+    return f"{region}-{round_of}-{game_index}"
+
+
 def _should_pick_upset(prob_a, seed_a, seed_b, aggression):
     """Decide whether to pick an upset based on aggression level."""
     if aggression <= 0:
@@ -1785,7 +1857,7 @@ def _make_pick_dict(game_num, round_of, round_name, region, a, b, result, pick_t
 
 
 def generate_bracket_picks(bracket, config=DEFAULT_CONFIG, upset_aggression=0.0, quadrant_order=None,
-                          data_dir=None, year=None):
+                          data_dir=None, year=None, locked_picks=None):
     """Generate a complete 63-game bracket with analysis for every pick.
 
     Args:
@@ -1795,11 +1867,13 @@ def generate_bracket_picks(bracket, config=DEFAULT_CONFIG, upset_aggression=0.0,
         quadrant_order: [TL, TR, BR, BL] region names for FF pairing
         data_dir: path to data dir for head-to-head lookup
         year: current bracket year for head-to-head
+        locked_picks: optional dict of game_id -> team_name for user-locked picks
 
     Returns dict with 'picks', 'champion', 'final_four', 'biggest_upsets', 'most_uncertain_games'.
     """
     if quadrant_order is None:
         quadrant_order = REGIONS[:4]
+    locked_picks = locked_picks or {}
     _h2h_kw = {"data_dir": data_dir, "year": year or 2026}
     picks = []
     game_num = 0
@@ -1818,30 +1892,42 @@ def generate_bracket_picks(bracket, config=DEFAULT_CONFIG, upset_aggression=0.0,
         teams = enriched_bracket[region]
 
         r64_winners = []
-        for seed_a, seed_b in FIRST_ROUND_MATCHUPS:
+        for gi, (seed_a, seed_b) in enumerate(FIRST_ROUND_MATCHUPS):
             a = teams.get(seed_a)
             b = teams.get(seed_b)
             if not a or not b:
                 continue
             game_num += 1
+            gid = _game_id_for_pick(region, 64, gi)
             result = predict_game(a, b, config=config, round_name="Round of 64")
-            pick_a = _should_pick_upset(result["win_prob_a"], a["seed"], b["seed"], upset_aggression)
-            pick_team = a if pick_a else b
+            locked_team = locked_picks.get(gid)
+            if locked_team in (a["team"], b["team"]):
+                pick_team = a if locked_team == a["team"] else b
+            else:
+                pick_a = _should_pick_upset(result["win_prob_a"], a["seed"], b["seed"], upset_aggression)
+                pick_team = a if pick_a else b
             picks.append(_make_pick_dict(game_num, 64, "Round of 64", region, a, b, result, pick_team, **_h2h_kw))
             r64_winners.append(pick_team)
 
         def _play_round(teams_in, round_of, round_name):
+            n = len(teams_in) // 2
             winners = []
             for i in range(0, len(teams_in), 2):
                 if i + 1 >= len(teams_in):
                     winners.append(teams_in[i])
                     continue
+                gi = i // 2
                 a, b = teams_in[i], teams_in[i + 1]
                 nonlocal game_num
                 game_num += 1
+                gid = _game_id_for_pick(region, round_of, gi)
                 result = predict_game(a, b, config=config, round_name=round_name)
-                pick_a = _should_pick_upset(result["win_prob_a"], a["seed"], b["seed"], upset_aggression)
-                pick_team = a if pick_a else b
+                locked_team = locked_picks.get(gid)
+                if locked_team in (a["team"], b["team"]):
+                    pick_team = a if locked_team == a["team"] else b
+                else:
+                    pick_a = _should_pick_upset(result["win_prob_a"], a["seed"], b["seed"], upset_aggression)
+                    pick_team = a if pick_a else b
                 picks.append(_make_pick_dict(game_num, round_of, round_name, region, a, b, result, pick_team, **_h2h_kw))
                 winners.append(pick_team)
             return winners
@@ -1856,7 +1942,7 @@ def generate_bracket_picks(bracket, config=DEFAULT_CONFIG, upset_aggression=0.0,
     qo = quadrant_order
     ff_pairs = [(qo[0], qo[3]), (qo[1], qo[2])]
     ff_winners = []
-    for r_a, r_b in ff_pairs:
+    for ff_gi, (r_a, r_b) in enumerate(ff_pairs):
         a = region_winners.get(r_a)
         b = region_winners.get(r_b)
         if not a and not b:
@@ -1865,9 +1951,14 @@ def generate_bracket_picks(bracket, config=DEFAULT_CONFIG, upset_aggression=0.0,
             ff_winners.append(a or b)
             continue
         game_num += 1
+        gid = _game_id_for_pick(None, 4, ff_gi)
         result = predict_game(a, b, config=config, round_name="Final Four")
-        pick_a = _should_pick_upset(result["win_prob_a"], a["seed"], b["seed"], upset_aggression)
-        pick_team = a if pick_a else b
+        locked_team = locked_picks.get(gid)
+        if locked_team in (a["team"], b["team"]):
+            pick_team = a if locked_team == a["team"] else b
+        else:
+            pick_a = _should_pick_upset(result["win_prob_a"], a["seed"], b["seed"], upset_aggression)
+            pick_team = a if pick_a else b
         picks.append(_make_pick_dict(game_num, 4, "Final Four", None, a, b, result, pick_team))
         ff_winners.append(pick_team)
 
@@ -1876,9 +1967,14 @@ def generate_bracket_picks(bracket, config=DEFAULT_CONFIG, upset_aggression=0.0,
     if len(ff_winners) >= 2:
         a, b = ff_winners[0], ff_winners[1]
         game_num += 1
+        gid = "FF-2-0"
         result = predict_game(a, b, config=config, round_name="Championship")
-        pick_a = _should_pick_upset(result["win_prob_a"], a["seed"], b["seed"], upset_aggression)
-        pick_team = a if pick_a else b
+        locked_team = locked_picks.get(gid)
+        if locked_team in (a["team"], b["team"]):
+            pick_team = a if locked_team == a["team"] else b
+        else:
+            pick_a = _should_pick_upset(result["win_prob_a"], a["seed"], b["seed"], upset_aggression)
+            pick_team = a if pick_a else b
         picks.append(_make_pick_dict(game_num, 2, "Championship", None, a, b, result, pick_team, **_h2h_kw))
         champion = pick_team["team"]
 
@@ -1920,8 +2016,7 @@ def load_bracket(filepath, data_dir=None, year=None):
         merged = load_teams_merged(data_dir, year)
         if merged:
             n = enrich_bracket_with_teams(bracket, merged)
-            if n > 0:
-                print(f"  Enriched {n} teams from teams_merged_{year}.json")
+            
     quadrant_order = data.get("quadrant_order")
     if not quadrant_order or len(quadrant_order) != 4:
         quadrant_order = _infer_quadrant_order(bracket)
