@@ -74,7 +74,7 @@ jobs:
           ODDS_API_KEY: ${{ secrets.ODDS_API_KEY }}
         run: python scripts/save_card.py || echo "Card save step failed (no games or API error)"
 
-      - name: Commit ledger and settle log
+      - name: Commit ledger
         run: |
           git config user.name  "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
@@ -82,9 +82,6 @@ jobs:
           # Include daily card snapshot if written
           CARD_DAILY="data/card_$(date -u +%Y-%m-%d).json"
           if [ -f "$CARD_DAILY" ]; then git add "$CARD_DAILY"; fi
-          # Include settle log if written (UTC date)
-          SETTLE_LOG="data/settle_log_$(date -u +%Y-%m-%d).json"
-          if [ -f "$SETTLE_LOG" ]; then git add "$SETTLE_LOG"; fi
           if git diff --cached --quiet; then
             echo "No changes to ledger."
           else
