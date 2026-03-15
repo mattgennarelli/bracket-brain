@@ -2513,10 +2513,10 @@
       "away_team": "Houston Cougars",
       "commence_time": "2026-03-14T22:00:00Z",
       "date": "2026-03-14",
-      "result": null,
-      "actual_score_home": null,
-      "actual_score_away": null,
-      "settled_at": null
+      "result": "W",
+      "actual_score_home": 79.0,
+      "actual_score_away": 74.0,
+      "settled_at": "2026-03-15T03:56:40.565058+00:00"
     },
     {
       "bet_type": "spread",
@@ -2535,10 +2535,10 @@
       "away_team": "Houston Cougars",
       "commence_time": "2026-03-14T22:00:00Z",
       "date": "2026-03-14",
-      "result": null,
-      "actual_score_home": null,
-      "actual_score_away": null,
-      "settled_at": null
+      "result": "W",
+      "actual_score_home": 79.0,
+      "actual_score_away": 74.0,
+      "settled_at": "2026-03-15T03:56:40.565142+00:00"
     },
     {
       "bet_type": "total",
@@ -2555,10 +2555,10 @@
       "away_team": "Houston Cougars",
       "commence_time": "2026-03-14T22:00:00Z",
       "date": "2026-03-14",
-      "result": null,
-      "actual_score_home": null,
-      "actual_score_away": null,
-      "settled_at": null
+      "result": "W",
+      "actual_score_home": 79.0,
+      "actual_score_away": 74.0,
+      "settled_at": "2026-03-15T03:56:40.565178+00:00"
     },
     {
       "bet_type": "ml",
@@ -2641,10 +2641,10 @@
       "away_team": "UConn Huskies",
       "commence_time": "2026-03-14T22:30:00Z",
       "date": "2026-03-14",
-      "result": null,
-      "actual_score_home": null,
-      "actual_score_away": null,
-      "settled_at": null
+      "result": "L",
+      "actual_score_home": 72.0,
+      "actual_score_away": 52.0,
+      "settled_at": "2026-03-15T03:56:40.565276+00:00"
     },
     {
       "bet_type": "spread",
@@ -2663,10 +2663,10 @@
       "away_team": "UConn Huskies",
       "commence_time": "2026-03-14T22:30:00Z",
       "date": "2026-03-14",
-      "result": null,
-      "actual_score_home": null,
-      "actual_score_away": null,
-      "settled_at": null
+      "result": "L",
+      "actual_score_home": 72.0,
+      "actual_score_away": 52.0,
+      "settled_at": "2026-03-15T03:56:40.565315+00:00"
     },
     {
       "bet_type": "total",
@@ -2683,10 +2683,10 @@
       "away_team": "UConn Huskies",
       "commence_time": "2026-03-14T22:30:00Z",
       "date": "2026-03-14",
-      "result": null,
-      "actual_score_home": null,
-      "actual_score_away": null,
-      "settled_at": null
+      "result": "L",
+      "actual_score_home": 72.0,
+      "actual_score_away": 52.0,
+      "settled_at": "2026-03-15T03:56:40.565341+00:00"
     },
     {
       "bet_type": "ml",
@@ -2769,10 +2769,10 @@
       "away_team": "Virginia Cavaliers",
       "commence_time": "2026-03-15T00:30:00Z",
       "date": "2026-03-14",
-      "result": null,
-      "actual_score_home": null,
-      "actual_score_away": null,
-      "settled_at": null
+      "result": "W",
+      "actual_score_home": 74.0,
+      "actual_score_away": 70.0,
+      "settled_at": "2026-03-15T03:56:40.565426+00:00"
     },
     {
       "bet_type": "spread",
@@ -2791,10 +2791,10 @@
       "away_team": "Virginia Cavaliers",
       "commence_time": "2026-03-15T00:30:00Z",
       "date": "2026-03-14",
-      "result": null,
-      "actual_score_home": null,
-      "actual_score_away": null,
-      "settled_at": null
+      "result": "L",
+      "actual_score_home": 74.0,
+      "actual_score_away": 70.0,
+      "settled_at": "2026-03-15T03:56:40.565461+00:00"
     },
     {
       "bet_type": "total",
@@ -2811,10 +2811,10 @@
       "away_team": "Virginia Cavaliers",
       "commence_time": "2026-03-15T00:30:00Z",
       "date": "2026-03-14",
-      "result": null,
-      "actual_score_home": null,
-      "actual_score_away": null,
-      "settled_at": null
+      "result": "W",
+      "actual_score_home": 74.0,
+      "actual_score_away": 70.0,
+      "settled_at": "2026-03-15T03:56:40.565484+00:00"
     },
     {
       "bet_type": "ml",
@@ -3045,10 +3045,10 @@
       "away_team": "Virginia Cavaliers",
       "commence_time": "2026-03-15T00:30:00Z",
       "date": "2026-03-14",
-      "result": null,
-      "actual_score_home": null,
-      "actual_score_away": null,
-      "settled_at": null
+      "result": "L",
+      "actual_score_home": 74.0,
+      "actual_score_away": 70.0,
+      "settled_at": "2026-03-15T03:56:40.565701+00:00"
     },
     {
       "bet_type": "total",
@@ -3325,49 +3325,71 @@
       "actual_score_home": null,
       "actual_score_away": null,
       "settled_at": null
+    },
+    {
+      "bet_type": "spread",
+      "bet_team": "Wichita St Shockers",
+      "bet_spread": 6.0,
+      "bet_odds": -110,
+      "edge": -0.1,
+      "stars": "",
+      "kelly_units": 0.0,
+      "cover_margin": 0.1,
+      "model_margin": 5.9,
+      "vegas_spread": -6.0,
+      "model_total": 156.4,
+      "vegas_total": 150.5,
+      "home_team": "South Florida Bulls",
+      "away_team": "Wichita St Shockers",
+      "commence_time": "2026-03-15T19:15:00Z",
+      "date": "2026-03-14",
+      "result": null,
+      "actual_score_home": null,
+      "actual_score_away": null,
+      "settled_at": null
     }
   ],
   "stats": {
-    "total_picks": 156,
-    "settled": 45,
-    "wins": 26,
-    "losses": 19,
+    "total_picks": 157,
+    "settled": 55,
+    "wins": 31,
+    "losses": 24,
     "pushes": 0,
-    "hit_rate": 0.5778,
+    "hit_rate": 0.5636,
     "by_type": {
       "ml": {
-        "picks": 15,
-        "wins": 12,
-        "losses": 3,
+        "picks": 18,
+        "wins": 14,
+        "losses": 4,
         "pushes": 0,
-        "net_units": 0.77,
-        "total_wagered": 3.49,
-        "hit_rate": 0.8,
-        "roi_pct": 22.13
+        "net_units": 4.04,
+        "total_wagered": 11.04,
+        "hit_rate": 0.7778,
+        "roi_pct": 36.61
       },
       "spread": {
-        "picks": 15,
-        "wins": 6,
-        "losses": 9,
+        "picks": 18,
+        "wins": 7,
+        "losses": 11,
         "pushes": 0,
-        "net_units": -2.82,
-        "total_wagered": 10.67,
-        "hit_rate": 0.4,
-        "roi_pct": -26.46
+        "net_units": -3.72,
+        "total_wagered": 16.7,
+        "hit_rate": 0.3889,
+        "roi_pct": -22.26
       },
       "total": {
-        "picks": 15,
-        "wins": 8,
-        "losses": 7,
+        "picks": 19,
+        "wins": 10,
+        "losses": 9,
         "pushes": 0,
-        "net_units": -3.26,
-        "total_wagered": 42.61,
-        "hit_rate": 0.5333,
-        "roi_pct": -7.66
+        "net_units": -5.26,
+        "total_wagered": 48.6,
+        "hit_rate": 0.5263,
+        "roi_pct": -10.83
       }
     },
-    "total_wagered": 56.77,
-    "net_units": -5.31,
-    "roi_pct": -9.36
+    "total_wagered": 76.34,
+    "net_units": -4.94,
+    "roi_pct": -6.47
   }
 }
