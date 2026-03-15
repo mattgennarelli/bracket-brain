@@ -3279,10 +3279,10 @@
       "away_team": "Purdue Boilermakers",
       "commence_time": "2026-03-15T19:30:00Z",
       "date": "2026-03-14",
-      "result": null,
-      "actual_score_home": null,
-      "actual_score_away": null,
-      "settled_at": null
+      "result": "L",
+      "actual_score_home": 72.0,
+      "actual_score_away": 80.0,
+      "settled_at": "2026-03-15T21:41:05.108047+00:00"
     },
     {
       "bet_type": "spread",
@@ -3301,10 +3301,10 @@
       "away_team": "Purdue Boilermakers",
       "commence_time": "2026-03-15T19:30:00Z",
       "date": "2026-03-14",
-      "result": null,
-      "actual_score_home": null,
-      "actual_score_away": null,
-      "settled_at": null
+      "result": "L",
+      "actual_score_home": 72.0,
+      "actual_score_away": 80.0,
+      "settled_at": "2026-03-15T21:41:05.108090+00:00"
     },
     {
       "bet_type": "total",
@@ -3321,10 +3321,10 @@
       "away_team": "Purdue Boilermakers",
       "commence_time": "2026-03-15T19:30:00Z",
       "date": "2026-03-14",
-      "result": null,
-      "actual_score_home": null,
-      "actual_score_away": null,
-      "settled_at": null
+      "result": "W",
+      "actual_score_home": 72.0,
+      "actual_score_away": 80.0,
+      "settled_at": "2026-03-15T21:41:05.108118+00:00"
     },
     {
       "bet_type": "spread",
@@ -3351,45 +3351,45 @@
   ],
   "stats": {
     "total_picks": 157,
-    "settled": 58,
-    "wins": 31,
-    "losses": 27,
+    "settled": 61,
+    "wins": 32,
+    "losses": 29,
     "pushes": 0,
-    "hit_rate": 0.5345,
+    "hit_rate": 0.5246,
     "by_type": {
       "ml": {
-        "picks": 19,
+        "picks": 20,
         "wins": 14,
-        "losses": 5,
+        "losses": 6,
         "pushes": 0,
-        "net_units": 3.88,
-        "total_wagered": 11.2,
-        "hit_rate": 0.7368,
-        "roi_pct": 34.66
+        "net_units": -1.12,
+        "total_wagered": 16.2,
+        "hit_rate": 0.7,
+        "roi_pct": -6.9
       },
       "spread": {
-        "picks": 19,
+        "picks": 20,
         "wins": 7,
-        "losses": 12,
+        "losses": 13,
         "pushes": 0,
-        "net_units": -3.77,
-        "total_wagered": 16.75,
-        "hit_rate": 0.3684,
-        "roi_pct": -22.5
+        "net_units": -8.45,
+        "total_wagered": 21.43,
+        "hit_rate": 0.35,
+        "roi_pct": -39.42
       },
       "total": {
-        "picks": 20,
-        "wins": 10,
+        "picks": 21,
+        "wins": 11,
         "losses": 10,
         "pushes": 0,
-        "net_units": -10.26,
-        "total_wagered": 53.6,
-        "hit_rate": 0.5,
-        "roi_pct": -19.15
+        "net_units": -5.72,
+        "total_wagered": 58.6,
+        "hit_rate": 0.5238,
+        "roi_pct": -9.76
       }
     },
-    "total_wagered": 81.55,
-    "net_units": -10.15,
-    "roi_pct": -12.45
+    "total_wagered": 96.23,
+    "net_units": -15.28,
+    "roi_pct": -15.88
   }
 }

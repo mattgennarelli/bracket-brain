@@ -744,10 +744,10 @@
       "edge": 11.800000000000011,
       "stars": "\u2605",
       "date": "2026-03-14",
-      "result": null,
-      "actual_score_home": null,
-      "actual_score_away": null,
-      "settled_at": null
+      "result": "W",
+      "actual_score_home": 72.0,
+      "actual_score_away": 80.0,
+      "settled_at": "2026-03-15T21:41:02.459669+00:00"
     },
     {
       "home_team": "Michigan Wolverines",
@@ -767,10 +767,10 @@
       "edge": 8.3,
       "stars": "\u2605",
       "date": "2026-03-14",
-      "result": null,
-      "actual_score_home": null,
-      "actual_score_away": null,
-      "settled_at": null
+      "result": "L",
+      "actual_score_home": 72.0,
+      "actual_score_away": 80.0,
+      "settled_at": "2026-03-15T21:41:02.459669+00:00"
     },
     {
       "home_team": "Michigan Wolverines",
@@ -789,53 +789,53 @@
       "edge": 0.1934818181818182,
       "stars": "\u2605\u2605",
       "date": "2026-03-14",
-      "result": null,
-      "actual_score_home": null,
-      "actual_score_away": null,
-      "settled_at": null
+      "result": "L",
+      "actual_score_home": 72.0,
+      "actual_score_away": 80.0,
+      "settled_at": "2026-03-15T21:41:02.459669+00:00"
     }
   ],
   "stats": {
     "total_picks": 38,
-    "settled": 34,
-    "wins": 16,
-    "losses": 18,
+    "settled": 37,
+    "wins": 17,
+    "losses": 20,
     "pushes": 0,
-    "hit_rate": 0.4706,
+    "hit_rate": 0.4595,
     "by_type": {
       "ml": {
-        "picks": 20,
+        "picks": 21,
         "wins": 12,
-        "losses": 8,
+        "losses": 9,
         "pushes": 0,
-        "net_units": 3.59,
-        "total_wagered": 52.26,
-        "hit_rate": 0.6,
-        "roi_pct": 6.87
+        "net_units": -1.41,
+        "total_wagered": 57.26,
+        "hit_rate": 0.5714,
+        "roi_pct": -2.46
       },
       "spread": {
-        "picks": 5,
+        "picks": 6,
         "wins": 2,
-        "losses": 3,
+        "losses": 4,
         "pushes": 0,
-        "net_units": -9.1,
-        "total_wagered": 13.0,
-        "hit_rate": 0.4,
-        "roi_pct": -70.03
+        "net_units": -14.1,
+        "total_wagered": 18.0,
+        "hit_rate": 0.3333,
+        "roi_pct": -78.36
       },
       "total": {
-        "picks": 9,
-        "wins": 2,
+        "picks": 10,
+        "wins": 3,
         "losses": 7,
         "pushes": 0,
-        "net_units": -25.91,
-        "total_wagered": 45.0,
-        "hit_rate": 0.2222,
-        "roi_pct": -57.58
+        "net_units": -21.37,
+        "total_wagered": 50.0,
+        "hit_rate": 0.3,
+        "roi_pct": -42.73
       }
     },
-    "total_wagered": 110.26,
-    "net_units": -31.43,
-    "roi_pct": -28.5
+    "total_wagered": 125.26,
+    "net_units": -36.88,
+    "roi_pct": -29.44
   }
 }
