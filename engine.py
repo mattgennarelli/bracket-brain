@@ -1228,6 +1228,13 @@ _NAME_ALIASES = {
     # Omaha
     "omaha": "nebraska omaha",
     "nebraskoomaha": "nebraska omaha",
+    # Historical naming variants (important for 2008/2009 joins)
+    "wku": "western kentucky",
+    "texas arlington": "ut arlington",
+    "texasarlington": "ut arlington",
+    "cal state fullerton": "cal st fullerton",
+    "cal state northridge": "cal st northridge",
+    "miss valley st": "mississippi valley st",
 }
 
 
