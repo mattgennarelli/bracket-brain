@@ -3087,10 +3087,10 @@
       "away_team": "Vanderbilt Commodores",
       "commence_time": "2026-03-15T17:00:00Z",
       "date": "2026-03-14",
-      "result": null,
-      "actual_score_home": null,
-      "actual_score_away": null,
-      "settled_at": null
+      "result": "L",
+      "actual_score_home": 86.0,
+      "actual_score_away": 75.0,
+      "settled_at": "2026-03-15T19:25:47.944415+00:00"
     },
     {
       "bet_type": "spread",
@@ -3109,10 +3109,10 @@
       "away_team": "Vanderbilt Commodores",
       "commence_time": "2026-03-15T17:00:00Z",
       "date": "2026-03-14",
-      "result": null,
-      "actual_score_home": null,
-      "actual_score_away": null,
-      "settled_at": null
+      "result": "L",
+      "actual_score_home": 86.0,
+      "actual_score_away": 75.0,
+      "settled_at": "2026-03-15T19:25:47.944457+00:00"
     },
     {
       "bet_type": "total",
@@ -3129,10 +3129,10 @@
       "away_team": "Vanderbilt Commodores",
       "commence_time": "2026-03-15T17:00:00Z",
       "date": "2026-03-14",
-      "result": null,
-      "actual_score_home": null,
-      "actual_score_away": null,
-      "settled_at": null
+      "result": "L",
+      "actual_score_home": 86.0,
+      "actual_score_away": 75.0,
+      "settled_at": "2026-03-15T19:25:47.944474+00:00"
     },
     {
       "bet_type": "ml",
@@ -3351,45 +3351,45 @@
   ],
   "stats": {
     "total_picks": 157,
-    "settled": 55,
+    "settled": 58,
     "wins": 31,
-    "losses": 24,
+    "losses": 27,
     "pushes": 0,
-    "hit_rate": 0.5636,
+    "hit_rate": 0.5345,
     "by_type": {
       "ml": {
-        "picks": 18,
+        "picks": 19,
         "wins": 14,
-        "losses": 4,
+        "losses": 5,
         "pushes": 0,
-        "net_units": 4.04,
-        "total_wagered": 11.04,
-        "hit_rate": 0.7778,
-        "roi_pct": 36.61
+        "net_units": 3.88,
+        "total_wagered": 11.2,
+        "hit_rate": 0.7368,
+        "roi_pct": 34.66
       },
       "spread": {
-        "picks": 18,
+        "picks": 19,
         "wins": 7,
-        "losses": 11,
+        "losses": 12,
         "pushes": 0,
-        "net_units": -3.72,
-        "total_wagered": 16.7,
-        "hit_rate": 0.3889,
-        "roi_pct": -22.26
+        "net_units": -3.77,
+        "total_wagered": 16.75,
+        "hit_rate": 0.3684,
+        "roi_pct": -22.5
       },
       "total": {
-        "picks": 19,
+        "picks": 20,
         "wins": 10,
-        "losses": 9,
+        "losses": 10,
         "pushes": 0,
-        "net_units": -5.26,
-        "total_wagered": 48.6,
-        "hit_rate": 0.5263,
-        "roi_pct": -10.83
+        "net_units": -10.26,
+        "total_wagered": 53.6,
+        "hit_rate": 0.5,
+        "roi_pct": -19.15
       }
     },
-    "total_wagered": 76.34,
-    "net_units": -4.94,
-    "roi_pct": -6.47
+    "total_wagered": 81.55,
+    "net_units": -10.15,
+    "roi_pct": -12.45
   }
 }

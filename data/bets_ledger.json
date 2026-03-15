@@ -704,10 +704,10 @@
       "edge": 11.5,
       "stars": "\u2605",
       "date": "2026-03-14",
-      "result": null,
-      "actual_score_home": null,
-      "actual_score_away": null,
-      "settled_at": null
+      "result": "L",
+      "actual_score_home": 86.0,
+      "actual_score_away": 75.0,
+      "settled_at": "2026-03-15T19:25:45.869041+00:00"
     },
     {
       "home_team": "VCU Rams",
@@ -797,11 +797,11 @@
   ],
   "stats": {
     "total_picks": 38,
-    "settled": 33,
+    "settled": 34,
     "wins": 16,
-    "losses": 17,
+    "losses": 18,
     "pushes": 0,
-    "hit_rate": 0.4848,
+    "hit_rate": 0.4706,
     "by_type": {
       "ml": {
         "picks": 20,
@@ -824,18 +824,18 @@
         "roi_pct": -70.03
       },
       "total": {
-        "picks": 8,
+        "picks": 9,
         "wins": 2,
-        "losses": 6,
+        "losses": 7,
         "pushes": 0,
-        "net_units": -20.91,
-        "total_wagered": 40.0,
-        "hit_rate": 0.25,
-        "roi_pct": -52.28
+        "net_units": -25.91,
+        "total_wagered": 45.0,
+        "hit_rate": 0.2222,
+        "roi_pct": -57.58
       }
     },
-    "total_wagered": 105.26,
-    "net_units": -26.43,
-    "roi_pct": -25.1
+    "total_wagered": 110.26,
+    "net_units": -31.43,
+    "roi_pct": -28.5
   }
 }
