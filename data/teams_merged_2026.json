@@ -67,7 +67,28 @@
     "em_adj_o": 128.6008,
     "em_adj_d": 85.2795,
     "conf_strength_score": 0.6508,
-    "conf_tourney_momentum": 1.0
+    "conf_tourney_momentum": 1.0,
+    "injuries": [
+      {
+        "player": "Ifeanyi Ufochukwu",
+        "status": "out",
+        "bpr_share": 0.5,
+        "importance": 0.5
+      },
+      {
+        "player": "Caleb Foster",
+        "status": "out",
+        "bpr_share": 0.0866,
+        "importance": 0.0866
+      },
+      {
+        "player": "Patrick Ngongba",
+        "status": "probable",
+        "bpr_share": 0.1577,
+        "importance": 0.1577
+      }
+    ],
+    "injury_impact": 1.80711
   },
   {
     "team": "Michigan",
@@ -137,7 +158,28 @@
     "em_adj_o": 128.9692,
     "em_adj_d": 83.666,
     "conf_strength_score": 0.4513,
-    "conf_tourney_momentum": 0.7
+    "conf_tourney_momentum": 0.7,
+    "injuries": [
+      {
+        "player": "Charlie May",
+        "status": "out",
+        "bpr_share": 0.5,
+        "importance": 0.5
+      },
+      {
+        "player": "L.J. Cason",
+        "status": "out",
+        "bpr_share": 0.0714,
+        "importance": 0.0714
+      },
+      {
+        "player": "Winters Grady",
+        "status": "out",
+        "bpr_share": 0.5,
+        "importance": 0.5
+      }
+    ],
+    "injury_impact": 3.2142
   },
   {
     "team": "Arizona",
@@ -627,7 +669,22 @@
     "em_adj_o": 123.0116,
     "em_adj_d": 92.7892,
     "conf_strength_score": 0.5008,
-    "conf_tourney_momentum": 0.7
+    "conf_tourney_momentum": 0.7,
+    "injuries": [
+      {
+        "player": "Jaylin Stewart",
+        "status": "out",
+        "bpr_share": 0.068,
+        "importance": 0.068
+      },
+      {
+        "player": "Silas Demary",
+        "status": "questionable",
+        "bpr_share": 0.1797,
+        "importance": 0.1797
+      }
+    ],
+    "injury_impact": 0.41964
   },
   {
     "team": "Vanderbilt",
@@ -697,7 +754,16 @@
     "em_adj_o": 124.2931,
     "em_adj_d": 95.6089,
     "conf_strength_score": 0.1522,
-    "conf_tourney_momentum": 0.7
+    "conf_tourney_momentum": 0.7,
+    "injuries": [
+      {
+        "player": "Frankie Collins",
+        "status": "out",
+        "bpr_share": 0.5,
+        "importance": 0.5
+      }
+    ],
+    "injury_impact": 1.5
   },
   {
     "team": "Gonzaga",
@@ -767,7 +833,16 @@
     "em_adj_o": 121.7728,
     "em_adj_d": 89.0964,
     "conf_strength_score": 0.2582,
-    "conf_tourney_momentum": 1.0
+    "conf_tourney_momentum": 1.0,
+    "injuries": [
+      {
+        "player": "Braden Huff",
+        "status": "out",
+        "bpr_share": 0.1319,
+        "importance": 0.1319
+      }
+    ],
+    "injury_impact": 0.39569999999999994
   },
   {
     "team": "Texas Tech",
@@ -907,7 +982,22 @@
     "em_adj_o": 121.0452,
     "em_adj_d": 89.6581,
     "conf_strength_score": 0.6851,
-    "conf_tourney_momentum": 0.2
+    "conf_tourney_momentum": 0.2,
+    "injuries": [
+      {
+        "player": "Kaleb Glenn",
+        "status": "out",
+        "bpr_share": 0.5,
+        "importance": 0.5
+      },
+      {
+        "player": "Divine Ugochukwu",
+        "status": "out",
+        "bpr_share": 0.0536,
+        "importance": 0.0536
+      }
+    ],
+    "injury_impact": 1.6608
   },
   {
     "team": "Virginia",
@@ -1047,7 +1137,22 @@
     "em_adj_o": 118.176,
     "em_adj_d": 91.0337,
     "conf_strength_score": 0.3615,
-    "conf_tourney_momentum": 1.0
+    "conf_tourney_momentum": 1.0,
+    "injuries": [
+      {
+        "player": "Casper Pohto",
+        "status": "out",
+        "bpr_share": 0.5,
+        "importance": 0.5
+      },
+      {
+        "player": "Imran Suljanovic",
+        "status": "out",
+        "bpr_share": 0.5,
+        "importance": 0.5
+      }
+    ],
+    "injury_impact": 3.0
   },
   {
     "team": "Tennessee",
@@ -1117,7 +1222,16 @@
     "em_adj_o": 123.3271,
     "em_adj_d": 94.8958,
     "conf_strength_score": 0.4655,
-    "conf_tourney_momentum": 0.2
+    "conf_tourney_momentum": 0.2,
+    "injuries": [
+      {
+        "player": "Cade Phillips",
+        "status": "out",
+        "bpr_share": 0.5,
+        "importance": 0.5
+      }
+    ],
+    "injury_impact": 1.5
   },
   {
     "team": "Louisville",
@@ -1187,7 +1301,16 @@
     "em_adj_o": 122.7522,
     "em_adj_d": 97.1237,
     "conf_strength_score": 0.5728,
-    "conf_tourney_momentum": 0.2
+    "conf_tourney_momentum": 0.2,
+    "injuries": [
+      {
+        "player": "Mikel Brown",
+        "status": "questionable",
+        "bpr_share": 0.1237,
+        "importance": 0.1237
+      }
+    ],
+    "injury_impact": 0.14844000000000002
   },
   {
     "team": "Alabama",
@@ -1257,7 +1380,28 @@
     "em_adj_o": 124.4841,
     "em_adj_d": 101.6134,
     "conf_strength_score": 0.4262,
-    "conf_tourney_momentum": 0.2
+    "conf_tourney_momentum": 0.2,
+    "injuries": [
+      {
+        "player": "Keitenn Bristow",
+        "status": "out",
+        "bpr_share": 0.5,
+        "importance": 0.5
+      },
+      {
+        "player": "Davion Hannah",
+        "status": "out",
+        "bpr_share": 0.5,
+        "importance": 0.5
+      },
+      {
+        "player": "Collins Onyejiaka",
+        "status": "out",
+        "bpr_share": 0.5,
+        "importance": 0.5
+      }
+    ],
+    "injury_impact": 4.5
   },
   {
     "team": "Arkansas",
@@ -1327,7 +1471,16 @@
     "em_adj_o": 125.4912,
     "em_adj_d": 100.5203,
     "conf_strength_score": 0.569,
-    "conf_tourney_momentum": 1.0
+    "conf_tourney_momentum": 1.0,
+    "injuries": [
+      {
+        "player": "Karter Knox",
+        "status": "out",
+        "bpr_share": 0.0942,
+        "importance": 0.0942
+      }
+    ],
+    "injury_impact": 0.2826
   },
   {
     "team": "Nebraska",
@@ -1747,7 +1900,16 @@
     "em_adj_o": 118.0531,
     "em_adj_d": 94.6095,
     "conf_strength_score": 0.6277,
-    "conf_tourney_momentum": 0.4
+    "conf_tourney_momentum": 0.4,
+    "injuries": [
+      {
+        "player": "Kevin Gad",
+        "status": "out",
+        "bpr_share": 0.5,
+        "importance": 0.5
+      }
+    ],
+    "injury_impact": 1.5
   },
   {
     "team": "Iowa",
@@ -1886,7 +2048,22 @@
     "em_adj_o": 121.4007,
     "em_adj_d": 91.8825,
     "conf_strength_score": 0.4668,
-    "conf_tourney_momentum": 0.2
+    "conf_tourney_momentum": 0.2,
+    "injuries": [
+      {
+        "player": "James Brown",
+        "status": "out",
+        "bpr_share": 0.5,
+        "importance": 0.5
+      },
+      {
+        "player": "Caleb Wilson",
+        "status": "out",
+        "bpr_share": 0.2309,
+        "importance": 0.2309
+      }
+    ],
+    "injury_impact": 2.1927
   },
   {
     "team": "Santa Clara",
@@ -2096,7 +2273,28 @@
     "em_adj_o": 117.7069,
     "em_adj_d": 91.1494,
     "conf_strength_score": 0.4699,
-    "conf_tourney_momentum": 0.4
+    "conf_tourney_momentum": 0.4,
+    "injuries": [
+      {
+        "player": "Carter Welling",
+        "status": "out",
+        "bpr_share": 0.1266,
+        "importance": 0.1266
+      },
+      {
+        "player": "Zac Foster",
+        "status": "out",
+        "bpr_share": 0.5,
+        "importance": 0.5
+      },
+      {
+        "player": "Trent Steinour",
+        "status": "questionable",
+        "bpr_share": 0.5,
+        "importance": 0.5
+      }
+    ],
+    "injury_impact": 2.4798
   },
   {
     "team": "Kentucky",
@@ -2166,7 +2364,22 @@
     "em_adj_o": 117.9063,
     "em_adj_d": 96.4841,
     "conf_strength_score": 0.5046,
-    "conf_tourney_momentum": 0.2
+    "conf_tourney_momentum": 0.2,
+    "injuries": [
+      {
+        "player": "Jaland Lowe",
+        "status": "out",
+        "bpr_share": 0.5,
+        "importance": 0.5
+      },
+      {
+        "player": "Jayden Quaintance",
+        "status": "out",
+        "bpr_share": 0.5,
+        "importance": 0.5
+      }
+    ],
+    "injury_impact": 3.0
   },
   {
     "team": "Cincinnati",
@@ -2305,7 +2518,34 @@
     "em_adj_o": 122.7553,
     "em_adj_d": 97.6245,
     "conf_strength_score": 0.2086,
-    "conf_tourney_momentum": 0.2
+    "conf_tourney_momentum": 0.2,
+    "injuries": [
+      {
+        "player": "Dawson Baker",
+        "status": "out",
+        "bpr_share": 0.5,
+        "importance": 0.5
+      },
+      {
+        "player": "Richie Saunders",
+        "status": "out",
+        "bpr_share": 0.2351,
+        "importance": 0.2351
+      },
+      {
+        "player": "Nate Pickens",
+        "status": "out",
+        "bpr_share": 0.5,
+        "importance": 0.5
+      },
+      {
+        "player": "KJ Perry",
+        "status": "out",
+        "bpr_share": 0.5,
+        "importance": 0.5
+      }
+    ],
+    "injury_impact": 5.2053
   },
   {
     "team": "Indiana",
@@ -2374,7 +2614,22 @@
     "em_depth_score": 0.651,
     "em_adj_o": 120.2487,
     "em_adj_d": 98.005,
-    "conf_strength_score": 0.561
+    "conf_strength_score": 0.561,
+    "injuries": [
+      {
+        "player": "Jason Drake",
+        "status": "out",
+        "bpr_share": 0.5,
+        "importance": 0.5
+      },
+      {
+        "player": "Jordan Rayford",
+        "status": "out",
+        "bpr_share": 0.5,
+        "importance": 0.5
+      }
+    ],
+    "injury_impact": 3.0
   },
   {
     "team": "Miami FL",
@@ -2444,7 +2699,22 @@
     "em_adj_o": 121.357,
     "em_adj_d": 97.1687,
     "conf_strength_score": 0.5242,
-    "conf_tourney_momentum": 0.4
+    "conf_tourney_momentum": 0.4,
+    "injuries": [
+      {
+        "player": "Marcus Allen",
+        "status": "out",
+        "bpr_share": 0.5,
+        "importance": 0.5
+      },
+      {
+        "player": "Treyvon Maddox",
+        "status": "out",
+        "bpr_share": 0.5,
+        "importance": 0.5
+      }
+    ],
+    "injury_impact": 3.0
   },
   {
     "team": "Villanova",
@@ -2514,7 +2784,28 @@
     "em_adj_o": 118.1852,
     "em_adj_d": 93.3102,
     "conf_strength_score": 0.6424,
-    "conf_tourney_momentum": 0.2
+    "conf_tourney_momentum": 0.2,
+    "injuries": [
+      {
+        "player": "Zion Stanford",
+        "status": "out",
+        "bpr_share": 0.5,
+        "importance": 0.5
+      },
+      {
+        "player": "Wade Chiddick",
+        "status": "out",
+        "bpr_share": 0.5,
+        "importance": 0.5
+      },
+      {
+        "player": "Matthew Hodge",
+        "status": "out",
+        "bpr_share": 0.5,
+        "importance": 0.5
+      }
+    ],
+    "injury_impact": 4.5
   },
   {
     "team": "Georgia",
@@ -2722,7 +3013,16 @@
     "em_depth_score": 0.585,
     "em_adj_o": 117.348,
     "em_adj_d": 97.4372,
-    "conf_strength_score": 0.831
+    "conf_strength_score": 0.831,
+    "injuries": [
+      {
+        "player": "Mackenzie Mgbako",
+        "status": "out",
+        "bpr_share": 0.5,
+        "importance": 0.5
+      }
+    ],
+    "injury_impact": 1.5
   },
   {
     "team": "Oklahoma",
@@ -2860,7 +3160,16 @@
     "em_depth_score": 0.655,
     "em_adj_o": 123.1335,
     "em_adj_d": 104.7319,
-    "conf_strength_score": 0.5037
+    "conf_strength_score": 0.5037,
+    "injuries": [
+      {
+        "player": "Emeka Opurum",
+        "status": "out",
+        "bpr_share": 0.5,
+        "importance": 0.5
+      }
+    ],
+    "injury_impact": 1.5
   },
   {
     "team": "SMU",
@@ -3137,7 +3446,16 @@
     "em_depth_score": 0.593,
     "em_adj_o": 121.7278,
     "em_adj_d": 103.6714,
-    "conf_strength_score": 0.7435
+    "conf_strength_score": 0.7435,
+    "injuries": [
+      {
+        "player": "Lassina Traore",
+        "status": "questionable",
+        "bpr_share": 0.0502,
+        "importance": 0.0502
+      }
+    ],
+    "injury_impact": 0.06024
   },
   {
     "team": "Missouri",
@@ -3206,7 +3524,22 @@
     "em_depth_score": 0.548,
     "em_adj_o": 117.7423,
     "em_adj_d": 101.662,
-    "conf_strength_score": 0.7908
+    "conf_strength_score": 0.7908,
+    "injuries": [
+      {
+        "player": "Jevon Porter",
+        "status": "out",
+        "bpr_share": 0.5,
+        "importance": 0.5
+      },
+      {
+        "player": "Annor Boateng",
+        "status": "out",
+        "bpr_share": 0.5,
+        "importance": 0.5
+      }
+    ],
+    "injury_impact": 3.0
   },
   {
     "team": "Baylor",
@@ -3275,7 +3608,28 @@
     "em_depth_score": 0.554,
     "em_adj_o": 121.818,
     "em_adj_d": 102.7105,
-    "conf_strength_score": 0.6062
+    "conf_strength_score": 0.6062,
+    "injuries": [
+      {
+        "player": "JJ White",
+        "status": "questionable",
+        "bpr_share": 0.5,
+        "importance": 0.5
+      },
+      {
+        "player": "Juslin Bodo Bodo",
+        "status": "out",
+        "bpr_share": 0.5,
+        "importance": 0.5
+      },
+      {
+        "player": "Maikcol Perez",
+        "status": "out",
+        "bpr_share": 0.5,
+        "importance": 0.5
+      }
+    ],
+    "injury_impact": 3.6
   },
   {
     "team": "VCU",
@@ -3554,7 +3908,22 @@
     "em_depth_score": 0.52,
     "em_adj_o": 115.8796,
     "em_adj_d": 102.6183,
-    "conf_strength_score": 0.6665
+    "conf_strength_score": 0.6665,
+    "injuries": [
+      {
+        "player": "AJ Swinton",
+        "status": "out",
+        "bpr_share": 0.0471,
+        "importance": 0.0471
+      },
+      {
+        "player": "Xavier Osceola",
+        "status": "questionable",
+        "bpr_share": 0.5,
+        "importance": 0.5
+      }
+    ],
+    "injury_impact": 0.7413000000000001
   },
   {
     "team": "Washington",
@@ -3623,7 +3992,52 @@
     "em_depth_score": 0.556,
     "em_adj_o": 117.143,
     "em_adj_d": 99.2225,
-    "conf_strength_score": 0.5777
+    "conf_strength_score": 0.5777,
+    "injuries": [
+      {
+        "player": "Jacob Ognacevic",
+        "status": "questionable",
+        "bpr_share": 0.5,
+        "importance": 0.5
+      },
+      {
+        "player": "Franck Kepnang",
+        "status": "questionable",
+        "bpr_share": 0.1204,
+        "importance": 0.1204
+      },
+      {
+        "player": "Desmond Claude",
+        "status": "questionable",
+        "bpr_share": 0.1092,
+        "importance": 0.1092
+      },
+      {
+        "player": "Mady Traore",
+        "status": "out",
+        "bpr_share": 0.5,
+        "importance": 0.5
+      },
+      {
+        "player": "Bryson Tucker",
+        "status": "questionable",
+        "bpr_share": 0.0033,
+        "importance": 0.0033
+      },
+      {
+        "player": "JJ Mandaquit",
+        "status": "out",
+        "bpr_share": 0.0819,
+        "importance": 0.0819
+      },
+      {
+        "player": "Jasir Rencher",
+        "status": "questionable",
+        "bpr_share": 0.5,
+        "importance": 0.5
+      }
+    ],
+    "injury_impact": 3.22518
   },
   {
     "team": "New Mexico",
@@ -3830,7 +4244,16 @@
     "em_depth_score": 0.441,
     "em_adj_o": 111.1185,
     "em_adj_d": 94.3055,
-    "conf_strength_score": 0.8027
+    "conf_strength_score": 0.8027,
+    "injuries": [
+      {
+        "player": "Wilhelm Breidenbach",
+        "status": "questionable",
+        "bpr_share": 0.0452,
+        "importance": 0.0452
+      }
+    ],
+    "injury_impact": 0.05424
   },
   {
     "team": "Boise St.",
@@ -4177,7 +4600,28 @@
     "em_adj_o": 109.5647,
     "em_adj_d": 91.804,
     "conf_strength_score": 0.3031,
-    "conf_tourney_momentum": 0.4
+    "conf_tourney_momentum": 0.4,
+    "injuries": [
+      {
+        "player": "Patrick Suemnick",
+        "status": "out",
+        "bpr_share": 0.5,
+        "importance": 0.5
+      },
+      {
+        "player": "Godswill Erheriene",
+        "status": "out",
+        "bpr_share": 0.5,
+        "importance": 0.5
+      },
+      {
+        "player": "Jahseem Felton",
+        "status": "out",
+        "bpr_share": 0.5,
+        "importance": 0.5
+      }
+    ],
+    "injury_impact": 4.5
   },
   {
     "team": "Arizona St.",
@@ -4384,7 +4828,16 @@
     "em_depth_score": 0.458,
     "em_adj_o": 115.9539,
     "em_adj_d": 104.2376,
-    "conf_strength_score": 0.3199
+    "conf_strength_score": 0.3199,
+    "injuries": [
+      {
+        "player": "Arrinten Page",
+        "status": "out",
+        "bpr_share": 0.136,
+        "importance": 0.136
+      }
+    ],
+    "injury_impact": 0.40800000000000003
   },
   {
     "team": "Mississippi",
@@ -4454,7 +4907,16 @@
     "em_adj_o": 111.0504,
     "em_adj_d": 96.1765,
     "conf_strength_score": 0.3523,
-    "conf_tourney_momentum": 0.4
+    "conf_tourney_momentum": 0.4,
+    "injuries": [
+      {
+        "player": "Koren Johnson",
+        "status": "questionable",
+        "bpr_share": 0.5,
+        "importance": 0.5
+      }
+    ],
+    "injury_impact": 0.6000000000000001
   },
   {
     "team": "Tulsa",
@@ -4730,7 +5192,28 @@
     "em_depth_score": 0.447,
     "em_adj_o": 114.3641,
     "em_adj_d": 97.347,
-    "conf_strength_score": 0.5179
+    "conf_strength_score": 0.5179,
+    "injuries": [
+      {
+        "player": "Rytis Petraitis",
+        "status": "out",
+        "bpr_share": 0.5,
+        "importance": 0.5
+      },
+      {
+        "player": "Stephon Marbury",
+        "status": "out",
+        "bpr_share": 0.5,
+        "importance": 0.5
+      },
+      {
+        "player": "Jovani Ruff",
+        "status": "out",
+        "bpr_share": 0.5,
+        "importance": 0.5
+      }
+    ],
+    "injury_impact": 4.5
   },
   {
     "team": "LSU",
@@ -4799,7 +5282,16 @@
     "em_depth_score": 0.552,
     "em_adj_o": 120.0656,
     "em_adj_d": 101.1626,
-    "conf_strength_score": 0.1359
+    "conf_strength_score": 0.1359,
+    "injuries": [
+      {
+        "player": "Dedan Thomas",
+        "status": "out",
+        "bpr_share": 0.2156,
+        "importance": 0.2156
+      }
+    ],
+    "injury_impact": 0.6468
   },
   {
     "team": "Northern Iowa",
@@ -5008,7 +5500,16 @@
     "em_depth_score": 0.468,
     "em_adj_o": 114.3269,
     "em_adj_d": 103.7859,
-    "conf_strength_score": 0.2725
+    "conf_strength_score": 0.2725,
+    "injuries": [
+      {
+        "player": "Azavier Robinson",
+        "status": "out",
+        "bpr_share": 0.1727,
+        "importance": 0.1727
+      }
+    ],
+    "injury_impact": 0.5181
   },
   {
     "team": "McNeese St.",
@@ -5147,7 +5648,34 @@
     "em_depth_score": 0.466,
     "em_adj_o": 117.9484,
     "em_adj_d": 104.6728,
-    "conf_strength_score": 0.6299
+    "conf_strength_score": 0.6299,
+    "injuries": [
+      {
+        "player": "Rich Barron",
+        "status": "out",
+        "bpr_share": 0.5,
+        "importance": 0.5
+      },
+      {
+        "player": "Jason Edwards",
+        "status": "questionable",
+        "bpr_share": 0.1336,
+        "importance": 0.1336
+      },
+      {
+        "player": "Daquan Davis",
+        "status": "out",
+        "bpr_share": 0.5,
+        "importance": 0.5
+      },
+      {
+        "player": "Jaylen Harrell",
+        "status": "out",
+        "bpr_share": 0.5,
+        "importance": 0.5
+      }
+    ],
+    "injury_impact": 4.6603200000000005
   },
   {
     "team": "Oklahoma St.",
@@ -5285,7 +5813,16 @@
     "em_depth_score": 0.44,
     "em_adj_o": 108.0622,
     "em_adj_d": 100.0787,
-    "conf_strength_score": 0.6643
+    "conf_strength_score": 0.6643,
+    "injuries": [
+      {
+        "player": "Sean Jones",
+        "status": "out",
+        "bpr_share": 0.5,
+        "importance": 0.5
+      }
+    ],
+    "injury_impact": 1.5
   },
   {
     "team": "Colorado",
@@ -5424,7 +5961,16 @@
     "em_adj_o": 112.1554,
     "em_adj_d": 101.3423,
     "conf_strength_score": 0.6079,
-    "conf_tourney_momentum": 0.4
+    "conf_tourney_momentum": 0.4,
+    "injuries": [
+      {
+        "player": "KJ Lewis",
+        "status": "out",
+        "bpr_share": 0.2395,
+        "importance": 0.2395
+      }
+    ],
+    "injury_impact": 0.7184999999999999
   },
   {
     "team": "Nevada",
@@ -5700,7 +6246,22 @@
     "em_depth_score": 0.475,
     "em_adj_o": 108.7871,
     "em_adj_d": 93.2434,
-    "conf_strength_score": 0.3446
+    "conf_strength_score": 0.3446,
+    "injuries": [
+      {
+        "player": "Evan Dickey",
+        "status": "questionable",
+        "bpr_share": 0.5,
+        "importance": 0.5
+      },
+      {
+        "player": "Jaron McKie",
+        "status": "out",
+        "bpr_share": 0.5,
+        "importance": 0.5
+      }
+    ],
+    "injury_impact": 2.1
   },
   {
     "team": "George Washington",
@@ -6023,7 +6584,16 @@
     "em_depth_score": 0.464,
     "em_adj_o": 110.312,
     "em_adj_d": 99.3144,
-    "conf_strength_score": 0.3211
+    "conf_strength_score": 0.3211,
+    "injuries": [
+      {
+        "player": "Tyler Hendricks",
+        "status": "questionable",
+        "bpr_share": 0.1891,
+        "importance": 0.1891
+      }
+    ],
+    "injury_impact": 0.22692
   },
   {
     "team": "Colorado St.",
@@ -6509,7 +7079,28 @@
     "em_depth_score": 0.39,
     "em_adj_o": 113.9585,
     "em_adj_d": 106.0965,
-    "conf_strength_score": 0.3928
+    "conf_strength_score": 0.3928,
+    "injuries": [
+      {
+        "player": "Michael Wolf",
+        "status": "questionable",
+        "bpr_share": 0.5,
+        "importance": 0.5
+      },
+      {
+        "player": "Gabriel Pozzato",
+        "status": "out",
+        "bpr_share": 0.5,
+        "importance": 0.5
+      },
+      {
+        "player": "Luke Naser",
+        "status": "out",
+        "bpr_share": 0.5,
+        "importance": 0.5
+      }
+    ],
+    "injury_impact": 3.6
   },
   {
     "team": "Wyoming",
@@ -6694,7 +7285,22 @@
     "em_depth_score": 0.385,
     "em_adj_o": 114.3903,
     "em_adj_d": 97.8375,
-    "conf_strength_score": 0.3364
+    "conf_strength_score": 0.3364,
+    "injuries": [
+      {
+        "player": "Markus Burton",
+        "status": "out",
+        "bpr_share": 0.2935,
+        "importance": 0.2935
+      },
+      {
+        "player": "Tommy Ahneman",
+        "status": "out",
+        "bpr_share": 0.5,
+        "importance": 0.5
+      }
+    ],
+    "injury_impact": 2.3805
   },
   {
     "team": "Saint Joseph's",
@@ -6832,7 +7438,22 @@
     "em_depth_score": 0.357,
     "em_adj_o": 109.4802,
     "em_adj_d": 105.4699,
-    "conf_strength_score": 0.7247
+    "conf_strength_score": 0.7247,
+    "injuries": [
+      {
+        "player": "Gai Chol",
+        "status": "out",
+        "bpr_share": 0.5,
+        "importance": 0.5
+      },
+      {
+        "player": "King Grace",
+        "status": "questionable",
+        "bpr_share": -0.0262,
+        "importance": -0.0262
+      }
+    ],
+    "injury_impact": 1.46856
   },
   {
     "team": "South Carolina",
@@ -7108,7 +7729,28 @@
     "em_depth_score": 0.438,
     "em_adj_o": 111.0086,
     "em_adj_d": 104.0965,
-    "conf_strength_score": 0.3572
+    "conf_strength_score": 0.3572,
+    "injuries": [
+      {
+        "player": "Abdi Bashir",
+        "status": "out",
+        "bpr_share": 0.1281,
+        "importance": 0.1281
+      },
+      {
+        "player": "Mobi Ikegwuruka",
+        "status": "out",
+        "bpr_share": 0.5,
+        "importance": 0.5
+      },
+      {
+        "player": "Dorin Buca",
+        "status": "out",
+        "bpr_share": -0.0321,
+        "importance": -0.0321
+      }
+    ],
+    "injury_impact": 1.788
   },
   {
     "team": "Seattle",
@@ -7246,7 +7888,16 @@
     "em_depth_score": 0.272,
     "em_adj_o": 106.7663,
     "em_adj_d": 103.8315,
-    "conf_strength_score": 0.641
+    "conf_strength_score": 0.641,
+    "injuries": [
+      {
+        "player": "Joe Hurlburt",
+        "status": "questionable",
+        "bpr_share": 0.5,
+        "importance": 0.5
+      }
+    ],
+    "injury_impact": 0.6000000000000001
   },
   {
     "team": "Sam Houston St.",
@@ -7501,7 +8152,22 @@
     "em_depth_score": 0.385,
     "em_adj_o": 108.5608,
     "em_adj_d": 104.5017,
-    "conf_strength_score": 0.6674
+    "conf_strength_score": 0.6674,
+    "injuries": [
+      {
+        "player": "Ladji Dembele",
+        "status": "out",
+        "bpr_share": 0.5,
+        "importance": 0.5
+      },
+      {
+        "player": "Myles Che",
+        "status": "out",
+        "bpr_share": 0.5,
+        "importance": 0.5
+      }
+    ],
+    "injury_impact": 3.0
   },
   {
     "team": "Illinois St.",
@@ -8610,7 +9276,22 @@
     "em_depth_score": 0.247,
     "em_adj_o": 111.3286,
     "em_adj_d": 107.2296,
-    "conf_strength_score": 0.698
+    "conf_strength_score": 0.698,
+    "injuries": [
+      {
+        "player": "Tomas Thrastarson",
+        "status": "out",
+        "bpr_share": 0.0844,
+        "importance": 0.0844
+      },
+      {
+        "player": "Kase Wynott",
+        "status": "out",
+        "bpr_share": 0.5,
+        "importance": 0.5
+      }
+    ],
+    "injury_impact": 1.7532
   },
   {
     "team": "UC Santa Barbara",
@@ -8956,7 +9637,16 @@
     "em_depth_score": 0.276,
     "em_adj_o": 105.9774,
     "em_adj_d": 103.8762,
-    "conf_strength_score": 0.6436
+    "conf_strength_score": 0.6436,
+    "injuries": [
+      {
+        "player": "Nathan Zulemie",
+        "status": "out",
+        "bpr_share": 0.5,
+        "importance": 0.5
+      }
+    ],
+    "injury_impact": 1.5
   },
   {
     "team": "Toledo",
@@ -9094,7 +9784,22 @@
     "em_depth_score": 0.353,
     "em_adj_o": 105.4868,
     "em_adj_d": 103.6431,
-    "conf_strength_score": 0.3517
+    "conf_strength_score": 0.3517,
+    "injuries": [
+      {
+        "player": "Ashton Hardaway",
+        "status": "doubtful",
+        "bpr_share": 0.0178,
+        "importance": 0.0178
+      },
+      {
+        "player": "Julius Thedford",
+        "status": "doubtful",
+        "bpr_share": 0.1576,
+        "importance": 0.1576
+      }
+    ],
+    "injury_impact": 0.36834
   },
   {
     "team": "Bradley",
@@ -10525,7 +11230,28 @@
     "em_depth_score": 0.35,
     "em_adj_o": 111.0949,
     "em_adj_d": 108.6099,
-    "conf_strength_score": 0.2231
+    "conf_strength_score": 0.2231,
+    "injuries": [
+      {
+        "player": "Amar'e Marshall",
+        "status": "out",
+        "bpr_share": 0.5,
+        "importance": 0.5
+      },
+      {
+        "player": "Xander Wedlow",
+        "status": "out",
+        "bpr_share": 0.5,
+        "importance": 0.5
+      },
+      {
+        "player": "Ilia Ermakov",
+        "status": "out",
+        "bpr_share": 0.5,
+        "importance": 0.5
+      }
+    ],
+    "injury_impact": 4.5
   },
   {
     "team": "Cornell",
@@ -12533,7 +13259,16 @@
     "em_depth_score": 0.204,
     "em_adj_o": 103.8396,
     "em_adj_d": 102.4524,
-    "conf_strength_score": 0.8022
+    "conf_strength_score": 0.8022,
+    "injuries": [
+      {
+        "player": "KJ Vasser",
+        "status": "out",
+        "bpr_share": 0.5,
+        "importance": 0.5
+      }
+    ],
+    "injury_impact": 1.5
   },
   {
     "team": "UMBC",
@@ -12928,7 +13663,16 @@
     "em_depth_score": 0.21,
     "em_adj_o": 105.5304,
     "em_adj_d": 106.1152,
-    "conf_strength_score": 0.8901
+    "conf_strength_score": 0.8901,
+    "injuries": [
+      {
+        "player": "Will Mortimore",
+        "status": "out",
+        "bpr_share": 0.5,
+        "importance": 0.5
+      }
+    ],
+    "injury_impact": 1.5
   },
   {
     "team": "Youngstown St.",
@@ -13044,7 +13788,22 @@
     "em_depth_score": 0.268,
     "em_adj_o": 98.4091,
     "em_adj_d": 100.2182,
-    "conf_strength_score": 0.4134
+    "conf_strength_score": 0.4134,
+    "injuries": [
+      {
+        "player": "Will Jeffress",
+        "status": "out",
+        "bpr_share": 0.5,
+        "importance": 0.5
+      },
+      {
+        "player": "A'Meir Williams",
+        "status": "out",
+        "bpr_share": 0.5,
+        "importance": 0.5
+      }
+    ],
+    "injury_impact": 3.0
   },
   {
     "team": "Cal St. Fullerton",
@@ -13786,7 +14545,22 @@
     "em_depth_score": 0.207,
     "em_adj_o": 102.1706,
     "em_adj_d": 106.1949,
-    "conf_strength_score": 0.8649
+    "conf_strength_score": 0.8649,
+    "injuries": [
+      {
+        "player": "Bencao Vungo",
+        "status": "out",
+        "bpr_share": 0.5,
+        "importance": 0.5
+      },
+      {
+        "player": "Jordan Vick",
+        "status": "out",
+        "bpr_share": 0.5,
+        "importance": 0.5
+      }
+    ],
+    "injury_impact": 3.0
   },
   {
     "team": "Indiana St.",
@@ -16765,7 +17539,16 @@
     "em_depth_score": 0.09,
     "em_adj_o": 103.5934,
     "em_adj_d": 109.6507,
-    "conf_strength_score": 0.6643
+    "conf_strength_score": 0.6643,
+    "injuries": [
+      {
+        "player": "Jack Stanton",
+        "status": "out",
+        "bpr_share": 1600.5613,
+        "importance": 1600.5613
+      }
+    ],
+    "injury_impact": 10.0
   },
   {
     "team": "Southeast Missouri St.",
@@ -17364,7 +18147,40 @@
     "em_depth_score": 0.0,
     "em_adj_o": 101.1929,
     "em_adj_d": 108.564,
-    "conf_strength_score": 0.778
+    "conf_strength_score": 0.778,
+    "injuries": [
+      {
+        "player": "Eli DeLaurier",
+        "status": "questionable",
+        "bpr_share": -1862.6019,
+        "importance": -1862.6019
+      },
+      {
+        "player": "Tybo Bailey",
+        "status": "questionable",
+        "bpr_share": -2729.9328,
+        "importance": -2729.9328
+      },
+      {
+        "player": "Trevion LaBeaux",
+        "status": "out",
+        "bpr_share": 0.5,
+        "importance": 0.5
+      },
+      {
+        "player": "Jayshayne Woodard",
+        "status": "out",
+        "bpr_share": 0.5,
+        "importance": 0.5
+      },
+      {
+        "player": "Daithi Quinn",
+        "status": "out",
+        "bpr_share": 0.5,
+        "importance": 0.5
+      }
+    ],
+    "injury_impact": -5506.54164
   },
   {
     "team": "Idaho St.",
@@ -18588,7 +19404,28 @@
     "em_depth_score": 0.0,
     "em_adj_o": 99.1927,
     "em_adj_d": 104.7666,
-    "conf_strength_score": 0.5244
+    "conf_strength_score": 0.5244,
+    "injuries": [
+      {
+        "player": "Jaxon Hartman",
+        "status": "out",
+        "bpr_share": 0.5,
+        "importance": 0.5
+      },
+      {
+        "player": "Abdou Khadre Kebe",
+        "status": "out",
+        "bpr_share": 0.5,
+        "importance": 0.5
+      },
+      {
+        "player": "Justin May",
+        "status": "out",
+        "bpr_share": 0.5,
+        "importance": 0.5
+      }
+    ],
+    "injury_impact": 4.5
   },
   {
     "team": "Ball St.",
@@ -24416,6 +25253,21 @@
     "em_depth_score": 0.161,
     "em_adj_o": 107.784,
     "em_adj_d": 104.5756,
+    "injuries": [
+      {
+        "player": "Antwan Burnett",
+        "status": "questionable",
+        "bpr_share": -0.1168,
+        "importance": -0.1168
+      },
+      {
+        "player": "Amar Kuljuhovic",
+        "status": "out",
+        "bpr_share": 0.5,
+        "importance": 0.5
+      }
+    ],
+    "injury_impact": 1.35984,
     "team": "Missouri State"
   },
   {
@@ -24566,6 +25418,15 @@
     "em_depth_score": 0.182,
     "em_adj_o": 107.2477,
     "em_adj_d": 112.6899,
+    "injuries": [
+      {
+        "player": "Jace Whiting",
+        "status": "out",
+        "bpr_share": -1.0463,
+        "importance": -1.0463
+      }
+    ],
+    "injury_impact": -3.1389,
     "team": "Weber State"
   },
   {
@@ -24641,6 +25502,15 @@
     "em_depth_score": 0.0,
     "em_adj_o": 102.8856,
     "em_adj_d": 107.0709,
+    "injuries": [
+      {
+        "player": "Daniel Rouzan",
+        "status": "questionable",
+        "bpr_share": -501.5053,
+        "importance": -501.5053
+      }
+    ],
+    "injury_impact": -601.80636,
     "team": "Bethune-Cookman"
   },
   {
@@ -24791,6 +25661,21 @@
     "em_depth_score": 0.012,
     "em_adj_o": 107.7179,
     "em_adj_d": 114.9568,
+    "injuries": [
+      {
+        "player": "JaVaughn Hannah",
+        "status": "out",
+        "bpr_share": 0.5,
+        "importance": 0.5
+      },
+      {
+        "player": "Jaden Goodall",
+        "status": "out",
+        "bpr_share": 0.5,
+        "importance": 0.5
+      }
+    ],
+    "injury_impact": 3.0,
     "team": "San Jose State"
   },
   {
@@ -25241,6 +26126,15 @@
     "em_depth_score": 0.0,
     "em_adj_o": 97.0883,
     "em_adj_d": 116.3351,
+    "injuries": [
+      {
+        "player": "Daeshun Ruffin",
+        "status": "questionable",
+        "bpr_share": 1233.8818,
+        "importance": 1233.8818
+      }
+    ],
+    "injury_impact": 10.0,
     "team": "Jackson State"
   },
   {

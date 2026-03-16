@@ -1,26 +1,24 @@
 """
 best_bets.py — Compare our model's predictions against today's Vegas lines.
 
-Fetches live NCAAB odds (spread, moneyline, over/under) from The Odds API,
-runs predict_game on each matchup, and ranks bets by model edge.
+Fetches live NCAAB odds (spread, moneyline, over/under) from an odds provider.
+Providers: The Odds API (default) or BetStack. Set ODDS_PROVIDER=odds_api|betstack.
 
 Requirements:
   pip install requests
-  Free API key from https://the-odds-api.com (500 req/month free tier)
+  ODDS_API_KEY for The Odds API (https://the-odds-api.com, 500 req/month free)
+  BETSTACK_API_KEY for BetStack (https://betstack.dev, free forever, 1 req/60s)
 
 Usage:
-  # Set key in environment:
   export ODDS_API_KEY=your_key_here
   python scripts/best_bets.py
 
-  # Or pass directly:
-  python scripts/best_bets.py --api-key YOUR_KEY
+  # Use BetStack instead:
+  export ODDS_PROVIDER=betstack
+  export BETSTACK_API_KEY=your_betstack_key
+  python scripts/best_bets.py
 
-  # Use a specific year's team data:
-  python scripts/best_bets.py --year 2026
-
-  # Adjust minimum edge thresholds:
-  python scripts/best_bets.py --ml-edge 0.04 --spread-edge 2.5 --total-edge 4.0
+  python scripts/best_bets.py --api-key YOUR_KEY --year 2026
 """
 import argparse
 import json
@@ -42,16 +40,7 @@ except ImportError:
     sys.exit(1)
 
 from engine import predict_game, ModelConfig, _normalize_team_for_match, enrich_team, load_teams_merged
-
-# ---------------------------------------------------------------------------
-# ODDS API CONFIG
-# ---------------------------------------------------------------------------
-
-ODDS_API_BASE = "https://api.the-odds-api.com/v4"
-SPORT_KEY = "basketball_ncaab"
-REGIONS = "us"
-MARKETS = "h2h,spreads,totals"
-ODDS_FORMAT = "american"
+from odds_provider import get_provider, get_api_key
 
 # Default edge thresholds to flag as a "bet"
 DEFAULT_ML_EDGE = 0.10      # 10% win probability edge over implied odds (raised from 7%)
@@ -65,33 +54,22 @@ DEFAULT_MAX_2STAR_PICKS = 8   # cap 2-star picks per day
 
 
 # ---------------------------------------------------------------------------
-# ODDS FETCHING
+# ODDS FETCHING (via odds_provider)
 # ---------------------------------------------------------------------------
 
 def fetch_today_odds(api_key):
-    """Fetch today's NCAAB games with spread, ML, and totals from The Odds API."""
-    url = f"{ODDS_API_BASE}/sports/{SPORT_KEY}/odds/"
-    params = {
-        "apiKey": api_key,
-        "regions": REGIONS,
-        "markets": MARKETS,
-        "oddsFormat": ODDS_FORMAT,
-        "dateFormat": "iso",
-    }
-    resp = requests.get(url, params=params, timeout=15)
-    if resp.status_code == 401:
-        print("ERROR: Invalid API key. Get a free key at https://the-odds-api.com")
+    """Fetch today's NCAAB games from the active provider (ODDS_PROVIDER)."""
+    provider = get_provider()
+    try:
+        return provider.fetch_games(api_key)
+    except ValueError as e:
+        print(f"ERROR: {e}")
         sys.exit(1)
-    if resp.status_code == 422:
-        print("ERROR: API returned 422 — sport may be off-season or no games today.")
-        return []
-    resp.raise_for_status()
 
-    remaining = resp.headers.get("x-requests-remaining", "?")
-    used = resp.headers.get("x-requests-used", "?")
-    print(f"  Odds API: {used} requests used, {remaining} remaining this month")
 
-    return resp.json()
+def parse_game(game):
+    """Parse raw game from active provider into common dict shape."""
+    return get_provider().parse_game(game)
 
 
 def _american_to_prob(odds):
@@ -116,74 +94,6 @@ def _american_to_decimal(odds):
         return 1 + 100 / abs(odds)
     else:
         return 1 + odds / 100
-
-
-def parse_game(game):
-    """Extract the best available line for each market from a raw Odds API game object.
-
-    Returns a dict with:
-      home_team, away_team, commence_time,
-      ml_home, ml_away,          (American odds or None)
-      spread_home, spread_line,  (home spread value e.g. -4.5, and odds)
-      total_line,                (over/under value)
-    """
-    home = game["home_team"]
-    away = game["away_team"]
-    commence = game.get("commence_time", "")
-
-    ml_home = ml_away = None
-    spread_home = spread_line = None
-    total_line = None
-
-    # Aggregate across bookmakers — pick the consensus/median line
-    h2h_home_odds, h2h_away_odds = [], []
-    spread_homes, spread_lines = [], []
-    total_lines = []
-
-    for bookmaker in game.get("bookmakers", []):
-        for market in bookmaker.get("markets", []):
-            key = market["key"]
-            outcomes = {o["name"]: o for o in market.get("outcomes", [])}
-
-            if key == "h2h":
-                if home in outcomes:
-                    h2h_home_odds.append(outcomes[home]["price"])
-                if away in outcomes:
-                    h2h_away_odds.append(outcomes[away]["price"])
-
-            elif key == "spreads":
-                if home in outcomes:
-                    spread_homes.append(outcomes[home].get("point", 0))
-                    spread_lines.append(outcomes[home]["price"])
-
-            elif key == "totals":
-                over = outcomes.get("Over")
-                if over:
-                    total_lines.append(over.get("point", 0))
-
-    def _median(lst):
-        if not lst:
-            return None
-        s = sorted(lst)
-        n = len(s)
-        return s[n // 2]
-
-    ml_home = _median(h2h_home_odds)
-    ml_away = _median(h2h_away_odds)
-    spread_home = _median(spread_homes)
-    spread_line = _median(spread_lines)
-    total_line = _median(total_lines)
-
-    return {
-        "home_team": home,
-        "away_team": away,
-        "commence_time": commence,
-        "ml_home": ml_home,
-        "ml_away": ml_away,
-        "spread_home": spread_home,     # home team's spread (negative = favorite)
-        "spread_line": spread_line,
-        "total_line": total_line,
-    }
 
 
 # ---------------------------------------------------------------------------
@@ -800,8 +710,8 @@ def print_report(bets, thresholds):
 
 def main():
     parser = argparse.ArgumentParser(description="Find best bets vs. Vegas for today's NCAAB games")
-    parser.add_argument("--api-key", default=os.environ.get("ODDS_API_KEY", ""),
-                        help="The Odds API key (or set ODDS_API_KEY env var)")
+    parser.add_argument("--api-key", default=None,
+                        help="API key (default: ODDS_API_KEY or BETSTACK_API_KEY per ODDS_PROVIDER)")
     parser.add_argument("--year", type=int, default=datetime.now().year,
                         help="Team stats year (default: current year)")
     parser.add_argument("--ml-edge", type=float, default=DEFAULT_ML_EDGE,
@@ -816,14 +726,20 @@ def main():
                         help=f"Min model probability for ML bets (default: {DEFAULT_MIN_MODEL_CONFIDENCE:.0%})")
     args = parser.parse_args()
 
-    if not args.api_key:
+    api_key = args.api_key or get_api_key()
+    if not api_key:
+        provider = (os.environ.get("ODDS_PROVIDER") or "odds_api").strip().lower()
         print("ERROR: No API key provided.")
-        print("  Get a free key at https://the-odds-api.com (500 req/month)")
-        print("  Then: export ODDS_API_KEY=your_key  OR  --api-key YOUR_KEY")
+        if provider == "betstack":
+            print("  Get a free key at https://betstack.dev")
+            print("  Then: export BETSTACK_API_KEY=your_key  OR  --api-key YOUR_KEY")
+        else:
+            print("  Get a free key at https://the-odds-api.com (500 req/month)")
+            print("  Then: export ODDS_API_KEY=your_key  OR  --api-key YOUR_KEY")
         sys.exit(1)
 
     print(f"Fetching today's NCAAB odds...")
-    raw_games = fetch_today_odds(args.api_key)
+    raw_games = fetch_today_odds(api_key)
     if not raw_games:
         print("No games found today.")
         return

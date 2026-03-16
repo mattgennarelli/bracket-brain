@@ -44,6 +44,7 @@ from engine import (
 )
 from espn_scores import fetch_scores_for_picks, _scores_key as espn_scores_key
 from best_bets import get_full_card_json
+from odds_provider import get_api_key
 
 LEDGER_PATH = os.path.join(DATA_DIR, "bets_ledger.json")
 CARD_LEDGER_PATH = os.path.join(DATA_DIR, "card_ledger.json")
@@ -468,8 +469,8 @@ def get_bets_card(year: int = Query(default=2026)):
         games = data.get("games", [])
         return {"date": today, "games": games, "available": bool(games)}
 
-    # Fall back to live Odds API if no saved file (e.g. before Actions runs)
-    api_key = os.environ.get("ODDS_API_KEY", "")
+    # Fall back to live odds fetch if no saved file (e.g. before Actions runs)
+    api_key = get_api_key()
     if not api_key:
         return {"games": [], "available": False,
                 "message": "No card data yet. Run save_card.py each morning."}

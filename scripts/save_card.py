@@ -4,13 +4,14 @@ save_card.py — Save today's full game card (all matchups, 1-3 picks each).
 Run once each morning before games start:
   python scripts/save_card.py
 
-Unlike save_bets.py, this saves EVERY game's model leans — not just
-high-confidence picks.  Stored in data/card_ledger.json and settled later
-by settle_card.py.
+Uses ODDS_PROVIDER (odds_api or betstack). Set ODDS_API_KEY or BETSTACK_API_KEY.
 
 Usage:
   export ODDS_API_KEY=your_key
   python scripts/save_card.py
+
+  export ODDS_PROVIDER=betstack
+  export BETSTACK_API_KEY=your_key
   python scripts/save_card.py --year 2026
 """
 
@@ -26,6 +27,7 @@ DATA_DIR = os.path.join(ROOT, "data")
 sys.path.insert(0, SCRIPT_DIR)
 
 from best_bets import get_full_card_json
+from odds_provider import get_api_key
 from settle_bets import compute_stats  # reuse stats computation
 
 CARD_LEDGER_PATH = os.path.join(DATA_DIR, "card_ledger.json")
@@ -51,18 +53,21 @@ def save_ledger(ledger):
 
 def main():
     parser = argparse.ArgumentParser(description="Save today's full game card to disk")
-    parser.add_argument("--api-key", default=os.environ.get("ODDS_API_KEY", ""))
+    parser.add_argument("--api-key", default=None,
+                        help="API key (default: ODDS_API_KEY or BETSTACK_API_KEY per ODDS_PROVIDER)")
     parser.add_argument("--year", type=int, default=datetime.now().year)
     args = parser.parse_args()
 
-    if not args.api_key:
-        print("ERROR: No API key. Set ODDS_API_KEY or pass --api-key.")
+    api_key = args.api_key or get_api_key()
+    if not api_key:
+        provider = (os.environ.get("ODDS_PROVIDER") or "odds_api").strip().lower()
+        print("ERROR: No API key. Set ODDS_API_KEY or BETSTACK_API_KEY (per ODDS_PROVIDER), or pass --api-key.")
         sys.exit(1)
 
     today = datetime.now().strftime("%Y-%m-%d")
     print(f"Fetching full card for {today}...")
 
-    games = get_full_card_json(args.api_key, year=args.year)
+    games = get_full_card_json(api_key, year=args.year)
 
     if not games:
         print("No games today (or no odds available).")

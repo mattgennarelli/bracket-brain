@@ -4,15 +4,15 @@ settle_bets.py — Fetch completed game scores and settle pending picks.
 Run after each day's games are complete (or each morning to settle yesterday):
   python scripts/settle_bets.py
 
-Uses ESPN first (free), then Odds API as fallback for unmatched picks (mid-majors).
+Uses ESPN first (free), then Odds API or BetStack as fallback for unmatched picks.
 Matches against pending picks in data/bets_ledger.json and marks each as W / L / P (push).
-Updates the ledger and prints a running hit rate.
 
 Usage:
-  python scripts/settle_bets.py                    # ESPN + Odds API fallback (if ODDS_API_KEY set)
-  python scripts/settle_bets.py --source odds       # Odds API only (requires ODDS_API_KEY)
-  python scripts/settle_bets.py --days 3           # check up to 3 days back
-  python scripts/settle_bets.py --debug            # log unmatched picks
+  python scripts/settle_bets.py                    # ESPN + Odds API fallback (if ODDS_API_KEY)
+  python scripts/settle_bets.py --source odds     # Odds API only (ODDS_API_KEY)
+  python scripts/settle_bets.py --source betstack # BetStack only (BETSTACK_API_KEY)
+  python scripts/settle_bets.py --days 3
+  python scripts/settle_bets.py --debug
 """
 
 import argparse
@@ -33,6 +33,7 @@ except ImportError:
     requests = None
 
 from best_bets import _normalize_team_for_match, _american_to_decimal
+from odds_provider import fetch_scores_betstack, get_api_key
 
 LEDGER_PATH = os.path.join(DATA_DIR, "bets_ledger.json")
 ODDS_API_BASE = "https://api.the-odds-api.com/v4"
@@ -307,18 +308,28 @@ def compute_stats(picks):
 
 def main():
     parser = argparse.ArgumentParser(description="Settle pending bets with actual scores")
-    parser.add_argument("--source", choices=["espn", "odds"], default="espn",
-                        help="Score source: espn (free) or odds (requires API key). Default uses ESPN first, then Odds API fallback.")
-    parser.add_argument("--api-key", default=os.environ.get("ODDS_API_KEY", ""))
+    parser.add_argument("--source", choices=["espn", "odds", "betstack"], default="espn",
+                        help="Score source: espn (free), odds (ODDS_API_KEY), or betstack (BETSTACK_API_KEY). Default: ESPN + Odds API fallback.")
+    parser.add_argument("--api-key", default=None,
+                        help="API key (default: ODDS_API_KEY or BETSTACK_API_KEY per --source)")
     parser.add_argument("--days", type=int, default=3,
                         help="How many days back to fetch scores (default 3)")
     parser.add_argument("--debug", action="store_true",
                         help="Log unmatched picks")
     args = parser.parse_args()
 
-    if args.source == "odds" and not args.api_key:
-        print("ERROR: Odds API requires ODDS_API_KEY. Use --source espn for free ESPN scores.")
-        sys.exit(1)
+    if args.source == "odds":
+        api_key = args.api_key or get_api_key("odds_api")
+        if not api_key:
+            print("ERROR: --source odds requires ODDS_API_KEY. Use --source espn for free ESPN scores.")
+            sys.exit(1)
+    elif args.source == "betstack":
+        api_key = args.api_key or get_api_key("betstack")
+        if not api_key:
+            print("ERROR: --source betstack requires BETSTACK_API_KEY.")
+            sys.exit(1)
+    else:
+        api_key = args.api_key or get_api_key("odds_api")
 
     if not os.path.isfile(LEDGER_PATH):
         print("No ledger found. Run save_bets.py first.")
@@ -345,10 +356,19 @@ def main():
         all_scores = []
         for d in range(0, min(args.days + 1, 4)):
             try:
-                scores = fetch_scores_odds(args.api_key, days_from=d)
+                scores = fetch_scores_odds(api_key, days_from=d)
                 all_scores.extend(scores)
             except Exception as e:
                 print(f"  Warning: could not fetch scores for daysFrom={d}: {e}")
+        scores_by_key = {}
+        for g in all_scores:
+            k = _scores_key(g["home_team"], g["away_team"])
+            scores_by_key[k] = g
+        print(f"  {len(all_scores)} completed game(s) found")
+    elif args.source == "betstack":
+        # BetStack only
+        print(f"Found {len(pending)} pending pick(s). Fetching scores from BetStack...")
+        all_scores = fetch_scores_betstack(api_key, days_back=args.days)
         scores_by_key = {}
         for g in all_scores:
             k = _scores_key(g["home_team"], g["away_team"])
@@ -401,20 +421,34 @@ def main():
 
     # Phase 2: Odds API fallback for still-pending (mid-major games ESPN may not have)
     still_pending = [p for p in ledger["picks"] if p.get("result") is None]
-    if still_pending and args.api_key and args.source == "espn":
-        print(f"\n  {len(still_pending)} pick(s) still pending. Trying Odds API fallback...")
-        all_odds = []
-        for d in range(0, min(args.days + 1, 4)):
-            try:
-                scores = fetch_scores_odds(args.api_key, days_from=d)
-                all_odds.extend(scores)
-            except Exception as e:
-                print(f"  Warning: could not fetch Odds API for daysFrom={d}: {e}")
-        for g in all_odds:
-            k = _scores_key(g["home_team"], g["away_team"])
-            if k not in scores_by_key:
-                scores_by_key[k] = g
-        print(f"  {len(all_odds)} game(s) from Odds API")
+    if still_pending and args.source == "espn":
+        odds_key = get_api_key("odds_api")
+        if odds_key:
+            print(f"\n  {len(still_pending)} pick(s) still pending. Trying Odds API fallback...")
+            all_odds = []
+            for d in range(0, min(args.days + 1, 4)):
+                try:
+                    scores = fetch_scores_odds(odds_key, days_from=d)
+                    all_odds.extend(scores)
+                except Exception as e:
+                    print(f"  Warning: could not fetch Odds API for daysFrom={d}: {e}")
+            for g in all_odds:
+                k = _scores_key(g["home_team"], g["away_team"])
+                if k not in scores_by_key:
+                    scores_by_key[k] = g
+            print(f"  {len(all_odds)} game(s) from Odds API")
+
+        # Phase 2b: BetStack fallback if still pending
+        still_pending = [p for p in ledger["picks"] if p.get("result") is None]
+        betstack_key = get_api_key("betstack") if still_pending else None
+        if still_pending and betstack_key:
+            print(f"\n  {len(still_pending)} pick(s) still pending. Trying BetStack fallback...")
+            all_betstack = fetch_scores_betstack(betstack_key, days_back=args.days)
+            for g in all_betstack:
+                k = _scores_key(g["home_team"], g["away_team"])
+                if k not in scores_by_key:
+                    scores_by_key[k] = g
+            print(f"  {len(all_betstack)} game(s) from BetStack")
 
         for pick in ledger["picks"]:
             if pick.get("result") is not None:
@@ -422,7 +456,7 @@ def main():
             score_rec = match_score(pick, scores_by_key)
             if not score_rec:
                 if args.debug:
-                    print(f"  [UNMATCHED] {pick['away_team']} @ {pick['home_team']} (no Odds API game)")
+                    print(f"  [UNMATCHED] {pick['away_team']} @ {pick['home_team']} (no fallback match)")
                 continue
 
             home_score, away_score = get_scores_from_record(score_rec)

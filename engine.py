@@ -1348,7 +1348,7 @@ def enrich_bracket_with_teams(bracket, teams_merged):
                       "em_depth_score",
                       "wab", "elite_sos", "qual_o", "qual_d", "qual_barthag",
                       "conf_adj_o", "conf_adj_d", "win_pct", "conf_win_pct", "conf_rating", "conf_strength_score",
-                      "momentum", "conf_tourney_momentum", "adj_o_recent", "adj_d_recent", "injuries",
+                      "momentum", "conf_tourney_momentum", "adj_o_recent", "adj_d_recent", "injuries", "injury_impact",
                       "em_o_rate", "em_d_rate", "em_rel_rating", "em_roster_rank",
                       "em_tempo", "top_player", "top_player_bpr"):
                 if k in merged and merged[k] is not None:

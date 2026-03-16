@@ -137,6 +137,10 @@ def generate_html(bracket_result, mc_results, bracket, config, num_sims,
                           "to_rate", "orb_rate", "ft_pct", "three_rate", "three_pct"):
                 if team.get(extra) is not None:
                     ts[extra] = team[extra]
+            if team.get("injuries"):
+                ts["injuries"] = team["injuries"]
+                if team.get("injury_impact") is not None:
+                    ts["injury_impact"] = team["injury_impact"]
             team_stats[team["team"]] = ts
 
     picks_json = json.dumps(picks)
@@ -159,13 +163,19 @@ def generate_html(bracket_result, mc_results, bracket, config, num_sims,
         bracket_structure[region_name] = teams
     bracket_structure_json = json.dumps(bracket_structure)
 
+    def _injury_badge(team_name):
+        imp = team_stats.get(team_name, {}).get("injury_impact", 0) or 0
+        if imp > 1:
+            return f' <span class="injury-badge" title="Key injuries ({imp:.1f} pts impact)">!</span>'
+        return ""
+
     max_champ = max(champ_probs.values()) if champ_probs else 1
     champ_rows = ""
     for i, (team, prob) in enumerate(list(champ_probs.items())[:16]):
         seed = _find_team_seed(team, bracket)
         bar_w = prob / max_champ * 100
         champ_rows += (f'<tr><td class="rank">{i+1}</td>'
-                       f'<td><span class="seed-badge">{seed}</span>{team}</td>'
+                       f'<td><span class="seed-badge">{seed}</span>{team}{_injury_badge(team)}</td>'
                        f'<td class="bar-cell"><div class="bar" style="width:{bar_w:.0f}%"></div></td>'
                        f'<td class="pct">{prob*100:.1f}%</td></tr>\n')
 
@@ -175,7 +185,7 @@ def generate_html(bracket_result, mc_results, bracket, config, num_sims,
         seed = _find_team_seed(team, bracket)
         bar_w = prob / max_ff * 100
         ff_rows += (f'<tr><td class="rank">{i+1}</td>'
-                    f'<td><span class="seed-badge">{seed}</span>{team}</td>'
+                    f'<td><span class="seed-badge">{seed}</span>{team}{_injury_badge(team)}</td>'
                     f'<td class="bar-cell"><div class="bar" style="width:{bar_w:.0f}%"></div></td>'
                     f'<td class="pct">{prob*100:.1f}%</td></tr>\n')
 
@@ -350,6 +360,7 @@ body {{ font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sys
 .bar {{ height:6px; border-radius:3px; background:var(--primary); opacity:.6; min-width:2px; }}
 .seed-badge {{ display:inline-block; background:var(--surface2); color:var(--muted); font-size:.62rem;
   font-weight:700; padding:1px 4px; border-radius:3px; margin-right:4px; border:1px solid var(--border); }}
+.injury-badge {{ color:#dc2626; font-size:.75rem; font-weight:700; margin-left:2px; cursor:help; }}
 
 .footer {{ text-align:center; padding:18px; color:var(--muted); font-size:.72rem;
   border-top:1px solid var(--border); background:var(--surface); }}
@@ -750,6 +761,17 @@ function renderBracket() {{
           const displayName = DISPLAY_NAMES[t.name] || t.name;
           slot.querySelector('.tm').textContent = displayName;
           slot.querySelector('.tm').title = displayName !== t.name ? t.name : '';
+          const injSlot = slot.querySelector('.injury-badge-slot');
+          if (injSlot) {{
+            const imp = TEAM_STATS[t.name]?.injury_impact;
+            if (imp != null && imp > 1) {{
+              injSlot.innerHTML = '<span class="injury-badge" title="Key injuries (' + imp.toFixed(1) + ' pts impact)">!</span>';
+              injSlot.style.display = 'inline';
+            }} else {{
+              injSlot.innerHTML = '';
+              injSlot.style.display = 'none';
+            }}
+          }}
           slot.classList.remove('empty');
           slot.classList.toggle('picked', st.pick === t.name);
           slot.classList.toggle('locked', st.isLocked && st.pick === t.name);
@@ -760,6 +782,8 @@ function renderBracket() {{
           slot.dataset.team = ''; slot.dataset.seed = '';
           slot.querySelector('.sd').textContent = '';
           slot.querySelector('.tm').textContent = '\\u2014';
+          const injSlot = slot.querySelector('.injury-badge-slot');
+          if (injSlot) {{ injSlot.innerHTML = ''; injSlot.style.display = 'none'; }}
           slot.classList.add('empty');
           slot.classList.remove('picked','locked','upset-pick');
           slot.onclick = null;
@@ -771,6 +795,8 @@ function renderBracket() {{
         slot.dataset.team = ''; slot.dataset.seed = '';
         slot.querySelector('.sd').textContent = '';
         slot.querySelector('.tm').textContent = '\\u2014';
+        const injSlot = slot.querySelector('.injury-badge-slot');
+        if (injSlot) {{ injSlot.innerHTML = ''; injSlot.style.display = 'none'; }}
         slot.classList.add('empty');
         slot.classList.remove('picked','locked','upset-pick');
         slot.onclick = null;
@@ -891,11 +917,11 @@ function buildRegionHTML(region, flipped) {{
       html += `<div class="game" data-game-id="${{gid}}" onclick="handleGameClick(event,'${{gid}}')">`;
       if (ri === 0) {{
         const tA = teams[gi*2], tB = teams[gi*2+1];
-        html += `<div class="team-slot" data-team="${{tA?.team||''}}" data-seed="${{tA?.seed||''}}"><span class="sd">${{tA?.seed||''}}</span><span class="tm">${{tA?.team||'\\u2014'}}</span><span class="upset-badge" style="display:none"></span></div>`;
-        html += `<div class="team-slot" data-team="${{tB?.team||''}}" data-seed="${{tB?.seed||''}}"><span class="sd">${{tB?.seed||''}}</span><span class="tm">${{tB?.team||'\\u2014'}}</span><span class="upset-badge" style="display:none"></span></div>`;
+        html += `<div class="team-slot" data-team="${{tA?.team||''}}" data-seed="${{tA?.seed||''}}"><span class="sd">${{tA?.seed||''}}</span><span class="tm">${{tA?.team||'\\u2014'}}</span><span class="injury-badge-slot"></span><span class="upset-badge" style="display:none"></span></div>`;
+        html += `<div class="team-slot" data-team="${{tB?.team||''}}" data-seed="${{tB?.seed||''}}"><span class="sd">${{tB?.seed||''}}</span><span class="tm">${{tB?.team||'\\u2014'}}</span><span class="injury-badge-slot"></span><span class="upset-badge" style="display:none"></span></div>`;
       }} else {{
-        html += '<div class="team-slot empty" data-team="" data-seed=""><span class="sd"></span><span class="tm">\\u2014</span><span class="upset-badge" style="display:none"></span></div>';
-        html += '<div class="team-slot empty" data-team="" data-seed=""><span class="sd"></span><span class="tm">\\u2014</span><span class="upset-badge" style="display:none"></span></div>';
+        html += '<div class="team-slot empty" data-team="" data-seed=""><span class="sd"></span><span class="tm">\\u2014</span><span class="injury-badge-slot"></span><span class="upset-badge" style="display:none"></span></div>';
+        html += '<div class="team-slot empty" data-team="" data-seed=""><span class="sd"></span><span class="tm">\\u2014</span><span class="injury-badge-slot"></span><span class="upset-badge" style="display:none"></span></div>';
       }}
       html += `<div class="info-btn" style="display:${{ri===0?'flex':'none'}}" onclick="event.stopPropagation();showAnalysis('${{gid}}')">i</div>`;
       html += '</div>';
@@ -911,15 +937,15 @@ function buildFinalFourHTML() {{
   let html = '<div class="ff-center"><div class="ff-label">Final Four</div>';
   ['FF-4-0','FF-4-1'].forEach(gid => {{
     html += `<div class="game" data-game-id="${{gid}}" onclick="handleGameClick(event,'${{gid}}')">`;
-    html += '<div class="team-slot empty" data-team="" data-seed=""><span class="sd"></span><span class="tm">\\u2014</span><span class="upset-badge" style="display:none"></span></div>';
-    html += '<div class="team-slot empty" data-team="" data-seed=""><span class="sd"></span><span class="tm">\\u2014</span><span class="upset-badge" style="display:none"></span></div>';
+    html += '<div class="team-slot empty" data-team="" data-seed=""><span class="sd"></span><span class="tm">\\u2014</span><span class="injury-badge-slot"></span><span class="upset-badge" style="display:none"></span></div>';
+    html += '<div class="team-slot empty" data-team="" data-seed=""><span class="sd"></span><span class="tm">\\u2014</span><span class="injury-badge-slot"></span><span class="upset-badge" style="display:none"></span></div>';
     html += `<div class="info-btn" style="display:none" title="Matchup details">i</div>`;
     html += '</div>';
   }});
   html += '<div class="ff-label">Championship</div>';
   html += '<div class="game" data-game-id="FF-2-0" onclick="handleGameClick(event,\\'FF-2-0\\')">';
-  html += '<div class="team-slot empty" data-team="" data-seed=""><span class="sd"></span><span class="tm">\\u2014</span><span class="upset-badge" style="display:none"></span></div>';
-  html += '<div class="team-slot empty" data-team="" data-seed=""><span class="sd"></span><span class="tm">\\u2014</span><span class="upset-badge" style="display:none"></span></div>';
+  html += '<div class="team-slot empty" data-team="" data-seed=""><span class="sd"></span><span class="tm">\\u2014</span><span class="injury-badge-slot"></span><span class="upset-badge" style="display:none"></span></div>';
+  html += '<div class="team-slot empty" data-team="" data-seed=""><span class="sd"></span><span class="tm">\\u2014</span><span class="injury-badge-slot"></span><span class="upset-badge" style="display:none"></span></div>';
   html += `<div class="info-btn" style="display:none" title="Matchup details">i</div>`;
   html += '</div>';
   html += '<div class="champ-banner"><div class="trophy">&#127942;</div><div class="champ-team" id="champ-banner-name">\\u2014</div></div>';
@@ -988,6 +1014,22 @@ function showAnalysis(gameId) {{
       return `<div class="matchup-alert" style="background:${{c}}12;border-left:3px solid ${{c}};padding:8px 10px;margin:8px 0;font-size:.8rem;">
         <div style="font-weight:700;color:${{c}};margin-bottom:2px;">${{labels[alert.level]||'Note'}}</div>
         <div style="color:var(--text);">${{alert.reason}}</div></div>`;
+    }})()}}
+    ${{(()=>{{
+      const injA = sA?.injuries, injB = sB?.injuries;
+      const impA = sA?.injury_impact, impB = sB?.injury_impact;
+      if ((!injA || injA.length===0) && (!injB || injB.length===0)) return '';
+      const fmt = (team, injs, imp) => {{
+        if (!injs || injs.length===0) return '';
+        const list = injs.map(i => i.player + ' (' + (i.status||'out') + ')').join(', ');
+        const pts = (imp!=null && imp>0) ? ' — ' + imp.toFixed(1) + ' pts impact' : '';
+        return `<div style="margin-bottom:6px;"><strong>${{team}}</strong>: ${{list}}${{pts}}</div>`;
+      }};
+      return `<div class="injury-block" style="background:rgba(220,38,38,.08);border-left:3px solid #dc2626;padding:8px 10px;margin:8px 0;font-size:.8rem;">
+        <div style="font-weight:700;color:#dc2626;margin-bottom:4px;">Injuries</div>
+        ${{fmt(st.teamA, injA, impA)}}
+        ${{fmt(st.teamB, injB, impB)}}
+      </div>`;
     }})()}}
     ${{(()=>{{
       const h2h = orig?.head_to_head;
@@ -1177,7 +1219,9 @@ def main():
 
     best_bets = []
     if args.best_bets:
-        api_key = os.environ.get("ODDS_API_KEY", "")
+        sys.path.insert(0, os.path.join(ROOT, "scripts"))
+        from odds_provider import get_api_key
+        api_key = get_api_key()
         if api_key:
             try:
                 import importlib.util
@@ -1191,7 +1235,7 @@ def main():
             except Exception as e:
                 print(f"  Warning: Could not fetch best bets: {e}")
         else:
-            print("  ODDS_API_KEY not set — skipping Top Bets tab")
+            print("  No odds API key set (ODDS_API_KEY or BETSTACK_API_KEY) — skipping Top Bets tab")
 
     print("\nGenerating HTML...")
     html = generate_html(bracket_result, mc_results, bracket, config, args.sims, args.upset, quadrant_order, year=year, best_bets=best_bets)

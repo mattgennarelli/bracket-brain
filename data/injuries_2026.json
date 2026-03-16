@@ -1,1 +1,1984 @@
-{}
+{
+  "Alabama": [
+    {
+      "player": "Keitenn Bristow",
+      "status": "out",
+      "bpr_share": 0.5,
+      "importance": 0.5
+    },
+    {
+      "player": "Davion Hannah",
+      "status": "out",
+      "bpr_share": 0.5,
+      "importance": 0.5
+    },
+    {
+      "player": "Collins Onyejiaka",
+      "status": "out",
+      "bpr_share": 0.5,
+      "importance": 0.5
+    }
+  ],
+  "Appalachian State": [
+    {
+      "player": "KJ Vasser",
+      "status": "out",
+      "bpr_share": 0.5,
+      "importance": 0.5
+    }
+  ],
+  "Arizona State Sun Devils": [
+    {
+      "player": "Adante' Holiman",
+      "status": "out",
+      "bpr_share": 0.5,
+      "importance": 0.5
+    },
+    {
+      "player": "Vijay Wallace",
+      "status": "out",
+      "bpr_share": 0.5,
+      "importance": 0.5
+    },
+    {
+      "player": "Dame Salane",
+      "status": "out",
+      "bpr_share": 0.5,
+      "importance": 0.5
+    }
+  ],
+  "Arkansas": [
+    {
+      "player": "Karter Knox",
+      "status": "out",
+      "bpr_share": 0.0942,
+      "importance": 0.0942
+    }
+  ],
+  "Auburn": [
+    {
+      "player": "Emeka Opurum",
+      "status": "out",
+      "bpr_share": 0.5,
+      "importance": 0.5
+    }
+  ],
+  "BYU": [
+    {
+      "player": "Dawson Baker",
+      "status": "out",
+      "bpr_share": 0.5,
+      "importance": 0.5
+    },
+    {
+      "player": "Richie Saunders",
+      "status": "out",
+      "bpr_share": 0.2351,
+      "importance": 0.2351
+    },
+    {
+      "player": "Nate Pickens",
+      "status": "out",
+      "bpr_share": 0.5,
+      "importance": 0.5
+    },
+    {
+      "player": "KJ Perry",
+      "status": "out",
+      "bpr_share": 0.5,
+      "importance": 0.5
+    }
+  ],
+  "Baylor": [
+    {
+      "player": "JJ White",
+      "status": "questionable",
+      "bpr_share": 0.5,
+      "importance": 0.5
+    },
+    {
+      "player": "Juslin Bodo Bodo",
+      "status": "out",
+      "bpr_share": 0.5,
+      "importance": 0.5
+    },
+    {
+      "player": "Maikcol Perez",
+      "status": "out",
+      "bpr_share": 0.5,
+      "importance": 0.5
+    }
+  ],
+  "Belmont Bruins": [
+    {
+      "player": "Nic McClain",
+      "status": "out",
+      "bpr_share": 0.5,
+      "importance": 0.5
+    }
+  ],
+  "Bethune-Cookman": [
+    {
+      "player": "Daniel Rouzan",
+      "status": "questionable",
+      "bpr_share": -501.5053,
+      "importance": -501.5053
+    }
+  ],
+  "Boise State Broncos": [
+    {
+      "player": "Julian Bowie",
+      "status": "out",
+      "bpr_share": 0.5,
+      "importance": 0.5
+    }
+  ],
+  "Boston College Eagles": [
+    {
+      "player": "Donald Hand",
+      "status": "questionable",
+      "bpr_share": 0.5,
+      "importance": 0.5
+    },
+    {
+      "player": "Jason Asemota",
+      "status": "questionable",
+      "bpr_share": 0.5,
+      "importance": 0.5
+    },
+    {
+      "player": "Nick Petronio",
+      "status": "out",
+      "bpr_share": 0.5,
+      "importance": 0.5
+    }
+  ],
+  "Boston University Terriers": [
+    {
+      "player": "Malcolm Chimezie",
+      "status": "questionable",
+      "bpr_share": 0.5,
+      "importance": 0.5
+    },
+    {
+      "player": "Kyrone Alexander",
+      "status": "out",
+      "bpr_share": 0.5,
+      "importance": 0.5
+    }
+  ],
+  "Bradley Braves": [
+    {
+      "player": "Matthew Zobrist",
+      "status": "questionable",
+      "bpr_share": 0.5,
+      "importance": 0.5
+    }
+  ],
+  "Buffalo Bulls": [
+    {
+      "player": "Daniel Freitag",
+      "status": "questionable",
+      "bpr_share": 0.5,
+      "importance": 0.5
+    }
+  ],
+  "Butler": [
+    {
+      "player": "Azavier Robinson",
+      "status": "out",
+      "bpr_share": 0.1727,
+      "importance": 0.1727
+    }
+  ],
+  "California": [
+    {
+      "player": "Rytis Petraitis",
+      "status": "out",
+      "bpr_share": 0.5,
+      "importance": 0.5
+    },
+    {
+      "player": "Stephon Marbury",
+      "status": "out",
+      "bpr_share": 0.5,
+      "importance": 0.5
+    },
+    {
+      "player": "Jovani Ruff",
+      "status": "out",
+      "bpr_share": 0.5,
+      "importance": 0.5
+    }
+  ],
+  "Charleston": [
+    {
+      "player": "Will Mortimore",
+      "status": "out",
+      "bpr_share": 0.5,
+      "importance": 0.5
+    }
+  ],
+  "Charlotte 49ers": [
+    {
+      "player": "Major Freeman",
+      "status": "questionable",
+      "bpr_share": 0.5,
+      "importance": 0.5
+    },
+    {
+      "player": "David Gomez",
+      "status": "questionable",
+      "bpr_share": 0.5,
+      "importance": 0.5
+    },
+    {
+      "player": "Frank Oguche",
+      "status": "out",
+      "bpr_share": 0.5,
+      "importance": 0.5
+    }
+  ],
+  "Cincinnati Bearcats": [
+    {
+      "player": "Jalen Haynes",
+      "status": "out",
+      "bpr_share": 0.5,
+      "importance": 0.5
+    }
+  ],
+  "Clemson": [
+    {
+      "player": "Carter Welling",
+      "status": "out",
+      "bpr_share": 0.1266,
+      "importance": 0.1266
+    },
+    {
+      "player": "Zac Foster",
+      "status": "out",
+      "bpr_share": 0.5,
+      "importance": 0.5
+    },
+    {
+      "player": "Trent Steinour",
+      "status": "questionable",
+      "bpr_share": 0.5,
+      "importance": 0.5
+    }
+  ],
+  "Cleveland State Vikings": [
+    {
+      "player": "Josiah Harris",
+      "status": "questionable",
+      "bpr_share": 0.5,
+      "importance": 0.5
+    },
+    {
+      "player": "Dayan Nessah",
+      "status": "questionable",
+      "bpr_share": 0.5,
+      "importance": 0.5
+    }
+  ],
+  "Colorado Buffaloes": [
+    {
+      "player": "Sebastian Rancik",
+      "status": "questionable",
+      "bpr_share": 0.5,
+      "importance": 0.5
+    },
+    {
+      "player": "Jon Mani",
+      "status": "out",
+      "bpr_share": 0.5,
+      "importance": 0.5
+    },
+    {
+      "player": "Leonardo Van Elswyk",
+      "status": "out",
+      "bpr_share": 0.5,
+      "importance": 0.5
+    }
+  ],
+  "Connecticut": [
+    {
+      "player": "Jaylin Stewart",
+      "status": "out",
+      "bpr_share": 0.068,
+      "importance": 0.068
+    },
+    {
+      "player": "Silas Demary",
+      "status": "questionable",
+      "bpr_share": 0.1797,
+      "importance": 0.1797
+    }
+  ],
+  "Creighton Bluejays": [
+    {
+      "player": "Liam McChesney",
+      "status": "out",
+      "bpr_share": 0.5,
+      "importance": 0.5
+    },
+    {
+      "player": "Josh Townley-Thomas",
+      "status": "questionable",
+      "bpr_share": 0.5,
+      "importance": 0.5
+    },
+    {
+      "player": "Jackson McAndrew",
+      "status": "out",
+      "bpr_share": 0.5,
+      "importance": 0.5
+    },
+    {
+      "player": "Aleksa Dimitrijevic",
+      "status": "out",
+      "bpr_share": 0.5,
+      "importance": 0.5
+    }
+  ],
+  "Davidson": [
+    {
+      "player": "Joe Hurlburt",
+      "status": "questionable",
+      "bpr_share": 0.5,
+      "importance": 0.5
+    }
+  ],
+  "Dayton": [
+    {
+      "player": "Evan Dickey",
+      "status": "questionable",
+      "bpr_share": 0.5,
+      "importance": 0.5
+    },
+    {
+      "player": "Jaron McKie",
+      "status": "out",
+      "bpr_share": 0.5,
+      "importance": 0.5
+    }
+  ],
+  "DePaul Blue Demons": [
+    {
+      "player": "Jeremy Lorenz",
+      "status": "out",
+      "bpr_share": 0.5,
+      "importance": 0.5
+    },
+    {
+      "player": "Amsal Delalic",
+      "status": "out",
+      "bpr_share": 0.5,
+      "importance": 0.5
+    }
+  ],
+  "Delaware Fightin Blue Hens": [
+    {
+      "player": "Jameel Brown",
+      "status": "questionable",
+      "bpr_share": 0.5,
+      "importance": 0.5
+    },
+    {
+      "player": "Tyler Houser",
+      "status": "out",
+      "bpr_share": 0.5,
+      "importance": 0.5
+    },
+    {
+      "player": "Cavan Reilly",
+      "status": "out",
+      "bpr_share": 0.5,
+      "importance": 0.5
+    },
+    {
+      "player": "Lance Piper",
+      "status": "out",
+      "bpr_share": 0.5,
+      "importance": 0.5
+    },
+    {
+      "player": "Bouna Kebe",
+      "status": "questionable",
+      "bpr_share": 0.5,
+      "importance": 0.5
+    },
+    {
+      "player": "Mason Ellison",
+      "status": "out",
+      "bpr_share": 0.5,
+      "importance": 0.5
+    }
+  ],
+  "Duke": [
+    {
+      "player": "Ifeanyi Ufochukwu",
+      "status": "out",
+      "bpr_share": 0.5,
+      "importance": 0.5
+    },
+    {
+      "player": "Caleb Foster",
+      "status": "out",
+      "bpr_share": 0.0866,
+      "importance": 0.0866
+    },
+    {
+      "player": "Patrick Ngongba",
+      "status": "probable",
+      "bpr_share": 0.1577,
+      "importance": 0.1577
+    }
+  ],
+  "East Carolina": [
+    {
+      "player": "Eli DeLaurier",
+      "status": "questionable",
+      "bpr_share": -1862.6019,
+      "importance": -1862.6019
+    },
+    {
+      "player": "Tybo Bailey",
+      "status": "questionable",
+      "bpr_share": -2729.9328,
+      "importance": -2729.9328
+    },
+    {
+      "player": "Trevion LaBeaux",
+      "status": "out",
+      "bpr_share": 0.5,
+      "importance": 0.5
+    },
+    {
+      "player": "Jayshayne Woodard",
+      "status": "out",
+      "bpr_share": 0.5,
+      "importance": 0.5
+    },
+    {
+      "player": "Daithi Quinn",
+      "status": "out",
+      "bpr_share": 0.5,
+      "importance": 0.5
+    }
+  ],
+  "Eastern Washington Eagles": [
+    {
+      "player": "Andrew Cook",
+      "status": "out",
+      "bpr_share": 0.5,
+      "importance": 0.5
+    }
+  ],
+  "Florida Atlantic Owls": [
+    {
+      "player": "Zion Sampaio",
+      "status": "out",
+      "bpr_share": 0.5,
+      "importance": 0.5
+    }
+  ],
+  "Florida International Golden Panthers": [
+    {
+      "player": "Amarion Nimmers",
+      "status": "out",
+      "bpr_share": 0.5,
+      "importance": 0.5
+    },
+    {
+      "player": "Gvidas Gicevicius",
+      "status": "out",
+      "bpr_share": 0.5,
+      "importance": 0.5
+    }
+  ],
+  "Florida State": [
+    {
+      "player": "AJ Swinton",
+      "status": "out",
+      "bpr_share": 0.0471,
+      "importance": 0.0471
+    },
+    {
+      "player": "Xavier Osceola",
+      "status": "questionable",
+      "bpr_share": 0.5,
+      "importance": 0.5
+    }
+  ],
+  "Fordham Rams": [
+    {
+      "player": "Ryan Pettis",
+      "status": "out",
+      "bpr_share": 0.5,
+      "importance": 0.5
+    },
+    {
+      "player": "Jack Whitbourn",
+      "status": "questionable",
+      "bpr_share": 0.5,
+      "importance": 0.5
+    }
+  ],
+  "Fresno State": [
+    {
+      "player": "Nathan Zulemie",
+      "status": "out",
+      "bpr_share": 0.5,
+      "importance": 0.5
+    }
+  ],
+  "George Mason Patriots": [
+    {
+      "player": "Brayden O'Connor",
+      "status": "out",
+      "bpr_share": 0.5,
+      "importance": 0.5
+    },
+    {
+      "player": "Jermahri Hill",
+      "status": "questionable",
+      "bpr_share": 0.5,
+      "importance": 0.5
+    }
+  ],
+  "George Washington Colonials": [
+    {
+      "player": "Ty Bevins",
+      "status": "questionable",
+      "bpr_share": 0.5,
+      "importance": 0.5
+    },
+    {
+      "player": "Mohamed Binzagr",
+      "status": "questionable",
+      "bpr_share": 0.5,
+      "importance": 0.5
+    },
+    {
+      "player": "Jalen Rougier-Roane",
+      "status": "out",
+      "bpr_share": 0.5,
+      "importance": 0.5
+    }
+  ],
+  "Georgetown": [
+    {
+      "player": "KJ Lewis",
+      "status": "out",
+      "bpr_share": 0.2395,
+      "importance": 0.2395
+    }
+  ],
+  "Georgia State Panthers": [
+    {
+      "player": "Clash Peters",
+      "status": "out",
+      "bpr_share": 0.5,
+      "importance": 0.5
+    }
+  ],
+  "Georgia Tech Yellow Jackets": [
+    {
+      "player": "Dyllan Thompson",
+      "status": "questionable",
+      "bpr_share": 0.5,
+      "importance": 0.5
+    },
+    {
+      "player": "Mouhamed Sylla",
+      "status": "out",
+      "bpr_share": 0.5,
+      "importance": 0.5
+    }
+  ],
+  "Gonzaga": [
+    {
+      "player": "Braden Huff",
+      "status": "out",
+      "bpr_share": 0.1319,
+      "importance": 0.1319
+    }
+  ],
+  "Grand Canyon": [
+    {
+      "player": "Wilhelm Breidenbach",
+      "status": "questionable",
+      "bpr_share": 0.0452,
+      "importance": 0.0452
+    }
+  ],
+  "Hawaii Warriors": [
+    {
+      "player": "Aaron Hunkin-Claytor",
+      "status": "out",
+      "bpr_share": 0.5,
+      "importance": 0.5
+    }
+  ],
+  "Illinois Fighting Illini": [
+    {
+      "player": "Jason Jakstys",
+      "status": "out",
+      "bpr_share": 0.5,
+      "importance": 0.5
+    }
+  ],
+  "Indiana": [
+    {
+      "player": "Jason Drake",
+      "status": "out",
+      "bpr_share": 0.5,
+      "importance": 0.5
+    },
+    {
+      "player": "Jordan Rayford",
+      "status": "out",
+      "bpr_share": 0.5,
+      "importance": 0.5
+    }
+  ],
+  "Indiana State Sycamores": [
+    {
+      "player": "Zyair Greene",
+      "status": "questionable",
+      "bpr_share": 0.5,
+      "importance": 0.5
+    },
+    {
+      "player": "Jayan Walker",
+      "status": "questionable",
+      "bpr_share": 0.5,
+      "importance": 0.5
+    }
+  ],
+  "Iowa Hawkeyes": [
+    {
+      "player": "Peyton McCollum",
+      "status": "out",
+      "bpr_share": 0.5,
+      "importance": 0.5
+    }
+  ],
+  "Jackson State": [
+    {
+      "player": "Daeshun Ruffin",
+      "status": "questionable",
+      "bpr_share": 1233.8818,
+      "importance": 1233.8818
+    }
+  ],
+  "Jacksonville State": [
+    {
+      "player": "Bencao Vungo",
+      "status": "out",
+      "bpr_share": 0.5,
+      "importance": 0.5
+    },
+    {
+      "player": "Jordan Vick",
+      "status": "out",
+      "bpr_share": 0.5,
+      "importance": 0.5
+    }
+  ],
+  "Kansas State": [
+    {
+      "player": "Abdi Bashir",
+      "status": "out",
+      "bpr_share": 0.1281,
+      "importance": 0.1281
+    },
+    {
+      "player": "Mobi Ikegwuruka",
+      "status": "out",
+      "bpr_share": 0.5,
+      "importance": 0.5
+    },
+    {
+      "player": "Dorin Buca",
+      "status": "out",
+      "bpr_share": -0.0321,
+      "importance": -0.0321
+    }
+  ],
+  "Kennesaw State Owls": [
+    {
+      "player": "Chase Clemmons",
+      "status": "out",
+      "bpr_share": 0.5,
+      "importance": 0.5
+    },
+    {
+      "player": "Brendan Tousignaut",
+      "status": "out",
+      "bpr_share": 0.5,
+      "importance": 0.5
+    }
+  ],
+  "Kentucky": [
+    {
+      "player": "Jaland Lowe",
+      "status": "out",
+      "bpr_share": 0.5,
+      "importance": 0.5
+    },
+    {
+      "player": "Jayden Quaintance",
+      "status": "out",
+      "bpr_share": 0.5,
+      "importance": 0.5
+    }
+  ],
+  "LSU": [
+    {
+      "player": "Dedan Thomas",
+      "status": "out",
+      "bpr_share": 0.2156,
+      "importance": 0.2156
+    }
+  ],
+  "Louisiana Ragin' Cajuns": [
+    {
+      "player": "Jamyron Keller",
+      "status": "out",
+      "bpr_share": 0.5,
+      "importance": 0.5
+    },
+    {
+      "player": "Sean Elkinton",
+      "status": "out",
+      "bpr_share": 0.5,
+      "importance": 0.5
+    }
+  ],
+  "Louisiana Tech": [
+    {
+      "player": "Will Jeffress",
+      "status": "out",
+      "bpr_share": 0.5,
+      "importance": 0.5
+    },
+    {
+      "player": "A'Meir Williams",
+      "status": "out",
+      "bpr_share": 0.5,
+      "importance": 0.5
+    }
+  ],
+  "Louisville": [
+    {
+      "player": "Mikel Brown",
+      "status": "questionable",
+      "bpr_share": 0.1237,
+      "importance": 0.1237
+    }
+  ],
+  "Loyola (IL) Ramblers": [
+    {
+      "player": "Dominick Harris",
+      "status": "out",
+      "bpr_share": 0.5,
+      "importance": 0.5
+    },
+    {
+      "player": "Kymany Houinsou",
+      "status": "questionable",
+      "bpr_share": 0.5,
+      "importance": 0.5
+    },
+    {
+      "player": "Caleb Reese",
+      "status": "questionable",
+      "bpr_share": 0.5,
+      "importance": 0.5
+    },
+    {
+      "player": "Justin Moore",
+      "status": "questionable",
+      "bpr_share": 0.5,
+      "importance": 0.5
+    },
+    {
+      "player": "Chuck Love",
+      "status": "out",
+      "bpr_share": 0.5,
+      "importance": 0.5
+    }
+  ],
+  "Marist Red Foxes": [
+    {
+      "player": "Jason Schofield",
+      "status": "out",
+      "bpr_share": 0.5,
+      "importance": 0.5
+    },
+    {
+      "player": "Elijah Lewis",
+      "status": "out",
+      "bpr_share": 0.5,
+      "importance": 0.5
+    },
+    {
+      "player": "Tarik Watson",
+      "status": "out",
+      "bpr_share": 0.5,
+      "importance": 0.5
+    }
+  ],
+  "Marquette": [
+    {
+      "player": "Sean Jones",
+      "status": "out",
+      "bpr_share": 0.5,
+      "importance": 0.5
+    }
+  ],
+  "Memphis": [
+    {
+      "player": "Ashton Hardaway",
+      "status": "doubtful",
+      "bpr_share": 0.0178,
+      "importance": 0.0178
+    },
+    {
+      "player": "Julius Thedford",
+      "status": "doubtful",
+      "bpr_share": 0.1576,
+      "importance": 0.1576
+    }
+  ],
+  "Miami (FL)": [
+    {
+      "player": "Marcus Allen",
+      "status": "out",
+      "bpr_share": 0.5,
+      "importance": 0.5
+    },
+    {
+      "player": "Treyvon Maddox",
+      "status": "out",
+      "bpr_share": 0.5,
+      "importance": 0.5
+    }
+  ],
+  "Michigan State": [
+    {
+      "player": "Kaleb Glenn",
+      "status": "out",
+      "bpr_share": 0.5,
+      "importance": 0.5
+    },
+    {
+      "player": "Divine Ugochukwu",
+      "status": "out",
+      "bpr_share": 0.0536,
+      "importance": 0.0536
+    }
+  ],
+  "Michigan": [
+    {
+      "player": "Charlie May",
+      "status": "out",
+      "bpr_share": 0.5,
+      "importance": 0.5
+    },
+    {
+      "player": "L.J. Cason",
+      "status": "out",
+      "bpr_share": 0.0714,
+      "importance": 0.0714
+    },
+    {
+      "player": "Winters Grady",
+      "status": "out",
+      "bpr_share": 0.5,
+      "importance": 0.5
+    }
+  ],
+  "Minnesota Golden Gophers": [
+    {
+      "player": "Robert Vaihola",
+      "status": "out",
+      "bpr_share": 0.5,
+      "importance": 0.5
+    },
+    {
+      "player": "BJ Omot",
+      "status": "out",
+      "bpr_share": 0.5,
+      "importance": 0.5
+    },
+    {
+      "player": "Chance Stephens",
+      "status": "out",
+      "bpr_share": 0.5,
+      "importance": 0.5
+    },
+    {
+      "player": "Jaylen Crocker-Johnson",
+      "status": "out",
+      "bpr_share": 0.5,
+      "importance": 0.5
+    }
+  ],
+  "Mississippi State": [
+    {
+      "player": "Gai Chol",
+      "status": "out",
+      "bpr_share": 0.5,
+      "importance": 0.5
+    },
+    {
+      "player": "King Grace",
+      "status": "questionable",
+      "bpr_share": -0.0262,
+      "importance": -0.0262
+    }
+  ],
+  "Missouri State": [
+    {
+      "player": "Antwan Burnett",
+      "status": "questionable",
+      "bpr_share": -0.1168,
+      "importance": -0.1168
+    },
+    {
+      "player": "Amar Kuljuhovic",
+      "status": "out",
+      "bpr_share": 0.5,
+      "importance": 0.5
+    }
+  ],
+  "Missouri": [
+    {
+      "player": "Jevon Porter",
+      "status": "out",
+      "bpr_share": 0.5,
+      "importance": 0.5
+    },
+    {
+      "player": "Annor Boateng",
+      "status": "out",
+      "bpr_share": 0.5,
+      "importance": 0.5
+    }
+  ],
+  "Mount St. Mary's": [
+    {
+      "player": "Jaxon Hartman",
+      "status": "out",
+      "bpr_share": 0.5,
+      "importance": 0.5
+    },
+    {
+      "player": "Abdou Khadre Kebe",
+      "status": "out",
+      "bpr_share": 0.5,
+      "importance": 0.5
+    },
+    {
+      "player": "Justin May",
+      "status": "out",
+      "bpr_share": 0.5,
+      "importance": 0.5
+    }
+  ],
+  "Nebraska Cornhuskers": [
+    {
+      "player": "Henry Burt",
+      "status": "out",
+      "bpr_share": 0.5,
+      "importance": 0.5
+    },
+    {
+      "player": "Connor Essegian",
+      "status": "out",
+      "bpr_share": 0.5,
+      "importance": 0.5
+    },
+    {
+      "player": "Ugnius Jarusevicius",
+      "status": "out",
+      "bpr_share": 0.5,
+      "importance": 0.5
+    }
+  ],
+  "North Carolina State Wolfpack": [
+    {
+      "player": "Alyn Breed",
+      "status": "questionable",
+      "bpr_share": 0.5,
+      "importance": 0.5
+    },
+    {
+      "player": "Colt Langdon",
+      "status": "questionable",
+      "bpr_share": 0.5,
+      "importance": 0.5
+    }
+  ],
+  "North Carolina": [
+    {
+      "player": "James Brown",
+      "status": "out",
+      "bpr_share": 0.5,
+      "importance": 0.5
+    },
+    {
+      "player": "Caleb Wilson",
+      "status": "out",
+      "bpr_share": 0.2309,
+      "importance": 0.2309
+    }
+  ],
+  "North Texas Mean Green": [
+    {
+      "player": "Will McClendon",
+      "status": "out",
+      "bpr_share": 0.5,
+      "importance": 0.5
+    }
+  ],
+  "Northern Iowa Panthers": [
+    {
+      "player": "Marino Dubravcic",
+      "status": "out",
+      "bpr_share": 0.5,
+      "importance": 0.5
+    },
+    {
+      "player": "Cade Courbat",
+      "status": "out",
+      "bpr_share": 0.5,
+      "importance": 0.5
+    }
+  ],
+  "Northwestern": [
+    {
+      "player": "Arrinten Page",
+      "status": "out",
+      "bpr_share": 0.136,
+      "importance": 0.136
+    }
+  ],
+  "Notre Dame": [
+    {
+      "player": "Markus Burton",
+      "status": "out",
+      "bpr_share": 0.2935,
+      "importance": 0.2935
+    },
+    {
+      "player": "Tommy Ahneman",
+      "status": "out",
+      "bpr_share": 0.5,
+      "importance": 0.5
+    }
+  ],
+  "Ohio Bobcats": [
+    {
+      "player": "Elijah Elliott",
+      "status": "out",
+      "bpr_share": 0.5,
+      "importance": 0.5
+    }
+  ],
+  "Ohio State Buckeyes": [
+    {
+      "player": "Josh Ojianwuna",
+      "status": "out",
+      "bpr_share": 0.5,
+      "importance": 0.5
+    },
+    {
+      "player": "Taison Chatman",
+      "status": "questionable",
+      "bpr_share": 0.5,
+      "importance": 0.5
+    },
+    {
+      "player": "Myles Herro",
+      "status": "out",
+      "bpr_share": 0.5,
+      "importance": 0.5
+    }
+  ],
+  "Oklahoma State Cowboys": [
+    {
+      "player": "Parsa Fallah",
+      "status": "out",
+      "bpr_share": 0.5,
+      "importance": 0.5
+    }
+  ],
+  "Old Dominion Monarchs": [
+    {
+      "player": "Caelum Swanton-Rodger",
+      "status": "questionable",
+      "bpr_share": 0.5,
+      "importance": 0.5
+    }
+  ],
+  "Ole Miss": [
+    {
+      "player": "Koren Johnson",
+      "status": "questionable",
+      "bpr_share": 0.5,
+      "importance": 0.5
+    }
+  ],
+  "Oregon Ducks": [
+    {
+      "player": "Jackson Shelstad",
+      "status": "out",
+      "bpr_share": 0.5,
+      "importance": 0.5
+    },
+    {
+      "player": "Devon Pryor",
+      "status": "out",
+      "bpr_share": 0.5,
+      "importance": 0.5
+    },
+    {
+      "player": "JJ Frakes",
+      "status": "questionable",
+      "bpr_share": 0.5,
+      "importance": 0.5
+    },
+    {
+      "player": "Ege Demir",
+      "status": "out",
+      "bpr_share": 0.5,
+      "importance": 0.5
+    }
+  ],
+  "Penn State Nittany Lions": [
+    {
+      "player": "Reggie Grodin",
+      "status": "out",
+      "bpr_share": 0.5,
+      "importance": 0.5
+    },
+    {
+      "player": "Tibor Mirtic",
+      "status": "out",
+      "bpr_share": 0.5,
+      "importance": 0.5
+    }
+  ],
+  "Pennsylvania Quakers": [
+    {
+      "player": "Ethan Roberts",
+      "status": "out",
+      "bpr_share": 0.5,
+      "importance": 0.5
+    },
+    {
+      "player": "Dylan Williams",
+      "status": "out",
+      "bpr_share": 0.5,
+      "importance": 0.5
+    },
+    {
+      "player": "Ryan Altman",
+      "status": "out",
+      "bpr_share": 0.5,
+      "importance": 0.5
+    }
+  ],
+  "Portland Pilots": [
+    {
+      "player": "Riley Parker",
+      "status": "out",
+      "bpr_share": 0.5,
+      "importance": 0.5
+    },
+    {
+      "player": "Timo George",
+      "status": "out",
+      "bpr_share": 0.5,
+      "importance": 0.5
+    }
+  ],
+  "Princeton": [
+    {
+      "player": "Jack Stanton",
+      "status": "out",
+      "bpr_share": 1600.5613,
+      "importance": 1600.5613
+    }
+  ],
+  "Providence": [
+    {
+      "player": "Rich Barron",
+      "status": "out",
+      "bpr_share": 0.5,
+      "importance": 0.5
+    },
+    {
+      "player": "Jason Edwards",
+      "status": "questionable",
+      "bpr_share": 0.1336,
+      "importance": 0.1336
+    },
+    {
+      "player": "Daquan Davis",
+      "status": "out",
+      "bpr_share": 0.5,
+      "importance": 0.5
+    },
+    {
+      "player": "Jaylen Harrell",
+      "status": "out",
+      "bpr_share": 0.5,
+      "importance": 0.5
+    }
+  ],
+  "Rhode Island Rams": [
+    {
+      "player": "Mouhamed Sow",
+      "status": "out",
+      "bpr_share": 0.5,
+      "importance": 0.5
+    },
+    {
+      "player": "Moek Icke",
+      "status": "out",
+      "bpr_share": 0.5,
+      "importance": 0.5
+    },
+    {
+      "player": "Jaymien Aponte",
+      "status": "questionable",
+      "bpr_share": 0.5,
+      "importance": 0.5
+    },
+    {
+      "player": "Javon Perry",
+      "status": "questionable",
+      "bpr_share": 0.5,
+      "importance": 0.5
+    }
+  ],
+  "Rice Owls": [
+    {
+      "player": "Dallas Hobbs",
+      "status": "questionable",
+      "bpr_share": 0.5,
+      "importance": 0.5
+    },
+    {
+      "player": "Aaron Powell",
+      "status": "out",
+      "bpr_share": 0.5,
+      "importance": 0.5
+    }
+  ],
+  "Richmond Spiders": [
+    {
+      "player": "Bryson McGlothin",
+      "status": "questionable",
+      "bpr_share": 0.5,
+      "importance": 0.5
+    }
+  ],
+  "Rutgers Scarlet Knights": [
+    {
+      "player": "Baye Fall",
+      "status": "out",
+      "bpr_share": 0.5,
+      "importance": 0.5
+    },
+    {
+      "player": "Dorian Jones",
+      "status": "out",
+      "bpr_share": 0.5,
+      "importance": 0.5
+    }
+  ],
+  "Saint Joseph's (PA) Hawks": [
+    {
+      "player": "Steven Solano",
+      "status": "questionable",
+      "bpr_share": 0.5,
+      "importance": 0.5
+    },
+    {
+      "player": "Owen Verna",
+      "status": "questionable",
+      "bpr_share": 0.5,
+      "importance": 0.5
+    }
+  ],
+  "Saint Mary's": [
+    {
+      "player": "Kevin Gad",
+      "status": "out",
+      "bpr_share": 0.5,
+      "importance": 0.5
+    }
+  ],
+  "Sam Houston Bearkats": [
+    {
+      "player": "Isaiah Manning",
+      "status": "out",
+      "bpr_share": 0.5,
+      "importance": 0.5
+    },
+    {
+      "player": "Po'Boigh King",
+      "status": "questionable",
+      "bpr_share": 0.5,
+      "importance": 0.5
+    },
+    {
+      "player": "Justin Begg",
+      "status": "out",
+      "bpr_share": 0.5,
+      "importance": 0.5
+    },
+    {
+      "player": "Jaxson Ford",
+      "status": "out",
+      "bpr_share": 0.5,
+      "importance": 0.5
+    },
+    {
+      "player": "Noah Benny",
+      "status": "out",
+      "bpr_share": 0.5,
+      "importance": 0.5
+    },
+    {
+      "player": "Nathan Nguyen",
+      "status": "out",
+      "bpr_share": 0.5,
+      "importance": 0.5
+    }
+  ],
+  "San Diego State Aztecs": [
+    {
+      "player": "Miles Heide",
+      "status": "questionable",
+      "bpr_share": 0.5,
+      "importance": 0.5
+    },
+    {
+      "player": "Elzie Harrington",
+      "status": "questionable",
+      "bpr_share": 0.5,
+      "importance": 0.5
+    }
+  ],
+  "San Jose State": [
+    {
+      "player": "JaVaughn Hannah",
+      "status": "out",
+      "bpr_share": 0.5,
+      "importance": 0.5
+    },
+    {
+      "player": "Jaden Goodall",
+      "status": "out",
+      "bpr_share": 0.5,
+      "importance": 0.5
+    }
+  ],
+  "Santa Clara Broncos": [
+    {
+      "player": "Gehrig Normand",
+      "status": "out",
+      "bpr_share": 0.5,
+      "importance": 0.5
+    },
+    {
+      "player": "Chris Tadjo",
+      "status": "out",
+      "bpr_share": 0.5,
+      "importance": 0.5
+    }
+  ],
+  "Seton Hall": [
+    {
+      "player": "Patrick Suemnick",
+      "status": "out",
+      "bpr_share": 0.5,
+      "importance": 0.5
+    },
+    {
+      "player": "Godswill Erheriene",
+      "status": "out",
+      "bpr_share": 0.5,
+      "importance": 0.5
+    },
+    {
+      "player": "Jahseem Felton",
+      "status": "out",
+      "bpr_share": 0.5,
+      "importance": 0.5
+    }
+  ],
+  "Siena Saints": [
+    {
+      "player": "Reid Ducharme",
+      "status": "out",
+      "bpr_share": 0.5,
+      "importance": 0.5
+    },
+    {
+      "player": "Tasman Goodrick",
+      "status": "out",
+      "bpr_share": 0.5,
+      "importance": 0.5
+    },
+    {
+      "player": "Antonio Chandler",
+      "status": "out",
+      "bpr_share": 0.5,
+      "importance": 0.5
+    },
+    {
+      "player": "Owen Schlager",
+      "status": "out",
+      "bpr_share": 0.5,
+      "importance": 0.5
+    }
+  ],
+  "South Alabama Jaguars": [
+    {
+      "player": "Peyton Law",
+      "status": "out",
+      "bpr_share": 0.5,
+      "importance": 0.5
+    }
+  ],
+  "South Dakota Coyotes": [
+    {
+      "player": "Josiah Dotzler",
+      "status": "out",
+      "bpr_share": 0.5,
+      "importance": 0.5
+    }
+  ],
+  "South Florida Bulls": [
+    {
+      "player": "Xavier Brown",
+      "status": "out",
+      "bpr_share": 0.5,
+      "importance": 0.5
+    },
+    {
+      "player": "De'Ante Green",
+      "status": "out",
+      "bpr_share": 0.5,
+      "importance": 0.5
+    }
+  ],
+  "Southern Methodist Mustangs": [
+    {
+      "player": "B.J. Edwards",
+      "status": "probable",
+      "bpr_share": 0.5,
+      "importance": 0.5
+    }
+  ],
+  "St. Bonaventure": [
+    {
+      "player": "Amar'e Marshall",
+      "status": "out",
+      "bpr_share": 0.5,
+      "importance": 0.5
+    },
+    {
+      "player": "Xander Wedlow",
+      "status": "out",
+      "bpr_share": 0.5,
+      "importance": 0.5
+    },
+    {
+      "player": "Ilia Ermakov",
+      "status": "out",
+      "bpr_share": 0.5,
+      "importance": 0.5
+    }
+  ],
+  "St. John's": [
+    {
+      "player": "Casper Pohto",
+      "status": "out",
+      "bpr_share": 0.5,
+      "importance": 0.5
+    },
+    {
+      "player": "Imran Suljanovic",
+      "status": "out",
+      "bpr_share": 0.5,
+      "importance": 0.5
+    }
+  ],
+  "Stanford Cardinal": [
+    {
+      "player": "Chisom Okpara",
+      "status": "questionable",
+      "bpr_share": 0.5,
+      "importance": 0.5
+    },
+    {
+      "player": "Anthony Batson",
+      "status": "questionable",
+      "bpr_share": 0.5,
+      "importance": 0.5
+    },
+    {
+      "player": "Tallis Toure",
+      "status": "questionable",
+      "bpr_share": 0.5,
+      "importance": 0.5
+    },
+    {
+      "player": "Kristers Skrinda",
+      "status": "questionable",
+      "bpr_share": 0.5,
+      "importance": 0.5
+    }
+  ],
+  "Stetson Hatters": [
+    {
+      "player": "Jamie Phillips",
+      "status": "questionable",
+      "bpr_share": 0.5,
+      "importance": 0.5
+    }
+  ],
+  "Syracuse Orange": [
+    {
+      "player": "Aaron Womack",
+      "status": "out",
+      "bpr_share": 0.5,
+      "importance": 0.5
+    }
+  ],
+  "TCU Horned Frogs": [
+    {
+      "player": "Malick Diallo",
+      "status": "out",
+      "bpr_share": 0.5,
+      "importance": 0.5
+    }
+  ],
+  "Temple Owls": [
+    {
+      "player": "AJ Smith",
+      "status": "out",
+      "bpr_share": 0.5,
+      "importance": 0.5
+    }
+  ],
+  "Tennessee": [
+    {
+      "player": "Cade Phillips",
+      "status": "out",
+      "bpr_share": 0.5,
+      "importance": 0.5
+    }
+  ],
+  "Texas A&M": [
+    {
+      "player": "Mackenzie Mgbako",
+      "status": "out",
+      "bpr_share": 0.5,
+      "importance": 0.5
+    }
+  ],
+  "Texas": [
+    {
+      "player": "Lassina Traore",
+      "status": "questionable",
+      "bpr_share": 0.0502,
+      "importance": 0.0502
+    }
+  ],
+  "Texas Tech Red Raiders": [
+    {
+      "player": "LeJuan Watts",
+      "status": "questionable",
+      "bpr_share": 0.5,
+      "importance": 0.5
+    },
+    {
+      "player": "JT Toppin",
+      "status": "out",
+      "bpr_share": 0.5,
+      "importance": 0.5
+    },
+    {
+      "player": "LaTrell Hoover",
+      "status": "out",
+      "bpr_share": 0.5,
+      "importance": 0.5
+    }
+  ],
+  "UAB Blazers": [
+    {
+      "player": "Joao Das Chagas",
+      "status": "out",
+      "bpr_share": 0.5,
+      "importance": 0.5
+    }
+  ],
+  "UCF Knights": [
+    {
+      "player": "Tanner Jones",
+      "status": "questionable",
+      "bpr_share": 0.5,
+      "importance": 0.5
+    }
+  ],
+  "UCLA Bruins": [
+    {
+      "player": "Tyler Bilodeau",
+      "status": "questionable",
+      "bpr_share": 0.5,
+      "importance": 0.5
+    },
+    {
+      "player": "Evan Manjikian",
+      "status": "out",
+      "bpr_share": 0.5,
+      "importance": 0.5
+    },
+    {
+      "player": "Donovan Dent",
+      "status": "probable",
+      "bpr_share": 0.5,
+      "importance": 0.5
+    }
+  ],
+  "UNC Wilmington Seahawks": [
+    {
+      "player": "Gavin Walsh",
+      "status": "questionable",
+      "bpr_share": 0.5,
+      "importance": 0.5
+    }
+  ],
+  "UNLV": [
+    {
+      "player": "Ladji Dembele",
+      "status": "out",
+      "bpr_share": 0.5,
+      "importance": 0.5
+    },
+    {
+      "player": "Myles Che",
+      "status": "out",
+      "bpr_share": 0.5,
+      "importance": 0.5
+    }
+  ],
+  "USC Trojans": [
+    {
+      "player": "Rodney Rice",
+      "status": "out",
+      "bpr_share": 0.5,
+      "importance": 0.5
+    },
+    {
+      "player": "Amarion Dickerson",
+      "status": "out",
+      "bpr_share": 0.5,
+      "importance": 0.5
+    }
+  ],
+  "UTEP Miners": [
+    {
+      "player": "David Tubek",
+      "status": "out",
+      "bpr_share": 0.5,
+      "importance": 0.5
+    },
+    {
+      "player": "Tyreese Watson",
+      "status": "out",
+      "bpr_share": 0.5,
+      "importance": 0.5
+    }
+  ],
+  "UTSA Roadrunners": [
+    {
+      "player": "Pierce Spencer",
+      "status": "out",
+      "bpr_share": 0.5,
+      "importance": 0.5
+    },
+    {
+      "player": "Mo Njie",
+      "status": "questionable",
+      "bpr_share": 0.5,
+      "importance": 0.5
+    },
+    {
+      "player": "Stanley Borden",
+      "status": "questionable",
+      "bpr_share": 0.5,
+      "importance": 0.5
+    },
+    {
+      "player": "Austin Nunez",
+      "status": "questionable",
+      "bpr_share": 0.5,
+      "importance": 0.5
+    },
+    {
+      "player": "Macaleab Rich",
+      "status": "out",
+      "bpr_share": 0.5,
+      "importance": 0.5
+    },
+    {
+      "player": "Vasean Allette",
+      "status": "out",
+      "bpr_share": 0.5,
+      "importance": 0.5
+    }
+  ],
+  "Utah Valley": [
+    {
+      "player": "Tyler Hendricks",
+      "status": "questionable",
+      "bpr_share": 0.1891,
+      "importance": 0.1891
+    }
+  ],
+  "VCU Rams": [
+    {
+      "player": "Obinnaya Okafor",
+      "status": "out",
+      "bpr_share": 0.5,
+      "importance": 0.5
+    },
+    {
+      "player": "Christian Fermin",
+      "status": "out",
+      "bpr_share": 0.5,
+      "importance": 0.5
+    }
+  ],
+  "Vanderbilt": [
+    {
+      "player": "Frankie Collins",
+      "status": "out",
+      "bpr_share": 0.5,
+      "importance": 0.5
+    }
+  ],
+  "Villanova": [
+    {
+      "player": "Zion Stanford",
+      "status": "out",
+      "bpr_share": 0.5,
+      "importance": 0.5
+    },
+    {
+      "player": "Wade Chiddick",
+      "status": "out",
+      "bpr_share": 0.5,
+      "importance": 0.5
+    },
+    {
+      "player": "Matthew Hodge",
+      "status": "out",
+      "bpr_share": 0.5,
+      "importance": 0.5
+    }
+  ],
+  "Virginia Tech Hokies": [
+    {
+      "player": "Amani Hansberry",
+      "status": "out",
+      "bpr_share": 0.5,
+      "importance": 0.5
+    },
+    {
+      "player": "Sin'Cere Jones",
+      "status": "out",
+      "bpr_share": 0.5,
+      "importance": 0.5
+    },
+    {
+      "player": "Shamarius Peterkin",
+      "status": "out",
+      "bpr_share": 0.5,
+      "importance": 0.5
+    }
+  ],
+  "Washington": [
+    {
+      "player": "Jacob Ognacevic",
+      "status": "questionable",
+      "bpr_share": 0.5,
+      "importance": 0.5
+    },
+    {
+      "player": "Franck Kepnang",
+      "status": "questionable",
+      "bpr_share": 0.1204,
+      "importance": 0.1204
+    },
+    {
+      "player": "Desmond Claude",
+      "status": "questionable",
+      "bpr_share": 0.1092,
+      "importance": 0.1092
+    },
+    {
+      "player": "Mady Traore",
+      "status": "out",
+      "bpr_share": 0.5,
+      "importance": 0.5
+    },
+    {
+      "player": "Bryson Tucker",
+      "status": "questionable",
+      "bpr_share": 0.0033,
+      "importance": 0.0033
+    },
+    {
+      "player": "JJ Mandaquit",
+      "status": "out",
+      "bpr_share": 0.0819,
+      "importance": 0.0819
+    },
+    {
+      "player": "Jasir Rencher",
+      "status": "questionable",
+      "bpr_share": 0.5,
+      "importance": 0.5
+    }
+  ],
+  "Washington State": [
+    {
+      "player": "Tomas Thrastarson",
+      "status": "out",
+      "bpr_share": 0.0844,
+      "importance": 0.0844
+    },
+    {
+      "player": "Kase Wynott",
+      "status": "out",
+      "bpr_share": 0.5,
+      "importance": 0.5
+    }
+  ],
+  "Weber State": [
+    {
+      "player": "Jace Whiting",
+      "status": "out",
+      "bpr_share": -1.0463,
+      "importance": -1.0463
+    }
+  ],
+  "West Georgia Wolves": [
+    {
+      "player": "Chas Lewless",
+      "status": "out",
+      "bpr_share": 0.5,
+      "importance": 0.5
+    }
+  ],
+  "Western Kentucky Hilltoppers": [
+    {
+      "player": "Bryant Selebangue",
+      "status": "out",
+      "bpr_share": 0.5,
+      "importance": 0.5
+    },
+    {
+      "player": "Louie Semona",
+      "status": "out",
+      "bpr_share": 0.5,
+      "importance": 0.5
+    },
+    {
+      "player": "Lawson Rice",
+      "status": "out",
+      "bpr_share": 0.5,
+      "importance": 0.5
+    }
+  ],
+  "Wichita State Shockers": [
+    {
+      "player": "Jaret Valencia",
+      "status": "out",
+      "bpr_share": 0.5,
+      "importance": 0.5
+    },
+    {
+      "player": "Pierre Couisnard",
+      "status": "out",
+      "bpr_share": 0.5,
+      "importance": 0.5
+    },
+    {
+      "player": "Tyrus Rathan-Mayes",
+      "status": "out",
+      "bpr_share": 0.5,
+      "importance": 0.5
+    }
+  ],
+  "Wisconsin Badgers": [
+    {
+      "player": "Jack Janicki",
+      "status": "questionable",
+      "bpr_share": 0.5,
+      "importance": 0.5
+    },
+    {
+      "player": "Nolan Winter",
+      "status": "questionable",
+      "bpr_share": 0.5,
+      "importance": 0.5
+    }
+  ],
+  "Wyoming Cowboys": [
+    {
+      "player": "Matija Belic",
+      "status": "out",
+      "bpr_share": 0.5,
+      "importance": 0.5
+    },
+    {
+      "player": "Jared Harris",
+      "status": "questionable",
+      "bpr_share": 0.5,
+      "importance": 0.5
+    }
+  ],
+  "Xavier": [
+    {
+      "player": "Michael Wolf",
+      "status": "questionable",
+      "bpr_share": 0.5,
+      "importance": 0.5
+    },
+    {
+      "player": "Gabriel Pozzato",
+      "status": "out",
+      "bpr_share": 0.5,
+      "importance": 0.5
+    },
+    {
+      "player": "Luke Naser",
+      "status": "out",
+      "bpr_share": 0.5,
+      "importance": 0.5
+    }
+  ]
+}

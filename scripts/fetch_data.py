@@ -4,6 +4,7 @@ Fetch all data sources and merge into a single teams file for the bracket.
   - KenPom: optional (run fetch_kenpom.py if you have a subscription)
   - Evan Miya: optional (place data/evanmiya_YYYY.csv or run fetch_evanmiya.py)
   - Conf tourney: optional (run fetch_conf_tourney.py or use --fetch-conf-tourney to auto-scrape)
+  - Injuries: optional (data/injuries_YYYY.csv or --fetch-injuries; auto-runs if CSV newer than JSON)
 Output: data/teams_merged_YYYY.json — one record per team with adj_o, adj_d, adj_tempo, barthag, luck (if any), star_score (if any).
 """
 import json
@@ -16,7 +17,7 @@ DATA_DIR = os.path.join(ROOT, "data")
 os.makedirs(DATA_DIR, exist_ok=True)
 
 sys.path.insert(0, ROOT)
-from engine import _normalize_team_for_match
+from engine import _normalize_team_for_match, calc_injury_penalty, DEFAULT_CONFIG
 
 
 def normalize_team(name):
@@ -124,7 +125,8 @@ def load_injuries(year):
 
 
 def merge_injuries(merged, injuries_data):
-    """Overlay injuries onto merged teams. Matches by normalized team name."""
+    """Overlay injuries onto merged teams. Matches by normalized team name.
+    Precomputes injury_impact for engine efficiency."""
     if not injuries_data:
         return
     merged_keys = set(merged.keys())
@@ -132,6 +134,7 @@ def merge_injuries(merged, injuries_data):
         key = _find_torvik_key(team_name, merged_keys) or normalize_team(team_name)
         if key in merged and isinstance(inj_list, list):
             merged[key]["injuries"] = inj_list
+            merged[key]["injury_impact"] = calc_injury_penalty(merged[key], DEFAULT_CONFIG)
 
 
 def load_momentum(year):
@@ -296,15 +299,39 @@ def run_fetch_conf_tourney(year):
     return len(teams) > 0
 
 
+def run_fetch_injuries(year, from_csv=None, enrich=False):
+    """Run fetch_injuries.py and return True if we have data."""
+    import subprocess
+    cmd = [sys.executable, os.path.join(SCRIPT_DIR, "fetch_injuries.py"), str(year)]
+    if from_csv:
+        cmd = [sys.executable, os.path.join(SCRIPT_DIR, "fetch_injuries.py"),
+               "--from-csv", from_csv, str(year)]
+    if enrich:
+        cmd.append("--enrich")
+    p = subprocess.run(cmd, cwd=ROOT, capture_output=True, text=True)
+    if p.returncode != 0:
+        print(p.stderr or p.stdout or "fetch_injuries failed")
+        return False
+    path = os.path.join(DATA_DIR, f"injuries_{year}.json")
+    if not os.path.isfile(path):
+        return False
+    data = load_json(path)
+    return isinstance(data, dict) and len(data) > 0
+
+
 def main():
     year = 2026
     args = sys.argv[1:]
     fetch_conf_tourney = False
+    fetch_injuries_flag = False
     for a in args:
         if a == "--no-fetch":
             continue
         if a == "--fetch-conf-tourney":
             fetch_conf_tourney = True
+            continue
+        if a == "--fetch-injuries":
+            fetch_injuries_flag = True
             continue
         try:
             year = int(a)
@@ -386,6 +413,16 @@ def main():
     if conf_tourney_data:
         merge_conf_tourney_momentum(merged, conf_tourney_data)
         print(f"Conf tourney: {len(conf_tourney_data)} teams (momentum overlay)")
+
+    # Ensure injuries JSON exists (run fetch_injuries if CSV present and stale)
+    injuries_json = os.path.join(DATA_DIR, f"injuries_{year}.json")
+    injuries_csv = os.path.join(DATA_DIR, f"injuries_{year}.csv")
+    csv_ok = os.path.isfile(injuries_csv)
+    json_ok = os.path.isfile(injuries_json)
+    csv_newer = csv_ok and json_ok and os.path.getmtime(injuries_csv) > os.path.getmtime(injuries_json)
+    if fetch_injuries_flag or (csv_ok and (not json_ok or csv_newer)):
+        if run_fetch_injuries(year, from_csv=injuries_csv if csv_ok else None, enrich=True):
+            print("  Ran fetch_injuries (from CSV or --fetch-injuries)")
 
     injuries_data = load_injuries(year)
     if injuries_data:
