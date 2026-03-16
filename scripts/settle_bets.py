@@ -210,6 +210,9 @@ def compute_stats(picks):
     by_type = {t: {"picks": 0, "wins": 0, "losses": 0, "pushes": 0,
                    "net_units": 0.0, "total_wagered": 0.0}
                for t in ("ml", "spread", "total")}
+    by_stars = {s: {"picks": 0, "wins": 0, "losses": 0, "pushes": 0,
+                    "net_units": 0.0, "total_wagered": 0.0}
+                for s in ("★", "★★", "★★★")}
     total_settled = wins = losses = pushes = 0
     total_wagered = 0.0
     net_units = 0.0
@@ -219,19 +222,27 @@ def compute_stats(picks):
         if r not in ("W", "L", "P"):
             continue
         bt = p.get("bet_type", "ml")
+        stars = p.get("stars", "★") or "★"
         if bt not in by_type:
             by_type[bt] = {"picks": 0, "wins": 0, "losses": 0, "pushes": 0,
                            "net_units": 0.0, "total_wagered": 0.0}
+        if stars not in by_stars:
+            by_stars[stars] = {"picks": 0, "wins": 0, "losses": 0, "pushes": 0,
+                               "net_units": 0.0, "total_wagered": 0.0}
         by_type[bt]["picks"] += 1
+        by_stars[stars]["picks"] += 1
         total_settled += 1
         if r == "W":
             by_type[bt]["wins"] += 1
+            by_stars[stars]["wins"] += 1
             wins += 1
         elif r == "L":
             by_type[bt]["losses"] += 1
+            by_stars[stars]["losses"] += 1
             losses += 1
         elif r == "P":
             by_type[bt]["pushes"] += 1
+            by_stars[stars]["pushes"] += 1
             pushes += 1
 
         # Odds-weighted ROI tracking (Kelly-sized stakes × actual payout)
@@ -243,14 +254,19 @@ def compute_stats(picks):
             total_wagered += kelly_u
             by_type[bt]["net_units"] += pnl
             by_type[bt]["total_wagered"] += kelly_u
+            by_stars[stars]["net_units"] += pnl
+            by_stars[stars]["total_wagered"] += kelly_u
         elif r == "L":
             net_units -= kelly_u
             total_wagered += kelly_u
             by_type[bt]["net_units"] -= kelly_u
             by_type[bt]["total_wagered"] += kelly_u
+            by_stars[stars]["net_units"] -= kelly_u
+            by_stars[stars]["total_wagered"] += kelly_u
         elif r == "P":
             total_wagered += kelly_u
             by_type[bt]["total_wagered"] += kelly_u
+            by_stars[stars]["total_wagered"] += kelly_u
 
     def hit_rate(d):
         decided = d["wins"] + d["losses"]
@@ -263,6 +279,13 @@ def compute_stats(picks):
         by_type[bt]["net_units"] = round(by_type[bt]["net_units"], 2)
         by_type[bt]["total_wagered"] = round(by_type[bt]["total_wagered"], 2)
 
+    for s in by_stars:
+        by_stars[s]["hit_rate"] = hit_rate(by_stars[s])
+        w = by_stars[s]["total_wagered"]
+        by_stars[s]["roi_pct"] = round(by_stars[s]["net_units"] / w * 100, 2) if w > 0 else None
+        by_stars[s]["net_units"] = round(by_stars[s]["net_units"], 2)
+        by_stars[s]["total_wagered"] = round(by_stars[s]["total_wagered"], 2)
+
     return {
         "total_picks": len([p for p in picks if p.get("result") is not None or True]),
         "settled": total_settled,
@@ -271,6 +294,7 @@ def compute_stats(picks):
         "pushes": pushes,
         "hit_rate": round(wins / (wins + losses), 4) if (wins + losses) else None,
         "by_type": by_type,
+        "by_stars": by_stars,
         "total_wagered": round(total_wagered, 2),
         "net_units": round(net_units, 2),
         "roi_pct": round(net_units / total_wagered * 100, 2) if total_wagered > 0 else 0.0,
@@ -306,7 +330,9 @@ def main():
     pending = [p for p in ledger["picks"] if p.get("result") is None]
     if not pending:
         print("No pending picks to settle.")
-        _print_stats(compute_stats(ledger["picks"]))
+        stats = compute_stats(ledger["picks"])
+        _print_stats(stats)
+        _write_diagnostics(ledger["picks"], stats)
         return
 
     settled_count = 0
@@ -453,6 +479,22 @@ def main():
         json.dump(ledger, f, indent=2)
 
     _print_stats(ledger["stats"])
+    _write_diagnostics(ledger["picks"], ledger["stats"])
+
+
+def _write_diagnostics(picks, stats):
+    """Write betting diagnostics to data/betting_diagnostics_YYYY-MM-DD.json."""
+    today = datetime.now(timezone.utc).strftime("%Y-%m-%d")
+    path = os.path.join(DATA_DIR, f"betting_diagnostics_{today}.json")
+    out = {
+        "date": today,
+        "generated_at": datetime.now(timezone.utc).isoformat(),
+        "stats": stats,
+        "settled_count": len([p for p in picks if p.get("result") in ("W", "L", "P")]),
+    }
+    with open(path, "w") as f:
+        json.dump(out, f, indent=2)
+    print(f"  Diagnostics -> {path}")
 
 
 def _print_stats(stats):
@@ -470,6 +512,14 @@ def _print_stats(stats):
         bhr = s.get("hit_rate")
         bhr_str = f"{bhr:.1%}" if bhr is not None else "—"
         print(f"    {bt.upper():8s}: {s['wins']}W-{s['losses']}L-{s['pushes']}P  {bhr_str}")
+    for stars, s in stats.get("by_stars", {}).items():
+        if s["picks"] == 0:
+            continue
+        bhr = s.get("hit_rate")
+        bhr_str = f"{bhr:.1%}" if bhr is not None else "—"
+        roi = s.get("roi_pct")
+        roi_str = f"  ROI: {roi:+.1f}%" if roi is not None else ""
+        print(f"    {stars:4s}: {s['wins']}W-{s['losses']}L-{s['pushes']}P  {bhr_str}{roi_str}")
 
 
 if __name__ == "__main__":

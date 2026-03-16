@@ -55,6 +55,8 @@ def main():
 
     # Write back: convert bracket dict back to regions list format
     out = {"regions": {}, "final_four_matchups": data.get("final_four_matchups", [[0, 1], [2, 3]])}
+    if data.get("quadrant_order"):
+        out["quadrant_order"] = data["quadrant_order"]
     for rname, by_seed in bracket.items():
         out["regions"][rname] = [by_seed[s] for s in sorted(by_seed.keys())]
 

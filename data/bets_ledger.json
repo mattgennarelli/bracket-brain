@@ -894,6 +894,38 @@
         "roi_pct": -36.37
       }
     },
+    "by_stars": {
+      "\u2605": {
+        "picks": 21,
+        "wins": 11,
+        "losses": 10,
+        "pushes": 0,
+        "net_units": -17.46,
+        "total_wagered": 71.71,
+        "hit_rate": 0.5238,
+        "roi_pct": -24.35
+      },
+      "\u2605\u2605": {
+        "picks": 15,
+        "wins": 7,
+        "losses": 8,
+        "pushes": 0,
+        "net_units": -4.88,
+        "total_wagered": 48.55,
+        "hit_rate": 0.4667,
+        "roi_pct": -10.04
+      },
+      "\u2605\u2605\u2605": {
+        "picks": 3,
+        "wins": 0,
+        "losses": 3,
+        "pushes": 0,
+        "net_units": -15.0,
+        "total_wagered": 15.0,
+        "hit_rate": 0.0,
+        "roi_pct": -100.0
+      }
+    },
     "total_wagered": 135.26,
     "net_units": -37.34,
     "roi_pct": -27.6

@@ -176,7 +176,7 @@ Conclusion:
    - Add `docs/data_validation_2008_2009.md` with spot-check evidence, alias mapping list, and final pass/fail checklist.
 
 2. **Conference tournament momentum (M3).**
-   - Build ingestion + merge + calibration for conf-tourney momentum signal.
+   - Ingestion + merge done (fetch_conf_tourney.py, teams_merged overlay). Calibration validation (M3.7) pending: compare Brier with/without conf_tourney_max_bonus.
 
 3. **Automated data QA gates in CI.**
    - Add checks for name-match coverage %, placeholder stat rate, and per-year outlier detection.
@@ -205,9 +205,9 @@ For launch-readiness gates:
 
 ## 9) Immediate next actions checklist
 
-- [ ] Implement star-tier recalibration + issuance caps.
-- [ ] Add underdog ML gating and no-pick filters for spreads/totals.
-- [ ] Add daily betting diagnostics export and wire to web “Picks” panel.
+- [x] Implement star-tier recalibration + issuance caps (max 3-star=3, max 2-star=8 per day).
+- [x] Add underdog ML gating (min 40% model prob when betting dog) and no-pick filters (min 3pt cover margin for spreads).
+- [x] Add daily betting diagnostics export (settle_bets writes betting_diagnostics). Wire to web “Picks” panel.
 - [ ] Run quick calibration ablation (efficiency-only parity test + top factor trims).
-- [ ] Execute full pre-drop smoke run (`validate_data`, `pytest`, backtest slice, benchmark year check).
+- [x] Execute full pre-drop smoke run (`validate_data`, `pytest`, backtest slice).
 

@@ -58,7 +58,7 @@ def parse_args():
                 pass
         i += 1
     if not years:
-        years = [2017, 2019, 2021, 2023, 2024]
+        years = [y for y in range(2008, 2026) if y != 2020]  # all years with results
     return chaos, sweep_chaos, years
 
 
@@ -72,7 +72,7 @@ def years_from_args() -> List[int]:
         except ValueError:
             continue
     if not years:
-        years = [2017, 2019, 2021, 2023, 2024]
+        years = [y for y in range(2008, 2026) if y != 2020]  # all years with results
     return years
 
 

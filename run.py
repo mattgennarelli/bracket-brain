@@ -856,6 +856,7 @@ function onUpsetChange(val) {{
 
 function buildBracket() {{
   const wrap = document.getElementById('bracket-wrap');
+  if (!wrap) return;
   let html = '<div class="bracket-top">';
   html += buildRegionHTML(QUADRANT[0], false);
   html += buildFinalFourHTML();
@@ -869,7 +870,11 @@ function buildBracket() {{
 }}
 
 function buildRegionHTML(region, flipped) {{
-  const teams = BRACKET[region];
+  let teams = BRACKET[region];
+  if (!teams && region) {{
+    const key = Object.keys(BRACKET).find(k => k.toLowerCase() === region.toLowerCase());
+    if (key) teams = BRACKET[key];
+  }}
   if (!teams) return '<div class="region-bracket"></div>';
   const rounds = ['R64','R32','S16','E8'], gamesPerRound = [8,4,2,1];
   let html = `<div class="region-bracket ${{flipped?'flipped':''}}">`;
@@ -912,7 +917,7 @@ function buildFinalFourHTML() {{
     html += '</div>';
   }});
   html += '<div class="ff-label">Championship</div>';
-  html += '<div class="game" data-game-id="FF-2-0" onclick="handleGameClick(event,\'FF-2-0\')">';
+  html += '<div class="game" data-game-id="FF-2-0" onclick="handleGameClick(event,\\'FF-2-0\\')">';
   html += '<div class="team-slot empty" data-team="" data-seed=""><span class="sd"></span><span class="tm">\\u2014</span><span class="upset-badge" style="display:none"></span></div>';
   html += '<div class="team-slot empty" data-team="" data-seed=""><span class="sd"></span><span class="tm">\\u2014</span><span class="upset-badge" style="display:none"></span></div>';
   html += `<div class="info-btn" style="display:none" title="Matchup details">i</div>`;
@@ -1023,26 +1028,31 @@ function closeAnalysis() {{
   document.getElementById('analysis-overlay').classList.remove('show');
 }}
 
-PICKS.forEach(p => {{
-  const region = p.region, roundOf = p.round;
-  let gid = null;
-  if (region && roundOf >= 8) {{
-    const same = PICKS.filter(pp => pp.region===region && pp.round===roundOf);
-    const gi = same.indexOf(p);
-    if (gi >= 0) gid = `${{region}}-${{roundOf}}-${{gi}}`;
-  }} else if (roundOf === 4) {{
-    const ff = PICKS.filter(pp => pp.round===4);
-    const gi = ff.indexOf(p);
-    if (gi >= 0) gid = `FF-4-${{gi}}`;
-  }} else if (roundOf === 2) {{
-    gid = 'FF-2-0';
-  }}
-  if (gid) simPicks[gid] = p.pick;
+document.addEventListener('DOMContentLoaded', function() {{
+  try {{
+    PICKS.forEach(p => {{
+      const region = p.region, roundOf = p.round;
+      let gid = null;
+      if (region && roundOf >= 8) {{
+        const same = PICKS.filter(pp => pp.region===region && pp.round===roundOf);
+        const gi = same.indexOf(p);
+        if (gi >= 0) gid = `${{region}}-${{roundOf}}-${{gi}}`;
+      }} else if (roundOf === 4) {{
+        const ff = PICKS.filter(pp => pp.round===4);
+        const gi = ff.indexOf(p);
+        if (gi >= 0) gid = `FF-4-${{gi}}`;
+      }} else if (roundOf === 2) {{
+        gid = 'FF-2-0';
+      }}
+      if (gid) simPicks[gid] = p.pick;
+    }});
+  }} catch (e) {{ console.warn('Picks init:', e); }}
+  buildBracket();
+  try {{
+    recomputeBracket();
+  }} catch (e) {{ console.warn('Recompute:', e); }}
+  document.addEventListener('keydown', e => {{ if (e.key==='Escape') closeAnalysis(); }});
 }});
-
-buildBracket();
-recomputeBracket();
-document.addEventListener('keydown', e => {{ if (e.key==='Escape') closeAnalysis(); }});
 </script>
 </body>
 </html>"""

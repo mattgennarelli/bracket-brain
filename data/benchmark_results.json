@@ -5,12 +5,12 @@
       "accuracy": 0.7068160597572363
     },
     "efficiency": {
-      "brier": 0.1664702773315574,
+      "brier": 0.16654988081071484,
       "accuracy": 0.7469654528478058
     },
     "full model": {
-      "brier": 0.1644027306069094,
-      "accuracy": 0.7450980392156863
+      "brier": 0.16430769613445378,
+      "accuracy": 0.7507002801120448
     }
   },
   "per_year": {
@@ -22,7 +22,7 @@
         "brier": 0.13298581449256328
       },
       "full model": {
-        "brier": 0.1402997433333333
+        "brier": 0.14194359365079365
       }
     },
     "2009": {
@@ -33,7 +33,7 @@
         "brier": 0.1513062409879516
       },
       "full model": {
-        "brier": 0.14981769365079375
+        "brier": 0.1456434934920635
       }
     },
     "2010": {
@@ -41,10 +41,10 @@
         "brier": 0.20009815873015868
       },
       "efficiency": {
-        "brier": 0.1770373395978694
+        "brier": 0.1768272334850959
       },
       "full model": {
-        "brier": 0.1759665434920635
+        "brier": 0.16811165873015876
       }
     },
     "2011": {
@@ -52,10 +52,10 @@
         "brier": 0.21133625396825398
       },
       "efficiency": {
-        "brier": 0.20685771034179504
+        "brier": 0.20678776256881176
       },
       "full model": {
-        "brier": 0.20572178476190475
+        "brier": 0.1899472401587301
       }
     },
     "2012": {
@@ -63,10 +63,10 @@
         "brier": 0.19060768253968258
       },
       "efficiency": {
-        "brier": 0.16380012635084337
+        "brier": 0.16155245080407507
       },
       "full model": {
-        "brier": 0.16088788904761905
+        "brier": 0.15275454158730156
       }
     },
     "2013": {
@@ -74,10 +74,10 @@
         "brier": 0.20703942857142854
       },
       "efficiency": {
-        "brier": 0.1766406849551292
+        "brier": 0.17640626823803557
       },
       "full model": {
-        "brier": 0.17761419269841264
+        "brier": 0.1747229141269841
       }
     },
     "2014": {
@@ -85,10 +85,10 @@
         "brier": 0.21400292063492066
       },
       "efficiency": {
-        "brier": 0.18736108903677087
+        "brier": 0.18665925969379554
       },
       "full model": {
-        "brier": 0.17155729936507938
+        "brier": 0.19093484555555548
       }
     },
     "2015": {
@@ -96,10 +96,10 @@
         "brier": 0.17427593650793655
       },
       "efficiency": {
-        "brier": 0.13047018668206897
+        "brier": 0.13258556550148837
       },
       "full model": {
-        "brier": 0.1396616211111111
+        "brier": 0.1460978274603175
       }
     },
     "2016": {
@@ -107,10 +107,10 @@
         "brier": 0.19468228571428567
       },
       "efficiency": {
-        "brier": 0.16386606051566263
+        "brier": 0.16382771148272826
       },
       "full model": {
-        "brier": 0.1640061534920635
+        "brier": 0.16628490571428575
       }
     },
     "2017": {
@@ -118,10 +118,10 @@
         "brier": 0.17597752380952378
       },
       "efficiency": {
-        "brier": 0.15464877780638853
+        "brier": 0.1544672496128541
       },
       "full model": {
-        "brier": 0.14409360142857144
+        "brier": 0.1539470114285714
       }
     },
     "2018": {
@@ -129,10 +129,10 @@
         "brier": 0.2098695873015873
       },
       "efficiency": {
-        "brier": 0.19070790152662395
+        "brier": 0.18902954626955706
       },
       "full model": {
-        "brier": 0.17621717968253964
+        "brier": 0.16740132650793652
       }
     },
     "2019": {
@@ -140,10 +140,10 @@
         "brier": 0.16208546031746032
       },
       "efficiency": {
-        "brier": 0.1374026339253575
+        "brier": 0.1370992911114321
       },
       "full model": {
-        "brier": 0.13456189396825396
+        "brier": 0.14057062063492062
       }
     },
     "2021": {
@@ -154,7 +154,7 @@
         "brier": 0.18245819392090162
       },
       "full model": {
-        "brier": 0.180657949047619
+        "brier": 0.18152075952380956
       }
     },
     "2022": {
@@ -162,10 +162,10 @@
         "brier": 0.21710926984126983
       },
       "efficiency": {
-        "brier": 0.19015973257747162
+        "brier": 0.1950631636937844
       },
       "full model": {
-        "brier": 0.18268943714285713
+        "brier": 0.1855570741269842
       }
     },
     "2023": {
@@ -176,7 +176,7 @@
         "brier": 0.1849382467547211
       },
       "full model": {
-        "brier": 0.18774978968253975
+        "brier": 0.19417982666666667
       }
     },
     "2024": {
@@ -187,7 +187,7 @@
         "brier": 0.1842181157193068
       },
       "full model": {
-        "brier": 0.18113668269841265
+        "brier": 0.17108589174603175
       }
     },
     "2025": {
@@ -198,7 +198,7 @@
         "brier": 0.11513585944504977
       },
       "full model": {
-        "brier": 0.12220696571428571
+        "brier": 0.12252730317460318
       }
     }
   },
@@ -214,17 +214,17 @@
       "by_model": {
         "seed-only": {
           "champion_rank": 3,
-          "champion_pct": 0.0845,
+          "champion_pct": 0.0875,
           "ff_hit_rate": 1.0
         },
         "efficiency": {
           "champion_rank": 1,
-          "champion_pct": 0.3545,
+          "champion_pct": 0.318,
           "ff_hit_rate": 1.0
         },
         "full model": {
           "champion_rank": 1,
-          "champion_pct": 0.41,
+          "champion_pct": 0.411,
           "ff_hit_rate": 1.0
         }
       }
@@ -232,51 +232,51 @@
     "2009": {
       "champion": "North Carolina",
       "actual_ff": [
-        "Michigan St.",
         "Villanova",
+        "Michigan St.",
         "North Carolina",
         "Connecticut"
       ],
       "by_model": {
         "seed-only": {
-          "champion_rank": 4,
-          "champion_pct": 0.082,
+          "champion_rank": 2,
+          "champion_pct": 0.0865,
           "ff_hit_rate": 0.5
         },
         "efficiency": {
           "champion_rank": 1,
-          "champion_pct": 0.1905,
-          "ff_hit_rate": 0.5
+          "champion_pct": 0.1785,
+          "ff_hit_rate": 0.75
         },
         "full model": {
           "champion_rank": 1,
-          "champion_pct": 0.242,
-          "ff_hit_rate": 0.5
+          "champion_pct": 0.271,
+          "ff_hit_rate": 0.75
         }
       }
     },
     "2010": {
       "champion": "Duke",
       "actual_ff": [
-        "Duke",
-        "Michigan State",
+        "Butler",
         "West Virginia",
-        "Butler"
+        "Duke",
+        "Michigan State"
       ],
       "by_model": {
         "seed-only": {
-          "champion_rank": 4,
-          "champion_pct": 0.0775,
+          "champion_rank": 2,
+          "champion_pct": 0.087,
           "ff_hit_rate": 0.5
         },
         "efficiency": {
           "champion_rank": 1,
-          "champion_pct": 0.288,
+          "champion_pct": 0.256,
           "ff_hit_rate": 0.5
         },
         "full model": {
-          "champion_rank": 1,
-          "champion_pct": 0.2885,
+          "champion_rank": 2,
+          "champion_pct": 0.311,
           "ff_hit_rate": 0.5
         }
       }
@@ -284,51 +284,51 @@
     "2011": {
       "champion": "Connecticut",
       "actual_ff": [
-        "Connecticut",
-        "VCU",
         "Butler",
+        "VCU",
+        "Connecticut",
         "Kentucky"
       ],
       "by_model": {
         "seed-only": {
-          "champion_rank": 10,
-          "champion_pct": 0.039,
+          "champion_rank": 11,
+          "champion_pct": 0.036,
           "ff_hit_rate": 0.0
         },
         "efficiency": {
-          "champion_rank": 14,
-          "champion_pct": 0.0125,
+          "champion_rank": 12,
+          "champion_pct": 0.0175,
           "ff_hit_rate": 0.0
         },
         "full model": {
-          "champion_rank": 14,
-          "champion_pct": 0.013,
-          "ff_hit_rate": 0.0
+          "champion_rank": 16,
+          "champion_pct": 0.0095,
+          "ff_hit_rate": 0.25
         }
       }
     },
     "2012": {
       "champion": "Kentucky",
       "actual_ff": [
+        "Louisville",
         "Kansas",
         "Ohio State",
-        "Louisville",
         "Kentucky"
       ],
       "by_model": {
         "seed-only": {
-          "champion_rank": 2,
-          "champion_pct": 0.098,
+          "champion_rank": 3,
+          "champion_pct": 0.091,
           "ff_hit_rate": 0.75
         },
         "efficiency": {
           "champion_rank": 1,
-          "champion_pct": 0.3285,
+          "champion_pct": 0.308,
           "ff_hit_rate": 0.75
         },
         "full model": {
           "champion_rank": 1,
-          "champion_pct": 0.506,
+          "champion_pct": 0.5605,
           "ff_hit_rate": 0.75
         }
       }
@@ -336,25 +336,25 @@
     "2013": {
       "champion": "Louisville",
       "actual_ff": [
-        "Wichita State",
-        "Michigan",
+        "Louisville",
         "Syracuse",
-        "Louisville"
+        "Wichita State",
+        "Michigan"
       ],
       "by_model": {
         "seed-only": {
-          "champion_rank": 3,
-          "champion_pct": 0.0775,
+          "champion_rank": 4,
+          "champion_pct": 0.079,
           "ff_hit_rate": 0.25
         },
         "efficiency": {
           "champion_rank": 1,
-          "champion_pct": 0.2375,
+          "champion_pct": 0.1995,
           "ff_hit_rate": 0.5
         },
         "full model": {
           "champion_rank": 1,
-          "champion_pct": 0.2545,
+          "champion_pct": 0.2715,
           "ff_hit_rate": 0.75
         }
       }
@@ -363,23 +363,23 @@
       "champion": "Connecticut",
       "actual_ff": [
         "Kentucky",
-        "Wisconsin",
         "Florida",
-        "Connecticut"
+        "Connecticut",
+        "Wisconsin"
       ],
       "by_model": {
         "seed-only": {
-          "champion_rank": 24,
-          "champion_pct": 0.0065,
+          "champion_rank": 25,
+          "champion_pct": 0.0055,
           "ff_hit_rate": 0.5
         },
         "efficiency": {
-          "champion_rank": 15,
+          "champion_rank": 18,
           "champion_pct": 0.014,
           "ff_hit_rate": 0.5
         },
         "full model": {
-          "champion_rank": 19,
+          "champion_rank": 17,
           "champion_pct": 0.0085,
           "ff_hit_rate": 0.5
         }
@@ -388,25 +388,25 @@
     "2015": {
       "champion": "Duke",
       "actual_ff": [
-        "Duke",
         "Wisconsin",
+        "Duke",
         "Michigan State",
         "Kentucky"
       ],
       "by_model": {
         "seed-only": {
-          "champion_rank": 1,
-          "champion_pct": 0.0915,
+          "champion_rank": 3,
+          "champion_pct": 0.083,
           "ff_hit_rate": 0.75
         },
         "efficiency": {
           "champion_rank": 2,
-          "champion_pct": 0.177,
+          "champion_pct": 0.178,
           "ff_hit_rate": 0.75
         },
         "full model": {
           "champion_rank": 2,
-          "champion_pct": 0.158,
+          "champion_pct": 0.1605,
           "ff_hit_rate": 0.75
         }
       }
@@ -414,25 +414,25 @@
     "2016": {
       "champion": "Villanova",
       "actual_ff": [
+        "Syracuse",
         "North Carolina",
         "Oklahoma",
-        "Syracuse",
         "Villanova"
       ],
       "by_model": {
         "seed-only": {
           "champion_rank": 7,
-          "champion_pct": 0.061,
+          "champion_pct": 0.064,
           "ff_hit_rate": 0.75
         },
         "efficiency": {
           "champion_rank": 1,
-          "champion_pct": 0.21,
+          "champion_pct": 0.199,
           "ff_hit_rate": 0.75
         },
         "full model": {
-          "champion_rank": 1,
-          "champion_pct": 0.231,
+          "champion_rank": 2,
+          "champion_pct": 0.225,
           "ff_hit_rate": 0.75
         }
       }
@@ -441,76 +441,76 @@
       "champion": "North Carolina",
       "actual_ff": [
         "Gonzaga",
-        "South Carolina",
         "North Carolina",
-        "Oregon"
+        "Oregon",
+        "South Carolina"
       ],
       "by_model": {
         "seed-only": {
-          "champion_rank": 1,
+          "champion_rank": 3,
           "champion_pct": 0.0875,
           "ff_hit_rate": 0.5
         },
         "efficiency": {
           "champion_rank": 2,
-          "champion_pct": 0.15,
+          "champion_pct": 0.128,
           "ff_hit_rate": 0.5
         },
         "full model": {
           "champion_rank": 2,
-          "champion_pct": 0.1355,
-          "ff_hit_rate": 0.5
+          "champion_pct": 0.1415,
+          "ff_hit_rate": 0.75
         }
       }
     },
     "2018": {
       "champion": "Villanova",
       "actual_ff": [
+        "Villanova",
         "Loyola\u2013Chicago",
         "Kansas",
-        "Michigan",
-        "Villanova"
+        "Michigan"
       ],
       "by_model": {
         "seed-only": {
-          "champion_rank": 1,
-          "champion_pct": 0.094,
+          "champion_rank": 4,
+          "champion_pct": 0.0865,
           "ff_hit_rate": 0.5
         },
         "efficiency": {
           "champion_rank": 1,
-          "champion_pct": 0.292,
+          "champion_pct": 0.286,
           "ff_hit_rate": 0.75
         },
         "full model": {
           "champion_rank": 1,
-          "champion_pct": 0.344,
-          "ff_hit_rate": 0.5
+          "champion_pct": 0.4055,
+          "ff_hit_rate": 0.75
         }
       }
     },
     "2019": {
       "champion": "Virginia",
       "actual_ff": [
+        "Auburn",
         "Virginia",
         "Texas Tech",
-        "Auburn",
         "Michigan State"
       ],
       "by_model": {
         "seed-only": {
           "champion_rank": 1,
-          "champion_pct": 0.09,
+          "champion_pct": 0.098,
           "ff_hit_rate": 0.5
         },
         "efficiency": {
           "champion_rank": 1,
-          "champion_pct": 0.1895,
+          "champion_pct": 0.19,
           "ff_hit_rate": 0.75
         },
         "full model": {
           "champion_rank": 1,
-          "champion_pct": 0.2635,
+          "champion_pct": 0.2385,
           "ff_hit_rate": 0.75
         }
       }
@@ -518,25 +518,25 @@
     "2021": {
       "champion": "Baylor",
       "actual_ff": [
-        "Gonzaga",
         "UCLA",
+        "Gonzaga",
         "Houston",
         "Baylor"
       ],
       "by_model": {
         "seed-only": {
           "champion_rank": 4,
-          "champion_pct": 0.08,
+          "champion_pct": 0.0765,
           "ff_hit_rate": 0.75
         },
         "efficiency": {
           "champion_rank": 2,
-          "champion_pct": 0.219,
+          "champion_pct": 0.2215,
           "ff_hit_rate": 0.75
         },
         "full model": {
           "champion_rank": 2,
-          "champion_pct": 0.2615,
+          "champion_pct": 0.248,
           "ff_hit_rate": 0.75
         }
       }
@@ -544,25 +544,25 @@
     "2022": {
       "champion": "Kansas",
       "actual_ff": [
-        "Duke",
         "North Carolina",
-        "Kansas",
-        "Villanova"
+        "Duke",
+        "Villanova",
+        "Kansas"
       ],
       "by_model": {
         "seed-only": {
-          "champion_rank": 4,
-          "champion_pct": 0.079,
+          "champion_rank": 2,
+          "champion_pct": 0.0885,
           "ff_hit_rate": 0.75
         },
         "efficiency": {
           "champion_rank": 2,
-          "champion_pct": 0.147,
+          "champion_pct": 0.1435,
           "ff_hit_rate": 0.5
         },
         "full model": {
-          "champion_rank": 2,
-          "champion_pct": 0.161,
+          "champion_rank": 1,
+          "champion_pct": 0.232,
           "ff_hit_rate": 0.75
         }
       }
@@ -570,25 +570,25 @@
     "2023": {
       "champion": "UConn",
       "actual_ff": [
-        "Florida Atlantic",
-        "UConn",
         "Miami (FL)",
-        "San Diego State"
+        "San Diego State",
+        "Florida Atlantic",
+        "UConn"
       ],
       "by_model": {
         "seed-only": {
-          "champion_rank": 13,
-          "champion_pct": 0.032,
+          "champion_rank": 16,
+          "champion_pct": 0.02,
           "ff_hit_rate": 0.0
         },
         "efficiency": {
-          "champion_rank": 2,
-          "champion_pct": 0.1465,
+          "champion_rank": 1,
+          "champion_pct": 0.1595,
           "ff_hit_rate": 0.25
         },
         "full model": {
-          "champion_rank": 3,
-          "champion_pct": 0.1365,
+          "champion_rank": 2,
+          "champion_pct": 0.1565,
           "ff_hit_rate": 0.25
         }
       }
@@ -596,25 +596,25 @@
     "2024": {
       "champion": "UConn",
       "actual_ff": [
-        "Alabama",
         "NC State",
         "Purdue",
+        "Alabama",
         "UConn"
       ],
       "by_model": {
         "seed-only": {
           "champion_rank": 4,
-          "champion_pct": 0.073,
+          "champion_pct": 0.078,
           "ff_hit_rate": 0.5
         },
         "efficiency": {
           "champion_rank": 1,
-          "champion_pct": 0.2835,
+          "champion_pct": 0.283,
           "ff_hit_rate": 0.5
         },
         "full model": {
           "champion_rank": 1,
-          "champion_pct": 0.419,
+          "champion_pct": 0.46,
           "ff_hit_rate": 0.75
         }
       }
@@ -622,25 +622,25 @@
     "2025": {
       "champion": "Florida",
       "actual_ff": [
+        "Florida",
         "Auburn",
-        "Duke",
         "Houston",
-        "Florida"
+        "Duke"
       ],
       "by_model": {
         "seed-only": {
           "champion_rank": 3,
-          "champion_pct": 0.0925,
+          "champion_pct": 0.0835,
           "ff_hit_rate": 1.0
         },
         "efficiency": {
           "champion_rank": 4,
-          "champion_pct": 0.13,
+          "champion_pct": 0.1085,
           "ff_hit_rate": 1.0
         },
         "full model": {
           "champion_rank": 3,
-          "champion_pct": 0.173,
+          "champion_pct": 0.195,
           "ff_hit_rate": 1.0
         }
       }

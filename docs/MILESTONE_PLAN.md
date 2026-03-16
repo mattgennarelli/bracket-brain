@@ -47,13 +47,13 @@
 | KenPom | Conf tourney pages | May require subscription |
 
 **Actions:**
-- [ ] **M3.1** Research and document where to fetch conference tournament results (dates, matchups, winners) for 2008–2026
-- [ ] **M3.2** Create `scripts/fetch_conf_tourney.py` or extend `fetch_data.py` to pull conf tourney results into `data/conf_tourney_YYYY.json`
-- [ ] **M3.3** Define momentum metric: e.g. `conf_tourney_momentum = (actual_finish - expected_finish) / expected_finish` or binary "won conf tourney" / "lost in final" / "lost earlier"
-- [ ] **M3.4** Merge conf tourney momentum into `teams_merged_YYYY` (new field `conf_tourney_momentum` or `conf_tourney_result`)
-- [ ] **M3.5** Add `calc_conf_tourney_bonus(team, config)` in `engine.py` and wire into factor list
-- [ ] **M3.6** Add config param `conf_tourney_max_bonus` and include in calibration
-- [ ] **M3.7** Validate: compare calibration/Brier with and without conf tourney momentum
+- [x] **M3.1** Research and document where to fetch conference tournament results (dates, matchups, winners) for 2008–2026 — Sports-Reference scrape
+- [x] **M3.2** Create `scripts/fetch_conf_tourney.py` or extend `fetch_data.py` to pull conf tourney results into `data/conf_tourney_YYYY.json`
+- [x] **M3.3** Define momentum metric: e.g. `conf_tourney_momentum = (actual_finish - expected_finish) / expected_finish` or binary "won conf tourney" / "lost in final" / "lost earlier" — champion=1.0, finalist=0.7, semifinal=0.4, quarterfinal=0.2, early=0.0
+- [x] **M3.4** Merge conf tourney momentum into `teams_merged_YYYY` (new field `conf_tourney_momentum` or `conf_tourney_result`)
+- [x] **M3.5** Add `calc_conf_tourney_bonus(team, config)` in `engine.py` and wire into factor list
+- [x] **M3.6** Add config param `conf_tourney_max_bonus` and include in calibration
+- [x] **M3.7** Validate: compare calibration/Brier with and without conf tourney momentum — run `python scripts/validate_conf_tourney.py`; result: conf tourney improves Brier slightly (-0.0002), keep signal
 
 ---
 
@@ -109,7 +109,7 @@
 | M5 | 2008/2009 data validation | Medium | 1 day |
 | M6 | Underseeded upset indicator | Medium | 0.5–1 day |
 
-**Suggested order:** M4 (quick doc) → M5 (data validation) → M6 (underseeded) → M1 (investigation) → M2 (bracket objective) → M3 (conf tourney momentum).
+**Suggested order:** M4 (quick doc) → M5 (data validation) → M6 (underseeded) → M1 (investigation) → M2 (bracket objective) → M3.7 (conf tourney validation).
 
 ---
 

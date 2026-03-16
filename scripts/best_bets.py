@@ -58,6 +58,10 @@ DEFAULT_ML_EDGE = 0.10      # 10% win probability edge over implied odds (raised
 DEFAULT_SPREAD_EDGE = 7.0   # model cover margin must exceed 7 pts (raised from 5)
 DEFAULT_TOTAL_EDGE = 10.0   # model total differs from Vegas total by 10+ pts (raised from 8)
 DEFAULT_MIN_MODEL_CONFIDENCE = 0.58  # skip ML bets when model probability < 58%
+DEFAULT_MIN_ML_PROB_FOR_DOG = 0.40   # skip ML when betting underdog with model prob < 40%
+DEFAULT_MIN_SPREAD_COVER_MARGIN = 3.0  # skip spread when cover margin < 3 pts
+DEFAULT_MAX_3STAR_PICKS = 3   # cap 3-star picks per day (3-star underperforming per audit)
+DEFAULT_MAX_2STAR_PICKS = 8   # cap 2-star picks per day
 
 
 # ---------------------------------------------------------------------------
@@ -375,7 +379,9 @@ def payout_str(american_odds):
     return f"{'+' if american_odds > 0 else ''}{int(american_odds)}"
 
 
-def get_best_bets_json(api_key, year=None, ml_min=None, spread_min=None, total_min=None):
+def get_best_bets_json(api_key, year=None, ml_min=None, spread_min=None, total_min=None,
+                       min_ml_prob_for_dog=None, min_spread_cover=None,
+                       max_3star=None, max_2star=None):
     """Fetch today's odds, run model, return bets as JSON-serializable list sorted by start time.
 
     Returns list of dicts, each with: commence_time, away_team, home_team, bet_type, bet_side/bet_team,
@@ -387,6 +393,10 @@ def get_best_bets_json(api_key, year=None, ml_min=None, spread_min=None, total_m
     min_ml = ml_min if ml_min is not None else DEFAULT_ML_EDGE
     min_spread = spread_min if spread_min is not None else DEFAULT_SPREAD_EDGE
     min_total = total_min if total_min is not None else DEFAULT_TOTAL_EDGE
+    min_ml_dog = min_ml_prob_for_dog if min_ml_prob_for_dog is not None else DEFAULT_MIN_ML_PROB_FOR_DOG
+    min_cover = min_spread_cover if min_spread_cover is not None else DEFAULT_MIN_SPREAD_COVER_MARGIN
+    cap_3 = max_3star if max_3star is not None else DEFAULT_MAX_3STAR_PICKS
+    cap_2 = max_2star if max_2star is not None else DEFAULT_MAX_2STAR_PICKS
 
     raw_games = fetch_today_odds(api_key)
     if not raw_games:
@@ -436,13 +446,17 @@ def get_best_bets_json(api_key, year=None, ml_min=None, spread_min=None, total_m
 
         min_conf = DEFAULT_MIN_MODEL_CONFIDENCE
 
-        # ML bets
+        # ML bets (with underdog gating: require min prob when betting dog)
         h_edge, a_edge = ml_edge(model_prob_home, game["ml_home"], game["ml_away"])
         if h_edge is not None:
             raw_h = _american_to_prob(game["ml_home"])
             raw_a = _american_to_prob(game["ml_away"])
             ih, ia = _devig(raw_h, raw_a)
-            if h_edge >= min_ml and model_prob_home >= min_conf:
+            # Home: skip if we're the dog (ih < 0.5) and model prob < min_ml_dog
+            home_ok = h_edge >= min_ml and model_prob_home >= min_conf
+            if ih < 0.5 and model_prob_home < min_ml_dog:
+                home_ok = False  # underdog ML gating
+            if home_ok:
                 dec_h = _american_to_decimal(game["ml_home"])
                 k_h = kelly_fraction(model_prob_home, dec_h)
                 bets.append(({**base, "bet_type": "ml", "bet_side": home_name,
@@ -450,7 +464,11 @@ def get_best_bets_json(api_key, year=None, ml_min=None, spread_min=None, total_m
                              "model_prob": model_prob_home,
                              "kelly_size": round(k_h, 4),
                              "kelly_units": round(k_h * 100, 2)}, h_edge))
-            if a_edge >= min_ml and (1 - model_prob_home) >= min_conf:
+            # Away: skip if we're the dog (ia < 0.5) and model prob < min_ml_dog
+            away_ok = a_edge >= min_ml and (1 - model_prob_home) >= min_conf
+            if ia < 0.5 and (1 - model_prob_home) < min_ml_dog:
+                away_ok = False  # underdog ML gating
+            if away_ok:
                 dec_a = _american_to_decimal(game["ml_away"])
                 k_a = kelly_fraction(1 - model_prob_home, dec_a)
                 bets.append(({**base, "bet_type": "ml", "bet_side": away_name,
@@ -459,9 +477,9 @@ def get_best_bets_json(api_key, year=None, ml_min=None, spread_min=None, total_m
                              "kelly_size": round(k_a, 4),
                              "kelly_units": round(k_a * 100, 2)}, a_edge))
 
-        # Spread bets
+        # Spread bets (skip when cover margin too slim — no-pick filter)
         sp_edge_val = spread_edge(model_margin, game["spread_home"])
-        if sp_edge_val is not None and abs(sp_edge_val) >= min_spread:
+        if sp_edge_val is not None and abs(sp_edge_val) >= min_spread and abs(sp_edge_val) >= min_cover:
             if sp_edge_val > 0:
                 bet_team = home_name
                 bet_spread = game["spread_home"]
@@ -500,15 +518,31 @@ def get_best_bets_json(api_key, year=None, ml_min=None, spread_min=None, total_m
     # Sort by commence_time, then by edge magnitude
     bets.sort(key=lambda x: (x[0]["commence_time"], -abs(x[1])))
 
-    # Build JSON-serializable output
-    out = []
+    # Build JSON-serializable output with star ratings
+    thresh_ml = [min_ml, min_ml * 1.5, min_ml * 2.5]
+    thresh_sp = [min_spread, min_spread * 1.5, min_spread * 2.0]
+    thresh_tot = [min_total, min_total * 1.4, min_total * 2.0]
+    rated = []
     for g, edge in bets:
         rec = dict(g)
         rec["edge"] = float(edge)
-        thresh = [min_ml, min_ml * 1.5, min_ml * 2.5] if g["bet_type"] == "ml" else \
-                 [min_spread, min_spread * 1.5, min_spread * 2.0] if g["bet_type"] == "spread" else \
-                 [min_total, min_total * 1.4, min_total * 2.0]
+        thresh = thresh_ml if g["bet_type"] == "ml" else thresh_sp if g["bet_type"] == "spread" else thresh_tot
         rec["stars"] = star_rating(abs(edge), thresh)
+        rated.append(rec)
+
+    # Apply star-tier issuance caps (3-star underperforming per audit)
+    count_3, count_2 = 0, 0
+    out = []
+    for rec in rated:
+        s = rec.get("stars", "")
+        if s == "★★★":
+            if count_3 >= cap_3:
+                continue
+            count_3 += 1
+        elif s == "★★":
+            if count_2 >= cap_2:
+                continue
+            count_2 += 1
         out.append(rec)
     return out
 

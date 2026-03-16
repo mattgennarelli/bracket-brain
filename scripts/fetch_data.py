@@ -3,6 +3,7 @@ Fetch all data sources and merge into a single teams file for the bracket.
   - Torvik: required (run fetch_torvik.py)
   - KenPom: optional (run fetch_kenpom.py if you have a subscription)
   - Evan Miya: optional (place data/evanmiya_YYYY.csv or run fetch_evanmiya.py)
+  - Conf tourney: optional (run fetch_conf_tourney.py or use --fetch-conf-tourney to auto-scrape)
 Output: data/teams_merged_YYYY.json — one record per team with adj_o, adj_d, adj_tempo, barthag, luck (if any), star_score (if any).
 """
 import json
@@ -275,11 +276,35 @@ def run_fetch_torvik(year):
     return os.path.isfile(os.path.join(DATA_DIR, f"torvik_{year}.json"))
 
 
+def run_fetch_conf_tourney(year):
+    """Run fetch_conf_tourney.py --scrape and return True if we have data."""
+    import subprocess
+    p = subprocess.run(
+        [sys.executable, os.path.join(SCRIPT_DIR, "fetch_conf_tourney.py"), "--scrape", str(year)],
+        cwd=ROOT,
+        capture_output=True,
+        text=True,
+    )
+    if p.returncode != 0:
+        print(p.stderr or p.stdout or "fetch_conf_tourney failed")
+        return False
+    path = os.path.join(DATA_DIR, f"conf_tourney_{year}.json")
+    if not os.path.isfile(path):
+        return False
+    data = load_json(path)
+    teams = data.get("teams", {}) if isinstance(data, dict) else {}
+    return len(teams) > 0
+
+
 def main():
     year = 2026
     args = sys.argv[1:]
+    fetch_conf_tourney = False
     for a in args:
         if a == "--no-fetch":
+            continue
+        if a == "--fetch-conf-tourney":
+            fetch_conf_tourney = True
             continue
         try:
             year = int(a)
@@ -305,6 +330,18 @@ def main():
     if not torvik:
         print("No Torvik records loaded. Check data/torvik_YYYY.json")
         sys.exit(1)
+    # Sanitize: if >80% of teams have zero efg_pct/blk_rate, adv data is corrupt — strip it
+    _BAD_ADV_FIELDS = ("efg_pct", "efg_d", "blk_rate", "ast_rate", "to_rate", "to_rate_d", "opp_orb_rate",
+                       "avg_experience", "experience", "two_pt_pct", "two_pt_pct_d",
+                       "three_pt_pct", "three_pt_pct_d", "ft_rate", "ft_rate_d", "ft_pct", "orb_rate",
+                       "ppp_off", "ppp_def")
+    sample = list(torvik.values())[:min(100, len(torvik))]
+    zeros = sum(1 for r in sample if r.get("efg_pct") == 0 and r.get("blk_rate") == 0)
+    if zeros >= len(sample) * 0.8:
+        for row in torvik.values():
+            for k in _BAD_ADV_FIELDS:
+                row.pop(k, None)
+        print(f"  Sanitized: removed corrupt adv stats ({zeros}/{len(sample)} teams had zeros)")
     print(f"Torvik: {len(torvik)} teams")
 
     kenpom = load_kenpom(year)
@@ -321,10 +358,29 @@ def main():
 
     merged = merge_sources(torvik, kenpom, evanmiya)
 
+    # Derive ppg/opp_ppg from ppp_off, ppp_def, adj_tempo when missing
+    for team, row in merged.items():
+        tempo = row.get("adj_tempo")
+        if tempo is None:
+            continue
+        if row.get("ppg") is None and row.get("ppp_off") is not None:
+            row["ppg"] = round(row["ppp_off"] * tempo, 1)
+        if row.get("opp_ppg") is None and row.get("ppp_def") is not None:
+            row["opp_ppg"] = round(row["ppp_def"] * tempo, 1)
+
     momentum_data = load_momentum(year)
     if momentum_data:
         merge_momentum(merged, momentum_data)
         print(f"Momentum: {len(momentum_data)} teams (recent form overlay)")
+
+    if fetch_conf_tourney:
+        conf_path = os.path.join(DATA_DIR, f"conf_tourney_{year}.json")
+        if not os.path.isfile(conf_path) or not load_conf_tourney(year):
+            print("Conf tourney data not found or empty. Running fetch_conf_tourney.py --scrape...")
+            if run_fetch_conf_tourney(year):
+                print("  Scraped conf tourney results")
+            else:
+                print("  Conf tourney scrape failed (optional; continuing without)")
 
     conf_tourney_data = load_conf_tourney(year)
     if conf_tourney_data:

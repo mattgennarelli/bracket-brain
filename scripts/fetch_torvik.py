@@ -268,6 +268,29 @@ _ADV_COL_MAP = {
 }
 
 
+def _adv_data_looks_valid(adv, min_teams=50):
+    """Return True if adv data has real Four Factors (not all zeros)."""
+    if not adv or len(adv) < min_teams:
+        return False
+    sample = list(adv.values())[:min(min_teams, len(adv))]
+    with_efg = sum(1 for r in sample if r.get("efg_pct") and float(r.get("efg_pct", 0)) > 5)
+    with_blk = sum(1 for r in sample if r.get("blk_rate") and float(r.get("blk_rate", 0)) > 1)
+    return with_efg >= len(sample) * 0.5 and with_blk >= len(sample) * 0.5
+
+
+def _derive_ppg(row):
+    """Derive ppg/opp_ppg from ppp_off, ppp_def, adj_tempo when missing."""
+    tempo = row.get("adj_tempo")
+    if tempo is None:
+        return
+    ppp_o = row.get("ppp_off")
+    ppp_d = row.get("ppp_def")
+    if ppp_o is not None and row.get("ppg") is None:
+        row["ppg"] = round(ppp_o * tempo, 1)
+    if ppp_d is not None and row.get("opp_ppg") is None:
+        row["opp_ppg"] = round(ppp_d * tempo, 1)
+
+
 def fetch_torvik_adv_season(year=2026):
     """Fetch advanced stats (Four Factors, height, experience) from team-tables_each.php.
     Uses POST trick to bypass JS browser verification.
@@ -449,7 +472,7 @@ def fetch_torvik_season(year=2026, from_csv=None):
     if not from_csv:
         print(f"  Fetching advanced stats (Four Factors, experience)...")
         adv = fetch_torvik_adv_season(year)
-        if adv:
+        if adv and _adv_data_looks_valid(adv):
             merged = 0
             for row in canonical_rows:
                 key = normalize_team_name(row.get("team", ""))
@@ -459,8 +482,14 @@ def fetch_torvik_season(year=2026, from_csv=None):
                             row[field] = val
                     merged += 1
             print(f"  Merged advanced stats for {merged}/{len(canonical_rows)} teams")
+        elif adv:
+            print("  Advanced stats rejected (corrupt/zero data for this year)")
         else:
             print("  Advanced stats unavailable (will retry on next fetch)")
+
+    # Derive ppg/opp_ppg from ppp_off, ppp_def, adj_tempo when missing
+    for row in canonical_rows:
+        _derive_ppg(row)
 
     with open(out_json, "w") as f:
         json.dump(canonical_rows, f, indent=2)
@@ -496,6 +525,9 @@ def fetch_adv_and_merge(year):
     if not adv:
         print(f"  {year}: No advanced stats returned")
         return False
+    if not _adv_data_looks_valid(adv):
+        print(f"  {year}: Advanced stats rejected (corrupt/zero data), skipping merge")
+        return False
     merged = 0
     for row in canonical_rows:
         key = normalize_team_name(row.get("team", ""))
@@ -504,6 +536,8 @@ def fetch_adv_and_merge(year):
                 if field not in row or row[field] is None:
                     row[field] = val
             merged += 1
+    for row in canonical_rows:
+        _derive_ppg(row)
     with open(out_json, "w") as f:
         json.dump(canonical_rows, f, indent=2)
     print(f"  {year}: merged advanced stats for {merged}/{len(canonical_rows)} teams → {out_json}")

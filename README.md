@@ -128,6 +128,7 @@ scripts/
   calibrate.py               # Optimize model parameters via Brier score
   generate_analysis.py       # Claude-powered matchup analysis with caching
   fetch_torvik.py            # Torvik T-Rank CSV parser
+  fetch_conf_tourney.py      # Conference tournament results (champions/finalists)
   fetch_data.py              # Merge team data sources
   fetch_brackets.py          # Historical + projected brackets
   merge_bracket_stats.py     # Enrich bracket with team stats
@@ -140,6 +141,7 @@ data/
   results_all.json           # 945 historical game results (2010-2025)
   analysis_cache_YYYY.json   # Cached Claude analyses
   torvik_YYYY.json           # Parsed team stats
+  conf_tourney_YYYY.json     # Conference tournament results (optional)
   teams_merged_YYYY.json     # Merged team data
   bracket_YYYY.json          # Tournament brackets
 output/

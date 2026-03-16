@@ -62,7 +62,9 @@
     "em_poss_weighted_bpr": 7.162,
     "em_depth_score": 0.901,
     "em_adj_o": 119.232,
-    "em_adj_d": 76.9434
+    "em_adj_d": 76.9434,
+    "conf_strength_score": 0.2399,
+    "conf_tourney_momentum": 1.0
   },
   {
     "team": "Duke",
@@ -127,7 +129,8 @@
     "em_poss_weighted_bpr": 6.601,
     "em_depth_score": 0.834,
     "em_adj_o": 125.127,
-    "em_adj_d": 87.5994
+    "em_adj_d": 87.5994,
+    "conf_strength_score": 0.1527
   },
   {
     "team": "Wisconsin",
@@ -192,7 +195,9 @@
     "em_poss_weighted_bpr": 6.801,
     "em_depth_score": 0.875,
     "em_adj_o": 130.7261,
-    "em_adj_d": 85.618
+    "em_adj_d": 85.618,
+    "conf_strength_score": 0.4162,
+    "conf_tourney_momentum": 1.0
   },
   {
     "team": "Arizona",
@@ -257,7 +262,9 @@
     "em_poss_weighted_bpr": 6.13,
     "em_depth_score": 0.808,
     "em_adj_o": 119.4189,
-    "em_adj_d": 79.0402
+    "em_adj_d": 79.0402,
+    "conf_strength_score": 0.727,
+    "conf_tourney_momentum": 1.0
   },
   {
     "team": "Villanova",
@@ -322,7 +329,9 @@
     "em_poss_weighted_bpr": 6.223,
     "em_depth_score": 0.787,
     "em_adj_o": 123.0378,
-    "em_adj_d": 84.4438
+    "em_adj_d": 84.4438,
+    "conf_strength_score": 0.4372,
+    "conf_tourney_momentum": 1.0
   },
   {
     "team": "Virginia",
@@ -387,7 +396,8 @@
     "em_poss_weighted_bpr": 5.663,
     "em_depth_score": 0.8,
     "em_adj_o": 121.7911,
-    "em_adj_d": 78.9375
+    "em_adj_d": 78.9375,
+    "conf_strength_score": 0.4133
   },
   {
     "team": "Gonzaga",
@@ -452,7 +462,9 @@
     "em_poss_weighted_bpr": 5.705,
     "em_depth_score": 0.732,
     "em_adj_o": 124.492,
-    "em_adj_d": 84.778
+    "em_adj_d": 84.778,
+    "conf_strength_score": 0.2406,
+    "conf_tourney_momentum": 1.0
   },
   {
     "team": "Utah",
@@ -517,7 +529,8 @@
     "em_poss_weighted_bpr": 5.213,
     "em_depth_score": 0.7,
     "em_adj_o": 119.9051,
-    "em_adj_d": 82.6127
+    "em_adj_d": 82.6127,
+    "conf_strength_score": 0.6922
   },
   {
     "team": "North Carolina",
@@ -582,7 +595,9 @@
     "em_poss_weighted_bpr": 5.676,
     "em_depth_score": 0.79,
     "em_adj_o": 117.3102,
-    "em_adj_d": 88.0181
+    "em_adj_d": 88.0181,
+    "conf_strength_score": 0.2317,
+    "conf_tourney_momentum": 0.7
   },
   {
     "team": "Notre Dame",
@@ -647,7 +662,9 @@
     "em_poss_weighted_bpr": 5.375,
     "em_depth_score": 0.676,
     "em_adj_o": 125.8216,
-    "em_adj_d": 96.0769
+    "em_adj_d": 96.0769,
+    "conf_strength_score": 0.1196,
+    "conf_tourney_momentum": 1.0
   },
   {
     "team": "Oklahoma",
@@ -712,7 +729,8 @@
     "em_poss_weighted_bpr": 4.533,
     "em_depth_score": 0.661,
     "em_adj_o": 111.7019,
-    "em_adj_d": 82.6213
+    "em_adj_d": 82.6213,
+    "conf_strength_score": 0.4925
   },
   {
     "team": "Michigan St.",
@@ -777,7 +795,9 @@
     "em_poss_weighted_bpr": 4.757,
     "em_depth_score": 0.757,
     "em_adj_o": 115.8666,
-    "em_adj_d": 86.5611
+    "em_adj_d": 86.5611,
+    "conf_strength_score": 0.2352,
+    "conf_tourney_momentum": 0.7
   },
   {
     "team": "Baylor",
@@ -842,7 +862,8 @@
     "em_poss_weighted_bpr": 4.899,
     "em_depth_score": 0.68,
     "em_adj_o": 115.1015,
-    "em_adj_d": 89.035
+    "em_adj_d": 89.035,
+    "conf_strength_score": 0.601
   },
   {
     "team": "Wichita St.",
@@ -907,7 +928,8 @@
     "em_poss_weighted_bpr": 4.567,
     "em_depth_score": 0.664,
     "em_adj_o": 116.0787,
-    "em_adj_d": 87.8014
+    "em_adj_d": 87.8014,
+    "conf_strength_score": 0.5244
   },
   {
     "team": "Louisville",
@@ -972,7 +994,8 @@
     "em_poss_weighted_bpr": 5.044,
     "em_depth_score": 0.708,
     "em_adj_o": 110.1963,
-    "em_adj_d": 82.0605
+    "em_adj_d": 82.0605,
+    "conf_strength_score": 0.357
   },
   {
     "team": "Kansas",
@@ -1037,7 +1060,9 @@
     "em_poss_weighted_bpr": 4.731,
     "em_depth_score": 0.686,
     "em_adj_o": 114.0695,
-    "em_adj_d": 86.6001
+    "em_adj_d": 86.6001,
+    "conf_strength_score": 0.5853,
+    "conf_tourney_momentum": 0.7
   },
   {
     "team": "Northern Iowa",
@@ -1102,7 +1127,8 @@
     "em_poss_weighted_bpr": 3.777,
     "em_depth_score": 0.517,
     "em_adj_o": 114.7529,
-    "em_adj_d": 85.7649
+    "em_adj_d": 85.7649,
+    "conf_strength_score": 0.5221
   },
   {
     "team": "Iowa",
@@ -1167,7 +1193,8 @@
     "em_poss_weighted_bpr": 4.401,
     "em_depth_score": 0.67,
     "em_adj_o": 113.5375,
-    "em_adj_d": 87.0722
+    "em_adj_d": 87.0722,
+    "conf_strength_score": 0.6384
   },
   {
     "team": "Iowa St.",
@@ -1232,7 +1259,9 @@
     "em_poss_weighted_bpr": 4.829,
     "em_depth_score": 0.634,
     "em_adj_o": 116.7927,
-    "em_adj_d": 91.8629
+    "em_adj_d": 91.8629,
+    "conf_strength_score": 0.5101,
+    "conf_tourney_momentum": 1.0
   },
   {
     "team": "Ohio St.",
@@ -1297,7 +1326,8 @@
     "em_poss_weighted_bpr": 5.112,
     "em_depth_score": 0.688,
     "em_adj_o": 117.1466,
-    "em_adj_d": 87.66
+    "em_adj_d": 87.66,
+    "conf_strength_score": 0.3819
   },
   {
     "team": "Butler",
@@ -1362,7 +1392,8 @@
     "em_poss_weighted_bpr": 4.292,
     "em_depth_score": 0.621,
     "em_adj_o": 110.0508,
-    "em_adj_d": 82.7681
+    "em_adj_d": 82.7681,
+    "conf_strength_score": 0.4873
   },
   {
     "team": "Xavier",
@@ -1427,7 +1458,9 @@
     "em_poss_weighted_bpr": 4.224,
     "em_depth_score": 0.602,
     "em_adj_o": 120.1816,
-    "em_adj_d": 90.7845
+    "em_adj_d": 90.7845,
+    "conf_strength_score": 0.1734,
+    "conf_tourney_momentum": 0.7
   },
   {
     "team": "Texas",
@@ -1492,7 +1525,8 @@
     "em_poss_weighted_bpr": 4.6,
     "em_depth_score": 0.628,
     "em_adj_o": 111.9501,
-    "em_adj_d": 84.3002
+    "em_adj_d": 84.3002,
+    "conf_strength_score": 0.2617
   },
   {
     "team": "Georgetown",
@@ -1557,7 +1591,8 @@
     "em_poss_weighted_bpr": 4.156,
     "em_depth_score": 0.616,
     "em_adj_o": 112.9758,
-    "em_adj_d": 88.3269
+    "em_adj_d": 88.3269,
+    "conf_strength_score": 0.4939
   },
   {
     "team": "Providence",
@@ -1622,7 +1657,8 @@
     "em_poss_weighted_bpr": 3.491,
     "em_depth_score": 0.478,
     "em_adj_o": 111.7514,
-    "em_adj_d": 90.1417
+    "em_adj_d": 90.1417,
+    "conf_strength_score": 0.402
   },
   {
     "team": "Florida",
@@ -1687,7 +1723,8 @@
     "em_poss_weighted_bpr": 3.273,
     "em_depth_score": 0.522,
     "em_adj_o": 109.3114,
-    "em_adj_d": 84.313
+    "em_adj_d": 84.313,
+    "conf_strength_score": 0.3079
   },
   {
     "team": "San Diego St.",
@@ -1752,7 +1789,9 @@
     "em_poss_weighted_bpr": 3.201,
     "em_depth_score": 0.516,
     "em_adj_o": 104.3549,
-    "em_adj_d": 80.4589
+    "em_adj_d": 80.4589,
+    "conf_strength_score": 0.3524,
+    "conf_tourney_momentum": 0.7
   },
   {
     "team": "BYU",
@@ -1817,7 +1856,9 @@
     "em_poss_weighted_bpr": 3.874,
     "em_depth_score": 0.603,
     "em_adj_o": 118.672,
-    "em_adj_d": 97.1336
+    "em_adj_d": 97.1336,
+    "conf_strength_score": 0.5968,
+    "conf_tourney_momentum": 0.7
   },
   {
     "team": "West Virginia",
@@ -1882,7 +1923,8 @@
     "em_poss_weighted_bpr": 3.609,
     "em_depth_score": 0.538,
     "em_adj_o": 107.8527,
-    "em_adj_d": 86.6353
+    "em_adj_d": 86.6353,
+    "conf_strength_score": 0.3934
   },
   {
     "team": "Arkansas",
@@ -1947,7 +1989,9 @@
     "em_poss_weighted_bpr": 3.783,
     "em_depth_score": 0.569,
     "em_adj_o": 115.4349,
-    "em_adj_d": 93.5648
+    "em_adj_d": 93.5648,
+    "conf_strength_score": 0.3284,
+    "conf_tourney_momentum": 0.7
   },
   {
     "team": "SMU",
@@ -2012,7 +2056,9 @@
     "em_poss_weighted_bpr": 4.092,
     "em_depth_score": 0.61,
     "em_adj_o": 112.7908,
-    "em_adj_d": 90.0426
+    "em_adj_d": 90.0426,
+    "conf_strength_score": 0.5494,
+    "conf_tourney_momentum": 1.0
   },
   {
     "team": "N.C. State",
@@ -2077,7 +2123,8 @@
     "em_poss_weighted_bpr": 3.804,
     "em_depth_score": 0.521,
     "em_adj_o": 112.135,
-    "em_adj_d": 92.1375
+    "em_adj_d": 92.1375,
+    "conf_strength_score": 0.6277
   },
   {
     "team": "Maryland",
@@ -2142,7 +2189,8 @@
     "em_poss_weighted_bpr": 3.352,
     "em_depth_score": 0.582,
     "em_adj_o": 109.5709,
-    "em_adj_d": 85.7921
+    "em_adj_d": 85.7921,
+    "conf_strength_score": 0.2883
   },
   {
     "team": "Purdue",
@@ -2207,7 +2255,8 @@
     "em_poss_weighted_bpr": 3.495,
     "em_depth_score": 0.589,
     "em_adj_o": 112.1996,
-    "em_adj_d": 90.8523
+    "em_adj_d": 90.8523,
+    "conf_strength_score": 0.581
   },
   {
     "team": "Syracuse",
@@ -2272,7 +2321,8 @@
     "em_poss_weighted_bpr": 3.457,
     "em_depth_score": 0.5,
     "em_adj_o": 104.5503,
-    "em_adj_d": 86.4171
+    "em_adj_d": 86.4171,
+    "conf_strength_score": 0.2756
   },
   {
     "team": "St. John's",
@@ -2337,7 +2387,8 @@
     "em_poss_weighted_bpr": 4.044,
     "em_depth_score": 0.553,
     "em_adj_o": 111.2526,
-    "em_adj_d": 91.4481
+    "em_adj_d": 91.4481,
+    "conf_strength_score": 0.5551
   },
   {
     "team": "Davidson",
@@ -2402,7 +2453,8 @@
     "em_poss_weighted_bpr": 3.538,
     "em_depth_score": 0.541,
     "em_adj_o": 120.1257,
-    "em_adj_d": 98.46
+    "em_adj_d": 98.46,
+    "conf_strength_score": 0.6378
   },
   {
     "team": "Georgia",
@@ -2467,7 +2519,8 @@
     "em_poss_weighted_bpr": 3.299,
     "em_depth_score": 0.497,
     "em_adj_o": 108.9327,
-    "em_adj_d": 86.668
+    "em_adj_d": 86.668,
+    "conf_strength_score": 0.5157
   },
   {
     "team": "Indiana",
@@ -2532,7 +2585,8 @@
     "em_poss_weighted_bpr": 3.584,
     "em_depth_score": 0.54,
     "em_adj_o": 118.44,
-    "em_adj_d": 99.5054
+    "em_adj_d": 99.5054,
+    "conf_strength_score": 0.345
   },
   {
     "team": "Cincinnati",
@@ -2597,7 +2651,8 @@
     "em_poss_weighted_bpr": 3.256,
     "em_depth_score": 0.528,
     "em_adj_o": 105.8863,
-    "em_adj_d": 83.016
+    "em_adj_d": 83.016,
+    "conf_strength_score": 0.429
   },
   {
     "team": "Miami FL",
@@ -2662,7 +2717,8 @@
     "em_poss_weighted_bpr": 1.748,
     "em_depth_score": 0.581,
     "em_adj_o": 112.2649,
-    "em_adj_d": 91.8207
+    "em_adj_d": 91.8207,
+    "conf_strength_score": 0.6601
   },
   {
     "team": "LSU",
@@ -2727,7 +2783,8 @@
     "em_poss_weighted_bpr": 3.372,
     "em_depth_score": 0.512,
     "em_adj_o": 108.6425,
-    "em_adj_d": 89.59
+    "em_adj_d": 89.59,
+    "conf_strength_score": 0.6602
   },
   {
     "team": "VCU",
@@ -2792,7 +2849,9 @@
     "em_poss_weighted_bpr": 3.49,
     "em_depth_score": 0.666,
     "em_adj_o": 114.1052,
-    "em_adj_d": 86.3974
+    "em_adj_d": 86.3974,
+    "conf_strength_score": 0.1128,
+    "conf_tourney_momentum": 1.0
   },
   {
     "team": "Oklahoma St.",
@@ -2857,7 +2916,8 @@
     "em_poss_weighted_bpr": 3.351,
     "em_depth_score": 0.51,
     "em_adj_o": 112.6606,
-    "em_adj_d": 90.8145
+    "em_adj_d": 90.8145,
+    "conf_strength_score": 0.5241
   },
   {
     "team": "UCLA",
@@ -2922,7 +2982,8 @@
     "em_poss_weighted_bpr": 3.447,
     "em_depth_score": 0.503,
     "em_adj_o": 113.0061,
-    "em_adj_d": 92.3144
+    "em_adj_d": 92.3144,
+    "conf_strength_score": 0.4463
   },
   {
     "team": "Stanford",
@@ -2987,7 +3048,8 @@
     "em_poss_weighted_bpr": 3.254,
     "em_depth_score": 0.466,
     "em_adj_o": 112.9141,
-    "em_adj_d": 93.9938
+    "em_adj_d": 93.9938,
+    "conf_strength_score": 0.3012
   },
   {
     "team": "Oregon",
@@ -3052,7 +3114,9 @@
     "em_poss_weighted_bpr": 3.282,
     "em_depth_score": 0.465,
     "em_adj_o": 113.4201,
-    "em_adj_d": 96.0303
+    "em_adj_d": 96.0303,
+    "conf_strength_score": 0.5556,
+    "conf_tourney_momentum": 0.7
   },
   {
     "team": "Vanderbilt",
@@ -3117,7 +3181,8 @@
     "em_poss_weighted_bpr": 3.336,
     "em_depth_score": 0.52,
     "em_adj_o": 113.3389,
-    "em_adj_d": 94.8196
+    "em_adj_d": 94.8196,
+    "conf_strength_score": 0.3617
   },
   {
     "team": "Boise St.",
@@ -3182,7 +3247,8 @@
     "em_poss_weighted_bpr": 3.146,
     "em_depth_score": 0.554,
     "em_adj_o": 115.5292,
-    "em_adj_d": 89.583
+    "em_adj_d": 89.583,
+    "conf_strength_score": 0.5713
   },
   {
     "team": "Michigan",
@@ -3247,7 +3313,8 @@
     "em_poss_weighted_bpr": 2.608,
     "em_depth_score": 0.476,
     "em_adj_o": 104.6399,
-    "em_adj_d": 88.6192
+    "em_adj_d": 88.6192,
+    "conf_strength_score": 0.2691
   },
   {
     "team": "TCU",
@@ -3312,7 +3379,8 @@
     "em_poss_weighted_bpr": 3.186,
     "em_depth_score": 0.516,
     "em_adj_o": 109.1668,
-    "em_adj_d": 86.7802
+    "em_adj_d": 86.7802,
+    "conf_strength_score": 0.2184
   },
   {
     "team": "Minnesota",
@@ -3377,7 +3445,8 @@
     "em_poss_weighted_bpr": 3.578,
     "em_depth_score": 0.538,
     "em_adj_o": 115.8365,
-    "em_adj_d": 87.6713
+    "em_adj_d": 87.6713,
+    "conf_strength_score": 0.3171
   },
   {
     "team": "Dayton",
@@ -3442,7 +3511,9 @@
     "em_poss_weighted_bpr": 2.966,
     "em_depth_score": 0.445,
     "em_adj_o": 110.3454,
-    "em_adj_d": 88.4778
+    "em_adj_d": 88.4778,
+    "conf_strength_score": 0.4641,
+    "conf_tourney_momentum": 0.7
   },
   {
     "team": "South Carolina",
@@ -3507,7 +3578,8 @@
     "em_poss_weighted_bpr": 2.798,
     "em_depth_score": 0.444,
     "em_adj_o": 103.3371,
-    "em_adj_d": 87.1112
+    "em_adj_d": 87.1112,
+    "conf_strength_score": 0.1172
   },
   {
     "team": "Illinois",
@@ -3572,7 +3644,8 @@
     "em_poss_weighted_bpr": 3.122,
     "em_depth_score": 0.507,
     "em_adj_o": 111.8053,
-    "em_adj_d": 89.7556
+    "em_adj_d": 89.7556,
+    "conf_strength_score": 0.6089
   },
   {
     "team": "Stephen F. Austin",
@@ -3637,7 +3710,9 @@
     "em_poss_weighted_bpr": 3.444,
     "em_depth_score": 0.657,
     "em_adj_o": 116.0969,
-    "em_adj_d": 89.8727
+    "em_adj_d": 89.8727,
+    "conf_strength_score": 0.4604,
+    "conf_tourney_momentum": 1.0
   },
   {
     "team": "Temple",
@@ -3702,7 +3777,8 @@
     "em_poss_weighted_bpr": 2.728,
     "em_depth_score": 0.407,
     "em_adj_o": 108.1112,
-    "em_adj_d": 85.1681
+    "em_adj_d": 85.1681,
+    "conf_strength_score": 0.4118
   },
   {
     "team": "Richmond",
@@ -3767,7 +3843,8 @@
     "em_poss_weighted_bpr": 2.575,
     "em_depth_score": 0.43,
     "em_adj_o": 107.6999,
-    "em_adj_d": 89.997
+    "em_adj_d": 89.997,
+    "conf_strength_score": 0.6185
   },
   {
     "team": "Texas A&M",
@@ -3832,7 +3909,8 @@
     "em_poss_weighted_bpr": 2.811,
     "em_depth_score": 0.452,
     "em_adj_o": 107.3186,
-    "em_adj_d": 87.6319
+    "em_adj_d": 87.6319,
+    "conf_strength_score": 0.6909
   },
   {
     "team": "Mississippi",
@@ -3897,7 +3975,8 @@
     "em_poss_weighted_bpr": 3.063,
     "em_depth_score": 0.457,
     "em_adj_o": 113.0216,
-    "em_adj_d": 91.9101
+    "em_adj_d": 91.9101,
+    "conf_strength_score": 0.7238
   },
   {
     "team": "Illinois St.",
@@ -3943,7 +4022,9 @@
     "ft_pct": 71.3,
     "opp_ft_pct": 69.0,
     "ppp_off": 1.041,
-    "ppp_def": 0.962
+    "ppp_def": 0.962,
+    "conf_strength_score": 0.4081,
+    "conf_tourney_momentum": 0.7
   },
   {
     "team": "Saint Mary's",
@@ -4008,7 +4089,8 @@
     "em_poss_weighted_bpr": 2.83,
     "em_depth_score": 0.374,
     "em_adj_o": 111.472,
-    "em_adj_d": 94.3148
+    "em_adj_d": 94.3148,
+    "conf_strength_score": 0.6818
   },
   {
     "team": "Murray St.",
@@ -4073,7 +4155,9 @@
     "em_poss_weighted_bpr": 3.095,
     "em_depth_score": 0.501,
     "em_adj_o": 116.6474,
-    "em_adj_d": 94.8785
+    "em_adj_d": 94.8785,
+    "conf_strength_score": 0.5362,
+    "conf_tourney_momentum": 0.7
   },
   {
     "team": "Georgia St.",
@@ -4119,7 +4203,9 @@
     "ft_pct": 73.1,
     "opp_ft_pct": 71.6,
     "ppp_off": 1.086,
-    "ppp_def": 0.97
+    "ppp_def": 0.97,
+    "conf_strength_score": 0.3181,
+    "conf_tourney_momentum": 1.0
   },
   {
     "team": "Rhode Island",
@@ -4184,7 +4270,8 @@
     "em_poss_weighted_bpr": 2.437,
     "em_depth_score": 0.423,
     "em_adj_o": 103.141,
-    "em_adj_d": 85.7688
+    "em_adj_d": 85.7688,
+    "conf_strength_score": 0.3161
   },
   {
     "team": "Colorado St.",
@@ -4249,7 +4336,8 @@
     "em_poss_weighted_bpr": 3.101,
     "em_depth_score": 0.478,
     "em_adj_o": 111.0121,
-    "em_adj_d": 93.6053
+    "em_adj_d": 93.6053,
+    "conf_strength_score": 0.605
   },
   {
     "team": "Alabama",
@@ -4314,7 +4402,8 @@
     "em_poss_weighted_bpr": 2.719,
     "em_depth_score": 0.405,
     "em_adj_o": 111.3301,
-    "em_adj_d": 93.3581
+    "em_adj_d": 93.3581,
+    "conf_strength_score": 0.3722
   },
   {
     "team": "Clemson",
@@ -4379,7 +4468,8 @@
     "em_poss_weighted_bpr": 2.013,
     "em_depth_score": 0.376,
     "em_adj_o": 104.3737,
-    "em_adj_d": 91.245
+    "em_adj_d": 91.245,
+    "conf_strength_score": 0.7095
   },
   {
     "team": "Buffalo",
@@ -4444,7 +4534,9 @@
     "em_poss_weighted_bpr": 2.753,
     "em_depth_score": 0.432,
     "em_adj_o": 110.7533,
-    "em_adj_d": 95.4104
+    "em_adj_d": 95.4104,
+    "conf_strength_score": 0.3332,
+    "conf_tourney_momentum": 1.0
   },
   {
     "team": "George Washington",
@@ -4509,7 +4601,8 @@
     "em_poss_weighted_bpr": 2.902,
     "em_depth_score": 0.463,
     "em_adj_o": 109.913,
-    "em_adj_d": 88.5761
+    "em_adj_d": 88.5761,
+    "conf_strength_score": 0.2947
   },
   {
     "team": "Valparaiso",
@@ -4574,7 +4667,9 @@
     "em_poss_weighted_bpr": 2.554,
     "em_depth_score": 0.411,
     "em_adj_o": 108.8061,
-    "em_adj_d": 89.7031
+    "em_adj_d": 89.7031,
+    "conf_strength_score": 0.3795,
+    "conf_tourney_momentum": 1.0
   },
   {
     "team": "Old Dominion",
@@ -4639,7 +4734,8 @@
     "em_poss_weighted_bpr": 2.7,
     "em_depth_score": 0.405,
     "em_adj_o": 105.6288,
-    "em_adj_d": 88.9722
+    "em_adj_d": 88.9722,
+    "conf_strength_score": 0.3335
   },
   {
     "team": "Pittsburgh",
@@ -4704,7 +4800,8 @@
     "em_poss_weighted_bpr": 3.353,
     "em_depth_score": 0.467,
     "em_adj_o": 113.4039,
-    "em_adj_d": 99.0953
+    "em_adj_d": 99.0953,
+    "conf_strength_score": 0.5614
   },
   {
     "team": "Arizona St.",
@@ -4769,7 +4866,8 @@
     "em_poss_weighted_bpr": 2.083,
     "em_depth_score": 0.388,
     "em_adj_o": 107.76,
-    "em_adj_d": 91.0356
+    "em_adj_d": 91.0356,
+    "conf_strength_score": 0.3254
   },
   {
     "team": "Green Bay",
@@ -4834,7 +4932,9 @@
     "em_poss_weighted_bpr": 2.892,
     "em_depth_score": 0.428,
     "em_adj_o": 103.7842,
-    "em_adj_d": 85.2971
+    "em_adj_d": 85.2971,
+    "conf_strength_score": 0.4031,
+    "conf_tourney_momentum": 0.7
   },
   {
     "team": "Penn St.",
@@ -4899,7 +4999,8 @@
     "em_poss_weighted_bpr": 2.059,
     "em_depth_score": 0.301,
     "em_adj_o": 105.2839,
-    "em_adj_d": 91.3455
+    "em_adj_d": 91.3455,
+    "conf_strength_score": 0.4378
   },
   {
     "team": "Memphis",
@@ -4964,7 +5065,8 @@
     "em_poss_weighted_bpr": 2.424,
     "em_depth_score": 0.457,
     "em_adj_o": 103.1416,
-    "em_adj_d": 93.6143
+    "em_adj_d": 93.6143,
+    "conf_strength_score": 0.334
   },
   {
     "team": "Creighton",
@@ -5029,7 +5131,8 @@
     "em_poss_weighted_bpr": 2.358,
     "em_depth_score": 0.432,
     "em_adj_o": 115.29,
-    "em_adj_d": 97.9244
+    "em_adj_d": 97.9244,
+    "conf_strength_score": 0.2408
   },
   {
     "team": "Boston College",
@@ -5094,7 +5197,8 @@
     "em_poss_weighted_bpr": 1.807,
     "em_depth_score": 0.288,
     "em_adj_o": 105.9334,
-    "em_adj_d": 96.4201
+    "em_adj_d": 96.4201,
+    "conf_strength_score": 0.4247
   },
   {
     "team": "Georgia Tech",
@@ -5159,7 +5263,8 @@
     "em_poss_weighted_bpr": 1.921,
     "em_depth_score": 0.329,
     "em_adj_o": 103.6871,
-    "em_adj_d": 90.2216
+    "em_adj_d": 90.2216,
+    "conf_strength_score": 0.4646
   },
   {
     "team": "Seton Hall",
@@ -5224,7 +5329,8 @@
     "em_poss_weighted_bpr": 2.371,
     "em_depth_score": 0.419,
     "em_adj_o": 107.5431,
-    "em_adj_d": 94.1012
+    "em_adj_d": 94.1012,
+    "conf_strength_score": 0.4162
   },
   {
     "team": "UC Irvine",
@@ -5289,7 +5395,8 @@
     "em_poss_weighted_bpr": 1.948,
     "em_depth_score": 0.376,
     "em_adj_o": 105.6175,
-    "em_adj_d": 90.2918
+    "em_adj_d": 90.2918,
+    "conf_strength_score": 0.5453
   },
   {
     "team": "Tulsa",
@@ -5354,7 +5461,8 @@
     "em_poss_weighted_bpr": 2.246,
     "em_depth_score": 0.371,
     "em_adj_o": 103.0799,
-    "em_adj_d": 89.6133
+    "em_adj_d": 89.6133,
+    "conf_strength_score": 0.6053
   },
   {
     "team": "Marquette",
@@ -5419,7 +5527,8 @@
     "em_poss_weighted_bpr": 2.339,
     "em_depth_score": 0.43,
     "em_adj_o": 107.2219,
-    "em_adj_d": 93.9606
+    "em_adj_d": 93.9606,
+    "conf_strength_score": 0.4039
   },
   {
     "team": "Connecticut",
@@ -5484,7 +5593,9 @@
     "em_poss_weighted_bpr": 2.673,
     "em_depth_score": 0.447,
     "em_adj_o": 107.3594,
-    "em_adj_d": 92.7725
+    "em_adj_d": 92.7725,
+    "conf_strength_score": 0.3828,
+    "conf_tourney_momentum": 0.7
   },
   {
     "team": "Sam Houston St.",
@@ -5530,7 +5641,8 @@
     "ft_pct": 71.2,
     "opp_ft_pct": 64.4,
     "ppp_off": 1.052,
-    "ppp_def": 0.918
+    "ppp_def": 0.918,
+    "conf_strength_score": 0.5671
   },
   {
     "team": "Louisiana Tech",
@@ -5595,7 +5707,8 @@
     "em_poss_weighted_bpr": 2.665,
     "em_depth_score": 0.421,
     "em_adj_o": 109.3927,
-    "em_adj_d": 92.0649
+    "em_adj_d": 92.0649,
+    "conf_strength_score": 0.4011
   },
   {
     "team": "Harvard",
@@ -5660,7 +5773,8 @@
     "em_poss_weighted_bpr": 2.612,
     "em_depth_score": 0.37,
     "em_adj_o": 104.597,
-    "em_adj_d": 88.3898
+    "em_adj_d": 88.3898,
+    "conf_strength_score": 0.5827
   },
   {
     "team": "Kansas St.",
@@ -5725,7 +5839,8 @@
     "em_poss_weighted_bpr": 2.266,
     "em_depth_score": 0.41,
     "em_adj_o": 107.0913,
-    "em_adj_d": 87.6839
+    "em_adj_d": 87.6839,
+    "conf_strength_score": 0.5795
   },
   {
     "team": "Central Michigan",
@@ -5790,7 +5905,8 @@
     "em_poss_weighted_bpr": 2.219,
     "em_depth_score": 0.37,
     "em_adj_o": 115.1217,
-    "em_adj_d": 99.5608
+    "em_adj_d": 99.5608,
+    "conf_strength_score": 0.2768
   },
   {
     "team": "Toledo",
@@ -5855,7 +5971,8 @@
     "em_poss_weighted_bpr": 2.336,
     "em_depth_score": 0.462,
     "em_adj_o": 113.6038,
-    "em_adj_d": 94.9935
+    "em_adj_d": 94.9935,
+    "conf_strength_score": 0.3817
   },
   {
     "team": "Florida St.",
@@ -5920,7 +6037,8 @@
     "em_poss_weighted_bpr": 1.673,
     "em_depth_score": 0.412,
     "em_adj_o": 107.486,
-    "em_adj_d": 89.0649
+    "em_adj_d": 89.0649,
+    "conf_strength_score": 0.6068
   },
   {
     "team": "Yale",
@@ -5985,7 +6103,8 @@
     "em_poss_weighted_bpr": 2.192,
     "em_depth_score": 0.333,
     "em_adj_o": 107.0797,
-    "em_adj_d": 91.0912
+    "em_adj_d": 91.0912,
+    "conf_strength_score": 0.5764
   },
   {
     "team": "Oregon St.",
@@ -6050,7 +6169,8 @@
     "em_poss_weighted_bpr": 1.953,
     "em_depth_score": 0.176,
     "em_adj_o": 101.4576,
-    "em_adj_d": 88.2994
+    "em_adj_d": 88.2994,
+    "conf_strength_score": 0.3903
   },
   {
     "team": "UNLV",
@@ -6115,7 +6235,8 @@
     "em_poss_weighted_bpr": 2.232,
     "em_depth_score": 0.361,
     "em_adj_o": 107.5613,
-    "em_adj_d": 95.3028
+    "em_adj_d": 95.3028,
+    "conf_strength_score": 0.3656
   },
   {
     "team": "UTEP",
@@ -6180,7 +6301,8 @@
     "em_poss_weighted_bpr": 2.191,
     "em_depth_score": 0.356,
     "em_adj_o": 108.6526,
-    "em_adj_d": 91.0742
+    "em_adj_d": 91.0742,
+    "conf_strength_score": 0.4241
   },
   {
     "team": "UC Santa Barbara",
@@ -6245,7 +6367,8 @@
     "em_poss_weighted_bpr": 2.049,
     "em_depth_score": 0.353,
     "em_adj_o": 108.5064,
-    "em_adj_d": 93.8963
+    "em_adj_d": 93.8963,
+    "conf_strength_score": 0.1972
   },
   {
     "team": "Colorado",
@@ -6310,7 +6433,8 @@
     "em_poss_weighted_bpr": 2.154,
     "em_depth_score": 0.413,
     "em_adj_o": 110.491,
-    "em_adj_d": 95.0843
+    "em_adj_d": 95.0843,
+    "conf_strength_score": 0.3995
   },
   {
     "team": "South Dakota St.",
@@ -6375,7 +6499,9 @@
     "em_poss_weighted_bpr": 1.962,
     "em_depth_score": 0.396,
     "em_adj_o": 111.4054,
-    "em_adj_d": 96.1031
+    "em_adj_d": 96.1031,
+    "conf_strength_score": 0.4798,
+    "conf_tourney_momentum": 0.7
   },
   {
     "team": "Akron",
@@ -6440,7 +6566,8 @@
     "em_poss_weighted_bpr": 1.685,
     "em_depth_score": 0.37,
     "em_adj_o": 107.882,
-    "em_adj_d": 91.3914
+    "em_adj_d": 91.3914,
+    "conf_strength_score": 0.3949
   },
   {
     "team": "San Diego",
@@ -6505,7 +6632,8 @@
     "em_poss_weighted_bpr": 1.644,
     "em_depth_score": 0.301,
     "em_adj_o": 102.449,
-    "em_adj_d": 90.476
+    "em_adj_d": 90.476,
+    "conf_strength_score": 0.2416
   },
   {
     "team": "Hawaii",
@@ -6570,7 +6698,9 @@
     "em_poss_weighted_bpr": 1.286,
     "em_depth_score": 0.295,
     "em_adj_o": 102.0503,
-    "em_adj_d": 94.8583
+    "em_adj_d": 94.8583,
+    "conf_strength_score": 0.4016,
+    "conf_tourney_momentum": 0.7
   },
   {
     "team": "New Mexico St.",
@@ -6616,7 +6746,9 @@
     "ft_pct": 70.7,
     "opp_ft_pct": 69.7,
     "ppp_off": 1.069,
-    "ppp_def": 0.953
+    "ppp_def": 0.953,
+    "conf_strength_score": 0.7085,
+    "conf_tourney_momentum": 1.0
   },
   {
     "team": "La Salle",
@@ -6681,7 +6813,8 @@
     "em_poss_weighted_bpr": 1.685,
     "em_depth_score": 0.304,
     "em_adj_o": 100.6086,
-    "em_adj_d": 86.6331
+    "em_adj_d": 86.6331,
+    "conf_strength_score": 0.3871
   },
   {
     "team": "Wofford",
@@ -6746,7 +6879,9 @@
     "em_poss_weighted_bpr": 1.904,
     "em_depth_score": 0.291,
     "em_adj_o": 105.6164,
-    "em_adj_d": 91.2344
+    "em_adj_d": 91.2344,
+    "conf_strength_score": 0.362,
+    "conf_tourney_momentum": 1.0
   },
   {
     "team": "Northeastern",
@@ -6811,7 +6946,9 @@
     "em_poss_weighted_bpr": 1.987,
     "em_depth_score": 0.334,
     "em_adj_o": 110.1384,
-    "em_adj_d": 96.4845
+    "em_adj_d": 96.4845,
+    "conf_strength_score": 0.3362,
+    "conf_tourney_momentum": 1.0
   },
   {
     "team": "Wake Forest",
@@ -6876,7 +7013,8 @@
     "em_poss_weighted_bpr": 1.684,
     "em_depth_score": 0.295,
     "em_adj_o": 103.4114,
-    "em_adj_d": 93.4024
+    "em_adj_d": 93.4024,
+    "conf_strength_score": 0.5209
   },
   {
     "team": "Tennessee",
@@ -6941,7 +7079,8 @@
     "em_poss_weighted_bpr": 2.456,
     "em_depth_score": 0.367,
     "em_adj_o": 107.6315,
-    "em_adj_d": 94.0032
+    "em_adj_d": 94.0032,
+    "conf_strength_score": 0.5294
   },
   {
     "team": "California",
@@ -7006,7 +7145,8 @@
     "em_poss_weighted_bpr": 1.702,
     "em_depth_score": 0.37,
     "em_adj_o": 100.9872,
-    "em_adj_d": 93.5177
+    "em_adj_d": 93.5177,
+    "conf_strength_score": 0.1412
   },
   {
     "team": "Iona",
@@ -7071,7 +7211,9 @@
     "em_poss_weighted_bpr": 2.609,
     "em_depth_score": 0.426,
     "em_adj_o": 114.9928,
-    "em_adj_d": 100.0324
+    "em_adj_d": 100.0324,
+    "conf_strength_score": 0.3439,
+    "conf_tourney_momentum": 0.7
   },
   {
     "team": "Cleveland St.",
@@ -7136,7 +7278,8 @@
     "em_poss_weighted_bpr": 2.439,
     "em_depth_score": 0.384,
     "em_adj_o": 107.3987,
-    "em_adj_d": 90.9116
+    "em_adj_d": 90.9116,
+    "conf_strength_score": 0.4829
   },
   {
     "team": "Nebraska",
@@ -7201,7 +7344,8 @@
     "em_poss_weighted_bpr": 1.676,
     "em_depth_score": 0.281,
     "em_adj_o": 99.4723,
-    "em_adj_d": 89.3539
+    "em_adj_d": 89.3539,
+    "conf_strength_score": 0.4787
   },
   {
     "team": "North Carolina Central",
@@ -7266,7 +7410,8 @@
     "em_poss_weighted_bpr": 2.147,
     "em_depth_score": 0.317,
     "em_adj_o": 107.8774,
-    "em_adj_d": 90.3343
+    "em_adj_d": 90.3343,
+    "conf_strength_score": 0.4196
   },
   {
     "team": "UC Davis",
@@ -7331,7 +7476,8 @@
     "em_poss_weighted_bpr": 1.496,
     "em_depth_score": 0.293,
     "em_adj_o": 113.2753,
-    "em_adj_d": 100.649
+    "em_adj_d": 100.649,
+    "conf_strength_score": 0.812
   },
   {
     "team": "Evansville",
@@ -7396,7 +7542,8 @@
     "em_poss_weighted_bpr": 1.374,
     "em_depth_score": 0.19,
     "em_adj_o": 106.1123,
-    "em_adj_d": 93.9448
+    "em_adj_d": 93.9448,
+    "conf_strength_score": 0.1118
   },
   {
     "team": "Washington",
@@ -7461,7 +7608,8 @@
     "em_poss_weighted_bpr": 2.088,
     "em_depth_score": 0.419,
     "em_adj_o": 108.2091,
-    "em_adj_d": 96.9423
+    "em_adj_d": 96.9423,
+    "conf_strength_score": 0.1451
   },
   {
     "team": "Portland",
@@ -7526,7 +7674,8 @@
     "em_poss_weighted_bpr": 1.757,
     "em_depth_score": 0.288,
     "em_adj_o": 108.4219,
-    "em_adj_d": 99.5845
+    "em_adj_d": 99.5845,
+    "conf_strength_score": 0.415
   },
   {
     "team": "Hofstra",
@@ -7591,7 +7740,8 @@
     "em_poss_weighted_bpr": 2.417,
     "em_depth_score": 0.355,
     "em_adj_o": 113.4067,
-    "em_adj_d": 98.1839
+    "em_adj_d": 98.1839,
+    "conf_strength_score": 0.4093
   },
   {
     "team": "Wyoming",
@@ -7656,7 +7806,9 @@
     "em_poss_weighted_bpr": 2.085,
     "em_depth_score": 0.268,
     "em_adj_o": 107.932,
-    "em_adj_d": 92.1962
+    "em_adj_d": 92.1962,
+    "conf_strength_score": 0.1209,
+    "conf_tourney_momentum": 1.0
   },
   {
     "team": "San Francisco",
@@ -7721,7 +7873,8 @@
     "em_poss_weighted_bpr": 1.549,
     "em_depth_score": 0.305,
     "em_adj_o": 105.9548,
-    "em_adj_d": 99.2988
+    "em_adj_d": 99.2988,
+    "conf_strength_score": 0.2214
   },
   {
     "team": "Bowling Green",
@@ -7786,7 +7939,8 @@
     "em_poss_weighted_bpr": 2.027,
     "em_depth_score": 0.319,
     "em_adj_o": 104.1413,
-    "em_adj_d": 89.7745
+    "em_adj_d": 89.7745,
+    "conf_strength_score": 0.558
   },
   {
     "team": "William & Mary",
@@ -7851,7 +8005,9 @@
     "em_poss_weighted_bpr": 2.185,
     "em_depth_score": 0.396,
     "em_adj_o": 116.9544,
-    "em_adj_d": 100.3722
+    "em_adj_d": 100.3722,
+    "conf_strength_score": 0.5368,
+    "conf_tourney_momentum": 0.7
   },
   {
     "team": "Northwestern",
@@ -7916,7 +8072,8 @@
     "em_poss_weighted_bpr": 1.927,
     "em_depth_score": 0.329,
     "em_adj_o": 108.4135,
-    "em_adj_d": 98.8904
+    "em_adj_d": 98.8904,
+    "conf_strength_score": 0.6265
   },
   {
     "team": "Utah St.",
@@ -7981,7 +8138,8 @@
     "em_poss_weighted_bpr": 1.623,
     "em_depth_score": 0.319,
     "em_adj_o": 107.8306,
-    "em_adj_d": 94.1695
+    "em_adj_d": 94.1695,
+    "conf_strength_score": 0.6287
   },
   {
     "team": "Kent St.",
@@ -8046,7 +8204,8 @@
     "em_poss_weighted_bpr": 1.614,
     "em_depth_score": 0.368,
     "em_adj_o": 105.9522,
-    "em_adj_d": 95.9315
+    "em_adj_d": 95.9315,
+    "conf_strength_score": 0.3747
   },
   {
     "team": "Louisiana",
@@ -8092,7 +8251,8 @@
     "ft_pct": 72.0,
     "opp_ft_pct": 68.8,
     "ppp_off": 1.049,
-    "ppp_def": 0.987
+    "ppp_def": 0.987,
+    "conf_strength_score": 0.5228
   },
   {
     "team": "St. Bonaventure",
@@ -8157,7 +8317,8 @@
     "em_poss_weighted_bpr": 1.654,
     "em_depth_score": 0.314,
     "em_adj_o": 103.2577,
-    "em_adj_d": 92.464
+    "em_adj_d": 92.464,
+    "conf_strength_score": 0.4453
   },
   {
     "team": "Pepperdine",
@@ -8222,7 +8383,8 @@
     "em_poss_weighted_bpr": 1.46,
     "em_depth_score": 0.286,
     "em_adj_o": 103.432,
-    "em_adj_d": 92.856
+    "em_adj_d": 92.856,
+    "conf_strength_score": 0.6244
   },
   {
     "team": "Vermont",
@@ -8287,7 +8449,8 @@
     "em_poss_weighted_bpr": 1.355,
     "em_depth_score": 0.31,
     "em_adj_o": 103.7391,
-    "em_adj_d": 88.1741
+    "em_adj_d": 88.1741,
+    "conf_strength_score": 0.6383
   },
   {
     "team": "Massachusetts",
@@ -8352,7 +8515,8 @@
     "em_poss_weighted_bpr": 1.658,
     "em_depth_score": 0.329,
     "em_adj_o": 103.1978,
-    "em_adj_d": 95.2526
+    "em_adj_d": 95.2526,
+    "conf_strength_score": 0.319
   },
   {
     "team": "Auburn",
@@ -8417,7 +8581,8 @@
     "em_poss_weighted_bpr": 0.909,
     "em_depth_score": 0.236,
     "em_adj_o": 103.503,
-    "em_adj_d": 99.7492
+    "em_adj_d": 99.7492,
+    "conf_strength_score": 0.2331
   },
   {
     "team": "Albany",
@@ -8482,7 +8647,8 @@
     "em_poss_weighted_bpr": 1.374,
     "em_depth_score": 0.293,
     "em_adj_o": 107.8426,
-    "em_adj_d": 94.699
+    "em_adj_d": 94.699,
+    "conf_strength_score": 0.7552
   },
   {
     "team": "Long Beach St.",
@@ -8528,7 +8694,8 @@
     "ft_pct": 68.4,
     "opp_ft_pct": 70.9,
     "ppp_off": 0.986,
-    "ppp_def": 1.024
+    "ppp_def": 1.024,
+    "conf_strength_score": 0.4426
   },
   {
     "team": "Eastern Washington",
@@ -8593,7 +8760,8 @@
     "em_poss_weighted_bpr": 2.487,
     "em_depth_score": 0.413,
     "em_adj_o": 116.6694,
-    "em_adj_d": 105.2916
+    "em_adj_d": 105.2916,
+    "conf_strength_score": 0.1607
   },
   {
     "team": "Loyola Chicago",
@@ -8658,7 +8826,8 @@
     "em_poss_weighted_bpr": 0.969,
     "em_depth_score": 0.218,
     "em_adj_o": 107.2558,
-    "em_adj_d": 91.7208
+    "em_adj_d": 91.7208,
+    "conf_strength_score": 0.1395
   },
   {
     "team": "DePaul",
@@ -8723,7 +8892,8 @@
     "em_poss_weighted_bpr": 1.287,
     "em_depth_score": 0.264,
     "em_adj_o": 109.1342,
-    "em_adj_d": 105.0564
+    "em_adj_d": 105.0564,
+    "conf_strength_score": 0.8175
   },
   {
     "team": "UAB",
@@ -8788,7 +8958,9 @@
     "em_poss_weighted_bpr": 1.253,
     "em_depth_score": 0.26,
     "em_adj_o": 106.7804,
-    "em_adj_d": 96.4057
+    "em_adj_d": 96.4057,
+    "conf_strength_score": 0.5446,
+    "conf_tourney_momentum": 1.0
   },
   {
     "team": "Stony Brook",
@@ -8853,7 +9025,9 @@
     "em_poss_weighted_bpr": 1.565,
     "em_depth_score": 0.225,
     "em_adj_o": 107.0853,
-    "em_adj_d": 93.0489
+    "em_adj_d": 93.0489,
+    "conf_strength_score": 0.4224,
+    "conf_tourney_momentum": 0.7
   },
   {
     "team": "Eastern Michigan",
@@ -8918,7 +9092,8 @@
     "em_poss_weighted_bpr": 0.871,
     "em_depth_score": 0.248,
     "em_adj_o": 98.9645,
-    "em_adj_d": 90.8822
+    "em_adj_d": 90.8822,
+    "conf_strength_score": 0.4099
   },
   {
     "team": "New Mexico",
@@ -8983,7 +9158,8 @@
     "em_poss_weighted_bpr": 1.423,
     "em_depth_score": 0.231,
     "em_adj_o": 101.2976,
-    "em_adj_d": 91.5456
+    "em_adj_d": 91.5456,
+    "conf_strength_score": 0.4027
   },
   {
     "team": "Belmont",
@@ -9048,7 +9224,9 @@
     "em_poss_weighted_bpr": 1.726,
     "em_depth_score": 0.338,
     "em_adj_o": 113.5581,
-    "em_adj_d": 98.4089
+    "em_adj_d": 98.4089,
+    "conf_strength_score": 0.0,
+    "conf_tourney_momentum": 1.0
   },
   {
     "team": "Texas Tech",
@@ -9113,7 +9291,8 @@
     "em_poss_weighted_bpr": 0.931,
     "em_depth_score": 0.254,
     "em_adj_o": 104.5266,
-    "em_adj_d": 96.3018
+    "em_adj_d": 96.3018,
+    "conf_strength_score": 0.2374
   },
   {
     "team": "Coastal Carolina",
@@ -9178,7 +9357,8 @@
     "em_poss_weighted_bpr": 1.472,
     "em_depth_score": 0.319,
     "em_adj_o": 111.2757,
-    "em_adj_d": 95.7379
+    "em_adj_d": 95.7379,
+    "conf_strength_score": 0.1653
   },
   {
     "team": "Mississippi St.",
@@ -9243,7 +9423,8 @@
     "em_poss_weighted_bpr": 0.664,
     "em_depth_score": 0.294,
     "em_adj_o": 101.9152,
-    "em_adj_d": 93.1165
+    "em_adj_d": 93.1165,
+    "conf_strength_score": 0.6475
   },
   {
     "team": "Eastern Kentucky",
@@ -9308,7 +9489,8 @@
     "em_poss_weighted_bpr": 1.593,
     "em_depth_score": 0.236,
     "em_adj_o": 104.8676,
-    "em_adj_d": 95.1511
+    "em_adj_d": 95.1511,
+    "conf_strength_score": 0.4744
   },
   {
     "team": "Morehead St.",
@@ -9373,7 +9555,8 @@
     "em_poss_weighted_bpr": 1.614,
     "em_depth_score": 0.388,
     "em_adj_o": 104.9313,
-    "em_adj_d": 93.7414
+    "em_adj_d": 93.7414,
+    "conf_strength_score": 0.5448
   },
   {
     "team": "Cal Poly",
@@ -9438,7 +9621,8 @@
     "em_poss_weighted_bpr": 1.187,
     "em_depth_score": 0.267,
     "em_adj_o": 100.5798,
-    "em_adj_d": 93.6394
+    "em_adj_d": 93.6394,
+    "conf_strength_score": 0.4891
   },
   {
     "team": "Manhattan",
@@ -9503,7 +9687,9 @@
     "em_poss_weighted_bpr": 0.89,
     "em_depth_score": 0.255,
     "em_adj_o": 104.0336,
-    "em_adj_d": 94.6364
+    "em_adj_d": 94.6364,
+    "conf_strength_score": 0.4356,
+    "conf_tourney_momentum": 1.0
   },
   {
     "team": "Princeton",
@@ -9568,7 +9754,8 @@
     "em_poss_weighted_bpr": 1.103,
     "em_depth_score": 0.259,
     "em_adj_o": 105.6862,
-    "em_adj_d": 99.0753
+    "em_adj_d": 99.0753,
+    "conf_strength_score": 0.7192
   },
   {
     "team": "Mercer",
@@ -9633,7 +9820,8 @@
     "em_poss_weighted_bpr": 1.116,
     "em_depth_score": 0.298,
     "em_adj_o": 110.3558,
-    "em_adj_d": 100.5086
+    "em_adj_d": 100.5086,
+    "conf_strength_score": 0.625
   },
   {
     "team": "Georgia Southern",
@@ -9698,7 +9886,8 @@
     "em_poss_weighted_bpr": 1.117,
     "em_depth_score": 0.219,
     "em_adj_o": 101.3214,
-    "em_adj_d": 91.5518
+    "em_adj_d": 91.5518,
+    "conf_strength_score": 0.559
   },
   {
     "team": "UNC Wilmington",
@@ -9763,7 +9952,8 @@
     "em_poss_weighted_bpr": 0.724,
     "em_depth_score": 0.267,
     "em_adj_o": 101.8285,
-    "em_adj_d": 95.0001
+    "em_adj_d": 95.0001,
+    "conf_strength_score": 0.5757
   },
   {
     "team": "Canisius",
@@ -9828,7 +10018,8 @@
     "em_poss_weighted_bpr": 1.186,
     "em_depth_score": 0.363,
     "em_adj_o": 105.1676,
-    "em_adj_d": 94.6794
+    "em_adj_d": 94.6794,
+    "conf_strength_score": 0.3719
   },
   {
     "team": "USC",
@@ -9893,7 +10084,8 @@
     "em_poss_weighted_bpr": 0.76,
     "em_depth_score": 0.269,
     "em_adj_o": 101.3865,
-    "em_adj_d": 93.5636
+    "em_adj_d": 93.5636,
+    "conf_strength_score": 0.4231
   },
   {
     "team": "Columbia",
@@ -9958,7 +10150,8 @@
     "em_poss_weighted_bpr": 1.691,
     "em_depth_score": 0.267,
     "em_adj_o": 106.9364,
-    "em_adj_d": 101.4824
+    "em_adj_d": 101.4824,
+    "conf_strength_score": 0.3122
   },
   {
     "team": "Saint Joseph's",
@@ -10023,7 +10216,8 @@
     "em_poss_weighted_bpr": 1.117,
     "em_depth_score": 0.121,
     "em_adj_o": 98.4521,
-    "em_adj_d": 93.9721
+    "em_adj_d": 93.9721,
+    "conf_strength_score": 0.5694
   },
   {
     "team": "North Florida",
@@ -10088,7 +10282,9 @@
     "em_poss_weighted_bpr": 1.604,
     "em_depth_score": 0.294,
     "em_adj_o": 109.9192,
-    "em_adj_d": 96.8492
+    "em_adj_d": 96.8492,
+    "conf_strength_score": 0.6204,
+    "conf_tourney_momentum": 1.0
   },
   {
     "team": "Western Michigan",
@@ -10153,7 +10349,8 @@
     "em_poss_weighted_bpr": 1.13,
     "em_depth_score": 0.24,
     "em_adj_o": 110.2126,
-    "em_adj_d": 101.1073
+    "em_adj_d": 101.1073,
+    "conf_strength_score": 0.6021
   },
   {
     "team": "Montana",
@@ -10218,7 +10415,9 @@
     "em_poss_weighted_bpr": 1.192,
     "em_depth_score": 0.308,
     "em_adj_o": 112.2091,
-    "em_adj_d": 102.0363
+    "em_adj_d": 102.0363,
+    "conf_strength_score": 0.6726,
+    "conf_tourney_momentum": 0.7
   },
   {
     "team": "Quinnipiac",
@@ -10283,7 +10482,8 @@
     "em_poss_weighted_bpr": 1.434,
     "em_depth_score": 0.237,
     "em_adj_o": 104.0972,
-    "em_adj_d": 93.6987
+    "em_adj_d": 93.6987,
+    "conf_strength_score": 0.1371
   },
   {
     "team": "Santa Clara",
@@ -10348,7 +10548,8 @@
     "em_poss_weighted_bpr": 0.649,
     "em_depth_score": 0.145,
     "em_adj_o": 104.2086,
-    "em_adj_d": 101.7178
+    "em_adj_d": 101.7178,
+    "conf_strength_score": 0.3472
   },
   {
     "team": "North Dakota St.",
@@ -10413,7 +10614,9 @@
     "em_poss_weighted_bpr": 0.967,
     "em_depth_score": 0.241,
     "em_adj_o": 101.8569,
-    "em_adj_d": 95.6871
+    "em_adj_d": 95.6871,
+    "conf_strength_score": 0.452,
+    "conf_tourney_momentum": 1.0
   },
   {
     "team": "Middle Tennessee",
@@ -10478,7 +10681,8 @@
     "em_poss_weighted_bpr": 0.618,
     "em_depth_score": 0.244,
     "em_adj_o": 102.7343,
-    "em_adj_d": 96.3727
+    "em_adj_d": 96.3727,
+    "conf_strength_score": 0.638
   },
   {
     "team": "Virginia Tech",
@@ -10543,7 +10747,8 @@
     "em_poss_weighted_bpr": 0.362,
     "em_depth_score": 0.228,
     "em_adj_o": 103.4109,
-    "em_adj_d": 101.7753
+    "em_adj_d": 101.7753,
+    "conf_strength_score": 0.3875
   },
   {
     "team": "Louisiana Monroe",
@@ -10589,7 +10794,8 @@
     "ft_pct": 71.7,
     "opp_ft_pct": 72.4,
     "ppp_off": 0.979,
-    "ppp_def": 0.965
+    "ppp_def": 0.965,
+    "conf_strength_score": 0.4736
   },
   {
     "team": "Rider",
@@ -10654,7 +10860,8 @@
     "em_poss_weighted_bpr": 0.979,
     "em_depth_score": 0.242,
     "em_adj_o": 103.8501,
-    "em_adj_d": 95.3054
+    "em_adj_d": 95.3054,
+    "conf_strength_score": 0.7022
   },
   {
     "team": "Charlotte",
@@ -10719,7 +10926,8 @@
     "em_poss_weighted_bpr": 1.448,
     "em_depth_score": 0.169,
     "em_adj_o": 107.3628,
-    "em_adj_d": 99.5084
+    "em_adj_d": 99.5084,
+    "conf_strength_score": 0.3425
   },
   {
     "team": "High Point",
@@ -10784,7 +10992,8 @@
     "em_poss_weighted_bpr": 1.632,
     "em_depth_score": 0.238,
     "em_adj_o": 111.0758,
-    "em_adj_d": 97.5496
+    "em_adj_d": 97.5496,
+    "conf_strength_score": 0.6184
   },
   {
     "team": "Tennessee Martin",
@@ -10830,7 +11039,8 @@
     "ft_pct": 71.0,
     "opp_ft_pct": 70.4,
     "ppp_off": 1.079,
-    "ppp_def": 1.051
+    "ppp_def": 1.051,
+    "conf_strength_score": 0.4501
   },
   {
     "team": "Indiana St.",
@@ -10876,7 +11086,8 @@
     "ft_pct": 70.1,
     "opp_ft_pct": 73.2,
     "ppp_off": 0.985,
-    "ppp_def": 1.01
+    "ppp_def": 1.01,
+    "conf_strength_score": 1.0
   },
   {
     "team": "Western Kentucky",
@@ -10941,7 +11152,8 @@
     "em_poss_weighted_bpr": 1.391,
     "em_depth_score": 0.2,
     "em_adj_o": 104.5409,
-    "em_adj_d": 96.0844
+    "em_adj_d": 96.0844,
+    "conf_strength_score": 0.4096
   },
   {
     "team": "Washington St.",
@@ -11006,7 +11218,8 @@
     "em_poss_weighted_bpr": 0.72,
     "em_depth_score": 0.224,
     "em_adj_o": 105.6315,
-    "em_adj_d": 105.4416
+    "em_adj_d": 105.4416,
+    "conf_strength_score": 0.6524
   },
   {
     "team": "Oakland",
@@ -11071,7 +11284,8 @@
     "em_poss_weighted_bpr": 1.077,
     "em_depth_score": 0.183,
     "em_adj_o": 109.7299,
-    "em_adj_d": 105.3049
+    "em_adj_d": 105.3049,
+    "conf_strength_score": 0.7162
   },
   {
     "team": "Winthrop",
@@ -11136,7 +11350,9 @@
     "em_poss_weighted_bpr": 0.689,
     "em_depth_score": 0.216,
     "em_adj_o": 106.4503,
-    "em_adj_d": 99.3031
+    "em_adj_d": 99.3031,
+    "conf_strength_score": 0.6468,
+    "conf_tourney_momentum": 0.7
   },
   {
     "team": "Chattanooga",
@@ -11201,7 +11417,8 @@
     "em_poss_weighted_bpr": 0.853,
     "em_depth_score": 0.301,
     "em_adj_o": 106.9418,
-    "em_adj_d": 94.0426
+    "em_adj_d": 94.0426,
+    "conf_strength_score": 0.5914
   },
   {
     "team": "USC Upstate",
@@ -11247,7 +11464,8 @@
     "ft_pct": 66.0,
     "opp_ft_pct": 66.9,
     "ppp_off": 1.066,
-    "ppp_def": 0.985
+    "ppp_def": 0.985,
+    "conf_strength_score": 0.2081
   },
   {
     "team": "NJIT",
@@ -11312,7 +11530,8 @@
     "em_poss_weighted_bpr": 0.593,
     "em_depth_score": 0.272,
     "em_adj_o": 106.6012,
-    "em_adj_d": 100.9196
+    "em_adj_d": 100.9196,
+    "conf_strength_score": 0.5278
   },
   {
     "team": "Northern Arizona",
@@ -11377,7 +11596,8 @@
     "em_poss_weighted_bpr": 0.966,
     "em_depth_score": 0.231,
     "em_adj_o": 104.3033,
-    "em_adj_d": 95.5891
+    "em_adj_d": 95.5891,
+    "conf_strength_score": 0.4526
   },
   {
     "team": "Radford",
@@ -11442,7 +11662,8 @@
     "em_poss_weighted_bpr": 0.823,
     "em_depth_score": 0.137,
     "em_adj_o": 102.6475,
-    "em_adj_d": 95.5364
+    "em_adj_d": 95.5364,
+    "conf_strength_score": 0.3766
   },
   {
     "team": "Colgate",
@@ -11507,7 +11728,8 @@
     "em_poss_weighted_bpr": 0.975,
     "em_depth_score": 0.266,
     "em_adj_o": 108.3287,
-    "em_adj_d": 100.4217
+    "em_adj_d": 100.4217,
+    "conf_strength_score": 0.7236
   },
   {
     "team": "Houston",
@@ -11572,7 +11794,8 @@
     "em_poss_weighted_bpr": 0.703,
     "em_depth_score": 0.248,
     "em_adj_o": 99.526,
-    "em_adj_d": 97.2726
+    "em_adj_d": 97.2726,
+    "conf_strength_score": 0.3984
   },
   {
     "team": "Lehigh",
@@ -11637,7 +11860,8 @@
     "em_poss_weighted_bpr": 0.592,
     "em_depth_score": 0.264,
     "em_adj_o": 99.491,
-    "em_adj_d": 97.0828
+    "em_adj_d": 97.0828,
+    "conf_strength_score": 0.4379
   },
   {
     "team": "St. Francis NY",
@@ -11683,7 +11907,9 @@
     "ft_pct": 67.8,
     "opp_ft_pct": 70.0,
     "ppp_off": 1.034,
-    "ppp_def": 0.973
+    "ppp_def": 0.973,
+    "conf_strength_score": 0.4409,
+    "conf_tourney_momentum": 0.7
   },
   {
     "team": "Rutgers",
@@ -11748,7 +11974,8 @@
     "em_poss_weighted_bpr": 0.583,
     "em_depth_score": 0.093,
     "em_adj_o": 95.2457,
-    "em_adj_d": 97.7779
+    "em_adj_d": 97.7779,
+    "conf_strength_score": 0.4231
   },
   {
     "team": "Robert Morris",
@@ -11813,7 +12040,9 @@
     "em_poss_weighted_bpr": 0.672,
     "em_depth_score": 0.202,
     "em_adj_o": 105.0449,
-    "em_adj_d": 97.2982
+    "em_adj_d": 97.2982,
+    "conf_strength_score": 0.5424,
+    "conf_tourney_momentum": 1.0
   },
   {
     "team": "Fordham",
@@ -11878,7 +12107,8 @@
     "em_poss_weighted_bpr": 0.675,
     "em_depth_score": 0.203,
     "em_adj_o": 100.3964,
-    "em_adj_d": 98.1848
+    "em_adj_d": 98.1848,
+    "conf_strength_score": 0.4437
   },
   {
     "team": "UT Arlington",
@@ -11943,7 +12173,8 @@
     "em_poss_weighted_bpr": 0.113,
     "em_depth_score": 0.249,
     "em_adj_o": 102.7785,
-    "em_adj_d": 97.5882
+    "em_adj_d": 97.5882,
+    "conf_strength_score": 0.5792
   },
   {
     "team": "Monmouth",
@@ -12008,7 +12239,8 @@
     "em_poss_weighted_bpr": 0.76,
     "em_depth_score": 0.266,
     "em_adj_o": 103.4202,
-    "em_adj_d": 96.6341
+    "em_adj_d": 96.6341,
+    "conf_strength_score": 0.4808
   },
   {
     "team": "Florida Gulf Coast",
@@ -12073,7 +12305,8 @@
     "em_poss_weighted_bpr": 1.31,
     "em_depth_score": 0.218,
     "em_adj_o": 102.9276,
-    "em_adj_d": 95.0957
+    "em_adj_d": 95.0957,
+    "conf_strength_score": 0.5201
   },
   {
     "team": "New Hampshire",
@@ -12138,7 +12371,8 @@
     "em_poss_weighted_bpr": -0.037,
     "em_depth_score": 0.203,
     "em_adj_o": 103.8419,
-    "em_adj_d": 96.235
+    "em_adj_d": 96.235,
+    "conf_strength_score": 0.563
   },
   {
     "team": "Detroit Mercy",
@@ -12184,7 +12418,8 @@
     "ft_pct": 69.2,
     "opp_ft_pct": 70.1,
     "ppp_off": 1.007,
-    "ppp_def": 1.042
+    "ppp_def": 1.042,
+    "conf_strength_score": 0.4998
   },
   {
     "team": "Southern Illinois",
@@ -12249,7 +12484,8 @@
     "em_poss_weighted_bpr": -0.28,
     "em_depth_score": 0.185,
     "em_adj_o": 101.01,
-    "em_adj_d": 95.3345
+    "em_adj_d": 95.3345,
+    "conf_strength_score": 0.2377
   },
   {
     "team": "George Mason",
@@ -12314,7 +12550,8 @@
     "em_poss_weighted_bpr": 0.136,
     "em_depth_score": 0.26,
     "em_adj_o": 99.2003,
-    "em_adj_d": 99.727
+    "em_adj_d": 99.727,
+    "conf_strength_score": 0.4383
   },
   {
     "team": "Missouri",
@@ -12379,7 +12616,8 @@
     "em_poss_weighted_bpr": 0.271,
     "em_depth_score": 0.151,
     "em_adj_o": 99.8118,
-    "em_adj_d": 100.5808
+    "em_adj_d": 100.5808,
+    "conf_strength_score": 0.3869
   },
   {
     "team": "Milwaukee",
@@ -12444,7 +12682,8 @@
     "em_poss_weighted_bpr": 0.225,
     "em_depth_score": 0.008,
     "em_adj_o": 99.5839,
-    "em_adj_d": 99.4362
+    "em_adj_d": 99.4362,
+    "conf_strength_score": 0.4916
   },
   {
     "team": "Oral Roberts",
@@ -12509,7 +12748,8 @@
     "em_poss_weighted_bpr": 0.227,
     "em_depth_score": 0.274,
     "em_adj_o": 102.2449,
-    "em_adj_d": 102.4925
+    "em_adj_d": 102.4925,
+    "conf_strength_score": 0.4009
   },
   {
     "team": "Purdue Fort Wayne",
@@ -12555,7 +12795,8 @@
     "ft_pct": 68.9,
     "opp_ft_pct": 71.4,
     "ppp_off": 1.055,
-    "ppp_def": 1.051
+    "ppp_def": 1.051,
+    "conf_strength_score": 0.642
   },
   {
     "team": "East Tennessee St.",
@@ -12601,7 +12842,8 @@
     "ft_pct": 72.6,
     "opp_ft_pct": 70.4,
     "ppp_off": 1.04,
-    "ppp_def": 1.052
+    "ppp_def": 1.052,
+    "conf_strength_score": 0.3345
   },
   {
     "team": "Northern Illinois",
@@ -12666,7 +12908,8 @@
     "em_poss_weighted_bpr": 0.296,
     "em_depth_score": 0.264,
     "em_adj_o": 101.6134,
-    "em_adj_d": 98.0395
+    "em_adj_d": 98.0395,
+    "conf_strength_score": 0.6383
   },
   {
     "team": "Dartmouth",
@@ -12731,7 +12974,8 @@
     "em_poss_weighted_bpr": 0.837,
     "em_depth_score": 0.225,
     "em_adj_o": 107.9164,
-    "em_adj_d": 95.0615
+    "em_adj_d": 95.0615,
+    "conf_strength_score": 0.4026
   },
   {
     "team": "Saint Peter's",
@@ -12796,7 +13040,8 @@
     "em_poss_weighted_bpr": 0.391,
     "em_depth_score": 0.213,
     "em_adj_o": 99.5406,
-    "em_adj_d": 94.5962
+    "em_adj_d": 94.5962,
+    "conf_strength_score": 0.2195
   },
   {
     "team": "Charleston Southern",
@@ -12861,7 +13106,8 @@
     "em_poss_weighted_bpr": 1.2,
     "em_depth_score": 0.264,
     "em_adj_o": 110.355,
-    "em_adj_d": 99.9708
+    "em_adj_d": 99.9708,
+    "conf_strength_score": 0.6057
   },
   {
     "team": "Fresno St.",
@@ -12926,7 +13172,8 @@
     "em_poss_weighted_bpr": 0.599,
     "em_depth_score": 0.2,
     "em_adj_o": 104.9372,
-    "em_adj_d": 99.7003
+    "em_adj_d": 99.7003,
+    "conf_strength_score": 0.7675
   },
   {
     "team": "Texas A&M Corpus Chris",
@@ -12972,7 +13219,8 @@
     "ft_pct": 68.8,
     "opp_ft_pct": 68.8,
     "ppp_off": 1.029,
-    "ppp_def": 1.015
+    "ppp_def": 1.015,
+    "conf_strength_score": 0.6353
   },
   {
     "team": "Rice",
@@ -13037,7 +13285,8 @@
     "em_poss_weighted_bpr": 0.283,
     "em_depth_score": 0.231,
     "em_adj_o": 99.7504,
-    "em_adj_d": 99.6553
+    "em_adj_d": 99.6553,
+    "conf_strength_score": 0.4848
   },
   {
     "team": "Denver",
@@ -13102,7 +13351,8 @@
     "em_poss_weighted_bpr": 0.994,
     "em_depth_score": 0.291,
     "em_adj_o": 104.1783,
-    "em_adj_d": 103.6474
+    "em_adj_d": 103.6474,
+    "conf_strength_score": 0.2306
   },
   {
     "team": "Saint Francis",
@@ -13167,7 +13417,8 @@
     "em_poss_weighted_bpr": 0.274,
     "em_depth_score": 0.255,
     "em_adj_o": 98.9366,
-    "em_adj_d": 95.8718
+    "em_adj_d": 95.8718,
+    "conf_strength_score": 0.2202
   },
   {
     "team": "American",
@@ -13232,7 +13483,9 @@
     "em_poss_weighted_bpr": 0.951,
     "em_depth_score": 0.246,
     "em_adj_o": 100.6242,
-    "em_adj_d": 96.2152
+    "em_adj_d": 96.2152,
+    "conf_strength_score": 0.1208,
+    "conf_tourney_momentum": 0.7
   },
   {
     "team": "Southeast Missouri St.",
@@ -13278,7 +13531,8 @@
     "ft_pct": 66.3,
     "opp_ft_pct": 68.8,
     "ppp_off": 1.02,
-    "ppp_def": 1.042
+    "ppp_def": 1.042,
+    "conf_strength_score": 0.5768
   },
   {
     "team": "Bucknell",
@@ -13343,7 +13597,8 @@
     "em_poss_weighted_bpr": 0.563,
     "em_depth_score": 0.191,
     "em_adj_o": 109.9361,
-    "em_adj_d": 103.8498
+    "em_adj_d": 103.8498,
+    "conf_strength_score": 0.6531
   },
   {
     "team": "Lafayette",
@@ -13408,7 +13663,9 @@
     "em_poss_weighted_bpr": 1.197,
     "em_depth_score": 0.283,
     "em_adj_o": 115.2996,
-    "em_adj_d": 109.0713
+    "em_adj_d": 109.0713,
+    "conf_strength_score": 0.066,
+    "conf_tourney_momentum": 1.0
   },
   {
     "team": "Western Carolina",
@@ -13473,7 +13730,8 @@
     "em_poss_weighted_bpr": 0.561,
     "em_depth_score": 0.209,
     "em_adj_o": 101.0736,
-    "em_adj_d": 97.7008
+    "em_adj_d": 97.7008,
+    "conf_strength_score": 0.424
   },
   {
     "team": "Gardner Webb",
@@ -13519,7 +13777,8 @@
     "ft_pct": 67.9,
     "opp_ft_pct": 68.8,
     "ppp_off": 1.064,
-    "ppp_def": 1.095
+    "ppp_def": 1.095,
+    "conf_strength_score": 0.1183
   },
   {
     "team": "James Madison",
@@ -13584,7 +13843,8 @@
     "em_poss_weighted_bpr": 0.457,
     "em_depth_score": 0.232,
     "em_adj_o": 102.9265,
-    "em_adj_d": 102.7557
+    "em_adj_d": 102.7557,
+    "conf_strength_score": 0.3083
   },
   {
     "team": "East Carolina",
@@ -13649,7 +13909,8 @@
     "em_poss_weighted_bpr": 0.281,
     "em_depth_score": 0.237,
     "em_adj_o": 105.9932,
-    "em_adj_d": 98.9099
+    "em_adj_d": 98.9099,
+    "conf_strength_score": 0.4297
   },
   {
     "team": "Pacific",
@@ -13714,7 +13975,8 @@
     "em_poss_weighted_bpr": -0.095,
     "em_depth_score": 0.207,
     "em_adj_o": 101.685,
-    "em_adj_d": 102.5532
+    "em_adj_d": 102.5532,
+    "conf_strength_score": 0.4619
   },
   {
     "team": "Air Force",
@@ -13779,7 +14041,8 @@
     "em_poss_weighted_bpr": 0.613,
     "em_depth_score": 0.258,
     "em_adj_o": 109.026,
-    "em_adj_d": 102.8087
+    "em_adj_d": 102.8087,
+    "conf_strength_score": 0.2815
   },
   {
     "team": "UC Riverside",
@@ -13844,7 +14107,8 @@
     "em_poss_weighted_bpr": -0.093,
     "em_depth_score": 0.222,
     "em_adj_o": 96.8987,
-    "em_adj_d": 98.8046
+    "em_adj_d": 98.8046,
+    "conf_strength_score": 0.4421
   },
   {
     "team": "Tulane",
@@ -13909,7 +14173,8 @@
     "em_poss_weighted_bpr": 0.216,
     "em_depth_score": 0.232,
     "em_adj_o": 100.061,
-    "em_adj_d": 98.7416
+    "em_adj_d": 98.7416,
+    "conf_strength_score": 0.4374
   },
   {
     "team": "UTSA",
@@ -13974,7 +14239,8 @@
     "em_poss_weighted_bpr": 0.742,
     "em_depth_score": 0.234,
     "em_adj_o": 106.6499,
-    "em_adj_d": 102.087
+    "em_adj_d": 102.087,
+    "conf_strength_score": 0.5753
   },
   {
     "team": "Sacramento St.",
@@ -14020,7 +14286,8 @@
     "ft_pct": 73.9,
     "opp_ft_pct": 71.3,
     "ppp_off": 1.107,
-    "ppp_def": 1.093
+    "ppp_def": 1.093,
+    "conf_strength_score": 0.5825
   },
   {
     "team": "North Texas",
@@ -14085,7 +14352,8 @@
     "em_poss_weighted_bpr": -0.152,
     "em_depth_score": 0.223,
     "em_adj_o": 98.122,
-    "em_adj_d": 99.7694
+    "em_adj_d": 99.7694,
+    "conf_strength_score": 0.5641
   },
   {
     "team": "Cornell",
@@ -14150,7 +14418,8 @@
     "em_poss_weighted_bpr": 0.365,
     "em_depth_score": 0.0,
     "em_adj_o": 97.5395,
-    "em_adj_d": 93.6314
+    "em_adj_d": 93.6314,
+    "conf_strength_score": 0.3701
   },
   {
     "team": "Norfolk St.",
@@ -14215,7 +14484,8 @@
     "em_poss_weighted_bpr": 0.768,
     "em_depth_score": 0.29,
     "em_adj_o": 107.8718,
-    "em_adj_d": 101.2653
+    "em_adj_d": 101.2653,
+    "conf_strength_score": 0.6104
   },
   {
     "team": "Little Rock",
@@ -14261,7 +14531,8 @@
     "ft_pct": 70.9,
     "opp_ft_pct": 67.7,
     "ppp_off": 1.026,
-    "ppp_def": 1.049
+    "ppp_def": 1.049,
+    "conf_strength_score": 0.5114
   },
   {
     "team": "Duquesne",
@@ -14326,7 +14597,8 @@
     "em_poss_weighted_bpr": 0.705,
     "em_depth_score": 0.191,
     "em_adj_o": 105.6353,
-    "em_adj_d": 107.1044
+    "em_adj_d": 107.1044,
+    "conf_strength_score": 0.5863
   },
   {
     "team": "Texas St.",
@@ -14372,7 +14644,8 @@
     "ft_pct": 69.6,
     "opp_ft_pct": 73.2,
     "ppp_off": 0.93,
-    "ppp_def": 0.959
+    "ppp_def": 0.959,
+    "conf_strength_score": 0.365
   },
   {
     "team": "Seattle",
@@ -14437,7 +14710,9 @@
     "em_poss_weighted_bpr": 0.105,
     "em_depth_score": 0.045,
     "em_adj_o": 100.7305,
-    "em_adj_d": 98.5807
+    "em_adj_d": 98.5807,
+    "conf_strength_score": 0.3136,
+    "conf_tourney_momentum": 0.7
   },
   {
     "team": "Idaho",
@@ -14502,7 +14777,8 @@
     "em_poss_weighted_bpr": 0.483,
     "em_depth_score": 0.222,
     "em_adj_o": 110.754,
-    "em_adj_d": 109.1851
+    "em_adj_d": 109.1851,
+    "conf_strength_score": 0.4303
   },
   {
     "team": "Boston University",
@@ -14567,7 +14843,8 @@
     "em_poss_weighted_bpr": 0.673,
     "em_depth_score": 0.196,
     "em_adj_o": 107.6059,
-    "em_adj_d": 103.9437
+    "em_adj_d": 103.9437,
+    "conf_strength_score": 0.6745
   },
   {
     "team": "South Dakota",
@@ -14632,7 +14909,8 @@
     "em_poss_weighted_bpr": 0.317,
     "em_depth_score": 0.236,
     "em_adj_o": 103.3814,
-    "em_adj_d": 99.1128
+    "em_adj_d": 99.1128,
+    "conf_strength_score": 0.3567
   },
   {
     "team": "Texas Southern",
@@ -14697,7 +14975,9 @@
     "em_poss_weighted_bpr": -0.186,
     "em_depth_score": 0.177,
     "em_adj_o": 104.5244,
-    "em_adj_d": 102.6745
+    "em_adj_d": 102.6745,
+    "conf_strength_score": 0.2609,
+    "conf_tourney_momentum": 1.0
   },
   {
     "team": "Ohio",
@@ -14762,7 +15042,8 @@
     "em_poss_weighted_bpr": 0.127,
     "em_depth_score": 0.134,
     "em_adj_o": 102.2069,
-    "em_adj_d": 102.2546
+    "em_adj_d": 102.2546,
+    "conf_strength_score": 0.332
   },
   {
     "team": "Northern Kentucky",
@@ -14827,7 +15108,8 @@
     "em_poss_weighted_bpr": 0.171,
     "em_depth_score": 0.193,
     "em_adj_o": 108.3702,
-    "em_adj_d": 104.4094
+    "em_adj_d": 104.4094,
+    "conf_strength_score": 0.3859
   },
   {
     "team": "Maryland Eastern Shore",
@@ -14873,7 +15155,8 @@
     "ft_pct": 65.6,
     "opp_ft_pct": 67.9,
     "ppp_off": 1.033,
-    "ppp_def": 1.027
+    "ppp_def": 1.027,
+    "conf_strength_score": 0.4085
   },
   {
     "team": "Northwestern St.",
@@ -14919,7 +15202,8 @@
     "ft_pct": 75.1,
     "opp_ft_pct": 69.4,
     "ppp_off": 1.124,
-    "ppp_def": 1.137
+    "ppp_def": 1.137,
+    "conf_strength_score": 0.5141
   },
   {
     "team": "Drexel",
@@ -14984,7 +15268,8 @@
     "em_poss_weighted_bpr": -0.049,
     "em_depth_score": 0.0,
     "em_adj_o": 97.8865,
-    "em_adj_d": 100.7713
+    "em_adj_d": 100.7713,
+    "conf_strength_score": 0.4041
   },
   {
     "team": "Holy Cross",
@@ -15049,7 +15334,8 @@
     "em_poss_weighted_bpr": 0.445,
     "em_depth_score": 0.099,
     "em_adj_o": 103.5688,
-    "em_adj_d": 99.5895
+    "em_adj_d": 99.5895,
+    "conf_strength_score": 0.2889
   },
   {
     "team": "Bryant",
@@ -15114,7 +15400,8 @@
     "em_poss_weighted_bpr": 0.409,
     "em_depth_score": 0.128,
     "em_adj_o": 105.0038,
-    "em_adj_d": 101.6883
+    "em_adj_d": 101.6883,
+    "conf_strength_score": 0.4402
   },
   {
     "team": "Mount St. Mary's",
@@ -15179,7 +15466,8 @@
     "em_poss_weighted_bpr": -0.284,
     "em_depth_score": 0.075,
     "em_adj_o": 101.8569,
-    "em_adj_d": 98.099
+    "em_adj_d": 98.099,
+    "conf_strength_score": 0.8969
   },
   {
     "team": "Miami OH",
@@ -15225,7 +15513,8 @@
     "ft_pct": 70.9,
     "opp_ft_pct": 69.4,
     "ppp_off": 0.993,
-    "ppp_def": 1.054
+    "ppp_def": 1.054,
+    "conf_strength_score": 0.5613
   },
   {
     "team": "UNC Asheville",
@@ -15290,7 +15579,8 @@
     "em_poss_weighted_bpr": 0.224,
     "em_depth_score": 0.194,
     "em_adj_o": 101.1217,
-    "em_adj_d": 100.4195
+    "em_adj_d": 100.4195,
+    "conf_strength_score": 0.5091
   },
   {
     "team": "Siena",
@@ -15355,7 +15645,8 @@
     "em_poss_weighted_bpr": 0.343,
     "em_depth_score": 0.25,
     "em_adj_o": 105.1442,
-    "em_adj_d": 107.4963
+    "em_adj_d": 107.4963,
+    "conf_strength_score": 0.317
   },
   {
     "team": "Brown",
@@ -15420,7 +15711,8 @@
     "em_poss_weighted_bpr": -0.296,
     "em_depth_score": 0.061,
     "em_adj_o": 99.82,
-    "em_adj_d": 98.2571
+    "em_adj_d": 98.2571,
+    "conf_strength_score": 0.4281
   },
   {
     "team": "Bradley",
@@ -15485,7 +15777,8 @@
     "em_poss_weighted_bpr": -0.717,
     "em_depth_score": 0.0,
     "em_adj_o": 92.2253,
-    "em_adj_d": 95.1768
+    "em_adj_d": 95.1768,
+    "conf_strength_score": 0.3835
   },
   {
     "team": "Weber St.",
@@ -15531,7 +15824,8 @@
     "ft_pct": 74.6,
     "opp_ft_pct": 71.3,
     "ppp_off": 1.007,
-    "ppp_def": 1.065
+    "ppp_def": 1.065,
+    "conf_strength_score": 0.4269
   },
   {
     "team": "Portland St.",
@@ -15577,7 +15871,8 @@
     "ft_pct": 74.4,
     "opp_ft_pct": 73.4,
     "ppp_off": 1.049,
-    "ppp_def": 1.092
+    "ppp_def": 1.092,
+    "conf_strength_score": 0.512
   },
   {
     "team": "Cal St. Bakersfield",
@@ -15623,7 +15918,8 @@
     "ft_pct": 72.5,
     "opp_ft_pct": 69.6,
     "ppp_off": 0.991,
-    "ppp_def": 1.001
+    "ppp_def": 1.001,
+    "conf_strength_score": 0.3113
   },
   {
     "team": "Drake",
@@ -15688,7 +15984,8 @@
     "em_poss_weighted_bpr": -1.073,
     "em_depth_score": 0.0,
     "em_adj_o": 104.2022,
-    "em_adj_d": 107.5045
+    "em_adj_d": 107.5045,
+    "conf_strength_score": 0.5882
   },
   {
     "team": "Incarnate Word",
@@ -15753,7 +16050,8 @@
     "em_poss_weighted_bpr": 0.567,
     "em_depth_score": 0.136,
     "em_adj_o": 107.7382,
-    "em_adj_d": 107.4769
+    "em_adj_d": 107.4769,
+    "conf_strength_score": 0.5126
   },
   {
     "team": "Eastern Illinois",
@@ -15818,7 +16116,8 @@
     "em_poss_weighted_bpr": 0.049,
     "em_depth_score": 0.257,
     "em_adj_o": 99.5686,
-    "em_adj_d": 96.0775
+    "em_adj_d": 96.0775,
+    "conf_strength_score": 0.4617
   },
   {
     "team": "Navy",
@@ -15883,7 +16182,8 @@
     "em_poss_weighted_bpr": -0.193,
     "em_depth_score": 0.219,
     "em_adj_o": 100.3507,
-    "em_adj_d": 96.9697
+    "em_adj_d": 96.9697,
+    "conf_strength_score": 0.7273
   },
   {
     "team": "Wright St.",
@@ -15948,7 +16248,8 @@
     "em_poss_weighted_bpr": -0.374,
     "em_depth_score": 0.0,
     "em_adj_o": 99.0711,
-    "em_adj_d": 97.2755
+    "em_adj_d": 97.2755,
+    "conf_strength_score": 0.3339
   },
   {
     "team": "Hampton",
@@ -16013,7 +16314,9 @@
     "em_poss_weighted_bpr": -1.295,
     "em_depth_score": 0.0,
     "em_adj_o": 95.6099,
-    "em_adj_d": 99.447
+    "em_adj_d": 99.447,
+    "conf_strength_score": 0.2913,
+    "conf_tourney_momentum": 1.0
   },
   {
     "team": "Nebraska Omaha",
@@ -16078,7 +16381,8 @@
     "em_poss_weighted_bpr": -0.198,
     "em_depth_score": 0.174,
     "em_adj_o": 107.0207,
-    "em_adj_d": 99.543
+    "em_adj_d": 99.543,
+    "conf_strength_score": 0.3118
   },
   {
     "team": "UNC Greensboro",
@@ -16143,7 +16447,8 @@
     "em_poss_weighted_bpr": -0.306,
     "em_depth_score": 0.0,
     "em_adj_o": 101.6598,
-    "em_adj_d": 102.1901
+    "em_adj_d": 102.1901,
+    "conf_strength_score": 0.5854
   },
   {
     "team": "Tennessee Tech",
@@ -16208,7 +16513,8 @@
     "em_poss_weighted_bpr": 0.016,
     "em_depth_score": 0.273,
     "em_adj_o": 100.8235,
-    "em_adj_d": 103.3546
+    "em_adj_d": 103.3546,
+    "conf_strength_score": 0.2279
   },
   {
     "team": "Marshall",
@@ -16273,7 +16579,8 @@
     "em_poss_weighted_bpr": -0.662,
     "em_depth_score": 0.0,
     "em_adj_o": 96.9375,
-    "em_adj_d": 95.1361
+    "em_adj_d": 95.1361,
+    "conf_strength_score": 0.4113
   },
   {
     "team": "Ball St.",
@@ -16319,7 +16626,8 @@
     "ft_pct": 69.7,
     "opp_ft_pct": 69.5,
     "ppp_off": 0.986,
-    "ppp_def": 1.065
+    "ppp_def": 1.065,
+    "conf_strength_score": 0.448
   },
   {
     "team": "Northern Colorado",
@@ -16384,7 +16692,8 @@
     "em_poss_weighted_bpr": 0.358,
     "em_depth_score": 0.23,
     "em_adj_o": 111.7978,
-    "em_adj_d": 105.1239
+    "em_adj_d": 105.1239,
+    "conf_strength_score": 0.4142
   },
   {
     "team": "Sacred Heart",
@@ -16449,7 +16758,8 @@
     "em_poss_weighted_bpr": 0.039,
     "em_depth_score": 0.201,
     "em_adj_o": 102.8246,
-    "em_adj_d": 104.148
+    "em_adj_d": 104.148,
+    "conf_strength_score": 0.3972
   },
   {
     "team": "Grand Canyon",
@@ -16514,7 +16824,8 @@
     "em_poss_weighted_bpr": -0.159,
     "em_depth_score": 0.17,
     "em_adj_o": 107.6262,
-    "em_adj_d": 106.2233
+    "em_adj_d": 106.2233,
+    "conf_strength_score": 0.4681
   },
   {
     "team": "SIU Edwardsville",
@@ -16579,7 +16890,8 @@
     "em_poss_weighted_bpr": -0.332,
     "em_depth_score": 0.0,
     "em_adj_o": 96.4614,
-    "em_adj_d": 97.3888
+    "em_adj_d": 97.3888,
+    "conf_strength_score": 0.7941
   },
   {
     "team": "Delaware",
@@ -16644,7 +16956,8 @@
     "em_poss_weighted_bpr": -0.513,
     "em_depth_score": 0.168,
     "em_adj_o": 102.2209,
-    "em_adj_d": 103.0037
+    "em_adj_d": 103.0037,
+    "conf_strength_score": 0.7074
   },
   {
     "team": "Cal St. Northridge",
@@ -16690,7 +17003,27 @@
     "ft_pct": 76.6,
     "opp_ft_pct": 70.3,
     "ppp_off": 0.97,
-    "ppp_def": 1.075
+    "ppp_def": 1.075,
+    "star_score": 0.451,
+    "em_obpr": -2.29386487839823,
+    "em_dbpr": -4.69868481398776,
+    "em_bpr": -6.99254969238599,
+    "em_opponent_adjust": 34.1770435250798,
+    "em_pace_adjust": 11.4746945220159,
+    "em_off_rank": 224.0,
+    "em_def_rank": 274.0,
+    "em_tempo_rank": 128.0,
+    "em_home_rank": 278.0,
+    "em_tempo": 65.8184913312399,
+    "top_player": "Stephan Hicks",
+    "top_player_bpr": 2.8637,
+    "em_top5_bpr": 3.33,
+    "em_star_concentration": 0.86,
+    "em_poss_weighted_bpr": -0.24,
+    "em_depth_score": 0.056,
+    "em_adj_o": 101.0673,
+    "em_adj_d": 103.1628,
+    "conf_strength_score": 0.3626
   },
   {
     "team": "Youngstown St.",
@@ -16736,7 +17069,8 @@
     "ft_pct": 69.6,
     "opp_ft_pct": 71.6,
     "ppp_off": 1.036,
-    "ppp_def": 1.122
+    "ppp_def": 1.122,
+    "conf_strength_score": 0.2065
   },
   {
     "team": "Towson",
@@ -16801,7 +17135,8 @@
     "em_poss_weighted_bpr": -0.283,
     "em_depth_score": 0.106,
     "em_adj_o": 105.2077,
-    "em_adj_d": 99.1965
+    "em_adj_d": 99.1965,
+    "conf_strength_score": 0.5009
   },
   {
     "team": "Loyola Marymount",
@@ -16866,7 +17201,8 @@
     "em_poss_weighted_bpr": -0.234,
     "em_depth_score": 0.235,
     "em_adj_o": 104.0291,
-    "em_adj_d": 108.161
+    "em_adj_d": 108.161,
+    "conf_strength_score": 0.5198
   },
   {
     "team": "Army",
@@ -16931,7 +17267,8 @@
     "em_poss_weighted_bpr": 0.482,
     "em_depth_score": 0.197,
     "em_adj_o": 103.5509,
-    "em_adj_d": 100.0581
+    "em_adj_d": 100.0581,
+    "conf_strength_score": 0.2147
   },
   {
     "team": "Missouri St.",
@@ -16977,7 +17314,8 @@
     "ft_pct": 74.0,
     "opp_ft_pct": 71.9,
     "ppp_off": 0.953,
-    "ppp_def": 1.06
+    "ppp_def": 1.06,
+    "conf_strength_score": 0.4803
   },
   {
     "team": "UCF",
@@ -17042,7 +17380,8 @@
     "em_poss_weighted_bpr": -0.444,
     "em_depth_score": 0.0,
     "em_adj_o": 103.123,
-    "em_adj_d": 108.2985
+    "em_adj_d": 108.2985,
+    "conf_strength_score": 0.5113
   },
   {
     "team": "South Florida",
@@ -17107,7 +17446,8 @@
     "em_poss_weighted_bpr": -0.402,
     "em_depth_score": 0.025,
     "em_adj_o": 99.1809,
-    "em_adj_d": 102.7903
+    "em_adj_d": 102.7903,
+    "conf_strength_score": 0.381
   },
   {
     "team": "Elon",
@@ -17172,7 +17512,8 @@
     "em_poss_weighted_bpr": -0.546,
     "em_depth_score": 0.098,
     "em_adj_o": 96.8352,
-    "em_adj_d": 97.8391
+    "em_adj_d": 97.8391,
+    "conf_strength_score": 0.3373
   },
   {
     "team": "FIU",
@@ -17218,7 +17559,8 @@
     "ft_pct": 64.3,
     "opp_ft_pct": 66.1,
     "ppp_off": 0.937,
-    "ppp_def": 1.006
+    "ppp_def": 1.006,
+    "conf_strength_score": 0.5067
   },
   {
     "team": "Nevada",
@@ -17283,7 +17625,8 @@
     "em_poss_weighted_bpr": -0.581,
     "em_depth_score": 0.042,
     "em_adj_o": 95.2763,
-    "em_adj_d": 101.7729
+    "em_adj_d": 101.7729,
+    "conf_strength_score": 0.4395
   },
   {
     "team": "IU Indy",
@@ -17348,7 +17691,8 @@
     "em_poss_weighted_bpr": -1.016,
     "em_depth_score": 0.0,
     "em_adj_o": 92.7242,
-    "em_adj_d": 96.8906
+    "em_adj_d": 96.8906,
+    "conf_strength_score": 0.5662
   },
   {
     "team": "LIU",
@@ -17413,7 +17757,8 @@
     "em_poss_weighted_bpr": -0.839,
     "em_depth_score": 0.0,
     "em_adj_o": 93.7337,
-    "em_adj_d": 97.2489
+    "em_adj_d": 97.2489,
+    "conf_strength_score": 0.3516
   },
   {
     "team": "Charleston",
@@ -17459,7 +17804,27 @@
     "ft_pct": 66.0,
     "opp_ft_pct": 68.2,
     "ppp_off": 0.942,
-    "ppp_def": 1.038
+    "ppp_def": 1.038,
+    "star_score": 0.363,
+    "em_obpr": -8.69105860138234,
+    "em_dbpr": -0.73471370768693,
+    "em_bpr": -9.42577230906927,
+    "em_opponent_adjust": -16.7713742412554,
+    "em_pace_adjust": -23.9349261583427,
+    "em_off_rank": 316.0,
+    "em_def_rank": 180.0,
+    "em_tempo_rank": 304.0,
+    "em_home_rank": 211.0,
+    "em_tempo": 62.3405441165079,
+    "top_player": "Joe Chealey",
+    "top_player_bpr": 1.7145,
+    "em_top5_bpr": -0.417,
+    "em_star_concentration": 1.0,
+    "em_poss_weighted_bpr": -0.56,
+    "em_depth_score": 0.0,
+    "em_adj_o": 95.899,
+    "em_adj_d": 97.2441,
+    "conf_strength_score": 0.3602
   },
   {
     "team": "Saint Louis",
@@ -17524,7 +17889,8 @@
     "em_poss_weighted_bpr": -1.096,
     "em_depth_score": 0.0,
     "em_adj_o": 96.6279,
-    "em_adj_d": 97.6691
+    "em_adj_d": 97.6691,
+    "conf_strength_score": 0.5129
   },
   {
     "team": "South Alabama",
@@ -17589,7 +17955,8 @@
     "em_poss_weighted_bpr": -0.997,
     "em_depth_score": 0.0,
     "em_adj_o": 101.3574,
-    "em_adj_d": 109.7281
+    "em_adj_d": 109.7281,
+    "conf_strength_score": 0.5103
   },
   {
     "team": "Lamar",
@@ -17654,7 +18021,8 @@
     "em_poss_weighted_bpr": -0.679,
     "em_depth_score": 0.179,
     "em_adj_o": 98.2585,
-    "em_adj_d": 100.6792
+    "em_adj_d": 100.6792,
+    "conf_strength_score": 0.4962
   },
   {
     "team": "Troy",
@@ -17719,7 +18087,8 @@
     "em_poss_weighted_bpr": -0.879,
     "em_depth_score": 0.0,
     "em_adj_o": 99.9939,
-    "em_adj_d": 103.5042
+    "em_adj_d": 103.5042,
+    "conf_strength_score": 0.5224
   },
   {
     "team": "Penn",
@@ -17784,7 +18153,8 @@
     "em_poss_weighted_bpr": -0.98,
     "em_depth_score": 0.0,
     "em_adj_o": 102.3379,
-    "em_adj_d": 101.9986
+    "em_adj_d": 101.9986,
+    "conf_strength_score": 0.1901
   },
   {
     "team": "Samford",
@@ -17849,7 +18219,8 @@
     "em_poss_weighted_bpr": -0.724,
     "em_depth_score": 0.0,
     "em_adj_o": 104.246,
-    "em_adj_d": 109.3606
+    "em_adj_d": 109.3606,
+    "conf_strength_score": 0.4377
   },
   {
     "team": "Hartford",
@@ -17906,7 +18277,8 @@
     "em_def_rank": 225.0,
     "em_tempo_rank": 243.0,
     "em_home_rank": 343.0,
-    "em_tempo": 63.8897321189079
+    "em_tempo": 63.8897321189079,
+    "conf_strength_score": 0.1971
   },
   {
     "team": "Delaware St.",
@@ -17952,7 +18324,9 @@
     "ft_pct": 70.8,
     "opp_ft_pct": 68.8,
     "ppp_off": 0.998,
-    "ppp_def": 1.056
+    "ppp_def": 1.056,
+    "conf_strength_score": 0.4458,
+    "conf_tourney_momentum": 0.7
   },
   {
     "team": "Alabama St.",
@@ -18017,7 +18391,8 @@
     "em_poss_weighted_bpr": -0.39,
     "em_depth_score": 0.0,
     "em_adj_o": 99.9925,
-    "em_adj_d": 99.0539
+    "em_adj_d": 99.0539,
+    "conf_strength_score": 0.4689
   },
   {
     "team": "Cal St. Fullerton",
@@ -18063,7 +18438,27 @@
     "ft_pct": 68.7,
     "opp_ft_pct": 69.7,
     "ppp_off": 0.953,
-    "ppp_def": 1.066
+    "ppp_def": 1.066,
+    "star_score": 0.367,
+    "em_obpr": -5.09004107082756,
+    "em_dbpr": -4.84951150491071,
+    "em_bpr": -9.93955257573827,
+    "em_opponent_adjust": -7.81394957077277,
+    "em_pace_adjust": -34.7030280849445,
+    "em_off_rank": 280.0,
+    "em_def_rank": 278.0,
+    "em_tempo_rank": 94.0,
+    "em_home_rank": 227.0,
+    "em_tempo": 66.4743381237993,
+    "top_player": "Alex Harris",
+    "top_player_bpr": 1.7744,
+    "em_top5_bpr": -0.803,
+    "em_star_concentration": 1.0,
+    "em_poss_weighted_bpr": -1.08,
+    "em_depth_score": 0.0,
+    "em_adj_o": 98.1292,
+    "em_adj_d": 102.1585,
+    "conf_strength_score": 0.321
   },
   {
     "team": "VMI",
@@ -18128,7 +18523,8 @@
     "em_poss_weighted_bpr": -0.54,
     "em_depth_score": 0.109,
     "em_adj_o": 103.0625,
-    "em_adj_d": 102.1775
+    "em_adj_d": 102.1775,
+    "conf_strength_score": 0.6297
   },
   {
     "team": "Illinois Chicago",
@@ -18174,7 +18570,8 @@
     "ft_pct": 73.9,
     "opp_ft_pct": 68.4,
     "ppp_off": 0.978,
-    "ppp_def": 1.094
+    "ppp_def": 1.094,
+    "conf_strength_score": 0.4964
   },
   {
     "team": "Howard",
@@ -18239,7 +18636,8 @@
     "em_poss_weighted_bpr": -1.091,
     "em_depth_score": 0.0,
     "em_adj_o": 92.182,
-    "em_adj_d": 97.3328
+    "em_adj_d": 97.3328,
+    "conf_strength_score": 0.5082
   },
   {
     "team": "Appalachian St.",
@@ -18304,7 +18702,8 @@
     "em_poss_weighted_bpr": -1.164,
     "em_depth_score": 0.0,
     "em_adj_o": 98.5324,
-    "em_adj_d": 100.8957
+    "em_adj_d": 100.8957,
+    "conf_strength_score": 0.3336
   },
   {
     "team": "UMKC",
@@ -18350,7 +18749,8 @@
     "ft_pct": 69.6,
     "opp_ft_pct": 68.7,
     "ppp_off": 0.983,
-    "ppp_def": 1.028
+    "ppp_def": 1.028,
+    "conf_strength_score": 0.5529
   },
   {
     "team": "McNeese St.",
@@ -18415,7 +18815,8 @@
     "em_poss_weighted_bpr": 0.138,
     "em_depth_score": 0.0,
     "em_adj_o": 101.1568,
-    "em_adj_d": 106.5463
+    "em_adj_d": 106.5463,
+    "conf_strength_score": 0.34
   },
   {
     "team": "Niagara",
@@ -18480,7 +18881,8 @@
     "em_poss_weighted_bpr": -0.652,
     "em_depth_score": 0.0,
     "em_adj_o": 99.8007,
-    "em_adj_d": 101.1735
+    "em_adj_d": 101.1735,
+    "conf_strength_score": 0.5428
   },
   {
     "team": "Prairie View A&M",
@@ -18526,7 +18928,8 @@
     "ft_pct": 64.5,
     "opp_ft_pct": 66.6,
     "ppp_off": 0.966,
-    "ppp_def": 1.005
+    "ppp_def": 1.005,
+    "conf_strength_score": 0.4754
   },
   {
     "team": "Florida Atlantic",
@@ -18591,7 +18994,8 @@
     "em_poss_weighted_bpr": -0.71,
     "em_depth_score": 0.0,
     "em_adj_o": 100.2561,
-    "em_adj_d": 100.4291
+    "em_adj_d": 100.4291,
+    "conf_strength_score": 0.1708
   },
   {
     "team": "Fairfield",
@@ -18656,7 +19060,8 @@
     "em_poss_weighted_bpr": -0.758,
     "em_depth_score": 0.121,
     "em_adj_o": 95.1182,
-    "em_adj_d": 98.7576
+    "em_adj_d": 98.7576,
+    "conf_strength_score": 0.6753
   },
   {
     "team": "Furman",
@@ -18721,7 +19126,9 @@
     "em_poss_weighted_bpr": -0.87,
     "em_depth_score": 0.0,
     "em_adj_o": 102.4575,
-    "em_adj_d": 105.808
+    "em_adj_d": 105.808,
+    "conf_strength_score": 0.0844,
+    "conf_tourney_momentum": 0.7
   },
   {
     "team": "Campbell",
@@ -18786,7 +19193,8 @@
     "em_poss_weighted_bpr": -0.464,
     "em_depth_score": 0.187,
     "em_adj_o": 102.8175,
-    "em_adj_d": 100.5358
+    "em_adj_d": 100.5358,
+    "conf_strength_score": 0.4582
   },
   {
     "team": "Southern",
@@ -18851,7 +19259,8 @@
     "em_poss_weighted_bpr": -0.798,
     "em_depth_score": 0.0,
     "em_adj_o": 98.0025,
-    "em_adj_d": 93.9789
+    "em_adj_d": 93.9789,
+    "conf_strength_score": 0.5396
   },
   {
     "team": "Marist",
@@ -18916,7 +19325,8 @@
     "em_poss_weighted_bpr": -1.262,
     "em_depth_score": 0.0,
     "em_adj_o": 93.6719,
-    "em_adj_d": 102.0037
+    "em_adj_d": 102.0037,
+    "conf_strength_score": 0.6628
   },
   {
     "team": "Lipscomb",
@@ -18981,7 +19391,8 @@
     "em_poss_weighted_bpr": -0.501,
     "em_depth_score": 0.139,
     "em_adj_o": 100.3269,
-    "em_adj_d": 104.2619
+    "em_adj_d": 104.2619,
+    "conf_strength_score": 0.4525
   },
   {
     "team": "Southeastern Louisiana",
@@ -19046,7 +19457,8 @@
     "em_poss_weighted_bpr": -0.803,
     "em_depth_score": 0.0,
     "em_adj_o": 98.0987,
-    "em_adj_d": 100.6739
+    "em_adj_d": 100.6739,
+    "conf_strength_score": 0.4519
   },
   {
     "team": "Southern Utah",
@@ -19111,7 +19523,8 @@
     "em_poss_weighted_bpr": -1.345,
     "em_depth_score": 0.0,
     "em_adj_o": 101.3958,
-    "em_adj_d": 106.534
+    "em_adj_d": 106.534,
+    "conf_strength_score": 0.5581
   },
   {
     "team": "Loyola MD",
@@ -19157,7 +19570,8 @@
     "ft_pct": 67.1,
     "opp_ft_pct": 68.2,
     "ppp_off": 0.921,
-    "ppp_def": 1.037
+    "ppp_def": 1.037,
+    "conf_strength_score": 0.5755
   },
   {
     "team": "North Dakota",
@@ -19222,7 +19636,8 @@
     "em_poss_weighted_bpr": -1.105,
     "em_depth_score": 0.0,
     "em_adj_o": 98.0,
-    "em_adj_d": 105.3302
+    "em_adj_d": 105.3302,
+    "conf_strength_score": 0.3746
   },
   {
     "team": "Arkansas St.",
@@ -19268,7 +19683,8 @@
     "ft_pct": 69.5,
     "opp_ft_pct": 67.4,
     "ppp_off": 0.94,
-    "ppp_def": 1.033
+    "ppp_def": 1.033,
+    "conf_strength_score": 0.2317
   },
   {
     "team": "Longwood",
@@ -19333,7 +19749,8 @@
     "em_poss_weighted_bpr": -1.311,
     "em_depth_score": 0.0,
     "em_adj_o": 95.4666,
-    "em_adj_d": 102.0864
+    "em_adj_d": 102.0864,
+    "conf_strength_score": 0.5602
   },
   {
     "team": "Montana St.",
@@ -19398,7 +19815,8 @@
     "em_poss_weighted_bpr": -1.224,
     "em_depth_score": 0.0,
     "em_adj_o": 97.6206,
-    "em_adj_d": 105.0749
+    "em_adj_d": 105.0749,
+    "conf_strength_score": 0.4384
   },
   {
     "team": "New Orleans",
@@ -19463,7 +19881,8 @@
     "em_poss_weighted_bpr": -1.305,
     "em_depth_score": 0.0,
     "em_adj_o": 96.399,
-    "em_adj_d": 99.2535
+    "em_adj_d": 99.2535,
+    "conf_strength_score": 0.3362
   },
   {
     "team": "Idaho St.",
@@ -19509,7 +19928,8 @@
     "ft_pct": 65.1,
     "opp_ft_pct": 74.0,
     "ppp_off": 0.993,
-    "ppp_def": 1.088
+    "ppp_def": 1.088,
+    "conf_strength_score": 0.3798
   },
   {
     "team": "Jacksonville St.",
@@ -19574,7 +19994,8 @@
     "em_poss_weighted_bpr": -1.049,
     "em_depth_score": 0.0,
     "em_adj_o": 95.9034,
-    "em_adj_d": 98.0805
+    "em_adj_d": 98.0805,
+    "conf_strength_score": 0.4754
   },
   {
     "team": "Wagner",
@@ -19639,7 +20060,8 @@
     "em_poss_weighted_bpr": -0.924,
     "em_depth_score": 0.0,
     "em_adj_o": 104.6282,
-    "em_adj_d": 107.0642
+    "em_adj_d": 107.0642,
+    "conf_strength_score": 0.6833
   },
   {
     "team": "Jackson St.",
@@ -19685,7 +20107,8 @@
     "ft_pct": 64.7,
     "opp_ft_pct": 68.8,
     "ppp_off": 0.928,
-    "ppp_def": 0.971
+    "ppp_def": 0.971,
+    "conf_strength_score": 0.2315
   },
   {
     "team": "Austin Peay",
@@ -19750,7 +20173,8 @@
     "em_poss_weighted_bpr": -1.079,
     "em_depth_score": 0.0,
     "em_adj_o": 94.7124,
-    "em_adj_d": 101.8072
+    "em_adj_d": 101.8072,
+    "conf_strength_score": 0.3636
   },
   {
     "team": "Southern Miss",
@@ -19796,7 +20220,8 @@
     "ft_pct": 62.1,
     "opp_ft_pct": 70.7,
     "ppp_off": 0.933,
-    "ppp_def": 1.091
+    "ppp_def": 1.091,
+    "conf_strength_score": 0.4266
   },
   {
     "team": "Utah Valley",
@@ -19861,7 +20286,8 @@
     "em_poss_weighted_bpr": -0.944,
     "em_depth_score": 0.0,
     "em_adj_o": 93.0173,
-    "em_adj_d": 99.9511
+    "em_adj_d": 99.9511,
+    "conf_strength_score": 0.5148
   },
   {
     "team": "UMass Lowell",
@@ -19926,7 +20352,8 @@
     "em_poss_weighted_bpr": -1.654,
     "em_depth_score": 0.0,
     "em_adj_o": 95.9757,
-    "em_adj_d": 99.3339
+    "em_adj_d": 99.3339,
+    "conf_strength_score": 0.2031
   },
   {
     "team": "Fairleigh Dickinson",
@@ -19991,7 +20418,8 @@
     "em_poss_weighted_bpr": -1.296,
     "em_depth_score": 0.0,
     "em_adj_o": 98.9628,
-    "em_adj_d": 103.767
+    "em_adj_d": 103.767,
+    "conf_strength_score": 0.2627
   },
   {
     "team": "Houston Christian",
@@ -20056,7 +20484,8 @@
     "em_poss_weighted_bpr": -1.36,
     "em_depth_score": 0.0,
     "em_adj_o": 97.7269,
-    "em_adj_d": 102.7316
+    "em_adj_d": 102.7316,
+    "conf_strength_score": 0.3867
   },
   {
     "team": "Nicholls St.",
@@ -20102,7 +20531,8 @@
     "ft_pct": 62.9,
     "opp_ft_pct": 72.2,
     "ppp_off": 0.916,
-    "ppp_def": 1.068
+    "ppp_def": 1.068,
+    "conf_strength_score": 0.4964
   },
   {
     "team": "Presbyterian",
@@ -20167,7 +20597,8 @@
     "em_poss_weighted_bpr": -2.222,
     "em_depth_score": 0.0,
     "em_adj_o": 95.8748,
-    "em_adj_d": 103.7105
+    "em_adj_d": 103.7105,
+    "conf_strength_score": 0.6433
   },
   {
     "team": "The Citadel",
@@ -20232,7 +20663,8 @@
     "em_poss_weighted_bpr": -1.577,
     "em_depth_score": 0.0,
     "em_adj_o": 105.2613,
-    "em_adj_d": 117.1709
+    "em_adj_d": 117.1709,
+    "conf_strength_score": 0.3945
   },
   {
     "team": "Coppin St.",
@@ -20278,7 +20710,8 @@
     "ft_pct": 69.2,
     "opp_ft_pct": 70.2,
     "ppp_off": 0.96,
-    "ppp_def": 1.138
+    "ppp_def": 1.138,
+    "conf_strength_score": 0.6498
   },
   {
     "team": "Binghamton",
@@ -20343,7 +20776,8 @@
     "em_poss_weighted_bpr": -2.216,
     "em_depth_score": 0.0,
     "em_adj_o": 93.2283,
-    "em_adj_d": 103.0147
+    "em_adj_d": 103.0147,
+    "conf_strength_score": 0.646
   },
   {
     "team": "Western Illinois",
@@ -20408,7 +20842,8 @@
     "em_poss_weighted_bpr": -1.857,
     "em_depth_score": 0.0,
     "em_adj_o": 90.9391,
-    "em_adj_d": 102.3551
+    "em_adj_d": 102.3551,
+    "conf_strength_score": 0.5933
   },
   {
     "team": "Morgan St.",
@@ -20454,7 +20889,8 @@
     "ft_pct": 62.5,
     "opp_ft_pct": 70.6,
     "ppp_off": 0.928,
-    "ppp_def": 1.075
+    "ppp_def": 1.075,
+    "conf_strength_score": 0.1402
   },
   {
     "team": "Arkansas Pine Bluff",
@@ -20500,7 +20936,8 @@
     "ft_pct": 68.0,
     "opp_ft_pct": 67.3,
     "ppp_off": 0.921,
-    "ppp_def": 1.03
+    "ppp_def": 1.03,
+    "conf_strength_score": 0.4167
   },
   {
     "team": "Jacksonville",
@@ -20565,7 +21002,8 @@
     "em_poss_weighted_bpr": -2.013,
     "em_depth_score": 0.0,
     "em_adj_o": 104.6754,
-    "em_adj_d": 110.214
+    "em_adj_d": 110.214,
+    "conf_strength_score": 0.4799
   },
   {
     "team": "Chicago St.",
@@ -20611,7 +21049,8 @@
     "ft_pct": 68.4,
     "opp_ft_pct": 68.2,
     "ppp_off": 0.87,
-    "ppp_def": 1.064
+    "ppp_def": 1.064,
+    "conf_strength_score": 0.3804
   },
   {
     "team": "South Carolina St.",
@@ -20657,7 +21096,8 @@
     "ft_pct": 60.1,
     "opp_ft_pct": 64.5,
     "ppp_off": 0.888,
-    "ppp_def": 1.04
+    "ppp_def": 1.04,
+    "conf_strength_score": 0.5179
   },
   {
     "team": "Bethune Cookman",
@@ -20703,7 +21143,8 @@
     "ft_pct": 71.0,
     "opp_ft_pct": 70.1,
     "ppp_off": 0.941,
-    "ppp_def": 1.025
+    "ppp_def": 1.025,
+    "conf_strength_score": 0.5698
   },
   {
     "team": "UT Rio Grande Valley",
@@ -20749,7 +21190,8 @@
     "ft_pct": 67.6,
     "opp_ft_pct": 72.2,
     "ppp_off": 0.931,
-    "ppp_def": 1.084
+    "ppp_def": 1.084,
+    "conf_strength_score": 0.1735
   },
   {
     "team": "Tennessee St.",
@@ -20795,7 +21237,8 @@
     "ft_pct": 62.1,
     "opp_ft_pct": 68.4,
     "ppp_off": 0.873,
-    "ppp_def": 1.069
+    "ppp_def": 1.069,
+    "conf_strength_score": 0.5084
   },
   {
     "team": "Liberty",
@@ -20860,7 +21303,8 @@
     "em_poss_weighted_bpr": -2.245,
     "em_depth_score": 0.0,
     "em_adj_o": 94.8972,
-    "em_adj_d": 100.3784
+    "em_adj_d": 100.3784,
+    "conf_strength_score": 0.1918
   },
   {
     "team": "Stetson",
@@ -20925,7 +21369,8 @@
     "em_poss_weighted_bpr": -1.894,
     "em_depth_score": 0.0,
     "em_adj_o": 96.717,
-    "em_adj_d": 107.1652
+    "em_adj_d": 107.1652,
+    "conf_strength_score": 0.3974
   },
   {
     "team": "Savannah St.",
@@ -20971,7 +21416,8 @@
     "ft_pct": 56.5,
     "opp_ft_pct": 69.9,
     "ppp_off": 0.845,
-    "ppp_def": 1.026
+    "ppp_def": 1.026,
+    "conf_strength_score": 0.2707
   },
   {
     "team": "Central Connecticut",
@@ -21036,7 +21482,8 @@
     "em_poss_weighted_bpr": -2.33,
     "em_depth_score": 0.0,
     "em_adj_o": 89.7548,
-    "em_adj_d": 103.1891
+    "em_adj_d": 103.1891,
+    "conf_strength_score": 0.3007
   },
   {
     "team": "North Carolina A&T",
@@ -21101,7 +21548,8 @@
     "em_poss_weighted_bpr": -2.378,
     "em_depth_score": 0.0,
     "em_adj_o": 89.124,
-    "em_adj_d": 105.4302
+    "em_adj_d": 105.4302,
+    "conf_strength_score": 0.6165
   },
   {
     "team": "Alabama A&M",
@@ -21166,7 +21614,8 @@
     "em_poss_weighted_bpr": -2.178,
     "em_depth_score": 0.0,
     "em_adj_o": 94.1429,
-    "em_adj_d": 106.5716
+    "em_adj_d": 106.5716,
+    "conf_strength_score": 0.5925
   },
   {
     "team": "Maine",
@@ -21231,7 +21680,8 @@
     "em_poss_weighted_bpr": -2.717,
     "em_depth_score": 0.0,
     "em_adj_o": 91.111,
-    "em_adj_d": 109.1253
+    "em_adj_d": 109.1253,
+    "conf_strength_score": 0.2359
   },
   {
     "team": "Abilene Christian",
@@ -21296,7 +21746,8 @@
     "em_poss_weighted_bpr": -2.076,
     "em_depth_score": 0.0,
     "em_adj_o": 94.875,
-    "em_adj_d": 107.2961
+    "em_adj_d": 107.2961,
+    "conf_strength_score": 0.4824
   },
   {
     "team": "Kennesaw St.",
@@ -21361,7 +21812,8 @@
     "em_poss_weighted_bpr": -2.231,
     "em_depth_score": 0.0,
     "em_adj_o": 94.5559,
-    "em_adj_d": 107.4021
+    "em_adj_d": 107.4021,
+    "conf_strength_score": 0.5102
   },
   {
     "team": "UMBC",
@@ -21426,7 +21878,8 @@
     "em_poss_weighted_bpr": -2.51,
     "em_depth_score": 0.0,
     "em_adj_o": 89.4262,
-    "em_adj_d": 102.4903
+    "em_adj_d": 102.4903,
+    "conf_strength_score": 0.3594
   },
   {
     "team": "San Jose St.",
@@ -21472,7 +21925,8 @@
     "ft_pct": 66.1,
     "opp_ft_pct": 66.6,
     "ppp_off": 0.822,
-    "ppp_def": 1.106
+    "ppp_def": 1.106,
+    "conf_strength_score": 0.3795
   },
   {
     "team": "Alcorn St.",
@@ -21518,7 +21972,8 @@
     "ft_pct": 65.7,
     "opp_ft_pct": 67.4,
     "ppp_off": 0.936,
-    "ppp_def": 1.095
+    "ppp_def": 1.095,
+    "conf_strength_score": 0.4815
   },
   {
     "team": "Central Arkansas",
@@ -21583,7 +22038,8 @@
     "em_poss_weighted_bpr": -3.391,
     "em_depth_score": 0.0,
     "em_adj_o": 88.9279,
-    "em_adj_d": 114.625
+    "em_adj_d": 114.625,
+    "conf_strength_score": 0.3153
   },
   {
     "team": "Mississippi Valley St.",
@@ -21629,7 +22085,8 @@
     "ft_pct": 65.4,
     "opp_ft_pct": 67.3,
     "ppp_off": 0.889,
-    "ppp_def": 1.114
+    "ppp_def": 1.114,
+    "conf_strength_score": 0.4834
   },
   {
     "team": "Florida A&M",
@@ -21694,7 +22151,8 @@
     "em_poss_weighted_bpr": -4.557,
     "em_depth_score": 0.0,
     "em_adj_o": 83.5506,
-    "em_adj_d": 111.0339
+    "em_adj_d": 111.0339,
+    "conf_strength_score": 0.4943
   },
   {
     "team": "Grambling St.",
@@ -21740,7 +22198,8 @@
     "ft_pct": 64.8,
     "opp_ft_pct": 63.1,
     "ppp_off": 0.774,
-    "ppp_def": 1.117
+    "ppp_def": 1.117,
+    "conf_strength_score": 0.6428
   },
   {
     "star_score": 0.557,
@@ -21784,11 +22243,7 @@
     "em_depth_score": 0.379,
     "em_adj_o": 109.5253,
     "em_adj_d": 93.1328,
-    "team": "Georgia State",
-    "adj_o": 109.8,
-    "adj_d": 100.0,
-    "adj_tempo": 68.0,
-    "_adj_source": "em_regression"
+    "team": "Georgia State"
   },
   {
     "star_score": 0.686,
@@ -21810,11 +22265,7 @@
     "em_depth_score": 0.411,
     "em_adj_o": 107.5546,
     "em_adj_d": 89.1807,
-    "team": "New Mexico State",
-    "adj_o": 107.7,
-    "adj_d": 99.8,
-    "adj_tempo": 68.0,
-    "_adj_source": "em_regression"
+    "team": "New Mexico State"
   },
   {
     "star_score": 0.647,
@@ -22257,28 +22708,6 @@
     "team": "Portland State"
   },
   {
-    "star_score": 0.451,
-    "em_obpr": -2.29386487839823,
-    "em_dbpr": -4.69868481398776,
-    "em_bpr": -6.99254969238599,
-    "em_opponent_adjust": 34.1770435250798,
-    "em_pace_adjust": 11.4746945220159,
-    "em_off_rank": 224.0,
-    "em_def_rank": 274.0,
-    "em_tempo_rank": 128.0,
-    "em_home_rank": 278.0,
-    "em_tempo": 65.8184913312399,
-    "top_player": "Stephan Hicks",
-    "top_player_bpr": 2.8637,
-    "em_top5_bpr": 3.33,
-    "em_star_concentration": 0.86,
-    "em_poss_weighted_bpr": -0.24,
-    "em_depth_score": 0.056,
-    "em_adj_o": 101.0673,
-    "em_adj_d": 103.1628,
-    "team": "Cal State Northridge"
-  },
-  {
     "star_score": 0.346,
     "em_obpr": -9.93926702238218,
     "em_dbpr": 2.66089357915265,
@@ -22367,28 +22796,6 @@
     "team": "Florida International"
   },
   {
-    "star_score": 0.363,
-    "em_obpr": -8.69105860138234,
-    "em_dbpr": -0.73471370768693,
-    "em_bpr": -9.42577230906927,
-    "em_opponent_adjust": -16.7713742412554,
-    "em_pace_adjust": -23.9349261583427,
-    "em_off_rank": 316.0,
-    "em_def_rank": 180.0,
-    "em_tempo_rank": 304.0,
-    "em_home_rank": 211.0,
-    "em_tempo": 62.3405441165079,
-    "top_player": "Joe Chealey",
-    "top_player_bpr": 1.7145,
-    "em_top5_bpr": -0.417,
-    "em_star_concentration": 1.0,
-    "em_poss_weighted_bpr": -0.56,
-    "em_depth_score": 0.0,
-    "em_adj_o": 95.899,
-    "em_adj_d": 97.2441,
-    "team": "College of Charleston"
-  },
-  {
     "star_score": 0.404,
     "em_obpr": -4.47162258276126,
     "em_dbpr": -4.86639021310927,
@@ -22431,28 +22838,6 @@
     "em_adj_o": 106.0587,
     "em_adj_d": 108.2844,
     "team": "Youngstown State"
-  },
-  {
-    "star_score": 0.367,
-    "em_obpr": -5.09004107082756,
-    "em_dbpr": -4.84951150491071,
-    "em_bpr": -9.93955257573827,
-    "em_opponent_adjust": -7.81394957077277,
-    "em_pace_adjust": -34.7030280849445,
-    "em_off_rank": 280.0,
-    "em_def_rank": 278.0,
-    "em_tempo_rank": 94.0,
-    "em_home_rank": 227.0,
-    "em_tempo": 66.4743381237993,
-    "top_player": "Alex Harris",
-    "top_player_bpr": 1.7744,
-    "em_top5_bpr": -0.803,
-    "em_star_concentration": 1.0,
-    "em_poss_weighted_bpr": -1.08,
-    "em_depth_score": 0.0,
-    "em_adj_o": 98.1292,
-    "em_adj_d": 102.1585,
-    "team": "Cal State Fullerton"
   },
   {
     "star_score": 0.354,
