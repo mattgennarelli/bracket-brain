@@ -1266,6 +1266,7 @@ async function showAnalysis(gameId) {
 
   // ── Helpers ────────────────────────────────────────────────────────────────
   const pct = v => v != null ? (v * 100).toFixed(1) + '%' : null;
+  const pctRaw = v => v != null ? v.toFixed(1) + '%' : null;  // for values already 0-100
   const fmt1 = v => v != null ? v.toFixed(1) : null;
   const fmtPM = v => v != null ? (v >= 0 ? '+' : '') + v.toFixed(1) : null;
 
@@ -1308,7 +1309,7 @@ async function showAnalysis(gameId) {
     const record = (stats.wins != null && stats.losses != null)
       ? `${stats.wins}–${stats.losses}` : null;
     const exp = stats.avg_experience != null
-      ? `${stats.avg_experience.toFixed(1)}yr avg exp` : null;
+      ? `${(stats.avg_experience / 12).toFixed(1)}yr avg exp` : null;
     const star = stats.top_player
       ? `★ ${stats.top_player}${stats.top_player_bpr != null ? ' (' + stats.top_player_bpr.toFixed(1) + ' BPR)' : ''}` : null;
     const depth = stats.em_depth_score != null
@@ -1363,13 +1364,13 @@ async function showAnalysis(gameId) {
         <span style="color:var(--green);font-weight:700">${st.teamA}</span>
         <span style="color:var(--red);font-weight:700">${st.teamB}</span>
       </div>
-      ${sigBar(efgA, efgB,   'eFG%',       pct(efgA), pct(efgB))}
-      ${sigBar(efgDA, efgDB, 'Def eFG%',   pct(efgDA), pct(efgDB), false)}
-      ${sigBar(tpA, tpB,    '3PT%',        pct(tpA), pct(tpB))}
-      ${sigBar(trA, trB,    '3PT rate',    pct(trA), pct(trB))}
-      ${sigBar(twA, twB,    '2PT%',        pct(twA), pct(twB))}
-      ${sigBar(ftA, ftB,    'FT%',         pct(ftA), pct(ftB))}
-      ${sigBar(ftRA, ftRB,  'FT rate',     pct(ftRA), pct(ftRB))}
+      ${sigBar(efgA, efgB,   'eFG%',       pctRaw(efgA), pctRaw(efgB))}
+      ${sigBar(efgDA, efgDB, 'Def eFG%',   pctRaw(efgDA), pctRaw(efgDB), false)}
+      ${sigBar(tpA, tpB,    '3PT%',        pctRaw(tpA), pctRaw(tpB))}
+      ${sigBar(trA, trB,    '3PT rate',    pctRaw(trA), pctRaw(trB))}
+      ${sigBar(twA, twB,    '2PT%',        pctRaw(twA), pctRaw(twB))}
+      ${sigBar(ftA, ftB,    'FT%',         pctRaw(ftA), pctRaw(ftB))}
+      ${sigBar(ftRA, ftRB,  'FT rate',     pctRaw(ftRA), pctRaw(ftRB))}
     </div>` : '';
 
   // ── Rebounding & ball control ──────────────────────────────────────────────
@@ -1386,12 +1387,12 @@ async function showAnalysis(gameId) {
         <span style="color:var(--green);font-weight:700">${st.teamA}</span>
         <span style="color:var(--red);font-weight:700">${st.teamB}</span>
       </div>
-      ${sigBar(orbA, orbB, 'Off Reb%',  pct(orbA), pct(orbB))}
-      ${sigBar(dopA, dopB, 'Opp OReb%', pct(dopA), pct(dopB), false)}
-      ${sigBar(blkA, blkB, 'Block rate', pct(blkA), pct(blkB))}
-      ${sigBar(toA, toB,   'TO rate',    pct(toA), pct(toB), false)}
-      ${sigBar(todA, todB, 'Force TOs',  pct(todA), pct(todB))}
-      ${sigBar(astA, astB, 'Assist rate', pct(astA), pct(astB))}
+      ${sigBar(orbA, orbB, 'Off Reb%',  pctRaw(orbA), pctRaw(orbB))}
+      ${sigBar(dopA, dopB, 'Opp OReb%', pctRaw(dopA), pctRaw(dopB), false)}
+      ${sigBar(blkA, blkB, 'Block rate', pctRaw(blkA), pctRaw(blkB))}
+      ${sigBar(toA, toB,   'TO rate',    pctRaw(toA), pctRaw(toB), false)}
+      ${sigBar(todA, todB, 'Force TOs',  pctRaw(todA), pctRaw(todB))}
+      ${sigBar(astA, astB, 'Assist rate', pctRaw(astA), pctRaw(astB))}
     </div>` : '';
 
   // ── Scoring output tiles ───────────────────────────────────────────────────
@@ -1427,10 +1428,10 @@ async function showAnalysis(gameId) {
     edges.push(`${tpA > tpB ? st.teamA : st.teamB} shoots ${pct(Math.abs(tpA-tpB))} better from three`);
   if (orbA != null && orbB != null && Math.abs(orbA - orbB) > 0.04)
     edges.push(`${orbA > orbB ? st.teamA : st.teamB} dominates the offensive glass`);
-  if (blkA != null && blkB != null && Math.abs(blkA - blkB) > 0.03)
+  if (blkA != null && blkB != null && Math.abs(blkA - blkB) > 3)
     edges.push(`${blkA > blkB ? st.teamA : st.teamB} has a significant shot-blocking edge`);
-  if (statsA.avg_experience != null && statsB.avg_experience != null) {
-    const expDiff = statsA.avg_experience - statsB.avg_experience;
+  if (statsA.experience != null && statsB.experience != null) {
+    const expDiff = statsA.experience - statsB.experience;
     if (Math.abs(expDiff) > 0.4) edges.push(`${expDiff > 0 ? st.teamA : st.teamB} is significantly more experienced`);
   }
   const allFactors = [...keyFactors, ...edges.filter(e => !keyFactors.some(kf => kf.includes(e.split(' ')[0])))];

@@ -1802,6 +1802,7 @@ def _make_pick_dict(game_num, round_of, round_name, region, a, b, result, pick_t
             "ast_rate":     _r(t.get("ast_rate"), 3),
             # Roster
             "avg_experience": _r(t.get("avg_experience"), 2),
+            "experience":   _r(t.get("experience"), 3),
             "top_player":   t.get("top_player"),
             "top_player_bpr": _r(t.get("top_player_bpr"), 2),
             "em_depth_score": _r(t.get("em_depth_score"), 3),
