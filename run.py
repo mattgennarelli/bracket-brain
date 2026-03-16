@@ -1131,6 +1131,10 @@ def main():
                         help="Fetch today's odds and include Top Bets tab (requires ODDS_API_KEY)")
     parser.add_argument("--all", action="store_true",
                         help="Generate HTML for all available bracket years")
+    parser.add_argument("--write-monte-carlo", action="store_true", default=True,
+                        help="Write data/monte_carlo_YYYY.json for API (default: True)")
+    parser.add_argument("--no-write-monte-carlo", action="store_false", dest="write_monte_carlo",
+                        help="Skip writing monte_carlo file")
     args = parser.parse_args()
 
     if args.all:
@@ -1216,6 +1220,21 @@ def main():
     for i, (team, prob) in enumerate(list(mc_results["champion_probs"].items())[:8]):
         seed = _find_team_seed(team, bracket)
         print(f"    {i+1:2}. ({seed}) {team:20s} {prob*100:5.1f}%")
+
+    if args.write_monte_carlo and args.sims == 10000:
+        mc_path = os.path.join(DATA_DIR, f"monte_carlo_{year}.json")
+        mc_export = {
+            "year": year,
+            "num_simulations": args.sims,
+            "champion_probs": mc_results["champion_probs"],
+            "final_four_probs": mc_results["final_four_probs"],
+            "elite_eight_probs": mc_results["elite_eight_probs"],
+            "sweet_sixteen_probs": mc_results["sweet_sixteen_probs"],
+            "round_of_32_probs": mc_results["round_of_32_probs"],
+        }
+        with open(mc_path, "w") as f:
+            json.dump(mc_export, f)
+        print(f"  Wrote {mc_path} for API")
 
     best_bets = []
     if args.best_bets:

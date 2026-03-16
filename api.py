@@ -127,6 +127,38 @@ def _load_config(num_sims: int = 10000) -> ModelConfig:
     return config
 
 
+def _config_mtime() -> str:
+    """Return mtime of calibrated_config.json for cache busting."""
+    cal_path = os.path.join(DATA_DIR, "calibrated_config.json")
+    if os.path.isfile(cal_path):
+        return str(int(os.path.getmtime(cal_path)))
+    return "0"
+
+
+def _add_final_four_by_region(result: dict, year: int) -> dict:
+    """Compute final_four_by_region from bracket + final_four_probs. Modifies result in place."""
+    ff_probs = result.get("final_four_probs", {})
+    if not ff_probs:
+        result["final_four_by_region"] = {}
+        return result
+    try:
+        bracket, _, _ = _load_bracket_for_year(year)
+    except Exception:
+        result["final_four_by_region"] = {}
+        return result
+    by_region = {}
+    for region, teams in bracket.items():
+        team_probs = []
+        for seed, team in teams.items():
+            t = team.get("team") if isinstance(team, dict) else None
+            if t and t in ff_probs:
+                team_probs.append((t, ff_probs[t]))
+        team_probs.sort(key=lambda x: -x[1])
+        by_region[region] = [(t, round(p, 4)) for t, p in team_probs[:8]]
+    result["final_four_by_region"] = by_region
+    return result
+
+
 @app.get("/", include_in_schema=False)
 def serve_index():
     return FileResponse(os.path.join(WEB_DIR, "index.html"))
@@ -265,7 +297,7 @@ def get_bracket(
     year: int,
     upset_aggression: float = Query(default=0.0, ge=0.0, le=1.0),
 ):
-    cache_key = f"bracket_{year}_{upset_aggression:.2f}"
+    cache_key = f"bracket_{year}_{upset_aggression:.2f}_{_config_mtime()}"
     cached = _cache_get(cache_key)
     if cached is not None:
         return cached
@@ -300,9 +332,11 @@ def simulate_bracket(year: int, req: SimulateRequest):
     """Generate bracket picks respecting locked picks. Use when user has manually
     locked some picks and wants to re-simulate the rest."""
     bracket, ff_matchups, quadrant_order = _load_bracket_for_year(year)
+    config = _load_config()
     with contextlib.redirect_stdout(io.StringIO()):
         bracket_result = generate_bracket_picks(
             bracket,
+            config=config,
             upset_aggression=req.upset_aggression,
             quadrant_order=quadrant_order,
             data_dir=DATA_DIR,
@@ -443,7 +477,15 @@ def get_monte_carlo(
     if cached is not None:
         return cached
 
-    # Always run live Monte Carlo with calibrated config so odds match run.py
+    # Use pre-computed file when available (sims=10000) for fast load; fallback to live
+    precomputed_path = os.path.join(DATA_DIR, f"monte_carlo_{year}.json")
+    if sims == 10000 and os.path.isfile(precomputed_path):
+        with open(precomputed_path) as f:
+            result = json.load(f)
+        result = _add_final_four_by_region(result, year)
+        _cache_set(cache_key, result)
+        return result
+
     bracket, _, _ = _load_bracket_for_year(year)
     config = _load_config(num_sims=sims)
     with contextlib.redirect_stdout(io.StringIO()):
@@ -458,6 +500,7 @@ def get_monte_carlo(
         "sweet_sixteen_probs": mc["sweet_sixteen_probs"],
         "round_of_32_probs": mc["round_of_32_probs"],
     }
+    result = _add_final_four_by_region(result, year)
     _cache_set(cache_key, result)
     return result
 

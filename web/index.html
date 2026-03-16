@@ -513,7 +513,7 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sa
 
 <div class="tab-nav">
   <button class="tab-btn active" onclick="switchTab('bracket')">Bracket</button>
-  <button class="tab-btn" onclick="switchTab('odds')">Championship Odds</button>
+  <button class="tab-btn" onclick="switchTab('odds')">Championship & F4 Odds</button>
   <button class="tab-btn" onclick="switchTab('picks')">Picks <span id="picks-badge" style="display:none;background:var(--primary);color:#fff;border-radius:8px;font-size:.6rem;padding:1px 5px;margin-left:3px"></span></button>
   <button class="tab-btn" onclick="switchTab('card')">Full Card <span id="card-badge" style="display:none;background:var(--primary);color:#fff;border-radius:8px;font-size:.6rem;padding:1px 5px;margin-left:3px"></span></button>
 </div>
@@ -529,8 +529,12 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sa
 <div class="tab-panel" id="tab-odds">
   <div class="odds-section">
     <div class="odds-panel">
-      <h3>Championship Odds (10,000 sims)</h3>
+      <h3>Championship Odds (<span id="odds-sims">10,000</span> sims)</h3>
       <table class="odds-table" id="odds-table"><tr><td colspan="4" style="color:var(--muted);padding:10px">Loading odds...</td></tr></table>
+    </div>
+    <div class="odds-panel" id="f4-by-region-panel" style="margin-top:16px">
+      <h3>Final Four Odds by Region</h3>
+      <div id="f4-by-region-body"><div style="color:var(--muted);padding:10px">Loading...</div></div>
     </div>
   </div>
 </div>
@@ -777,14 +781,21 @@ function updateSimButtonLabel() {
 async function fetchOdds(year) {
   document.getElementById('odds-table').innerHTML =
     '<tr><td colspan="4" style="color:var(--muted);padding:10px">Loading ' + year + ' odds...</td></tr>';
+  document.getElementById('f4-by-region-body').innerHTML =
+    '<div style="color:var(--muted);padding:10px">Loading...</div>';
   try {
     const mc = await apiFetch(`/bracket/${year}/monte-carlo?sims=10000`);
     renderOdds(mc.champion_probs, mc.num_simulations);
+    renderF4ByRegion(mc.final_four_by_region || {}, mc.num_simulations);
     document.getElementById('meta-sims').textContent =
       mc.num_simulations.toLocaleString() + ' Monte Carlo sims';
+    document.getElementById('odds-sims').textContent =
+      mc.num_simulations.toLocaleString();
   } catch (e) {
     document.getElementById('odds-table').innerHTML =
       '<tr><td colspan="4" style="color:var(--muted)">Odds unavailable</td></tr>';
+    document.getElementById('f4-by-region-body').innerHTML =
+      '<div style="color:var(--muted);padding:10px">Odds unavailable</div>';
   }
 }
 
@@ -844,7 +855,7 @@ function applyPicksFromServer() {
 // Rendering — Championship odds table
 // ---------------------------------------------------------------------------
 function renderOdds(champProbs, numSims) {
-  const entries = Object.entries(champProbs).sort((a, b) => b[1] - a[1]);
+  const entries = Object.entries(champProbs || {}).sort((a, b) => b[1] - a[1]);
   const maxPct = entries[0]?.[1] || 1;
   const rows = entries.slice(0, 20).map(([team, prob], i) => {
     const pct = (prob * 100).toFixed(1);
@@ -858,6 +869,35 @@ function renderOdds(champProbs, numSims) {
     </tr>`;
   }).join('');
   document.getElementById('odds-table').innerHTML = rows;
+}
+
+function renderF4ByRegion(byRegion, numSims) {
+  const regionOrder = ['South', 'East', 'Midwest', 'West'];
+  const regions = Object.keys(byRegion).length
+    ? [...regionOrder.filter(r => r in byRegion), ...Object.keys(byRegion).filter(r => !regionOrder.includes(r))]
+    : regionOrder;
+  let html = '';
+  for (const region of regions) {
+    const teams = byRegion[region] || [];
+    const maxPct = teams[0]?.[1] || 1;
+    html += `<div style="margin-bottom:16px">
+      <div style="font-weight:700;font-size:.8rem;color:var(--primary);margin-bottom:6px">${region}</div>
+      <table class="odds-table" style="font-size:.75rem">
+        ${teams.slice(0, 8).map(([team, prob], i) => {
+          const pct = (prob * 100).toFixed(1);
+          const barW = Math.round((prob / maxPct) * 100);
+          const seed = TEAM_STATS[team]?.seed || '';
+          return `<tr>
+            <td class="rank">${i + 1}</td>
+            <td>${seed ? `<span class="seed-badge">${seed}</span>` : ''}${team}</td>
+            <td class="bar-cell"><div class="bar" style="width:${barW}%"></div></td>
+            <td class="pct">${pct}%</td>
+          </tr>`;
+        }).join('') || '<tr><td colspan="4" style="color:var(--muted);padding:6px">No data</td></tr>'}
+      </table>
+    </div>`;
+  }
+  document.getElementById('f4-by-region-body').innerHTML = html || '<div style="color:var(--muted);padding:10px">No F4 data</div>';
 }
 
 // ---------------------------------------------------------------------------
