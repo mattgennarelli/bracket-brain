@@ -14,6 +14,7 @@ Usage:
   uvicorn api:app --host 0.0.0.0 --port 8000
 """
 
+import hashlib
 import io
 import json
 import logging
@@ -185,6 +186,31 @@ def _data_freshness(year: int) -> Optional[str]:
     return datetime.fromtimestamp(mtime, tz=timezone.utc).isoformat()
 
 
+def _data_hash_and_meta(year: int) -> dict:
+    """Return data hash and bracket meta for diagnostic (compare local vs Render)."""
+    out = {"data_hash": None, "quadrant_order": None, "sample_teams": {}}
+    h = hashlib.sha256()
+    files = [
+        os.path.join(DATA_DIR, f"bracket_{year}.json"),
+        os.path.join(DATA_DIR, f"teams_merged_{year}.json"),
+        os.path.join(DATA_DIR, "calibrated_config.json"),
+    ]
+    for path in files:
+        if os.path.isfile(path):
+            with open(path, "rb") as f:
+                h.update(f.read())
+    out["data_hash"] = h.hexdigest()[:16]
+
+    try:
+        bracket, _, quadrant_order = _load_bracket_for_year(year)
+        out["quadrant_order"] = quadrant_order
+        for rname, teams in list(bracket.items())[:2]:
+            out["sample_teams"][rname] = [t.get("team") for s, t in list(teams.items())[:4]]
+    except Exception:
+        pass
+    return out
+
+
 def _load_bracket_for_year(year: int):
     path = os.path.join(DATA_DIR, f"bracket_{year}.json")
     if not os.path.isfile(path):
@@ -244,12 +270,16 @@ def ready():
 def health():
     years = _available_years()
     current = max(years) if years else None
+    meta = _data_hash_and_meta(current) if current else {}
     return {
         "status": "ok",
         "version": "2.0.0",
         "available_years": years,
         "current_year": current,
         "data_updated_at": _data_freshness(current) if current else None,
+        "data_hash": meta.get("data_hash"),
+        "quadrant_order": meta.get("quadrant_order"),
+        "sample_teams": meta.get("sample_teams"),
     }
 
 

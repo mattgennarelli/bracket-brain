@@ -1,4 +1,5 @@
 {
+  "injury_penalty_per_level": 0,
   "base_scoring_stdev": 8.7498,
   "possession_edge_max_bonus": 4.9868,
   "ft_clutch_max_bonus": 5.8532,
