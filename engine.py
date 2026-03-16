@@ -1807,6 +1807,9 @@ def _make_pick_dict(game_num, round_of, round_name, region, a, b, result, pick_t
             "top_player_bpr": _r(t.get("top_player_bpr"), 2),
             "em_depth_score": _r(t.get("em_depth_score"), 3),
             "star_score":   _r(t.get("star_score"), 2),
+            # Injuries
+            "injuries":     t.get("injuries"),
+            "injury_impact": _r(t.get("injury_impact"), 1),
         }
 
     d = {

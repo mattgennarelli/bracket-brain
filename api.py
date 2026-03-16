@@ -114,6 +114,19 @@ def _cache_set(key: str, result):
     _cache[key] = {"result": result, "cached_at": time.time()}
 
 
+def _load_config(num_sims: int = 10000) -> ModelConfig:
+    """Load ModelConfig with calibrated parameters (same as run.py)."""
+    config = ModelConfig(num_sims=num_sims)
+    cal_path = os.path.join(DATA_DIR, "calibrated_config.json")
+    if os.path.isfile(cal_path):
+        with open(cal_path) as f:
+            cal = json.load(f)
+        for k, v in cal.items():
+            if hasattr(config, k):
+                setattr(config, k, v)
+    return config
+
+
 @app.get("/", include_in_schema=False)
 def serve_index():
     return FileResponse(os.path.join(WEB_DIR, "index.html"))
@@ -258,11 +271,15 @@ def get_bracket(
         return cached
 
     bracket, ff_matchups, quadrant_order = _load_bracket_for_year(year)
+    config = _load_config()
     with contextlib.redirect_stdout(io.StringIO()):
         picks = generate_bracket_picks(
             bracket,
+            config=config,
             upset_aggression=upset_aggression,
             quadrant_order=quadrant_order,
+            data_dir=DATA_DIR,
+            year=year,
         )
 
     # ff_pairs: [(TL_region, BL_region), (TR_region, BR_region)]
@@ -435,7 +452,7 @@ def get_monte_carlo(
         return result
 
     bracket, _, _ = _load_bracket_for_year(year)
-    config = ModelConfig(num_sims=sims)
+    config = _load_config(num_sims=sims)
     with contextlib.redirect_stdout(io.StringIO()):
         mc = run_monte_carlo(bracket, config=config)
 

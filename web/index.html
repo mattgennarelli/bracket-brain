@@ -1459,6 +1459,23 @@ async function showAnalysis(gameId) {
       </ul>
     </div>` : '';
 
+  // ── Injuries ────────────────────────────────────────────────────────────────
+  const injA = statsA?.injuries, injB = statsB?.injuries;
+  const impA = statsA?.injury_impact, impB = statsB?.injury_impact;
+  const hasInjuries = (injA && injA.length > 0) || (injB && injB.length > 0);
+  const fmtInj = (team, injs, imp) => {
+    if (!injs || injs.length === 0) return '';
+    const list = injs.map(i => i.player + ' (' + (i.status || 'out') + ')').join(', ');
+    const pts = (imp != null && imp > 0) ? ' — ' + imp.toFixed(1) + ' pts impact' : '';
+    return `<div style="margin-bottom:6px;"><strong>${team}</strong>: ${list}${pts}</div>`;
+  };
+  const injurySection = hasInjuries ? `
+    <div class="ap-section" style="background:rgba(220,38,38,.08);border-left:3px solid #dc2626;padding:8px 10px;margin:8px 0;font-size:.8rem;">
+      <div class="ap-section-title" style="color:#dc2626;">Injuries</div>
+      ${fmtInj(st.teamA, injA, impA)}
+      ${fmtInj(st.teamB, injB, impB)}
+    </div>` : '';
+
   // ── Historical ─────────────────────────────────────────────────────────────
   const histWin = orig?.historical_win_pct;
   const histMargin = orig?.historical_avg_margin;
@@ -1540,6 +1557,7 @@ async function showAnalysis(gameId) {
       ${pickBoxHtml}
       ${insightHtml}
       ${factorsSection}
+      ${injurySection}
       ${rosterSection}
       ${effSection}
       ${shootingSection}
