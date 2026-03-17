@@ -283,6 +283,34 @@ def health():
     }
 
 
+@app.get("/debug/picks-sample")
+def debug_picks_sample(year: int = 2026, upset_aggression: float = 0.0):
+    """Return first 8 R64 picks for direct local vs Render comparison."""
+    bracket, _, quadrant_order = _load_bracket_for_year(year)
+    config = _load_config()
+    with contextlib.redirect_stdout(io.StringIO()):
+        result = generate_bracket_picks(
+            bracket,
+            config=config,
+            upset_aggression=upset_aggression,
+            quadrant_order=quadrant_order,
+            data_dir=DATA_DIR,
+            year=year,
+        )
+    picks = [p for p in result["picks"] if p.get("round") == 64][:8]
+    return {
+        "year": year,
+        "upset_aggression": upset_aggression,
+        "champion": result["champion"],
+        "quadrant_order": quadrant_order,
+        "sample_picks": [
+            {"region": p["region"], "team_a": p["team_a"], "team_b": p["team_b"],
+             "pick": p["pick"], "win_prob_a": p.get("win_prob_a")}
+            for p in picks
+        ],
+    }
+
+
 @app.get("/teams/{year}")
 def get_teams(year: int):
     teams = load_teams_merged(DATA_DIR, year)
