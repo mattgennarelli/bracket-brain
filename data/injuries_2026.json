@@ -1,6 +1,12 @@
 {
   "Alabama": [
     {
+      "player": "Aden Holloway",
+      "status": "questionable",
+      "bpr_share": 0.5,
+      "importance": 0.5
+    },
+    {
       "player": "Keitenn Bristow",
       "status": "out",
       "bpr_share": 0.5,
@@ -27,32 +33,12 @@
       "importance": 0.5
     }
   ],
-  "Arizona State Sun Devils": [
-    {
-      "player": "Adante' Holiman",
-      "status": "out",
-      "bpr_share": 0.5,
-      "importance": 0.5
-    },
-    {
-      "player": "Vijay Wallace",
-      "status": "out",
-      "bpr_share": 0.5,
-      "importance": 0.5
-    },
-    {
-      "player": "Dame Salane",
-      "status": "out",
-      "bpr_share": 0.5,
-      "importance": 0.5
-    }
-  ],
   "Arkansas": [
     {
       "player": "Karter Knox",
       "status": "out",
-      "bpr_share": 0.0942,
-      "importance": 0.0942
+      "bpr_share": 0.5,
+      "importance": 0.5
     }
   ],
   "Auburn": [
@@ -73,8 +59,8 @@
     {
       "player": "Richie Saunders",
       "status": "out",
-      "bpr_share": 0.2351,
-      "importance": 0.2351
+      "bpr_share": 0.5,
+      "importance": 0.5
     },
     {
       "player": "Nate Pickens",
@@ -121,8 +107,8 @@
     {
       "player": "Daniel Rouzan",
       "status": "questionable",
-      "bpr_share": -501.5053,
-      "importance": -501.5053
+      "bpr_share": 0.5,
+      "importance": 0.5
     }
   ],
   "Boise State Broncos": [
@@ -153,20 +139,6 @@
       "importance": 0.5
     }
   ],
-  "Boston University Terriers": [
-    {
-      "player": "Malcolm Chimezie",
-      "status": "questionable",
-      "bpr_share": 0.5,
-      "importance": 0.5
-    },
-    {
-      "player": "Kyrone Alexander",
-      "status": "out",
-      "bpr_share": 0.5,
-      "importance": 0.5
-    }
-  ],
   "Bradley Braves": [
     {
       "player": "Matthew Zobrist",
@@ -181,14 +153,6 @@
       "status": "questionable",
       "bpr_share": 0.5,
       "importance": 0.5
-    }
-  ],
-  "Butler": [
-    {
-      "player": "Azavier Robinson",
-      "status": "out",
-      "bpr_share": 0.1727,
-      "importance": 0.1727
     }
   ],
   "California": [
@@ -219,26 +183,6 @@
       "importance": 0.5
     }
   ],
-  "Charlotte 49ers": [
-    {
-      "player": "Major Freeman",
-      "status": "questionable",
-      "bpr_share": 0.5,
-      "importance": 0.5
-    },
-    {
-      "player": "David Gomez",
-      "status": "questionable",
-      "bpr_share": 0.5,
-      "importance": 0.5
-    },
-    {
-      "player": "Frank Oguche",
-      "status": "out",
-      "bpr_share": 0.5,
-      "importance": 0.5
-    }
-  ],
   "Cincinnati Bearcats": [
     {
       "player": "Jalen Haynes",
@@ -251,8 +195,8 @@
     {
       "player": "Carter Welling",
       "status": "out",
-      "bpr_share": 0.1266,
-      "importance": 0.1266
+      "bpr_share": 0.5,
+      "importance": 0.5
     },
     {
       "player": "Zac Foster",
@@ -305,14 +249,14 @@
     {
       "player": "Jaylin Stewart",
       "status": "out",
-      "bpr_share": 0.068,
-      "importance": 0.068
+      "bpr_share": 0.5,
+      "importance": 0.5
     },
     {
       "player": "Silas Demary",
       "status": "questionable",
-      "bpr_share": 0.1797,
-      "importance": 0.1797
+      "bpr_share": 0.5,
+      "importance": 0.5
     }
   ],
   "Creighton Bluejays": [
@@ -363,58 +307,6 @@
       "importance": 0.5
     }
   ],
-  "DePaul Blue Demons": [
-    {
-      "player": "Jeremy Lorenz",
-      "status": "out",
-      "bpr_share": 0.5,
-      "importance": 0.5
-    },
-    {
-      "player": "Amsal Delalic",
-      "status": "out",
-      "bpr_share": 0.5,
-      "importance": 0.5
-    }
-  ],
-  "Delaware Fightin Blue Hens": [
-    {
-      "player": "Jameel Brown",
-      "status": "questionable",
-      "bpr_share": 0.5,
-      "importance": 0.5
-    },
-    {
-      "player": "Tyler Houser",
-      "status": "out",
-      "bpr_share": 0.5,
-      "importance": 0.5
-    },
-    {
-      "player": "Cavan Reilly",
-      "status": "out",
-      "bpr_share": 0.5,
-      "importance": 0.5
-    },
-    {
-      "player": "Lance Piper",
-      "status": "out",
-      "bpr_share": 0.5,
-      "importance": 0.5
-    },
-    {
-      "player": "Bouna Kebe",
-      "status": "questionable",
-      "bpr_share": 0.5,
-      "importance": 0.5
-    },
-    {
-      "player": "Mason Ellison",
-      "status": "out",
-      "bpr_share": 0.5,
-      "importance": 0.5
-    }
-  ],
   "Duke": [
     {
       "player": "Ifeanyi Ufochukwu",
@@ -425,28 +317,28 @@
     {
       "player": "Caleb Foster",
       "status": "out",
-      "bpr_share": 0.0866,
-      "importance": 0.0866
+      "bpr_share": 0.5,
+      "importance": 0.5
     },
     {
       "player": "Patrick Ngongba",
       "status": "probable",
-      "bpr_share": 0.1577,
-      "importance": 0.1577
+      "bpr_share": 0.5,
+      "importance": 0.5
     }
   ],
   "East Carolina": [
     {
       "player": "Eli DeLaurier",
       "status": "questionable",
-      "bpr_share": -1862.6019,
-      "importance": -1862.6019
+      "bpr_share": 0.5,
+      "importance": 0.5
     },
     {
       "player": "Tybo Bailey",
       "status": "questionable",
-      "bpr_share": -2729.9328,
-      "importance": -2729.9328
+      "bpr_share": 0.5,
+      "importance": 0.5
     },
     {
       "player": "Trevion LaBeaux",
@@ -475,14 +367,6 @@
       "importance": 0.5
     }
   ],
-  "Florida Atlantic Owls": [
-    {
-      "player": "Zion Sampaio",
-      "status": "out",
-      "bpr_share": 0.5,
-      "importance": 0.5
-    }
-  ],
   "Florida International Golden Panthers": [
     {
       "player": "Amarion Nimmers",
@@ -497,20 +381,6 @@
       "importance": 0.5
     }
   ],
-  "Florida State": [
-    {
-      "player": "AJ Swinton",
-      "status": "out",
-      "bpr_share": 0.0471,
-      "importance": 0.0471
-    },
-    {
-      "player": "Xavier Osceola",
-      "status": "questionable",
-      "bpr_share": 0.5,
-      "importance": 0.5
-    }
-  ],
   "Fordham Rams": [
     {
       "player": "Ryan Pettis",
@@ -521,14 +391,6 @@
     {
       "player": "Jack Whitbourn",
       "status": "questionable",
-      "bpr_share": 0.5,
-      "importance": 0.5
-    }
-  ],
-  "Fresno State": [
-    {
-      "player": "Nathan Zulemie",
-      "status": "out",
       "bpr_share": 0.5,
       "importance": 0.5
     }
@@ -567,14 +429,6 @@
       "importance": 0.5
     }
   ],
-  "Georgetown": [
-    {
-      "player": "KJ Lewis",
-      "status": "out",
-      "bpr_share": 0.2395,
-      "importance": 0.2395
-    }
-  ],
   "Georgia State Panthers": [
     {
       "player": "Clash Peters",
@@ -583,34 +437,18 @@
       "importance": 0.5
     }
   ],
-  "Georgia Tech Yellow Jackets": [
+  "Gonzaga": [
     {
-      "player": "Dyllan Thompson",
-      "status": "questionable",
+      "player": "Jalen Warley",
+      "status": "probable",
       "bpr_share": 0.5,
       "importance": 0.5
     },
     {
-      "player": "Mouhamed Sylla",
+      "player": "Braden Huff",
       "status": "out",
       "bpr_share": 0.5,
       "importance": 0.5
-    }
-  ],
-  "Gonzaga": [
-    {
-      "player": "Braden Huff",
-      "status": "out",
-      "bpr_share": 0.1319,
-      "importance": 0.1319
-    }
-  ],
-  "Grand Canyon": [
-    {
-      "player": "Wilhelm Breidenbach",
-      "status": "questionable",
-      "bpr_share": 0.0452,
-      "importance": 0.0452
     }
   ],
   "Hawaii Warriors": [
@@ -621,23 +459,17 @@
       "importance": 0.5
     }
   ],
-  "Illinois Fighting Illini": [
+  "Howard Bison": [
     {
-      "player": "Jason Jakstys",
+      "player": "Shane Frazier",
       "status": "out",
       "bpr_share": 0.5,
       "importance": 0.5
     }
   ],
-  "Indiana": [
+  "Illinois Fighting Illini": [
     {
-      "player": "Jason Drake",
-      "status": "out",
-      "bpr_share": 0.5,
-      "importance": 0.5
-    },
-    {
-      "player": "Jordan Rayford",
+      "player": "Jason Jakstys",
       "status": "out",
       "bpr_share": 0.5,
       "importance": 0.5
@@ -669,8 +501,8 @@
     {
       "player": "Daeshun Ruffin",
       "status": "questionable",
-      "bpr_share": 1233.8818,
-      "importance": 1233.8818
+      "bpr_share": 0.5,
+      "importance": 0.5
     }
   ],
   "Jacksonville State": [
@@ -685,26 +517,6 @@
       "status": "out",
       "bpr_share": 0.5,
       "importance": 0.5
-    }
-  ],
-  "Kansas State": [
-    {
-      "player": "Abdi Bashir",
-      "status": "out",
-      "bpr_share": 0.1281,
-      "importance": 0.1281
-    },
-    {
-      "player": "Mobi Ikegwuruka",
-      "status": "out",
-      "bpr_share": 0.5,
-      "importance": 0.5
-    },
-    {
-      "player": "Dorin Buca",
-      "status": "out",
-      "bpr_share": -0.0321,
-      "importance": -0.0321
     }
   ],
   "Kennesaw State Owls": [
@@ -739,8 +551,8 @@
     {
       "player": "Dedan Thomas",
       "status": "out",
-      "bpr_share": 0.2156,
-      "importance": 0.2156
+      "bpr_share": 0.5,
+      "importance": 0.5
     }
   ],
   "Louisiana Ragin' Cajuns": [
@@ -775,8 +587,8 @@
     {
       "player": "Mikel Brown",
       "status": "questionable",
-      "bpr_share": 0.1237,
-      "importance": 0.1237
+      "bpr_share": 0.5,
+      "importance": 0.5
     }
   ],
   "Loyola (IL) Ramblers": [
@@ -843,14 +655,14 @@
     {
       "player": "Ashton Hardaway",
       "status": "doubtful",
-      "bpr_share": 0.0178,
-      "importance": 0.0178
+      "bpr_share": 0.5,
+      "importance": 0.5
     },
     {
       "player": "Julius Thedford",
       "status": "doubtful",
-      "bpr_share": 0.1576,
-      "importance": 0.1576
+      "bpr_share": 0.5,
+      "importance": 0.5
     }
   ],
   "Miami (FL)": [
@@ -877,8 +689,8 @@
     {
       "player": "Divine Ugochukwu",
       "status": "out",
-      "bpr_share": 0.0536,
-      "importance": 0.0536
+      "bpr_share": 0.5,
+      "importance": 0.5
     }
   ],
   "Michigan": [
@@ -891,8 +703,8 @@
     {
       "player": "L.J. Cason",
       "status": "out",
-      "bpr_share": 0.0714,
-      "importance": 0.0714
+      "bpr_share": 0.5,
+      "importance": 0.5
     },
     {
       "player": "Winters Grady",
@@ -937,16 +749,16 @@
     {
       "player": "King Grace",
       "status": "questionable",
-      "bpr_share": -0.0262,
-      "importance": -0.0262
+      "bpr_share": 0.5,
+      "importance": 0.5
     }
   ],
   "Missouri State": [
     {
       "player": "Antwan Burnett",
       "status": "questionable",
-      "bpr_share": -0.1168,
-      "importance": -0.1168
+      "bpr_share": 0.5,
+      "importance": 0.5
     },
     {
       "player": "Amar Kuljuhovic",
@@ -1011,14 +823,8 @@
   ],
   "North Carolina State Wolfpack": [
     {
-      "player": "Alyn Breed",
-      "status": "questionable",
-      "bpr_share": 0.5,
-      "importance": 0.5
-    },
-    {
       "player": "Colt Langdon",
-      "status": "questionable",
+      "status": "out",
       "bpr_share": 0.5,
       "importance": 0.5
     }
@@ -1033,8 +839,8 @@
     {
       "player": "Caleb Wilson",
       "status": "out",
-      "bpr_share": 0.2309,
-      "importance": 0.2309
+      "bpr_share": 0.5,
+      "importance": 0.5
     }
   ],
   "North Texas Mean Green": [
@@ -1063,16 +869,16 @@
     {
       "player": "Arrinten Page",
       "status": "out",
-      "bpr_share": 0.136,
-      "importance": 0.136
+      "bpr_share": 0.5,
+      "importance": 0.5
     }
   ],
   "Notre Dame": [
     {
       "player": "Markus Burton",
       "status": "out",
-      "bpr_share": 0.2935,
-      "importance": 0.2935
+      "bpr_share": 0.5,
+      "importance": 0.5
     },
     {
       "player": "Tommy Ahneman",
@@ -1115,6 +921,12 @@
       "status": "out",
       "bpr_share": 0.5,
       "importance": 0.5
+    },
+    {
+      "player": "Andrija Vukovic",
+      "status": "questionable",
+      "bpr_share": 0.5,
+      "importance": 0.5
     }
   ],
   "Old Dominion Monarchs": [
@@ -1129,32 +941,6 @@
     {
       "player": "Koren Johnson",
       "status": "questionable",
-      "bpr_share": 0.5,
-      "importance": 0.5
-    }
-  ],
-  "Oregon Ducks": [
-    {
-      "player": "Jackson Shelstad",
-      "status": "out",
-      "bpr_share": 0.5,
-      "importance": 0.5
-    },
-    {
-      "player": "Devon Pryor",
-      "status": "out",
-      "bpr_share": 0.5,
-      "importance": 0.5
-    },
-    {
-      "player": "JJ Frakes",
-      "status": "questionable",
-      "bpr_share": 0.5,
-      "importance": 0.5
-    },
-    {
-      "player": "Ege Demir",
-      "status": "out",
       "bpr_share": 0.5,
       "importance": 0.5
     }
@@ -1211,8 +997,8 @@
     {
       "player": "Jack Stanton",
       "status": "out",
-      "bpr_share": 1600.5613,
-      "importance": 1600.5613
+      "bpr_share": 0.5,
+      "importance": 0.5
     }
   ],
   "Providence": [
@@ -1225,8 +1011,8 @@
     {
       "player": "Jason Edwards",
       "status": "questionable",
-      "bpr_share": 0.1336,
-      "importance": 0.1336
+      "bpr_share": 0.5,
+      "importance": 0.5
     },
     {
       "player": "Daquan Davis",
@@ -1358,34 +1144,6 @@
     },
     {
       "player": "Nathan Nguyen",
-      "status": "out",
-      "bpr_share": 0.5,
-      "importance": 0.5
-    }
-  ],
-  "San Diego State Aztecs": [
-    {
-      "player": "Miles Heide",
-      "status": "questionable",
-      "bpr_share": 0.5,
-      "importance": 0.5
-    },
-    {
-      "player": "Elzie Harrington",
-      "status": "questionable",
-      "bpr_share": 0.5,
-      "importance": 0.5
-    }
-  ],
-  "San Jose State": [
-    {
-      "player": "JaVaughn Hannah",
-      "status": "out",
-      "bpr_share": 0.5,
-      "importance": 0.5
-    },
-    {
-      "player": "Jaden Goodall",
       "status": "out",
       "bpr_share": 0.5,
       "importance": 0.5
@@ -1600,9 +1358,9 @@
   "Texas": [
     {
       "player": "Lassina Traore",
-      "status": "questionable",
-      "bpr_share": 0.0502,
-      "importance": 0.0502
+      "status": "out",
+      "bpr_share": 0.5,
+      "importance": 0.5
     }
   ],
   "Texas Tech Red Raiders": [
@@ -1661,6 +1419,32 @@
       "importance": 0.5
     }
   ],
+  "UMBC Retrievers": [
+    {
+      "player": "Devin Ceaser",
+      "status": "out",
+      "bpr_share": 0.5,
+      "importance": 0.5
+    },
+    {
+      "player": "Regimantas Ciunys",
+      "status": "out",
+      "bpr_share": 0.5,
+      "importance": 0.5
+    },
+    {
+      "player": "Daylon Dickerson",
+      "status": "out",
+      "bpr_share": 0.5,
+      "importance": 0.5
+    },
+    {
+      "player": "Jake Stout",
+      "status": "out",
+      "bpr_share": 0.5,
+      "importance": 0.5
+    }
+  ],
   "UNC Wilmington Seahawks": [
     {
       "player": "Gavin Walsh",
@@ -1678,20 +1462,6 @@
     },
     {
       "player": "Myles Che",
-      "status": "out",
-      "bpr_share": 0.5,
-      "importance": 0.5
-    }
-  ],
-  "USC Trojans": [
-    {
-      "player": "Rodney Rice",
-      "status": "out",
-      "bpr_share": 0.5,
-      "importance": 0.5
-    },
-    {
-      "player": "Amarion Dickerson",
       "status": "out",
       "bpr_share": 0.5,
       "importance": 0.5
@@ -1753,8 +1523,8 @@
     {
       "player": "Tyler Hendricks",
       "status": "questionable",
-      "bpr_share": 0.1891,
-      "importance": 0.1891
+      "bpr_share": 0.5,
+      "importance": 0.5
     }
   ],
   "VCU Rams": [
@@ -1799,76 +1569,12 @@
       "importance": 0.5
     }
   ],
-  "Virginia Tech Hokies": [
-    {
-      "player": "Amani Hansberry",
-      "status": "out",
-      "bpr_share": 0.5,
-      "importance": 0.5
-    },
-    {
-      "player": "Sin'Cere Jones",
-      "status": "out",
-      "bpr_share": 0.5,
-      "importance": 0.5
-    },
-    {
-      "player": "Shamarius Peterkin",
-      "status": "out",
-      "bpr_share": 0.5,
-      "importance": 0.5
-    }
-  ],
-  "Washington": [
-    {
-      "player": "Jacob Ognacevic",
-      "status": "questionable",
-      "bpr_share": 0.5,
-      "importance": 0.5
-    },
-    {
-      "player": "Franck Kepnang",
-      "status": "questionable",
-      "bpr_share": 0.1204,
-      "importance": 0.1204
-    },
-    {
-      "player": "Desmond Claude",
-      "status": "questionable",
-      "bpr_share": 0.1092,
-      "importance": 0.1092
-    },
-    {
-      "player": "Mady Traore",
-      "status": "out",
-      "bpr_share": 0.5,
-      "importance": 0.5
-    },
-    {
-      "player": "Bryson Tucker",
-      "status": "questionable",
-      "bpr_share": 0.0033,
-      "importance": 0.0033
-    },
-    {
-      "player": "JJ Mandaquit",
-      "status": "out",
-      "bpr_share": 0.0819,
-      "importance": 0.0819
-    },
-    {
-      "player": "Jasir Rencher",
-      "status": "questionable",
-      "bpr_share": 0.5,
-      "importance": 0.5
-    }
-  ],
   "Washington State": [
     {
       "player": "Tomas Thrastarson",
       "status": "out",
-      "bpr_share": 0.0844,
-      "importance": 0.0844
+      "bpr_share": 0.5,
+      "importance": 0.5
     },
     {
       "player": "Kase Wynott",
@@ -1881,8 +1587,8 @@
     {
       "player": "Jace Whiting",
       "status": "out",
-      "bpr_share": -1.0463,
-      "importance": -1.0463
+      "bpr_share": 0.5,
+      "importance": 0.5
     }
   ],
   "West Georgia Wolves": [
