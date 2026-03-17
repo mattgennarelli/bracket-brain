@@ -350,9 +350,12 @@ PARAM_SPEC = [
     ("upset_spread_threshold", 2.0, 8.0),
     ("upset_tolerance_max_bonus", 0.0, 5.0),
     ("close_game_stdev_boost", 0.0, 0.3),
-    # Injury penalty: pts of margin penalty per unit of bpr_share × severity.
-    # Let calibration find the optimal value; 0.0 = disabled.
-    ("injury_penalty_per_level", 0.0, 6.0),
+    # NOTE: injury_penalty_per_level is intentionally NOT calibrated here.
+    # We have no historical injury data to train against (only 2026 injuries exist),
+    # so calibration would zero it out. Instead it's treated as an expert-set prior
+    # in ModelConfig (default=3.0) and applied using live injuries_YYYY.json at
+    # prediction time. This is correct: it's a current-year signal, not a
+    # historical pattern the optimizer can learn.
 ]
 
 # Phase 2 only: score scaling, stdev inflation, late-round dampening, close-game upset tolerance
