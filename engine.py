@@ -225,6 +225,10 @@ def calc_size_bonus(team, config=DEFAULT_CONFIG):
 
 # Status -> severity multiplier for injury penalty (out=full, doubtful=0.7, etc.)
 _INJURY_SEVERITY = {"out": 1.0, "doubtful": 0.7, "questionable": 0.4, "probable": 0.1}
+# Minimum BPR share to include a player in the injury penalty calculation.
+# Filtering out noise players (<5% of team BPR) prevents stale/bad data from
+# distorting predictions — this was the root cause of the penalty being disabled.
+_MIN_BPR_SHARE = 0.05
 
 
 def calc_injury_penalty(team, config=DEFAULT_CONFIG):
@@ -232,7 +236,10 @@ def calc_injury_penalty(team, config=DEFAULT_CONFIG):
 
     injuries[] entries: status (out/doubtful/questionable/probable), bpr_share or importance.
     Penalty = sum(bpr_share * severity_multiplier) * injury_penalty_per_level, capped at 10.
+    Players with bpr_share < _MIN_BPR_SHARE are skipped to guard against noisy data.
     """
+    if config.injury_penalty_per_level == 0:
+        return 0.0
     if "injury_impact" in team and team["injury_impact"] is not None:
         return min(team["injury_impact"], 10.0)
     if "injury_level" in team:
@@ -240,11 +247,13 @@ def calc_injury_penalty(team, config=DEFAULT_CONFIG):
     injuries = team.get("injuries", [])
     total = 0.0
     for i in injuries:
+        bpr = float(i.get("bpr_share") or i.get("importance") or 0.0)
+        if bpr < _MIN_BPR_SHARE:
+            continue  # skip fringe/noise players — insufficient signal
         severity = _INJURY_SEVERITY.get(
             str(i.get("status", "out")).lower(), 1.0
         )
-        weight = i.get("bpr_share") or i.get("importance", 0.5)
-        total += severity * weight * config.injury_penalty_per_level
+        total += severity * bpr * config.injury_penalty_per_level
     return min(total, 10.0)
 
 def calc_luck_regression(team, config=DEFAULT_CONFIG):

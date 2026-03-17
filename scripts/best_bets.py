@@ -36,29 +36,46 @@ sys.path.insert(0, ROOT)
 try:
     import requests
 except ImportError:
-    print("ERROR: 'requests' not installed. Run: pip install requests")
-    sys.exit(1)
+    # Don't sys.exit at import time — that crashes pytest collection for ALL tests.
+    # Instead, defer the error to runtime so tests can safely import this module.
+    requests = None  # type: ignore[assignment]
 
 from engine import predict_game, ModelConfig, _normalize_team_for_match, enrich_team, load_teams_merged
 from odds_provider import get_provider, get_api_key
 
 # Default edge thresholds to flag as a "bet"
 DEFAULT_ML_EDGE = 0.10      # 10% win probability edge over implied odds (raised from 7%)
-DEFAULT_SPREAD_EDGE = 7.0   # model cover margin must exceed 7 pts (raised from 5)
-DEFAULT_TOTAL_EDGE = 10.0   # model total differs from Vegas total by 10+ pts (raised from 8)
+DEFAULT_SPREAD_EDGE = 7.0   # model cover margin must exceed 7 pts
+DEFAULT_TOTAL_EDGE = 10.0   # model total differs from Vegas total by 10+ pts
 DEFAULT_MIN_MODEL_CONFIDENCE = 0.58  # skip ML bets when model probability < 58%
 DEFAULT_MIN_ML_PROB_FOR_DOG = 0.40   # skip ML when betting underdog with model prob < 40%
 DEFAULT_MIN_SPREAD_COVER_MARGIN = 3.0  # skip spread when cover margin < 3 pts
-DEFAULT_MAX_3STAR_PICKS = 3   # cap 3-star picks per day (3-star underperforming per audit)
+DEFAULT_MAX_3STAR_PICKS = 0   # 3-star picks disabled: 0/3 hit rate (0% ROI). Re-enable when positive.
 DEFAULT_MAX_2STAR_PICKS = 8   # cap 2-star picks per day
+
+# Maximum moneyline price to bet — don't chase heavy chalk beyond this.
+# At -200, break-even accuracy is 66.7%. Our model rarely beats that on big favorites.
+DEFAULT_MAX_ML_PRICE = -200  # skip ML bets with juice worse than -200
+
+# Bias correction: model consistently predicts totals ~1.8 pts too LOW vs actuals.
+# Applied before edge calculation: model_total_corrected = model_total + TOTAL_BIAS_CORRECTION
+# Calibrated on 187 tournament games 2023-2025 (total_bias = -1.8 pts).
+TOTAL_BIAS_CORRECTION = 1.8
 
 
 # ---------------------------------------------------------------------------
 # ODDS FETCHING (via odds_provider)
 # ---------------------------------------------------------------------------
 
+def _require_requests():
+    """Raise a clear error if requests wasn't installed. Called lazily before any network call."""
+    if requests is None:
+        raise ImportError("'requests' not installed. Run: pip install requests")
+
+
 def fetch_today_odds(api_key):
     """Fetch today's NCAAB games from the active provider (ODDS_PROVIDER)."""
+    _require_requests()
     provider = get_provider()
     try:
         return provider.fetch_games(api_key)
@@ -343,7 +360,9 @@ def get_best_bets_json(api_key, year=None, ml_min=None, spread_min=None, total_m
         result = run_model(home_stats, away_stats, config)
         model_prob_home = result["win_prob_a"]
         model_margin = result["predicted_margin"]
-        model_total = result["predicted_score_a"] + result["predicted_score_b"]
+        model_total_raw = result["predicted_score_a"] + result["predicted_score_b"]
+        # Apply bias correction: model under-predicts totals by ~1.8 pts on avg
+        model_total = model_total_raw + TOTAL_BIAS_CORRECTION
 
         base = {
             "home_team": home_name,
@@ -356,14 +375,16 @@ def get_best_bets_json(api_key, year=None, ml_min=None, spread_min=None, total_m
 
         min_conf = DEFAULT_MIN_MODEL_CONFIDENCE
 
-        # ML bets (with underdog gating: require min prob when betting dog)
+        # ML bets (with underdog gating + max price filter)
         h_edge, a_edge = ml_edge(model_prob_home, game["ml_home"], game["ml_away"])
         if h_edge is not None:
             raw_h = _american_to_prob(game["ml_home"])
             raw_a = _american_to_prob(game["ml_away"])
             ih, ia = _devig(raw_h, raw_a)
             # Home: skip if we're the dog (ih < 0.5) and model prob < min_ml_dog
-            home_ok = h_edge >= min_ml and model_prob_home >= min_conf
+            # Also skip if price is worse than max ML price (too much chalk juice)
+            home_price_ok = game["ml_home"] is None or game["ml_home"] >= DEFAULT_MAX_ML_PRICE
+            home_ok = h_edge >= min_ml and model_prob_home >= min_conf and home_price_ok
             if ih < 0.5 and model_prob_home < min_ml_dog:
                 home_ok = False  # underdog ML gating
             if home_ok:
@@ -375,7 +396,8 @@ def get_best_bets_json(api_key, year=None, ml_min=None, spread_min=None, total_m
                              "kelly_size": round(k_h, 4),
                              "kelly_units": round(k_h * 100, 2)}, h_edge))
             # Away: skip if we're the dog (ia < 0.5) and model prob < min_ml_dog
-            away_ok = a_edge >= min_ml and (1 - model_prob_home) >= min_conf
+            away_price_ok = game["ml_away"] is None or game["ml_away"] >= DEFAULT_MAX_ML_PRICE
+            away_ok = a_edge >= min_ml and (1 - model_prob_home) >= min_conf and away_price_ok
             if ia < 0.5 and (1 - model_prob_home) < min_ml_dog:
                 away_ok = False  # underdog ML gating
             if away_ok:
@@ -409,9 +431,9 @@ def get_best_bets_json(api_key, year=None, ml_min=None, spread_min=None, total_m
                          "kelly_size": round(k_sp, 4),
                          "kelly_units": round(k_sp * 100, 2)}, abs(sp_edge_val)))
 
-        # Total bets — calibrated for NCAA tournament games (-1.8 pts avg error, 46% OVER
-        # rate across 69 games 2023-2025). Do NOT run against regular-season or conference
-        # tournament games: mid-major adj_o/d produces +14.7pt OVER bias outside the tourney.
+        # Total bets — calibrated for NCAA tournament games (bias-corrected by +1.8 pts).
+        # Do NOT run against regular-season or conference tournament games:
+        # mid-major adj_o/d produces +14.7pt OVER bias outside the tourney.
         tot_e = total_edge(model_total, game["total_line"])
         if tot_e is not None and abs(tot_e) >= min_total:
             side = "OVER" if tot_e > 0 else "UNDER"

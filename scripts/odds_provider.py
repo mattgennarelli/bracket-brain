@@ -79,10 +79,17 @@ class OddsAPIProvider:
         if resp.status_code == 422:
             return []
         resp.raise_for_status()
-        remaining = resp.headers.get("x-requests-remaining", "?")
-        used = resp.headers.get("x-requests-used", "?")
+        remaining_str = resp.headers.get("x-requests-remaining")
+        used_str = resp.headers.get("x-requests-used", "?")
+        remaining_int = int(remaining_str) if remaining_str and remaining_str.isdigit() else None
         if hasattr(sys.stdout, "write"):
-            print(f"  Odds API: {used} requests used, {remaining} remaining this month")
+            print(f"  Odds API: {used_str} requests used, {remaining_str or '?'} remaining this month")
+        # Record usage for budget tracking
+        try:
+            from track_api_usage import record_usage
+            record_usage(remaining_int, endpoint="odds/games")
+        except Exception:
+            pass  # never block on tracker failure
         return resp.json()
 
     def parse_game(self, raw):

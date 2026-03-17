@@ -321,7 +321,7 @@ PARAM_SPEC = [
     ("coach_tourney_max_bonus", 0.0, 6.0),
     ("pedigree_max_bonus", 0.0, 6.0),
     ("three_pt_volatility_factor", 0.0, 3.0),
-    ("tempo_volatility_weight", 0.0, 4.0),
+    ("tempo_volatility_weight", 0.0, 8.0),  # widened: optimizer consistently hits 4.0 ceiling
     ("star_player_max_bonus", 0.0, 8.0),
     ("momentum_max_bonus", 0.0, 5.0),
     ("win_pct_max_bonus", 0.0, 5.0),
@@ -350,6 +350,9 @@ PARAM_SPEC = [
     ("upset_spread_threshold", 2.0, 8.0),
     ("upset_tolerance_max_bonus", 0.0, 5.0),
     ("close_game_stdev_boost", 0.0, 0.3),
+    # Injury penalty: pts of margin penalty per unit of bpr_share × severity.
+    # Let calibration find the optimal value; 0.0 = disabled.
+    ("injury_penalty_per_level", 0.0, 6.0),
 ]
 
 # Phase 2 only: score scaling, stdev inflation, late-round dampening, close-game upset tolerance
@@ -789,12 +792,15 @@ def calibrate_walk_forward(pairs, objective_name="brier", maxiter=100, popsize=1
         if val <= lo + 0.01:
             optimized[name] = 0.0
             setattr(config, name, 0.0)
-            print(f"  Param {name} hit lower bound ({val}) -> removed (set to 0)")
+            print(f"  Param {name} hit lower bound ({val:.4f}) -> removed (set to 0)")
         elif val >= hi - 0.01:
-            default_val = defaults.get(name, getattr(ModelConfig(), name))
-            optimized[name] = round(default_val, 4)
-            setattr(config, name, default_val)
-            print(f"  Param {name} hit upper bound ({val}) -> using default {default_val}")
+            # Use the BOUND value (optimizer's best guess given constraints), not the
+            # unrelated ModelConfig default. The old behavior (falling back to default)
+            # silently discarded the optimizer's finding whenever it hit the ceiling.
+            optimized[name] = round(hi, 4)
+            setattr(config, name, hi)
+            print(f"  Param {name} hit upper bound ({val:.4f}) -> using bound value {hi} "
+                  f"(consider widening bounds if this persists)")
 
     for name, _, _ in PARAM_SPEC:
         if name not in optimized:

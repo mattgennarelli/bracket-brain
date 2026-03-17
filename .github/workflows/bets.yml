@@ -62,6 +62,10 @@ jobs:
         if: steps.action.outputs.action == 'settle' || steps.action.outputs.action == 'both'
         run: python scripts/settle_card.py || echo "Card settle step failed (no pending picks)"
 
+      - name: Refresh live injury data (ESPN, free)
+        if: steps.action.outputs.action == 'save' || steps.action.outputs.action == 'both'
+        run: python scripts/fetch_injuries_live.py 2026 --merge || echo "Injury refresh failed (non-fatal)"
+
       - name: Save today's picks (best bets)
         if: steps.action.outputs.action == 'save' || steps.action.outputs.action == 'both'
         env:
@@ -74,14 +78,22 @@ jobs:
           ODDS_API_KEY: ${{ secrets.ODDS_API_KEY }}
         run: python scripts/save_card.py || echo "Card save step failed (no games or API error)"
 
+      - name: Print Odds API budget status
+        run: python scripts/track_api_usage.py || echo "Usage tracker not initialized yet"
+
       - name: Commit ledger
         run: |
           git config user.name  "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add data/bets_ledger.json data/card_ledger.json
+          git add data/bets_ledger.json data/card_ledger.json data/api_usage.json
           # Include daily card snapshot if written
           CARD_DAILY="data/card_$(date -u +%Y-%m-%d).json"
           if [ -f "$CARD_DAILY" ]; then git add "$CARD_DAILY"; fi
+          # Include injury updates if changed
+          if [ -f "data/injuries_2026.json" ]; then git add data/injuries_2026.json; fi
+          # Include betting diagnostics if written
+          DIAG="data/betting_diagnostics_$(date -u +%Y-%m-%d).json"
+          if [ -f "$DIAG" ]; then git add "$DIAG"; fi
           if git diff --cached --quiet; then
             echo "No changes to ledger."
           else

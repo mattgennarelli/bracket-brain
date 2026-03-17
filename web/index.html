@@ -452,7 +452,7 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sa
   background:var(--primary); opacity:.4; transition:width .3s; pointer-events:none; }
 .team-slot.picked .prob-pip { background:var(--green); opacity:.7; }
 
-@media (max-width: 768px) {
+@media (max-width: 1024px) {
   .bracket-wrap { display:none !important; }
   .mobile-bracket { display:block; }
   .controls { flex-wrap:wrap; gap:8px; padding:8px 14px; }
@@ -493,30 +493,31 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sa
 
 <div class="controls" id="controls">
   <div class="select-group">
-    <label>Year:</label>
-    <select id="year-select" onchange="onYearChange(this.value)"></select>
+    <label for="year-select">Year:</label>
+    <select id="year-select" aria-label="Select tournament year" onchange="onYearChange(this.value)"></select>
   </div>
   <div class="slider-group">
-    <label>Chaos:</label>
+    <label for="upset-slider">Chaos:</label>
     <input type="range" id="upset-slider" min="0" max="100" value="0"
+      aria-label="Upset aggression slider" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"
       oninput="onUpsetChange(this.value)">
-    <span class="val" id="upset-val">0%</span>
+    <span class="val" id="upset-val" aria-live="polite">0%</span>
     <span class="slider-label" id="upset-label">All Chalk</span>
   </div>
-  <button class="btn primary" id="sim-btn" onclick="fetchBracket()">Simulate</button>
-  <button class="btn" onclick="resetPicks()">Reset</button>
-  <button class="btn share" id="share-btn" onclick="shareBracket()" title="Copy shareable bracket link">🔗 Share</button>
-  <div class="champ-display">
+  <button class="btn primary" id="sim-btn" aria-label="Simulate bracket" onclick="fetchBracket()">Simulate</button>
+  <button class="btn" aria-label="Reset all picks" onclick="resetPicks()">Reset</button>
+  <button class="btn share" id="share-btn" onclick="shareBracket()" title="Copy shareable bracket link" aria-label="Copy shareable bracket link">🔗 Share</button>
+  <div class="champ-display" aria-live="polite">
     Champion: <span class="champ-name" id="champ-name">—</span>
   </div>
 </div>
 
-<div class="tab-nav">
-  <button class="tab-btn active" onclick="switchTab('bracket')">Bracket</button>
-  <button class="tab-btn" onclick="switchTab('odds')">Championship & F4 Odds</button>
-  <button class="tab-btn" onclick="switchTab('picks')">Picks <span id="picks-badge" style="display:none;background:var(--primary);color:#fff;border-radius:8px;font-size:.6rem;padding:1px 5px;margin-left:3px"></span></button>
-  <button class="tab-btn" onclick="switchTab('card')">Full Card <span id="card-badge" style="display:none;background:var(--primary);color:#fff;border-radius:8px;font-size:.6rem;padding:1px 5px;margin-left:3px"></span></button>
-</div>
+<nav class="tab-nav" role="tablist" aria-label="Main navigation">
+  <button class="tab-btn active" role="tab" aria-selected="true"  aria-controls="tab-bracket" onclick="switchTab('bracket')">Bracket</button>
+  <button class="tab-btn"        role="tab" aria-selected="false" aria-controls="tab-odds"    onclick="switchTab('odds')">Championship &amp; F4 Odds</button>
+  <button class="tab-btn"        role="tab" aria-selected="false" aria-controls="tab-picks"   onclick="switchTab('picks')">Picks <span id="picks-badge" aria-hidden="true" style="display:none;background:var(--primary);color:#fff;border-radius:8px;font-size:.6rem;padding:1px 5px;margin-left:3px"></span></button>
+  <button class="tab-btn"        role="tab" aria-selected="false" aria-controls="tab-card"    onclick="switchTab('card')">Full Card <span id="card-badge" aria-hidden="true" style="display:none;background:var(--primary);color:#fff;border-radius:8px;font-size:.6rem;padding:1px 5px;margin-left:3px"></span></button>
+</nav>
 
 <div class="tab-panel active" id="tab-bracket">
   <div class="bracket-wrap" id="bracket-wrap"></div>
@@ -616,6 +617,19 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sa
 const API = ''; // empty = same origin; set to 'http://localhost:8000' for dev
 
 // ---------------------------------------------------------------------------
+// Security helpers
+// ---------------------------------------------------------------------------
+function escapeHtml(str) {
+  if (str == null) return '';
+  return String(str)
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#39;');
+}
+
+// ---------------------------------------------------------------------------
 // State
 // ---------------------------------------------------------------------------
 let PICKS = [];
@@ -636,7 +650,7 @@ const ROUND_ORDER = [64, 32, 16, 8, 4, 2];
 const ROUND_LABELS = { 64:'R64', 32:'R32', 16:'S16', 8:'E8', 4:'Final Four', 2:'Championship' };
 let mobileRound = 64;
 
-function isMobile() { return window.innerWidth <= 768; }
+function isMobile() { return window.innerWidth <= 1024; }
 
 // ---------------------------------------------------------------------------
 // API helpers
@@ -1686,7 +1700,7 @@ async function loadCard() {
     renderCard(cardData, historyData, scoresData?.scores || {});
     _startCardScoresPoll(cardData, historyData);
   } catch (e) {
-    document.getElementById('card-games-body').innerHTML = `<div class="picks-empty">Error loading card: ${e.message}</div>`;
+    document.getElementById('card-games-body').innerHTML = `<div class="picks-empty">Error loading card: ${escapeHtml(e.message)}</div>`;
   }
 }
 
@@ -2302,6 +2316,13 @@ function renderMobileBracket() {
 
   body.innerHTML = html;
 }
+
+// ---------------------------------------------------------------------------
+// Cleanup: clear polling intervals on page unload to prevent memory/network leaks
+window.addEventListener('beforeunload', () => {
+  if (_picksScoresInterval) clearInterval(_picksScoresInterval);
+  if (_cardScoresInterval)  clearInterval(_cardScoresInterval);
+});
 
 // ---------------------------------------------------------------------------
 // Boot

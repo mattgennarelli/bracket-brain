@@ -14,6 +14,7 @@ Usage:
   uvicorn api:app --host 0.0.0.0 --port 8000
 """
 
+import collections
 import hashlib
 import io
 import json
@@ -58,7 +59,9 @@ CACHE_TTL_SECONDS = 3600
 SCORES_CACHE_TTL = 90
 
 # Cache: key -> {"result": ..., "cached_at": timestamp}
-_cache: dict = {}
+# Uses OrderedDict so we can evict the oldest entry when size limit is hit.
+_CACHE_MAX_ENTRIES = 50
+_cache: collections.OrderedDict = collections.OrderedDict()
 
 # Structured JSON logging
 _log = logging.getLogger("api")
@@ -73,11 +76,16 @@ app = FastAPI(
     version="2.0.0",
 )
 
+_ALLOWED_ORIGINS = [o.strip() for o in os.environ.get(
+    "ALLOWED_ORIGINS",
+    "http://localhost:8000,http://localhost:3000,http://127.0.0.1:8000"
+).split(",") if o.strip()]
+
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],
-    allow_methods=["*"],
-    allow_headers=["*"],
+    allow_origins=_ALLOWED_ORIGINS,
+    allow_methods=["GET", "POST"],
+    allow_headers=["Content-Type", "Authorization"],
 )
 
 
@@ -99,20 +107,49 @@ async def log_requests(request: Request, call_next):
 WEB_DIR = os.path.join(ROOT, "web")
 
 
-def _cache_get(key: str):
-    """Return cached result if not expired, else None."""
+def _cache_get(key: str, ttl: int = CACHE_TTL_SECONDS):
+    """Return cached result if not expired, else None. Moves hit to end (LRU)."""
     entry = _cache.get(key)
     if not entry:
         return None
     cached_at = entry.get("cached_at", 0)
-    if time.time() - cached_at > CACHE_TTL_SECONDS:
-        del _cache[key]
+    if time.time() - cached_at > ttl:
+        _cache.pop(key, None)
         return None
+    # Move to end so it's the most recently used
+    _cache.move_to_end(key)
     return entry.get("result")
 
 
 def _cache_set(key: str, result):
+    """Store result in cache, evicting the oldest entry if at capacity."""
+    if key in _cache:
+        _cache.move_to_end(key)
     _cache[key] = {"result": result, "cached_at": time.time()}
+    while len(_cache) > _CACHE_MAX_ENTRIES:
+        _cache.popitem(last=False)  # evict oldest
+
+
+# ---------------------------------------------------------------------------
+# Rate limiting: per-IP request tracking for expensive endpoints
+# ---------------------------------------------------------------------------
+_RATE_LIMIT_WINDOW = 60  # seconds
+_MC_RATE_LIMIT = 10       # max Monte Carlo requests per IP per minute
+_rate_limit_store: dict = {}  # ip -> [(timestamp, ...)]
+
+
+def _check_rate_limit(ip: str, limit: int = _MC_RATE_LIMIT) -> bool:
+    """Return True if the request is allowed, False if rate limit exceeded."""
+    now = time.time()
+    window_start = now - _RATE_LIMIT_WINDOW
+    hits = _rate_limit_store.get(ip, [])
+    hits = [t for t in hits if t > window_start]
+    if len(hits) >= limit:
+        _rate_limit_store[ip] = hits
+        return False
+    hits.append(now)
+    _rate_limit_store[ip] = hits
+    return True
 
 
 def _load_config(num_sims: int = 10000) -> ModelConfig:
@@ -527,9 +564,16 @@ def get_benchmark():
 
 @app.get("/bracket/{year}/monte-carlo")
 def get_monte_carlo(
+    request: Request,
     year: int,
     sims: int = Query(default=10000, ge=100, le=100000),
 ):
+    # Rate limit live simulations (pre-computed file is unaffected)
+    if not (sims == 10000 and os.path.isfile(os.path.join(DATA_DIR, f"monte_carlo_{year}.json"))):
+        ip = request.client.host if request.client else "unknown"
+        if not _check_rate_limit(ip):
+            raise HTTPException(status_code=429, detail="Too many Monte Carlo requests. Try again in a minute.")
+
     cache_key = f"mc_{year}_{sims}"
     cached = _cache_get(cache_key)
     if cached is not None:
