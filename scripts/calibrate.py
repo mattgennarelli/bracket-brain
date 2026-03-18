@@ -342,7 +342,7 @@ PARAM_SPEC = [
     ("tempo_volatility_weight", 0.0, 8.0),  # widened: optimizer consistently hits 4.0 ceiling
     ("star_player_max_bonus", 0.0, 8.0),
     ("proximity_max_bonus", 0.0, 5.0),
-    ("proximity_distance_threshold", 1200, 3500),
+    ("proximity_neutral_distance", 600, 1800),
     ("momentum_max_bonus", 0.0, 5.0),
     ("win_pct_max_bonus", 0.0, 5.0),
     ("conf_rating_max_bonus", 0.0, 4.0),

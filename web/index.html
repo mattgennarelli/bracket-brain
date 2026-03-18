@@ -1293,7 +1293,10 @@ async function showAnalysis(gameId) {
     }
   }
 
-  const pA = orig?.win_prob_a != null ? orig.win_prob_a : (st.probA != null ? st.probA : 0.5);
+  // Normalise so display order (st.teamA left, st.teamB right) matches API response
+  const flipped = orig && orig.team_a !== st.teamA;
+  const rawPA = orig?.win_prob_a != null ? orig.win_prob_a : (st.probA != null ? st.probA : 0.5);
+  const pA = flipped ? (1 - rawPA) : rawPA;  // when flipped, win_prob_a is for team_b (our right)
   const pB = 1 - pA;
   const probA = (pA * 100).toFixed(0);
   const probB = (pB * 100).toFixed(0);
@@ -1314,8 +1317,7 @@ async function showAnalysis(gameId) {
   const fA = orig?.factors_a || {};
   const fB = orig?.factors_b || {};
 
-  // Normalise so sA always corresponds to st.teamA
-  const flipped = orig && orig.team_a !== st.teamA;
+  // Normalise so sA always corresponds to st.teamA (flipped already computed above)
   const statsA = flipped ? (orig?.stats_b || {}) : sA;
   const statsB = flipped ? (orig?.stats_a || {}) : sB;
   const factorsA = flipped ? (orig?.factors_b || {}) : fA;
@@ -1736,8 +1738,8 @@ async function showAnalysis(gameId) {
         const scoreLine = content.querySelector('.ap-score-line');
         if (scoreLine) {
           const strongs = scoreLine.querySelectorAll('strong');
-          if (strongs[0] && updated.score_a != null) strongs[0].textContent = updated.score_a.toFixed(0);
-          if (strongs[1] && updated.score_b != null) strongs[1].textContent = updated.score_b.toFixed(0);
+          if (strongs[0] && updated.predicted_score_a != null) strongs[0].textContent = updated.predicted_score_a.toFixed(0);
+          if (strongs[1] && updated.predicted_score_b != null) strongs[1].textContent = updated.predicted_score_b.toFixed(0);
         }
         // Update pick box
         const pickBox = content.querySelector('.pick-box');
@@ -1758,6 +1760,33 @@ async function showAnalysis(gameId) {
           const imp = teamName === st.teamA ? newStatsA.injury_impact : newStatsB.injury_impact;
           impSpan.textContent = (imp != null && imp > 0) ? `(−${imp.toFixed(1)} pts)` : '';
         });
+        // Update situational section (travel edge, injury edge)
+        const newFactorsA = updated.factors_a || {};
+        const newFactorsB = updated.factors_b || {};
+        const newProxA = newFactorsA.proximity || 0, newProxB = newFactorsB.proximity || 0;
+        const newInjA = newFactorsA.injuries || 0, newInjB = newFactorsB.injuries || 0;
+        const newTravelNet = newProxA - newProxB;
+        const newInjuryNet = newInjA - newInjB;
+        const sitSection = [...content.querySelectorAll('.ap-section')].find(el => {
+          const t = el.querySelector('.ap-section-title');
+          return t && t.textContent.includes('Situational');
+        });
+        if (sitSection && (Math.abs(newTravelNet) > 0.05 || Math.abs(newInjuryNet) > 0.05)) {
+          const fmtNet = (val, label) => {
+            if (Math.abs(val) < 0.05) return '';
+            const team = val > 0 ? st.teamA : st.teamB;
+            const color = val > 0 ? 'var(--green)' : 'var(--red)';
+            return `<span style="color:${color}">${team} ${label} <strong>${Math.abs(val).toFixed(1)}</strong> pts</span>`;
+          };
+          const items = [];
+          if (updated.venue_city) items.push(`<span>📍 ${updated.venue_city}</span>`);
+          const travelItem = fmtNet(newTravelNet, 'travel edge:');
+          const injItem = fmtNet(newInjuryNet, 'injury edge:');
+          if (travelItem) items.push(travelItem);
+          if (injItem) items.push(injItem);
+          const inner = sitSection.querySelector('div[style*="display:flex"]');
+          if (inner && items.length > 0) inner.innerHTML = items.join('<span style="color:var(--border)">·</span>');
+        }
       } catch (e) {
         console.warn('Injury override re-analysis failed:', e);
       } finally {
