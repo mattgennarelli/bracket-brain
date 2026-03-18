@@ -1,6 +1,6 @@
 {
   "date": "2026-03-18",
-  "fetched_at": "2026-03-18T22:07:16.076215+00:00",
+  "fetched_at": "2026-03-18T22:11:17.246488+00:00",
   "games": [
     {
       "home_team": "Lehigh Mountain Hawks",
@@ -402,8 +402,8 @@
           "bet_side": "Nevada Wolf Pack",
           "bet_odds": -375,
           "model_prob": 0.824,
-          "implied_prob": 0.7649,
-          "edge": 0.0591,
+          "implied_prob": 0.7618,
+          "edge": 0.0622,
           "stars": "",
           "kelly_units": 1.64,
           "model_margin": 11.2,
