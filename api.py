@@ -457,15 +457,47 @@ def analyze_matchup_endpoint(
     seed_b: Optional[int] = Query(default=None),
     region: Optional[str] = Query(default=None),
     round_name: Optional[str] = Query(default=None),
+    injury_overrides: Optional[str] = Query(default=None),
 ):
     """Return full matchup analysis for display. Used when matchup is not in
-    pre-generated picks (e.g. downstream game after user changed an upstream pick)."""
+    pre-generated picks (e.g. downstream game after user changed an upstream pick).
+    injury_overrides: JSON string mapping "team_name|player_name" -> new_status.
+      e.g. '{"Duke|Kyle Filipowski":"out","Duke|Jared McCain":"healthy"}'
+      Use status "healthy" to remove a player from the injury list entirely.
+    """
     raw_a = _lookup_team(team_a, year)
     raw_b = _lookup_team(team_b, year)
     if seed_a is not None:
         raw_a = dict(raw_a, seed=seed_a)
     if seed_b is not None:
         raw_b = dict(raw_b, seed=seed_b)
+    # Apply injury status overrides from user
+    if injury_overrides:
+        import json as _json
+        try:
+            overrides = _json.loads(injury_overrides)
+        except (ValueError, TypeError):
+            overrides = {}
+        for team_dict, team_name in [(raw_a, team_a), (raw_b, team_b)]:
+            if "injuries" not in team_dict:
+                continue
+            new_injuries = []
+            for inj in team_dict["injuries"]:
+                key = f"{team_name}|{inj.get('player', '')}"
+                if key in overrides:
+                    new_status = overrides[key]
+                    if new_status.lower() in ("healthy", "active", "playing", "remove"):
+                        continue  # Remove from injury list
+                    inj = dict(inj, status=new_status)
+                new_injuries.append(inj)
+            team_dict = dict(team_dict, injuries=new_injuries)
+            # Recompute injury_impact with overridden statuses
+            from engine import calc_injury_penalty
+            team_dict["injury_impact"] = calc_injury_penalty(team_dict)
+            if team_name == team_a:
+                raw_a = team_dict
+            else:
+                raw_b = team_dict
     analysis = get_matchup_analysis_display(
         raw_a, raw_b, data_dir=DATA_DIR, year=year,
         region=region, round_name=round_name,

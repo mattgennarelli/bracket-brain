@@ -61,7 +61,7 @@ STATUS_MAP = {
     "doubtful": "doubtful",
     "questionable": "questionable",
     "probable": "probable",
-    "day-to-day": "questionable",
+    "day-to-day": "day-to-day",
     "injured reserve": "out",
     "suspension": "out",
     "not with team": "out",

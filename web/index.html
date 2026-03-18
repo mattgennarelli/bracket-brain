@@ -1527,21 +1527,37 @@ async function showAnalysis(gameId) {
       </ul>
     </div>` : '';
 
-  // ── Injuries ────────────────────────────────────────────────────────────────
+  // ── Injuries (interactive status override) ──────────────────────────────────
   const injA = statsA?.injuries, injB = statsB?.injuries;
   const impA = statsA?.injury_impact, impB = statsB?.injury_impact;
   const hasInjuries = (injA && injA.length > 0) || (injB && injB.length > 0);
-  const fmtInj = (team, injs, imp) => {
+  const statusOptions = ['out', 'doubtful', 'questionable', 'day-to-day', 'healthy'];
+  const statusColors = {out:'#dc2626',doubtful:'#d97706',questionable:'#ca8a04','day-to-day':'#65a30d',healthy:'#16a34a'};
+  const fmtInjInteractive = (team, injs, imp) => {
     if (!injs || injs.length === 0) return '';
-    const list = injs.map(i => i.player + ' (' + (i.status || 'out') + ')').join(', ');
-    const pts = (imp != null && imp > 0) ? ' — ' + imp.toFixed(1) + ' pts impact' : '';
-    return `<div style="margin-bottom:6px;"><strong>${team}</strong>: ${list}${pts}</div>`;
+    const rows = injs.map(i => {
+      const cur = (i.status || 'out').toLowerCase();
+      const opts = statusOptions.map(s =>
+        `<option value="${s}"${s===cur?' selected':''}>${s}</option>`
+      ).join('');
+      const col = statusColors[cur] || '#dc2626';
+      return `<div style="display:flex;align-items:center;gap:6px;margin:3px 0;">
+        <span style="flex:1;font-weight:500;">${i.player}</span>
+        <select class="inj-override" data-team="${team}" data-player="${i.player}"
+          style="font-size:.72rem;padding:2px 4px;border-radius:4px;border:1px solid ${col};
+          background:${col}18;color:${col};font-weight:600;cursor:pointer;">
+          ${opts}
+        </select>
+      </div>`;
+    }).join('');
+    const pts = (imp != null && imp > 0) ? ` <span style="color:var(--muted);font-size:.72rem;">(−${imp.toFixed(1)} pts)</span>` : '';
+    return `<div style="margin-bottom:8px;"><strong>${team}</strong>${pts}${rows}</div>`;
   };
   const injurySection = hasInjuries ? `
     <div class="ap-section" style="background:rgba(220,38,38,.08);border-left:3px solid #dc2626;padding:8px 10px;margin:8px 0;font-size:.8rem;">
-      <div class="ap-section-title" style="color:#dc2626;">Injuries</div>
-      ${fmtInj(st.teamA, injA, impA)}
-      ${fmtInj(st.teamB, injB, impB)}
+      <div class="ap-section-title" style="color:#dc2626;">Injuries <span style="font-weight:400;font-size:.7rem;color:var(--muted);">— change status to see impact</span></div>
+      ${fmtInjInteractive(st.teamA, injA, impA)}
+      ${fmtInjInteractive(st.teamB, injB, impB)}
     </div>` : '';
 
   // ── Historical ─────────────────────────────────────────────────────────────
@@ -1664,6 +1680,91 @@ async function showAnalysis(gameId) {
   `;
   panel.classList.add('show');
   overlay.classList.add('show');
+
+  // Wire up injury override dropdowns — re-run analysis when user changes a status
+  content.querySelectorAll('.inj-override').forEach(sel => {
+    sel.addEventListener('change', async () => {
+      // Collect all current override values
+      const overrides = {};
+      content.querySelectorAll('.inj-override').forEach(s => {
+        const team = s.dataset.team;
+        const player = s.dataset.player;
+        const origStatus = (s.querySelector('option[data-orig]')?.dataset?.orig) || s.options[0]?.defaultSelected;
+        overrides[`${team}|${player}`] = s.value;
+      });
+      // Build override param — only include changed statuses
+      const overrideParam = encodeURIComponent(JSON.stringify(overrides));
+      const seedParams = (st.seedA != null && st.seedB != null)
+        ? `&seed_a=${st.seedA}&seed_b=${st.seedB}` : '';
+      let regionParam = '', roundParam = '';
+      if (!gameId.startsWith('FF')) {
+        const parts = gameId.split('-');
+        regionParam = `&region=${encodeURIComponent(parts[0])}`;
+        const rndMap = {64:'Round of 64',32:'Round of 32',16:'Sweet 16',8:'Elite 8'};
+        const roundNum2 = parseInt(parts[1]);
+        if (rndMap[roundNum2]) roundParam = `&round_name=${encodeURIComponent(rndMap[roundNum2])}`;
+      } else {
+        const isChamp = gameId === 'FF-2-0';
+        roundParam = `&round_name=${encodeURIComponent(isChamp ? 'Championship' : 'Final Four')}`;
+      }
+      // Show loading state on the prob section
+      const probSection = content.querySelector('.ap-prob-section');
+      if (probSection) probSection.style.opacity = '0.5';
+      try {
+        const updated = await apiFetch(
+          `/analyze?team_a=${encodeURIComponent(st.teamA)}&team_b=${encodeURIComponent(st.teamB)}&year=${currentYear || 2026}${seedParams}${regionParam}${roundParam}&injury_overrides=${overrideParam}`
+        );
+        // Update probabilities and margin in-place
+        const newPA = updated.win_prob_a ?? 0.5;
+        const newPB = 1 - newPA;
+        const pctA = (newPA * 100).toFixed(0);
+        const pctB = (newPB * 100).toFixed(0);
+        const newFavA = newPA >= newPB;
+        // Update prob percentages
+        const probEls = content.querySelectorAll('.ap-prob-pct');
+        if (probEls[0]) { probEls[0].textContent = pctA + '%'; probEls[0].className = `ap-prob-pct${newFavA?' fav':' dog'}`; }
+        if (probEls[1]) { probEls[1].textContent = pctB + '%'; probEls[1].className = `ap-prob-pct${!newFavA?' fav':' dog'}`; }
+        // Update bar
+        const barA = content.querySelector('.ap-bar-a');
+        const barB = content.querySelector('.ap-bar-b');
+        if (barA) barA.style.width = pctA + '%';
+        if (barB) barB.style.width = pctB + '%';
+        // Update spread
+        const spreadChip = content.querySelector('.spread-chip');
+        if (spreadChip && updated.spread_fav) spreadChip.textContent = updated.spread_fav;
+        // Update score line
+        const scoreLine = content.querySelector('.ap-score-line');
+        if (scoreLine) {
+          const strongs = scoreLine.querySelectorAll('strong');
+          if (strongs[0] && updated.score_a != null) strongs[0].textContent = updated.score_a.toFixed(0);
+          if (strongs[1] && updated.score_b != null) strongs[1].textContent = updated.score_b.toFixed(0);
+        }
+        // Update pick box
+        const pickBox = content.querySelector('.pick-box');
+        if (pickBox && updated.pick) {
+          const pbTeam = pickBox.querySelector('.pb-team');
+          const pbProb = pickBox.querySelector('.pb-prob');
+          if (pbTeam) pbTeam.textContent = `(${updated.pick_seed || ''}) ${updated.pick}`;
+          if (pbProb) pbProb.textContent = (Math.max(newPA, newPB) * 100).toFixed(0) + '%';
+        }
+        // Update injury impact display
+        const newStatsA = updated.stats_a || {};
+        const newStatsB = updated.stats_b || {};
+        const impEls = content.querySelectorAll('.ap-section[style*="dc2626"] strong');
+        impEls.forEach(el => {
+          const impSpan = el.parentElement?.querySelector('span');
+          if (!impSpan) return;
+          const teamName = el.textContent;
+          const imp = teamName === st.teamA ? newStatsA.injury_impact : newStatsB.injury_impact;
+          impSpan.textContent = (imp != null && imp > 0) ? ` (−${imp.toFixed(1)} pts)` : '';
+        });
+      } catch (e) {
+        console.warn('Injury override re-analysis failed:', e);
+      } finally {
+        if (probSection) probSection.style.opacity = '1';
+      }
+    });
+  });
 }
 
 function closeAnalysis() {

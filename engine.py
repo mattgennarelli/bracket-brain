@@ -226,8 +226,18 @@ def calc_size_bonus(team, config=DEFAULT_CONFIG):
     orb = max(0, min(1, (team.get("orb_rate", 28.0) - 22) / 16))
     return (two_pt * 0.4 + block * 0.3 + orb * 0.3) * config.size_max_bonus
 
-# Status -> severity multiplier for injury penalty (out=full, doubtful=0.7, etc.)
-_INJURY_SEVERITY = {"out": 1.0, "doubtful": 0.7, "questionable": 0.4, "probable": 0.1}
+# Status -> severity multiplier for injury penalty.
+# College basketball has no mandatory injury reporting (unlike NBA), so coaches routinely
+# list starters as "questionable" for gamesmanship.  Only "out" and "doubtful" reliably
+# indicate a player will miss the game.  "Day-to-day" is treated separately from
+# "questionable" since ESPN maps it that way and it's even softer.
+_INJURY_SEVERITY = {
+    "out": 1.0,
+    "doubtful": 0.75,
+    "questionable": 0.0,
+    "day-to-day": 0.0,
+    "probable": 0.0,
+}
 # Minimum BPR share to include a player in the injury penalty calculation.
 _MIN_BPR_SHARE = 0.05
 
@@ -1422,6 +1432,8 @@ _NAME_ALIASES = {
     # Sports Reference / conf tourney variants
     "ualr": "arkansas little rock",
     "college of charleston": "charleston",
+    "pennsylvania": "penn",
+    "pennsylvania quakers": "penn",
     "mass lowell": "massachusetts lowell",
     "masslowell": "massachusetts lowell",
     "s dakota st": "south dakota st",

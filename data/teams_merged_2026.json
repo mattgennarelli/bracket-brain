@@ -1151,7 +1151,7 @@
         "poss": 810.0
       }
     ],
-    "injury_impact": 1.1631166301694096
+    "injury_impact": 0.49903741760232845
   },
   {
     "team": "Vanderbilt",
@@ -1490,17 +1490,17 @@
       {
         "player": "LeJuan Watts",
         "status": "questionable",
-        "bpr": 1.0,
-        "poss": 0.0,
-        "bpr_share": 0.1,
+        "bpr": 4.2366,
+        "poss": 1448.0,
+        "bpr_share": 0.1119,
         "importance": 0.1
       },
       {
         "player": "JT Toppin",
         "status": "out",
-        "bpr": 1.0,
-        "poss": 0.0,
-        "bpr_share": 0.1,
+        "bpr": 8.7097,
+        "poss": 1498.0,
+        "bpr_share": 0.23,
         "importance": 0.1
       },
       {
@@ -1549,7 +1549,7 @@
         "poss": 534.0
       }
     ],
-    "injury_impact": 0.8965107741679672
+    "injury_impact": 2.6229158324647552
   },
   {
     "team": "Michigan St.",
@@ -2191,7 +2191,7 @@
         "poss": 702.0
       }
     ],
-    "injury_impact": 0.34541031737501404
+    "injury_impact": 0.0
   },
   {
     "team": "Alabama",
@@ -2343,7 +2343,7 @@
         "poss": 456.0
       }
     ],
-    "injury_impact": 1.5187355387965062
+    "injury_impact": 1.8984194234956326
   },
   {
     "team": "Arkansas",
@@ -2675,17 +2675,17 @@
       {
         "player": "Jack Janicki",
         "status": "questionable",
-        "bpr": 1.0,
-        "poss": 0.0,
-        "bpr_share": 0.1,
+        "bpr": 0.818,
+        "poss": 732.0,
+        "bpr_share": 0.0216,
         "importance": 0.1
       },
       {
         "player": "Nolan Winter",
         "status": "questionable",
-        "bpr": 1.0,
-        "poss": 0.0,
-        "bpr_share": 0.1,
+        "bpr": 7.3864,
+        "poss": 1604.0,
+        "bpr_share": 0.1953,
         "importance": 0.1
       }
     ],
@@ -2731,7 +2731,7 @@
         "poss": 732.0
       }
     ],
-    "injury_impact": 0.2060818685094234
+    "injury_impact": 0.0
   },
   {
     "team": "Kansas",
@@ -2928,9 +2928,9 @@
       {
         "player": "Taison Chatman",
         "status": "questionable",
-        "bpr": 1.0,
-        "poss": 0.0,
-        "bpr_share": 0.1,
+        "bpr": 1.5511,
+        "poss": 600.0,
+        "bpr_share": 0.0461,
         "importance": 0.1
       },
       {
@@ -2989,7 +2989,7 @@
         "poss": 525.0
       }
     ],
-    "injury_impact": 0.8931798021749022
+    "injury_impact": 0.0
   },
   {
     "team": "UCLA",
@@ -3064,9 +3064,9 @@
       {
         "player": "Tyler Bilodeau",
         "status": "questionable",
-        "bpr": 1.0,
-        "poss": 0.0,
-        "bpr_share": 0.1,
+        "bpr": 6.1298,
+        "poss": 1549.0,
+        "bpr_share": 0.1537,
         "importance": 0.1
       },
       {
@@ -3080,9 +3080,9 @@
       {
         "player": "Donovan Dent",
         "status": "probable",
-        "bpr": 1.0,
-        "poss": 0.0,
-        "bpr_share": 0.1,
+        "bpr": 6.5371,
+        "poss": 1857.0,
+        "bpr_share": 0.164,
         "importance": 0.1
       }
     ],
@@ -3138,7 +3138,7 @@
         "poss": 452.0
       }
     ],
-    "injury_impact": 0.4851576640136108
+    "injury_impact": 0.0
   },
   {
     "team": "Saint Mary's",
@@ -5413,9 +5413,9 @@
       {
         "player": "B.J. Edwards",
         "status": "probable",
-        "bpr": 1.0,
-        "poss": 0.0,
-        "bpr_share": 0.1,
+        "bpr": 7.161,
+        "poss": 1689.0,
+        "bpr_share": 0.2236,
         "importance": 0.1
       }
     ],
@@ -6093,7 +6093,7 @@
         "poss": 1176.0
       }
     ],
-    "injury_impact": 0.9157720092271109
+    "injury_impact": 0.8140195637574319
   },
   {
     "team": "VCU",
@@ -6401,9 +6401,9 @@
       {
         "player": "Xavier Brown",
         "status": "out",
-        "bpr": 1.0,
-        "poss": 0.0,
-        "bpr_share": 0.1,
+        "bpr": 4.2312,
+        "poss": 1538.0,
+        "bpr_share": 0.1477,
         "importance": 0.1
       },
       {
@@ -6457,7 +6457,7 @@
         "poss": 476.0
       }
     ],
-    "injury_impact": 0.8568178994867187
+    "injury_impact": 1.3407270906323987
   },
   {
     "team": "Florida St.",
@@ -7371,9 +7371,9 @@
       {
         "player": "Jaylen Crocker-Johnson",
         "status": "out",
-        "bpr": 1.0,
-        "poss": 0.0,
-        "bpr_share": 0.1,
+        "bpr": 2.2581,
+        "poss": 1220.0,
+        "bpr_share": 0.1103,
         "importance": 0.1
       }
     ],
@@ -7414,7 +7414,7 @@
         "poss": 582.0
       }
     ],
-    "injury_impact": 1.5036023574111772
+    "injury_impact": 0.5412155155207509
   },
   {
     "team": "Stanford",
@@ -7488,9 +7488,9 @@
       {
         "player": "Chisom Okpara",
         "status": "questionable",
-        "bpr": 1.0,
-        "poss": 0.0,
-        "bpr_share": 0.1,
+        "bpr": 1.3045,
+        "poss": 850.0,
+        "bpr_share": 0.0566,
         "importance": 0.1
       },
       {
@@ -7565,7 +7565,7 @@
         "poss": 500.0
       }
     ],
-    "injury_impact": 0.4019844164265561
+    "injury_impact": 0.0
   },
   {
     "team": "Seton Hall",
@@ -8205,7 +8205,7 @@
         "poss": 516.0
       }
     ],
-    "injury_impact": 0.09910624348332525
+    "injury_impact": 0.0
   },
   {
     "team": "Tulsa",
@@ -9473,7 +9473,7 @@
         "poss": 661.0
       }
     ],
-    "injury_impact": 0.15469026182147005
+    "injury_impact": 0.0
   },
   {
     "team": "Oklahoma St.",
@@ -9547,17 +9547,17 @@
       {
         "player": "Parsa Fallah",
         "status": "out",
-        "bpr": 1.0,
-        "poss": 0.0,
-        "bpr_share": 0.1,
+        "bpr": 4.0067,
+        "poss": 1257.0,
+        "bpr_share": 0.1511,
         "importance": 0.1
       },
       {
         "player": "Andrija Vukovic",
         "status": "questionable",
-        "bpr": 1.0,
-        "poss": 0.0,
-        "bpr_share": 0.1,
+        "bpr": 1.1841,
+        "poss": 758.0,
+        "bpr_share": 0.0447,
         "importance": 0.1
       }
     ],
@@ -9608,7 +9608,7 @@
         "poss": 464.0
       }
     ],
-    "injury_impact": 0.5413194794572969
+    "injury_impact": 0.9802474719048377
   },
   {
     "team": "Marquette",
@@ -9804,9 +9804,9 @@
       {
         "player": "Sebastian Rancik",
         "status": "questionable",
-        "bpr": 1.0,
-        "poss": 0.0,
-        "bpr_share": 0.1,
+        "bpr": 3.2583,
+        "poss": 1446.0,
+        "bpr_share": 0.1654,
         "importance": 0.1
       },
       {
@@ -9873,7 +9873,7 @@
         "poss": 700.0
       }
     ],
-    "injury_impact": 0.9262221309655412
+    "injury_impact": 0.0
   },
   {
     "team": "Georgetown",
@@ -10189,9 +10189,9 @@
       {
         "player": "Nic McClain",
         "status": "out",
-        "bpr": 1.0,
-        "poss": 0.0,
-        "bpr_share": 0.1,
+        "bpr": 2.9864,
+        "poss": 650.0,
+        "bpr_share": 0.1058,
         "importance": 0.1
       }
     ],
@@ -10242,7 +10242,7 @@
         "poss": 650.0
       }
     ],
-    "injury_impact": 0.4138080867859547
+    "injury_impact": 0.4038144509076131
   },
   {
     "team": "Syracuse",
@@ -10494,7 +10494,7 @@
         "poss": 934.0
       }
     ],
-    "injury_impact": 0.5026410827201695
+    "injury_impact": 0.40211286617613556
   },
   {
     "team": "George Washington",
@@ -10637,7 +10637,7 @@
         "poss": 959.0
       }
     ],
-    "injury_impact": 0.6239889452355285
+    "injury_impact": 0.41599263015701904
   },
   {
     "team": "Wichita St.",
@@ -10931,7 +10931,7 @@
         "poss": 456.0
       }
     ],
-    "injury_impact": 1.3134148855120287
+    "injury_impact": 1.2123829712418726
   },
   {
     "team": "Miami OH",
@@ -11154,7 +11154,7 @@
         "poss": 710.0
       }
     ],
-    "injury_impact": 0.18371130112060857
+    "injury_impact": 0.0
   },
   {
     "team": "Colorado St.",
@@ -11993,7 +11993,7 @@
         "poss": 461.0
       }
     ],
-    "injury_impact": 0.9491927720836569
+    "injury_impact": 0.8437269085188062
   },
   {
     "team": "Wyoming",
@@ -12128,7 +12128,7 @@
         "poss": 464.0
       }
     ],
-    "injury_impact": 0.49537814158714216
+    "injury_impact": 0.3963025132697137
   },
   {
     "team": "Cal Baptist",
@@ -13275,7 +13275,7 @@
         "poss": 554.0
       }
     ],
-    "injury_impact": 0.0953555768887353
+    "injury_impact": 0.0
   },
   {
     "team": "Sam Houston St.",
@@ -14420,9 +14420,9 @@
       {
         "player": "Aaron Hunkin-Claytor",
         "status": "out",
-        "bpr": 1.0,
-        "poss": 0.0,
-        "bpr_share": 0.1,
+        "bpr": 1.5678,
+        "poss": 727.0,
+        "bpr_share": 0.1156,
         "importance": 0.1
       }
     ],
@@ -14473,7 +14473,7 @@
         "poss": 480.0
       }
     ],
-    "injury_impact": 0.41748599518500457
+    "injury_impact": 0.2251569096922085
   },
   {
     "team": "Rutgers",
@@ -14700,9 +14700,9 @@
       {
         "player": "Jermahri Hill",
         "status": "questionable",
-        "bpr": 1.0,
-        "poss": 0.0,
-        "bpr_share": 0.1,
+        "bpr": 0.7388,
+        "poss": 896.0,
+        "bpr_share": 0.0384,
         "importance": 0.1
       }
     ],
@@ -14758,7 +14758,7 @@
         "poss": 456.0
       }
     ],
-    "injury_impact": 0.4768071870275437
+    "injury_impact": 0.0
   },
   {
     "team": "UT Rio Grande Valley",
@@ -15467,9 +15467,9 @@
       {
         "player": "Gavin Walsh",
         "status": "questionable",
-        "bpr": 1.0,
-        "poss": 0.0,
-        "bpr_share": 0.1,
+        "bpr": 2.2062,
+        "poss": 550.0,
+        "bpr_share": 0.1422,
         "importance": 0.1
       }
     ],
@@ -15510,7 +15510,7 @@
         "poss": 550.0
       }
     ],
-    "injury_impact": 0.09734582371195521
+    "injury_impact": 0.0
   },
   {
     "team": "Washington St.",
@@ -16442,7 +16442,7 @@
         "poss": 514.0
       }
     ],
-    "injury_impact": 0.2736397881036994
+    "injury_impact": 0.34204973512962417
   },
   {
     "team": "Bradley",
@@ -16564,7 +16564,7 @@
         "poss": 990.0
       }
     ],
-    "injury_impact": 0.101260169315556
+    "injury_impact": 0.0
   },
   {
     "team": "Murray St.",
@@ -17101,9 +17101,9 @@
       {
         "player": "Donald Hand",
         "status": "questionable",
-        "bpr": 1.0,
-        "poss": 0.0,
-        "bpr_share": 0.1,
+        "bpr": -0.251,
+        "poss": 1460.0,
+        "bpr_share": 0.0,
         "importance": 0.1
       },
       {
@@ -17165,7 +17165,7 @@
         "poss": 570.0
       }
     ],
-    "injury_impact": 0.5936325397557709
+    "injury_impact": 0.0
   },
   {
     "team": "North Texas",
@@ -18111,7 +18111,32 @@
     "em_adj_d": 103.2898,
     "conf_strength_score": 0.4702,
     "conf_tourney_momentum": 1.0,
-    "injuries": [],
+    "injuries": [
+      {
+        "player": "Ethan Roberts",
+        "status": "out",
+        "bpr": 1.8463,
+        "poss": 1192.0,
+        "bpr_share": 0.2404,
+        "importance": 0.1
+      },
+      {
+        "player": "Dylan Williams",
+        "status": "out",
+        "bpr": 1.0,
+        "poss": 0.0,
+        "bpr_share": 0.1,
+        "importance": 0.1
+      },
+      {
+        "player": "Ryan Altman",
+        "status": "out",
+        "bpr": 1.0,
+        "poss": 0.0,
+        "bpr_share": 0.1,
+        "importance": 0.1
+      }
+    ],
     "roster": [
       {
         "player": "tj power",
@@ -18159,7 +18184,7 @@
         "poss": 555.0
       }
     ],
-    "injury_impact": 0.0
+    "injury_impact": 0.5106148132123272
   },
   {
     "team": "Navy",
@@ -18776,7 +18801,7 @@
         "poss": 502.0
       }
     ],
-    "injury_impact": 0.9875704954530963
+    "injury_impact": 0.790056396362477
   },
   {
     "team": "Bowling Green",
@@ -20644,7 +20669,7 @@
         "poss": 500.0
       }
     ],
-    "injury_impact": 0.10136150609102755
+    "injury_impact": 0.0
   },
   {
     "team": "Western Kentucky",
@@ -21668,7 +21693,7 @@
         "poss": 678.0
       }
     ],
-    "injury_impact": 0.4815109320496237
+    "injury_impact": 0.385208745639699
   },
   {
     "team": "Oakland",
@@ -22653,9 +22678,9 @@
       {
         "player": "Antonio Chandler",
         "status": "out",
-        "bpr": 1.0,
-        "poss": 0.0,
-        "bpr_share": 0.1,
+        "bpr": 1.2536,
+        "poss": 1037.0,
+        "bpr_share": 0.1283,
         "importance": 0.1
       },
       {
@@ -22709,7 +22734,7 @@
         "poss": 614.0
       }
     ],
-    "injury_impact": 1.551128771860616
+    "injury_impact": 0.24182593116850157
   },
   {
     "team": "Campbell",
@@ -22950,9 +22975,9 @@
       {
         "player": "Timo George",
         "status": "out",
-        "bpr": 1.0,
-        "poss": 0.0,
-        "bpr_share": 0.1,
+        "bpr": -0.0776,
+        "poss": 486.0,
+        "bpr_share": 0.0,
         "importance": 0.1
       }
     ],
@@ -23003,7 +23028,7 @@
         "poss": 486.0
       }
     ],
-    "injury_impact": 0.8220107527105182
+    "injury_impact": 0.0
   },
   {
     "team": "Charleston",
@@ -24882,7 +24907,7 @@
         "poss": 710.0
       }
     ],
-    "injury_impact": 0.20463906251301492
+    "injury_impact": 0.0
   },
   {
     "team": "Howard",
@@ -25192,17 +25217,17 @@
       {
         "player": "Jason Schofield",
         "status": "out",
-        "bpr": 1.0,
-        "poss": 0.0,
-        "bpr_share": 0.1,
+        "bpr": 0.9785,
+        "poss": 690.0,
+        "bpr_share": 0.1341,
         "importance": 0.1
       },
       {
         "player": "Elijah Lewis",
         "status": "out",
-        "bpr": 1.0,
-        "poss": 0.0,
-        "bpr_share": 0.1,
+        "bpr": 1.2413,
+        "poss": 1160.0,
+        "bpr_share": 0.1702,
         "importance": 0.1
       },
       {
@@ -25256,7 +25281,7 @@
         "poss": 690.0
       }
     ],
-    "injury_impact": 1.1919697009388694
+    "injury_impact": 0.4669227935092562
   },
   {
     "team": "Mercer",
@@ -25612,7 +25637,7 @@
         "poss": 690.0
       }
     ],
-    "injury_impact": 0.49217086352615846
+    "injury_impact": 0.39373669082092677
   },
   {
     "team": "Marshall",
@@ -26469,9 +26494,9 @@
       {
         "player": "Daniel Freitag",
         "status": "questionable",
-        "bpr": 1.0,
-        "poss": 0.0,
-        "bpr_share": 0.1,
+        "bpr": 3.8394,
+        "poss": 1212.0,
+        "bpr_share": 0.5255,
         "importance": 0.1
       }
     ],
@@ -26517,7 +26542,7 @@
         "poss": 480.0
       }
     ],
-    "injury_impact": 0.09967821370692288
+    "injury_impact": 0.0
   },
   {
     "team": "Quinnipiac",
@@ -28156,9 +28181,9 @@
       {
         "player": "Caelum Swanton-Rodger",
         "status": "questionable",
-        "bpr": 1.0,
-        "poss": 0.0,
-        "bpr_share": 0.1,
+        "bpr": -0.1323,
+        "poss": 1084.0,
+        "bpr_share": 0.0,
         "importance": 0.1
       }
     ],
@@ -28209,7 +28234,7 @@
         "poss": 464.0
       }
     ],
-    "injury_impact": 0.1033397051549943
+    "injury_impact": 0.0
   },
   {
     "team": "Eastern Michigan",
@@ -34900,9 +34925,9 @@
       {
         "player": "Chas Lewless",
         "status": "out",
-        "bpr": 1.0,
-        "poss": 0.0,
-        "bpr_share": 0.1,
+        "bpr": -2.2778,
+        "poss": 456.0,
+        "bpr_share": 0.0,
         "importance": 0.1
       }
     ],
@@ -34953,7 +34978,7 @@
         "poss": 456.0
       }
     ],
-    "injury_impact": 0.4143878297385151
+    "injury_impact": 0.0
   },
   {
     "team": "Southeastern Louisiana",
@@ -36533,9 +36558,9 @@
       {
         "player": "Jamie Phillips",
         "status": "questionable",
-        "bpr": 1.0,
-        "poss": 0.0,
-        "bpr_share": 0.1,
+        "bpr": -1.8575,
+        "poss": 816.0,
+        "bpr_share": 0.0,
         "importance": 0.1
       }
     ],
@@ -36586,7 +36611,7 @@
         "poss": 620.0
       }
     ],
-    "injury_impact": 0.10014584877031762
+    "injury_impact": 0.0
   },
   {
     "team": "North Carolina A&T",
@@ -37004,17 +37029,17 @@
       {
         "player": "Josiah Harris",
         "status": "questionable",
-        "bpr": 1.0,
-        "poss": 0.0,
-        "bpr_share": 0.1,
+        "bpr": -0.6531,
+        "poss": 1013.0,
+        "bpr_share": 0.0,
         "importance": 0.1
       },
       {
         "player": "Dayan Nessah",
         "status": "questionable",
-        "bpr": 1.0,
-        "poss": 0.0,
-        "bpr_share": 0.1,
+        "bpr": 0.8085,
+        "poss": 1132.0,
+        "bpr_share": 0.1743,
         "importance": 0.1
       }
     ],
@@ -37060,7 +37085,7 @@
         "poss": 745.0
       }
     ],
-    "injury_impact": 0.20879912498171474
+    "injury_impact": 0.0
   },
   {
     "team": "Le Moyne",
@@ -39061,7 +39086,7 @@
         "poss": 484.0
       }
     ],
-    "injury_impact": 0.10072916786997003
+    "injury_impact": 0.0
   },
   {
     "team": "Holy Cross",
@@ -39487,9 +39512,9 @@
       {
         "player": "Mo Njie",
         "status": "questionable",
-        "bpr": 1.0,
-        "poss": 0.0,
-        "bpr_share": 0.1,
+        "bpr": -1.0962,
+        "poss": 1219.0,
+        "bpr_share": 0.0,
         "importance": 0.1
       },
       {
@@ -39503,9 +39528,9 @@
       {
         "player": "Austin Nunez",
         "status": "questionable",
-        "bpr": 1.0,
-        "poss": 0.0,
-        "bpr_share": 0.1,
+        "bpr": -3.9123,
+        "poss": 1021.0,
+        "bpr_share": 0.0,
         "importance": 0.1
       },
       {
@@ -39567,7 +39592,7 @@
         "poss": 554.0
       }
     ],
-    "injury_impact": 1.5432625027773534
+    "injury_impact": 0.0
   },
   {
     "team": "Stonehill",

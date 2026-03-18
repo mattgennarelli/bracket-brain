@@ -5,6 +5,12 @@ on:
     # Save picks: 9am ET = 2pm UTC (lines are up by then)
     - cron: '0 14 13-31 3 *'   # March 13-31
     - cron: '0 14 1-8  4 *'    # April 1-8
+    # Pre-game refresh: 11am ET = 4pm UTC (injuries resolve 1-2h before tip, lines sharpen)
+    - cron: '0 16 13-31 3 *'   # March 13-31
+    - cron: '0 16 1-8  4 *'    # April 1-8
+    # Evening refresh: 5pm ET = 10pm UTC (catch late-window game updates)
+    - cron: '0 22 13-31 3 *'   # March 13-31
+    - cron: '0 22 1-8  4 *'    # April 1-8
     # Settle: every 15 min from 12pm–2am ET (catches games within ~15 min of final buzzer)
     # 12pm ET = 17:00 UTC, 2am ET = 07:00 UTC next day
     - cron: '*/15 17-23,0-7 14-31 3 *'   # March
@@ -43,10 +49,9 @@ jobs:
             echo "action=${{ inputs.action }}" >> $GITHUB_OUTPUT
             exit 0
           fi
-          # Infer from cron time: 2pm UTC = save, else settle (17-23 or 0-7 = settle)
+          # Infer from cron time: 14/16/22 UTC = save windows, else settle
           HOUR=$(date -u +%H)
-          MINUTE=$(date -u +%M)
-          if [ "$HOUR" -eq 14 ] && [ "$MINUTE" -eq 0 ]; then
+          if [ "$HOUR" -eq 14 ] || [ "$HOUR" -eq 16 ] || [ "$HOUR" -eq 22 ]; then
             echo "action=save" >> $GITHUB_OUTPUT
           else
             echo "action=settle" >> $GITHUB_OUTPUT

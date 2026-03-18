@@ -146,6 +146,25 @@ def merge_injuries(merged, injuries_data):
             merged[key]["injuries"] = inj_list
         if roster or not merged[key].get("roster"):
             merged[key]["roster"] = roster
+        # Enrich injury BPR/poss from roster when ESPN used fallback values
+        team_roster = merged[key].get("roster", [])
+        if team_roster:
+            roster_lookup = {r["player"].lower(): r for r in team_roster}
+            team_bpr_total = max(sum(r["bpr"] for r in team_roster if r["bpr"] > 0), 1.0)
+            for inj in merged[key].get("injuries", []):
+                if inj.get("bpr", 0) <= 1.0 and inj.get("poss", 0) == 0:
+                    pname = inj["player"].lower()
+                    match = roster_lookup.get(pname)
+                    if not match:
+                        last = pname.split()[-1] if pname else ""
+                        for rname, rdata in roster_lookup.items():
+                            if last and last in rname:
+                                match = rdata
+                                break
+                    if match:
+                        inj["bpr"] = match["bpr"]
+                        inj["poss"] = match["poss"]
+                        inj["bpr_share"] = round(max(match["bpr"], 0) / team_bpr_total, 4)
         merged[key].pop("injury_impact", None)
         merged[key]["injury_impact"] = calc_injury_penalty(merged[key], DEFAULT_CONFIG)
 
