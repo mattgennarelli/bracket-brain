@@ -820,6 +820,50 @@ def _haversine(lat1, lon1, lat2, lon2):
     a = math.sin(dlat/2)**2 + math.cos(lat1)*math.cos(lat2)*math.sin(dlon/2)**2
     return R * 2 * math.asin(math.sqrt(a))
 
+
+_DATA_DIR = os.path.join(os.path.dirname(os.path.abspath(__file__)), "data")
+_school_locations: dict = {}
+_venues_cache: dict = {}
+
+
+def _load_school_locations() -> dict:
+    global _school_locations
+    if _school_locations:
+        return _school_locations
+    path = os.path.join(_DATA_DIR, "school_locations.json")
+    if os.path.isfile(path):
+        with open(path) as f:
+            data = json.load(f)
+        _school_locations = {k: v for k, v in data.items() if not k.startswith("_")}
+    return _school_locations
+
+
+def _load_venues(year: int) -> dict:
+    global _venues_cache
+    if year in _venues_cache:
+        return _venues_cache[year]
+    path = os.path.join(_DATA_DIR, f"venues_{year}.json")
+    if os.path.isfile(path):
+        with open(path) as f:
+            data = json.load(f)
+        _venues_cache[year] = data
+        return data
+    return {}
+
+
+def _get_game_site(venues: dict, region: str, round_name: str) -> list | None:
+    """Return [lat, lon] for the venue where this round/region game is played."""
+    if not venues:
+        return None
+    round_map = {"Round of 64": "R64", "Round of 32": "R32",
+                 "Sweet 16": "S16", "Elite 8": "E8",
+                 "Final Four": "F4", "Championship": "Championship"}
+    rkey = round_map.get(round_name, round_name)
+    if rkey in ("F4", "Championship"):
+        return venues.get(rkey) or venues.get("F4")
+    region_venues = venues.get("regions", {}).get(region, {})
+    return region_venues.get(rkey)
+
 # ===========================================================================
 # ENRICHMENT — Auto-fill intangibles from built-in databases
 # ===========================================================================
@@ -917,15 +961,16 @@ def enrich_team(team):
 FIRST_ROUND_MATCHUPS = [(1,16),(8,9),(5,12),(4,13),(6,11),(3,14),(7,10),(2,15)]
 REGIONS = ["South", "East", "Midwest", "West"]
 
-def simulate_region(teams_by_seed, config=DEFAULT_CONFIG):
+def simulate_region(teams_by_seed, config=DEFAULT_CONFIG, region_name=None, venues=None):
     enriched = {s: enrich_team(t) for s, t in teams_by_seed.items()}
     matchups = [(enriched[a], enriched[b]) for a, b in FIRST_ROUND_MATCHUPS if a in enriched and b in enriched]
     results = {"Round of 64": [], "Round of 32": [], "Sweet 16": [], "Elite 8": []}
 
     def play_round(teams, round_name):
+        site = _get_game_site(venues, region_name, round_name) if venues else None
         winners = []
         for i in range(0, len(teams), 2):
-            w = simulate_game(teams[i], teams[i+1], config=config)
+            w = simulate_game(teams[i], teams[i+1], game_site=site, config=config)
             results[round_name].append({
                 "team_a": teams[i]["team"], "seed_a": teams[i]["seed"],
                 "team_b": teams[i+1]["team"], "seed_b": teams[i+1]["seed"],
@@ -934,9 +979,10 @@ def simulate_region(teams_by_seed, config=DEFAULT_CONFIG):
             winners.append(w)
         return winners
 
+    r64_site = _get_game_site(venues, region_name, "Round of 64") if venues else None
     r64_winners = []
     for a, b in matchups:
-        w = simulate_game(a, b, config=config)
+        w = simulate_game(a, b, game_site=r64_site, config=config)
         results["Round of 64"].append({"team_a": a["team"], "seed_a": a["seed"],
             "team_b": b["team"], "seed_b": b["seed"], "winner": w["team"]})
         r64_winners.append(w)
@@ -946,36 +992,44 @@ def simulate_region(teams_by_seed, config=DEFAULT_CONFIG):
     e8_winners = play_round(s16_winners, "Elite 8")
     return e8_winners[0], results
 
-def simulate_tournament(bracket, config=DEFAULT_CONFIG):
+def simulate_tournament(bracket, config=DEFAULT_CONFIG, venues=None):
     results = {}
     final_four = []
     for region in REGIONS:
         if region not in bracket: continue
-        winner, rr = simulate_region(bracket[region], config)
+        winner, rr = simulate_region(bracket[region], config, region_name=region, venues=venues)
         results[region] = rr
         final_four.append((region, winner))
 
     results["Final Four"] = []
     champ_teams = []
+    f4_site = _get_game_site(venues, None, "Final Four") if venues else None
     for i, j in [(0,1),(2,3)]:
         if i < len(final_four) and j < len(final_four):
             _, a = final_four[i]; _, b = final_four[j]
-            w = simulate_game(a, b, config=config)
+            w = simulate_game(a, b, game_site=f4_site, config=config)
             results["Final Four"].append({"team_a": a["team"], "seed_a": a["seed"],
                 "team_b": b["team"], "seed_b": b["seed"], "winner": w["team"]})
             champ_teams.append(w)
 
     results["Championship"] = []
+    champ_site = _get_game_site(venues, None, "Championship") if venues else None
     if len(champ_teams) == 2:
-        w = simulate_game(champ_teams[0], champ_teams[1], config=config)
+        w = simulate_game(champ_teams[0], champ_teams[1], game_site=champ_site, config=config)
         results["Championship"].append({"team_a": champ_teams[0]["team"], "seed_a": champ_teams[0]["seed"],
             "team_b": champ_teams[1]["team"], "seed_b": champ_teams[1]["seed"], "winner": w["team"]})
         return w, results
     return None, results
 
-def run_monte_carlo(bracket, config=DEFAULT_CONFIG):
+def run_monte_carlo(bracket, config=DEFAULT_CONFIG, year=None):
     counts = {k: defaultdict(int) for k in ["champ","ff","e8","s16","r32"]}
     game_results = defaultdict(lambda: defaultdict(int))
+
+    # Load venue data for proximity bonus (uses year from bracket if not provided)
+    if year is None:
+        year = next((v.get("year") for v in bracket.values()
+                     if isinstance(v, dict) and "year" in v), None)
+    venues = _load_venues(year) if year else {}
 
     print(f"Running {config.num_sims:,} simulations...")
     print(f"  Factors: efficiency, seed, experience, coach, pedigree, preseason,")
@@ -984,7 +1038,7 @@ def run_monte_carlo(bracket, config=DEFAULT_CONFIG):
     for sim in range(config.num_sims):
         if (sim+1) % 2000 == 0:
             print(f"  {sim+1:,}/{config.num_sims:,}")
-        champ, results = simulate_tournament(bracket, config)
+        champ, results = simulate_tournament(bracket, config, venues=venues)
         if champ: counts["champ"][champ["team"]] += 1
 
         for rname, rdata in results.items():
@@ -1409,6 +1463,10 @@ def enrich_bracket_with_teams(bracket, teams_merged):
                       "em_tempo", "top_player", "top_player_bpr"):
                 if k in merged and merged[k] is not None:
                     team_obj[k] = merged[k]
+            # Attach school lat/lon for proximity calculations
+            locs = _load_school_locations()
+            if tname in locs and "location" not in team_obj:
+                team_obj["location"] = locs[tname]
             enriched += 1
             enriched_names.add(tname)
 
