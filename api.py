@@ -597,6 +597,108 @@ def _days_ago(n):
     return d.strftime("%Y-%m-%d")
 
 
+@app.get("/injuries/{year}")
+def get_injuries(year: int):
+    """Return current injury data for all teams."""
+    path = os.path.join(DATA_DIR, f"injuries_{year}.json")
+    if not os.path.isfile(path):
+        return {}
+    with open(path) as f:
+        return json.load(f)
+
+
+@app.post("/injuries/{year}/update")
+def update_injury(
+    year: int,
+    team: str = Query(...),
+    player: str = Query(...),
+    status: str = Query(..., description="out, doubtful, questionable, probable, day-to-day, healthy (removes)"),
+):
+    """Add, update, or remove a single injury entry. BPR data auto-populated from EvanMiya.
+
+    Examples:
+      POST /injuries/2026/update?team=Duke&player=Patrick Ngongba&status=out
+      POST /injuries/2026/update?team=UCLA&player=Donovan Dent&status=healthy
+    """
+    path = os.path.join(DATA_DIR, f"injuries_{year}.json")
+    if os.path.isfile(path):
+        with open(path) as f:
+            data = json.load(f)
+    else:
+        data = {}
+
+    # Ensure team entry exists
+    if team not in data:
+        data[team] = {"injuries": [], "roster": []}
+    elif isinstance(data[team], list):
+        data[team] = {"injuries": data[team], "roster": []}
+
+    injuries = data[team].get("injuries", [])
+
+    # Remove existing entry for this player (case-insensitive)
+    injuries = [i for i in injuries if i.get("player", "").lower() != player.lower()]
+
+    if status.lower() not in ("healthy", "active", "playing", "remove"):
+        # Add/update: look up BPR data
+        sys.path.insert(0, ROOT) if ROOT not in sys.path else None
+        from scripts.fetch_injuries_live import _load_bpr_data, _find_bpr_team, FALLBACK_BPR_SHARE
+        from datetime import timezone as _tz
+        bpr_data = _load_bpr_data(year)
+        team_bpr = _find_bpr_team(team, bpr_data)
+
+        # Match player in BPR data
+        player_match = team_bpr.get(player.lower())
+        if player_match is None:
+            last = player.lower().split()[-1] if player else ""
+            for k, v in team_bpr.items():
+                if last and last in k:
+                    player_match = v
+                    break
+        if player_match is None:
+            parts = player.lower().split()
+            if len(parts) >= 2:
+                for k, v in team_bpr.items():
+                    if parts[0] in k and parts[-1] in k:
+                        player_match = v
+                        break
+
+        if player_match:
+            bpr_val = round(float(player_match["bpr"]), 4)
+            poss_val = round(float(player_match.get("poss", 0)), 0)
+            share_val = round(float(player_match.get("bpr_share", 0)), 4)
+        else:
+            bpr_val = round(FALLBACK_BPR_SHARE * 10, 4)
+            poss_val = 0.0
+            share_val = FALLBACK_BPR_SHARE
+
+        injuries.append({
+            "player": player,
+            "status": status.lower(),
+            "bpr": bpr_val,
+            "poss": poss_val,
+            "bpr_share": share_val,
+            "importance": share_val,
+            "source": "manual",
+            "updated_at": datetime.now(timezone.utc).isoformat(),
+        })
+        action = f"set {player} to {status}"
+    else:
+        action = f"removed {player}"
+
+    data[team]["injuries"] = injuries
+    with open(path, "w") as f:
+        json.dump(data, f, indent=2)
+
+    # Also rebuild teams_merged so the engine picks it up
+    try:
+        from scripts.fetch_data import main as rebuild_data
+        rebuild_data(year)
+    except Exception:
+        pass  # non-critical
+
+    return {"ok": True, "team": team, "action": action, "injuries": injuries}
+
+
 @app.get("/benchmark")
 def get_benchmark():
     """Return model comparison (seed-only vs efficiency vs full) for Picks tab."""
