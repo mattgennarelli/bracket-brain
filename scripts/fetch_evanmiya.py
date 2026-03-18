@@ -23,8 +23,9 @@ Output: data/evanmiya_YYYY.json with per-team:
   em_star_concentration,              — top1_bpr / top5_bpr (1.0 = one-man band)
   em_poss_weighted_bpr,               — possession-weighted avg BPR
   em_depth_score,                     — 0-1 roster depth score
-  em_size_adj_bpr,                    — BPR weighted by position (rewards frontcourt quality)
-  em_interior_bpr                     — sum BPR of players at position >= 4.0 (top 8)
+  em_big_bpr,                         — sum BPR of top-4 frontcourt players (pos >= 3.0)
+  em_guard_bpr,                       — sum BPR of top-4 backcourt players (pos < 3.0)
+  em_creator_count                    — count of ball-dominant creators (role < 2.0) in top 8
 """
 import csv
 import json
@@ -151,6 +152,7 @@ def _load_player_ratings(path):
         dbpr_col   = _find_col(headers, ["DBPR", "dbpr"])
         poss_col   = _find_col(headers, ["poss", "Off Poss", "Poss", "Minutes", "Min", "MP"])
         pos_col    = _find_col(headers, ["position", "Position", "Pos"])
+        role_col   = _find_col(headers, ["role", "Role"])
         # Team-level efficiency estimates on same scale as Torvik adj_o/adj_d
         team_off_col = _find_col(headers, ["adj_team_off_eff", "Adj Team Off Eff"])
         team_def_col = _find_col(headers, ["adj_team_def_eff", "Adj Team Def Eff"])
@@ -165,6 +167,7 @@ def _load_player_ratings(path):
             key  = team.lower()
             if key not in team_players:
                 team_players[key] = {"team": team, "players": []}
+            role = _num(row.get(role_col), 3.0) if role_col else 3.0
             entry = {
                 "name": player,
                 "bpr":  bpr,
@@ -172,6 +175,7 @@ def _load_player_ratings(path):
                 "dbpr": _num(row.get(dbpr_col)) if dbpr_col else 0.0,
                 "poss": max(poss, 1),
                 "pos":  max(1.0, min(5.0, pos)),
+                "role": max(1.0, min(5.0, role)),
             }
             # Team efficiency context (same value for all players on a team; store once)
             if team_off_col and "em_adj_o" not in team_players[key]:
@@ -214,19 +218,30 @@ def _load_player_ratings(path):
         depth_balance = 1.0 - star_conc
         depth_score   = round(0.6 * depth_quality + 0.4 * depth_balance, 3)
 
-        # Interior strength metrics (top-8 by BPR).
-        # Tournament basketball rewards frontcourt quality — rebounding, paint
-        # scoring, and rim protection are harder to scheme against with limited
-        # prep time.  Controlled analysis (2010-2025, N=225 equal-talent games)
-        # shows ~58% win rate for teams with higher size-adjusted BPR.
+        # Positional & role metrics (top-8 by BPR).
+        # Analysis of 941 tournament matchups (2010-2025) showed:
+        #   - big_bpr (pos >= 3.0): +0.093 residual corr, 56.7% close-game WR
+        #   - guard_bpr (pos < 3.0): +0.076 residual corr, 54.5% close-game WR
+        #   - creator_count (role < 2.0): -0.081 residual — fewer ball-dominant
+        #     creators among top talent = better (role-defined teams with clear
+        #     creator/finisher splits outperform in tournament pressure).
         top8 = players[:8]
         has_pos = any(p.get("pos", 3.0) != 3.0 for p in top8)
         if has_pos:
-            size_adj_bpr = round(sum(p["bpr"] * (p["pos"] / 3.0) for p in top8), 3)
-            interior_bpr = round(sum(p["bpr"] for p in top8 if p["pos"] >= 4.0), 3)
+            # Top-4 frontcourt and backcourt players by BPR
+            bigs = sorted([p for p in top8 if p["pos"] >= 3.0], key=lambda p: -p["bpr"])[:4]
+            guards = sorted([p for p in top8 if p["pos"] < 3.0], key=lambda p: -p["bpr"])[:4]
+            big_bpr = round(sum(p["bpr"] for p in bigs), 3) if bigs else 0.0
+            guard_bpr = round(sum(p["bpr"] for p in guards), 3) if guards else 0.0
         else:
-            size_adj_bpr = None
-            interior_bpr = None
+            big_bpr = None
+            guard_bpr = None
+        # Creator concentration: role 1 = creator (ball-dominant), role 5 = receiver
+        has_role = any(p.get("role", 3.0) != 3.0 for p in top8)
+        if has_role:
+            creator_count = sum(1 for p in top8 if p["role"] < 2.0)
+        else:
+            creator_count = None
 
         result[key] = {
             "team":           data["team"],
@@ -237,10 +252,12 @@ def _load_player_ratings(path):
             "em_poss_weighted_bpr":  round(poss_weighted, 3),
             "em_depth_score":        depth_score,
         }
-        if size_adj_bpr is not None:
-            result[key]["em_size_adj_bpr"] = size_adj_bpr
-        if interior_bpr is not None:
-            result[key]["em_interior_bpr"] = interior_bpr
+        if big_bpr is not None:
+            result[key]["em_big_bpr"] = big_bpr
+        if guard_bpr is not None:
+            result[key]["em_guard_bpr"] = guard_bpr
+        if creator_count is not None:
+            result[key]["em_creator_count"] = creator_count
         # Pass through team efficiency estimates if captured
         if "em_adj_o" in data:
             result[key]["em_adj_o"] = round(data["em_adj_o"], 4)
@@ -294,7 +311,7 @@ def load_evanmiya_season(year=2026):
             # Depth features, interior strength, EvanMiya efficiency estimates
             for depth_key in ("em_top5_bpr", "em_star_concentration",
                               "em_poss_weighted_bpr", "em_depth_score",
-                              "em_size_adj_bpr", "em_interior_bpr",
+                              "em_big_bpr", "em_guard_bpr", "em_creator_count",
                               "em_adj_o", "em_adj_d"):
                 if depth_key in pdata:
                     result[key][depth_key] = pdata[depth_key]

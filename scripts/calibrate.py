@@ -353,7 +353,9 @@ PARAM_SPEC = [
     ("em_opp_adjust_max_bonus", 0.0, 8.0),
     ("em_adj_o_weight", 0.0, 1.0),
     ("em_runs_margin_max_bonus", 0.0, 6.0),
-    ("interior_max_bonus", 0.0, 4.0),
+    ("big_bpr_max_bonus", 0.0, 4.0),
+    ("guard_bpr_max_bonus", 0.0, 4.0),
+    ("creator_count_max_bonus", 0.0, 4.0),
     ("ft_foul_rate_max_bonus", 0.0, 6.0),
     # Per-round score scaling (Phase 1)
     ("score_scale", 0.88, 1.00),

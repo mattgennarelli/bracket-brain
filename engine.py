@@ -77,7 +77,9 @@ class ModelConfig:
     em_opp_adjust_max_bonus: float = 2.0  # em_opponent_adjust: opponent quality adjustment
     em_adj_o_weight: float = 0.3          # blend weight for EvanMiya adj_o/adj_d in base score (0=Torvik only)
     em_runs_margin_max_bonus: float = 2.0  # scoring-burst margin bonus (ability to go on runs)
-    interior_max_bonus: float = 1.5        # frontcourt quality differential (em_size_adj_bpr)
+    big_bpr_max_bonus: float = 1.5         # frontcourt quality differential (em_big_bpr)
+    guard_bpr_max_bonus: float = 1.5       # backcourt quality differential (em_guard_bpr)
+    creator_count_max_bonus: float = 1.0   # penalty for too many ball-dominant creators
     ft_foul_rate_max_bonus: float = 2.0   # margin bonus from differential FT rate (foul drawing vs committing)
     score_scale: float = 0.942            # tournament scoring discount vs regular-season efficiency baseline
                                           # (calibrated: model over-predicts by 8.8 pts on 187 tournament games)
@@ -248,22 +250,57 @@ def calc_runs_margin_bonus(team_a, team_b, config=DEFAULT_CONFIG):
     return max(-config.em_runs_margin_max_bonus, min(config.em_runs_margin_max_bonus, margin))
 
 
-def calc_interior_bonus(team_a, team_b, config=DEFAULT_CONFIG):
-    """Margin bonus from interior strength differential (em_size_adj_bpr).
+def calc_big_bpr_bonus(team_a, team_b, config=DEFAULT_CONFIG):
+    """Margin bonus from frontcourt quality differential (em_big_bpr).
 
-    Tournament basketball rewards frontcourt quality: rebounding, paint scoring,
-    and rim protection are harder to scheme against with limited prep time.
-    Controlled analysis (2010-2025, 225 equal-talent tournament games) shows
-    ~58% win rate for teams with higher size-adjusted BPR.
-    Typical range ~15-70; a 10-pt diff maps to ±max_bonus.
+    Sum of BPR for top-4 players with position >= 3.0 (forwards/centers).
+    Analysis of 941 tournament matchups shows +0.093 residual correlation,
+    56.7% close-game win rate for the team with the frontcourt advantage.
+    Typical range ~5-30; a 10-pt diff maps to ±max_bonus.
     """
-    ia = team_a.get("em_size_adj_bpr")
-    ib = team_b.get("em_size_adj_bpr")
+    ia = team_a.get("em_big_bpr")
+    ib = team_b.get("em_big_bpr")
     if ia is None or ib is None:
         return 0.0
     diff = ia - ib
-    margin = diff * (config.interior_max_bonus / 10.0)
-    return max(-config.interior_max_bonus, min(config.interior_max_bonus, margin))
+    margin = diff * (config.big_bpr_max_bonus / 10.0)
+    return max(-config.big_bpr_max_bonus, min(config.big_bpr_max_bonus, margin))
+
+
+def calc_guard_bpr_bonus(team_a, team_b, config=DEFAULT_CONFIG):
+    """Margin bonus from backcourt quality differential (em_guard_bpr).
+
+    Sum of BPR for top-4 players with position < 3.0 (guards).
+    Analysis shows +0.076 residual correlation, 54.5% close-game win rate.
+    Guards drive tempo, handle pressure, and create in late-game situations.
+    Typical range ~5-25; a 10-pt diff maps to ±max_bonus.
+    """
+    ga = team_a.get("em_guard_bpr")
+    gb = team_b.get("em_guard_bpr")
+    if ga is None or gb is None:
+        return 0.0
+    diff = ga - gb
+    margin = diff * (config.guard_bpr_max_bonus / 10.0)
+    return max(-config.guard_bpr_max_bonus, min(config.guard_bpr_max_bonus, margin))
+
+
+def calc_creator_count_bonus(team_a, team_b, config=DEFAULT_CONFIG):
+    """Margin bonus from creator/role balance differential (em_creator_count).
+
+    Count of ball-dominant creators (role < 2.0) among top-8 by BPR.
+    FEWER creators is better: teams with clear creator/finisher role definition
+    outperform in tournament (55.4% vs 41.2% in close games, -0.081 residual).
+    Role 1 = offensive creator, Role 5 = receiver/finisher.
+    Typical range 1-6; a 2-player diff maps to ±max_bonus.
+    """
+    ca = team_a.get("em_creator_count")
+    cb = team_b.get("em_creator_count")
+    if ca is None or cb is None:
+        return 0.0
+    # Fewer creators is BETTER, so we negate: team with fewer creators gets positive bonus
+    diff = cb - ca  # positive when A has fewer (better)
+    margin = diff * (config.creator_count_max_bonus / 2.0)
+    return max(-config.creator_count_max_bonus, min(config.creator_count_max_bonus, margin))
 
 
 def calc_size_bonus(team, config=DEFAULT_CONFIG):
@@ -449,7 +486,9 @@ def predict_game(team_a, team_b, game_site=None, config=DEFAULT_CONFIG, round_na
     foul_rate_margin = _calc_foul_rate_margin(team_a, team_b, poss, config)
     sos_margin = _calc_sos_edge_margin(team_a, team_b, config)
     runs_margin = calc_runs_margin_bonus(team_a, team_b, config)
-    interior_margin = calc_interior_bonus(team_a, team_b, config)
+    big_bpr_margin = calc_big_bpr_bonus(team_a, team_b, config)
+    guard_bpr_margin = calc_guard_bpr_bonus(team_a, team_b, config)
+    creator_margin = calc_creator_count_bonus(team_a, team_b, config)
 
     # All factor adjustments
     factor_names = ["experience", "coach", "pedigree", "preseason", "proximity",
@@ -483,7 +522,7 @@ def predict_game(team_a, team_b, game_site=None, config=DEFAULT_CONFIG, round_na
     cap = config.factor_margin_cap
     factor_margin = math.tanh(factor_margin / cap) * cap
 
-    extra_margin = possession_margin + ft_margin + foul_rate_margin + sos_margin + runs_margin + interior_margin
+    extra_margin = possession_margin + ft_margin + foul_rate_margin + sos_margin + runs_margin + big_bpr_margin + guard_bpr_margin + creator_margin
     adjusted_margin = base_margin + factor_margin + extra_margin
 
     # Close-game upset tolerance: shift toward underdog when game is close and underdog has favorable indicators
@@ -553,7 +592,9 @@ def predict_game(team_a, team_b, game_site=None, config=DEFAULT_CONFIG, round_na
         "ft_margin": round(ft_margin, 2),
         "sos_margin": round(sos_margin, 2),
         "runs_margin": round(runs_margin, 2),
-        "interior_margin": round(interior_margin, 2),
+        "big_bpr_margin": round(big_bpr_margin, 2),
+        "guard_bpr_margin": round(guard_bpr_margin, 2),
+        "creator_margin": round(creator_margin, 2),
         "upset_tolerance_bonus": round(upset_bonus, 2),
         "efficiency_prob": round(eff_prob, 4),
         "seed_prob": round(seed_prob, 4),
@@ -1576,7 +1617,7 @@ def enrich_bracket_with_teams(bracket, teams_merged):
                       "avg_experience", "experience",
                       "efg_pct", "efg_d",
                       "wins", "losses", "games", "ppg", "opp_ppg",
-                      "em_depth_score", "em_size_adj_bpr", "em_interior_bpr",
+                      "em_depth_score", "em_big_bpr", "em_guard_bpr", "em_creator_count",
                       "wab", "elite_sos", "qual_o", "qual_d", "qual_barthag",
                       "conf_adj_o", "conf_adj_d", "win_pct", "conf_win_pct", "conf_rating", "conf_strength_score",
                       "momentum", "conf_tourney_momentum", "adj_o_recent", "adj_d_recent", "injuries", "injury_impact",
@@ -2029,7 +2070,9 @@ def _make_pick_dict(game_num, round_of, round_name, region, a, b, result, pick_t
             "sos":          _r(t.get("sos"), 3),
             "conf_rating":  t.get("conf_rating"),
             "em_depth_score": _r(t.get("em_depth_score"), 3),
-            "em_size_adj_bpr": _r(t.get("em_size_adj_bpr"), 2),
+            "em_big_bpr": _r(t.get("em_big_bpr"), 2),
+            "em_guard_bpr": _r(t.get("em_guard_bpr"), 2),
+            "em_creator_count": t.get("em_creator_count"),
             # Scoring
             "ppg":          _r(t.get("ppg"), 1),
             "opp_ppg":      _r(t.get("opp_ppg"), 1),
@@ -2056,7 +2099,9 @@ def _make_pick_dict(game_num, round_of, round_name, region, a, b, result, pick_t
             "top_player":   t.get("top_player"),
             "top_player_bpr": _r(t.get("top_player_bpr"), 2),
             "em_depth_score": _r(t.get("em_depth_score"), 3),
-            "em_size_adj_bpr": _r(t.get("em_size_adj_bpr"), 2),
+            "em_big_bpr": _r(t.get("em_big_bpr"), 2),
+            "em_guard_bpr": _r(t.get("em_guard_bpr"), 2),
+            "em_creator_count": t.get("em_creator_count"),
             "star_score":   _r(t.get("star_score"), 2),
             # Injuries
             "injuries":     t.get("injuries"),
@@ -2092,7 +2137,9 @@ def _make_pick_dict(game_num, round_of, round_name, region, a, b, result, pick_t
         "ft_margin":          round(result.get("ft_margin", 0), 2),
         "sos_margin":         round(result.get("sos_margin", 0), 2),
         "runs_margin":        round(result.get("runs_margin", 0), 2),
-        "interior_margin":    round(result.get("interior_margin", 0), 2),
+        "big_bpr_margin":     round(result.get("big_bpr_margin", 0), 2),
+        "guard_bpr_margin":   round(result.get("guard_bpr_margin", 0), 2),
+        "creator_margin":     round(result.get("creator_margin", 0), 2),
         # Model signal probabilities
         "efficiency_prob":    round(result["efficiency_prob"], 4),
         "seed_prob":          round(result["seed_prob"], 4),

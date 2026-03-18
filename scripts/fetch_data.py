@@ -93,7 +93,7 @@ def load_evanmiya(year):
         # Player depth
         "top_player", "top_player_bpr",
         "em_top5_bpr", "em_star_concentration", "em_poss_weighted_bpr", "em_depth_score",
-        "em_size_adj_bpr", "em_interior_bpr",
+        "em_big_bpr", "em_guard_bpr", "em_creator_count",
         # EvanMiya efficiency on Torvik scale (from player CSV context)
         "em_adj_o", "em_adj_d",
         # Legacy fields (kept for backwards compat)
