@@ -1550,8 +1550,8 @@ async function showAnalysis(gameId) {
         </select>
       </div>`;
     }).join('');
-    const pts = (imp != null && imp > 0) ? ` <span style="color:var(--muted);font-size:.72rem;">(−${imp.toFixed(1)} pts)</span>` : '';
-    return `<div style="margin-bottom:8px;"><strong>${team}</strong>${pts}${rows}</div>`;
+    const ptsText = (imp != null && imp > 0) ? `(−${imp.toFixed(1)} pts)` : '';
+    return `<div style="margin-bottom:8px;"><strong>${team}</strong> <span class="inj-impact-pts" style="color:var(--muted);font-size:.72rem;">${ptsText}</span>${rows}</div>`;
   };
   const injurySection = hasInjuries ? `
     <div class="ap-section" style="background:rgba(220,38,38,.08);border-left:3px solid #dc2626;padding:8px 10px;margin:8px 0;font-size:.8rem;">
@@ -1752,11 +1752,11 @@ async function showAnalysis(gameId) {
         const newStatsB = updated.stats_b || {};
         const impEls = content.querySelectorAll('.ap-section[style*="dc2626"] strong');
         impEls.forEach(el => {
-          const impSpan = el.parentElement?.querySelector('span');
+          const impSpan = el.parentElement?.querySelector('.inj-impact-pts');
           if (!impSpan) return;
           const teamName = el.textContent;
           const imp = teamName === st.teamA ? newStatsA.injury_impact : newStatsB.injury_impact;
-          impSpan.textContent = (imp != null && imp > 0) ? ` (−${imp.toFixed(1)} pts)` : '';
+          impSpan.textContent = (imp != null && imp > 0) ? `(−${imp.toFixed(1)} pts)` : '';
         });
       } catch (e) {
         console.warn('Injury override re-analysis failed:', e);

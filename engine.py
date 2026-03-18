@@ -74,6 +74,8 @@ class ModelConfig:
     depth_max_bonus: float = 2.0          # em_depth_score: deep/balanced roster bonus
     em_opp_adjust_max_bonus: float = 2.0  # em_opponent_adjust: opponent quality adjustment
     em_adj_o_weight: float = 0.3          # blend weight for EvanMiya adj_o/adj_d in base score (0=Torvik only)
+    em_runs_margin_max_bonus: float = 2.0  # scoring-burst margin bonus (ability to go on runs)
+    interior_max_bonus: float = 1.5        # frontcourt quality differential (em_size_adj_bpr)
     ft_foul_rate_max_bonus: float = 2.0   # margin bonus from differential FT rate (foul drawing vs committing)
     score_scale: float = 0.942            # tournament scoring discount vs regular-season efficiency baseline
                                           # (calibrated: model over-predicts by 8.8 pts on 187 tournament games)
@@ -218,6 +220,41 @@ def calc_depth_bonus(team, config=DEFAULT_CONFIG):
         return 0.0
     return depth * config.depth_max_bonus
 
+def calc_runs_margin_bonus(team_a, team_b, config=DEFAULT_CONFIG):
+    """Margin bonus from scoring-burst differential (em_runs_margin).
+
+    EvanMiya's runs metric measures a team's ability to go on scoring runs
+    minus their tendency to give up runs. Higher = more "clutch" / momentum-capable.
+    Typical range: 0.0 to 1.0. Normalized diff capped at ±max_bonus.
+    """
+    rm_a = team_a.get("em_runs_margin")
+    rm_b = team_b.get("em_runs_margin")
+    if rm_a is None or rm_b is None:
+        return 0.0
+    # Diff typically in [-1.0, +1.0], scale so a 0.5 diff = max_bonus
+    diff = rm_a - rm_b
+    margin = diff * (config.em_runs_margin_max_bonus / 0.5)
+    return max(-config.em_runs_margin_max_bonus, min(config.em_runs_margin_max_bonus, margin))
+
+
+def calc_interior_bonus(team_a, team_b, config=DEFAULT_CONFIG):
+    """Margin bonus from interior strength differential (em_size_adj_bpr).
+
+    Tournament basketball rewards frontcourt quality: rebounding, paint scoring,
+    and rim protection are harder to scheme against with limited prep time.
+    Controlled analysis (2010-2025, 225 equal-talent tournament games) shows
+    ~58% win rate for teams with higher size-adjusted BPR.
+    Typical range ~15-70; a 10-pt diff maps to ±max_bonus.
+    """
+    ia = team_a.get("em_size_adj_bpr")
+    ib = team_b.get("em_size_adj_bpr")
+    if ia is None or ib is None:
+        return 0.0
+    diff = ia - ib
+    margin = diff * (config.interior_max_bonus / 10.0)
+    return max(-config.interior_max_bonus, min(config.interior_max_bonus, margin))
+
+
 def calc_size_bonus(team, config=DEFAULT_CONFIG):
     if "size_score" in team:
         return team["size_score"] * config.size_max_bonus
@@ -234,8 +271,8 @@ def calc_size_bonus(team, config=DEFAULT_CONFIG):
 _INJURY_SEVERITY = {
     "out": 1.0,
     "doubtful": 0.75,
-    "questionable": 0.0,
-    "day-to-day": 0.0,
+    "questionable": 0.20,
+    "day-to-day": 0.05,
     "probable": 0.0,
 }
 # Minimum BPR share to include a player in the injury penalty calculation.
@@ -398,6 +435,8 @@ def predict_game(team_a, team_b, game_site=None, config=DEFAULT_CONFIG, round_na
     ft_margin = _calc_ft_edge_margin(team_a, team_b, base_margin, config)
     foul_rate_margin = _calc_foul_rate_margin(team_a, team_b, poss, config)
     sos_margin = _calc_sos_edge_margin(team_a, team_b, config)
+    runs_margin = calc_runs_margin_bonus(team_a, team_b, config)
+    interior_margin = calc_interior_bonus(team_a, team_b, config)
 
     # All factor adjustments
     factor_names = ["experience", "coach", "pedigree", "preseason", "proximity",
@@ -431,7 +470,7 @@ def predict_game(team_a, team_b, game_site=None, config=DEFAULT_CONFIG, round_na
     cap = config.factor_margin_cap
     factor_margin = math.tanh(factor_margin / cap) * cap
 
-    extra_margin = possession_margin + ft_margin + foul_rate_margin + sos_margin
+    extra_margin = possession_margin + ft_margin + foul_rate_margin + sos_margin + runs_margin + interior_margin
     adjusted_margin = base_margin + factor_margin + extra_margin
 
     # Close-game upset tolerance: shift toward underdog when game is close and underdog has favorable indicators
@@ -500,6 +539,8 @@ def predict_game(team_a, team_b, game_site=None, config=DEFAULT_CONFIG, round_na
         "possession_margin": round(possession_margin, 2),
         "ft_margin": round(ft_margin, 2),
         "sos_margin": round(sos_margin, 2),
+        "runs_margin": round(runs_margin, 2),
+        "interior_margin": round(interior_margin, 2),
         "upset_tolerance_bonus": round(upset_bonus, 2),
         "efficiency_prob": round(eff_prob, 4),
         "seed_prob": round(seed_prob, 4),
@@ -1522,7 +1563,7 @@ def enrich_bracket_with_teams(bracket, teams_merged):
                       "avg_experience", "experience",
                       "efg_pct", "efg_d",
                       "wins", "losses", "games", "ppg", "opp_ppg",
-                      "em_depth_score",
+                      "em_depth_score", "em_size_adj_bpr", "em_interior_bpr",
                       "wab", "elite_sos", "qual_o", "qual_d", "qual_barthag",
                       "conf_adj_o", "conf_adj_d", "win_pct", "conf_win_pct", "conf_rating", "conf_strength_score",
                       "momentum", "conf_tourney_momentum", "adj_o_recent", "adj_d_recent", "injuries", "injury_impact",
@@ -1975,6 +2016,7 @@ def _make_pick_dict(game_num, round_of, round_name, region, a, b, result, pick_t
             "sos":          _r(t.get("sos"), 3),
             "conf_rating":  t.get("conf_rating"),
             "em_depth_score": _r(t.get("em_depth_score"), 3),
+            "em_size_adj_bpr": _r(t.get("em_size_adj_bpr"), 2),
             # Scoring
             "ppg":          _r(t.get("ppg"), 1),
             "opp_ppg":      _r(t.get("opp_ppg"), 1),
@@ -2034,6 +2076,8 @@ def _make_pick_dict(game_num, round_of, round_name, region, a, b, result, pick_t
         "possession_margin":  round(result.get("possession_margin", 0), 2),
         "ft_margin":          round(result.get("ft_margin", 0), 2),
         "sos_margin":         round(result.get("sos_margin", 0), 2),
+        "runs_margin":        round(result.get("runs_margin", 0), 2),
+        "interior_margin":    round(result.get("interior_margin", 0), 2),
         # Model signal probabilities
         "efficiency_prob":    round(result["efficiency_prob"], 4),
         "seed_prob":          round(result["seed_prob"], 4),

@@ -184,10 +184,18 @@ def build_game_pairs(games, teams_by_year):
             key = _normalize_team_for_match(name)
             if key and key in rank_map:
                 team_dict["eff_rank"] = rank_map[key]
-        # Attach school location for proximity calculation
+        # Attach school location for proximity calculation (normalize name first)
         for team_dict, name in ((a, g["team_a"]), (b, g["team_b"])):
-            if name in school_locs and "location" not in team_dict:
-                team_dict["location"] = school_locs[name]
+            if "location" not in team_dict:
+                loc = school_locs.get(name)
+                if not loc:
+                    nk = _normalize_team_for_match(name)
+                    for sname, scoords in school_locs.items():
+                        if _normalize_team_for_match(sname) == nk:
+                            loc = scoords
+                            break
+                if loc:
+                    team_dict["location"] = loc
         # Attach pre-game path snapshot
         game_key = (g["team_a"], g["team_b"], g.get("round_name", ""))
         snap = game_path_snapshot.get((yr, game_key), {})
@@ -342,6 +350,7 @@ PARAM_SPEC = [
     ("depth_max_bonus", 0.0, 8.0),
     ("em_opp_adjust_max_bonus", 0.0, 8.0),
     ("em_adj_o_weight", 0.0, 1.0),
+    ("em_runs_margin_max_bonus", 0.0, 6.0),
     ("ft_foul_rate_max_bonus", 0.0, 6.0),
     # Per-round score scaling (Phase 1)
     ("score_scale", 0.88, 1.00),
