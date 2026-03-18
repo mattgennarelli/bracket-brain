@@ -1,0 +1,18 @@
+{
+  "requests_remaining": 488,
+  "requests_used": 12,
+  "last_updated": "2026-03-18T16:32:27.603085+00:00",
+  "billing_period_start": "2026-03",
+  "call_log": [
+    {
+      "ts": "2026-03-18T16:32:26.992745+00:00",
+      "endpoint": "odds/games",
+      "remaining": 491
+    },
+    {
+      "ts": "2026-03-18T16:32:27.603085+00:00",
+      "endpoint": "odds/games",
+      "remaining": 488
+    }
+  ]
+}
