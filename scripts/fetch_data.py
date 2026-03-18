@@ -93,6 +93,7 @@ def load_evanmiya(year):
         # Player depth
         "top_player", "top_player_bpr",
         "em_top5_bpr", "em_star_concentration", "em_poss_weighted_bpr", "em_depth_score",
+        "em_size_adj_bpr", "em_interior_bpr",
         # EvanMiya efficiency on Torvik scale (from player CSV context)
         "em_adj_o", "em_adj_d",
         # Legacy fields (kept for backwards compat)
@@ -142,6 +143,7 @@ def merge_injuries(merged, injuries_data):
             inj_list = val.get("injuries", [])
             roster = val.get("roster", [])
         existing_inj = merged[key].get("injuries", [])
+        # Prefer non-empty over empty when multiple keys map to same team (e.g. UCLA vs UCLA Bruins)
         if inj_list or not existing_inj:
             merged[key]["injuries"] = inj_list
         if roster or not merged[key].get("roster"):

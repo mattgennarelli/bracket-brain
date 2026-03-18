@@ -306,8 +306,9 @@ def calc_injury_penalty(team, config=DEFAULT_CONFIG):
     Legacy path — bpr_share × injury_penalty_per_level (old data format).
     Result is capped at 10 pts.
     """
-    if "injury_impact" in team and team["injury_impact"] is not None and not team.get("injuries"):
-        # Trust precomputed value only when no raw injuries list exists to recalculate from
+    if "injury_impact" in team and team["injury_impact"] is not None and "injuries" not in team:
+        # Trust precomputed value only when no raw injuries list exists to recalculate from.
+        # When injuries=[] (e.g. user set all to healthy via override), we must recalc to 0.
         return min(team["injury_impact"], 10.0)
     if "injury_level" in team and config.injury_penalty_per_level > 0:
         return team["injury_level"] * config.injury_penalty_per_level
@@ -2043,6 +2044,7 @@ def _make_pick_dict(game_num, round_of, round_name, region, a, b, result, pick_t
             "top_player":   t.get("top_player"),
             "top_player_bpr": _r(t.get("top_player_bpr"), 2),
             "em_depth_score": _r(t.get("em_depth_score"), 3),
+            "em_size_adj_bpr": _r(t.get("em_size_adj_bpr"), 2),
             "star_score":   _r(t.get("star_score"), 2),
             # Injuries
             "injuries":     t.get("injuries"),

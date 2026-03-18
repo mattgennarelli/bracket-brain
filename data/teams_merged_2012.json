@@ -61,6 +61,8 @@
     "em_star_concentration": 0.306,
     "em_poss_weighted_bpr": 6.751,
     "em_depth_score": 0.877,
+    "em_size_adj_bpr": 51.166,
+    "em_interior_bpr": 11.844,
     "em_adj_o": 122.6039,
     "em_adj_d": 82.3801,
     "conf_strength_score": 0.7121,
@@ -128,6 +130,8 @@
     "em_star_concentration": 0.27,
     "em_poss_weighted_bpr": 6.089,
     "em_depth_score": 0.892,
+    "em_size_adj_bpr": 44.044,
+    "em_interior_bpr": 10.118,
     "em_adj_o": 119.4254,
     "em_adj_d": 78.1853,
     "conf_strength_score": 0.5172,
@@ -195,6 +199,8 @@
     "em_star_concentration": 0.323,
     "em_poss_weighted_bpr": 5.476,
     "em_depth_score": 0.807,
+    "em_size_adj_bpr": 46.957,
+    "em_interior_bpr": 15.493,
     "em_adj_o": 115.159,
     "em_adj_d": 79.7332,
     "conf_strength_score": 0.6127,
@@ -262,6 +268,8 @@
     "em_star_concentration": 0.23,
     "em_poss_weighted_bpr": 5.302,
     "em_depth_score": 0.902,
+    "em_size_adj_bpr": 43.005,
+    "em_interior_bpr": 18.074,
     "em_adj_o": 117.475,
     "em_adj_d": 78.6609,
     "conf_strength_score": 0.7093
@@ -328,6 +336,8 @@
     "em_star_concentration": 0.235,
     "em_poss_weighted_bpr": 5.579,
     "em_depth_score": 0.906,
+    "em_size_adj_bpr": 45.949,
+    "em_interior_bpr": 15.715,
     "em_adj_o": 119.4699,
     "em_adj_d": 81.9138,
     "conf_strength_score": 0.4707,
@@ -395,6 +405,8 @@
     "em_star_concentration": 0.278,
     "em_poss_weighted_bpr": 5.572,
     "em_depth_score": 0.889,
+    "em_size_adj_bpr": 40.638,
+    "em_interior_bpr": 10.568,
     "em_adj_o": 119.4449,
     "em_adj_d": 79.0586,
     "conf_strength_score": 0.6008
@@ -461,6 +473,8 @@
     "em_star_concentration": 0.298,
     "em_poss_weighted_bpr": 4.963,
     "em_depth_score": 0.751,
+    "em_size_adj_bpr": 32.62,
+    "em_interior_bpr": 8.461,
     "em_adj_o": 112.6529,
     "em_adj_d": 82.8568,
     "conf_strength_score": 0.0738
@@ -527,6 +541,8 @@
     "em_star_concentration": 0.243,
     "em_poss_weighted_bpr": 5.389,
     "em_depth_score": 0.903,
+    "em_size_adj_bpr": 33.844,
+    "em_interior_bpr": 7.496,
     "em_adj_o": 126.5186,
     "em_adj_d": 92.6467,
     "conf_strength_score": 0.3177,
@@ -594,6 +610,8 @@
     "em_star_concentration": 0.298,
     "em_poss_weighted_bpr": 4.234,
     "em_depth_score": 0.689,
+    "em_size_adj_bpr": 32.285,
+    "em_interior_bpr": 8.456,
     "em_adj_o": 119.8732,
     "em_adj_d": 89.2513,
     "conf_strength_score": 0.5119
@@ -660,6 +678,8 @@
     "em_star_concentration": 0.693,
     "em_poss_weighted_bpr": -0.188,
     "em_depth_score": 0.123,
+    "em_size_adj_bpr": -2.068,
+    "em_interior_bpr": -1.867,
     "em_adj_o": 100.9857,
     "em_adj_d": 99.6452,
     "conf_strength_score": 0.0
@@ -726,6 +746,8 @@
     "em_star_concentration": 0.278,
     "em_poss_weighted_bpr": 4.791,
     "em_depth_score": 0.807,
+    "em_size_adj_bpr": 37.926,
+    "em_interior_bpr": 9.67,
     "em_adj_o": 120.0237,
     "em_adj_d": 87.2842,
     "conf_strength_score": 0.2214
@@ -792,6 +814,8 @@
     "em_star_concentration": 0.28,
     "em_poss_weighted_bpr": 4.162,
     "em_depth_score": 0.773,
+    "em_size_adj_bpr": 30.906,
+    "em_interior_bpr": 9.659,
     "em_adj_o": 118.0218,
     "em_adj_d": 89.7996,
     "conf_strength_score": 0.7064,
@@ -859,6 +883,8 @@
     "em_star_concentration": 0.263,
     "em_poss_weighted_bpr": 4.535,
     "em_depth_score": 0.811,
+    "em_size_adj_bpr": 36.838,
+    "em_interior_bpr": 8.44,
     "em_adj_o": 114.9851,
     "em_adj_d": 86.1007,
     "conf_strength_score": 0.5628,
@@ -926,6 +952,8 @@
     "em_star_concentration": 0.237,
     "em_poss_weighted_bpr": 4.691,
     "em_depth_score": 0.81,
+    "em_size_adj_bpr": 35.909,
+    "em_interior_bpr": 0,
     "em_adj_o": 113.9406,
     "em_adj_d": 82.3188,
     "conf_strength_score": 0.2477
@@ -992,6 +1020,8 @@
     "em_star_concentration": 0.266,
     "em_poss_weighted_bpr": 3.899,
     "em_depth_score": 0.638,
+    "em_size_adj_bpr": 30.03,
+    "em_interior_bpr": 6.419,
     "em_adj_o": 114.6032,
     "em_adj_d": 86.055,
     "conf_strength_score": 0.2695
@@ -1058,6 +1088,8 @@
     "em_star_concentration": 0.25,
     "em_poss_weighted_bpr": 4.486,
     "em_depth_score": 0.747,
+    "em_size_adj_bpr": 34.503,
+    "em_interior_bpr": 10.151,
     "em_adj_o": 106.7342,
     "em_adj_d": 79.8551,
     "conf_strength_score": 0.097,
@@ -1125,6 +1157,8 @@
     "em_star_concentration": 0.266,
     "em_poss_weighted_bpr": 4.461,
     "em_depth_score": 0.751,
+    "em_size_adj_bpr": 34.126,
+    "em_interior_bpr": 11.594,
     "em_adj_o": 118.7755,
     "em_adj_d": 91.0738,
     "conf_strength_score": 0.4163,
@@ -1192,6 +1226,8 @@
     "em_star_concentration": 0.248,
     "em_poss_weighted_bpr": 4.521,
     "em_depth_score": 0.753,
+    "em_size_adj_bpr": 37.376,
+    "em_interior_bpr": 16.366,
     "em_adj_o": 120.7307,
     "em_adj_d": 92.4574,
     "conf_strength_score": 0.3895
@@ -1258,6 +1294,8 @@
     "em_star_concentration": 0.245,
     "em_poss_weighted_bpr": 3.834,
     "em_depth_score": 0.737,
+    "em_size_adj_bpr": 29.719,
+    "em_interior_bpr": 5.36,
     "em_adj_o": 112.0523,
     "em_adj_d": 86.1116,
     "conf_strength_score": 0.5371,
@@ -1325,6 +1363,8 @@
     "em_star_concentration": 0.383,
     "em_poss_weighted_bpr": 4.479,
     "em_depth_score": 0.607,
+    "em_size_adj_bpr": 37.103,
+    "em_interior_bpr": 8.455,
     "em_adj_o": 114.329,
     "em_adj_d": 84.6954,
     "conf_strength_score": 0.536
@@ -1391,6 +1431,8 @@
     "em_star_concentration": 0.218,
     "em_poss_weighted_bpr": 3.584,
     "em_depth_score": 0.753,
+    "em_size_adj_bpr": 29.603,
+    "em_interior_bpr": 7.64,
     "em_adj_o": 110.0362,
     "em_adj_d": 84.3682,
     "conf_strength_score": 0.3592,
@@ -1458,6 +1500,8 @@
     "em_star_concentration": 0.275,
     "em_poss_weighted_bpr": 3.932,
     "em_depth_score": 0.69,
+    "em_size_adj_bpr": 25.936,
+    "em_interior_bpr": 7.135,
     "em_adj_o": 112.1386,
     "em_adj_d": 86.6446,
     "conf_strength_score": 0.5258,
@@ -1525,6 +1569,8 @@
     "em_star_concentration": 0.252,
     "em_poss_weighted_bpr": 3.598,
     "em_depth_score": 0.655,
+    "em_size_adj_bpr": 29.209,
+    "em_interior_bpr": 13.16,
     "em_adj_o": 113.869,
     "em_adj_d": 88.2778,
     "conf_strength_score": 0.07,
@@ -1592,6 +1638,8 @@
     "em_star_concentration": 0.233,
     "em_poss_weighted_bpr": 3.945,
     "em_depth_score": 0.693,
+    "em_size_adj_bpr": 28.667,
+    "em_interior_bpr": 8.354,
     "em_adj_o": 113.4788,
     "em_adj_d": 89.5863,
     "conf_strength_score": 0.8476
@@ -1658,6 +1706,8 @@
     "em_star_concentration": 0.293,
     "em_poss_weighted_bpr": 4.027,
     "em_depth_score": 0.713,
+    "em_size_adj_bpr": 32.149,
+    "em_interior_bpr": 9.682,
     "em_adj_o": 116.4872,
     "em_adj_d": 93.9876,
     "conf_strength_score": 0.3346
@@ -1724,6 +1774,8 @@
     "em_star_concentration": 0.257,
     "em_poss_weighted_bpr": 3.421,
     "em_depth_score": 0.593,
+    "em_size_adj_bpr": 29.37,
+    "em_interior_bpr": 8.08,
     "em_adj_o": 113.7218,
     "em_adj_d": 95.6881,
     "conf_strength_score": 0.7157
@@ -1790,6 +1842,8 @@
     "em_star_concentration": 0.278,
     "em_poss_weighted_bpr": 3.449,
     "em_depth_score": 0.68,
+    "em_size_adj_bpr": 31.792,
+    "em_interior_bpr": 14.208,
     "em_adj_o": 109.2431,
     "em_adj_d": 81.4937,
     "conf_strength_score": 0.2785
@@ -1856,6 +1910,8 @@
     "em_star_concentration": 0.281,
     "em_poss_weighted_bpr": 3.455,
     "em_depth_score": 0.652,
+    "em_size_adj_bpr": 28.722,
+    "em_interior_bpr": 10.885,
     "em_adj_o": 108.7021,
     "em_adj_d": 84.4012,
     "conf_strength_score": 0.5939
@@ -1922,6 +1978,8 @@
     "em_star_concentration": 0.26,
     "em_poss_weighted_bpr": 3.191,
     "em_depth_score": 0.603,
+    "em_size_adj_bpr": 24.071,
+    "em_interior_bpr": 8.515,
     "em_adj_o": 108.8807,
     "em_adj_d": 84.8633,
     "conf_strength_score": 0.634
@@ -1988,6 +2046,8 @@
     "em_star_concentration": 0.228,
     "em_poss_weighted_bpr": 3.906,
     "em_depth_score": 0.723,
+    "em_size_adj_bpr": 30.618,
+    "em_interior_bpr": 9.028,
     "em_adj_o": 109.6668,
     "em_adj_d": 87.0727,
     "conf_strength_score": 0.4913
@@ -2054,6 +2114,8 @@
     "em_star_concentration": 0.313,
     "em_poss_weighted_bpr": 3.579,
     "em_depth_score": 0.568,
+    "em_size_adj_bpr": 24.465,
+    "em_interior_bpr": 3.645,
     "em_adj_o": 115.0877,
     "em_adj_d": 93.3831,
     "conf_strength_score": 0.7396
@@ -2120,6 +2182,8 @@
     "em_star_concentration": 0.22,
     "em_poss_weighted_bpr": 2.859,
     "em_depth_score": 0.639,
+    "em_size_adj_bpr": 25.866,
+    "em_interior_bpr": 7.4,
     "em_adj_o": 108.4531,
     "em_adj_d": 87.9699,
     "conf_strength_score": 0.073
@@ -2186,6 +2250,8 @@
     "em_star_concentration": 0.266,
     "em_poss_weighted_bpr": 3.47,
     "em_depth_score": 0.675,
+    "em_size_adj_bpr": 27.836,
+    "em_interior_bpr": 6.541,
     "em_adj_o": 112.0375,
     "em_adj_d": 87.3232,
     "conf_strength_score": 0.6348
@@ -2252,6 +2318,8 @@
     "em_star_concentration": 0.265,
     "em_poss_weighted_bpr": 3.787,
     "em_depth_score": 0.688,
+    "em_size_adj_bpr": 29.563,
+    "em_interior_bpr": 8.811,
     "em_adj_o": 120.6277,
     "em_adj_d": 96.1317,
     "conf_strength_score": 0.8065,
@@ -2319,6 +2387,8 @@
     "em_star_concentration": 0.273,
     "em_poss_weighted_bpr": 3.732,
     "em_depth_score": 0.665,
+    "em_size_adj_bpr": 24.432,
+    "em_interior_bpr": 8.874,
     "em_adj_o": 111.3422,
     "em_adj_d": 92.3077,
     "conf_strength_score": 0.1905
@@ -2385,6 +2455,8 @@
     "em_star_concentration": 0.29,
     "em_poss_weighted_bpr": 3.774,
     "em_depth_score": 0.63,
+    "em_size_adj_bpr": 23.917,
+    "em_interior_bpr": 6.546,
     "em_adj_o": 111.5575,
     "em_adj_d": 90.4672,
     "conf_strength_score": 0.349
@@ -2451,6 +2523,8 @@
     "em_star_concentration": 0.294,
     "em_poss_weighted_bpr": 2.954,
     "em_depth_score": 0.524,
+    "em_size_adj_bpr": 20.969,
+    "em_interior_bpr": 2.955,
     "em_adj_o": 107.5954,
     "em_adj_d": 85.9987,
     "conf_strength_score": 0.292,
@@ -2518,6 +2592,8 @@
     "em_star_concentration": 0.273,
     "em_poss_weighted_bpr": 3.447,
     "em_depth_score": 0.616,
+    "em_size_adj_bpr": 31.846,
+    "em_interior_bpr": 11.55,
     "em_adj_o": 119.0888,
     "em_adj_d": 96.6409,
     "conf_strength_score": 0.4435,
@@ -2585,6 +2661,8 @@
     "em_star_concentration": 0.24,
     "em_poss_weighted_bpr": 2.601,
     "em_depth_score": 0.568,
+    "em_size_adj_bpr": 21.973,
+    "em_interior_bpr": 5.295,
     "em_adj_o": 102.8464,
     "em_adj_d": 83.0046,
     "conf_strength_score": 0.461
@@ -2651,6 +2729,8 @@
     "em_star_concentration": 0.369,
     "em_poss_weighted_bpr": 2.65,
     "em_depth_score": 0.451,
+    "em_size_adj_bpr": 23.02,
+    "em_interior_bpr": 6.815,
     "em_adj_o": 112.4975,
     "em_adj_d": 91.5984,
     "conf_strength_score": 0.4688,
@@ -2718,6 +2798,8 @@
     "em_star_concentration": 0.25,
     "em_poss_weighted_bpr": 2.981,
     "em_depth_score": 0.607,
+    "em_size_adj_bpr": 20.779,
+    "em_interior_bpr": 7.207,
     "em_adj_o": 108.7702,
     "em_adj_d": 88.4064,
     "conf_strength_score": 0.4148
@@ -2784,6 +2866,8 @@
     "em_star_concentration": 0.291,
     "em_poss_weighted_bpr": 3.008,
     "em_depth_score": 0.584,
+    "em_size_adj_bpr": 18.795,
+    "em_interior_bpr": 5.239,
     "em_adj_o": 111.0354,
     "em_adj_d": 88.4613,
     "conf_strength_score": 0.1312,
@@ -2851,6 +2935,8 @@
     "em_star_concentration": 1.0,
     "em_poss_weighted_bpr": -1.89,
     "em_depth_score": 0.0,
+    "em_size_adj_bpr": -12.75,
+    "em_interior_bpr": -5.318,
     "em_adj_o": 90.1441,
     "em_adj_d": 101.4169,
     "conf_strength_score": 0.4627
@@ -2917,6 +3003,8 @@
     "em_star_concentration": 0.258,
     "em_poss_weighted_bpr": 2.783,
     "em_depth_score": 0.57,
+    "em_size_adj_bpr": 15.552,
+    "em_interior_bpr": 2.315,
     "em_adj_o": 109.7475,
     "em_adj_d": 89.4143,
     "conf_strength_score": 0.4005
@@ -2983,6 +3071,8 @@
     "em_star_concentration": 0.363,
     "em_poss_weighted_bpr": 3.327,
     "em_depth_score": 0.504,
+    "em_size_adj_bpr": 25.358,
+    "em_interior_bpr": 10.089,
     "em_adj_o": 112.2654,
     "em_adj_d": 90.5789,
     "conf_strength_score": 0.5993
@@ -3049,6 +3139,8 @@
     "em_star_concentration": 0.312,
     "em_poss_weighted_bpr": 3.156,
     "em_depth_score": 0.54,
+    "em_size_adj_bpr": 20.201,
+    "em_interior_bpr": 6.623,
     "em_adj_o": 113.0781,
     "em_adj_d": 87.6481,
     "conf_strength_score": 0.2782,
@@ -3116,6 +3208,8 @@
     "em_star_concentration": 0.309,
     "em_poss_weighted_bpr": 1.819,
     "em_depth_score": 0.532,
+    "em_size_adj_bpr": 26.264,
+    "em_interior_bpr": 8.204,
     "em_adj_o": 107.9199,
     "em_adj_d": 88.8327,
     "conf_strength_score": 0.7791
@@ -3182,6 +3276,8 @@
     "em_star_concentration": 0.28,
     "em_poss_weighted_bpr": 3.391,
     "em_depth_score": 0.634,
+    "em_size_adj_bpr": 29.808,
+    "em_interior_bpr": 7.131,
     "em_adj_o": 117.9228,
     "em_adj_d": 96.4565,
     "conf_strength_score": 0.1554
@@ -3248,6 +3344,8 @@
     "em_star_concentration": 0.272,
     "em_poss_weighted_bpr": 3.332,
     "em_depth_score": 0.607,
+    "em_size_adj_bpr": 19.937,
+    "em_interior_bpr": 3.18,
     "em_adj_o": 114.4806,
     "em_adj_d": 89.2338,
     "conf_strength_score": 0.2223,
@@ -3315,6 +3413,8 @@
     "em_star_concentration": 0.268,
     "em_poss_weighted_bpr": 2.984,
     "em_depth_score": 0.623,
+    "em_size_adj_bpr": 32.989,
+    "em_interior_bpr": 11.102,
     "em_adj_o": 107.1876,
     "em_adj_d": 89.6155,
     "conf_strength_score": 0.3743
@@ -3381,6 +3481,8 @@
     "em_star_concentration": 0.279,
     "em_poss_weighted_bpr": 3.735,
     "em_depth_score": 0.662,
+    "em_size_adj_bpr": 28.942,
+    "em_interior_bpr": 12.403,
     "em_adj_o": 115.2727,
     "em_adj_d": 92.7536,
     "conf_strength_score": 0.6788,
@@ -3448,6 +3550,8 @@
     "em_star_concentration": 0.284,
     "em_poss_weighted_bpr": 2.847,
     "em_depth_score": 0.563,
+    "em_size_adj_bpr": 21.312,
+    "em_interior_bpr": 2.176,
     "em_adj_o": 118.1028,
     "em_adj_d": 97.7541,
     "conf_strength_score": 0.7465
@@ -3514,6 +3618,8 @@
     "em_star_concentration": 0.382,
     "em_poss_weighted_bpr": 2.464,
     "em_depth_score": 0.414,
+    "em_size_adj_bpr": 15.14,
+    "em_interior_bpr": 2.992,
     "em_adj_o": 106.0689,
     "em_adj_d": 89.1542,
     "conf_strength_score": 0.1815,
@@ -3581,6 +3687,8 @@
     "em_star_concentration": 0.245,
     "em_poss_weighted_bpr": 3.31,
     "em_depth_score": 0.617,
+    "em_size_adj_bpr": 27.785,
+    "em_interior_bpr": 12.821,
     "em_adj_o": 110.0559,
     "em_adj_d": 90.0671,
     "conf_strength_score": 0.8362
@@ -3647,6 +3755,8 @@
     "em_star_concentration": 0.254,
     "em_poss_weighted_bpr": 2.587,
     "em_depth_score": 0.537,
+    "em_size_adj_bpr": 22.867,
+    "em_interior_bpr": 8.818,
     "em_adj_o": 107.1209,
     "em_adj_d": 89.2418,
     "conf_strength_score": 0.4291
@@ -3713,6 +3823,8 @@
     "em_star_concentration": 0.286,
     "em_poss_weighted_bpr": 3.327,
     "em_depth_score": 0.632,
+    "em_size_adj_bpr": 28.116,
+    "em_interior_bpr": 6.789,
     "em_adj_o": 113.2343,
     "em_adj_d": 89.043,
     "conf_strength_score": 0.8984
@@ -3779,6 +3891,8 @@
     "em_star_concentration": 0.361,
     "em_poss_weighted_bpr": 2.239,
     "em_depth_score": 0.41,
+    "em_size_adj_bpr": 14.898,
+    "em_interior_bpr": 4.666,
     "em_adj_o": 107.059,
     "em_adj_d": 89.6668,
     "conf_strength_score": 0.8153
@@ -3845,6 +3959,8 @@
     "em_star_concentration": 0.34,
     "em_poss_weighted_bpr": 3.138,
     "em_depth_score": 0.536,
+    "em_size_adj_bpr": 21.483,
+    "em_interior_bpr": 10.857,
     "em_adj_o": 112.4906,
     "em_adj_d": 93.8955,
     "conf_strength_score": 0.313
@@ -3911,6 +4027,8 @@
     "em_star_concentration": 0.312,
     "em_poss_weighted_bpr": 3.209,
     "em_depth_score": 0.553,
+    "em_size_adj_bpr": 22.732,
+    "em_interior_bpr": 2.127,
     "em_adj_o": 108.3048,
     "em_adj_d": 89.3406,
     "conf_strength_score": 0.5952
@@ -3977,6 +4095,8 @@
     "em_star_concentration": 0.333,
     "em_poss_weighted_bpr": 2.936,
     "em_depth_score": 0.54,
+    "em_size_adj_bpr": 18.847,
+    "em_interior_bpr": 3.319,
     "em_adj_o": 111.3463,
     "em_adj_d": 90.9344,
     "conf_strength_score": 0.5391,
@@ -4044,6 +4164,8 @@
     "em_star_concentration": 0.257,
     "em_poss_weighted_bpr": 3.133,
     "em_depth_score": 0.609,
+    "em_size_adj_bpr": 29.412,
+    "em_interior_bpr": 7.003,
     "em_adj_o": 108.3452,
     "em_adj_d": 88.5657,
     "conf_strength_score": 0.5777
@@ -4110,6 +4232,8 @@
     "em_star_concentration": 0.337,
     "em_poss_weighted_bpr": 3.494,
     "em_depth_score": 0.548,
+    "em_size_adj_bpr": 26.822,
+    "em_interior_bpr": 0,
     "em_adj_o": 115.2072,
     "em_adj_d": 100.6343,
     "conf_strength_score": 0.623
@@ -4176,6 +4300,8 @@
     "em_star_concentration": 0.272,
     "em_poss_weighted_bpr": 2.708,
     "em_depth_score": 0.592,
+    "em_size_adj_bpr": 23.074,
+    "em_interior_bpr": 11.086,
     "em_adj_o": 111.5381,
     "em_adj_d": 93.6958,
     "conf_strength_score": 0.6744,
@@ -4243,6 +4369,8 @@
     "em_star_concentration": 0.31,
     "em_poss_weighted_bpr": 3.228,
     "em_depth_score": 0.557,
+    "em_size_adj_bpr": 22.227,
+    "em_interior_bpr": 7.912,
     "em_adj_o": 108.8535,
     "em_adj_d": 88.982,
     "conf_strength_score": 0.4882
@@ -4309,6 +4437,8 @@
     "em_star_concentration": 0.314,
     "em_poss_weighted_bpr": 3.167,
     "em_depth_score": 0.589,
+    "em_size_adj_bpr": 18.179,
+    "em_interior_bpr": 3.872,
     "em_adj_o": 115.3499,
     "em_adj_d": 95.1192,
     "conf_strength_score": 0.5239,
@@ -4376,6 +4506,8 @@
     "em_star_concentration": 0.325,
     "em_poss_weighted_bpr": 2.489,
     "em_depth_score": 0.453,
+    "em_size_adj_bpr": 16.424,
+    "em_interior_bpr": 6.124,
     "em_adj_o": 109.6364,
     "em_adj_d": 96.3865,
     "conf_strength_score": 0.5394
@@ -4442,6 +4574,8 @@
     "em_star_concentration": 0.389,
     "em_poss_weighted_bpr": 2.233,
     "em_depth_score": 0.397,
+    "em_size_adj_bpr": 20.738,
+    "em_interior_bpr": 6.822,
     "em_adj_o": 107.7232,
     "em_adj_d": 91.7452,
     "conf_strength_score": 0.6325,
@@ -4509,6 +4643,8 @@
     "em_star_concentration": 0.354,
     "em_poss_weighted_bpr": 3.37,
     "em_depth_score": 0.524,
+    "em_size_adj_bpr": 25.726,
+    "em_interior_bpr": 3.715,
     "em_adj_o": 117.3811,
     "em_adj_d": 94.9366,
     "conf_strength_score": 0.6189
@@ -4575,6 +4711,8 @@
     "em_star_concentration": 0.245,
     "em_poss_weighted_bpr": 3.183,
     "em_depth_score": 0.638,
+    "em_size_adj_bpr": 26.284,
+    "em_interior_bpr": 4.089,
     "em_adj_o": 106.8334,
     "em_adj_d": 89.6754,
     "conf_strength_score": 0.6707,
@@ -4642,6 +4780,8 @@
     "em_star_concentration": 0.311,
     "em_poss_weighted_bpr": 2.736,
     "em_depth_score": 0.502,
+    "em_size_adj_bpr": 21.211,
+    "em_interior_bpr": 2.738,
     "em_adj_o": 110.4963,
     "em_adj_d": 96.8519,
     "conf_strength_score": 0.6327
@@ -4708,6 +4848,8 @@
     "em_star_concentration": 0.453,
     "em_poss_weighted_bpr": 2.299,
     "em_depth_score": 0.313,
+    "em_size_adj_bpr": 14.923,
+    "em_interior_bpr": 4.674,
     "em_adj_o": 108.4009,
     "em_adj_d": 89.6276,
     "conf_strength_score": 0.6702,
@@ -4775,6 +4917,8 @@
     "em_star_concentration": 0.282,
     "em_poss_weighted_bpr": 2.442,
     "em_depth_score": 0.486,
+    "em_size_adj_bpr": 19.736,
+    "em_interior_bpr": 7.8,
     "em_adj_o": 109.9392,
     "em_adj_d": 94.4626,
     "conf_strength_score": 0.5699
@@ -4888,6 +5032,8 @@
     "em_star_concentration": 0.341,
     "em_poss_weighted_bpr": 2.503,
     "em_depth_score": 0.479,
+    "em_size_adj_bpr": 20.933,
+    "em_interior_bpr": 7.31,
     "em_adj_o": 107.3906,
     "em_adj_d": 90.2893,
     "conf_strength_score": 0.394
@@ -4954,6 +5100,8 @@
     "em_star_concentration": 0.325,
     "em_poss_weighted_bpr": 2.227,
     "em_depth_score": 0.476,
+    "em_size_adj_bpr": 17.456,
+    "em_interior_bpr": 4.634,
     "em_adj_o": 109.2655,
     "em_adj_d": 95.1784,
     "conf_strength_score": 0.4056
@@ -5020,6 +5168,8 @@
     "em_star_concentration": 0.294,
     "em_poss_weighted_bpr": 1.703,
     "em_depth_score": 0.407,
+    "em_size_adj_bpr": 12.266,
+    "em_interior_bpr": 4.172,
     "em_adj_o": 103.1816,
     "em_adj_d": 86.4318,
     "conf_strength_score": 0.574
@@ -5086,6 +5236,8 @@
     "em_star_concentration": 0.282,
     "em_poss_weighted_bpr": 2.613,
     "em_depth_score": 0.524,
+    "em_size_adj_bpr": 20.248,
+    "em_interior_bpr": 7.153,
     "em_adj_o": 113.7516,
     "em_adj_d": 96.6531,
     "conf_strength_score": 0.3302
@@ -5152,6 +5304,8 @@
     "em_star_concentration": 0.309,
     "em_poss_weighted_bpr": 2.609,
     "em_depth_score": 0.469,
+    "em_size_adj_bpr": 19.467,
+    "em_interior_bpr": 6.232,
     "em_adj_o": 105.9756,
     "em_adj_d": 90.3293,
     "conf_strength_score": 0.4782
@@ -5218,6 +5372,8 @@
     "em_star_concentration": 0.293,
     "em_poss_weighted_bpr": 1.705,
     "em_depth_score": 0.418,
+    "em_size_adj_bpr": 16.542,
+    "em_interior_bpr": 3.758,
     "em_adj_o": 102.7584,
     "em_adj_d": 87.22,
     "conf_strength_score": 0.5251
@@ -5284,6 +5440,8 @@
     "em_star_concentration": 0.323,
     "em_poss_weighted_bpr": 2.431,
     "em_depth_score": 0.495,
+    "em_size_adj_bpr": 16.508,
+    "em_interior_bpr": 6.156,
     "em_adj_o": 105.5365,
     "em_adj_d": 89.1259,
     "conf_strength_score": 0.8293
@@ -5350,6 +5508,8 @@
     "em_star_concentration": 0.317,
     "em_poss_weighted_bpr": 2.361,
     "em_depth_score": 0.452,
+    "em_size_adj_bpr": 20.167,
+    "em_interior_bpr": 6.814,
     "em_adj_o": 110.9769,
     "em_adj_d": 99.3713,
     "conf_strength_score": 0.6936
@@ -5416,6 +5576,8 @@
     "em_star_concentration": 0.286,
     "em_poss_weighted_bpr": 2.685,
     "em_depth_score": 0.489,
+    "em_size_adj_bpr": 18.301,
+    "em_interior_bpr": 7.742,
     "em_adj_o": 110.137,
     "em_adj_d": 93.5007,
     "conf_strength_score": 0.2783,
@@ -5483,6 +5645,8 @@
     "em_star_concentration": 0.31,
     "em_poss_weighted_bpr": 2.528,
     "em_depth_score": 0.467,
+    "em_size_adj_bpr": 19.687,
+    "em_interior_bpr": 7.4,
     "em_adj_o": 108.076,
     "em_adj_d": 92.7807,
     "conf_strength_score": 0.0979
@@ -5549,6 +5713,8 @@
     "em_star_concentration": 0.235,
     "em_poss_weighted_bpr": 2.298,
     "em_depth_score": 0.506,
+    "em_size_adj_bpr": 17.569,
+    "em_interior_bpr": 4.295,
     "em_adj_o": 104.4618,
     "em_adj_d": 85.412,
     "conf_strength_score": 0.3569
@@ -5615,6 +5781,8 @@
     "em_star_concentration": 0.223,
     "em_poss_weighted_bpr": 1.964,
     "em_depth_score": 0.505,
+    "em_size_adj_bpr": 17.694,
+    "em_interior_bpr": 0.195,
     "em_adj_o": 109.7771,
     "em_adj_d": 98.6853,
     "conf_strength_score": 0.1851
@@ -5681,6 +5849,8 @@
     "em_star_concentration": 0.359,
     "em_poss_weighted_bpr": 2.001,
     "em_depth_score": 0.354,
+    "em_size_adj_bpr": 15.262,
+    "em_interior_bpr": 2.966,
     "em_adj_o": 106.8168,
     "em_adj_d": 96.1452,
     "conf_strength_score": 0.3398
@@ -5747,6 +5917,8 @@
     "em_star_concentration": 0.442,
     "em_poss_weighted_bpr": 1.865,
     "em_depth_score": 0.321,
+    "em_size_adj_bpr": 15.943,
+    "em_interior_bpr": 7.0,
     "em_adj_o": 111.886,
     "em_adj_d": 92.3857,
     "conf_strength_score": 0.4703
@@ -5813,6 +5985,8 @@
     "em_star_concentration": 0.501,
     "em_poss_weighted_bpr": 2.177,
     "em_depth_score": 0.303,
+    "em_size_adj_bpr": 16.444,
+    "em_interior_bpr": 4.177,
     "em_adj_o": 113.6936,
     "em_adj_d": 92.2931,
     "conf_strength_score": 0.0685,
@@ -5880,6 +6054,8 @@
     "em_star_concentration": 0.323,
     "em_poss_weighted_bpr": 2.074,
     "em_depth_score": 0.469,
+    "em_size_adj_bpr": 18.936,
+    "em_interior_bpr": 4.027,
     "em_adj_o": 106.4322,
     "em_adj_d": 90.7528,
     "conf_strength_score": 0.3142
@@ -5946,6 +6122,8 @@
     "em_star_concentration": 0.291,
     "em_poss_weighted_bpr": 1.814,
     "em_depth_score": 0.479,
+    "em_size_adj_bpr": 18.669,
+    "em_interior_bpr": 8.695,
     "em_adj_o": 104.8312,
     "em_adj_d": 85.1716,
     "conf_strength_score": 0.5312
@@ -6012,6 +6190,8 @@
     "em_star_concentration": 0.28,
     "em_poss_weighted_bpr": 2.313,
     "em_depth_score": 0.498,
+    "em_size_adj_bpr": 19.794,
+    "em_interior_bpr": 5.659,
     "em_adj_o": 107.5343,
     "em_adj_d": 87.1999,
     "conf_strength_score": 0.4698,
@@ -6079,6 +6259,8 @@
     "em_star_concentration": 0.248,
     "em_poss_weighted_bpr": 2.602,
     "em_depth_score": 0.537,
+    "em_size_adj_bpr": 17.844,
+    "em_interior_bpr": 6.593,
     "em_adj_o": 109.2914,
     "em_adj_d": 96.2428,
     "conf_strength_score": 0.4906,
@@ -6146,6 +6328,8 @@
     "em_star_concentration": 0.25,
     "em_poss_weighted_bpr": 2.275,
     "em_depth_score": 0.549,
+    "em_size_adj_bpr": 16.627,
+    "em_interior_bpr": 2.964,
     "em_adj_o": 105.781,
     "em_adj_d": 85.2542,
     "conf_strength_score": 0.6795
@@ -6212,6 +6396,8 @@
     "em_star_concentration": 0.356,
     "em_poss_weighted_bpr": 2.013,
     "em_depth_score": 0.406,
+    "em_size_adj_bpr": 17.792,
+    "em_interior_bpr": 8.691,
     "em_adj_o": 104.6895,
     "em_adj_d": 91.4083,
     "conf_strength_score": 0.6079
@@ -6278,6 +6464,8 @@
     "em_star_concentration": 0.258,
     "em_poss_weighted_bpr": 1.851,
     "em_depth_score": 0.482,
+    "em_size_adj_bpr": 15.467,
+    "em_interior_bpr": 5.208,
     "em_adj_o": 109.0302,
     "em_adj_d": 95.0885,
     "conf_strength_score": 0.1429,
@@ -6345,6 +6533,8 @@
     "em_star_concentration": 0.229,
     "em_poss_weighted_bpr": 1.978,
     "em_depth_score": 0.505,
+    "em_size_adj_bpr": 15.008,
+    "em_interior_bpr": 2.436,
     "em_adj_o": 105.2357,
     "em_adj_d": 90.2755,
     "conf_strength_score": 0.5575
@@ -6411,6 +6601,8 @@
     "em_star_concentration": 0.31,
     "em_poss_weighted_bpr": 2.087,
     "em_depth_score": 0.376,
+    "em_size_adj_bpr": 15.318,
+    "em_interior_bpr": 3.603,
     "em_adj_o": 113.1152,
     "em_adj_d": 98.2393,
     "conf_strength_score": 0.4545
@@ -6477,6 +6669,8 @@
     "em_star_concentration": 0.375,
     "em_poss_weighted_bpr": 2.042,
     "em_depth_score": 0.386,
+    "em_size_adj_bpr": 15.144,
+    "em_interior_bpr": 5.61,
     "em_adj_o": 105.667,
     "em_adj_d": 92.5793,
     "conf_strength_score": 0.9435
@@ -6543,6 +6737,8 @@
     "em_star_concentration": 0.383,
     "em_poss_weighted_bpr": 1.861,
     "em_depth_score": 0.358,
+    "em_size_adj_bpr": 16.014,
+    "em_interior_bpr": 1.998,
     "em_adj_o": 109.0733,
     "em_adj_d": 92.4354,
     "conf_strength_score": 0.5833
@@ -6609,6 +6805,8 @@
     "em_star_concentration": 0.377,
     "em_poss_weighted_bpr": 1.946,
     "em_depth_score": 0.406,
+    "em_size_adj_bpr": 14.462,
+    "em_interior_bpr": 2.982,
     "em_adj_o": 99.1853,
     "em_adj_d": 86.6067,
     "conf_strength_score": 0.6996
@@ -6675,6 +6873,8 @@
     "em_star_concentration": 0.335,
     "em_poss_weighted_bpr": 1.828,
     "em_depth_score": 0.385,
+    "em_size_adj_bpr": 9.116,
+    "em_interior_bpr": 0.743,
     "em_adj_o": 103.6338,
     "em_adj_d": 94.2673,
     "conf_strength_score": 0.5076
@@ -6741,6 +6941,8 @@
     "em_star_concentration": 0.383,
     "em_poss_weighted_bpr": 1.645,
     "em_depth_score": 0.31,
+    "em_size_adj_bpr": 14.855,
+    "em_interior_bpr": 4.318,
     "em_adj_o": 107.754,
     "em_adj_d": 91.6366,
     "conf_strength_score": 0.449
@@ -6807,6 +7009,8 @@
     "em_star_concentration": 0.295,
     "em_poss_weighted_bpr": 2.697,
     "em_depth_score": 0.502,
+    "em_size_adj_bpr": 17.111,
+    "em_interior_bpr": 3.874,
     "em_adj_o": 111.2718,
     "em_adj_d": 96.3469,
     "conf_strength_score": 0.4874
@@ -6873,6 +7077,8 @@
     "em_star_concentration": 0.331,
     "em_poss_weighted_bpr": 2.075,
     "em_depth_score": 0.424,
+    "em_size_adj_bpr": 16.634,
+    "em_interior_bpr": -0.101,
     "em_adj_o": 106.7292,
     "em_adj_d": 91.792,
     "conf_strength_score": 0.64
@@ -6939,6 +7145,8 @@
     "em_star_concentration": 0.45,
     "em_poss_weighted_bpr": 2.005,
     "em_depth_score": 0.31,
+    "em_size_adj_bpr": 19.608,
+    "em_interior_bpr": 7.431,
     "em_adj_o": 109.0338,
     "em_adj_d": 93.1539,
     "conf_strength_score": 0.661,
@@ -7006,6 +7214,8 @@
     "em_star_concentration": 0.304,
     "em_poss_weighted_bpr": 2.205,
     "em_depth_score": 0.447,
+    "em_size_adj_bpr": 18.642,
+    "em_interior_bpr": 2.983,
     "em_adj_o": 103.2464,
     "em_adj_d": 88.3417,
     "conf_strength_score": 0.5635,
@@ -7073,6 +7283,8 @@
     "em_star_concentration": 0.306,
     "em_poss_weighted_bpr": 2.328,
     "em_depth_score": 0.491,
+    "em_size_adj_bpr": 13.026,
+    "em_interior_bpr": -1.402,
     "em_adj_o": 106.0362,
     "em_adj_d": 88.296,
     "conf_strength_score": 0.7838,
@@ -7140,6 +7352,8 @@
     "em_star_concentration": 0.382,
     "em_poss_weighted_bpr": 1.728,
     "em_depth_score": 0.314,
+    "em_size_adj_bpr": 13.866,
+    "em_interior_bpr": 3.458,
     "em_adj_o": 104.6958,
     "em_adj_d": 94.9634,
     "conf_strength_score": 0.6546
@@ -7206,6 +7420,8 @@
     "em_star_concentration": 0.42,
     "em_poss_weighted_bpr": 1.501,
     "em_depth_score": 0.29,
+    "em_size_adj_bpr": 10.083,
+    "em_interior_bpr": 1.593,
     "em_adj_o": 107.1957,
     "em_adj_d": 97.5829,
     "conf_strength_score": 0.7065
@@ -7272,6 +7488,8 @@
     "em_star_concentration": 0.365,
     "em_poss_weighted_bpr": 2.228,
     "em_depth_score": 0.427,
+    "em_size_adj_bpr": 20.008,
+    "em_interior_bpr": 11.719,
     "em_adj_o": 108.1248,
     "em_adj_d": 92.4705,
     "conf_strength_score": 0.4386
@@ -7338,6 +7556,8 @@
     "em_star_concentration": 0.325,
     "em_poss_weighted_bpr": 2.332,
     "em_depth_score": 0.469,
+    "em_size_adj_bpr": 21.151,
+    "em_interior_bpr": 6.244,
     "em_adj_o": 110.3784,
     "em_adj_d": 99.6964,
     "conf_strength_score": 0.4178
@@ -7404,6 +7624,8 @@
     "em_star_concentration": 0.346,
     "em_poss_weighted_bpr": 1.927,
     "em_depth_score": 0.412,
+    "em_size_adj_bpr": 11.509,
+    "em_interior_bpr": 1.5,
     "em_adj_o": 107.8835,
     "em_adj_d": 93.9349,
     "conf_strength_score": 0.8533
@@ -7470,6 +7692,8 @@
     "em_star_concentration": 0.315,
     "em_poss_weighted_bpr": 1.397,
     "em_depth_score": 0.38,
+    "em_size_adj_bpr": 12.753,
+    "em_interior_bpr": 5.529,
     "em_adj_o": 100.0276,
     "em_adj_d": 90.0659,
     "conf_strength_score": 0.2113
@@ -7536,6 +7760,8 @@
     "em_star_concentration": 0.311,
     "em_poss_weighted_bpr": 1.687,
     "em_depth_score": 0.49,
+    "em_size_adj_bpr": 20.923,
+    "em_interior_bpr": 7.777,
     "em_adj_o": 131.0279,
     "em_adj_d": 65.042,
     "conf_strength_score": 0.3093
@@ -7602,6 +7828,8 @@
     "em_star_concentration": 0.35,
     "em_poss_weighted_bpr": 1.674,
     "em_depth_score": 0.388,
+    "em_size_adj_bpr": 17.138,
+    "em_interior_bpr": 4.461,
     "em_adj_o": 106.3397,
     "em_adj_d": 92.6371,
     "conf_strength_score": 0.584
@@ -7668,6 +7896,8 @@
     "em_star_concentration": 0.329,
     "em_poss_weighted_bpr": 1.284,
     "em_depth_score": 0.373,
+    "em_size_adj_bpr": 15.261,
+    "em_interior_bpr": 3.015,
     "em_adj_o": 101.3508,
     "em_adj_d": 89.3941,
     "conf_strength_score": 0.3643
@@ -7734,6 +7964,8 @@
     "em_star_concentration": 0.53,
     "em_poss_weighted_bpr": 1.799,
     "em_depth_score": 0.23,
+    "em_size_adj_bpr": 9.897,
+    "em_interior_bpr": 0.137,
     "em_adj_o": 106.9646,
     "em_adj_d": 95.0727,
     "conf_strength_score": 0.4286
@@ -7800,6 +8032,8 @@
     "em_star_concentration": 0.505,
     "em_poss_weighted_bpr": 1.355,
     "em_depth_score": 0.23,
+    "em_size_adj_bpr": 12.858,
+    "em_interior_bpr": 7.155,
     "em_adj_o": 105.7005,
     "em_adj_d": 97.8073,
     "conf_strength_score": 0.5566,
@@ -7867,6 +8101,8 @@
     "em_star_concentration": 0.353,
     "em_poss_weighted_bpr": 1.477,
     "em_depth_score": 0.355,
+    "em_size_adj_bpr": 7.355,
+    "em_interior_bpr": -1.338,
     "em_adj_o": 107.6391,
     "em_adj_d": 101.1879,
     "conf_strength_score": 0.8288
@@ -7933,6 +8169,8 @@
     "em_star_concentration": 0.328,
     "em_poss_weighted_bpr": 2.158,
     "em_depth_score": 0.395,
+    "em_size_adj_bpr": 13.082,
+    "em_interior_bpr": 6.025,
     "em_adj_o": 108.7847,
     "em_adj_d": 99.7912,
     "conf_strength_score": 0.7358
@@ -8047,6 +8285,8 @@
     "em_star_concentration": 0.343,
     "em_poss_weighted_bpr": 1.756,
     "em_depth_score": 0.396,
+    "em_size_adj_bpr": 18.575,
+    "em_interior_bpr": 8.604,
     "em_adj_o": 110.3571,
     "em_adj_d": 96.7307,
     "conf_strength_score": 0.427
@@ -8113,6 +8353,8 @@
     "em_star_concentration": 0.308,
     "em_poss_weighted_bpr": 1.412,
     "em_depth_score": 0.375,
+    "em_size_adj_bpr": 13.426,
+    "em_interior_bpr": 3.356,
     "em_adj_o": 107.1445,
     "em_adj_d": 91.0947,
     "conf_strength_score": 0.6872
@@ -8179,6 +8421,8 @@
     "em_star_concentration": 0.508,
     "em_poss_weighted_bpr": 1.641,
     "em_depth_score": 0.233,
+    "em_size_adj_bpr": 8.154,
+    "em_interior_bpr": 1.663,
     "em_adj_o": 109.826,
     "em_adj_d": 99.3465,
     "conf_strength_score": 0.719,
@@ -8246,6 +8490,8 @@
     "em_star_concentration": 0.309,
     "em_poss_weighted_bpr": 2.084,
     "em_depth_score": 0.435,
+    "em_size_adj_bpr": 18.807,
+    "em_interior_bpr": 5.338,
     "em_adj_o": 101.1899,
     "em_adj_d": 92.1166,
     "conf_strength_score": 0.6883
@@ -8312,6 +8558,8 @@
     "em_star_concentration": 0.329,
     "em_poss_weighted_bpr": 1.118,
     "em_depth_score": 0.356,
+    "em_size_adj_bpr": 10.37,
+    "em_interior_bpr": 2.225,
     "em_adj_o": 103.0926,
     "em_adj_d": 93.87,
     "conf_strength_score": 0.4089
@@ -8378,6 +8626,8 @@
     "em_star_concentration": 0.398,
     "em_poss_weighted_bpr": 0.878,
     "em_depth_score": 0.254,
+    "em_size_adj_bpr": 9.865,
+    "em_interior_bpr": 3.768,
     "em_adj_o": 98.8766,
     "em_adj_d": 91.2078,
     "conf_strength_score": 0.6951
@@ -8444,6 +8694,8 @@
     "em_star_concentration": 0.365,
     "em_poss_weighted_bpr": 1.491,
     "em_depth_score": 0.36,
+    "em_size_adj_bpr": 15.347,
+    "em_interior_bpr": 4.922,
     "em_adj_o": 102.8097,
     "em_adj_d": 92.7588,
     "conf_strength_score": 0.4965,
@@ -8511,6 +8763,8 @@
     "em_star_concentration": 0.293,
     "em_poss_weighted_bpr": 2.125,
     "em_depth_score": 0.462,
+    "em_size_adj_bpr": 14.367,
+    "em_interior_bpr": 0.577,
     "em_adj_o": 110.7779,
     "em_adj_d": 97.0862,
     "conf_strength_score": 0.3843,
@@ -8578,6 +8832,8 @@
     "em_star_concentration": 0.253,
     "em_poss_weighted_bpr": 1.911,
     "em_depth_score": 0.483,
+    "em_size_adj_bpr": 13.485,
+    "em_interior_bpr": 6.146,
     "em_adj_o": 104.3237,
     "em_adj_d": 92.2459,
     "conf_strength_score": 0.7007
@@ -8644,6 +8900,8 @@
     "em_star_concentration": 0.295,
     "em_poss_weighted_bpr": 1.881,
     "em_depth_score": 0.456,
+    "em_size_adj_bpr": 14.94,
+    "em_interior_bpr": 2.256,
     "em_adj_o": 107.5805,
     "em_adj_d": 94.4471,
     "conf_strength_score": 0.3543,
@@ -8711,6 +8969,8 @@
     "em_star_concentration": 0.34,
     "em_poss_weighted_bpr": 1.239,
     "em_depth_score": 0.319,
+    "em_size_adj_bpr": 6.535,
+    "em_interior_bpr": 1.584,
     "em_adj_o": 103.075,
     "em_adj_d": 95.2206,
     "conf_strength_score": 0.3832
@@ -8777,6 +9037,8 @@
     "em_star_concentration": 0.464,
     "em_poss_weighted_bpr": 1.408,
     "em_depth_score": 0.252,
+    "em_size_adj_bpr": 3.682,
+    "em_interior_bpr": -0.661,
     "em_adj_o": 104.3057,
     "em_adj_d": 95.0752,
     "conf_strength_score": 0.6822
@@ -8843,6 +9105,8 @@
     "em_star_concentration": 0.55,
     "em_poss_weighted_bpr": 1.483,
     "em_depth_score": 0.18,
+    "em_size_adj_bpr": 7.524,
+    "em_interior_bpr": 0.086,
     "em_adj_o": 105.2479,
     "em_adj_d": 93.7321,
     "conf_strength_score": 0.8161
@@ -8957,6 +9221,8 @@
     "em_star_concentration": 0.443,
     "em_poss_weighted_bpr": 1.123,
     "em_depth_score": 0.262,
+    "em_size_adj_bpr": 8.274,
+    "em_interior_bpr": -0.867,
     "em_adj_o": 101.3428,
     "em_adj_d": 94.1545,
     "conf_strength_score": 0.4602
@@ -9023,6 +9289,8 @@
     "em_star_concentration": 0.305,
     "em_poss_weighted_bpr": 1.825,
     "em_depth_score": 0.475,
+    "em_size_adj_bpr": 12.749,
+    "em_interior_bpr": 4.82,
     "em_adj_o": 108.16,
     "em_adj_d": 92.9622,
     "conf_strength_score": 0.2711,
@@ -9090,6 +9358,8 @@
     "em_star_concentration": 0.681,
     "em_poss_weighted_bpr": 1.272,
     "em_depth_score": 0.127,
+    "em_size_adj_bpr": 3.519,
+    "em_interior_bpr": 0.487,
     "em_adj_o": 101.1985,
     "em_adj_d": 94.3922,
     "conf_strength_score": 0.6192
@@ -9156,6 +9426,8 @@
     "em_star_concentration": 0.327,
     "em_poss_weighted_bpr": 1.254,
     "em_depth_score": 0.345,
+    "em_size_adj_bpr": 7.055,
+    "em_interior_bpr": 0.874,
     "em_adj_o": 109.6938,
     "em_adj_d": 102.7951,
     "conf_strength_score": 0.4918
@@ -9222,6 +9494,8 @@
     "em_star_concentration": 0.362,
     "em_poss_weighted_bpr": 1.422,
     "em_depth_score": 0.342,
+    "em_size_adj_bpr": 12.369,
+    "em_interior_bpr": 3.743,
     "em_adj_o": 100.8752,
     "em_adj_d": 92.1524,
     "conf_strength_score": 0.7041
@@ -9288,6 +9562,8 @@
     "em_star_concentration": 0.382,
     "em_poss_weighted_bpr": 1.361,
     "em_depth_score": 0.262,
+    "em_size_adj_bpr": 8.144,
+    "em_interior_bpr": 3.704,
     "em_adj_o": 102.884,
     "em_adj_d": 99.2019,
     "conf_strength_score": 0.701
@@ -9401,6 +9677,8 @@
     "em_star_concentration": 0.32,
     "em_poss_weighted_bpr": 1.42,
     "em_depth_score": 0.349,
+    "em_size_adj_bpr": 10.698,
+    "em_interior_bpr": 3.833,
     "em_adj_o": 103.4294,
     "em_adj_d": 96.1225,
     "conf_strength_score": 0.3552
@@ -9467,6 +9745,8 @@
     "em_star_concentration": 0.397,
     "em_poss_weighted_bpr": 1.595,
     "em_depth_score": 0.359,
+    "em_size_adj_bpr": 16.306,
+    "em_interior_bpr": 4.231,
     "em_adj_o": 109.304,
     "em_adj_d": 89.9444,
     "conf_strength_score": 0.5619
@@ -9533,6 +9813,8 @@
     "em_star_concentration": 0.566,
     "em_poss_weighted_bpr": 1.677,
     "em_depth_score": 0.182,
+    "em_size_adj_bpr": 2.758,
+    "em_interior_bpr": -2.303,
     "em_adj_o": 115.0769,
     "em_adj_d": 107.8124,
     "conf_strength_score": 0.5242
@@ -9599,6 +9881,8 @@
     "em_star_concentration": 0.363,
     "em_poss_weighted_bpr": 0.688,
     "em_depth_score": 0.257,
+    "em_size_adj_bpr": 4.78,
+    "em_interior_bpr": 1.153,
     "em_adj_o": 100.7949,
     "em_adj_d": 95.4013,
     "conf_strength_score": 0.6069
@@ -9665,6 +9949,8 @@
     "em_star_concentration": 0.419,
     "em_poss_weighted_bpr": 0.874,
     "em_depth_score": 0.247,
+    "em_size_adj_bpr": 7.074,
+    "em_interior_bpr": 0.583,
     "em_adj_o": 103.7114,
     "em_adj_d": 94.5367,
     "conf_strength_score": 0.7526
@@ -9731,6 +10017,8 @@
     "em_star_concentration": 0.309,
     "em_poss_weighted_bpr": 1.212,
     "em_depth_score": 0.365,
+    "em_size_adj_bpr": 9.742,
+    "em_interior_bpr": 3.561,
     "em_adj_o": 102.5702,
     "em_adj_d": 94.226,
     "conf_strength_score": 0.5532
@@ -9797,6 +10085,8 @@
     "em_star_concentration": 0.389,
     "em_poss_weighted_bpr": 1.06,
     "em_depth_score": 0.28,
+    "em_size_adj_bpr": 10.353,
+    "em_interior_bpr": 3.332,
     "em_adj_o": 104.3972,
     "em_adj_d": 92.624,
     "conf_strength_score": 0.455
@@ -9863,6 +10153,8 @@
     "em_star_concentration": 0.395,
     "em_poss_weighted_bpr": 0.531,
     "em_depth_score": 0.242,
+    "em_size_adj_bpr": 3.988,
+    "em_interior_bpr": 1.146,
     "em_adj_o": 101.5054,
     "em_adj_d": 95.9281,
     "conf_strength_score": 0.8769
@@ -9929,6 +10221,8 @@
     "em_star_concentration": 0.312,
     "em_poss_weighted_bpr": 1.409,
     "em_depth_score": 0.39,
+    "em_size_adj_bpr": 11.979,
+    "em_interior_bpr": 5.759,
     "em_adj_o": 105.5714,
     "em_adj_d": 95.2646,
     "conf_strength_score": 0.4335
@@ -9995,6 +10289,8 @@
     "em_star_concentration": 0.592,
     "em_poss_weighted_bpr": 1.182,
     "em_depth_score": 0.163,
+    "em_size_adj_bpr": 13.699,
+    "em_interior_bpr": 6.327,
     "em_adj_o": 102.7407,
     "em_adj_d": 91.9623,
     "conf_strength_score": 0.5658
@@ -10061,6 +10357,8 @@
     "em_star_concentration": 0.224,
     "em_poss_weighted_bpr": 1.09,
     "em_depth_score": 0.366,
+    "em_size_adj_bpr": 11.282,
+    "em_interior_bpr": 2.919,
     "em_adj_o": 102.9072,
     "em_adj_d": 100.2846,
     "conf_strength_score": 0.1549
@@ -10127,6 +10425,8 @@
     "em_star_concentration": 0.492,
     "em_poss_weighted_bpr": 1.241,
     "em_depth_score": 0.207,
+    "em_size_adj_bpr": 9.302,
+    "em_interior_bpr": 0.418,
     "em_adj_o": 108.6444,
     "em_adj_d": 100.6086,
     "conf_strength_score": 0.4105
@@ -10193,6 +10493,8 @@
     "em_star_concentration": 0.422,
     "em_poss_weighted_bpr": 0.912,
     "em_depth_score": 0.249,
+    "em_size_adj_bpr": 8.19,
+    "em_interior_bpr": -0.157,
     "em_adj_o": 106.7621,
     "em_adj_d": 99.9865,
     "conf_strength_score": 0.7304
@@ -10259,6 +10561,8 @@
     "em_star_concentration": 0.418,
     "em_poss_weighted_bpr": 1.173,
     "em_depth_score": 0.242,
+    "em_size_adj_bpr": 6.719,
+    "em_interior_bpr": 1.524,
     "em_adj_o": 102.1029,
     "em_adj_d": 94.9047,
     "conf_strength_score": 0.101
@@ -10325,6 +10629,8 @@
     "em_star_concentration": 0.284,
     "em_poss_weighted_bpr": 1.429,
     "em_depth_score": 0.358,
+    "em_size_adj_bpr": 10.643,
+    "em_interior_bpr": 3.218,
     "em_adj_o": 102.7778,
     "em_adj_d": 94.2334,
     "conf_strength_score": 0.4249
@@ -10391,6 +10697,8 @@
     "em_star_concentration": 0.54,
     "em_poss_weighted_bpr": 0.679,
     "em_depth_score": 0.184,
+    "em_size_adj_bpr": 11.034,
+    "em_interior_bpr": 4.399,
     "em_adj_o": 101.0964,
     "em_adj_d": 84.3239,
     "conf_strength_score": 0.6584
@@ -10457,6 +10765,8 @@
     "em_star_concentration": 0.353,
     "em_poss_weighted_bpr": 1.18,
     "em_depth_score": 0.333,
+    "em_size_adj_bpr": 10.004,
+    "em_interior_bpr": 5.559,
     "em_adj_o": 110.3774,
     "em_adj_d": 97.3357,
     "conf_strength_score": 0.5968,
@@ -10524,6 +10834,8 @@
     "em_star_concentration": 0.279,
     "em_poss_weighted_bpr": 1.142,
     "em_depth_score": 0.449,
+    "em_size_adj_bpr": 15.99,
+    "em_interior_bpr": 9.883,
     "em_adj_o": 102.0414,
     "em_adj_d": 95.6421,
     "conf_strength_score": 0.4216
@@ -10590,6 +10902,8 @@
     "em_star_concentration": 0.525,
     "em_poss_weighted_bpr": 1.361,
     "em_depth_score": 0.201,
+    "em_size_adj_bpr": 10.409,
+    "em_interior_bpr": 1.341,
     "em_adj_o": 106.6072,
     "em_adj_d": 92.8987,
     "conf_strength_score": 0.8042,
@@ -10657,6 +10971,8 @@
     "em_star_concentration": 0.495,
     "em_poss_weighted_bpr": 0.48,
     "em_depth_score": 0.202,
+    "em_size_adj_bpr": 3.924,
+    "em_interior_bpr": 1.6,
     "em_adj_o": 103.2746,
     "em_adj_d": 96.6916,
     "conf_strength_score": 0.768
@@ -10781,6 +11097,8 @@
     "em_star_concentration": 0.275,
     "em_poss_weighted_bpr": 1.314,
     "em_depth_score": 0.368,
+    "em_size_adj_bpr": 10.713,
+    "em_interior_bpr": 3.248,
     "em_adj_o": 109.3715,
     "em_adj_d": 101.1708,
     "conf_strength_score": 0.3809
@@ -10847,6 +11165,8 @@
     "em_star_concentration": 0.439,
     "em_poss_weighted_bpr": 1.286,
     "em_depth_score": 0.253,
+    "em_size_adj_bpr": 4.429,
+    "em_interior_bpr": 2.532,
     "em_adj_o": 105.5514,
     "em_adj_d": 98.0691,
     "conf_strength_score": 0.7718
@@ -10913,6 +11233,8 @@
     "em_star_concentration": 0.355,
     "em_poss_weighted_bpr": 1.517,
     "em_depth_score": 0.378,
+    "em_size_adj_bpr": 14.008,
+    "em_interior_bpr": 3.784,
     "em_adj_o": 109.832,
     "em_adj_d": 95.7619,
     "conf_strength_score": 0.3067
@@ -10979,6 +11301,8 @@
     "em_star_concentration": 0.392,
     "em_poss_weighted_bpr": 0.732,
     "em_depth_score": 0.244,
+    "em_size_adj_bpr": 6.944,
+    "em_interior_bpr": 3.258,
     "em_adj_o": 107.2113,
     "em_adj_d": 99.3256,
     "conf_strength_score": 0.2473
@@ -11045,6 +11369,8 @@
     "em_star_concentration": 0.311,
     "em_poss_weighted_bpr": 1.25,
     "em_depth_score": 0.361,
+    "em_size_adj_bpr": 14.854,
+    "em_interior_bpr": 4.091,
     "em_adj_o": 108.0265,
     "em_adj_d": 99.4308,
     "conf_strength_score": 0.4315
@@ -11111,6 +11437,8 @@
     "em_star_concentration": 0.353,
     "em_poss_weighted_bpr": 1.329,
     "em_depth_score": 0.39,
+    "em_size_adj_bpr": 13.689,
+    "em_interior_bpr": 3.806,
     "em_adj_o": 100.201,
     "em_adj_d": 94.8063,
     "conf_strength_score": 0.3137
@@ -11177,6 +11505,8 @@
     "em_star_concentration": 0.407,
     "em_poss_weighted_bpr": 0.983,
     "em_depth_score": 0.27,
+    "em_size_adj_bpr": 6.997,
+    "em_interior_bpr": 2.845,
     "em_adj_o": 102.5459,
     "em_adj_d": 93.9602,
     "conf_strength_score": 0.3519
@@ -11290,6 +11620,8 @@
     "em_star_concentration": 0.279,
     "em_poss_weighted_bpr": 1.202,
     "em_depth_score": 0.34,
+    "em_size_adj_bpr": 4.737,
+    "em_interior_bpr": -0.263,
     "em_adj_o": 109.1024,
     "em_adj_d": 100.7054,
     "conf_strength_score": 0.476
@@ -11356,6 +11688,8 @@
     "em_star_concentration": 0.598,
     "em_poss_weighted_bpr": 0.44,
     "em_depth_score": 0.161,
+    "em_size_adj_bpr": 9.112,
+    "em_interior_bpr": 5.791,
     "em_adj_o": 103.7194,
     "em_adj_d": 91.6473,
     "conf_strength_score": 0.8604,
@@ -11423,6 +11757,8 @@
     "em_star_concentration": 0.336,
     "em_poss_weighted_bpr": 0.84,
     "em_depth_score": 0.286,
+    "em_size_adj_bpr": 7.873,
+    "em_interior_bpr": 2.947,
     "em_adj_o": 108.1569,
     "em_adj_d": 100.4715,
     "conf_strength_score": 0.4472
@@ -11536,6 +11872,8 @@
     "em_star_concentration": 0.757,
     "em_poss_weighted_bpr": 0.586,
     "em_depth_score": 0.097,
+    "em_size_adj_bpr": 1.079,
+    "em_interior_bpr": 1.568,
     "em_adj_o": 99.5601,
     "em_adj_d": 91.6367,
     "conf_strength_score": 0.4962
@@ -11602,6 +11940,8 @@
     "em_star_concentration": 0.499,
     "em_poss_weighted_bpr": 0.631,
     "em_depth_score": 0.2,
+    "em_size_adj_bpr": 7.673,
+    "em_interior_bpr": 1.099,
     "em_adj_o": 106.266,
     "em_adj_d": 93.6314,
     "conf_strength_score": 0.459
@@ -11668,6 +12008,8 @@
     "em_star_concentration": 0.544,
     "em_poss_weighted_bpr": -0.085,
     "em_depth_score": 0.182,
+    "em_size_adj_bpr": -0.843,
+    "em_interior_bpr": -1.086,
     "em_adj_o": 104.3952,
     "em_adj_d": 101.6447,
     "conf_strength_score": 0.5059
@@ -11734,6 +12076,8 @@
     "em_star_concentration": 0.284,
     "em_poss_weighted_bpr": 0.224,
     "em_depth_score": 0.286,
+    "em_size_adj_bpr": 1.308,
+    "em_interior_bpr": -0.551,
     "em_adj_o": 104.6987,
     "em_adj_d": 97.7677,
     "conf_strength_score": 0.7672,
@@ -11801,6 +12145,8 @@
     "em_star_concentration": 0.35,
     "em_poss_weighted_bpr": 0.98,
     "em_depth_score": 0.335,
+    "em_size_adj_bpr": 7.18,
+    "em_interior_bpr": 2.843,
     "em_adj_o": 102.3119,
     "em_adj_d": 95.6484,
     "conf_strength_score": 0.7281
@@ -11867,6 +12213,8 @@
     "em_star_concentration": 0.317,
     "em_poss_weighted_bpr": 0.538,
     "em_depth_score": 0.296,
+    "em_size_adj_bpr": 7.661,
+    "em_interior_bpr": 4.332,
     "em_adj_o": 100.5775,
     "em_adj_d": 98.3744,
     "conf_strength_score": 0.7179
@@ -11933,6 +12281,8 @@
     "em_star_concentration": 0.448,
     "em_poss_weighted_bpr": 0.49,
     "em_depth_score": 0.221,
+    "em_size_adj_bpr": 2.574,
+    "em_interior_bpr": 1.484,
     "em_adj_o": 101.8559,
     "em_adj_d": 102.4085,
     "conf_strength_score": 0.5377
@@ -11999,6 +12349,8 @@
     "em_star_concentration": 0.357,
     "em_poss_weighted_bpr": 0.985,
     "em_depth_score": 0.274,
+    "em_size_adj_bpr": 2.392,
+    "em_interior_bpr": 0.233,
     "em_adj_o": 101.9877,
     "em_adj_d": 96.0651,
     "conf_strength_score": 0.3509
@@ -12065,6 +12417,8 @@
     "em_star_concentration": 0.374,
     "em_poss_weighted_bpr": 0.701,
     "em_depth_score": 0.303,
+    "em_size_adj_bpr": 8.6,
+    "em_interior_bpr": 0.322,
     "em_adj_o": 98.7828,
     "em_adj_d": 86.1303,
     "conf_strength_score": 0.1721
@@ -12131,6 +12485,8 @@
     "em_star_concentration": 0.357,
     "em_poss_weighted_bpr": 0.337,
     "em_depth_score": 0.265,
+    "em_size_adj_bpr": 3.881,
+    "em_interior_bpr": 0.522,
     "em_adj_o": 100.8193,
     "em_adj_d": 97.2382,
     "conf_strength_score": 0.4372
@@ -12197,6 +12553,8 @@
     "em_star_concentration": 0.669,
     "em_poss_weighted_bpr": 0.644,
     "em_depth_score": 0.133,
+    "em_size_adj_bpr": 6.697,
+    "em_interior_bpr": 5.24,
     "em_adj_o": 104.5291,
     "em_adj_d": 94.0612,
     "conf_strength_score": 0.2848,
@@ -12264,6 +12622,8 @@
     "em_star_concentration": 0.722,
     "em_poss_weighted_bpr": 0.349,
     "em_depth_score": 0.111,
+    "em_size_adj_bpr": 7.727,
+    "em_interior_bpr": 4.362,
     "em_adj_o": 102.8881,
     "em_adj_d": 94.7257,
     "conf_strength_score": 0.2879,
@@ -12331,6 +12691,8 @@
     "em_star_concentration": 0.292,
     "em_poss_weighted_bpr": 0.235,
     "em_depth_score": 0.287,
+    "em_size_adj_bpr": 4.315,
+    "em_interior_bpr": 1.022,
     "em_adj_o": 102.6193,
     "em_adj_d": 98.6716,
     "conf_strength_score": 0.5889
@@ -12397,6 +12759,8 @@
     "em_star_concentration": 0.424,
     "em_poss_weighted_bpr": 0.016,
     "em_depth_score": 0.23,
+    "em_size_adj_bpr": 4.579,
+    "em_interior_bpr": 2.641,
     "em_adj_o": 99.1225,
     "em_adj_d": 93.1818,
     "conf_strength_score": 0.3109
@@ -12463,6 +12827,8 @@
     "em_star_concentration": 0.447,
     "em_poss_weighted_bpr": 0.257,
     "em_depth_score": 0.221,
+    "em_size_adj_bpr": 3.642,
+    "em_interior_bpr": 1.151,
     "em_adj_o": 99.4896,
     "em_adj_d": 97.4721,
     "conf_strength_score": 0.3886
@@ -12529,6 +12895,8 @@
     "em_star_concentration": 0.364,
     "em_poss_weighted_bpr": 0.694,
     "em_depth_score": 0.254,
+    "em_size_adj_bpr": 0.804,
+    "em_interior_bpr": -2.34,
     "em_adj_o": 102.859,
     "em_adj_d": 96.0899,
     "conf_strength_score": 0.4396
@@ -12642,6 +13010,8 @@
     "em_star_concentration": 0.466,
     "em_poss_weighted_bpr": 0.946,
     "em_depth_score": 0.224,
+    "em_size_adj_bpr": 7.223,
+    "em_interior_bpr": 2.249,
     "em_adj_o": 108.3997,
     "em_adj_d": 106.607,
     "conf_strength_score": 0.4981
@@ -12708,6 +13078,8 @@
     "em_star_concentration": 0.565,
     "em_poss_weighted_bpr": -0.162,
     "em_depth_score": 0.174,
+    "em_size_adj_bpr": -0.568,
+    "em_interior_bpr": -0.398,
     "em_adj_o": 99.7421,
     "em_adj_d": 101.7785,
     "conf_strength_score": 0.7309
@@ -12774,6 +13146,8 @@
     "em_star_concentration": 0.405,
     "em_poss_weighted_bpr": 1.022,
     "em_depth_score": 0.259,
+    "em_size_adj_bpr": 5.714,
+    "em_interior_bpr": 1.722,
     "em_adj_o": 105.4445,
     "em_adj_d": 95.7489,
     "conf_strength_score": 0.6863
@@ -12840,6 +13214,8 @@
     "em_star_concentration": 0.313,
     "em_poss_weighted_bpr": 0.442,
     "em_depth_score": 0.283,
+    "em_size_adj_bpr": 3.119,
+    "em_interior_bpr": -0.815,
     "em_adj_o": 98.4594,
     "em_adj_d": 94.1891,
     "conf_strength_score": 0.5229
@@ -12906,6 +13282,8 @@
     "em_star_concentration": 0.457,
     "em_poss_weighted_bpr": 0.969,
     "em_depth_score": 0.217,
+    "em_size_adj_bpr": 7.632,
+    "em_interior_bpr": 3.291,
     "em_adj_o": 104.7853,
     "em_adj_d": 99.1681,
     "conf_strength_score": 0.4905
@@ -12972,6 +13350,8 @@
     "em_star_concentration": 0.725,
     "em_poss_weighted_bpr": 0.55,
     "em_depth_score": 0.11,
+    "em_size_adj_bpr": 3.539,
+    "em_interior_bpr": 1.723,
     "em_adj_o": 100.8771,
     "em_adj_d": 92.656,
     "conf_strength_score": 0.27
@@ -13085,6 +13465,8 @@
     "em_star_concentration": 0.309,
     "em_poss_weighted_bpr": 0.722,
     "em_depth_score": 0.326,
+    "em_size_adj_bpr": 10.09,
+    "em_interior_bpr": 0.761,
     "em_adj_o": 105.4923,
     "em_adj_d": 96.6143,
     "conf_strength_score": 0.2055
@@ -13151,6 +13533,8 @@
     "em_star_concentration": 0.334,
     "em_poss_weighted_bpr": 0.518,
     "em_depth_score": 0.266,
+    "em_size_adj_bpr": 5.077,
+    "em_interior_bpr": -0.301,
     "em_adj_o": 109.0493,
     "em_adj_d": 107.9819,
     "conf_strength_score": 0.2788
@@ -13217,6 +13601,8 @@
     "em_star_concentration": 0.365,
     "em_poss_weighted_bpr": 0.519,
     "em_depth_score": 0.254,
+    "em_size_adj_bpr": 1.617,
+    "em_interior_bpr": -0.325,
     "em_adj_o": 103.6454,
     "em_adj_d": 100.0013,
     "conf_strength_score": 0.6632
@@ -13283,6 +13669,8 @@
     "em_star_concentration": 0.658,
     "em_poss_weighted_bpr": 0.142,
     "em_depth_score": 0.137,
+    "em_size_adj_bpr": 4.245,
+    "em_interior_bpr": 0.731,
     "em_adj_o": 98.9956,
     "em_adj_d": 95.0741,
     "conf_strength_score": 0.5078
@@ -13349,6 +13737,8 @@
     "em_star_concentration": 0.313,
     "em_poss_weighted_bpr": 0.732,
     "em_depth_score": 0.275,
+    "em_size_adj_bpr": 4.541,
+    "em_interior_bpr": 1.831,
     "em_adj_o": 101.7175,
     "em_adj_d": 98.8761,
     "conf_strength_score": 1.0
@@ -13415,6 +13805,8 @@
     "em_star_concentration": 0.458,
     "em_poss_weighted_bpr": 0.422,
     "em_depth_score": 0.217,
+    "em_size_adj_bpr": 0.874,
+    "em_interior_bpr": -1.138,
     "em_adj_o": 103.1314,
     "em_adj_d": 95.5561,
     "conf_strength_score": 0.9301
@@ -13481,6 +13873,8 @@
     "em_star_concentration": 1.0,
     "em_poss_weighted_bpr": 0.158,
     "em_depth_score": 0.0,
+    "em_size_adj_bpr": 1.058,
+    "em_interior_bpr": 1.089,
     "em_adj_o": 102.2259,
     "em_adj_d": 99.0102,
     "conf_strength_score": 0.4494
@@ -13547,6 +13941,8 @@
     "em_star_concentration": 0.323,
     "em_poss_weighted_bpr": 0.142,
     "em_depth_score": 0.271,
+    "em_size_adj_bpr": 6.204,
+    "em_interior_bpr": 2.119,
     "em_adj_o": 102.4451,
     "em_adj_d": 99.4691,
     "conf_strength_score": 0.698
@@ -13613,6 +14009,8 @@
     "em_star_concentration": 0.5,
     "em_poss_weighted_bpr": 0.468,
     "em_depth_score": 0.2,
+    "em_size_adj_bpr": 4.663,
+    "em_interior_bpr": 2.119,
     "em_adj_o": 108.4593,
     "em_adj_d": 103.4186,
     "conf_strength_score": 0.4654
@@ -13679,6 +14077,8 @@
     "em_star_concentration": 0.335,
     "em_poss_weighted_bpr": -0.155,
     "em_depth_score": 0.266,
+    "em_size_adj_bpr": 4.92,
+    "em_interior_bpr": 1.713,
     "em_adj_o": 97.7435,
     "em_adj_d": 97.292,
     "conf_strength_score": 0.7791
@@ -13745,6 +14145,8 @@
     "em_star_concentration": 0.302,
     "em_poss_weighted_bpr": 0.101,
     "em_depth_score": 0.279,
+    "em_size_adj_bpr": 4.846,
+    "em_interior_bpr": 1.716,
     "em_adj_o": 98.7846,
     "em_adj_d": 95.0787,
     "conf_strength_score": 0.5361
@@ -13811,6 +14213,8 @@
     "em_star_concentration": 0.993,
     "em_poss_weighted_bpr": 0.455,
     "em_depth_score": 0.003,
+    "em_size_adj_bpr": 7.069,
+    "em_interior_bpr": 5.529,
     "em_adj_o": 103.7212,
     "em_adj_d": 96.3155,
     "conf_strength_score": 0.6048
@@ -13877,6 +14281,8 @@
     "em_star_concentration": 0.457,
     "em_poss_weighted_bpr": 0.199,
     "em_depth_score": 0.217,
+    "em_size_adj_bpr": 1.813,
+    "em_interior_bpr": -2.595,
     "em_adj_o": 103.1571,
     "em_adj_d": 97.6495,
     "conf_strength_score": 0.7352
@@ -13943,6 +14349,8 @@
     "em_star_concentration": 0.799,
     "em_poss_weighted_bpr": 0.234,
     "em_depth_score": 0.08,
+    "em_size_adj_bpr": 0.746,
+    "em_interior_bpr": -0.9,
     "em_adj_o": 98.7075,
     "em_adj_d": 95.9399,
     "conf_strength_score": 0.4666
@@ -14009,6 +14417,8 @@
     "em_star_concentration": 0.568,
     "em_poss_weighted_bpr": 0.317,
     "em_depth_score": 0.173,
+    "em_size_adj_bpr": 4.11,
+    "em_interior_bpr": 1.627,
     "em_adj_o": 96.0381,
     "em_adj_d": 95.0325,
     "conf_strength_score": 0.4502
@@ -14075,6 +14485,8 @@
     "em_star_concentration": 0.37,
     "em_poss_weighted_bpr": 0.144,
     "em_depth_score": 0.252,
+    "em_size_adj_bpr": 2.699,
+    "em_interior_bpr": 1.549,
     "em_adj_o": 105.7734,
     "em_adj_d": 99.8388,
     "conf_strength_score": 0.6741
@@ -14141,6 +14553,8 @@
     "em_star_concentration": 0.742,
     "em_poss_weighted_bpr": -0.182,
     "em_depth_score": 0.103,
+    "em_size_adj_bpr": 2.25,
+    "em_interior_bpr": 0.864,
     "em_adj_o": 97.3223,
     "em_adj_d": 97.3621,
     "conf_strength_score": 0.6988
@@ -14207,6 +14621,8 @@
     "em_star_concentration": 0.593,
     "em_poss_weighted_bpr": 0.09,
     "em_depth_score": 0.163,
+    "em_size_adj_bpr": -0.78,
+    "em_interior_bpr": -0.142,
     "em_adj_o": 104.9123,
     "em_adj_d": 102.6083,
     "conf_strength_score": 0.8451
@@ -14273,6 +14689,8 @@
     "em_star_concentration": 0.293,
     "em_poss_weighted_bpr": 0.496,
     "em_depth_score": 0.283,
+    "em_size_adj_bpr": 4.927,
+    "em_interior_bpr": -0.412,
     "em_adj_o": 103.7534,
     "em_adj_d": 103.431,
     "conf_strength_score": 0.6847
@@ -14339,6 +14757,8 @@
     "em_star_concentration": 0.432,
     "em_poss_weighted_bpr": 0.663,
     "em_depth_score": 0.227,
+    "em_size_adj_bpr": 5.814,
+    "em_interior_bpr": 3.06,
     "em_adj_o": 107.9518,
     "em_adj_d": 95.4724,
     "conf_strength_score": 0.3523
@@ -14405,6 +14825,8 @@
     "em_star_concentration": 0.52,
     "em_poss_weighted_bpr": 0.13,
     "em_depth_score": 0.192,
+    "em_size_adj_bpr": 3.078,
+    "em_interior_bpr": 2.203,
     "em_adj_o": 98.8674,
     "em_adj_d": 98.4278,
     "conf_strength_score": 0.2003
@@ -14471,6 +14893,8 @@
     "em_star_concentration": 0.549,
     "em_poss_weighted_bpr": 0.074,
     "em_depth_score": 0.18,
+    "em_size_adj_bpr": 3.002,
+    "em_interior_bpr": 0.018,
     "em_adj_o": 101.8134,
     "em_adj_d": 99.8552,
     "conf_strength_score": 0.4984
@@ -14537,6 +14961,8 @@
     "em_star_concentration": 0.861,
     "em_poss_weighted_bpr": -0.069,
     "em_depth_score": 0.055,
+    "em_size_adj_bpr": 1.674,
+    "em_interior_bpr": 0.055,
     "em_adj_o": 97.5584,
     "em_adj_d": 96.239,
     "conf_strength_score": 0.5656
@@ -14603,6 +15029,8 @@
     "em_star_concentration": 1.0,
     "em_poss_weighted_bpr": -0.73,
     "em_depth_score": 0.0,
+    "em_size_adj_bpr": -2.958,
+    "em_interior_bpr": -0.129,
     "em_adj_o": 96.6331,
     "em_adj_d": 97.8458,
     "conf_strength_score": 0.7266
@@ -14669,6 +15097,8 @@
     "em_star_concentration": 0.551,
     "em_poss_weighted_bpr": 0.142,
     "em_depth_score": 0.18,
+    "em_size_adj_bpr": 2.961,
+    "em_interior_bpr": -0.106,
     "em_adj_o": 98.2119,
     "em_adj_d": 99.9107,
     "conf_strength_score": 0.4374
@@ -14735,6 +15165,8 @@
     "em_star_concentration": 0.394,
     "em_poss_weighted_bpr": 0.141,
     "em_depth_score": 0.242,
+    "em_size_adj_bpr": 6.227,
+    "em_interior_bpr": 1.782,
     "em_adj_o": 105.5156,
     "em_adj_d": 95.1784,
     "conf_strength_score": 0.5198
@@ -14801,6 +15233,8 @@
     "em_star_concentration": 1.0,
     "em_poss_weighted_bpr": -0.498,
     "em_depth_score": 0.0,
+    "em_size_adj_bpr": -0.14,
+    "em_interior_bpr": 1.123,
     "em_adj_o": 95.1997,
     "em_adj_d": 92.4312,
     "conf_strength_score": 0.6993
@@ -14867,6 +15301,8 @@
     "em_star_concentration": 1.0,
     "em_poss_weighted_bpr": 0.066,
     "em_depth_score": 0.0,
+    "em_size_adj_bpr": 1.091,
+    "em_interior_bpr": 0.562,
     "em_adj_o": 101.9423,
     "em_adj_d": 100.9779,
     "conf_strength_score": 0.4576
@@ -14933,6 +15369,8 @@
     "em_star_concentration": 0.375,
     "em_poss_weighted_bpr": 0.12,
     "em_depth_score": 0.25,
+    "em_size_adj_bpr": 0.363,
+    "em_interior_bpr": -0.153,
     "em_adj_o": 100.9923,
     "em_adj_d": 100.6124,
     "conf_strength_score": 0.167
@@ -14999,6 +15437,8 @@
     "em_star_concentration": 0.497,
     "em_poss_weighted_bpr": -0.31,
     "em_depth_score": 0.201,
+    "em_size_adj_bpr": 1.867,
+    "em_interior_bpr": -0.306,
     "em_adj_o": 100.2546,
     "em_adj_d": 100.5557,
     "conf_strength_score": 0.5153
@@ -15065,6 +15505,8 @@
     "em_star_concentration": 1.0,
     "em_poss_weighted_bpr": -0.025,
     "em_depth_score": 0.0,
+    "em_size_adj_bpr": 3.236,
+    "em_interior_bpr": 3.442,
     "em_adj_o": 101.1486,
     "em_adj_d": 99.2608,
     "conf_strength_score": 0.3424
@@ -15131,6 +15573,8 @@
     "em_star_concentration": 0.896,
     "em_poss_weighted_bpr": -0.029,
     "em_depth_score": 0.042,
+    "em_size_adj_bpr": 3.462,
+    "em_interior_bpr": 3.23,
     "em_adj_o": 100.4258,
     "em_adj_d": 95.6134,
     "conf_strength_score": 0.4242
@@ -15197,6 +15641,8 @@
     "em_star_concentration": 0.947,
     "em_poss_weighted_bpr": -0.509,
     "em_depth_score": 0.021,
+    "em_size_adj_bpr": -1.322,
+    "em_interior_bpr": -0.392,
     "em_adj_o": 97.2544,
     "em_adj_d": 100.7161,
     "conf_strength_score": 0.6673
@@ -15263,6 +15709,8 @@
     "em_star_concentration": 0.487,
     "em_poss_weighted_bpr": -0.646,
     "em_depth_score": 0.205,
+    "em_size_adj_bpr": 1.387,
+    "em_interior_bpr": 0.355,
     "em_adj_o": 103.4544,
     "em_adj_d": 95.8047,
     "conf_strength_score": 0.3851
@@ -15329,6 +15777,8 @@
     "em_star_concentration": 0.705,
     "em_poss_weighted_bpr": 0.13,
     "em_depth_score": 0.118,
+    "em_size_adj_bpr": 0.972,
+    "em_interior_bpr": 0.052,
     "em_adj_o": 109.3161,
     "em_adj_d": 107.2492,
     "conf_strength_score": 0.4089
@@ -15395,6 +15845,8 @@
     "em_star_concentration": 0.455,
     "em_poss_weighted_bpr": 0.222,
     "em_depth_score": 0.218,
+    "em_size_adj_bpr": 3.157,
+    "em_interior_bpr": 1.201,
     "em_adj_o": 105.6536,
     "em_adj_d": 105.1999,
     "conf_strength_score": 0.8673
@@ -15461,6 +15913,8 @@
     "em_star_concentration": 0.446,
     "em_poss_weighted_bpr": 0.238,
     "em_depth_score": 0.222,
+    "em_size_adj_bpr": 0.407,
+    "em_interior_bpr": 0.439,
     "em_adj_o": 96.4729,
     "em_adj_d": 96.5608,
     "conf_strength_score": 0.4434
@@ -15527,6 +15981,8 @@
     "em_star_concentration": 0.432,
     "em_poss_weighted_bpr": -0.02,
     "em_depth_score": 0.227,
+    "em_size_adj_bpr": 1.655,
+    "em_interior_bpr": -0.104,
     "em_adj_o": 101.3268,
     "em_adj_d": 102.6915,
     "conf_strength_score": 0.4621
@@ -15640,6 +16096,8 @@
     "em_star_concentration": 0.498,
     "em_poss_weighted_bpr": 0.118,
     "em_depth_score": 0.201,
+    "em_size_adj_bpr": 2.196,
+    "em_interior_bpr": 1.826,
     "em_adj_o": 100.9633,
     "em_adj_d": 100.6588,
     "conf_strength_score": 0.7294
@@ -15706,6 +16164,8 @@
     "em_star_concentration": 0.349,
     "em_poss_weighted_bpr": 0.334,
     "em_depth_score": 0.26,
+    "em_size_adj_bpr": 4.563,
+    "em_interior_bpr": 2.328,
     "em_adj_o": 104.388,
     "em_adj_d": 102.6971,
     "conf_strength_score": 0.4974
@@ -15772,6 +16232,8 @@
     "em_star_concentration": 0.802,
     "em_poss_weighted_bpr": -0.392,
     "em_depth_score": 0.079,
+    "em_size_adj_bpr": -0.417,
+    "em_interior_bpr": 1.541,
     "em_adj_o": 91.2459,
     "em_adj_d": 90.6484,
     "conf_strength_score": 0.1366
@@ -15838,6 +16300,8 @@
     "em_star_concentration": 1.0,
     "em_poss_weighted_bpr": -0.634,
     "em_depth_score": 0.0,
+    "em_size_adj_bpr": -4.881,
+    "em_interior_bpr": -2.683,
     "em_adj_o": 99.7647,
     "em_adj_d": 105.269,
     "conf_strength_score": 0.4423
@@ -15904,6 +16368,8 @@
     "em_star_concentration": 0.428,
     "em_poss_weighted_bpr": -0.056,
     "em_depth_score": 0.229,
+    "em_size_adj_bpr": 0.683,
+    "em_interior_bpr": 0.779,
     "em_adj_o": 97.2588,
     "em_adj_d": 97.4321,
     "conf_strength_score": 0.6418
@@ -15970,6 +16436,8 @@
     "em_star_concentration": 0.825,
     "em_poss_weighted_bpr": 0.082,
     "em_depth_score": 0.07,
+    "em_size_adj_bpr": -0.787,
+    "em_interior_bpr": -1.991,
     "em_adj_o": 99.2838,
     "em_adj_d": 99.0318,
     "conf_strength_score": 0.601,
@@ -16037,6 +16505,8 @@
     "em_star_concentration": 0.395,
     "em_poss_weighted_bpr": -0.171,
     "em_depth_score": 0.242,
+    "em_size_adj_bpr": 3.078,
+    "em_interior_bpr": -0.093,
     "em_adj_o": 104.3038,
     "em_adj_d": 103.1541,
     "conf_strength_score": 0.5174
@@ -16103,6 +16573,8 @@
     "em_star_concentration": 0.439,
     "em_poss_weighted_bpr": -0.195,
     "em_depth_score": 0.224,
+    "em_size_adj_bpr": 0.601,
+    "em_interior_bpr": -0.315,
     "em_adj_o": 95.783,
     "em_adj_d": 98.0089,
     "conf_strength_score": 0.4395
@@ -16169,6 +16641,8 @@
     "em_star_concentration": 0.81,
     "em_poss_weighted_bpr": -0.406,
     "em_depth_score": 0.076,
+    "em_size_adj_bpr": 0.6,
+    "em_interior_bpr": 0.342,
     "em_adj_o": 99.0827,
     "em_adj_d": 99.2703,
     "conf_strength_score": 0.2974
@@ -16235,6 +16709,8 @@
     "em_star_concentration": 1.0,
     "em_poss_weighted_bpr": -0.527,
     "em_depth_score": 0.0,
+    "em_size_adj_bpr": -1.79,
+    "em_interior_bpr": -1.182,
     "em_adj_o": 98.9363,
     "em_adj_d": 100.6851,
     "conf_strength_score": 0.2717
@@ -16301,6 +16777,8 @@
     "em_star_concentration": 0.439,
     "em_poss_weighted_bpr": 0.379,
     "em_depth_score": 0.225,
+    "em_size_adj_bpr": 4.202,
+    "em_interior_bpr": 1.647,
     "em_adj_o": 102.3168,
     "em_adj_d": 101.7814,
     "conf_strength_score": 0.6095
@@ -16367,6 +16845,8 @@
     "em_star_concentration": 0.91,
     "em_poss_weighted_bpr": -0.475,
     "em_depth_score": 0.036,
+    "em_size_adj_bpr": -1.8,
+    "em_interior_bpr": 0.13,
     "em_adj_o": 97.8144,
     "em_adj_d": 95.79,
     "conf_strength_score": 0.4153,
@@ -16434,6 +16914,8 @@
     "em_star_concentration": 0.652,
     "em_poss_weighted_bpr": -0.082,
     "em_depth_score": 0.139,
+    "em_size_adj_bpr": 3.584,
+    "em_interior_bpr": 2.984,
     "em_adj_o": 103.8681,
     "em_adj_d": 101.6533,
     "conf_strength_score": 0.3476
@@ -16500,6 +16982,8 @@
     "em_star_concentration": 0.65,
     "em_poss_weighted_bpr": -0.021,
     "em_depth_score": 0.14,
+    "em_size_adj_bpr": 0.208,
+    "em_interior_bpr": -1.002,
     "em_adj_o": 102.2827,
     "em_adj_d": 102.7239,
     "conf_strength_score": 0.6869
@@ -16566,6 +17050,8 @@
     "em_star_concentration": 0.276,
     "em_poss_weighted_bpr": 0.013,
     "em_depth_score": 0.29,
+    "em_size_adj_bpr": 2.53,
+    "em_interior_bpr": -0.558,
     "em_adj_o": 106.2341,
     "em_adj_d": 106.4817,
     "conf_strength_score": 0.0871
@@ -16632,6 +17118,8 @@
     "em_star_concentration": 0.815,
     "em_poss_weighted_bpr": 0.206,
     "em_depth_score": 0.074,
+    "em_size_adj_bpr": -1.648,
+    "em_interior_bpr": 0.285,
     "em_adj_o": 105.5297,
     "em_adj_d": 102.5137,
     "conf_strength_score": 0.7621
@@ -16698,6 +17186,8 @@
     "em_star_concentration": 0.739,
     "em_poss_weighted_bpr": -0.357,
     "em_depth_score": 0.104,
+    "em_size_adj_bpr": -3.766,
+    "em_interior_bpr": -3.949,
     "em_adj_o": 105.7923,
     "em_adj_d": 105.2732,
     "conf_strength_score": 0.232
@@ -16764,6 +17254,8 @@
     "em_star_concentration": 0.564,
     "em_poss_weighted_bpr": -0.311,
     "em_depth_score": 0.175,
+    "em_size_adj_bpr": 3.942,
+    "em_interior_bpr": 0.409,
     "em_adj_o": 108.688,
     "em_adj_d": 98.8832,
     "conf_strength_score": 0.4522
@@ -16830,6 +17322,8 @@
     "em_star_concentration": 0.862,
     "em_poss_weighted_bpr": -0.049,
     "em_depth_score": 0.055,
+    "em_size_adj_bpr": -5.134,
+    "em_interior_bpr": -2.446,
     "em_adj_o": 97.4104,
     "em_adj_d": 97.3961,
     "conf_strength_score": 0.6521
@@ -17037,6 +17531,8 @@
     "em_star_concentration": 0.971,
     "em_poss_weighted_bpr": -0.302,
     "em_depth_score": 0.012,
+    "em_size_adj_bpr": -3.118,
+    "em_interior_bpr": -1.774,
     "em_adj_o": 104.5115,
     "em_adj_d": 107.9987,
     "conf_strength_score": 0.351
@@ -17103,6 +17599,8 @@
     "em_star_concentration": 0.861,
     "em_poss_weighted_bpr": -0.344,
     "em_depth_score": 0.056,
+    "em_size_adj_bpr": 0.162,
+    "em_interior_bpr": 4.505,
     "em_adj_o": 97.0444,
     "em_adj_d": 96.4923,
     "conf_strength_score": 0.3924
@@ -17169,6 +17667,8 @@
     "em_star_concentration": 0.932,
     "em_poss_weighted_bpr": -0.208,
     "em_depth_score": 0.027,
+    "em_size_adj_bpr": 0.775,
+    "em_interior_bpr": 1.93,
     "em_adj_o": 106.6903,
     "em_adj_d": 102.568,
     "conf_strength_score": 0.358,
@@ -17236,6 +17736,8 @@
     "em_star_concentration": 0.346,
     "em_poss_weighted_bpr": -0.723,
     "em_depth_score": 0.262,
+    "em_size_adj_bpr": 0.017,
+    "em_interior_bpr": -0.505,
     "em_adj_o": 97.2032,
     "em_adj_d": 101.2591,
     "conf_strength_score": 0.8311
@@ -17302,6 +17804,8 @@
     "em_star_concentration": 0.846,
     "em_poss_weighted_bpr": -0.304,
     "em_depth_score": 0.062,
+    "em_size_adj_bpr": 0.347,
+    "em_interior_bpr": 0.487,
     "em_adj_o": 97.5777,
     "em_adj_d": 97.5276,
     "conf_strength_score": 0.2498
@@ -17368,6 +17872,8 @@
     "em_star_concentration": 0.497,
     "em_poss_weighted_bpr": -0.65,
     "em_depth_score": 0.201,
+    "em_size_adj_bpr": -2.313,
+    "em_interior_bpr": -1.883,
     "em_adj_o": 93.5152,
     "em_adj_d": 100.1454,
     "conf_strength_score": 0.4524
@@ -17434,6 +17940,8 @@
     "em_star_concentration": 1.0,
     "em_poss_weighted_bpr": -0.357,
     "em_depth_score": 0.0,
+    "em_size_adj_bpr": -4.916,
+    "em_interior_bpr": -2.11,
     "em_adj_o": 99.5653,
     "em_adj_d": 96.635,
     "conf_strength_score": 0.6737
@@ -17500,6 +18008,8 @@
     "em_star_concentration": 0.686,
     "em_poss_weighted_bpr": -0.543,
     "em_depth_score": 0.125,
+    "em_size_adj_bpr": -0.274,
+    "em_interior_bpr": -1.271,
     "em_adj_o": 100.444,
     "em_adj_d": 98.2025,
     "conf_strength_score": 0.5351
@@ -17566,6 +18076,8 @@
     "em_star_concentration": 0.297,
     "em_poss_weighted_bpr": -0.348,
     "em_depth_score": 0.281,
+    "em_size_adj_bpr": -1.6,
+    "em_interior_bpr": 1.442,
     "em_adj_o": 98.3746,
     "em_adj_d": 97.6521,
     "conf_strength_score": 0.6406
@@ -17632,6 +18144,8 @@
     "em_star_concentration": 1.0,
     "em_poss_weighted_bpr": -0.672,
     "em_depth_score": 0.0,
+    "em_size_adj_bpr": -3.664,
+    "em_interior_bpr": -1.182,
     "em_adj_o": 104.0889,
     "em_adj_d": 109.8247,
     "conf_strength_score": 0.6329
@@ -17698,6 +18212,8 @@
     "em_star_concentration": 1.0,
     "em_poss_weighted_bpr": -0.809,
     "em_depth_score": 0.0,
+    "em_size_adj_bpr": -2.91,
+    "em_interior_bpr": -1.192,
     "em_adj_o": 95.8446,
     "em_adj_d": 97.7955,
     "conf_strength_score": 0.481
@@ -17764,6 +18280,8 @@
     "em_star_concentration": 0.523,
     "em_poss_weighted_bpr": -0.321,
     "em_depth_score": 0.191,
+    "em_size_adj_bpr": -3.371,
+    "em_interior_bpr": -0.977,
     "em_adj_o": 98.2919,
     "em_adj_d": 100.2571,
     "conf_strength_score": 0.2832
@@ -17830,6 +18348,8 @@
     "em_star_concentration": 1.0,
     "em_poss_weighted_bpr": -0.954,
     "em_depth_score": 0.0,
+    "em_size_adj_bpr": -4.055,
+    "em_interior_bpr": -1.429,
     "em_adj_o": 95.6374,
     "em_adj_d": 103.25,
     "conf_strength_score": 0.5798
@@ -17896,6 +18416,8 @@
     "em_star_concentration": 1.0,
     "em_poss_weighted_bpr": -0.525,
     "em_depth_score": 0.0,
+    "em_size_adj_bpr": -5.13,
+    "em_interior_bpr": -3.109,
     "em_adj_o": 101.4319,
     "em_adj_d": 104.7696,
     "conf_strength_score": 0.6894
@@ -17962,6 +18484,8 @@
     "em_star_concentration": 0.803,
     "em_poss_weighted_bpr": -0.363,
     "em_depth_score": 0.079,
+    "em_size_adj_bpr": -2.203,
+    "em_interior_bpr": -0.815,
     "em_adj_o": 97.6305,
     "em_adj_d": 99.0174,
     "conf_strength_score": 0.4194
@@ -18075,6 +18599,8 @@
     "em_star_concentration": 1.0,
     "em_poss_weighted_bpr": -1.086,
     "em_depth_score": 0.0,
+    "em_size_adj_bpr": -7.633,
+    "em_interior_bpr": -2.002,
     "em_adj_o": 90.7889,
     "em_adj_d": 92.8679,
     "conf_strength_score": 0.8439
@@ -18141,6 +18667,8 @@
     "em_star_concentration": 1.0,
     "em_poss_weighted_bpr": -0.696,
     "em_depth_score": 0.0,
+    "em_size_adj_bpr": -8.016,
+    "em_interior_bpr": -4.448,
     "em_adj_o": 99.8697,
     "em_adj_d": 105.5896,
     "conf_strength_score": 0.5011
@@ -18207,6 +18735,8 @@
     "em_star_concentration": 1.0,
     "em_poss_weighted_bpr": -0.771,
     "em_depth_score": 0.0,
+    "em_size_adj_bpr": -2.847,
+    "em_interior_bpr": -0.463,
     "em_adj_o": 90.1337,
     "em_adj_d": 92.2523,
     "conf_strength_score": 0.2479
@@ -18273,6 +18803,8 @@
     "em_star_concentration": 1.0,
     "em_poss_weighted_bpr": -0.891,
     "em_depth_score": 0.0,
+    "em_size_adj_bpr": -4.605,
+    "em_interior_bpr": -2.584,
     "em_adj_o": 88.4664,
     "em_adj_d": 92.5082,
     "conf_strength_score": 0.623
@@ -18339,6 +18871,8 @@
     "em_star_concentration": 0.314,
     "em_poss_weighted_bpr": -0.085,
     "em_depth_score": 0.274,
+    "em_size_adj_bpr": 0.323,
+    "em_interior_bpr": -0.854,
     "em_adj_o": 106.8929,
     "em_adj_d": 109.8828,
     "conf_strength_score": 0.6276
@@ -18405,6 +18939,8 @@
     "em_star_concentration": 1.0,
     "em_poss_weighted_bpr": -0.4,
     "em_depth_score": 0.0,
+    "em_size_adj_bpr": -4.366,
+    "em_interior_bpr": -2.054,
     "em_adj_o": 100.1891,
     "em_adj_d": 103.4454,
     "conf_strength_score": 0.6045
@@ -18471,6 +19007,8 @@
     "em_star_concentration": 0.468,
     "em_poss_weighted_bpr": -0.92,
     "em_depth_score": 0.213,
+    "em_size_adj_bpr": -5.492,
+    "em_interior_bpr": -3.296,
     "em_adj_o": 98.9992,
     "em_adj_d": 106.1905,
     "conf_strength_score": 0.4048,
@@ -18538,6 +19076,8 @@
     "em_star_concentration": 0.444,
     "em_poss_weighted_bpr": -0.367,
     "em_depth_score": 0.223,
+    "em_size_adj_bpr": 1.785,
+    "em_interior_bpr": 0.261,
     "em_adj_o": 102.2387,
     "em_adj_d": 92.2192,
     "conf_strength_score": 0.2643
@@ -18604,6 +19144,8 @@
     "em_star_concentration": 0.91,
     "em_poss_weighted_bpr": -0.73,
     "em_depth_score": 0.036,
+    "em_size_adj_bpr": -2.906,
+    "em_interior_bpr": -1.32,
     "em_adj_o": 99.6813,
     "em_adj_d": 105.2754,
     "conf_strength_score": 0.5111
@@ -18670,6 +19212,8 @@
     "em_star_concentration": 0.708,
     "em_poss_weighted_bpr": -0.468,
     "em_depth_score": 0.117,
+    "em_size_adj_bpr": -4.978,
+    "em_interior_bpr": -2.52,
     "em_adj_o": 97.9281,
     "em_adj_d": 103.3042,
     "conf_strength_score": 0.309
@@ -18736,6 +19280,8 @@
     "em_star_concentration": 1.0,
     "em_poss_weighted_bpr": -1.222,
     "em_depth_score": 0.0,
+    "em_size_adj_bpr": -8.75,
+    "em_interior_bpr": -2.806,
     "em_adj_o": 94.3325,
     "em_adj_d": 97.5134,
     "conf_strength_score": 0.3895
@@ -18802,6 +19348,8 @@
     "em_star_concentration": 1.0,
     "em_poss_weighted_bpr": -1.216,
     "em_depth_score": 0.0,
+    "em_size_adj_bpr": -4.597,
+    "em_interior_bpr": -0.033,
     "em_adj_o": 90.8599,
     "em_adj_d": 90.2462,
     "conf_strength_score": 0.5369
@@ -18868,6 +19416,8 @@
     "em_star_concentration": 1.0,
     "em_poss_weighted_bpr": -1.093,
     "em_depth_score": 0.0,
+    "em_size_adj_bpr": -5.327,
+    "em_interior_bpr": -0.526,
     "em_adj_o": 95.5372,
     "em_adj_d": 102.8812,
     "conf_strength_score": 0.7306
@@ -18934,6 +19484,8 @@
     "em_star_concentration": 1.0,
     "em_poss_weighted_bpr": -0.734,
     "em_depth_score": 0.0,
+    "em_size_adj_bpr": 2.169,
+    "em_interior_bpr": 4.19,
     "em_adj_o": 96.726,
     "em_adj_d": 95.9325,
     "conf_strength_score": 0.1415
@@ -19000,6 +19552,8 @@
     "em_star_concentration": 1.0,
     "em_poss_weighted_bpr": -0.582,
     "em_depth_score": 0.0,
+    "em_size_adj_bpr": -4.891,
+    "em_interior_bpr": -1.585,
     "em_adj_o": 95.2795,
     "em_adj_d": 99.2418,
     "conf_strength_score": 0.505
@@ -19113,6 +19667,8 @@
     "em_star_concentration": 1.0,
     "em_poss_weighted_bpr": -1.433,
     "em_depth_score": 0.0,
+    "em_size_adj_bpr": -9.267,
+    "em_interior_bpr": -3.234,
     "em_adj_o": 94.754,
     "em_adj_d": 98.1287,
     "conf_strength_score": 0.4734
@@ -19179,6 +19735,8 @@
     "em_star_concentration": 0.544,
     "em_poss_weighted_bpr": -1.115,
     "em_depth_score": 0.182,
+    "em_size_adj_bpr": -2.792,
+    "em_interior_bpr": -2.528,
     "em_adj_o": 97.2727,
     "em_adj_d": 107.0293,
     "conf_strength_score": 0.8042
@@ -19245,6 +19803,8 @@
     "em_star_concentration": 1.0,
     "em_poss_weighted_bpr": -0.836,
     "em_depth_score": 0.0,
+    "em_size_adj_bpr": -5.693,
+    "em_interior_bpr": -2.07,
     "em_adj_o": 98.6572,
     "em_adj_d": 102.3803,
     "conf_strength_score": 0.8724
@@ -19311,6 +19871,8 @@
     "em_star_concentration": 1.0,
     "em_poss_weighted_bpr": -1.114,
     "em_depth_score": 0.0,
+    "em_size_adj_bpr": -4.391,
+    "em_interior_bpr": -2.671,
     "em_adj_o": 96.6338,
     "em_adj_d": 97.9062,
     "conf_strength_score": 0.5348
@@ -19377,6 +19939,8 @@
     "em_star_concentration": 1.0,
     "em_poss_weighted_bpr": -1.714,
     "em_depth_score": 0.0,
+    "em_size_adj_bpr": -6.24,
+    "em_interior_bpr": -0.897,
     "em_adj_o": 94.1465,
     "em_adj_d": 104.8173,
     "conf_strength_score": 0.9092
@@ -19443,6 +20007,8 @@
     "em_star_concentration": 1.0,
     "em_poss_weighted_bpr": -1.448,
     "em_depth_score": 0.0,
+    "em_size_adj_bpr": -10.959,
+    "em_interior_bpr": -2.726,
     "em_adj_o": 91.8119,
     "em_adj_d": 96.7887,
     "conf_strength_score": 0.4997
@@ -19509,6 +20075,8 @@
     "em_star_concentration": 1.0,
     "em_poss_weighted_bpr": -1.29,
     "em_depth_score": 0.0,
+    "em_size_adj_bpr": -6.246,
+    "em_interior_bpr": -3.202,
     "em_adj_o": 95.3227,
     "em_adj_d": 98.034,
     "conf_strength_score": 0.4815
@@ -19575,6 +20143,8 @@
     "em_star_concentration": 1.0,
     "em_poss_weighted_bpr": -1.246,
     "em_depth_score": 0.0,
+    "em_size_adj_bpr": -5.585,
+    "em_interior_bpr": -2.798,
     "em_adj_o": 90.728,
     "em_adj_d": 92.2241,
     "conf_strength_score": 0.8532,
@@ -19642,6 +20212,8 @@
     "em_star_concentration": 1.0,
     "em_poss_weighted_bpr": -1.655,
     "em_depth_score": 0.0,
+    "em_size_adj_bpr": -11.48,
+    "em_interior_bpr": -5.774,
     "em_adj_o": 95.3219,
     "em_adj_d": 95.9879,
     "conf_strength_score": 0.2577
@@ -19708,6 +20280,8 @@
     "em_star_concentration": 1.0,
     "em_poss_weighted_bpr": -1.148,
     "em_depth_score": 0.0,
+    "em_size_adj_bpr": -8.153,
+    "em_interior_bpr": -4.086,
     "em_adj_o": 98.0145,
     "em_adj_d": 104.3589,
     "conf_strength_score": 0.4048
@@ -19774,6 +20348,8 @@
     "em_star_concentration": 1.0,
     "em_poss_weighted_bpr": -1.188,
     "em_depth_score": 0.0,
+    "em_size_adj_bpr": -5.055,
+    "em_interior_bpr": -2.323,
     "em_adj_o": 99.2449,
     "em_adj_d": 104.5217,
     "conf_strength_score": 0.5894
@@ -19898,6 +20474,8 @@
     "em_star_concentration": 0.932,
     "em_poss_weighted_bpr": -0.998,
     "em_depth_score": 0.027,
+    "em_size_adj_bpr": -2.245,
+    "em_interior_bpr": 1.528,
     "em_adj_o": 95.2404,
     "em_adj_d": 104.1466,
     "conf_strength_score": 0.4022
@@ -19964,6 +20542,8 @@
     "em_star_concentration": 1.0,
     "em_poss_weighted_bpr": -1.594,
     "em_depth_score": 0.0,
+    "em_size_adj_bpr": -3.428,
+    "em_interior_bpr": -0.296,
     "em_adj_o": 102.4472,
     "em_adj_d": 105.0513,
     "conf_strength_score": 0.5938
@@ -20030,6 +20610,8 @@
     "em_star_concentration": 1.0,
     "em_poss_weighted_bpr": -1.713,
     "em_depth_score": 0.0,
+    "em_size_adj_bpr": -9.808,
+    "em_interior_bpr": -4.458,
     "em_adj_o": 89.9194,
     "em_adj_d": 101.1654,
     "conf_strength_score": 0.5518
@@ -20096,6 +20678,8 @@
     "em_star_concentration": 1.0,
     "em_poss_weighted_bpr": -1.862,
     "em_depth_score": 0.0,
+    "em_size_adj_bpr": -13.134,
+    "em_interior_bpr": -4.294,
     "em_adj_o": 96.1366,
     "em_adj_d": 103.547,
     "conf_strength_score": 0.7386
@@ -20162,6 +20746,8 @@
     "em_star_concentration": 1.0,
     "em_poss_weighted_bpr": -1.479,
     "em_depth_score": 0.0,
+    "em_size_adj_bpr": -10.318,
+    "em_interior_bpr": -2.695,
     "em_adj_o": 93.0162,
     "em_adj_d": 67.284,
     "conf_strength_score": 0.5836
@@ -20228,6 +20814,8 @@
     "em_star_concentration": 1.0,
     "em_poss_weighted_bpr": -2.256,
     "em_depth_score": 0.0,
+    "em_size_adj_bpr": -11.303,
+    "em_interior_bpr": 0,
     "em_adj_o": 88.0853,
     "em_adj_d": 88.9716,
     "conf_strength_score": 0.3902
@@ -20294,6 +20882,8 @@
     "em_star_concentration": 1.0,
     "em_poss_weighted_bpr": -1.935,
     "em_depth_score": 0.0,
+    "em_size_adj_bpr": -13.524,
+    "em_interior_bpr": -6.093,
     "em_adj_o": 96.9137,
     "em_adj_d": 108.219,
     "conf_strength_score": 0.2409
@@ -20360,6 +20950,8 @@
     "em_star_concentration": 1.0,
     "em_poss_weighted_bpr": -1.697,
     "em_depth_score": 0.0,
+    "em_size_adj_bpr": -16.674,
+    "em_interior_bpr": -4.822,
     "em_adj_o": 94.7733,
     "em_adj_d": 110.8888,
     "conf_strength_score": 0.4429
@@ -20426,6 +21018,8 @@
     "em_star_concentration": 1.0,
     "em_poss_weighted_bpr": -1.48,
     "em_depth_score": 0.0,
+    "em_size_adj_bpr": -8.655,
+    "em_interior_bpr": -4.046,
     "em_adj_o": 100.2592,
     "em_adj_d": 102.0817,
     "conf_strength_score": 0.4619
@@ -20539,6 +21133,8 @@
     "em_star_concentration": 1.0,
     "em_poss_weighted_bpr": -1.607,
     "em_depth_score": 0.0,
+    "em_size_adj_bpr": -10.568,
+    "em_interior_bpr": -4.768,
     "em_adj_o": 92.6636,
     "em_adj_d": 103.3883,
     "conf_strength_score": 0.4824
@@ -20605,6 +21201,8 @@
     "em_star_concentration": 1.0,
     "em_poss_weighted_bpr": -2.58,
     "em_depth_score": 0.0,
+    "em_size_adj_bpr": -12.612,
+    "em_interior_bpr": -4.499,
     "em_adj_o": 86.83,
     "em_adj_d": 101.2815,
     "conf_strength_score": 0.5004
@@ -20671,6 +21269,8 @@
     "em_star_concentration": 1.0,
     "em_poss_weighted_bpr": -2.388,
     "em_depth_score": 0.0,
+    "em_size_adj_bpr": -17.093,
+    "em_interior_bpr": -4.68,
     "em_adj_o": 93.7914,
     "em_adj_d": 101.3226,
     "conf_strength_score": 0.3133
@@ -20831,6 +21431,8 @@
     "em_star_concentration": 1.0,
     "em_poss_weighted_bpr": -2.158,
     "em_depth_score": 0.0,
+    "em_size_adj_bpr": -8.117,
+    "em_interior_bpr": -1.548,
     "em_adj_o": 94.6449,
     "em_adj_d": 101.3371,
     "conf_strength_score": 0.5664
@@ -20897,6 +21499,8 @@
     "em_star_concentration": 1.0,
     "em_poss_weighted_bpr": -1.966,
     "em_depth_score": 0.0,
+    "em_size_adj_bpr": -9.438,
+    "em_interior_bpr": -1.812,
     "em_adj_o": 92.5812,
     "em_adj_d": 106.8184,
     "conf_strength_score": 0.6469
@@ -20963,6 +21567,8 @@
     "em_star_concentration": 1.0,
     "em_poss_weighted_bpr": -2.517,
     "em_depth_score": 0.0,
+    "em_size_adj_bpr": -18.294,
+    "em_interior_bpr": -7.387,
     "em_adj_o": 91.8084,
     "em_adj_d": 94.8966,
     "conf_strength_score": 0.5581
@@ -21029,6 +21635,8 @@
     "em_star_concentration": 1.0,
     "em_poss_weighted_bpr": -2.192,
     "em_depth_score": 0.0,
+    "em_size_adj_bpr": -6.987,
+    "em_interior_bpr": -2.028,
     "em_adj_o": 96.0434,
     "em_adj_d": 103.7841,
     "conf_strength_score": 0.6613
@@ -21095,6 +21703,8 @@
     "em_star_concentration": 1.0,
     "em_poss_weighted_bpr": -2.606,
     "em_depth_score": 0.0,
+    "em_size_adj_bpr": -12.738,
+    "em_interior_bpr": -3.068,
     "em_adj_o": 99.2369,
     "em_adj_d": 112.4535,
     "conf_strength_score": 0.7173
@@ -21161,6 +21771,8 @@
     "em_star_concentration": 1.0,
     "em_poss_weighted_bpr": -2.192,
     "em_depth_score": 0.0,
+    "em_size_adj_bpr": -16.744,
+    "em_interior_bpr": -9.149,
     "em_adj_o": 97.1998,
     "em_adj_d": 108.9747,
     "conf_strength_score": 0.6166
@@ -21227,6 +21839,8 @@
     "em_star_concentration": 1.0,
     "em_poss_weighted_bpr": -1.92,
     "em_depth_score": 0.0,
+    "em_size_adj_bpr": -6.394,
+    "em_interior_bpr": 0,
     "em_adj_o": 91.1171,
     "em_adj_d": 104.0494,
     "conf_strength_score": 0.386
@@ -21293,6 +21907,8 @@
     "em_star_concentration": 1.0,
     "em_poss_weighted_bpr": -1.92,
     "em_depth_score": 0.0,
+    "em_size_adj_bpr": -15.623,
+    "em_interior_bpr": -5.26,
     "em_adj_o": 87.1034,
     "em_adj_d": 95.6848,
     "conf_strength_score": 0.4448
@@ -21359,6 +21975,8 @@
     "em_star_concentration": 1.0,
     "em_poss_weighted_bpr": -2.275,
     "em_depth_score": 0.0,
+    "em_size_adj_bpr": -15.264,
+    "em_interior_bpr": -2.528,
     "em_adj_o": 99.2518,
     "em_adj_d": 111.1216,
     "conf_strength_score": 0.2955
@@ -21519,6 +22137,8 @@
     "em_star_concentration": 1.0,
     "em_poss_weighted_bpr": -3.288,
     "em_depth_score": 0.0,
+    "em_size_adj_bpr": -20.269,
+    "em_interior_bpr": -7.216,
     "em_adj_o": 88.6556,
     "em_adj_d": 100.5783,
     "conf_strength_score": 0.2564
@@ -21585,6 +22205,8 @@
     "em_star_concentration": 1.0,
     "em_poss_weighted_bpr": -2.962,
     "em_depth_score": 0.0,
+    "em_size_adj_bpr": -25.028,
+    "em_interior_bpr": -5.884,
     "em_adj_o": 87.0834,
     "em_adj_d": 104.6842,
     "conf_strength_score": 0.7203
@@ -21698,6 +22320,8 @@
     "em_star_concentration": 1.0,
     "em_poss_weighted_bpr": -2.244,
     "em_depth_score": 0.0,
+    "em_size_adj_bpr": -17.729,
+    "em_interior_bpr": -6.101,
     "em_adj_o": 91.7094,
     "em_adj_d": 109.8452,
     "conf_strength_score": 0.3208
@@ -21811,6 +22435,8 @@
     "em_star_concentration": 1.0,
     "em_poss_weighted_bpr": -2.877,
     "em_depth_score": 0.0,
+    "em_size_adj_bpr": -16.91,
+    "em_interior_bpr": -3.262,
     "em_adj_o": 82.6145,
     "em_adj_d": 104.7207,
     "conf_strength_score": 0.5469
@@ -21877,6 +22503,8 @@
     "em_star_concentration": 1.0,
     "em_poss_weighted_bpr": -2.509,
     "em_depth_score": 0.0,
+    "em_size_adj_bpr": -7.727,
+    "em_interior_bpr": -1.216,
     "em_adj_o": 90.4396,
     "em_adj_d": 102.2281,
     "conf_strength_score": 0.383
@@ -21943,6 +22571,8 @@
     "em_star_concentration": 1.0,
     "em_poss_weighted_bpr": -2.993,
     "em_depth_score": 0.0,
+    "em_size_adj_bpr": -16.173,
+    "em_interior_bpr": -5.192,
     "em_adj_o": 118.9813,
     "em_adj_d": 103.7222,
     "conf_strength_score": 0.399
@@ -22009,6 +22639,8 @@
     "em_star_concentration": 1.0,
     "em_poss_weighted_bpr": -2.621,
     "em_depth_score": 0.0,
+    "em_size_adj_bpr": -18.775,
+    "em_interior_bpr": -7.022,
     "em_adj_o": 93.6188,
     "em_adj_d": 95.7499,
     "conf_strength_score": 0.5313
@@ -22075,6 +22707,8 @@
     "em_star_concentration": 1.0,
     "em_poss_weighted_bpr": -2.13,
     "em_depth_score": 0.0,
+    "em_size_adj_bpr": -10.355,
+    "em_interior_bpr": -0.318,
     "em_adj_o": 104.765,
     "em_adj_d": 115.5724,
     "conf_strength_score": 0.4036
@@ -22141,6 +22775,8 @@
     "em_star_concentration": 1.0,
     "em_poss_weighted_bpr": -2.066,
     "em_depth_score": 0.0,
+    "em_size_adj_bpr": -12.964,
+    "em_interior_bpr": -3.662,
     "em_adj_o": 75.2075,
     "em_adj_d": 83.0446,
     "conf_strength_score": 0.4648
@@ -22207,6 +22843,8 @@
     "em_star_concentration": 1.0,
     "em_poss_weighted_bpr": -2.564,
     "em_depth_score": 0.0,
+    "em_size_adj_bpr": -16.106,
+    "em_interior_bpr": -6.261,
     "em_adj_o": 83.3113,
     "em_adj_d": 98.3925,
     "conf_strength_score": 0.247
@@ -22273,6 +22911,8 @@
     "em_star_concentration": 1.0,
     "em_poss_weighted_bpr": -2.903,
     "em_depth_score": 0.0,
+    "em_size_adj_bpr": -16.75,
+    "em_interior_bpr": -6.298,
     "em_adj_o": 89.6431,
     "em_adj_d": 106.26,
     "conf_strength_score": 0.3582
@@ -22339,6 +22979,8 @@
     "em_star_concentration": 1.0,
     "em_poss_weighted_bpr": -3.167,
     "em_depth_score": 0.0,
+    "em_size_adj_bpr": -18.411,
+    "em_interior_bpr": -2.838,
     "em_adj_o": 86.8153,
     "em_adj_d": 106.743,
     "conf_strength_score": 0.5742
@@ -22408,6 +23050,8 @@
     "em_star_concentration": 0.357,
     "em_poss_weighted_bpr": 1.831,
     "em_depth_score": 0.385,
+    "em_size_adj_bpr": 16.592,
+    "em_interior_bpr": 5.656,
     "em_adj_o": 107.8125,
     "em_adj_d": 98.4945,
     "team": "Detroit"
@@ -22430,6 +23074,8 @@
     "em_star_concentration": 0.333,
     "em_poss_weighted_bpr": 1.98,
     "em_depth_score": 0.428,
+    "em_size_adj_bpr": 16.478,
+    "em_interior_bpr": 6.92,
     "em_adj_o": 108.2568,
     "em_adj_d": 90.9804,
     "team": "Loyola Maryland"
@@ -22452,6 +23098,8 @@
     "em_star_concentration": 0.83,
     "em_poss_weighted_bpr": -0.077,
     "em_depth_score": 0.068,
+    "em_size_adj_bpr": -2.034,
+    "em_interior_bpr": -0.042,
     "em_adj_o": 95.7601,
     "em_adj_d": 92.0628,
     "team": "Arkansas-Little Rock"
@@ -22474,6 +23122,8 @@
     "em_star_concentration": 0.709,
     "em_poss_weighted_bpr": -0.239,
     "em_depth_score": 0.116,
+    "em_size_adj_bpr": -0.551,
+    "em_interior_bpr": -0.352,
     "em_adj_o": 96.5309,
     "em_adj_d": 92.7571,
     "team": "Louisiana-Lafayette"
@@ -22496,6 +23146,8 @@
     "em_star_concentration": 1.0,
     "em_poss_weighted_bpr": -0.657,
     "em_depth_score": 0.0,
+    "em_size_adj_bpr": -5.36,
+    "em_interior_bpr": -2.677,
     "em_adj_o": 103.0544,
     "em_adj_d": 102.1141,
     "conf_tourney_momentum": 0.7,
@@ -22519,6 +23171,8 @@
     "em_star_concentration": 1.0,
     "em_poss_weighted_bpr": -0.595,
     "em_depth_score": 0.0,
+    "em_size_adj_bpr": -4.025,
+    "em_interior_bpr": -0.837,
     "em_adj_o": 93.2166,
     "em_adj_d": 95.3885,
     "team": "Gardner-Webb"
@@ -22541,6 +23195,8 @@
     "em_star_concentration": 1.0,
     "em_poss_weighted_bpr": -0.399,
     "em_depth_score": 0.0,
+    "em_size_adj_bpr": -0.369,
+    "em_interior_bpr": 0.12,
     "em_adj_o": 100.3528,
     "em_adj_d": 100.8048,
     "team": "Fort Wayne"
@@ -22563,6 +23219,8 @@
     "em_star_concentration": 0.937,
     "em_poss_weighted_bpr": -0.599,
     "em_depth_score": 0.025,
+    "em_size_adj_bpr": -4.401,
+    "em_interior_bpr": -2.05,
     "em_adj_o": 99.4805,
     "em_adj_d": 108.1692,
     "team": "Missouri-Kansas City"
@@ -22585,6 +23243,8 @@
     "em_star_concentration": 1.0,
     "em_poss_weighted_bpr": -0.94,
     "em_depth_score": 0.0,
+    "em_size_adj_bpr": -3.223,
+    "em_interior_bpr": 0.657,
     "em_adj_o": 99.4728,
     "em_adj_d": 102.2926,
     "team": "Illinois-Chicago"
@@ -22607,6 +23267,8 @@
     "em_star_concentration": 1.0,
     "em_poss_weighted_bpr": -2.04,
     "em_depth_score": 0.0,
+    "em_size_adj_bpr": -9.91,
+    "em_interior_bpr": -2.556,
     "em_adj_o": 91.6357,
     "em_adj_d": 99.9339,
     "team": "Texas-Rio Grande Valley"
@@ -22629,6 +23291,8 @@
     "em_star_concentration": 1.0,
     "em_poss_weighted_bpr": -2.064,
     "em_depth_score": 0.0,
+    "em_size_adj_bpr": -11.045,
+    "em_interior_bpr": -3.035,
     "em_adj_o": 91.7361,
     "em_adj_d": 104.7306,
     "team": "Arkansas-Pine Bluff"
@@ -22651,6 +23315,8 @@
     "em_star_concentration": 1.0,
     "em_poss_weighted_bpr": -2.591,
     "em_depth_score": 0.0,
+    "em_size_adj_bpr": -15.498,
+    "em_interior_bpr": -6.86,
     "em_adj_o": 88.6521,
     "em_adj_d": 97.2388,
     "team": "Prairie View"
@@ -22673,6 +23339,8 @@
     "em_star_concentration": 1.0,
     "em_poss_weighted_bpr": -2.048,
     "em_depth_score": 0.0,
+    "em_size_adj_bpr": -10.139,
+    "em_interior_bpr": -1.579,
     "em_adj_o": 94.2207,
     "em_adj_d": 110.4605,
     "team": "Louisiana-Monroe"
@@ -22695,6 +23363,8 @@
     "em_star_concentration": 1.0,
     "em_poss_weighted_bpr": -2.593,
     "em_depth_score": 0.0,
+    "em_size_adj_bpr": -17.384,
+    "em_interior_bpr": -5.399,
     "em_adj_o": 88.1439,
     "em_adj_d": 101.1808,
     "team": "Maryland-Eastern Shore"
@@ -22717,6 +23387,8 @@
     "em_star_concentration": 1.0,
     "em_poss_weighted_bpr": -2.293,
     "em_depth_score": 0.0,
+    "em_size_adj_bpr": -15.887,
+    "em_interior_bpr": -7.68,
     "em_adj_o": 95.2763,
     "em_adj_d": 104.4186,
     "team": "Tennessee-Martin"
@@ -22739,6 +23411,8 @@
     "em_star_concentration": 1.0,
     "em_poss_weighted_bpr": -4.613,
     "em_depth_score": 0.0,
+    "em_size_adj_bpr": -26.86,
+    "em_interior_bpr": -2.041,
     "em_adj_o": 88.2302,
     "em_adj_d": 112.4383,
     "team": "Grambling"
