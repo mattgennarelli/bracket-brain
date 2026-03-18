@@ -128,26 +128,50 @@ def _find_espn_id(team_name: str) -> str | None:
 # ---------------------------------------------------------------------------
 
 def _load_bpr_data(year: int) -> dict:
-    """Load evanmiya_players_YYYY.csv → dict normalised_team -> dict player_lower -> bpr_share."""
+    """Load evanmiya_players_YYYY.csv → dict normalised_team -> dict player_lower -> {bpr, bpr_share, poss}.
+
+    Returns absolute BPR in pts/100 possessions (e.g. 14.8 for a star player) and poss
+    (season possessions). Both are needed for the weighted on/off injury calculation.
+    """
     path = os.path.join(DATA_DIR, f"evanmiya_players_{year}.csv")
     if not os.path.isfile(path):
         return {}
     try:
         import csv
-        result: dict = {}
+        # First pass: collect raw BPR + poss values per team
+        raw: dict = {}  # norm_team -> {player_lower: (bpr_abs, poss)}
         with open(path, newline="", encoding="utf-8-sig") as f:
             reader = csv.DictReader(f)
             for row in reader:
                 team = (row.get("team") or row.get("Team") or "").strip()
                 player = (row.get("player") or row.get("Player") or row.get("name") or "").strip()
-                bpr = row.get("bpr") or row.get("BPR") or row.get("bpr_share") or "0"
+                bpr_str = row.get("bpr") or row.get("BPR") or "0"
+                poss_str = row.get("poss") or row.get("Poss") or "0"
                 try:
-                    bpr_val = float(str(bpr).replace("%", "").strip()) / 100
+                    bpr_abs = float(str(bpr_str).replace("%", "").strip())
                 except (ValueError, TypeError):
-                    bpr_val = 0.0
-                if team and player and bpr_val > 0:
+                    bpr_abs = 0.0
+                try:
+                    poss = float(str(poss_str).strip())
+                except (ValueError, TypeError):
+                    poss = 0.0
+                if team and player:
                     norm_team = _normalize_team_for_match(team)
-                    result.setdefault(norm_team, {})[player.lower()] = round(bpr_val, 4)
+                    raw.setdefault(norm_team, {})[player.lower()] = (bpr_abs, poss)
+
+        # Second pass: compute team BPR totals for share calculation
+        result: dict = {}
+        for norm_team, players in raw.items():
+            team_total = sum(v for v, _ in players.values() if v > 0) or 1.0
+            result[norm_team] = {
+                name: {
+                    "bpr": round(bpr, 4),
+                    "bpr_share": round(max(bpr, 0) / team_total, 4),
+                    "poss": round(poss, 0),
+                }
+                for name, (bpr, poss) in players.items()
+            }
+
         print(f"  Loaded BPR data for {len(result)} teams from {os.path.basename(path)}")
         return result
     except Exception as e:
@@ -188,27 +212,33 @@ def fetch_injuries_for_team(team_name: str, espn_id: str | None, bpr_data: dict)
         if status is None:
             continue  # unknown status — skip
 
-        # Look up BPR share for this player
+        # Look up BPR for this player (absolute pts/100 possessions + share of team total)
         player_key = player_name.lower()
-        bpr_share = team_bpr.get(player_key)
-        if bpr_share is None:
-            # Try partial name match (last name only)
+        player_data = team_bpr.get(player_key)
+        if player_data is None:
+            # Try last-name-only match
             last = player_key.split()[-1] if player_key else ""
             for k, v in team_bpr.items():
                 if last and last in k:
-                    bpr_share = v
+                    player_data = v
                     break
-        if bpr_share is None:
-            bpr_share = FALLBACK_BPR_SHARE
+        if player_data is None:
+            # Fallback: conservative values when no EvanMiya data found
+            player_data = {"bpr": FALLBACK_BPR_SHARE * 10, "bpr_share": FALLBACK_BPR_SHARE}
 
-        if bpr_share < MIN_BPR_SHARE:
-            continue  # below threshold — skip
+        bpr_abs = player_data["bpr"]
+        bpr_share = player_data["bpr_share"]
+
+        if bpr_share < MIN_BPR_SHARE and bpr_abs < (MIN_BPR_SHARE * 10):
+            continue  # below threshold — skip fringe players
 
         injuries.append({
             "player": player_name,
             "status": status,
-            "bpr_share": round(float(bpr_share), 4),
-            "importance": round(float(bpr_share), 4),
+            "bpr": round(float(bpr_abs), 4),           # absolute pts/100 possessions
+            "poss": round(float(player_data.get("poss", 0)), 0),  # season possessions
+            "bpr_share": round(float(bpr_share), 4),   # fraction of team BPR total
+            "importance": round(float(bpr_share), 4),  # legacy field
             "source": "espn",
             "updated_at": datetime.now(timezone.utc).isoformat(),
         })
@@ -220,9 +250,28 @@ def fetch_injuries_for_team(team_name: str, espn_id: str | None, bpr_data: dict)
 # Main
 # ---------------------------------------------------------------------------
 
+def _build_roster(team_name: str, bpr_data: dict) -> list:
+    """Return full roster as [{player, bpr, poss}, ...] sorted by poss desc.
+
+    Used by calc_injury_penalty to compute the healthy-roster weighted avg BPR
+    for the on/off approach (instead of assuming replacement is average D1 player).
+    """
+    norm = _normalize_team_for_match(team_name)
+    team_bpr = bpr_data.get(norm, {})
+    roster = []
+    for name, data in team_bpr.items():
+        bpr = data.get("bpr", 0.0)
+        poss = data.get("poss", 0.0)
+        if poss > 0:
+            roster.append({"player": name, "bpr": round(bpr, 4), "poss": round(poss, 0)})
+    roster.sort(key=lambda x: x["poss"], reverse=True)
+    return roster
+
+
 def fetch_all_injuries(year: int = 2026, team_names: list | None = None, merge: bool = False) -> dict:
     """
-    Fetch live injuries for all teams (or a subset). Returns dict team -> [injuries].
+    Fetch live injuries for all teams (or a subset).
+    Returns dict team -> {"injuries": [...], "roster": [...]}.
 
     If merge=True, loads the existing injuries_YYYY.json and only updates teams
     for which we find ESPN data (preserving manually entered records for others).
@@ -236,16 +285,26 @@ def fetch_all_injuries(year: int = 2026, team_names: list | None = None, merge: 
         if os.path.isfile(teams_path):
             with open(teams_path) as f:
                 raw = json.load(f)
-            team_names = [v.get("team", k) for k, v in raw.items() if isinstance(v, dict)]
+            if isinstance(raw, list):
+                team_names = [v.get("team") for v in raw if isinstance(v, dict) and v.get("team")]
+            else:
+                team_names = [v.get("team", k) for k, v in raw.items() if isinstance(v, dict)]
         else:
             print(f"  No teams_merged_{year}.json found — fetching ESPN team list only")
             team_names = list(_fetch_espn_teams().values())
 
-    # Load existing data if merging
+    # Load existing data if merging (handle both old list format and new dict format)
     out_path = os.path.join(DATA_DIR, f"injuries_{year}.json")
     if merge and os.path.isfile(out_path):
         with open(out_path) as f:
-            result = json.load(f)
+            existing = json.load(f)
+        # Normalise old format {team: [list]} -> {team: {"injuries": list, "roster": []}}
+        result = {}
+        for k, v in existing.items():
+            if isinstance(v, list):
+                result[k] = {"injuries": v, "roster": []}
+            else:
+                result[k] = v
     else:
         result = {}
 
@@ -260,14 +319,16 @@ def fetch_all_injuries(year: int = 2026, team_names: list | None = None, merge: 
             skipped += 1
             continue
         injuries = fetch_injuries_for_team(team, espn_id, bpr_data)
+        roster = _build_roster(team, bpr_data)
         if injuries:
-            result[team] = injuries
+            result[team] = {"injuries": injuries, "roster": roster}
             fetched += 1
             print(f"  [{i}/{total}] {team}: {len(injuries)} injured player(s)")
         elif merge and team in result:
-            pass  # keep existing data if ESPN returned nothing
+            # Keep existing injury list but refresh roster (BPR data may have updated)
+            result[team]["roster"] = roster
         else:
-            result[team] = []
+            result[team] = {"injuries": [], "roster": roster}
         # Polite delay — ESPN is free and we want to keep it that way
         time.sleep(0.15)
 

@@ -1,1690 +1,4609 @@
 {
-  "Alabama": [
-    {
-      "player": "Aden Holloway",
-      "status": "questionable",
-      "bpr_share": 0.5,
-      "importance": 0.5
-    },
-    {
-      "player": "Keitenn Bristow",
-      "status": "out",
-      "bpr_share": 0.5,
-      "importance": 0.5
-    },
-    {
-      "player": "Davion Hannah",
-      "status": "out",
-      "bpr_share": 0.5,
-      "importance": 0.5
-    },
-    {
-      "player": "Collins Onyejiaka",
-      "status": "out",
-      "bpr_share": 0.5,
-      "importance": 0.5
-    }
-  ],
-  "Appalachian State": [
-    {
-      "player": "KJ Vasser",
-      "status": "out",
-      "bpr_share": 0.5,
-      "importance": 0.5
-    }
-  ],
-  "Arkansas": [
-    {
-      "player": "Karter Knox",
-      "status": "out",
-      "bpr_share": 0.5,
-      "importance": 0.5
-    }
-  ],
-  "Auburn": [
-    {
-      "player": "Emeka Opurum",
-      "status": "out",
-      "bpr_share": 0.5,
-      "importance": 0.5
-    }
-  ],
-  "BYU": [
-    {
-      "player": "Dawson Baker",
-      "status": "out",
-      "bpr_share": 0.5,
-      "importance": 0.5
-    },
-    {
-      "player": "Richie Saunders",
-      "status": "out",
-      "bpr_share": 0.5,
-      "importance": 0.5
-    },
-    {
-      "player": "Nate Pickens",
-      "status": "out",
-      "bpr_share": 0.5,
-      "importance": 0.5
-    },
-    {
-      "player": "KJ Perry",
-      "status": "out",
-      "bpr_share": 0.5,
-      "importance": 0.5
-    }
-  ],
-  "Baylor": [
-    {
-      "player": "JJ White",
-      "status": "questionable",
-      "bpr_share": 0.5,
-      "importance": 0.5
-    },
-    {
-      "player": "Juslin Bodo Bodo",
-      "status": "out",
-      "bpr_share": 0.5,
-      "importance": 0.5
-    },
-    {
-      "player": "Maikcol Perez",
-      "status": "out",
-      "bpr_share": 0.5,
-      "importance": 0.5
-    }
-  ],
-  "Belmont Bruins": [
-    {
-      "player": "Nic McClain",
-      "status": "out",
-      "bpr_share": 0.5,
-      "importance": 0.5
-    }
-  ],
-  "Bethune-Cookman": [
-    {
-      "player": "Daniel Rouzan",
-      "status": "questionable",
-      "bpr_share": 0.5,
-      "importance": 0.5
-    }
-  ],
-  "Boise State Broncos": [
-    {
-      "player": "Julian Bowie",
-      "status": "out",
-      "bpr_share": 0.5,
-      "importance": 0.5
-    }
-  ],
-  "Boston College Eagles": [
-    {
-      "player": "Donald Hand",
-      "status": "questionable",
-      "bpr_share": 0.5,
-      "importance": 0.5
-    },
-    {
-      "player": "Jason Asemota",
-      "status": "questionable",
-      "bpr_share": 0.5,
-      "importance": 0.5
-    },
-    {
-      "player": "Nick Petronio",
-      "status": "out",
-      "bpr_share": 0.5,
-      "importance": 0.5
-    }
-  ],
-  "Bradley Braves": [
-    {
-      "player": "Matthew Zobrist",
-      "status": "questionable",
-      "bpr_share": 0.5,
-      "importance": 0.5
-    }
-  ],
-  "Buffalo Bulls": [
-    {
-      "player": "Daniel Freitag",
-      "status": "questionable",
-      "bpr_share": 0.5,
-      "importance": 0.5
-    }
-  ],
-  "California": [
-    {
-      "player": "Rytis Petraitis",
-      "status": "out",
-      "bpr_share": 0.5,
-      "importance": 0.5
-    },
-    {
-      "player": "Stephon Marbury",
-      "status": "out",
-      "bpr_share": 0.5,
-      "importance": 0.5
-    },
-    {
-      "player": "Jovani Ruff",
-      "status": "out",
-      "bpr_share": 0.5,
-      "importance": 0.5
-    }
-  ],
-  "Charleston": [
-    {
-      "player": "Will Mortimore",
-      "status": "out",
-      "bpr_share": 0.5,
-      "importance": 0.5
-    }
-  ],
-  "Cincinnati Bearcats": [
-    {
-      "player": "Jalen Haynes",
-      "status": "out",
-      "bpr_share": 0.5,
-      "importance": 0.5
-    }
-  ],
-  "Clemson": [
-    {
-      "player": "Carter Welling",
-      "status": "out",
-      "bpr_share": 0.5,
-      "importance": 0.5
-    },
-    {
-      "player": "Zac Foster",
-      "status": "out",
-      "bpr_share": 0.5,
-      "importance": 0.5
-    },
-    {
-      "player": "Trent Steinour",
-      "status": "questionable",
-      "bpr_share": 0.5,
-      "importance": 0.5
-    }
-  ],
-  "Cleveland State Vikings": [
-    {
-      "player": "Josiah Harris",
-      "status": "questionable",
-      "bpr_share": 0.5,
-      "importance": 0.5
-    },
-    {
-      "player": "Dayan Nessah",
-      "status": "questionable",
-      "bpr_share": 0.5,
-      "importance": 0.5
-    }
-  ],
-  "Colorado Buffaloes": [
-    {
-      "player": "Sebastian Rancik",
-      "status": "questionable",
-      "bpr_share": 0.5,
-      "importance": 0.5
-    },
-    {
-      "player": "Jon Mani",
-      "status": "out",
-      "bpr_share": 0.5,
-      "importance": 0.5
-    },
-    {
-      "player": "Leonardo Van Elswyk",
-      "status": "out",
-      "bpr_share": 0.5,
-      "importance": 0.5
-    }
-  ],
-  "Connecticut": [
-    {
-      "player": "Jaylin Stewart",
-      "status": "out",
-      "bpr_share": 0.5,
-      "importance": 0.5
-    },
-    {
-      "player": "Silas Demary",
-      "status": "questionable",
-      "bpr_share": 0.5,
-      "importance": 0.5
-    }
-  ],
-  "Creighton Bluejays": [
-    {
-      "player": "Liam McChesney",
-      "status": "out",
-      "bpr_share": 0.5,
-      "importance": 0.5
-    },
-    {
-      "player": "Josh Townley-Thomas",
-      "status": "questionable",
-      "bpr_share": 0.5,
-      "importance": 0.5
-    },
-    {
-      "player": "Jackson McAndrew",
-      "status": "out",
-      "bpr_share": 0.5,
-      "importance": 0.5
-    },
-    {
-      "player": "Aleksa Dimitrijevic",
-      "status": "out",
-      "bpr_share": 0.5,
-      "importance": 0.5
-    }
-  ],
-  "Davidson": [
-    {
-      "player": "Joe Hurlburt",
-      "status": "questionable",
-      "bpr_share": 0.5,
-      "importance": 0.5
-    }
-  ],
-  "Dayton": [
-    {
-      "player": "Evan Dickey",
-      "status": "questionable",
-      "bpr_share": 0.5,
-      "importance": 0.5
-    },
-    {
-      "player": "Jaron McKie",
-      "status": "out",
-      "bpr_share": 0.5,
-      "importance": 0.5
-    }
-  ],
-  "Duke": [
-    {
-      "player": "Ifeanyi Ufochukwu",
-      "status": "out",
-      "bpr_share": 0.5,
-      "importance": 0.5
-    },
-    {
-      "player": "Caleb Foster",
-      "status": "out",
-      "bpr_share": 0.5,
-      "importance": 0.5
-    },
-    {
-      "player": "Patrick Ngongba",
-      "status": "probable",
-      "bpr_share": 0.5,
-      "importance": 0.5
-    }
-  ],
-  "East Carolina": [
-    {
-      "player": "Eli DeLaurier",
-      "status": "questionable",
-      "bpr_share": 0.5,
-      "importance": 0.5
-    },
-    {
-      "player": "Tybo Bailey",
-      "status": "questionable",
-      "bpr_share": 0.5,
-      "importance": 0.5
-    },
-    {
-      "player": "Trevion LaBeaux",
-      "status": "out",
-      "bpr_share": 0.5,
-      "importance": 0.5
-    },
-    {
-      "player": "Jayshayne Woodard",
-      "status": "out",
-      "bpr_share": 0.5,
-      "importance": 0.5
-    },
-    {
-      "player": "Daithi Quinn",
-      "status": "out",
-      "bpr_share": 0.5,
-      "importance": 0.5
-    }
-  ],
-  "Eastern Washington Eagles": [
-    {
-      "player": "Andrew Cook",
-      "status": "out",
-      "bpr_share": 0.5,
-      "importance": 0.5
-    }
-  ],
-  "Florida International Golden Panthers": [
-    {
-      "player": "Amarion Nimmers",
-      "status": "out",
-      "bpr_share": 0.5,
-      "importance": 0.5
-    },
-    {
-      "player": "Gvidas Gicevicius",
-      "status": "out",
-      "bpr_share": 0.5,
-      "importance": 0.5
-    }
-  ],
-  "Fordham Rams": [
-    {
-      "player": "Ryan Pettis",
-      "status": "out",
-      "bpr_share": 0.5,
-      "importance": 0.5
-    },
-    {
-      "player": "Jack Whitbourn",
-      "status": "questionable",
-      "bpr_share": 0.5,
-      "importance": 0.5
-    }
-  ],
-  "George Mason Patriots": [
-    {
-      "player": "Brayden O'Connor",
-      "status": "out",
-      "bpr_share": 0.5,
-      "importance": 0.5
-    },
-    {
-      "player": "Jermahri Hill",
-      "status": "questionable",
-      "bpr_share": 0.5,
-      "importance": 0.5
-    }
-  ],
-  "George Washington Colonials": [
-    {
-      "player": "Ty Bevins",
-      "status": "questionable",
-      "bpr_share": 0.5,
-      "importance": 0.5
-    },
-    {
-      "player": "Mohamed Binzagr",
-      "status": "questionable",
-      "bpr_share": 0.5,
-      "importance": 0.5
-    },
-    {
-      "player": "Jalen Rougier-Roane",
-      "status": "out",
-      "bpr_share": 0.5,
-      "importance": 0.5
-    }
-  ],
-  "Georgia State Panthers": [
-    {
-      "player": "Clash Peters",
-      "status": "out",
-      "bpr_share": 0.5,
-      "importance": 0.5
-    }
-  ],
-  "Gonzaga": [
-    {
-      "player": "Jalen Warley",
-      "status": "probable",
-      "bpr_share": 0.5,
-      "importance": 0.5
-    },
-    {
-      "player": "Braden Huff",
-      "status": "out",
-      "bpr_share": 0.5,
-      "importance": 0.5
-    }
-  ],
-  "Hawaii Warriors": [
-    {
-      "player": "Aaron Hunkin-Claytor",
-      "status": "out",
-      "bpr_share": 0.5,
-      "importance": 0.5
-    }
-  ],
-  "Howard Bison": [
-    {
-      "player": "Shane Frazier",
-      "status": "out",
-      "bpr_share": 0.5,
-      "importance": 0.5
-    }
-  ],
-  "Illinois Fighting Illini": [
-    {
-      "player": "Jason Jakstys",
-      "status": "out",
-      "bpr_share": 0.5,
-      "importance": 0.5
-    }
-  ],
-  "Indiana State Sycamores": [
-    {
-      "player": "Zyair Greene",
-      "status": "questionable",
-      "bpr_share": 0.5,
-      "importance": 0.5
-    },
-    {
-      "player": "Jayan Walker",
-      "status": "questionable",
-      "bpr_share": 0.5,
-      "importance": 0.5
-    }
-  ],
-  "Iowa Hawkeyes": [
-    {
-      "player": "Peyton McCollum",
-      "status": "out",
-      "bpr_share": 0.5,
-      "importance": 0.5
-    }
-  ],
-  "Jackson State": [
-    {
-      "player": "Daeshun Ruffin",
-      "status": "questionable",
-      "bpr_share": 0.5,
-      "importance": 0.5
-    }
-  ],
-  "Jacksonville State": [
-    {
-      "player": "Bencao Vungo",
-      "status": "out",
-      "bpr_share": 0.5,
-      "importance": 0.5
-    },
-    {
-      "player": "Jordan Vick",
-      "status": "out",
-      "bpr_share": 0.5,
-      "importance": 0.5
-    }
-  ],
-  "Kennesaw State Owls": [
-    {
-      "player": "Chase Clemmons",
-      "status": "out",
-      "bpr_share": 0.5,
-      "importance": 0.5
-    },
-    {
-      "player": "Brendan Tousignaut",
-      "status": "out",
-      "bpr_share": 0.5,
-      "importance": 0.5
-    }
-  ],
-  "Kentucky": [
-    {
-      "player": "Jaland Lowe",
-      "status": "out",
-      "bpr_share": 0.5,
-      "importance": 0.5
-    },
-    {
-      "player": "Jayden Quaintance",
-      "status": "out",
-      "bpr_share": 0.5,
-      "importance": 0.5
-    }
-  ],
-  "LSU": [
-    {
-      "player": "Dedan Thomas",
-      "status": "out",
-      "bpr_share": 0.5,
-      "importance": 0.5
-    }
-  ],
-  "Louisiana Ragin' Cajuns": [
-    {
-      "player": "Jamyron Keller",
-      "status": "out",
-      "bpr_share": 0.5,
-      "importance": 0.5
-    },
-    {
-      "player": "Sean Elkinton",
-      "status": "out",
-      "bpr_share": 0.5,
-      "importance": 0.5
-    }
-  ],
-  "Louisiana Tech": [
-    {
-      "player": "Will Jeffress",
-      "status": "out",
-      "bpr_share": 0.5,
-      "importance": 0.5
-    },
-    {
-      "player": "A'Meir Williams",
-      "status": "out",
-      "bpr_share": 0.5,
-      "importance": 0.5
-    }
-  ],
-  "Louisville": [
-    {
-      "player": "Mikel Brown",
-      "status": "questionable",
-      "bpr_share": 0.5,
-      "importance": 0.5
-    }
-  ],
-  "Loyola (IL) Ramblers": [
-    {
-      "player": "Dominick Harris",
-      "status": "out",
-      "bpr_share": 0.5,
-      "importance": 0.5
-    },
-    {
-      "player": "Kymany Houinsou",
-      "status": "questionable",
-      "bpr_share": 0.5,
-      "importance": 0.5
-    },
-    {
-      "player": "Caleb Reese",
-      "status": "questionable",
-      "bpr_share": 0.5,
-      "importance": 0.5
-    },
-    {
-      "player": "Justin Moore",
-      "status": "questionable",
-      "bpr_share": 0.5,
-      "importance": 0.5
-    },
-    {
-      "player": "Chuck Love",
-      "status": "out",
-      "bpr_share": 0.5,
-      "importance": 0.5
-    }
-  ],
-  "Marist Red Foxes": [
-    {
-      "player": "Jason Schofield",
-      "status": "out",
-      "bpr_share": 0.5,
-      "importance": 0.5
-    },
-    {
-      "player": "Elijah Lewis",
-      "status": "out",
-      "bpr_share": 0.5,
-      "importance": 0.5
-    },
-    {
-      "player": "Tarik Watson",
-      "status": "out",
-      "bpr_share": 0.5,
-      "importance": 0.5
-    }
-  ],
-  "Marquette": [
-    {
-      "player": "Sean Jones",
-      "status": "out",
-      "bpr_share": 0.5,
-      "importance": 0.5
-    }
-  ],
-  "Memphis": [
-    {
-      "player": "Ashton Hardaway",
-      "status": "doubtful",
-      "bpr_share": 0.5,
-      "importance": 0.5
-    },
-    {
-      "player": "Julius Thedford",
-      "status": "doubtful",
-      "bpr_share": 0.5,
-      "importance": 0.5
-    }
-  ],
-  "Miami (FL)": [
-    {
-      "player": "Marcus Allen",
-      "status": "out",
-      "bpr_share": 0.5,
-      "importance": 0.5
-    },
-    {
-      "player": "Treyvon Maddox",
-      "status": "out",
-      "bpr_share": 0.5,
-      "importance": 0.5
-    }
-  ],
-  "Michigan State": [
-    {
-      "player": "Kaleb Glenn",
-      "status": "out",
-      "bpr_share": 0.5,
-      "importance": 0.5
-    },
-    {
-      "player": "Divine Ugochukwu",
-      "status": "out",
-      "bpr_share": 0.5,
-      "importance": 0.5
-    }
-  ],
-  "Michigan": [
-    {
-      "player": "Charlie May",
-      "status": "out",
-      "bpr_share": 0.5,
-      "importance": 0.5
-    },
-    {
-      "player": "L.J. Cason",
-      "status": "out",
-      "bpr_share": 0.5,
-      "importance": 0.5
-    },
-    {
-      "player": "Winters Grady",
-      "status": "out",
-      "bpr_share": 0.5,
-      "importance": 0.5
-    }
-  ],
-  "Minnesota Golden Gophers": [
-    {
-      "player": "Robert Vaihola",
-      "status": "out",
-      "bpr_share": 0.5,
-      "importance": 0.5
-    },
-    {
-      "player": "BJ Omot",
-      "status": "out",
-      "bpr_share": 0.5,
-      "importance": 0.5
-    },
-    {
-      "player": "Chance Stephens",
-      "status": "out",
-      "bpr_share": 0.5,
-      "importance": 0.5
-    },
-    {
-      "player": "Jaylen Crocker-Johnson",
-      "status": "out",
-      "bpr_share": 0.5,
-      "importance": 0.5
-    }
-  ],
-  "Mississippi State": [
-    {
-      "player": "Gai Chol",
-      "status": "out",
-      "bpr_share": 0.5,
-      "importance": 0.5
-    },
-    {
-      "player": "King Grace",
-      "status": "questionable",
-      "bpr_share": 0.5,
-      "importance": 0.5
-    }
-  ],
-  "Missouri State": [
-    {
-      "player": "Antwan Burnett",
-      "status": "questionable",
-      "bpr_share": 0.5,
-      "importance": 0.5
-    },
-    {
-      "player": "Amar Kuljuhovic",
-      "status": "out",
-      "bpr_share": 0.5,
-      "importance": 0.5
-    }
-  ],
-  "Missouri": [
-    {
-      "player": "Jevon Porter",
-      "status": "out",
-      "bpr_share": 0.5,
-      "importance": 0.5
-    },
-    {
-      "player": "Annor Boateng",
-      "status": "out",
-      "bpr_share": 0.5,
-      "importance": 0.5
-    }
-  ],
-  "Mount St. Mary's": [
-    {
-      "player": "Jaxon Hartman",
-      "status": "out",
-      "bpr_share": 0.5,
-      "importance": 0.5
-    },
-    {
-      "player": "Abdou Khadre Kebe",
-      "status": "out",
-      "bpr_share": 0.5,
-      "importance": 0.5
-    },
-    {
-      "player": "Justin May",
-      "status": "out",
-      "bpr_share": 0.5,
-      "importance": 0.5
-    }
-  ],
-  "Nebraska Cornhuskers": [
-    {
-      "player": "Henry Burt",
-      "status": "out",
-      "bpr_share": 0.5,
-      "importance": 0.5
-    },
-    {
-      "player": "Connor Essegian",
-      "status": "out",
-      "bpr_share": 0.5,
-      "importance": 0.5
-    },
-    {
-      "player": "Ugnius Jarusevicius",
-      "status": "out",
-      "bpr_share": 0.5,
-      "importance": 0.5
-    }
-  ],
-  "North Carolina State Wolfpack": [
-    {
-      "player": "Colt Langdon",
-      "status": "out",
-      "bpr_share": 0.5,
-      "importance": 0.5
-    }
-  ],
-  "North Carolina": [
-    {
-      "player": "James Brown",
-      "status": "out",
-      "bpr_share": 0.5,
-      "importance": 0.5
-    },
-    {
-      "player": "Caleb Wilson",
-      "status": "out",
-      "bpr_share": 0.5,
-      "importance": 0.5
-    }
-  ],
-  "North Texas Mean Green": [
-    {
-      "player": "Will McClendon",
-      "status": "out",
-      "bpr_share": 0.5,
-      "importance": 0.5
-    }
-  ],
-  "Northern Iowa Panthers": [
-    {
-      "player": "Marino Dubravcic",
-      "status": "out",
-      "bpr_share": 0.5,
-      "importance": 0.5
-    },
-    {
-      "player": "Cade Courbat",
-      "status": "out",
-      "bpr_share": 0.5,
-      "importance": 0.5
-    }
-  ],
-  "Northwestern": [
-    {
-      "player": "Arrinten Page",
-      "status": "out",
-      "bpr_share": 0.5,
-      "importance": 0.5
-    }
-  ],
-  "Notre Dame": [
-    {
-      "player": "Markus Burton",
-      "status": "out",
-      "bpr_share": 0.5,
-      "importance": 0.5
-    },
-    {
-      "player": "Tommy Ahneman",
-      "status": "out",
-      "bpr_share": 0.5,
-      "importance": 0.5
-    }
-  ],
-  "Ohio Bobcats": [
-    {
-      "player": "Elijah Elliott",
-      "status": "out",
-      "bpr_share": 0.5,
-      "importance": 0.5
-    }
-  ],
-  "Ohio State Buckeyes": [
-    {
-      "player": "Josh Ojianwuna",
-      "status": "out",
-      "bpr_share": 0.5,
-      "importance": 0.5
-    },
-    {
-      "player": "Taison Chatman",
-      "status": "questionable",
-      "bpr_share": 0.5,
-      "importance": 0.5
-    },
-    {
-      "player": "Myles Herro",
-      "status": "out",
-      "bpr_share": 0.5,
-      "importance": 0.5
-    }
-  ],
-  "Oklahoma State Cowboys": [
-    {
-      "player": "Parsa Fallah",
-      "status": "out",
-      "bpr_share": 0.5,
-      "importance": 0.5
-    },
-    {
-      "player": "Andrija Vukovic",
-      "status": "questionable",
-      "bpr_share": 0.5,
-      "importance": 0.5
-    }
-  ],
-  "Old Dominion Monarchs": [
-    {
-      "player": "Caelum Swanton-Rodger",
-      "status": "questionable",
-      "bpr_share": 0.5,
-      "importance": 0.5
-    }
-  ],
-  "Ole Miss": [
-    {
-      "player": "Koren Johnson",
-      "status": "questionable",
-      "bpr_share": 0.5,
-      "importance": 0.5
-    }
-  ],
-  "Penn State Nittany Lions": [
-    {
-      "player": "Reggie Grodin",
-      "status": "out",
-      "bpr_share": 0.5,
-      "importance": 0.5
-    },
-    {
-      "player": "Tibor Mirtic",
-      "status": "out",
-      "bpr_share": 0.5,
-      "importance": 0.5
-    }
-  ],
-  "Pennsylvania Quakers": [
-    {
-      "player": "Ethan Roberts",
-      "status": "out",
-      "bpr_share": 0.5,
-      "importance": 0.5
-    },
-    {
-      "player": "Dylan Williams",
-      "status": "out",
-      "bpr_share": 0.5,
-      "importance": 0.5
-    },
-    {
-      "player": "Ryan Altman",
-      "status": "out",
-      "bpr_share": 0.5,
-      "importance": 0.5
-    }
-  ],
-  "Portland Pilots": [
-    {
-      "player": "Riley Parker",
-      "status": "out",
-      "bpr_share": 0.5,
-      "importance": 0.5
-    },
-    {
-      "player": "Timo George",
-      "status": "out",
-      "bpr_share": 0.5,
-      "importance": 0.5
-    }
-  ],
-  "Princeton": [
-    {
-      "player": "Jack Stanton",
-      "status": "out",
-      "bpr_share": 0.5,
-      "importance": 0.5
-    }
-  ],
-  "Providence": [
-    {
-      "player": "Rich Barron",
-      "status": "out",
-      "bpr_share": 0.5,
-      "importance": 0.5
-    },
-    {
-      "player": "Jason Edwards",
-      "status": "questionable",
-      "bpr_share": 0.5,
-      "importance": 0.5
-    },
-    {
-      "player": "Daquan Davis",
-      "status": "out",
-      "bpr_share": 0.5,
-      "importance": 0.5
-    },
-    {
-      "player": "Jaylen Harrell",
-      "status": "out",
-      "bpr_share": 0.5,
-      "importance": 0.5
-    }
-  ],
-  "Rhode Island Rams": [
-    {
-      "player": "Mouhamed Sow",
-      "status": "out",
-      "bpr_share": 0.5,
-      "importance": 0.5
-    },
-    {
-      "player": "Moek Icke",
-      "status": "out",
-      "bpr_share": 0.5,
-      "importance": 0.5
-    },
-    {
-      "player": "Jaymien Aponte",
-      "status": "questionable",
-      "bpr_share": 0.5,
-      "importance": 0.5
-    },
-    {
-      "player": "Javon Perry",
-      "status": "questionable",
-      "bpr_share": 0.5,
-      "importance": 0.5
-    }
-  ],
-  "Rice Owls": [
-    {
-      "player": "Dallas Hobbs",
-      "status": "questionable",
-      "bpr_share": 0.5,
-      "importance": 0.5
-    },
-    {
-      "player": "Aaron Powell",
-      "status": "out",
-      "bpr_share": 0.5,
-      "importance": 0.5
-    }
-  ],
-  "Richmond Spiders": [
-    {
-      "player": "Bryson McGlothin",
-      "status": "questionable",
-      "bpr_share": 0.5,
-      "importance": 0.5
-    }
-  ],
-  "Rutgers Scarlet Knights": [
-    {
-      "player": "Baye Fall",
-      "status": "out",
-      "bpr_share": 0.5,
-      "importance": 0.5
-    },
-    {
-      "player": "Dorian Jones",
-      "status": "out",
-      "bpr_share": 0.5,
-      "importance": 0.5
-    }
-  ],
-  "Saint Joseph's (PA) Hawks": [
-    {
-      "player": "Steven Solano",
-      "status": "questionable",
-      "bpr_share": 0.5,
-      "importance": 0.5
-    },
-    {
-      "player": "Owen Verna",
-      "status": "questionable",
-      "bpr_share": 0.5,
-      "importance": 0.5
-    }
-  ],
-  "Saint Mary's": [
-    {
-      "player": "Kevin Gad",
-      "status": "out",
-      "bpr_share": 0.5,
-      "importance": 0.5
-    }
-  ],
-  "Sam Houston Bearkats": [
-    {
-      "player": "Isaiah Manning",
-      "status": "out",
-      "bpr_share": 0.5,
-      "importance": 0.5
-    },
-    {
-      "player": "Po'Boigh King",
-      "status": "questionable",
-      "bpr_share": 0.5,
-      "importance": 0.5
-    },
-    {
-      "player": "Justin Begg",
-      "status": "out",
-      "bpr_share": 0.5,
-      "importance": 0.5
-    },
-    {
-      "player": "Jaxson Ford",
-      "status": "out",
-      "bpr_share": 0.5,
-      "importance": 0.5
-    },
-    {
-      "player": "Noah Benny",
-      "status": "out",
-      "bpr_share": 0.5,
-      "importance": 0.5
-    },
-    {
-      "player": "Nathan Nguyen",
-      "status": "out",
-      "bpr_share": 0.5,
-      "importance": 0.5
-    }
-  ],
-  "Santa Clara Broncos": [
-    {
-      "player": "Gehrig Normand",
-      "status": "out",
-      "bpr_share": 0.5,
-      "importance": 0.5
-    },
-    {
-      "player": "Chris Tadjo",
-      "status": "out",
-      "bpr_share": 0.5,
-      "importance": 0.5
-    }
-  ],
-  "Seton Hall": [
-    {
-      "player": "Patrick Suemnick",
-      "status": "out",
-      "bpr_share": 0.5,
-      "importance": 0.5
-    },
-    {
-      "player": "Godswill Erheriene",
-      "status": "out",
-      "bpr_share": 0.5,
-      "importance": 0.5
-    },
-    {
-      "player": "Jahseem Felton",
-      "status": "out",
-      "bpr_share": 0.5,
-      "importance": 0.5
-    }
-  ],
-  "Siena Saints": [
-    {
-      "player": "Reid Ducharme",
-      "status": "out",
-      "bpr_share": 0.5,
-      "importance": 0.5
-    },
-    {
-      "player": "Tasman Goodrick",
-      "status": "out",
-      "bpr_share": 0.5,
-      "importance": 0.5
-    },
-    {
-      "player": "Antonio Chandler",
-      "status": "out",
-      "bpr_share": 0.5,
-      "importance": 0.5
-    },
-    {
-      "player": "Owen Schlager",
-      "status": "out",
-      "bpr_share": 0.5,
-      "importance": 0.5
-    }
-  ],
-  "South Alabama Jaguars": [
-    {
-      "player": "Peyton Law",
-      "status": "out",
-      "bpr_share": 0.5,
-      "importance": 0.5
-    }
-  ],
-  "South Dakota Coyotes": [
-    {
-      "player": "Josiah Dotzler",
-      "status": "out",
-      "bpr_share": 0.5,
-      "importance": 0.5
-    }
-  ],
-  "South Florida Bulls": [
-    {
-      "player": "Xavier Brown",
-      "status": "out",
-      "bpr_share": 0.5,
-      "importance": 0.5
-    },
-    {
-      "player": "De'Ante Green",
-      "status": "out",
-      "bpr_share": 0.5,
-      "importance": 0.5
-    }
-  ],
-  "Southern Methodist Mustangs": [
-    {
-      "player": "B.J. Edwards",
-      "status": "probable",
-      "bpr_share": 0.5,
-      "importance": 0.5
-    }
-  ],
-  "St. Bonaventure": [
-    {
-      "player": "Amar'e Marshall",
-      "status": "out",
-      "bpr_share": 0.5,
-      "importance": 0.5
-    },
-    {
-      "player": "Xander Wedlow",
-      "status": "out",
-      "bpr_share": 0.5,
-      "importance": 0.5
-    },
-    {
-      "player": "Ilia Ermakov",
-      "status": "out",
-      "bpr_share": 0.5,
-      "importance": 0.5
-    }
-  ],
-  "St. John's": [
-    {
-      "player": "Casper Pohto",
-      "status": "out",
-      "bpr_share": 0.5,
-      "importance": 0.5
-    },
-    {
-      "player": "Imran Suljanovic",
-      "status": "out",
-      "bpr_share": 0.5,
-      "importance": 0.5
-    }
-  ],
-  "Stanford Cardinal": [
-    {
-      "player": "Chisom Okpara",
-      "status": "questionable",
-      "bpr_share": 0.5,
-      "importance": 0.5
-    },
-    {
-      "player": "Anthony Batson",
-      "status": "questionable",
-      "bpr_share": 0.5,
-      "importance": 0.5
-    },
-    {
-      "player": "Tallis Toure",
-      "status": "questionable",
-      "bpr_share": 0.5,
-      "importance": 0.5
-    },
-    {
-      "player": "Kristers Skrinda",
-      "status": "questionable",
-      "bpr_share": 0.5,
-      "importance": 0.5
-    }
-  ],
-  "Stetson Hatters": [
-    {
-      "player": "Jamie Phillips",
-      "status": "questionable",
-      "bpr_share": 0.5,
-      "importance": 0.5
-    }
-  ],
-  "Syracuse Orange": [
-    {
-      "player": "Aaron Womack",
-      "status": "out",
-      "bpr_share": 0.5,
-      "importance": 0.5
-    }
-  ],
-  "TCU Horned Frogs": [
-    {
-      "player": "Malick Diallo",
-      "status": "out",
-      "bpr_share": 0.5,
-      "importance": 0.5
-    }
-  ],
-  "Temple Owls": [
-    {
-      "player": "AJ Smith",
-      "status": "out",
-      "bpr_share": 0.5,
-      "importance": 0.5
-    }
-  ],
-  "Tennessee": [
-    {
-      "player": "Cade Phillips",
-      "status": "out",
-      "bpr_share": 0.5,
-      "importance": 0.5
-    }
-  ],
-  "Texas A&M": [
-    {
-      "player": "Mackenzie Mgbako",
-      "status": "out",
-      "bpr_share": 0.5,
-      "importance": 0.5
-    }
-  ],
-  "Texas": [
-    {
-      "player": "Lassina Traore",
-      "status": "out",
-      "bpr_share": 0.5,
-      "importance": 0.5
-    }
-  ],
-  "Texas Tech Red Raiders": [
-    {
-      "player": "LeJuan Watts",
-      "status": "questionable",
-      "bpr_share": 0.5,
-      "importance": 0.5
-    },
-    {
-      "player": "JT Toppin",
-      "status": "out",
-      "bpr_share": 0.5,
-      "importance": 0.5
-    },
-    {
-      "player": "LaTrell Hoover",
-      "status": "out",
-      "bpr_share": 0.5,
-      "importance": 0.5
-    }
-  ],
-  "UAB Blazers": [
-    {
-      "player": "Joao Das Chagas",
-      "status": "out",
-      "bpr_share": 0.5,
-      "importance": 0.5
-    }
-  ],
-  "UCF Knights": [
-    {
-      "player": "Tanner Jones",
-      "status": "questionable",
-      "bpr_share": 0.5,
-      "importance": 0.5
-    }
-  ],
-  "UCLA Bruins": [
-    {
-      "player": "Tyler Bilodeau",
-      "status": "questionable",
-      "bpr_share": 0.5,
-      "importance": 0.5
-    },
-    {
-      "player": "Evan Manjikian",
-      "status": "out",
-      "bpr_share": 0.5,
-      "importance": 0.5
-    },
-    {
-      "player": "Donovan Dent",
-      "status": "probable",
-      "bpr_share": 0.5,
-      "importance": 0.5
-    }
-  ],
-  "UMBC Retrievers": [
-    {
-      "player": "Devin Ceaser",
-      "status": "out",
-      "bpr_share": 0.5,
-      "importance": 0.5
-    },
-    {
-      "player": "Regimantas Ciunys",
-      "status": "out",
-      "bpr_share": 0.5,
-      "importance": 0.5
-    },
-    {
-      "player": "Daylon Dickerson",
-      "status": "out",
-      "bpr_share": 0.5,
-      "importance": 0.5
-    },
-    {
-      "player": "Jake Stout",
-      "status": "out",
-      "bpr_share": 0.5,
-      "importance": 0.5
-    }
-  ],
-  "UNC Wilmington Seahawks": [
-    {
-      "player": "Gavin Walsh",
-      "status": "questionable",
-      "bpr_share": 0.5,
-      "importance": 0.5
-    }
-  ],
-  "UNLV": [
-    {
-      "player": "Ladji Dembele",
-      "status": "out",
-      "bpr_share": 0.5,
-      "importance": 0.5
-    },
-    {
-      "player": "Myles Che",
-      "status": "out",
-      "bpr_share": 0.5,
-      "importance": 0.5
-    }
-  ],
-  "UTEP Miners": [
-    {
-      "player": "David Tubek",
-      "status": "out",
-      "bpr_share": 0.5,
-      "importance": 0.5
-    },
-    {
-      "player": "Tyreese Watson",
-      "status": "out",
-      "bpr_share": 0.5,
-      "importance": 0.5
-    }
-  ],
-  "UTSA Roadrunners": [
-    {
-      "player": "Pierce Spencer",
-      "status": "out",
-      "bpr_share": 0.5,
-      "importance": 0.5
-    },
-    {
-      "player": "Mo Njie",
-      "status": "questionable",
-      "bpr_share": 0.5,
-      "importance": 0.5
-    },
-    {
-      "player": "Stanley Borden",
-      "status": "questionable",
-      "bpr_share": 0.5,
-      "importance": 0.5
-    },
-    {
-      "player": "Austin Nunez",
-      "status": "questionable",
-      "bpr_share": 0.5,
-      "importance": 0.5
-    },
-    {
-      "player": "Macaleab Rich",
-      "status": "out",
-      "bpr_share": 0.5,
-      "importance": 0.5
-    },
-    {
-      "player": "Vasean Allette",
-      "status": "out",
-      "bpr_share": 0.5,
-      "importance": 0.5
-    }
-  ],
-  "Utah Valley": [
-    {
-      "player": "Tyler Hendricks",
-      "status": "questionable",
-      "bpr_share": 0.5,
-      "importance": 0.5
-    }
-  ],
-  "VCU Rams": [
-    {
-      "player": "Obinnaya Okafor",
-      "status": "out",
-      "bpr_share": 0.5,
-      "importance": 0.5
-    },
-    {
-      "player": "Christian Fermin",
-      "status": "out",
-      "bpr_share": 0.5,
-      "importance": 0.5
-    }
-  ],
-  "Vanderbilt": [
-    {
-      "player": "Frankie Collins",
-      "status": "out",
-      "bpr_share": 0.5,
-      "importance": 0.5
-    }
-  ],
-  "Villanova": [
-    {
-      "player": "Zion Stanford",
-      "status": "out",
-      "bpr_share": 0.5,
-      "importance": 0.5
-    },
-    {
-      "player": "Wade Chiddick",
-      "status": "out",
-      "bpr_share": 0.5,
-      "importance": 0.5
-    },
-    {
-      "player": "Matthew Hodge",
-      "status": "out",
-      "bpr_share": 0.5,
-      "importance": 0.5
-    }
-  ],
-  "Washington State": [
-    {
-      "player": "Tomas Thrastarson",
-      "status": "out",
-      "bpr_share": 0.5,
-      "importance": 0.5
-    },
-    {
-      "player": "Kase Wynott",
-      "status": "out",
-      "bpr_share": 0.5,
-      "importance": 0.5
-    }
-  ],
-  "Weber State": [
-    {
-      "player": "Jace Whiting",
-      "status": "out",
-      "bpr_share": 0.5,
-      "importance": 0.5
-    }
-  ],
-  "West Georgia Wolves": [
-    {
-      "player": "Chas Lewless",
-      "status": "out",
-      "bpr_share": 0.5,
-      "importance": 0.5
-    }
-  ],
-  "Western Kentucky Hilltoppers": [
-    {
-      "player": "Bryant Selebangue",
-      "status": "out",
-      "bpr_share": 0.5,
-      "importance": 0.5
-    },
-    {
-      "player": "Louie Semona",
-      "status": "out",
-      "bpr_share": 0.5,
-      "importance": 0.5
-    },
-    {
-      "player": "Lawson Rice",
-      "status": "out",
-      "bpr_share": 0.5,
-      "importance": 0.5
-    }
-  ],
-  "Wichita State Shockers": [
-    {
-      "player": "Jaret Valencia",
-      "status": "out",
-      "bpr_share": 0.5,
-      "importance": 0.5
-    },
-    {
-      "player": "Pierre Couisnard",
-      "status": "out",
-      "bpr_share": 0.5,
-      "importance": 0.5
-    },
-    {
-      "player": "Tyrus Rathan-Mayes",
-      "status": "out",
-      "bpr_share": 0.5,
-      "importance": 0.5
-    }
-  ],
-  "Wisconsin Badgers": [
-    {
-      "player": "Jack Janicki",
-      "status": "questionable",
-      "bpr_share": 0.5,
-      "importance": 0.5
-    },
-    {
-      "player": "Nolan Winter",
-      "status": "questionable",
-      "bpr_share": 0.5,
-      "importance": 0.5
-    }
-  ],
-  "Wyoming Cowboys": [
-    {
-      "player": "Matija Belic",
-      "status": "out",
-      "bpr_share": 0.5,
-      "importance": 0.5
-    },
-    {
-      "player": "Jared Harris",
-      "status": "questionable",
-      "bpr_share": 0.5,
-      "importance": 0.5
-    }
-  ],
-  "Xavier": [
-    {
-      "player": "Michael Wolf",
-      "status": "questionable",
-      "bpr_share": 0.5,
-      "importance": 0.5
-    },
-    {
-      "player": "Gabriel Pozzato",
-      "status": "out",
-      "bpr_share": 0.5,
-      "importance": 0.5
-    },
-    {
-      "player": "Luke Naser",
-      "status": "out",
-      "bpr_share": 0.5,
-      "importance": 0.5
-    }
-  ]
+  "Alabama": {
+    "injuries": [
+      {
+        "player": "Aden Holloway",
+        "status": "doubtful",
+        "bpr": 8.4493,
+        "poss": 1499.0,
+        "bpr_share": 0.1784,
+        "importance": 0.1784
+      },
+      {
+        "player": "Keitenn Bristow",
+        "status": "out",
+        "bpr": 1.0,
+        "poss": 0.0,
+        "bpr_share": 0.1,
+        "importance": 0.1
+      },
+      {
+        "player": "Davion Hannah",
+        "status": "out",
+        "bpr": 1.0,
+        "poss": 0.0,
+        "bpr_share": 0.1,
+        "importance": 0.1
+      },
+      {
+        "player": "Collins Onyejiaka",
+        "status": "out",
+        "bpr": 1.0,
+        "poss": 0.0,
+        "bpr_share": 0.1,
+        "importance": 0.1
+      }
+    ],
+    "roster": [
+      {
+        "player": "labaron philon",
+        "bpr": 8.6564,
+        "poss": 1703.0
+      },
+      {
+        "player": "amari allen",
+        "bpr": 6.5502,
+        "poss": 1542.0
+      },
+      {
+        "player": "aden holloway",
+        "bpr": 8.4493,
+        "poss": 1499.0
+      },
+      {
+        "player": "houston mallette",
+        "bpr": 4.2599,
+        "poss": 1392.0
+      },
+      {
+        "player": "aiden sherrell",
+        "bpr": 7.1456,
+        "poss": 1361.0
+      },
+      {
+        "player": "latrell wrightsell jr.",
+        "bpr": 4.67,
+        "poss": 1206.0
+      },
+      {
+        "player": "taylor bol bowen",
+        "bpr": 2.0791,
+        "poss": 950.0
+      },
+      {
+        "player": "london jemison",
+        "bpr": 4.1161,
+        "poss": 858.0
+      },
+      {
+        "player": "noah williamson",
+        "bpr": 1.4359,
+        "poss": 456.0
+      }
+    ]
+  },
+  "Appalachian State": {
+    "injuries": [
+      {
+        "player": "KJ Vasser",
+        "status": "out",
+        "bpr": 1.0,
+        "poss": 0.0,
+        "bpr_share": 0.1,
+        "importance": 0.1
+      }
+    ],
+    "roster": [
+      {
+        "player": "kasen jennings",
+        "bpr": 1.1957,
+        "poss": 1646.0
+      },
+      {
+        "player": "alonzo dodd",
+        "bpr": 2.9176,
+        "poss": 1576.0
+      },
+      {
+        "player": "luke wilson",
+        "bpr": 1.298,
+        "poss": 1408.0
+      },
+      {
+        "player": "jalen tot",
+        "bpr": 0.5071,
+        "poss": 1201.0
+      },
+      {
+        "player": "michael marcus jr.",
+        "bpr": -0.102,
+        "poss": 1174.0
+      },
+      {
+        "player": "eren banks",
+        "bpr": 0.038,
+        "poss": 1168.0
+      },
+      {
+        "player": "chad moodie",
+        "bpr": -2.9957,
+        "poss": 578.0
+      },
+      {
+        "player": "jason clarke jr.",
+        "bpr": -5.058,
+        "poss": 459.0
+      }
+    ]
+  },
+  "Arkansas": {
+    "injuries": [
+      {
+        "player": "Karter Knox",
+        "status": "out",
+        "bpr": 4.2111,
+        "poss": 888.0,
+        "bpr_share": 0.0942,
+        "importance": 0.0942
+      }
+    ],
+    "roster": [
+      {
+        "player": "darius acuff jr.",
+        "bpr": 8.58,
+        "poss": 2034.0
+      },
+      {
+        "player": "trevon brazile",
+        "bpr": 6.6933,
+        "poss": 1795.0
+      },
+      {
+        "player": "meleek thomas",
+        "bpr": 7.3405,
+        "poss": 1788.0
+      },
+      {
+        "player": "billy richmond iii",
+        "bpr": 5.9465,
+        "poss": 1600.0
+      },
+      {
+        "player": "d.j. wagner",
+        "bpr": 3.7614,
+        "poss": 1328.0
+      },
+      {
+        "player": "malique ewin",
+        "bpr": 5.6039,
+        "poss": 1185.0
+      },
+      {
+        "player": "nick pringle",
+        "bpr": 2.5785,
+        "poss": 1112.0
+      },
+      {
+        "player": "karter knox",
+        "bpr": 4.2111,
+        "poss": 888.0
+      }
+    ]
+  },
+  "Auburn": {
+    "injuries": [
+      {
+        "player": "Emeka Opurum",
+        "status": "out",
+        "bpr": 1.0,
+        "poss": 0.0,
+        "bpr_share": 0.1,
+        "importance": 0.1
+      }
+    ],
+    "roster": [
+      {
+        "player": "tahaad pettiford",
+        "bpr": 6.5997,
+        "poss": 1843.0
+      },
+      {
+        "player": "keyshawn hall",
+        "bpr": 7.036,
+        "poss": 1793.0
+      },
+      {
+        "player": "kevin overton",
+        "bpr": 4.4785,
+        "poss": 1793.0
+      },
+      {
+        "player": "sebastian williams-adams",
+        "bpr": 2.7986,
+        "poss": 1566.0
+      },
+      {
+        "player": "elyjah freeman",
+        "bpr": 4.697,
+        "poss": 1471.0
+      },
+      {
+        "player": "keshawn murphy",
+        "bpr": 4.9819,
+        "poss": 1276.0
+      },
+      {
+        "player": "filip jovic",
+        "bpr": 3.7191,
+        "poss": 948.0
+      }
+    ]
+  },
+  "BYU": {
+    "injuries": [
+      {
+        "player": "Dawson Baker",
+        "status": "out",
+        "bpr": 1.0,
+        "poss": 0.0,
+        "bpr_share": 0.1,
+        "importance": 0.1
+      },
+      {
+        "player": "Richie Saunders",
+        "status": "out",
+        "bpr": 8.5315,
+        "poss": 1403.0,
+        "bpr_share": 0.2286,
+        "importance": 0.2286
+      },
+      {
+        "player": "Nate Pickens",
+        "status": "out",
+        "bpr": 1.0,
+        "poss": 0.0,
+        "bpr_share": 0.1,
+        "importance": 0.1
+      },
+      {
+        "player": "KJ Perry",
+        "status": "out",
+        "bpr": 1.0,
+        "poss": 0.0,
+        "bpr_share": 0.1,
+        "importance": 0.1
+      }
+    ],
+    "roster": [
+      {
+        "player": "robert wright iii",
+        "bpr": 7.3096,
+        "poss": 2101.0
+      },
+      {
+        "player": "aj dybantsa",
+        "bpr": 9.6381,
+        "poss": 2092.0
+      },
+      {
+        "player": "kennard davis jr.",
+        "bpr": 2.8243,
+        "poss": 1600.0
+      },
+      {
+        "player": "richie saunders",
+        "bpr": 8.5315,
+        "poss": 1403.0
+      },
+      {
+        "player": "keba keita",
+        "bpr": 5.0666,
+        "poss": 1272.0
+      },
+      {
+        "player": "khadim mboup",
+        "bpr": 3.2683,
+        "poss": 898.0
+      },
+      {
+        "player": "mihailo boskovic",
+        "bpr": -0.2925,
+        "poss": 724.0
+      },
+      {
+        "player": "aleksej kosti\u0107",
+        "bpr": -0.7276,
+        "poss": 532.0
+      },
+      {
+        "player": "tyler mrus",
+        "bpr": 0.6739,
+        "poss": 465.0
+      }
+    ]
+  },
+  "Baylor": {
+    "injuries": [
+      {
+        "player": "JJ White",
+        "status": "questionable",
+        "bpr": 1.0,
+        "poss": 0.0,
+        "bpr_share": 0.1,
+        "importance": 0.1
+      },
+      {
+        "player": "Juslin Bodo Bodo",
+        "status": "out",
+        "bpr": 1.0,
+        "poss": 0.0,
+        "bpr_share": 0.1,
+        "importance": 0.1
+      },
+      {
+        "player": "Maikcol Perez",
+        "status": "out",
+        "bpr": 1.0,
+        "poss": 0.0,
+        "bpr_share": 0.1,
+        "importance": 0.1
+      }
+    ],
+    "roster": [
+      {
+        "player": "cameron carr",
+        "bpr": 7.4056,
+        "poss": 1824.0
+      },
+      {
+        "player": "obi agbim",
+        "bpr": 3.7459,
+        "poss": 1804.0
+      },
+      {
+        "player": "tounde yessoufou",
+        "bpr": 4.9123,
+        "poss": 1762.0
+      },
+      {
+        "player": "isaac williams",
+        "bpr": 4.0842,
+        "poss": 1306.0
+      },
+      {
+        "player": "caden powell",
+        "bpr": 3.7383,
+        "poss": 1294.0
+      },
+      {
+        "player": "michael rataj",
+        "bpr": 2.2915,
+        "poss": 1284.0
+      },
+      {
+        "player": "dan skillings jr.",
+        "bpr": 3.4794,
+        "poss": 1176.0
+      }
+    ]
+  },
+  "Belmont Bruins": {
+    "injuries": [
+      {
+        "player": "Nic McClain",
+        "status": "out",
+        "bpr": 1.0,
+        "poss": 0.0,
+        "bpr_share": 0.1,
+        "importance": 0.1
+      }
+    ],
+    "roster": []
+  },
+  "Bethune-Cookman": {
+    "injuries": [],
+    "roster": [
+      {
+        "player": "jakobi heady",
+        "bpr": 2.3096,
+        "poss": 1966.0
+      },
+      {
+        "player": "arterio morris",
+        "bpr": -0.9525,
+        "poss": 1428.0
+      },
+      {
+        "player": "quentin heady",
+        "bpr": -1.0579,
+        "poss": 1418.0
+      },
+      {
+        "player": "daniel rouzan",
+        "bpr": -0.5015,
+        "poss": 1296.0
+      },
+      {
+        "player": "seneca willoughby",
+        "bpr": -0.7634,
+        "poss": 1228.0
+      },
+      {
+        "player": "ariel bland",
+        "bpr": 1.0455,
+        "poss": 1100.0
+      },
+      {
+        "player": "tyler andrews",
+        "bpr": -0.5967,
+        "poss": 926.0
+      },
+      {
+        "player": "jordan johnson",
+        "bpr": -4.2743,
+        "poss": 874.0
+      }
+    ]
+  },
+  "Boise State Broncos": {
+    "injuries": [
+      {
+        "player": "Julian Bowie",
+        "status": "out",
+        "bpr": 1.0,
+        "poss": 0.0,
+        "bpr_share": 0.1,
+        "importance": 0.1
+      }
+    ],
+    "roster": []
+  },
+  "Boston College Eagles": {
+    "injuries": [
+      {
+        "player": "Donald Hand",
+        "status": "questionable",
+        "bpr": 1.0,
+        "poss": 0.0,
+        "bpr_share": 0.1,
+        "importance": 0.1
+      },
+      {
+        "player": "Jason Asemota",
+        "status": "questionable",
+        "bpr": 1.0,
+        "poss": 0.0,
+        "bpr_share": 0.1,
+        "importance": 0.1
+      },
+      {
+        "player": "Nick Petronio",
+        "status": "out",
+        "bpr": 1.0,
+        "poss": 0.0,
+        "bpr_share": 0.1,
+        "importance": 0.1
+      }
+    ],
+    "roster": []
+  },
+  "Bradley Braves": {
+    "injuries": [
+      {
+        "player": "Matthew Zobrist",
+        "status": "questionable",
+        "bpr": 1.0,
+        "poss": 0.0,
+        "bpr_share": 0.1,
+        "importance": 0.1
+      }
+    ],
+    "roster": []
+  },
+  "Buffalo Bulls": {
+    "injuries": [
+      {
+        "player": "Daniel Freitag",
+        "status": "questionable",
+        "bpr": 1.0,
+        "poss": 0.0,
+        "bpr_share": 0.1,
+        "importance": 0.1
+      }
+    ],
+    "roster": []
+  },
+  "California": {
+    "injuries": [
+      {
+        "player": "Rytis Petraitis",
+        "status": "out",
+        "bpr": 1.0,
+        "poss": 0.0,
+        "bpr_share": 0.1,
+        "importance": 0.1
+      },
+      {
+        "player": "Stephon Marbury",
+        "status": "out",
+        "bpr": 1.0,
+        "poss": 0.0,
+        "bpr_share": 0.1,
+        "importance": 0.1
+      },
+      {
+        "player": "Jovani Ruff",
+        "status": "out",
+        "bpr": 1.0,
+        "poss": 0.0,
+        "bpr_share": 0.1,
+        "importance": 0.1
+      }
+    ],
+    "roster": [
+      {
+        "player": "dai dai ames",
+        "bpr": 3.1169,
+        "poss": 1734.0
+      },
+      {
+        "player": "john camden",
+        "bpr": 5.4412,
+        "poss": 1720.0
+      },
+      {
+        "player": "justin pippen",
+        "bpr": 3.8843,
+        "poss": 1576.0
+      },
+      {
+        "player": "chris bell",
+        "bpr": 2.2424,
+        "poss": 1505.0
+      },
+      {
+        "player": "lee dort",
+        "bpr": 3.2086,
+        "poss": 982.0
+      },
+      {
+        "player": "milos ilic",
+        "bpr": 2.4747,
+        "poss": 918.0
+      },
+      {
+        "player": "semetri (tt) carr",
+        "bpr": 2.6633,
+        "poss": 798.0
+      },
+      {
+        "player": "dejuan campbell",
+        "bpr": -1.0801,
+        "poss": 512.0
+      },
+      {
+        "player": "nolan dorsey",
+        "bpr": -0.0154,
+        "poss": 506.0
+      }
+    ]
+  },
+  "Charleston": {
+    "injuries": [
+      {
+        "player": "Will Mortimore",
+        "status": "out",
+        "bpr": 1.0,
+        "poss": 0.0,
+        "bpr_share": 0.1,
+        "importance": 0.1
+      }
+    ],
+    "roster": [
+      {
+        "player": "jlynn counter",
+        "bpr": 4.0651,
+        "poss": 1618.0
+      },
+      {
+        "player": "martin kalu",
+        "bpr": -0.3639,
+        "poss": 1465.0
+      },
+      {
+        "player": "connor hickman",
+        "bpr": -0.5186,
+        "poss": 1352.0
+      },
+      {
+        "player": "christian reeves",
+        "bpr": 2.8318,
+        "poss": 1084.0
+      },
+      {
+        "player": "chol machot",
+        "bpr": 1.3147,
+        "poss": 1066.0
+      },
+      {
+        "player": "colby duggan",
+        "bpr": -0.0237,
+        "poss": 920.0
+      },
+      {
+        "player": "chris davis jr",
+        "bpr": 0.2697,
+        "poss": 912.0
+      },
+      {
+        "player": "chadlyn traylor",
+        "bpr": 0.079,
+        "poss": 882.0
+      },
+      {
+        "player": "jaxon prunty",
+        "bpr": -0.0965,
+        "poss": 850.0
+      }
+    ]
+  },
+  "Cincinnati Bearcats": {
+    "injuries": [
+      {
+        "player": "Jalen Haynes",
+        "status": "out",
+        "bpr": 1.0,
+        "poss": 0.0,
+        "bpr_share": 0.1,
+        "importance": 0.1
+      }
+    ],
+    "roster": []
+  },
+  "Clemson": {
+    "injuries": [
+      {
+        "player": "Carter Welling",
+        "status": "out",
+        "bpr": 4.3007,
+        "poss": 1114.0,
+        "bpr_share": 0.1266,
+        "importance": 0.1266
+      },
+      {
+        "player": "Zac Foster",
+        "status": "out",
+        "bpr": 1.0,
+        "poss": 0.0,
+        "bpr_share": 0.1,
+        "importance": 0.1
+      },
+      {
+        "player": "Trent Steinour",
+        "status": "questionable",
+        "bpr": 1.0,
+        "poss": 0.0,
+        "bpr_share": 0.1,
+        "importance": 0.1
+      }
+    ],
+    "roster": [
+      {
+        "player": "dillon hunter",
+        "bpr": 4.2553,
+        "poss": 1594.0
+      },
+      {
+        "player": "jestin porter",
+        "bpr": 4.1752,
+        "poss": 1500.0
+      },
+      {
+        "player": "rj godfrey",
+        "bpr": 6.7285,
+        "poss": 1373.0
+      },
+      {
+        "player": "nick davidson",
+        "bpr": 3.9702,
+        "poss": 1200.0
+      },
+      {
+        "player": "efrem johnson",
+        "bpr": 2.3121,
+        "poss": 1165.0
+      },
+      {
+        "player": "jake wahlin",
+        "bpr": 3.5462,
+        "poss": 1162.0
+      },
+      {
+        "player": "carter welling",
+        "bpr": 4.3007,
+        "poss": 1114.0
+      },
+      {
+        "player": "ace buckner",
+        "bpr": 3.087,
+        "poss": 1088.0
+      },
+      {
+        "player": "chase thompson",
+        "bpr": 1.5843,
+        "poss": 484.0
+      }
+    ]
+  },
+  "Cleveland State Vikings": {
+    "injuries": [
+      {
+        "player": "Josiah Harris",
+        "status": "questionable",
+        "bpr": 1.0,
+        "poss": 0.0,
+        "bpr_share": 0.1,
+        "importance": 0.1
+      },
+      {
+        "player": "Dayan Nessah",
+        "status": "questionable",
+        "bpr": 1.0,
+        "poss": 0.0,
+        "bpr_share": 0.1,
+        "importance": 0.1
+      }
+    ],
+    "roster": []
+  },
+  "Colorado Buffaloes": {
+    "injuries": [
+      {
+        "player": "Sebastian Rancik",
+        "status": "questionable",
+        "bpr": 1.0,
+        "poss": 0.0,
+        "bpr_share": 0.1,
+        "importance": 0.1
+      },
+      {
+        "player": "Jon Mani",
+        "status": "out",
+        "bpr": 1.0,
+        "poss": 0.0,
+        "bpr_share": 0.1,
+        "importance": 0.1
+      },
+      {
+        "player": "Leonardo Van Elswyk",
+        "status": "out",
+        "bpr": 1.0,
+        "poss": 0.0,
+        "bpr_share": 0.1,
+        "importance": 0.1
+      }
+    ],
+    "roster": []
+  },
+  "Connecticut": {
+    "injuries": [
+      {
+        "player": "Jaylin Stewart",
+        "status": "out",
+        "bpr": 3.4527,
+        "poss": 815.0,
+        "bpr_share": 0.068,
+        "importance": 0.068
+      },
+      {
+        "player": "Silas Demary",
+        "status": "questionable",
+        "bpr": 9.122,
+        "poss": 1642.0,
+        "bpr_share": 0.1797,
+        "importance": 0.1797
+      }
+    ],
+    "roster": [
+      {
+        "player": "alex karaban",
+        "bpr": 7.5318,
+        "poss": 1880.0
+      },
+      {
+        "player": "silas demary jr.",
+        "bpr": 9.122,
+        "poss": 1642.0
+      },
+      {
+        "player": "solo ball",
+        "bpr": 4.9025,
+        "poss": 1584.0
+      },
+      {
+        "player": "tarris reed jr.",
+        "bpr": 8.9976,
+        "poss": 1266.0
+      },
+      {
+        "player": "braylon mullins",
+        "bpr": 5.1597,
+        "poss": 1223.0
+      },
+      {
+        "player": "jayden ross",
+        "bpr": 4.4439,
+        "poss": 885.0
+      },
+      {
+        "player": "malachi smith",
+        "bpr": 4.0354,
+        "poss": 820.0
+      },
+      {
+        "player": "jaylin stewart",
+        "bpr": 3.4527,
+        "poss": 815.0
+      },
+      {
+        "player": "eric reibe",
+        "bpr": 3.131,
+        "poss": 810.0
+      }
+    ]
+  },
+  "Creighton Bluejays": {
+    "injuries": [
+      {
+        "player": "Liam McChesney",
+        "status": "out",
+        "bpr": 1.0,
+        "poss": 0.0,
+        "bpr_share": 0.1,
+        "importance": 0.1
+      },
+      {
+        "player": "Josh Townley-Thomas",
+        "status": "questionable",
+        "bpr": 1.0,
+        "poss": 0.0,
+        "bpr_share": 0.1,
+        "importance": 0.1
+      },
+      {
+        "player": "Jackson McAndrew",
+        "status": "out",
+        "bpr": 1.0,
+        "poss": 0.0,
+        "bpr_share": 0.1,
+        "importance": 0.1
+      },
+      {
+        "player": "Aleksa Dimitrijevic",
+        "status": "out",
+        "bpr": 1.0,
+        "poss": 0.0,
+        "bpr_share": 0.1,
+        "importance": 0.1
+      }
+    ],
+    "roster": []
+  },
+  "Davidson": {
+    "injuries": [
+      {
+        "player": "Joe Hurlburt",
+        "status": "questionable",
+        "bpr": 1.0,
+        "poss": 0.0,
+        "bpr_share": 0.1,
+        "importance": 0.1
+      }
+    ],
+    "roster": [
+      {
+        "player": "parker friedrichsen",
+        "bpr": 1.3589,
+        "poss": 1300.0
+      },
+      {
+        "player": "josh scovens",
+        "bpr": 2.9154,
+        "poss": 1212.0
+      },
+      {
+        "player": "devin brown",
+        "bpr": -0.1927,
+        "poss": 1156.0
+      },
+      {
+        "player": "sam brown",
+        "bpr": 1.3772,
+        "poss": 1120.0
+      },
+      {
+        "player": "roberts blums",
+        "bpr": 1.7539,
+        "poss": 1066.0
+      },
+      {
+        "player": "nick coval",
+        "bpr": 1.1542,
+        "poss": 936.0
+      },
+      {
+        "player": "hunter adam",
+        "bpr": 1.5346,
+        "poss": 732.0
+      },
+      {
+        "player": "ian platteeuw",
+        "bpr": 0.3178,
+        "poss": 707.0
+      },
+      {
+        "player": "sean logan",
+        "bpr": 1.5388,
+        "poss": 618.0
+      },
+      {
+        "player": "jaqualon roberts",
+        "bpr": 0.3789,
+        "poss": 554.0
+      }
+    ]
+  },
+  "Dayton": {
+    "injuries": [
+      {
+        "player": "Evan Dickey",
+        "status": "questionable",
+        "bpr": 1.0,
+        "poss": 0.0,
+        "bpr_share": 0.1,
+        "importance": 0.1
+      },
+      {
+        "player": "Jaron McKie",
+        "status": "out",
+        "bpr": 1.0,
+        "poss": 0.0,
+        "bpr_share": 0.1,
+        "importance": 0.1
+      }
+    ],
+    "roster": [
+      {
+        "player": "javon bennett",
+        "bpr": 4.0249,
+        "poss": 2006.0
+      },
+      {
+        "player": "keonte jones",
+        "bpr": 3.74,
+        "poss": 1724.0
+      },
+      {
+        "player": "de'shayne montgomery",
+        "bpr": 4.5824,
+        "poss": 1698.0
+      },
+      {
+        "player": "amael l'etang",
+        "bpr": 3.8061,
+        "poss": 1276.0
+      },
+      {
+        "player": "jordan derkack",
+        "bpr": 2.496,
+        "poss": 1186.0
+      },
+      {
+        "player": "bryce heard",
+        "bpr": -0.505,
+        "poss": 1048.0
+      },
+      {
+        "player": "jaiun simon",
+        "bpr": 1.8959,
+        "poss": 984.0
+      },
+      {
+        "player": "jacob conner",
+        "bpr": 0.6202,
+        "poss": 934.0
+      }
+    ]
+  },
+  "Duke": {
+    "injuries": [
+      {
+        "player": "Ifeanyi Ufochukwu",
+        "status": "out",
+        "bpr": 1.0,
+        "poss": 0.0,
+        "bpr_share": 0.1,
+        "importance": 0.1
+      },
+      {
+        "player": "Caleb Foster",
+        "status": "out",
+        "bpr": 5.4917,
+        "poss": 1321.0,
+        "bpr_share": 0.0866,
+        "importance": 0.0866
+      },
+      {
+        "player": "Patrick Ngongba",
+        "status": "probable",
+        "bpr": 9.9951,
+        "poss": 1106.0,
+        "bpr_share": 0.1577,
+        "importance": 0.1577
+      }
+    ],
+    "roster": [
+      {
+        "player": "cameron boozer",
+        "bpr": 14.8064,
+        "poss": 1888.0
+      },
+      {
+        "player": "isaiah evans",
+        "bpr": 8.5002,
+        "poss": 1594.0
+      },
+      {
+        "player": "caleb foster",
+        "bpr": 5.4917,
+        "poss": 1321.0
+      },
+      {
+        "player": "dame sarr",
+        "bpr": 4.6138,
+        "poss": 1302.0
+      },
+      {
+        "player": "cayden boozer",
+        "bpr": 5.728,
+        "poss": 1246.0
+      },
+      {
+        "player": "maliq brown",
+        "bpr": 7.3637,
+        "poss": 1128.0
+      },
+      {
+        "player": "nikolas khamenia",
+        "bpr": 5.1329,
+        "poss": 1108.0
+      },
+      {
+        "player": "patrick ngongba",
+        "bpr": 9.9951,
+        "poss": 1106.0
+      },
+      {
+        "player": "darren harris",
+        "bpr": 1.746,
+        "poss": 568.0
+      }
+    ]
+  },
+  "East Carolina": {
+    "injuries": [
+      {
+        "player": "Trevion LaBeaux",
+        "status": "out",
+        "bpr": 1.0,
+        "poss": 0.0,
+        "bpr_share": 0.1,
+        "importance": 0.1
+      },
+      {
+        "player": "Jayshayne Woodard",
+        "status": "out",
+        "bpr": 1.0,
+        "poss": 0.0,
+        "bpr_share": 0.1,
+        "importance": 0.1
+      },
+      {
+        "player": "Daithi Quinn",
+        "status": "out",
+        "bpr": 1.0,
+        "poss": 0.0,
+        "bpr_share": 0.1,
+        "importance": 0.1
+      }
+    ],
+    "roster": [
+      {
+        "player": "jordan riley",
+        "bpr": 2.925,
+        "poss": 1969.0
+      },
+      {
+        "player": "giovanni emejuru",
+        "bpr": 0.6121,
+        "poss": 1707.0
+      },
+      {
+        "player": "corey caulker",
+        "bpr": -0.6896,
+        "poss": 1618.0
+      },
+      {
+        "player": "isaiah mbeng",
+        "bpr": -1.6956,
+        "poss": 1202.0
+      },
+      {
+        "player": "demitri gardner",
+        "bpr": -0.0329,
+        "poss": 868.0
+      },
+      {
+        "player": "reid cason",
+        "bpr": -2.0827,
+        "poss": 794.0
+      },
+      {
+        "player": "tybo bailey",
+        "bpr": -2.7299,
+        "poss": 757.0
+      },
+      {
+        "player": "eli delaurier",
+        "bpr": -1.8626,
+        "poss": 592.0
+      },
+      {
+        "player": "luke davis",
+        "bpr": -1.0559,
+        "poss": 498.0
+      }
+    ]
+  },
+  "Eastern Washington Eagles": {
+    "injuries": [
+      {
+        "player": "Andrew Cook",
+        "status": "out",
+        "bpr": 1.0,
+        "poss": 0.0,
+        "bpr_share": 0.1,
+        "importance": 0.1
+      }
+    ],
+    "roster": []
+  },
+  "Florida International Golden Panthers": {
+    "injuries": [
+      {
+        "player": "Amarion Nimmers",
+        "status": "out",
+        "bpr": 1.0,
+        "poss": 0.0,
+        "bpr_share": 0.1,
+        "importance": 0.1
+      },
+      {
+        "player": "Gvidas Gicevicius",
+        "status": "out",
+        "bpr": 1.0,
+        "poss": 0.0,
+        "bpr_share": 0.1,
+        "importance": 0.1
+      }
+    ],
+    "roster": []
+  },
+  "Fordham Rams": {
+    "injuries": [
+      {
+        "player": "Ryan Pettis",
+        "status": "out",
+        "bpr": 1.0,
+        "poss": 0.0,
+        "bpr_share": 0.1,
+        "importance": 0.1
+      },
+      {
+        "player": "Jack Whitbourn",
+        "status": "questionable",
+        "bpr": 1.0,
+        "poss": 0.0,
+        "bpr_share": 0.1,
+        "importance": 0.1
+      }
+    ],
+    "roster": []
+  },
+  "George Mason Patriots": {
+    "injuries": [
+      {
+        "player": "Brayden O'Connor",
+        "status": "out",
+        "bpr": 1.0,
+        "poss": 0.0,
+        "bpr_share": 0.1,
+        "importance": 0.1
+      },
+      {
+        "player": "Jermahri Hill",
+        "status": "questionable",
+        "bpr": 1.0,
+        "poss": 0.0,
+        "bpr_share": 0.1,
+        "importance": 0.1
+      }
+    ],
+    "roster": []
+  },
+  "George Washington Colonials": {
+    "injuries": [
+      {
+        "player": "Ty Bevins",
+        "status": "questionable",
+        "bpr": 1.0,
+        "poss": 0.0,
+        "bpr_share": 0.1,
+        "importance": 0.1
+      },
+      {
+        "player": "Mohamed Binzagr",
+        "status": "questionable",
+        "bpr": 1.0,
+        "poss": 0.0,
+        "bpr_share": 0.1,
+        "importance": 0.1
+      },
+      {
+        "player": "Jalen Rougier-Roane",
+        "status": "out",
+        "bpr": 1.0,
+        "poss": 0.0,
+        "bpr_share": 0.1,
+        "importance": 0.1
+      }
+    ],
+    "roster": []
+  },
+  "Georgia State Panthers": {
+    "injuries": [
+      {
+        "player": "Clash Peters",
+        "status": "out",
+        "bpr": 1.0,
+        "poss": 0.0,
+        "bpr_share": 0.1,
+        "importance": 0.1
+      }
+    ],
+    "roster": []
+  },
+  "Gonzaga": {
+    "injuries": [
+      {
+        "player": "Jalen Warley",
+        "status": "probable",
+        "bpr": 6.6608,
+        "poss": 1173.0,
+        "bpr_share": 0.1157,
+        "importance": 0.1157
+      },
+      {
+        "player": "Braden Huff",
+        "status": "out",
+        "bpr": 7.5925,
+        "poss": 842.0,
+        "bpr_share": 0.1319,
+        "importance": 0.1319
+      }
+    ],
+    "roster": [
+      {
+        "player": "graham ike",
+        "bpr": 9.1195,
+        "poss": 1554.0
+      },
+      {
+        "player": "emmanuel innocenti",
+        "bpr": 4.7595,
+        "poss": 1346.0
+      },
+      {
+        "player": "mario saint-supery",
+        "bpr": 7.2499,
+        "poss": 1326.0
+      },
+      {
+        "player": "tyon grant-foster",
+        "bpr": 4.3857,
+        "poss": 1266.0
+      },
+      {
+        "player": "jalen warley",
+        "bpr": 6.6608,
+        "poss": 1173.0
+      },
+      {
+        "player": "adam miller",
+        "bpr": 3.046,
+        "poss": 1152.0
+      },
+      {
+        "player": "braeden smith",
+        "bpr": 5.3961,
+        "poss": 1040.0
+      },
+      {
+        "player": "braden huff",
+        "bpr": 7.5925,
+        "poss": 842.0
+      },
+      {
+        "player": "davis fogle",
+        "bpr": 5.8492,
+        "poss": 788.0
+      },
+      {
+        "player": "steele venters",
+        "bpr": 3.5026,
+        "poss": 733.0
+      }
+    ]
+  },
+  "Hawaii Warriors": {
+    "injuries": [
+      {
+        "player": "Aaron Hunkin-Claytor",
+        "status": "out",
+        "bpr": 1.0,
+        "poss": 0.0,
+        "bpr_share": 0.1,
+        "importance": 0.1
+      }
+    ],
+    "roster": []
+  },
+  "Howard Bison": {
+    "injuries": [
+      {
+        "player": "Shane Frazier",
+        "status": "out",
+        "bpr": 1.0,
+        "poss": 0.0,
+        "bpr_share": 0.1,
+        "importance": 0.1
+      }
+    ],
+    "roster": []
+  },
+  "Illinois Fighting Illini": {
+    "injuries": [
+      {
+        "player": "Jason Jakstys",
+        "status": "out",
+        "bpr": 1.0,
+        "poss": 0.0,
+        "bpr_share": 0.1,
+        "importance": 0.1
+      }
+    ],
+    "roster": []
+  },
+  "Indiana State Sycamores": {
+    "injuries": [
+      {
+        "player": "Zyair Greene",
+        "status": "questionable",
+        "bpr": 1.0,
+        "poss": 0.0,
+        "bpr_share": 0.1,
+        "importance": 0.1
+      },
+      {
+        "player": "Jayan Walker",
+        "status": "questionable",
+        "bpr": 1.0,
+        "poss": 0.0,
+        "bpr_share": 0.1,
+        "importance": 0.1
+      }
+    ],
+    "roster": []
+  },
+  "Iowa Hawkeyes": {
+    "injuries": [
+      {
+        "player": "Peyton McCollum",
+        "status": "out",
+        "bpr": 1.0,
+        "poss": 0.0,
+        "bpr_share": 0.1,
+        "importance": 0.1
+      }
+    ],
+    "roster": []
+  },
+  "Jackson State": {
+    "injuries": [
+      {
+        "player": "Daeshun Ruffin",
+        "status": "questionable",
+        "bpr": 1.2339,
+        "poss": 1680.0,
+        "bpr_share": 1.0,
+        "importance": 1.0
+      }
+    ],
+    "roster": [
+      {
+        "player": "jayme mitchell jr.",
+        "bpr": -1.3125,
+        "poss": 1853.0
+      },
+      {
+        "player": "daeshun ruffin",
+        "bpr": 1.2339,
+        "poss": 1680.0
+      },
+      {
+        "player": "dorian mcmillian",
+        "bpr": -2.3369,
+        "poss": 1494.0
+      },
+      {
+        "player": "devin ree",
+        "bpr": -1.8904,
+        "poss": 1200.0
+      },
+      {
+        "player": "tamarion hoover",
+        "bpr": -3.6901,
+        "poss": 1052.0
+      },
+      {
+        "player": "delyle williams",
+        "bpr": -2.7621,
+        "poss": 954.0
+      },
+      {
+        "player": "raevon thomas",
+        "bpr": -2.2397,
+        "poss": 770.0
+      },
+      {
+        "player": "dionjahe thomas",
+        "bpr": -3.3536,
+        "poss": 736.0
+      },
+      {
+        "player": "jalen tatum",
+        "bpr": -4.0035,
+        "poss": 516.0
+      },
+      {
+        "player": "kobe butler",
+        "bpr": -5.0422,
+        "poss": 484.0
+      }
+    ]
+  },
+  "Jacksonville State": {
+    "injuries": [
+      {
+        "player": "Bencao Vungo",
+        "status": "out",
+        "bpr": 1.0,
+        "poss": 0.0,
+        "bpr_share": 0.1,
+        "importance": 0.1
+      },
+      {
+        "player": "Jordan Vick",
+        "status": "out",
+        "bpr": 1.0,
+        "poss": 0.0,
+        "bpr_share": 0.1,
+        "importance": 0.1
+      }
+    ],
+    "roster": [
+      {
+        "player": "jacoby hill",
+        "bpr": 0.0041,
+        "poss": 1486.0
+      },
+      {
+        "player": "mostapha el moutaouakkil",
+        "bpr": 0.5961,
+        "poss": 1478.0
+      },
+      {
+        "player": "ac bryant",
+        "bpr": 1.502,
+        "poss": 1342.0
+      },
+      {
+        "player": "jaye nash",
+        "bpr": -0.2491,
+        "poss": 1282.0
+      },
+      {
+        "player": "emondrek erkins-ford",
+        "bpr": 0.4998,
+        "poss": 1043.0
+      },
+      {
+        "player": "iaroslav niagu",
+        "bpr": 0.5106,
+        "poss": 965.0
+      },
+      {
+        "player": "marcus fitzgerald jr.",
+        "bpr": -2.2841,
+        "poss": 812.0
+      },
+      {
+        "player": "jamar franklin",
+        "bpr": -0.4457,
+        "poss": 592.0
+      }
+    ]
+  },
+  "Kennesaw State Owls": {
+    "injuries": [
+      {
+        "player": "Chase Clemmons",
+        "status": "out",
+        "bpr": 1.0,
+        "poss": 0.0,
+        "bpr_share": 0.1,
+        "importance": 0.1
+      },
+      {
+        "player": "Brendan Tousignaut",
+        "status": "out",
+        "bpr": 1.0,
+        "poss": 0.0,
+        "bpr_share": 0.1,
+        "importance": 0.1
+      }
+    ],
+    "roster": []
+  },
+  "Kentucky": {
+    "injuries": [
+      {
+        "player": "Jaland Lowe",
+        "status": "out",
+        "bpr": 1.0,
+        "poss": 0.0,
+        "bpr_share": 0.1,
+        "importance": 0.1
+      },
+      {
+        "player": "Jayden Quaintance",
+        "status": "out",
+        "bpr": 1.0,
+        "poss": 0.0,
+        "bpr_share": 0.1,
+        "importance": 0.1
+      }
+    ],
+    "roster": [
+      {
+        "player": "otega oweh",
+        "bpr": 6.6148,
+        "poss": 1942.0
+      },
+      {
+        "player": "denzel aberdeen",
+        "bpr": 5.2235,
+        "poss": 1800.0
+      },
+      {
+        "player": "collin chandler",
+        "bpr": 5.055,
+        "poss": 1594.0
+      },
+      {
+        "player": "malachi moreno",
+        "bpr": 6.2618,
+        "poss": 1364.0
+      },
+      {
+        "player": "mouhamed dioubate",
+        "bpr": 6.55,
+        "poss": 1069.0
+      },
+      {
+        "player": "brandon garrison",
+        "bpr": 4.1162,
+        "poss": 944.0
+      },
+      {
+        "player": "andrija jelavic",
+        "bpr": 1.2478,
+        "poss": 830.0
+      },
+      {
+        "player": "kam williams",
+        "bpr": 5.1851,
+        "poss": 725.0
+      },
+      {
+        "player": "jasper johnson",
+        "bpr": 2.5781,
+        "poss": 724.0
+      },
+      {
+        "player": "trent noah",
+        "bpr": 2.0575,
+        "poss": 488.0
+      }
+    ]
+  },
+  "LSU": {
+    "injuries": [
+      {
+        "player": "Dedan Thomas",
+        "status": "out",
+        "bpr": 6.0969,
+        "poss": 828.0,
+        "bpr_share": 0.21,
+        "importance": 0.21
+      }
+    ],
+    "roster": [
+      {
+        "player": "marquel sutton",
+        "bpr": 3.2634,
+        "poss": 1720.0
+      },
+      {
+        "player": "max mackinnon",
+        "bpr": 3.5851,
+        "poss": 1704.0
+      },
+      {
+        "player": "pablo tamba",
+        "bpr": 4.7614,
+        "poss": 1550.0
+      },
+      {
+        "player": "jalen reece",
+        "bpr": 1.5349,
+        "poss": 1292.0
+      },
+      {
+        "player": "michael nwoko",
+        "bpr": 4.4867,
+        "poss": 1198.0
+      },
+      {
+        "player": "rashad king",
+        "bpr": 1.3278,
+        "poss": 1022.0
+      },
+      {
+        "player": "robert miller iii",
+        "bpr": 3.9774,
+        "poss": 1020.0
+      },
+      {
+        "player": "dedan thomas jr.",
+        "bpr": 6.0969,
+        "poss": 828.0
+      },
+      {
+        "player": "pj carter",
+        "bpr": -0.7613,
+        "poss": 463.0
+      }
+    ]
+  },
+  "Louisiana Ragin' Cajuns": {
+    "injuries": [
+      {
+        "player": "Jamyron Keller",
+        "status": "out",
+        "bpr": 1.0,
+        "poss": 0.0,
+        "bpr_share": 0.1,
+        "importance": 0.1
+      },
+      {
+        "player": "Sean Elkinton",
+        "status": "out",
+        "bpr": 1.0,
+        "poss": 0.0,
+        "bpr_share": 0.1,
+        "importance": 0.1
+      }
+    ],
+    "roster": []
+  },
+  "Louisiana Tech": {
+    "injuries": [
+      {
+        "player": "Will Jeffress",
+        "status": "out",
+        "bpr": 1.0,
+        "poss": 0.0,
+        "bpr_share": 0.1,
+        "importance": 0.1
+      },
+      {
+        "player": "A'Meir Williams",
+        "status": "out",
+        "bpr": 1.3193,
+        "poss": 898.0,
+        "bpr_share": 0.187,
+        "importance": 0.187
+      }
+    ],
+    "roster": [
+      {
+        "player": "aj bates",
+        "bpr": 1.983,
+        "poss": 1724.0
+      },
+      {
+        "player": "dj dudley",
+        "bpr": 0.0635,
+        "poss": 1546.0
+      },
+      {
+        "player": "avery thomas ii",
+        "bpr": 1.2351,
+        "poss": 1251.0
+      },
+      {
+        "player": "kaden cooper",
+        "bpr": 2.3063,
+        "poss": 1110.0
+      },
+      {
+        "player": "jaylen fenner",
+        "bpr": -0.6419,
+        "poss": 1030.0
+      },
+      {
+        "player": "scooter williams jr.",
+        "bpr": 1.3193,
+        "poss": 898.0
+      },
+      {
+        "player": "will allen",
+        "bpr": -0.8398,
+        "poss": 768.0
+      },
+      {
+        "player": "melian martinez",
+        "bpr": 0.1463,
+        "poss": 745.0
+      },
+      {
+        "player": "sir issac herron",
+        "bpr": -2.1661,
+        "poss": 494.0
+      }
+    ]
+  },
+  "Louisville": {
+    "injuries": [
+      {
+        "player": "Mikel Brown",
+        "status": "questionable",
+        "bpr": 6.4373,
+        "poss": 1133.0,
+        "bpr_share": 0.1237,
+        "importance": 0.1237
+      }
+    ],
+    "roster": [
+      {
+        "player": "ryan conwell",
+        "bpr": 6.7952,
+        "poss": 1738.0
+      },
+      {
+        "player": "isaac mckneely",
+        "bpr": 5.1926,
+        "poss": 1685.0
+      },
+      {
+        "player": "j'vonne hadley",
+        "bpr": 6.5851,
+        "poss": 1590.0
+      },
+      {
+        "player": "sananda fru",
+        "bpr": 5.6295,
+        "poss": 1300.0
+      },
+      {
+        "player": "adrian wooley",
+        "bpr": 6.021,
+        "poss": 1282.0
+      },
+      {
+        "player": "mikel brown jr.",
+        "bpr": 6.4373,
+        "poss": 1133.0
+      },
+      {
+        "player": "khani rooths",
+        "bpr": 3.9159,
+        "poss": 835.0
+      },
+      {
+        "player": "kobe rodgers",
+        "bpr": 4.7166,
+        "poss": 775.0
+      },
+      {
+        "player": "aly khalifa",
+        "bpr": 6.7514,
+        "poss": 702.0
+      }
+    ]
+  },
+  "Marist Red Foxes": {
+    "injuries": [
+      {
+        "player": "Jason Schofield",
+        "status": "out",
+        "bpr": 1.0,
+        "poss": 0.0,
+        "bpr_share": 0.1,
+        "importance": 0.1
+      },
+      {
+        "player": "Elijah Lewis",
+        "status": "out",
+        "bpr": 1.0,
+        "poss": 0.0,
+        "bpr_share": 0.1,
+        "importance": 0.1
+      },
+      {
+        "player": "Tarik Watson",
+        "status": "out",
+        "bpr": 1.0,
+        "poss": 0.0,
+        "bpr_share": 0.1,
+        "importance": 0.1
+      }
+    ],
+    "roster": []
+  },
+  "Marquette": {
+    "injuries": [
+      {
+        "player": "Sean Jones",
+        "status": "out",
+        "bpr": 1.0,
+        "poss": 0.0,
+        "bpr_share": 0.1,
+        "importance": 0.1
+      }
+    ],
+    "roster": [
+      {
+        "player": "chase ross",
+        "bpr": 4.3856,
+        "poss": 1862.0
+      },
+      {
+        "player": "nigel james jr.",
+        "bpr": 4.9423,
+        "poss": 1641.0
+      },
+      {
+        "player": "royce parham",
+        "bpr": 2.8885,
+        "poss": 1565.0
+      },
+      {
+        "player": "ben gold",
+        "bpr": 2.3722,
+        "poss": 1490.0
+      },
+      {
+        "player": "adrien stevens",
+        "bpr": 3.0328,
+        "poss": 1465.0
+      },
+      {
+        "player": "damarius owens",
+        "bpr": 0.4325,
+        "poss": 820.0
+      },
+      {
+        "player": "caedin hamilton",
+        "bpr": -0.3881,
+        "poss": 736.0
+      },
+      {
+        "player": "zaide lowery",
+        "bpr": 0.7423,
+        "poss": 466.0
+      }
+    ]
+  },
+  "Memphis": {
+    "injuries": [
+      {
+        "player": "Julius Thedford",
+        "status": "doubtful",
+        "bpr": 2.3533,
+        "poss": 988.0,
+        "bpr_share": 0.1513,
+        "importance": 0.1513
+      }
+    ],
+    "roster": [
+      {
+        "player": "dug mcdaniel",
+        "bpr": 3.5668,
+        "poss": 1970.0
+      },
+      {
+        "player": "curtis givens iii",
+        "bpr": 0.4382,
+        "poss": 1128.0
+      },
+      {
+        "player": "zach davis",
+        "bpr": 1.6516,
+        "poss": 1104.0
+      },
+      {
+        "player": "sincere parker",
+        "bpr": 2.6564,
+        "poss": 1093.0
+      },
+      {
+        "player": "julius thedford",
+        "bpr": 2.3533,
+        "poss": 988.0
+      },
+      {
+        "player": "aaron bradshaw",
+        "bpr": 2.8669,
+        "poss": 978.0
+      },
+      {
+        "player": "quante berry",
+        "bpr": 0.9137,
+        "poss": 978.0
+      },
+      {
+        "player": "ashton hardaway",
+        "bpr": 0.2656,
+        "poss": 844.0
+      },
+      {
+        "player": "thierno sylla",
+        "bpr": -0.6246,
+        "poss": 560.0
+      },
+      {
+        "player": "simon majok",
+        "bpr": 0.41,
+        "poss": 543.0
+      },
+      {
+        "player": "hasan abdul hakim",
+        "bpr": 0.4342,
+        "poss": 514.0
+      }
+    ]
+  },
+  "Miami (FL)": {
+    "injuries": [
+      {
+        "player": "Marcus Allen",
+        "status": "out",
+        "bpr": 2.1653,
+        "poss": 1128.0,
+        "bpr_share": 0.0654,
+        "importance": 0.0654
+      },
+      {
+        "player": "Treyvon Maddox",
+        "status": "out",
+        "bpr": 1.0,
+        "poss": 0.0,
+        "bpr_share": 0.1,
+        "importance": 0.1
+      }
+    ],
+    "roster": [
+      {
+        "player": "tre donaldson",
+        "bpr": 7.7518,
+        "poss": 1940.0
+      },
+      {
+        "player": "shelton henderson",
+        "bpr": 4.4743,
+        "poss": 1762.0
+      },
+      {
+        "player": "malik reneau",
+        "bpr": 7.3409,
+        "poss": 1636.0
+      },
+      {
+        "player": "ernest udeh jr.",
+        "bpr": 5.3193,
+        "poss": 1464.0
+      },
+      {
+        "player": "tru washington",
+        "bpr": 4.3106,
+        "poss": 1382.0
+      },
+      {
+        "player": "dante allen",
+        "bpr": 2.1653,
+        "poss": 1128.0
+      },
+      {
+        "player": "timotej malovec",
+        "bpr": 1.7434,
+        "poss": 846.0
+      }
+    ]
+  },
+  "Michigan State": {
+    "injuries": [
+      {
+        "player": "Kaleb Glenn",
+        "status": "out",
+        "bpr": 1.0,
+        "poss": 0.0,
+        "bpr_share": 0.1,
+        "importance": 0.1
+      },
+      {
+        "player": "Divine Ugochukwu",
+        "status": "out",
+        "bpr": 2.4038,
+        "poss": 587.0,
+        "bpr_share": 0.0531,
+        "importance": 0.0531
+      }
+    ],
+    "roster": [
+      {
+        "player": "jeremy fears jr.",
+        "bpr": 11.4742,
+        "poss": 1742.0
+      },
+      {
+        "player": "coen carr",
+        "bpr": 5.43,
+        "poss": 1560.0
+      },
+      {
+        "player": "jaxon kohler",
+        "bpr": 7.7289,
+        "poss": 1482.0
+      },
+      {
+        "player": "carson cooper",
+        "bpr": 5.8005,
+        "poss": 1420.0
+      },
+      {
+        "player": "jordan scott",
+        "bpr": 4.9843,
+        "poss": 1100.0
+      },
+      {
+        "player": "kur teng",
+        "bpr": 4.3495,
+        "poss": 924.0
+      },
+      {
+        "player": "cameron ward",
+        "bpr": 3.0995,
+        "poss": 771.0
+      },
+      {
+        "player": "divine ugochukwu",
+        "bpr": 2.4038,
+        "poss": 587.0
+      },
+      {
+        "player": "trey fort",
+        "bpr": -0.3913,
+        "poss": 510.0
+      }
+    ]
+  },
+  "Michigan": {
+    "injuries": [
+      {
+        "player": "Charlie May",
+        "status": "out",
+        "bpr": 1.0,
+        "poss": 0.0,
+        "bpr_share": 0.1,
+        "importance": 0.1
+      },
+      {
+        "player": "L.J. Cason",
+        "status": "out",
+        "bpr": 4.6225,
+        "poss": 943.0,
+        "bpr_share": 0.0714,
+        "importance": 0.0714
+      },
+      {
+        "player": "Winters Grady",
+        "status": "out",
+        "bpr": 1.0,
+        "poss": 0.0,
+        "bpr_share": 0.1,
+        "importance": 0.1
+      }
+    ],
+    "roster": [
+      {
+        "player": "yaxel lendeborg",
+        "bpr": 13.1935,
+        "poss": 1756.0
+      },
+      {
+        "player": "elliot cadeau",
+        "bpr": 7.3979,
+        "poss": 1542.0
+      },
+      {
+        "player": "morez johnson jr.",
+        "bpr": 9.2327,
+        "poss": 1476.0
+      },
+      {
+        "player": "aday mara",
+        "bpr": 9.1211,
+        "poss": 1354.0
+      },
+      {
+        "player": "trey mckenney",
+        "bpr": 6.6035,
+        "poss": 1258.0
+      },
+      {
+        "player": "roddy gayle jr.",
+        "bpr": 4.8201,
+        "poss": 1168.0
+      },
+      {
+        "player": "nimari burnett",
+        "bpr": 5.0125,
+        "poss": 1140.0
+      },
+      {
+        "player": "l.j. cason",
+        "bpr": 4.6225,
+        "poss": 943.0
+      },
+      {
+        "player": "will tschetter",
+        "bpr": 4.7689,
+        "poss": 800.0
+      }
+    ]
+  },
+  "Minnesota Golden Gophers": {
+    "injuries": [
+      {
+        "player": "Robert Vaihola",
+        "status": "out",
+        "bpr": 1.0,
+        "poss": 0.0,
+        "bpr_share": 0.1,
+        "importance": 0.1
+      },
+      {
+        "player": "BJ Omot",
+        "status": "out",
+        "bpr": 1.0,
+        "poss": 0.0,
+        "bpr_share": 0.1,
+        "importance": 0.1
+      },
+      {
+        "player": "Chance Stephens",
+        "status": "out",
+        "bpr": 1.0,
+        "poss": 0.0,
+        "bpr_share": 0.1,
+        "importance": 0.1
+      },
+      {
+        "player": "Jaylen Crocker-Johnson",
+        "status": "out",
+        "bpr": 1.0,
+        "poss": 0.0,
+        "bpr_share": 0.1,
+        "importance": 0.1
+      }
+    ],
+    "roster": []
+  },
+  "Mississippi State": {
+    "injuries": [
+      {
+        "player": "Gai Chol",
+        "status": "out",
+        "bpr": 1.0,
+        "poss": 0.0,
+        "bpr_share": 0.1,
+        "importance": 0.1
+      }
+    ],
+    "roster": [
+      {
+        "player": "josh hubbard",
+        "bpr": 5.4769,
+        "poss": 1937.0
+      },
+      {
+        "player": "jayden epps",
+        "bpr": 1.6204,
+        "poss": 1473.0
+      },
+      {
+        "player": "shawn jones jr.",
+        "bpr": 2.3316,
+        "poss": 1447.0
+      },
+      {
+        "player": "ja'borri mcghee",
+        "bpr": 2.2903,
+        "poss": 1264.0
+      },
+      {
+        "player": "quincy ballard",
+        "bpr": 3.2607,
+        "poss": 1168.0
+      },
+      {
+        "player": "jamarion davis-fleming",
+        "bpr": 0.2424,
+        "poss": 1148.0
+      },
+      {
+        "player": "achor achor",
+        "bpr": 1.7474,
+        "poss": 1032.0
+      },
+      {
+        "player": "sergej macura",
+        "bpr": 1.6417,
+        "poss": 916.0
+      },
+      {
+        "player": "king grace",
+        "bpr": -0.4745,
+        "poss": 520.0
+      }
+    ]
+  },
+  "Missouri State": {
+    "injuries": [
+      {
+        "player": "Amar Kuljuhovic",
+        "status": "out",
+        "bpr": 1.0,
+        "poss": 0.0,
+        "bpr_share": 0.1,
+        "importance": 0.1
+      }
+    ],
+    "roster": [
+      {
+        "player": "kobi williams",
+        "bpr": 0.8852,
+        "poss": 1798.0
+      },
+      {
+        "player": "keith palek iii",
+        "bpr": 1.31,
+        "poss": 1737.0
+      },
+      {
+        "player": "trey williams jr",
+        "bpr": 0.2595,
+        "poss": 1589.0
+      },
+      {
+        "player": "zaxton king",
+        "bpr": -0.1723,
+        "poss": 1372.0
+      },
+      {
+        "player": "michael osei-bonsu",
+        "bpr": 3.3945,
+        "poss": 1338.0
+      },
+      {
+        "player": "antwan burnett",
+        "bpr": -0.5326,
+        "poss": 760.0
+      },
+      {
+        "player": "darrion sutton",
+        "bpr": -0.5841,
+        "poss": 664.0
+      }
+    ]
+  },
+  "Missouri": {
+    "injuries": [
+      {
+        "player": "Jevon Porter",
+        "status": "out",
+        "bpr": 1.0,
+        "poss": 0.0,
+        "bpr_share": 0.1,
+        "importance": 0.1
+      },
+      {
+        "player": "Annor Boateng",
+        "status": "out",
+        "bpr": 1.0,
+        "poss": 0.0,
+        "bpr_share": 0.1,
+        "importance": 0.1
+      }
+    ],
+    "roster": [
+      {
+        "player": "mark mitchell",
+        "bpr": 6.9309,
+        "poss": 1842.0
+      },
+      {
+        "player": "anthony robinson ii",
+        "bpr": 5.0078,
+        "poss": 1471.0
+      },
+      {
+        "player": "jayden stone",
+        "bpr": 4.4227,
+        "poss": 1289.0
+      },
+      {
+        "player": "t.o. barrett",
+        "bpr": 2.8694,
+        "poss": 1248.0
+      },
+      {
+        "player": "jacob crews",
+        "bpr": 3.2728,
+        "poss": 1126.0
+      },
+      {
+        "player": "shawn phillips jr.",
+        "bpr": 1.6307,
+        "poss": 1012.0
+      },
+      {
+        "player": "trent pierce",
+        "bpr": 3.6923,
+        "poss": 918.0
+      },
+      {
+        "player": "sebastian mack",
+        "bpr": -0.1009,
+        "poss": 504.0
+      }
+    ]
+  },
+  "Mount St. Mary's": {
+    "injuries": [
+      {
+        "player": "Jaxon Hartman",
+        "status": "out",
+        "bpr": 1.0,
+        "poss": 0.0,
+        "bpr_share": 0.1,
+        "importance": 0.1
+      },
+      {
+        "player": "Abdou Khadre Kebe",
+        "status": "out",
+        "bpr": 1.0,
+        "poss": 0.0,
+        "bpr_share": 0.1,
+        "importance": 0.1
+      },
+      {
+        "player": "Justin May",
+        "status": "out",
+        "bpr": 1.0,
+        "poss": 0.0,
+        "bpr_share": 0.1,
+        "importance": 0.1
+      }
+    ],
+    "roster": [
+      {
+        "player": "xavier lipscomb",
+        "bpr": 0.8531,
+        "poss": 1718.0
+      },
+      {
+        "player": "arlandus keyes",
+        "bpr": 2.4438,
+        "poss": 1480.0
+      },
+      {
+        "player": "luke mceldon",
+        "bpr": -0.1631,
+        "poss": 1296.0
+      },
+      {
+        "player": "trey deveaux",
+        "bpr": -1.6971,
+        "poss": 1236.0
+      },
+      {
+        "player": "justin amadi",
+        "bpr": -1.0321,
+        "poss": 1034.0
+      },
+      {
+        "player": "mason so",
+        "bpr": -2.1728,
+        "poss": 936.0
+      },
+      {
+        "player": "abdou khadre k\u00e9b\u00e9",
+        "bpr": -1.4807,
+        "poss": 774.0
+      },
+      {
+        "player": "anthony arrington, jr.",
+        "bpr": -3.4262,
+        "poss": 666.0
+      },
+      {
+        "player": "anastasios rozakeas",
+        "bpr": -3.9106,
+        "poss": 562.0
+      }
+    ]
+  },
+  "Nebraska Cornhuskers": {
+    "injuries": [
+      {
+        "player": "Henry Burt",
+        "status": "out",
+        "bpr": 1.0,
+        "poss": 0.0,
+        "bpr_share": 0.1,
+        "importance": 0.1
+      },
+      {
+        "player": "Connor Essegian",
+        "status": "out",
+        "bpr": 1.0,
+        "poss": 0.0,
+        "bpr_share": 0.1,
+        "importance": 0.1
+      },
+      {
+        "player": "Ugnius Jarusevicius",
+        "status": "out",
+        "bpr": 1.0,
+        "poss": 0.0,
+        "bpr_share": 0.1,
+        "importance": 0.1
+      }
+    ],
+    "roster": []
+  },
+  "North Carolina State Wolfpack": {
+    "injuries": [
+      {
+        "player": "Colt Langdon",
+        "status": "out",
+        "bpr": 1.0,
+        "poss": 0.0,
+        "bpr_share": 0.1,
+        "importance": 0.1
+      }
+    ],
+    "roster": []
+  },
+  "North Carolina": {
+    "injuries": [
+      {
+        "player": "James Brown",
+        "status": "out",
+        "bpr": 1.0,
+        "poss": 0.0,
+        "bpr_share": 0.1,
+        "importance": 0.1
+      },
+      {
+        "player": "Caleb Wilson",
+        "status": "out",
+        "bpr": 8.8165,
+        "poss": 1316.0,
+        "bpr_share": 0.2309,
+        "importance": 0.2309
+      }
+    ],
+    "roster": [
+      {
+        "player": "henri veesaar",
+        "bpr": 9.227,
+        "poss": 1610.0
+      },
+      {
+        "player": "jarin stevenson",
+        "bpr": 4.4043,
+        "poss": 1388.0
+      },
+      {
+        "player": "luka bogavac",
+        "bpr": 3.7684,
+        "poss": 1330.0
+      },
+      {
+        "player": "caleb wilson",
+        "bpr": 8.8165,
+        "poss": 1316.0
+      },
+      {
+        "player": "seth trimble",
+        "bpr": 3.9591,
+        "poss": 1278.0
+      },
+      {
+        "player": "derek dixon",
+        "bpr": 2.971,
+        "poss": 1194.0
+      },
+      {
+        "player": "kyan evans",
+        "bpr": 2.684,
+        "poss": 998.0
+      },
+      {
+        "player": "jonathan powell",
+        "bpr": 2.3606,
+        "poss": 882.0
+      }
+    ]
+  },
+  "North Texas Mean Green": {
+    "injuries": [
+      {
+        "player": "Will McClendon",
+        "status": "out",
+        "bpr": 1.0,
+        "poss": 0.0,
+        "bpr_share": 0.1,
+        "importance": 0.1
+      }
+    ],
+    "roster": []
+  },
+  "Northern Iowa Panthers": {
+    "injuries": [
+      {
+        "player": "Marino Dubravcic",
+        "status": "out",
+        "bpr": 1.0,
+        "poss": 0.0,
+        "bpr_share": 0.1,
+        "importance": 0.1
+      },
+      {
+        "player": "Cade Courbat",
+        "status": "out",
+        "bpr": 1.0,
+        "poss": 0.0,
+        "bpr_share": 0.1,
+        "importance": 0.1
+      }
+    ],
+    "roster": []
+  },
+  "Northwestern": {
+    "injuries": [
+      {
+        "player": "Arrinten Page",
+        "status": "out",
+        "bpr": 3.763,
+        "poss": 1096.0,
+        "bpr_share": 0.136,
+        "importance": 0.136
+      }
+    ],
+    "roster": [
+      {
+        "player": "nick martinelli",
+        "bpr": 5.9582,
+        "poss": 1908.0
+      },
+      {
+        "player": "jayden reid",
+        "bpr": 3.0324,
+        "poss": 1424.0
+      },
+      {
+        "player": "tre singleton",
+        "bpr": 2.5346,
+        "poss": 1376.0
+      },
+      {
+        "player": "angelo ciaravino",
+        "bpr": 3.21,
+        "poss": 1186.0
+      },
+      {
+        "player": "jake west",
+        "bpr": 3.1637,
+        "poss": 1162.0
+      },
+      {
+        "player": "arrinten page",
+        "bpr": 3.763,
+        "poss": 1096.0
+      },
+      {
+        "player": "jordan clayton",
+        "bpr": 2.8224,
+        "poss": 916.0
+      },
+      {
+        "player": "tyler kropp",
+        "bpr": 0.3724,
+        "poss": 586.0
+      },
+      {
+        "player": "max green",
+        "bpr": 1.5975,
+        "poss": 554.0
+      },
+      {
+        "player": "justin mullins",
+        "bpr": 1.2132,
+        "poss": 524.0
+      }
+    ]
+  },
+  "Notre Dame": {
+    "injuries": [
+      {
+        "player": "Markus Burton",
+        "status": "out",
+        "bpr": 5.5921,
+        "poss": 498.0,
+        "bpr_share": 0.2825,
+        "importance": 0.2825
+      },
+      {
+        "player": "Tommy Ahneman",
+        "status": "out",
+        "bpr": 1.0,
+        "poss": 0.0,
+        "bpr_share": 0.1,
+        "importance": 0.1
+      }
+    ],
+    "roster": [
+      {
+        "player": "braeden shrewsberry",
+        "bpr": 3.3729,
+        "poss": 1720.0
+      },
+      {
+        "player": "cole certa",
+        "bpr": 2.4489,
+        "poss": 1419.0
+      },
+      {
+        "player": "carson towt",
+        "bpr": 2.7194,
+        "poss": 1346.0
+      },
+      {
+        "player": "jalen haralson",
+        "bpr": 2.0335,
+        "poss": 1214.0
+      },
+      {
+        "player": "logan imes",
+        "bpr": 0.7554,
+        "poss": 1090.0
+      },
+      {
+        "player": "garrett sundra",
+        "bpr": 1.6411,
+        "poss": 916.0
+      },
+      {
+        "player": "sir mohammed",
+        "bpr": -0.7387,
+        "poss": 847.0
+      },
+      {
+        "player": "brady koehler",
+        "bpr": 1.2306,
+        "poss": 828.0
+      },
+      {
+        "player": "markus burton",
+        "bpr": 5.5921,
+        "poss": 498.0
+      }
+    ]
+  },
+  "Ohio Bobcats": {
+    "injuries": [
+      {
+        "player": "Elijah Elliott",
+        "status": "out",
+        "bpr": 1.0,
+        "poss": 0.0,
+        "bpr_share": 0.1,
+        "importance": 0.1
+      }
+    ],
+    "roster": []
+  },
+  "Ohio State Buckeyes": {
+    "injuries": [
+      {
+        "player": "Josh Ojianwuna",
+        "status": "out",
+        "bpr": 1.0,
+        "poss": 0.0,
+        "bpr_share": 0.1,
+        "importance": 0.1
+      },
+      {
+        "player": "Taison Chatman",
+        "status": "questionable",
+        "bpr": 1.0,
+        "poss": 0.0,
+        "bpr_share": 0.1,
+        "importance": 0.1
+      },
+      {
+        "player": "Myles Herro",
+        "status": "out",
+        "bpr": 1.0,
+        "poss": 0.0,
+        "bpr_share": 0.1,
+        "importance": 0.1
+      }
+    ],
+    "roster": []
+  },
+  "Oklahoma State Cowboys": {
+    "injuries": [
+      {
+        "player": "Parsa Fallah",
+        "status": "out",
+        "bpr": 1.0,
+        "poss": 0.0,
+        "bpr_share": 0.1,
+        "importance": 0.1
+      },
+      {
+        "player": "Andrija Vukovic",
+        "status": "questionable",
+        "bpr": 1.0,
+        "poss": 0.0,
+        "bpr_share": 0.1,
+        "importance": 0.1
+      }
+    ],
+    "roster": []
+  },
+  "Old Dominion Monarchs": {
+    "injuries": [
+      {
+        "player": "Caelum Swanton-Rodger",
+        "status": "questionable",
+        "bpr": 1.0,
+        "poss": 0.0,
+        "bpr_share": 0.1,
+        "importance": 0.1
+      }
+    ],
+    "roster": []
+  },
+  "Ole Miss": {
+    "injuries": [
+      {
+        "player": "Koren Johnson",
+        "status": "questionable",
+        "bpr": 1.0,
+        "poss": 0.0,
+        "bpr_share": 0.1,
+        "importance": 0.1
+      }
+    ],
+    "roster": [
+      {
+        "player": "ilias kamardine",
+        "bpr": 3.4786,
+        "poss": 1862.0
+      },
+      {
+        "player": "aj storr",
+        "bpr": 1.3853,
+        "poss": 1594.0
+      },
+      {
+        "player": "patton pinkins",
+        "bpr": 3.3761,
+        "poss": 1489.0
+      },
+      {
+        "player": "malik dia",
+        "bpr": 3.2643,
+        "poss": 1470.0
+      },
+      {
+        "player": "james scott",
+        "bpr": 4.567,
+        "poss": 1059.0
+      },
+      {
+        "player": "travis perry",
+        "bpr": 2.8135,
+        "poss": 999.0
+      },
+      {
+        "player": "eduardo klafke",
+        "bpr": 3.6186,
+        "poss": 868.0
+      },
+      {
+        "player": "corey chest",
+        "bpr": 3.1374,
+        "poss": 744.0
+      },
+      {
+        "player": "kezza giffa",
+        "bpr": 2.2785,
+        "poss": 740.0
+      },
+      {
+        "player": "augusto cassia",
+        "bpr": 2.3894,
+        "poss": 516.0
+      }
+    ]
+  },
+  "Penn State Nittany Lions": {
+    "injuries": [
+      {
+        "player": "Reggie Grodin",
+        "status": "out",
+        "bpr": 1.0,
+        "poss": 0.0,
+        "bpr_share": 0.1,
+        "importance": 0.1
+      },
+      {
+        "player": "Tibor Mirtic",
+        "status": "out",
+        "bpr": 1.0,
+        "poss": 0.0,
+        "bpr_share": 0.1,
+        "importance": 0.1
+      }
+    ],
+    "roster": []
+  },
+  "Pennsylvania Quakers": {
+    "injuries": [
+      {
+        "player": "Ethan Roberts",
+        "status": "out",
+        "bpr": 1.0,
+        "poss": 0.0,
+        "bpr_share": 0.1,
+        "importance": 0.1
+      },
+      {
+        "player": "Dylan Williams",
+        "status": "out",
+        "bpr": 1.0,
+        "poss": 0.0,
+        "bpr_share": 0.1,
+        "importance": 0.1
+      },
+      {
+        "player": "Ryan Altman",
+        "status": "out",
+        "bpr": 1.0,
+        "poss": 0.0,
+        "bpr_share": 0.1,
+        "importance": 0.1
+      }
+    ],
+    "roster": []
+  },
+  "Portland Pilots": {
+    "injuries": [
+      {
+        "player": "Riley Parker",
+        "status": "out",
+        "bpr": 1.0,
+        "poss": 0.0,
+        "bpr_share": 0.1,
+        "importance": 0.1
+      },
+      {
+        "player": "Timo George",
+        "status": "out",
+        "bpr": 1.0,
+        "poss": 0.0,
+        "bpr_share": 0.1,
+        "importance": 0.1
+      }
+    ],
+    "roster": []
+  },
+  "Princeton": {
+    "injuries": [
+      {
+        "player": "Jack Stanton",
+        "status": "out",
+        "bpr": 1.6006,
+        "poss": 1136.0,
+        "bpr_share": 0.4336,
+        "importance": 0.4336
+      }
+    ],
+    "roster": [
+      {
+        "player": "jackson hicke",
+        "bpr": 2.0706,
+        "poss": 1560.0
+      },
+      {
+        "player": "landon clark",
+        "bpr": -0.187,
+        "poss": 1314.0
+      },
+      {
+        "player": "malik abdullahi",
+        "bpr": -0.8363,
+        "poss": 1214.0
+      },
+      {
+        "player": "jack stanton",
+        "bpr": 1.6006,
+        "poss": 1136.0
+      },
+      {
+        "player": "jacob huggins",
+        "bpr": 0.0205,
+        "poss": 986.0
+      },
+      {
+        "player": "dalen davis",
+        "bpr": -1.1586,
+        "poss": 886.0
+      },
+      {
+        "player": "cj happy",
+        "bpr": -2.4296,
+        "poss": 702.0
+      },
+      {
+        "player": "sebastian whitfield",
+        "bpr": -3.7902,
+        "poss": 565.0
+      }
+    ]
+  },
+  "Providence": {
+    "injuries": [
+      {
+        "player": "Rich Barron",
+        "status": "out",
+        "bpr": 1.0,
+        "poss": 0.0,
+        "bpr_share": 0.1,
+        "importance": 0.1
+      },
+      {
+        "player": "Jason Edwards",
+        "status": "questionable",
+        "bpr": 2.9878,
+        "poss": 1122.0,
+        "bpr_share": 0.1288,
+        "importance": 0.1288
+      },
+      {
+        "player": "Daquan Davis",
+        "status": "out",
+        "bpr": 1.0,
+        "poss": 0.0,
+        "bpr_share": 0.1,
+        "importance": 0.1
+      },
+      {
+        "player": "Jaylen Harrell",
+        "status": "out",
+        "bpr": 1.0,
+        "poss": 0.0,
+        "bpr_share": 0.1,
+        "importance": 0.1
+      }
+    ],
+    "roster": [
+      {
+        "player": "stefan vaaks",
+        "bpr": 3.4904,
+        "poss": 1781.0
+      },
+      {
+        "player": "jaylin sellers",
+        "bpr": 3.8568,
+        "poss": 1776.0
+      },
+      {
+        "player": "ryan mela",
+        "bpr": 2.8172,
+        "poss": 1542.0
+      },
+      {
+        "player": "oswin erhunmwunse",
+        "bpr": 4.3751,
+        "poss": 1496.0
+      },
+      {
+        "player": "jamier jones",
+        "bpr": 3.4285,
+        "poss": 1443.0
+      },
+      {
+        "player": "jason edwards",
+        "bpr": 2.9878,
+        "poss": 1122.0
+      },
+      {
+        "player": "corey floyd, jr.",
+        "bpr": 2.2324,
+        "poss": 1107.0
+      },
+      {
+        "player": "cole hargrove",
+        "bpr": -0.1603,
+        "poss": 665.0
+      },
+      {
+        "player": "duncan powell",
+        "bpr": -0.6635,
+        "poss": 661.0
+      }
+    ]
+  },
+  "Rhode Island Rams": {
+    "injuries": [
+      {
+        "player": "Mouhamed Sow",
+        "status": "out",
+        "bpr": 1.0,
+        "poss": 0.0,
+        "bpr_share": 0.1,
+        "importance": 0.1
+      },
+      {
+        "player": "Moek Icke",
+        "status": "out",
+        "bpr": 1.0,
+        "poss": 0.0,
+        "bpr_share": 0.1,
+        "importance": 0.1
+      },
+      {
+        "player": "Jaymien Aponte",
+        "status": "questionable",
+        "bpr": 1.0,
+        "poss": 0.0,
+        "bpr_share": 0.1,
+        "importance": 0.1
+      },
+      {
+        "player": "Javon Perry",
+        "status": "questionable",
+        "bpr": 1.0,
+        "poss": 0.0,
+        "bpr_share": 0.1,
+        "importance": 0.1
+      }
+    ],
+    "roster": []
+  },
+  "Rice Owls": {
+    "injuries": [
+      {
+        "player": "Dallas Hobbs",
+        "status": "questionable",
+        "bpr": 1.0,
+        "poss": 0.0,
+        "bpr_share": 0.1,
+        "importance": 0.1
+      },
+      {
+        "player": "Aaron Powell",
+        "status": "out",
+        "bpr": 1.0,
+        "poss": 0.0,
+        "bpr_share": 0.1,
+        "importance": 0.1
+      }
+    ],
+    "roster": []
+  },
+  "Richmond Spiders": {
+    "injuries": [
+      {
+        "player": "Bryson McGlothin",
+        "status": "questionable",
+        "bpr": 1.0,
+        "poss": 0.0,
+        "bpr_share": 0.1,
+        "importance": 0.1
+      }
+    ],
+    "roster": []
+  },
+  "Rutgers Scarlet Knights": {
+    "injuries": [
+      {
+        "player": "Baye Fall",
+        "status": "out",
+        "bpr": 1.0,
+        "poss": 0.0,
+        "bpr_share": 0.1,
+        "importance": 0.1
+      },
+      {
+        "player": "Dorian Jones",
+        "status": "out",
+        "bpr": 1.0,
+        "poss": 0.0,
+        "bpr_share": 0.1,
+        "importance": 0.1
+      }
+    ],
+    "roster": []
+  },
+  "Saint Mary's": {
+    "injuries": [
+      {
+        "player": "Kevin Gad",
+        "status": "out",
+        "bpr": 1.0,
+        "poss": 0.0,
+        "bpr_share": 0.1,
+        "importance": 0.1
+      }
+    ],
+    "roster": [
+      {
+        "player": "joshua dent",
+        "bpr": 5.7733,
+        "poss": 1870.0
+      },
+      {
+        "player": "paulius murauskas",
+        "bpr": 7.2057,
+        "poss": 1676.0
+      },
+      {
+        "player": "dillan shaw",
+        "bpr": 4.0654,
+        "poss": 1410.0
+      },
+      {
+        "player": "mikey lewis",
+        "bpr": 5.8378,
+        "poss": 1374.0
+      },
+      {
+        "player": "andrew mckeever",
+        "bpr": 3.9332,
+        "poss": 1192.0
+      },
+      {
+        "player": "harry wessels",
+        "bpr": 3.109,
+        "poss": 834.0
+      },
+      {
+        "player": "liam campbell",
+        "bpr": 2.1257,
+        "poss": 754.0
+      },
+      {
+        "player": "rory hawke",
+        "bpr": -1.1958,
+        "poss": 540.0
+      }
+    ]
+  },
+  "Sam Houston Bearkats": {
+    "injuries": [
+      {
+        "player": "Isaiah Manning",
+        "status": "out",
+        "bpr": 1.0,
+        "poss": 0.0,
+        "bpr_share": 0.1,
+        "importance": 0.1
+      },
+      {
+        "player": "Po'Boigh King",
+        "status": "questionable",
+        "bpr": 1.0,
+        "poss": 0.0,
+        "bpr_share": 0.1,
+        "importance": 0.1
+      },
+      {
+        "player": "Justin Begg",
+        "status": "out",
+        "bpr": 1.0,
+        "poss": 0.0,
+        "bpr_share": 0.1,
+        "importance": 0.1
+      },
+      {
+        "player": "Jaxson Ford",
+        "status": "out",
+        "bpr": 1.0,
+        "poss": 0.0,
+        "bpr_share": 0.1,
+        "importance": 0.1
+      },
+      {
+        "player": "Noah Benny",
+        "status": "out",
+        "bpr": 1.0,
+        "poss": 0.0,
+        "bpr_share": 0.1,
+        "importance": 0.1
+      },
+      {
+        "player": "Nathan Nguyen",
+        "status": "out",
+        "bpr": 1.0,
+        "poss": 0.0,
+        "bpr_share": 0.1,
+        "importance": 0.1
+      }
+    ],
+    "roster": []
+  },
+  "Santa Clara Broncos": {
+    "injuries": [
+      {
+        "player": "Gehrig Normand",
+        "status": "out",
+        "bpr": 1.0,
+        "poss": 0.0,
+        "bpr_share": 0.1,
+        "importance": 0.1
+      },
+      {
+        "player": "Chris Tadjo",
+        "status": "out",
+        "bpr": 1.0,
+        "poss": 0.0,
+        "bpr_share": 0.1,
+        "importance": 0.1
+      }
+    ],
+    "roster": []
+  },
+  "Seton Hall": {
+    "injuries": [
+      {
+        "player": "Patrick Suemnick",
+        "status": "out",
+        "bpr": 1.0,
+        "poss": 0.0,
+        "bpr_share": 0.1,
+        "importance": 0.1
+      },
+      {
+        "player": "Godswill Erheriene",
+        "status": "out",
+        "bpr": 1.0,
+        "poss": 0.0,
+        "bpr_share": 0.1,
+        "importance": 0.1
+      },
+      {
+        "player": "Jahseem Felton",
+        "status": "out",
+        "bpr": 1.0,
+        "poss": 0.0,
+        "bpr_share": 0.1,
+        "importance": 0.1
+      }
+    ],
+    "roster": [
+      {
+        "player": "adam clark",
+        "bpr": 5.4407,
+        "poss": 1704.0
+      },
+      {
+        "player": "a.j. staton-mccray",
+        "bpr": 4.0508,
+        "poss": 1534.0
+      },
+      {
+        "player": "tajuan simpkins",
+        "bpr": 3.8218,
+        "poss": 1359.0
+      },
+      {
+        "player": "elijah fisher",
+        "bpr": 3.0122,
+        "poss": 1158.0
+      },
+      {
+        "player": "mike williams iii",
+        "bpr": 1.7968,
+        "poss": 1152.0
+      },
+      {
+        "player": "stephon payne iii",
+        "bpr": 3.0365,
+        "poss": 1126.0
+      },
+      {
+        "player": "najai hines",
+        "bpr": 5.1701,
+        "poss": 900.0
+      },
+      {
+        "player": "trey parker",
+        "bpr": 2.5943,
+        "poss": 792.0
+      },
+      {
+        "player": "josh rivera",
+        "bpr": 1.4759,
+        "poss": 568.0
+      },
+      {
+        "player": "jacob dar",
+        "bpr": 0.437,
+        "poss": 512.0
+      }
+    ]
+  },
+  "Siena Saints": {
+    "injuries": [
+      {
+        "player": "Reid Ducharme",
+        "status": "out",
+        "bpr": 1.0,
+        "poss": 0.0,
+        "bpr_share": 0.1,
+        "importance": 0.1
+      },
+      {
+        "player": "Tasman Goodrick",
+        "status": "out",
+        "bpr": 1.0,
+        "poss": 0.0,
+        "bpr_share": 0.1,
+        "importance": 0.1
+      },
+      {
+        "player": "Antonio Chandler",
+        "status": "out",
+        "bpr": 1.0,
+        "poss": 0.0,
+        "bpr_share": 0.1,
+        "importance": 0.1
+      },
+      {
+        "player": "Owen Schlager",
+        "status": "out",
+        "bpr": 1.0,
+        "poss": 0.0,
+        "bpr_share": 0.1,
+        "importance": 0.1
+      }
+    ],
+    "roster": []
+  },
+  "South Alabama Jaguars": {
+    "injuries": [
+      {
+        "player": "Peyton Law",
+        "status": "out",
+        "bpr": 1.0,
+        "poss": 0.0,
+        "bpr_share": 0.1,
+        "importance": 0.1
+      }
+    ],
+    "roster": []
+  },
+  "South Dakota Coyotes": {
+    "injuries": [
+      {
+        "player": "Josiah Dotzler",
+        "status": "out",
+        "bpr": 1.0,
+        "poss": 0.0,
+        "bpr_share": 0.1,
+        "importance": 0.1
+      }
+    ],
+    "roster": []
+  },
+  "South Florida Bulls": {
+    "injuries": [
+      {
+        "player": "Xavier Brown",
+        "status": "out",
+        "bpr": 1.0,
+        "poss": 0.0,
+        "bpr_share": 0.1,
+        "importance": 0.1
+      },
+      {
+        "player": "De'Ante Green",
+        "status": "out",
+        "bpr": 1.0,
+        "poss": 0.0,
+        "bpr_share": 0.1,
+        "importance": 0.1
+      }
+    ],
+    "roster": []
+  },
+  "Southern Methodist Mustangs": {
+    "injuries": [
+      {
+        "player": "B.J. Edwards",
+        "status": "probable",
+        "bpr": 1.0,
+        "poss": 0.0,
+        "bpr_share": 0.1,
+        "importance": 0.1
+      }
+    ],
+    "roster": []
+  },
+  "St. Bonaventure": {
+    "injuries": [
+      {
+        "player": "Amar'e Marshall",
+        "status": "out",
+        "bpr": 1.0,
+        "poss": 0.0,
+        "bpr_share": 0.1,
+        "importance": 0.1
+      },
+      {
+        "player": "Xander Wedlow",
+        "status": "out",
+        "bpr": 1.0,
+        "poss": 0.0,
+        "bpr_share": 0.1,
+        "importance": 0.1
+      },
+      {
+        "player": "Ilia Ermakov",
+        "status": "out",
+        "bpr": 1.0,
+        "poss": 0.0,
+        "bpr_share": 0.1,
+        "importance": 0.1
+      }
+    ],
+    "roster": [
+      {
+        "player": "darryl simmons ii",
+        "bpr": 2.1632,
+        "poss": 2010.0
+      },
+      {
+        "player": "frank mitchell",
+        "bpr": 3.3424,
+        "poss": 1909.0
+      },
+      {
+        "player": "dasonte bowen",
+        "bpr": 1.7564,
+        "poss": 1900.0
+      },
+      {
+        "player": "cayden charles",
+        "bpr": 2.852,
+        "poss": 1881.0
+      },
+      {
+        "player": "daniel egbuniwe",
+        "bpr": 0.1879,
+        "poss": 1200.0
+      },
+      {
+        "player": "joseph grahovac",
+        "bpr": 0.8445,
+        "poss": 988.0
+      },
+      {
+        "player": "andrew osasuyi",
+        "bpr": 2.6449,
+        "poss": 614.0
+      }
+    ]
+  },
+  "St. John's": {
+    "injuries": [
+      {
+        "player": "Casper Pohto",
+        "status": "out",
+        "bpr": 1.0,
+        "poss": 0.0,
+        "bpr_share": 0.1,
+        "importance": 0.1
+      },
+      {
+        "player": "Imran Suljanovic",
+        "status": "out",
+        "bpr": 1.0,
+        "poss": 0.0,
+        "bpr_share": 0.1,
+        "importance": 0.1
+      }
+    ],
+    "roster": [
+      {
+        "player": "zuby ejiofor",
+        "bpr": 9.9533,
+        "poss": 1790.0
+      },
+      {
+        "player": "oziyah sellers",
+        "bpr": 4.4305,
+        "poss": 1749.0
+      },
+      {
+        "player": "bryce hopkins",
+        "bpr": 6.0748,
+        "poss": 1723.0
+      },
+      {
+        "player": "dillon mitchell",
+        "bpr": 7.7358,
+        "poss": 1652.0
+      },
+      {
+        "player": "joson sanon",
+        "bpr": 0.9992,
+        "poss": 1292.0
+      },
+      {
+        "player": "dylan darling",
+        "bpr": 6.6227,
+        "poss": 1197.0
+      },
+      {
+        "player": "ian jackson",
+        "bpr": 3.9631,
+        "poss": 1098.0
+      },
+      {
+        "player": "rub\u00e9n prey",
+        "bpr": 3.832,
+        "poss": 637.0
+      }
+    ]
+  },
+  "Stanford Cardinal": {
+    "injuries": [
+      {
+        "player": "Chisom Okpara",
+        "status": "questionable",
+        "bpr": 1.0,
+        "poss": 0.0,
+        "bpr_share": 0.1,
+        "importance": 0.1
+      },
+      {
+        "player": "Anthony Batson",
+        "status": "questionable",
+        "bpr": 1.0,
+        "poss": 0.0,
+        "bpr_share": 0.1,
+        "importance": 0.1
+      },
+      {
+        "player": "Tallis Toure",
+        "status": "questionable",
+        "bpr": 1.0,
+        "poss": 0.0,
+        "bpr_share": 0.1,
+        "importance": 0.1
+      },
+      {
+        "player": "Kristers Skrinda",
+        "status": "questionable",
+        "bpr": 1.0,
+        "poss": 0.0,
+        "bpr_share": 0.1,
+        "importance": 0.1
+      }
+    ],
+    "roster": []
+  },
+  "Stetson Hatters": {
+    "injuries": [
+      {
+        "player": "Jamie Phillips",
+        "status": "questionable",
+        "bpr": 1.0,
+        "poss": 0.0,
+        "bpr_share": 0.1,
+        "importance": 0.1
+      }
+    ],
+    "roster": []
+  },
+  "Syracuse Orange": {
+    "injuries": [
+      {
+        "player": "Aaron Womack",
+        "status": "out",
+        "bpr": 1.0,
+        "poss": 0.0,
+        "bpr_share": 0.1,
+        "importance": 0.1
+      }
+    ],
+    "roster": []
+  },
+  "Temple Owls": {
+    "injuries": [
+      {
+        "player": "AJ Smith",
+        "status": "out",
+        "bpr": 1.0,
+        "poss": 0.0,
+        "bpr_share": 0.1,
+        "importance": 0.1
+      }
+    ],
+    "roster": []
+  },
+  "Tennessee": {
+    "injuries": [
+      {
+        "player": "Cade Phillips",
+        "status": "out",
+        "bpr": 1.0,
+        "poss": 0.0,
+        "bpr_share": 0.1,
+        "importance": 0.1
+      }
+    ],
+    "roster": [
+      {
+        "player": "ja'kobi gillespie",
+        "bpr": 10.1959,
+        "poss": 1917.0
+      },
+      {
+        "player": "nate ament",
+        "bpr": 7.7506,
+        "poss": 1566.0
+      },
+      {
+        "player": "felix okpara",
+        "bpr": 4.187,
+        "poss": 1382.0
+      },
+      {
+        "player": "bishop boswell",
+        "bpr": 4.4655,
+        "poss": 1296.0
+      },
+      {
+        "player": "jaylen carey",
+        "bpr": 4.1419,
+        "poss": 1026.0
+      },
+      {
+        "player": "j.p. estrella",
+        "bpr": 6.0124,
+        "poss": 864.0
+      },
+      {
+        "player": "dewayne brown ii",
+        "bpr": 3.0155,
+        "poss": 804.0
+      },
+      {
+        "player": "amari evans",
+        "bpr": 3.5408,
+        "poss": 738.0
+      },
+      {
+        "player": "ethan burg",
+        "bpr": 2.5463,
+        "poss": 468.0
+      }
+    ]
+  },
+  "Texas A&M": {
+    "injuries": [
+      {
+        "player": "Mackenzie Mgbako",
+        "status": "out",
+        "bpr": 1.0,
+        "poss": 0.0,
+        "bpr_share": 0.1,
+        "importance": 0.1
+      }
+    ],
+    "roster": [
+      {
+        "player": "rashaun agee",
+        "bpr": 6.6241,
+        "poss": 1542.0
+      },
+      {
+        "player": "rylan griffen",
+        "bpr": 5.3094,
+        "poss": 1434.0
+      },
+      {
+        "player": "ruben dominguez",
+        "bpr": 4.2799,
+        "poss": 1349.0
+      },
+      {
+        "player": "marcus hill",
+        "bpr": 3.8378,
+        "poss": 1342.0
+      },
+      {
+        "player": "pop isaacs",
+        "bpr": 2.7822,
+        "poss": 1251.0
+      },
+      {
+        "player": "jacari lane",
+        "bpr": 4.5638,
+        "poss": 1130.0
+      },
+      {
+        "player": "zach clemence",
+        "bpr": 2.8573,
+        "poss": 962.0
+      },
+      {
+        "player": "ali dibba",
+        "bpr": 3.6464,
+        "poss": 891.0
+      },
+      {
+        "player": "josh holloway",
+        "bpr": 1.9902,
+        "poss": 780.0
+      },
+      {
+        "player": "federiko federiko",
+        "bpr": 3.3568,
+        "poss": 496.0
+      }
+    ]
+  },
+  "Texas": {
+    "injuries": [
+      {
+        "player": "Lassina Traore",
+        "status": "out",
+        "bpr": 1.6685,
+        "poss": 584.0,
+        "bpr_share": 0.0492,
+        "importance": 0.0492
+      }
+    ],
+    "roster": [
+      {
+        "player": "dailyn swain",
+        "bpr": 8.2297,
+        "poss": 1721.0
+      },
+      {
+        "player": "jordan pope",
+        "bpr": 4.6848,
+        "poss": 1516.0
+      },
+      {
+        "player": "tramon mark",
+        "bpr": 4.5108,
+        "poss": 1464.0
+      },
+      {
+        "player": "matas vokietaitis",
+        "bpr": 4.8664,
+        "poss": 1385.0
+      },
+      {
+        "player": "camden heide",
+        "bpr": 2.8489,
+        "poss": 1190.0
+      },
+      {
+        "player": "chendall weaver",
+        "bpr": 3.4156,
+        "poss": 1093.0
+      },
+      {
+        "player": "simeon wilcher",
+        "bpr": 3.6784,
+        "poss": 1050.0
+      },
+      {
+        "player": "lassina traore",
+        "bpr": 1.6685,
+        "poss": 584.0
+      },
+      {
+        "player": "nic codie",
+        "bpr": -0.6551,
+        "poss": 475.0
+      }
+    ]
+  },
+  "Texas Tech Red Raiders": {
+    "injuries": [
+      {
+        "player": "LeJuan Watts",
+        "status": "questionable",
+        "bpr": 1.0,
+        "poss": 0.0,
+        "bpr_share": 0.1,
+        "importance": 0.1
+      },
+      {
+        "player": "JT Toppin",
+        "status": "out",
+        "bpr": 1.0,
+        "poss": 0.0,
+        "bpr_share": 0.1,
+        "importance": 0.1
+      },
+      {
+        "player": "LaTrell Hoover",
+        "status": "out",
+        "bpr": 1.0,
+        "poss": 0.0,
+        "bpr_share": 0.1,
+        "importance": 0.1
+      }
+    ],
+    "roster": []
+  },
+  "UCLA Bruins": {
+    "injuries": [
+      {
+        "player": "Tyler Bilodeau",
+        "status": "questionable",
+        "bpr": 1.0,
+        "poss": 0.0,
+        "bpr_share": 0.1,
+        "importance": 0.1
+      },
+      {
+        "player": "Evan Manjikian",
+        "status": "out",
+        "bpr": 1.0,
+        "poss": 0.0,
+        "bpr_share": 0.1,
+        "importance": 0.1
+      },
+      {
+        "player": "Donovan Dent",
+        "status": "probable",
+        "bpr": 1.0,
+        "poss": 0.0,
+        "bpr_share": 0.1,
+        "importance": 0.1
+      }
+    ],
+    "roster": []
+  },
+  "UMBC Retrievers": {
+    "injuries": [
+      {
+        "player": "Devin Ceaser",
+        "status": "out",
+        "bpr": 1.0,
+        "poss": 0.0,
+        "bpr_share": 0.1,
+        "importance": 0.1
+      },
+      {
+        "player": "Regimantas Ciunys",
+        "status": "out",
+        "bpr": 1.0,
+        "poss": 0.0,
+        "bpr_share": 0.1,
+        "importance": 0.1
+      },
+      {
+        "player": "Daylon Dickerson",
+        "status": "out",
+        "bpr": 1.0,
+        "poss": 0.0,
+        "bpr_share": 0.1,
+        "importance": 0.1
+      },
+      {
+        "player": "Jake Stout",
+        "status": "out",
+        "bpr": 1.0,
+        "poss": 0.0,
+        "bpr_share": 0.1,
+        "importance": 0.1
+      }
+    ],
+    "roster": []
+  },
+  "UNC Wilmington Seahawks": {
+    "injuries": [
+      {
+        "player": "Gavin Walsh",
+        "status": "questionable",
+        "bpr": 1.0,
+        "poss": 0.0,
+        "bpr_share": 0.1,
+        "importance": 0.1
+      }
+    ],
+    "roster": []
+  },
+  "UNLV": {
+    "injuries": [
+      {
+        "player": "Ladji Dembele",
+        "status": "out",
+        "bpr": 1.0,
+        "poss": 0.0,
+        "bpr_share": 0.1,
+        "importance": 0.1
+      },
+      {
+        "player": "Myles Che",
+        "status": "out",
+        "bpr": 1.0,
+        "poss": 0.0,
+        "bpr_share": 0.1,
+        "importance": 0.1
+      }
+    ],
+    "roster": [
+      {
+        "player": "dra gibbs-lawhorn",
+        "bpr": 3.9441,
+        "poss": 1950.0
+      },
+      {
+        "player": "kimani hamilton",
+        "bpr": 3.9959,
+        "poss": 1635.0
+      },
+      {
+        "player": "howie fleming jr.",
+        "bpr": 2.888,
+        "poss": 1549.0
+      },
+      {
+        "player": "tyrin jones",
+        "bpr": 2.1618,
+        "poss": 1374.0
+      },
+      {
+        "player": "issac williamson",
+        "bpr": -1.2086,
+        "poss": 1212.0
+      },
+      {
+        "player": "walter brown",
+        "bpr": 0.36,
+        "poss": 1050.0
+      },
+      {
+        "player": "jacob bannarbie",
+        "bpr": 1.698,
+        "poss": 802.0
+      },
+      {
+        "player": "al green",
+        "bpr": -0.2474,
+        "poss": 621.0
+      },
+      {
+        "player": "emmanuel stephen",
+        "bpr": -2.1135,
+        "poss": 571.0
+      },
+      {
+        "player": "naas cunningham",
+        "bpr": -1.3216,
+        "poss": 488.0
+      }
+    ]
+  },
+  "UTSA Roadrunners": {
+    "injuries": [
+      {
+        "player": "Pierce Spencer",
+        "status": "out",
+        "bpr": 1.0,
+        "poss": 0.0,
+        "bpr_share": 0.1,
+        "importance": 0.1
+      },
+      {
+        "player": "Mo Njie",
+        "status": "questionable",
+        "bpr": 1.0,
+        "poss": 0.0,
+        "bpr_share": 0.1,
+        "importance": 0.1
+      },
+      {
+        "player": "Stanley Borden",
+        "status": "questionable",
+        "bpr": 1.0,
+        "poss": 0.0,
+        "bpr_share": 0.1,
+        "importance": 0.1
+      },
+      {
+        "player": "Austin Nunez",
+        "status": "questionable",
+        "bpr": 1.0,
+        "poss": 0.0,
+        "bpr_share": 0.1,
+        "importance": 0.1
+      },
+      {
+        "player": "Macaleab Rich",
+        "status": "out",
+        "bpr": 1.0,
+        "poss": 0.0,
+        "bpr_share": 0.1,
+        "importance": 0.1
+      },
+      {
+        "player": "Vasean Allette",
+        "status": "out",
+        "bpr": 1.0,
+        "poss": 0.0,
+        "bpr_share": 0.1,
+        "importance": 0.1
+      }
+    ],
+    "roster": []
+  },
+  "Utah Valley": {
+    "injuries": [
+      {
+        "player": "Tyler Hendricks",
+        "status": "questionable",
+        "bpr": 2.7351,
+        "poss": 1334.0,
+        "bpr_share": 0.141,
+        "importance": 0.141
+      }
+    ],
+    "roster": [
+      {
+        "player": "trevan leonhardt",
+        "bpr": 5.1221,
+        "poss": 1844.0
+      },
+      {
+        "player": "jackson holcombe",
+        "bpr": 5.9846,
+        "poss": 1612.0
+      },
+      {
+        "player": "tyler hendricks",
+        "bpr": 2.7351,
+        "poss": 1334.0
+      },
+      {
+        "player": "braden housley",
+        "bpr": -0.623,
+        "poss": 1162.0
+      },
+      {
+        "player": "isaac davis",
+        "bpr": 3.0294,
+        "poss": 1013.0
+      },
+      {
+        "player": "noah taitz",
+        "bpr": -0.4502,
+        "poss": 904.0
+      },
+      {
+        "player": "hayden welling",
+        "bpr": -2.1323,
+        "poss": 878.0
+      },
+      {
+        "player": "sherman weatherspoon iv",
+        "bpr": -1.7288,
+        "poss": 766.0
+      },
+      {
+        "player": "isaac hawkins",
+        "bpr": 2.5243,
+        "poss": 710.0
+      }
+    ]
+  },
+  "Vanderbilt": {
+    "injuries": [
+      {
+        "player": "Frankie Collins",
+        "status": "out",
+        "bpr": 1.0,
+        "poss": 0.0,
+        "bpr_share": 0.1,
+        "importance": 0.1
+      }
+    ],
+    "roster": [
+      {
+        "player": "tyler tanner",
+        "bpr": 9.8794,
+        "poss": 1936.0
+      },
+      {
+        "player": "tyler nickel",
+        "bpr": 5.9476,
+        "poss": 1786.0
+      },
+      {
+        "player": "ak okereke",
+        "bpr": 5.7926,
+        "poss": 1502.0
+      },
+      {
+        "player": "devin mcglockton",
+        "bpr": 5.9272,
+        "poss": 1466.0
+      },
+      {
+        "player": "duke miles",
+        "bpr": 8.4313,
+        "poss": 1308.0
+      },
+      {
+        "player": "jalen washington",
+        "bpr": 5.0882,
+        "poss": 1211.0
+      },
+      {
+        "player": "chandler bing",
+        "bpr": -0.2725,
+        "poss": 816.0
+      },
+      {
+        "player": "tyler harris",
+        "bpr": 3.3873,
+        "poss": 700.0
+      }
+    ]
+  },
+  "Villanova": {
+    "injuries": [
+      {
+        "player": "Zion Stanford",
+        "status": "out",
+        "bpr": 1.0,
+        "poss": 0.0,
+        "bpr_share": 0.1,
+        "importance": 0.1
+      },
+      {
+        "player": "Wade Chiddick",
+        "status": "out",
+        "bpr": 1.0,
+        "poss": 0.0,
+        "bpr_share": 0.1,
+        "importance": 0.1
+      },
+      {
+        "player": "Matthew Hodge",
+        "status": "out",
+        "bpr": 3.6252,
+        "poss": 1332.0,
+        "bpr_share": 0.1185,
+        "importance": 0.1185
+      }
+    ],
+    "roster": [
+      {
+        "player": "acaden lewis",
+        "bpr": 5.2068,
+        "poss": 1627.0
+      },
+      {
+        "player": "duke brennan",
+        "bpr": 6.1763,
+        "poss": 1583.0
+      },
+      {
+        "player": "tyler perkins",
+        "bpr": 5.6054,
+        "poss": 1580.0
+      },
+      {
+        "player": "bryce lindsay",
+        "bpr": 3.369,
+        "poss": 1512.0
+      },
+      {
+        "player": "matt hodge",
+        "bpr": 3.6252,
+        "poss": 1332.0
+      },
+      {
+        "player": "devin askew",
+        "bpr": 4.2899,
+        "poss": 1226.0
+      },
+      {
+        "player": "malachi palmer",
+        "bpr": 2.3152,
+        "poss": 978.0
+      }
+    ]
+  },
+  "Washington State": {
+    "injuries": [
+      {
+        "player": "Tomas Thrastarson",
+        "status": "out",
+        "bpr": 0.7761,
+        "poss": 729.0,
+        "bpr_share": 0.0699,
+        "importance": 0.0699
+      },
+      {
+        "player": "Kase Wynott",
+        "status": "out",
+        "bpr": 1.0,
+        "poss": 0.0,
+        "bpr_share": 0.1,
+        "importance": 0.1
+      }
+    ],
+    "roster": [
+      {
+        "player": "ace glass lll",
+        "bpr": 3.1551,
+        "poss": 1566.0
+      },
+      {
+        "player": "eemeli yalaho",
+        "bpr": 0.9031,
+        "poss": 1530.0
+      },
+      {
+        "player": "jerone morton",
+        "bpr": 0.9832,
+        "poss": 1329.0
+      },
+      {
+        "player": "nd okafor",
+        "bpr": 1.9132,
+        "poss": 1244.0
+      },
+      {
+        "player": "rihards vavers",
+        "bpr": 1.2784,
+        "poss": 1218.0
+      },
+      {
+        "player": "adria rodriguez",
+        "bpr": 0.6905,
+        "poss": 1050.0
+      },
+      {
+        "player": "simon hildebrandt",
+        "bpr": 0.6979,
+        "poss": 778.0
+      },
+      {
+        "player": "tomas thrastarson",
+        "bpr": 0.7761,
+        "poss": 729.0
+      },
+      {
+        "player": "emmanuel ugbo",
+        "bpr": -1.8992,
+        "poss": 668.0
+      },
+      {
+        "player": "parker gerrits",
+        "bpr": 0.7008,
+        "poss": 482.0
+      }
+    ]
+  },
+  "Weber State": {
+    "injuries": [],
+    "roster": [
+      {
+        "player": "tijan saine jr.",
+        "bpr": 2.4488,
+        "poss": 1756.0
+      },
+      {
+        "player": "viljami vartiainen",
+        "bpr": 1.136,
+        "poss": 1342.0
+      },
+      {
+        "player": "malek gomma",
+        "bpr": 0.8236,
+        "poss": 1340.0
+      },
+      {
+        "player": "nigel burris",
+        "bpr": -0.4491,
+        "poss": 1256.0
+      },
+      {
+        "player": "edwin suarez jr.",
+        "bpr": 0.328,
+        "poss": 1154.0
+      },
+      {
+        "player": "trevor hennig",
+        "bpr": -1.3247,
+        "poss": 1054.0
+      },
+      {
+        "player": "jace whiting",
+        "bpr": -0.2389,
+        "poss": 1045.0
+      },
+      {
+        "player": "ardarius grayson",
+        "bpr": -1.3884,
+        "poss": 622.0
+      },
+      {
+        "player": "duce paschal",
+        "bpr": -1.1071,
+        "poss": 594.0
+      }
+    ]
+  },
+  "West Georgia Wolves": {
+    "injuries": [
+      {
+        "player": "Chas Lewless",
+        "status": "out",
+        "bpr": 1.0,
+        "poss": 0.0,
+        "bpr_share": 0.1,
+        "importance": 0.1
+      }
+    ],
+    "roster": []
+  },
+  "Western Kentucky Hilltoppers": {
+    "injuries": [
+      {
+        "player": "Bryant Selebangue",
+        "status": "out",
+        "bpr": 1.0,
+        "poss": 0.0,
+        "bpr_share": 0.1,
+        "importance": 0.1
+      },
+      {
+        "player": "Louie Semona",
+        "status": "out",
+        "bpr": 1.0,
+        "poss": 0.0,
+        "bpr_share": 0.1,
+        "importance": 0.1
+      },
+      {
+        "player": "Lawson Rice",
+        "status": "out",
+        "bpr": 1.0,
+        "poss": 0.0,
+        "bpr_share": 0.1,
+        "importance": 0.1
+      }
+    ],
+    "roster": []
+  },
+  "Wichita State Shockers": {
+    "injuries": [
+      {
+        "player": "Jaret Valencia",
+        "status": "out",
+        "bpr": 1.0,
+        "poss": 0.0,
+        "bpr_share": 0.1,
+        "importance": 0.1
+      },
+      {
+        "player": "Pierre Couisnard",
+        "status": "out",
+        "bpr": 1.0,
+        "poss": 0.0,
+        "bpr_share": 0.1,
+        "importance": 0.1
+      },
+      {
+        "player": "Tyrus Rathan-Mayes",
+        "status": "out",
+        "bpr": 1.0,
+        "poss": 0.0,
+        "bpr_share": 0.1,
+        "importance": 0.1
+      }
+    ],
+    "roster": []
+  },
+  "Wisconsin Badgers": {
+    "injuries": [
+      {
+        "player": "Jack Janicki",
+        "status": "questionable",
+        "bpr": 1.0,
+        "poss": 0.0,
+        "bpr_share": 0.1,
+        "importance": 0.1
+      },
+      {
+        "player": "Nolan Winter",
+        "status": "questionable",
+        "bpr": 1.0,
+        "poss": 0.0,
+        "bpr_share": 0.1,
+        "importance": 0.1
+      }
+    ],
+    "roster": []
+  },
+  "Wyoming Cowboys": {
+    "injuries": [
+      {
+        "player": "Matija Belic",
+        "status": "out",
+        "bpr": 1.0,
+        "poss": 0.0,
+        "bpr_share": 0.1,
+        "importance": 0.1
+      },
+      {
+        "player": "Jared Harris",
+        "status": "questionable",
+        "bpr": 1.0,
+        "poss": 0.0,
+        "bpr_share": 0.1,
+        "importance": 0.1
+      }
+    ],
+    "roster": []
+  },
+  "Xavier": {
+    "injuries": [
+      {
+        "player": "Michael Wolf",
+        "status": "questionable",
+        "bpr": 1.0,
+        "poss": 0.0,
+        "bpr_share": 0.1,
+        "importance": 0.1
+      },
+      {
+        "player": "Gabriel Pozzato",
+        "status": "out",
+        "bpr": 1.0,
+        "poss": 0.0,
+        "bpr_share": 0.1,
+        "importance": 0.1
+      },
+      {
+        "player": "Luke Naser",
+        "status": "out",
+        "bpr": 1.0,
+        "poss": 0.0,
+        "bpr_share": 0.1,
+        "importance": 0.1
+      }
+    ],
+    "roster": [
+      {
+        "player": "malik messina-moore",
+        "bpr": 2.4036,
+        "poss": 1957.0
+      },
+      {
+        "player": "filip borovicanin",
+        "bpr": 4.6768,
+        "poss": 1838.0
+      },
+      {
+        "player": "tre carroll",
+        "bpr": 4.1659,
+        "poss": 1830.0
+      },
+      {
+        "player": "jovan milicevic",
+        "bpr": 2.2789,
+        "poss": 1558.0
+      },
+      {
+        "player": "roddie anderson iii",
+        "bpr": 0.8925,
+        "poss": 1398.0
+      },
+      {
+        "player": "all wright",
+        "bpr": 1.9823,
+        "poss": 1296.0
+      },
+      {
+        "player": "isaiah walker",
+        "bpr": 1.2868,
+        "poss": 950.0
+      },
+      {
+        "player": "anthony robinson",
+        "bpr": -0.8312,
+        "poss": 462.0
+      },
+      {
+        "player": "pape n'diaye",
+        "bpr": 0.5205,
+        "poss": 461.0
+      }
+    ]
+  }
 }

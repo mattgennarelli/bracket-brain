@@ -126,15 +126,24 @@ def load_injuries(year):
 
 def merge_injuries(merged, injuries_data):
     """Overlay injuries onto merged teams. Matches by normalized team name.
+    Handles both old format {team: [list]} and new format {team: {"injuries": [...], "roster": [...]}}.
     Precomputes injury_impact for engine efficiency."""
     if not injuries_data:
         return
     merged_keys = set(merged.keys())
-    for team_name, inj_list in injuries_data.items():
+    for team_name, val in injuries_data.items():
         key = _find_torvik_key(team_name, merged_keys) or normalize_team(team_name)
-        if key in merged and isinstance(inj_list, list):
-            merged[key]["injuries"] = inj_list
-            merged[key]["injury_impact"] = calc_injury_penalty(merged[key], DEFAULT_CONFIG)
+        if key not in merged:
+            continue
+        # Normalise old list format
+        if isinstance(val, list):
+            inj_list, roster = val, []
+        else:
+            inj_list = val.get("injuries", [])
+            roster = val.get("roster", [])
+        merged[key]["injuries"] = inj_list
+        merged[key]["roster"] = roster
+        merged[key]["injury_impact"] = calc_injury_penalty(merged[key], DEFAULT_CONFIG)
 
 
 def load_momentum(year):

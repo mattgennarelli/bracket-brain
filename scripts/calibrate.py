@@ -317,7 +317,7 @@ PARAM_SPEC = [
     ("sos_max_bonus", 0.0, 8.0),
     ("possession_edge_max_bonus", 0.0, 8.0),
     ("ft_clutch_max_bonus", 0.0, 6.0),
-    ("experience_max_bonus", 0.0, 4.0),
+    ("experience_max_bonus", 0.0, 8.0),  # widened: optimizer hit 4.0 ceiling
     ("coach_tourney_max_bonus", 0.0, 6.0),
     ("pedigree_max_bonus", 0.0, 6.0),
     ("three_pt_volatility_factor", 0.0, 3.0),
@@ -348,7 +348,7 @@ PARAM_SPEC = [
     ("late_round_dampening", 0.0, 0.35),
     # Close-game upset tolerance
     ("upset_spread_threshold", 2.0, 8.0),
-    ("upset_tolerance_max_bonus", 0.0, 5.0),
+    ("upset_tolerance_max_bonus", 0.0, 8.0),  # widened: optimizer hit 5.0 ceiling
     ("close_game_stdev_boost", 0.0, 0.3),
     # NOTE: injury_penalty_per_level is intentionally NOT calibrated here.
     # We have no historical injury data to train against (only 2026 injuries exist),
@@ -373,7 +373,7 @@ PARAM_SPEC_PHASE2 = [
     ("round_stdev_inflation_ff", 1.0, 1.30),
     ("late_round_dampening", 0.0, 0.35),
     ("upset_spread_threshold", 2.0, 8.0),
-    ("upset_tolerance_max_bonus", 0.0, 5.0),
+    ("upset_tolerance_max_bonus", 0.0, 8.0),  # widened: optimizer hit 5.0 ceiling
     ("close_game_stdev_boost", 0.0, 0.3),
 ]
 
