@@ -57,7 +57,7 @@ class ModelConfig:
     pedigree_max_bonus: float = 1.0
     preseason_max_bonus: float = 1.5
     proximity_max_bonus: float = 2.0
-    proximity_distance_threshold: float = 500
+    proximity_distance_threshold: float = 2500  # miles; neutral point for signed bonus/penalty
     momentum_max_bonus: float = 1.5
     star_player_max_bonus: float = 1.5
     size_max_bonus: float = 1.0
@@ -185,9 +185,12 @@ def calc_proximity_bonus(team, game_site=None, config=DEFAULT_CONFIG):
     if game_site is None or "location" not in team:
         return 0.0
     distance = _haversine(team["location"][0], team["location"][1], game_site[0], game_site[1])
-    if distance >= config.proximity_distance_threshold:
-        return 0.0
-    return (1.0 - distance / config.proximity_distance_threshold) * config.proximity_max_bonus
+    # Signed score: positive within threshold (home-ish), negative beyond (long trip).
+    # predict_game differences the two teams' bonuses, so the NET relative advantage
+    # is captured — e.g. Arizona at 1100mi vs Alabama at 2200mi gives Arizona +benefit
+    # even though neither team is "close" in absolute terms.
+    score = 1.0 - distance / config.proximity_distance_threshold
+    return max(-config.proximity_max_bonus, min(config.proximity_max_bonus, score * config.proximity_max_bonus))
 
 def calc_momentum_bonus(team, config=DEFAULT_CONFIG):
     if "momentum" in team:
