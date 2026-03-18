@@ -1055,6 +1055,19 @@ def enrich_team(team):
         t["coach_tourney_score"] = COACH_SCORES.get(t.get("coach",""), 0.3)
     if "pedigree_score" not in t:
         t["pedigree_score"] = PEDIGREE.get(t["team"], 0.15)
+    # Attach school lat/lon for proximity calculations (needed by /analyze endpoint)
+    if "location" not in t:
+        locs = _load_school_locations()
+        tname = t.get("team", "")
+        if tname in locs:
+            t["location"] = locs[tname]
+        else:
+            # Fallback: try normalized or case-insensitive match
+            tname_lower = tname.lower()
+            for k, v in locs.items():
+                if k.lower() == tname_lower or _normalize_team_for_match(k) == _normalize_team_for_match(tname):
+                    t["location"] = v
+                    break
     if "three_rate" not in t:
         t["three_rate"] = 0.35
     if "three_pct" not in t:
