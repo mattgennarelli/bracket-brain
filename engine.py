@@ -2045,6 +2045,8 @@ def _make_pick_dict(game_num, round_of, round_name, region, a, b, result, pick_t
         "head_to_head": h2h,
         "upset_alert": upset_alert,
     }
+    d["stats_a"]["injury_impact"] = round(abs(result["factors_a"].get("injuries", 0)), 1)
+    d["stats_b"]["injury_impact"] = round(abs(result["factors_b"].get("injuries", 0)), 1)
     return d
 
 
