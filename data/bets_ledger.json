@@ -157,5 +157,79 @@
       "settled_at": null
     }
   ],
-  "stats": {}
+  "stats": {
+    "total_picks": 7,
+    "settled": 0,
+    "wins": 0,
+    "losses": 0,
+    "pushes": 0,
+    "hit_rate": null,
+    "by_type": {
+      "ml": {
+        "picks": 0,
+        "wins": 0,
+        "losses": 0,
+        "pushes": 0,
+        "net_units": 0.0,
+        "total_wagered": 0.0,
+        "hit_rate": null,
+        "roi_pct": null
+      },
+      "spread": {
+        "picks": 0,
+        "wins": 0,
+        "losses": 0,
+        "pushes": 0,
+        "net_units": 0.0,
+        "total_wagered": 0.0,
+        "hit_rate": null,
+        "roi_pct": null
+      },
+      "total": {
+        "picks": 0,
+        "wins": 0,
+        "losses": 0,
+        "pushes": 0,
+        "net_units": 0.0,
+        "total_wagered": 0.0,
+        "hit_rate": null,
+        "roi_pct": null
+      }
+    },
+    "by_stars": {
+      "\u2605": {
+        "picks": 0,
+        "wins": 0,
+        "losses": 0,
+        "pushes": 0,
+        "net_units": 0.0,
+        "total_wagered": 0.0,
+        "hit_rate": null,
+        "roi_pct": null
+      },
+      "\u2605\u2605": {
+        "picks": 0,
+        "wins": 0,
+        "losses": 0,
+        "pushes": 0,
+        "net_units": 0.0,
+        "total_wagered": 0.0,
+        "hit_rate": null,
+        "roi_pct": null
+      },
+      "\u2605\u2605\u2605": {
+        "picks": 0,
+        "wins": 0,
+        "losses": 0,
+        "pushes": 0,
+        "net_units": 0.0,
+        "total_wagered": 0.0,
+        "hit_rate": null,
+        "roi_pct": null
+      }
+    },
+    "total_wagered": 0.0,
+    "net_units": 0.0,
+    "roi_pct": 0.0
+  }
 }
