@@ -544,13 +544,38 @@ def _compute_objective(metrics, objective_name="brier", baseline_accuracy=None, 
 
 FLOOR_PARAMS = {"possession_edge_max_bonus", "conf_rating_max_bonus"}
 
+# ---------------------------------------------------------------------------
+# L2 regularization — penalise parameters that drift far from defaults
+# ---------------------------------------------------------------------------
+
+def _compute_l2_penalty(x, param_spec, reg_lambda):
+    """L2 penalty: λ × Σ((x_i - default_i) / range_i)².
+
+    Each parameter's deviation is normalised by its allowed range so that
+    narrow-range params (score_scale: 0.12 span) and wide-range params
+    (experience: 8.0 span) are penalised on the same scale.
+    """
+    if reg_lambda <= 0:
+        return 0.0
+    defaults = {n: getattr(ModelConfig(), n) for n, _, _ in param_spec}
+    total = 0.0
+    for i, (name, lo, hi) in enumerate(param_spec):
+        span = hi - lo
+        if span <= 0:
+            continue
+        default_val = defaults.get(name, (lo + hi) / 2)
+        deviation = (x[i] - default_val) / span
+        total += deviation * deviation
+    return reg_lambda * total
+
 
 def calibrate_single(pairs, param_spec, objective_name="brier", maxiter=60, popsize=12, seed=42,
-                    init_values=None, min_floor=0.0):
+                    init_values=None, min_floor=0.0, reg_lambda=0.0):
     """Optimize params on given pairs. Returns (optimized_dict, config).
 
     If init_values is provided (or calibrated_config.json exists), use as first DE population member.
     If min_floor > 0, apply as lower bound for possession_edge_max_bonus and conf_rating_max_bonus.
+    If reg_lambda > 0, add L2 regularisation penalty to prevent parameter drift from defaults.
     """
     import random
     from scipy.optimize import differential_evolution
@@ -568,6 +593,7 @@ def calibrate_single(pairs, param_spec, objective_name="brier", maxiter=60, pops
             baseline_acc[0] = metrics["accuracy"]
         eval_count[0] += 1
         score = _compute_objective(metrics, objective_name, baseline_acc[0])
+        score += _compute_l2_penalty(x, param_spec, reg_lambda)
         if score < best_score[0]:
             best_score[0] = score
             if eval_count[0] % 50 == 0:
@@ -616,7 +642,7 @@ def calibrate_single(pairs, param_spec, objective_name="brier", maxiter=60, pops
     return optimized, config
 
 
-def calibrate_phase2_only(pairs, objective_name="brier", maxiter=60, popsize=12, seed=42):
+def calibrate_phase2_only(pairs, objective_name="brier", maxiter=60, popsize=12, seed=42, reg_lambda=0.0):
     """Optimize only Phase 2 + upset params, starting from current calibrated_config."""
     from scipy.optimize import differential_evolution
 
@@ -642,6 +668,7 @@ def calibrate_phase2_only(pairs, objective_name="brier", maxiter=60, popsize=12,
             baseline_acc[0] = metrics["accuracy"]
         eval_count[0] += 1
         score = _compute_objective(metrics, objective_name, baseline_acc[0])
+        score += _compute_l2_penalty(x, PARAM_SPEC_PHASE2, reg_lambda)
         if score < best_score[0]:
             best_score[0] = score
             if eval_count[0] % 50 == 0:
@@ -677,7 +704,7 @@ def calibrate_phase2_only(pairs, objective_name="brier", maxiter=60, popsize=12,
 
 
 def _compute_cv_score(pairs_by_year, param_spec, x, objective_name, test_years, baseline_acc_ref,
-                      games=None, brier_f4_weights=(0.6, 0.4)):
+                      games=None, brier_f4_weights=(0.6, 0.4), reg_lambda=0.0):
     """Evaluate param vector x on walk-forward CV. Returns (score, cv_brier).
     Lower is better.
     For objective brier+f4: score = w1*cv_brier + w2*bracket_quality_penalty.
@@ -700,19 +727,22 @@ def _compute_cv_score(pairs_by_year, param_spec, x, objective_name, test_years, 
     cv_brier = sum(briers) / len(briers) if briers else 1e9
     base_score = sum(scores) / len(scores) if scores else 1e9
 
+    # Add L2 regularization penalty (applied once, not per-fold)
+    l2 = _compute_l2_penalty(x, param_spec, reg_lambda)
+
     if objective_name == "brier+f4" and games:
         w1, w2 = brier_f4_weights[0], brier_f4_weights[1]
         bracket_years = [y for y in test_years if os.path.isfile(os.path.join(DATA_DIR, f"bracket_{y}.json"))]
         if bracket_years:
             bq_penalty = _compute_bracket_quality_for_config(config, bracket_years, games, DATA_DIR, num_sims=500)
             combined = w1 * cv_brier + w2 * bq_penalty
-            return combined, cv_brier
-    return base_score, cv_brier
+            return combined + l2, cv_brier
+    return base_score + l2, cv_brier
 
 
 def calibrate_walk_forward(pairs, objective_name="brier", maxiter=100, popsize=16, seed=42,
                           use_cv_objective=True, early_stop_iter=0, min_floor=0.0,
-                          games=None, brier_f4_weights=(0.6, 0.4)):
+                          games=None, brier_f4_weights=(0.6, 0.4), reg_lambda=0.0):
     """Walk-forward: optimize to minimize CV Brier (or train Brier if use_cv_objective=False).
     Reduce params; return final config.
     If min_floor > 0, apply as lower bound for possession_edge_max_bonus and conf_rating_max_bonus.
@@ -723,7 +753,7 @@ def calibrate_walk_forward(pairs, objective_name="brier", maxiter=100, popsize=1
     years = sorted(pairs_by_year.keys())
     if len(years) < 3:
         print("  Not enough years for walk-forward; falling back to single calibration.")
-        return calibrate_single(pairs, PARAM_SPEC, objective_name, maxiter, popsize, seed, min_floor=min_floor)
+        return calibrate_single(pairs, PARAM_SPEC, objective_name, maxiter, popsize, seed, min_floor=min_floor, reg_lambda=reg_lambda)
 
     test_years = [y for y in sorted(pairs_by_year.keys()) if y >= 2017]
     defaults = {name: getattr(ModelConfig(), name) for name, _, _ in PARAM_SPEC}
@@ -743,7 +773,7 @@ def calibrate_walk_forward(pairs, objective_name="brier", maxiter=100, popsize=1
         def objective(x):
             score, cv_brier = _compute_cv_score(
                 pairs_by_year, PARAM_SPEC, x, objective_name, test_years, baseline_acc_ref[0],
-                games=games, brier_f4_weights=brier_f4_weights
+                games=games, brier_f4_weights=brier_f4_weights, reg_lambda=reg_lambda
             )
             eval_count[0] += 1
             if baseline_acc_ref[0] is None:
@@ -771,7 +801,7 @@ def calibrate_walk_forward(pairs, objective_name="brier", maxiter=100, popsize=1
             if not train_pairs or not test_pairs:
                 continue
             print(f"\n--- Fold: train on years < {test_year}, test on {test_year} ({len(test_pairs)} games) ---")
-            opt, _ = calibrate_single(train_pairs, PARAM_SPEC, objective_name, maxiter, popsize, seed)
+            opt, _ = calibrate_single(train_pairs, PARAM_SPEC, objective_name, maxiter, popsize, seed, reg_lambda=reg_lambda)
             config = ModelConfig(num_sims=1)
             for k, v in opt.items():
                 setattr(config, k, v)
@@ -803,7 +833,8 @@ def calibrate_walk_forward(pairs, objective_name="brier", maxiter=100, popsize=1
     print(f"\n--- Final calibration on {len(all_train)} games (all years except {max(years)}) ---")
     init_vals = optimized if use_cv_objective else None
     optimized, config = calibrate_single(
-        all_train, reduced_spec, objective_name, maxiter, popsize, seed, init_values=init_vals, min_floor=min_floor
+        all_train, reduced_spec, objective_name, maxiter, popsize, seed, init_values=init_vals, min_floor=min_floor,
+        reg_lambda=reg_lambda
     )
 
     # M1: Drop params that hit bounds
@@ -911,6 +942,7 @@ def main():
     use_cv_objective = "--no-cv" not in sys.argv
     save_report_path = None
     min_floor = 0.0
+    reg_lambda = 0.002  # default L2 regularization strength (prevents overfitting)
     brier_f4_weights = (0.6, 0.4)
     for i, arg in enumerate(sys.argv):
         if arg == "--save-report" and i + 1 < len(sys.argv):
@@ -941,6 +973,13 @@ def main():
                 multi_start = int(sys.argv[i + 1])
             except ValueError:
                 pass
+        elif arg == "--regularization" and i + 1 < len(sys.argv):
+            try:
+                reg_lambda = float(sys.argv[i + 1])
+            except ValueError:
+                pass
+        elif arg == "--no-regularization":
+            reg_lambda = 0.0
         elif arg == "--brier-f4-weights" and i + 1 < len(sys.argv):
             parts = sys.argv[i + 1].split(",")
             if len(parts) >= 2:
@@ -966,6 +1005,8 @@ def main():
     print("Building game pairs (matching teams to stats)...")
     pairs = build_game_pairs(games, teams_by_year)
     print(f"  {len(pairs)} matchable games")
+    if reg_lambda > 0:
+        print(f"  L2 regularization: λ={reg_lambda}")
 
     # Score with baseline (calibrated_config.json if exists, else engine defaults)
     cal_path = os.path.join(DATA_DIR, "calibrated_config.json")
@@ -992,7 +1033,7 @@ def main():
         for run, s in enumerate(seeds):
             if multi_start > 1:
                 print(f"\n  Multi-start run {run + 1}/{multi_start} (seed={s})")
-            opt, cfg = calibrate_phase2_only(pairs, objective_name, maxiter, popsize, s)
+            opt, cfg = calibrate_phase2_only(pairs, objective_name, maxiter, popsize, s, reg_lambda=reg_lambda)
             m = score_model(pairs, cfg)
             sc = _compute_objective(m, objective_name)
             if sc < best_score:
@@ -1009,7 +1050,7 @@ def main():
             opt, cfg = calibrate_walk_forward(
                 pairs, objective_name, maxiter, popsize, s, use_cv_objective=use_cv_objective, min_floor=min_floor,
                 games=games if objective_name == "brier+f4" else None,
-                brier_f4_weights=brier_f4_weights
+                brier_f4_weights=brier_f4_weights, reg_lambda=reg_lambda
             )
             pairs_by_year = _pairs_by_year(pairs)
             test_years = [y for y in sorted(pairs_by_year.keys()) if y >= 2017]

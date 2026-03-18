@@ -488,9 +488,18 @@ def get_bets_today():
 @app.get("/bets/history")
 def get_bets_history():
     if not os.path.isfile(LEDGER_PATH):
-        return {"picks": [], "stats": {}}
+        return {"picks": [], "stats": {}, "model_epoch": None}
     with open(LEDGER_PATH) as f:
-        return json.load(f)
+        data = json.load(f)
+    # Attach model_epoch: the date calibrated_config.json was last written.
+    # Picks generated before this date used a different (possibly worse) model.
+    cal_path = os.path.join(DATA_DIR, "calibrated_config.json")
+    if os.path.isfile(cal_path):
+        epoch_ts = os.path.getmtime(cal_path)
+        data["model_epoch"] = datetime.fromtimestamp(epoch_ts, tz=timezone.utc).strftime("%Y-%m-%d")
+    else:
+        data["model_epoch"] = None
+    return data
 
 
 @app.get("/bets/scores")

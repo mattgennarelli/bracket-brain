@@ -95,8 +95,10 @@ def main():
         return
 
     # Annotate each pick with date + pending result
+    now_iso = datetime.now(timezone.utc).isoformat()
     for pick in bets:
         pick["date"] = today
+        pick["generated_at"] = now_iso   # when this pick was saved (for model epoch filtering)
         pick["result"] = None          # null = pending
         pick["actual_score_home"] = None
         pick["actual_score_away"] = None

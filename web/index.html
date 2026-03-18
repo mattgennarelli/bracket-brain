@@ -341,7 +341,7 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sa
 .filter-btn { background:var(--surface2); border:1px solid var(--border); border-radius:5px;
   padding:2px 8px; font-size:.7rem; color:var(--muted); cursor:pointer; }
 .filter-btn.active { background:var(--primary); border-color:var(--primary); color:#fff; }
-.picks-stats-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(120px,1fr));
+.picks-stats-grid { display:grid; grid-template-columns:repeat(4,1fr);
   gap:12px; margin-bottom:16px; }
 .stat-card { background:var(--surface2); border:1px solid var(--border); border-radius:8px;
   padding:12px 14px; }
@@ -464,6 +464,7 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sa
   .odds-section { padding:0 0 20px; }
   .picks-panel { border-radius:0; margin:0; border-left:none; border-right:none; }
   .picks-stats-grid { grid-template-columns:repeat(2,1fr); }
+  .stat-card .sc-value { font-size:1.1rem; }
 }
 </style>
 </head>
@@ -544,6 +545,7 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sa
   <div class="odds-section">
     <div class="picks-panel" id="picks-panel">
       <div id="picks-stats-cards" class="picks-stats-grid"></div>
+      <div id="picks-meta-row"></div>
       <div class="picks-header">
         <h3 id="picks-section-title">Today's Picks</h3>
         <span class="hit-rate-badge" id="hit-rate-badge"></span>
@@ -1676,6 +1678,7 @@ document.addEventListener('keydown', e => { if (e.key === 'Escape') closeAnalysi
 // ---------------------------------------------------------------------------
 let _picksLoaded = false;
 let _cardLoaded = false;
+let _picksLoadedDate = null; // ET date when picks were last loaded
 function switchTab(name) {
   document.querySelectorAll('.tab-btn').forEach((b, i) => {
     const names = ['bracket','odds','picks','card'];
@@ -1683,7 +1686,15 @@ function switchTab(name) {
   });
   document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
   document.getElementById('tab-' + name).classList.add('active');
-  if (name === 'picks' && !_picksLoaded) { loadPicks(); _picksLoaded = true; }
+  if (name === 'picks') {
+    const todayET = _todayET();
+    // Reload if never loaded, or if date rolled over since last load
+    if (!_picksLoaded || _picksLoadedDate !== todayET) {
+      loadPicks();
+      _picksLoaded = true;
+      _picksLoadedDate = todayET;
+    }
+  }
   if (name === 'card' && !_cardLoaded) { loadCard(); _cardLoaded = true; }
 }
 
@@ -1691,9 +1702,16 @@ function switchTab(name) {
 // Picks tab
 // ---------------------------------------------------------------------------
 let _picksScoresInterval = null;
+let _picksFullRefreshInterval = null;
 
-async function loadPicks() {
-  document.getElementById('picks-today-body').innerHTML = '<div class="picks-empty">Loading...</div>';
+// Return today's date in ET regardless of browser timezone
+function _todayET() {
+  return new Date().toLocaleDateString('en-CA', { timeZone: 'America/New_York' });
+}
+
+async function loadPicks(silent = false) {
+  if (!silent)
+    document.getElementById('picks-today-body').innerHTML = '<div class="picks-empty">Loading...</div>';
   try {
     const [todayData, historyData, benchmarkData, scoresData] = await Promise.all([
       apiFetch('/bets/today').catch(() => ({ picks: [], available: false })),
@@ -1702,26 +1720,37 @@ async function loadPicks() {
       apiFetch('/bets/scores').catch(() => ({ scores: {} })),
     ]);
     renderPicks(todayData, historyData, scoresData?.scores || {});
-    renderBenchmark(benchmarkData);
-    _startPicksScoresPoll(todayData, historyData);
+    if (!silent) renderBenchmark(benchmarkData);
+    _startPicksPoll();
   } catch (e) {
-    document.getElementById('picks-today-body').innerHTML =
-      '<div class="picks-empty">Picks unavailable</div>';
+    if (!silent)
+      document.getElementById('picks-today-body').innerHTML =
+        '<div class="picks-empty">Picks unavailable</div>';
   }
 }
 
-function _startPicksScoresPoll(todayData, historyData) {
+function _startPicksPoll() {
   if (_picksScoresInterval) clearInterval(_picksScoresInterval);
-  const pending = (todayData?.picks || []).filter(p => !p.result);
-  if (pending.length === 0) return;
+  if (_picksFullRefreshInterval) clearInterval(_picksFullRefreshInterval);
+
+  // Fast poll: refresh scores every 90s
   _picksScoresInterval = setInterval(async () => {
-    if (document.getElementById('tab-picks')?.classList?.contains('active')) {
-      try {
-        const scoresData = await apiFetch('/bets/scores').catch(() => ({ scores: {} }));
-        renderPicks(todayData, historyData, scoresData?.scores || {});
-      } catch (_) {}
-    }
+    if (!document.getElementById('tab-picks')?.classList?.contains('active')) return;
+    try {
+      const [todayData, historyData, scoresData] = await Promise.all([
+        apiFetch('/bets/today').catch(() => ({ picks: [], available: false })),
+        apiFetch('/bets/history').catch(() => ({ picks: [], stats: {} })),
+        apiFetch('/bets/scores').catch(() => ({ scores: {} })),
+      ]);
+      renderPicks(todayData, historyData, scoresData?.scores || {});
+    } catch (_) {}
   }, 90000);
+
+  // Slow poll: full refresh every 5 min (picks up newly settled results)
+  _picksFullRefreshInterval = setInterval(() => {
+    if (document.getElementById('tab-picks')?.classList?.contains('active'))
+      loadPicks(true);
+  }, 300000);
 }
 
 // ---------------------------------------------------------------------------
@@ -2051,6 +2080,30 @@ function _pickRowHtml(p, showDate, scoreOverlay) {
   </div>`;
 }
 
+// Compute stats for an array of picks (reusable for filtered subsets)
+function _computePickStats(picks) {
+  const settled = picks.filter(p => p.result === 'W' || p.result === 'L');
+  const wins = settled.filter(p => p.result === 'W').length;
+  const losses = settled.filter(p => p.result === 'L').length;
+  const pushes = picks.filter(p => p.result === 'P').length;
+  let net = 0, wagered = 0;
+  settled.forEach(p => {
+    const ku = p.kelly_units || 1;
+    const dec = p.bet_odds != null
+      ? (p.bet_odds > 0 ? p.bet_odds/100+1 : 100/Math.abs(p.bet_odds)+1)
+      : 1.909;
+    if (p.result === 'W') { net += ku * (dec - 1); wagered += ku; }
+    else { net -= ku; wagered += ku; }
+  });
+  return {
+    wins, losses, pushes, decided: settled.length,
+    hit_rate: settled.length ? wins / settled.length : null,
+    net_units: net,
+    total_wagered: wagered,
+    roi_pct: wagered ? net / wagered * 100 : null,
+  };
+}
+
 function renderPicks(todayData, historyData, scores) {
   scores = scores || {};
   const todayBody = document.getElementById('picks-today-body');
@@ -2060,83 +2113,88 @@ function renderPicks(todayData, historyData, scores) {
   const histBody = document.getElementById('picks-history-body');
   const sectionTitle = document.getElementById('picks-section-title');
 
-  const allPicks = historyData.picks || [];
-  const stats = historyData.stats || {};
-  const decided = (stats.wins || 0) + (stats.losses || 0);
+  const allPicksRaw = historyData.picks || [];
+  const modelEpoch = historyData.model_epoch || null; // YYYY-MM-DD when last calibration ran
 
-  // Stats cards
+  // Only show picks generated after the current model epoch (calibration date).
+  // Picks with no generated_at fall back to their date field for comparison.
+  const validPicks = modelEpoch
+    ? allPicksRaw.filter(p => {
+        const pickTs = p.generated_at || (p.date ? p.date + 'T23:59:59Z' : null);
+        return !pickTs || pickTs >= modelEpoch;
+      })
+    : allPicksRaw;
+  // allPicks = what we display everywhere (only valid picks)
+  const allPicks = validPicks;
+
+  // Compute stats on valid picks only
+  const stats = _computePickStats(validPicks);
+
+  // Stats cards — just the 4 core metrics, clean layout
   const hr = stats.hit_rate;
   const roi = stats.roi_pct;
   const netU = stats.net_units;
   const wagered = stats.total_wagered;
   const cards = [
-    { label: 'Hit Rate', value: decided ? `${(hr*100).toFixed(0)}%` : '—', sub: `${decided} decided`, color: decided?(hr>=.55?'var(--green)':hr<.45?'var(--red)':''):'' },
-    { label: 'Record', value: `${stats.wins||0}W-${stats.losses||0}L`, sub: `${stats.pushes||0} push${(stats.pushes||0)!==1?'es':''}` },
-    { label: 'Net Units', value: wagered ? `${netU>=0?'+':''}${netU.toFixed(1)}u` : '—', sub: wagered ? `${wagered.toFixed(1)}u wagered` : 'no settled picks', color: wagered?(netU>0?'var(--green)':netU<0?'var(--red)':''):'' },
-    { label: 'ROI', value: wagered ? `${roi>=0?'+':''}${roi.toFixed(1)}%` : '—', sub: 'on settled picks', color: wagered?(roi>0?'var(--green)':roi<0?'var(--red)':''):'' },
-    { label: 'Total Picks', value: allPicks.length, sub: `${allPicks.filter(p=>!p.result).length} pending` },
+    { label: 'Hit Rate', value: stats.decided ? `${(hr*100).toFixed(0)}%` : '—',
+      sub: `${stats.decided} decided`, color: stats.decided?(hr>=.55?'var(--green)':hr<.45?'var(--red)':''):'' },
+    { label: 'Record', value: `${stats.wins}W‑${stats.losses}L`,
+      sub: stats.pushes ? `${stats.pushes} push` : `${validPicks.filter(p=>!p.result).length} pending` },
+    { label: 'Net Units', value: wagered ? `${netU>=0?'+':''}${netU.toFixed(1)}u` : '—',
+      sub: wagered ? `${wagered.toFixed(1)}u wagered` : 'no settled picks',
+      color: wagered?(netU>0?'var(--green)':netU<0?'var(--red)':''):'' },
+    { label: 'ROI', value: wagered ? `${roi>=0?'+':''}${roi.toFixed(1)}%` : '—',
+      sub: 'on settled picks',
+      color: wagered?(roi>0?'var(--green)':roi<0?'var(--red)':''):'' },
   ];
-  const byType = stats.by_type || {};
-  Object.entries(byType).filter(([,s])=>s.picks>0).forEach(([bt,s]) => {
-    const roi = s.roi_pct != null ? `${s.roi_pct >= 0 ? '+' : ''}${s.roi_pct.toFixed(1)}%` : '—';
-    const hr  = s.hit_rate != null ? `${(s.hit_rate*100).toFixed(0)}%` : '?';
-    cards.push({
-      label: bt.toUpperCase(),
-      value: roi,
-      sub: `${s.wins}W-${s.losses}L (${hr} hit)`,
-      color: s.roi_pct != null ? (s.roi_pct > 0 ? 'var(--green)' : s.roi_pct < 0 ? 'var(--red)' : '') : '',
-    });
+
+  // Per-type breakdown as a secondary row (not separate cards)
+  const byType = {};
+  validPicks.forEach(p => {
+    const bt = p.bet_type || 'ml';
+    if (!byType[bt]) byType[bt] = [];
+    byType[bt].push(p);
   });
-  // Per-star-tier: odds-weighted ROI (not just hit rate)
-  [3,2,1].forEach(n => {
-    const starLabel = '★'.repeat(n);
-    const tier = allPicks.filter(p => (p.stars||'').replace(/[^★]/g,'').length === n);
-    const settled = tier.filter(p => p.result === 'W' || p.result === 'L');
-    if (tier.length === 0) return;
-    let net = 0, wagered = 0;
-    settled.forEach(p => {
-      const ku = p.kelly_units || 1;
-      const dec = p.bet_odds != null
-        ? (p.bet_odds > 0 ? p.bet_odds/100+1 : 100/Math.abs(p.bet_odds)+1)
-        : 1.909;
-      if (p.result === 'W') { net += ku * (dec - 1); wagered += ku; }
-      else { net -= ku; wagered += ku; }
-    });
-    const roi = wagered ? net / wagered * 100 : null;
-    const winsN = settled.filter(p => p.result === 'W').length;
-    cards.push({
-      label: starLabel,
-      value: wagered ? `${roi >= 0 ? '+' : ''}${roi.toFixed(1)}% ROI` : '—',
-      sub: `${winsN}W-${settled.length-winsN}L / ${tier.length} picks`,
-      color: wagered ? (roi > 0 ? 'var(--green)' : roi < 0 ? 'var(--red)' : '') : '',
-    });
-  });
+  const typeChips = Object.entries(byType).map(([bt, ps]) => {
+    const s = _computePickStats(ps);
+    const roi = s.roi_pct != null ? `${s.roi_pct>=0?'+':''}${s.roi_pct.toFixed(0)}% ROI` : '—';
+    const color = s.roi_pct != null ? (s.roi_pct > 0 ? 'var(--green)' : s.roi_pct < 0 ? 'var(--red)' : 'var(--muted)') : 'var(--muted)';
+    return `<span style="font-size:.72rem;color:var(--muted)">${bt.toUpperCase()} <strong style="color:${color}">${roi}</strong> (${s.wins}W‑${s.losses}L)</span>`;
+  }).join('<span style="color:var(--border);margin:0 6px">·</span>');
+
   statsCards.innerHTML = cards.map(c => `<div class="stat-card">
     <div class="sc-label">${c.label}</div>
     <div class="sc-value" style="${c.color ? `color:${c.color}` : ''}">${c.value}</div>
     <div class="sc-sub">${c.sub}</div>
   </div>`).join('');
 
+  // Type breakdown row (compact secondary stats)
+  const metaEl = document.getElementById('picks-meta-row');
+  if (metaEl) {
+    metaEl.innerHTML = typeChips
+      ? `<div style="display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin:-4px 0 14px;padding:8px 12px;background:var(--surface2);border-radius:6px;border:1px solid var(--border)">${typeChips}</div>`
+      : '';
+  }
+
   // Hit rate badge
-  if (decided) {
-    badge.textContent = `${(hr*100).toFixed(0)}% (${stats.wins}W-${stats.losses}L)`;
+  if (stats.decided) {
+    badge.textContent = `${(hr*100).toFixed(0)}% (${stats.wins}W‑${stats.losses}L)`;
     badge.className = 'hit-rate-badge ' + (hr >= .55 ? 'good' : hr < .45 ? 'bad' : '');
   } else {
-    badge.textContent = 'No results yet';
+    badge.textContent = modelEpoch ? `Since ${modelEpoch}` : 'No results yet';
     badge.className = 'hit-rate-badge';
   }
 
-  // Today's picks
-  const today = new Date().toLocaleDateString('en-CA');
+  // Today's picks — use ET timezone
+  const today = _todayET();
   const todayPicks = todayData.picks || [];
-  sectionTitle.textContent = `Today's Picks (${today})`;
+  sectionTitle.textContent = `Today's Picks — ${_formatHistoryDate(today)}`;
   if (!todayData.available || todayPicks.length === 0) {
     todayBody.innerHTML = '<div class="picks-empty">No picks for today. Run <code>python scripts/save_bets.py</code> each morning before games tip.</div>';
   } else {
     todayBody.innerHTML = todayPicks.map(p => {
       const key = `${p.home_team}|${p.away_team}`;
-      const keyFlip = `${p.away_team}|${p.home_team}`;
-      const scoreOverlay = scores[key] || scores[keyFlip];
+      const scoreOverlay = scores[key] || scores[`${p.away_team}|${p.home_team}`];
       return _pickRowHtml(p, false, scoreOverlay);
     }).join('');
   }
@@ -2149,12 +2207,11 @@ function renderPicks(todayData, historyData, scores) {
     picksBadge.style.display = 'inline';
   }
 
-  // Full history (all settled + pending, grouped by date, newest first)
+  // Full history (all picks, grouped by date, newest first)
   if (allPicks.length > 0) {
     histSection.style.display = 'block';
-    const sorted = [...allPicks].reverse();
     const byDate = {};
-    sorted.forEach(p => {
+    [...allPicks].reverse().forEach(p => {
       const d = p.date || '';
       if (!byDate[d]) byDate[d] = [];
       byDate[d].push(p);
@@ -2165,8 +2222,7 @@ function renderPicks(todayData, historyData, scores) {
       html += `<div class="history-date-group" data-date="${date}"><div class="history-date-header">${label}</div>`;
       byDate[date].forEach(p => {
         const key = `${p.home_team}|${p.away_team}`;
-        const keyFlip = `${p.away_team}|${p.home_team}`;
-        const scoreOverlay = scores[key] || scores[keyFlip];
+        const scoreOverlay = scores[key] || scores[`${p.away_team}|${p.home_team}`];
         html += _pickRowHtml(p, true, scoreOverlay);
       });
       html += '</div>';
