@@ -38,7 +38,7 @@ DATA_DIR = os.path.join(ROOT, "data")
 sys.path.insert(0, ROOT)
 
 from engine import predict_game, ModelConfig, DEFAULT_CONFIG, _normalize_team_for_match, enrich_team
-from engine import run_monte_carlo, load_bracket
+from engine import run_monte_carlo, load_bracket, _load_venues, _get_game_site, _load_school_locations
 
 
 def load_results():
@@ -165,6 +165,9 @@ def build_game_pairs(games, teams_by_year):
                 state[winner] = {"path_opponents_barthag": []}
             state[winner]["path_opponents_barthag"] = state[winner]["path_opponents_barthag"] + [loser_barthag]
 
+    # Preload school locations once for efficiency
+    school_locs = _load_school_locations()
+
     pairs = []
     skipped = 0
     for g in games:
@@ -181,6 +184,10 @@ def build_game_pairs(games, teams_by_year):
             key = _normalize_team_for_match(name)
             if key and key in rank_map:
                 team_dict["eff_rank"] = rank_map[key]
+        # Attach school location for proximity calculation
+        for team_dict, name in ((a, g["team_a"]), (b, g["team_b"])):
+            if name in school_locs and "location" not in team_dict:
+                team_dict["location"] = school_locs[name]
         # Attach pre-game path snapshot
         game_key = (g["team_a"], g["team_b"], g.get("round_name", ""))
         snap = game_path_snapshot.get((yr, game_key), {})
@@ -246,8 +253,10 @@ def score_model(pairs, config, recency_weight=None, round_weight=None):
         weight_sum += w
 
         try:
-            result = predict_game(enrich_team(a), enrich_team(b), config=config,
-                                  round_name=rname)
+            venues = _load_venues(yr)
+            game_site = _get_game_site(venues, g.get("region"), rname) if venues else None
+            result = predict_game(enrich_team(a), enrich_team(b), game_site=game_site,
+                                  config=config, round_name=rname)
         except Exception:
             continue
         prob_a = result["win_prob_a"]
@@ -516,6 +525,13 @@ def _compute_objective(metrics, objective_name="brier", baseline_accuracy=None, 
         score = brier + 0.3 * brier_upset
     elif objective_name == "composite":
         score = 0.7 * brier - 0.02 * acc + 0.2 * brier_close
+    elif objective_name == "brier+f4":
+        # Proxy for bracket quality: weight upset accuracy more heavily.
+        # Full bracket quality (MC sims) is too expensive per evaluation;
+        # the CV phase in calibrate_walk_forward handles the real brier+f4
+        # weighting. This proxy ensures the final calibrate_single step
+        # still biases toward getting key upset/close games right.
+        score = brier + 0.3 * brier_upset + 0.001 * mae
     else:
         score = brier + 0.001 * mae
     if baseline_accuracy is not None and acc < baseline_accuracy - 0.01:
