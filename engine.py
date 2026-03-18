@@ -58,6 +58,8 @@ class ModelConfig:
     preseason_max_bonus: float = 1.5
     proximity_max_bonus: float = 2.0
     proximity_neutral_distance: float = 1200  # miles at which score=0 (home max, cross-country min)
+    proximity_home_threshold_mi: float = 75   # extra "home court" bonus when team within this many miles
+    proximity_home_bonus: float = 1.2        # additive pts when distance <= threshold (quasi-home games)
     momentum_max_bonus: float = 1.5
     star_player_max_bonus: float = 1.5
     size_max_bonus: float = 1.0
@@ -196,6 +198,11 @@ def calc_proximity_bonus(team, game_site=None, config=DEFAULT_CONFIG):
     else:
         score = -config.proximity_max_bonus * (distance - nd) / (far - nd)
         score = max(-config.proximity_max_bonus, score)
+    # Extra home bonus when team is very close (quasi-home game)
+    home_thresh = getattr(config, "proximity_home_threshold_mi", 75)
+    home_bonus = getattr(config, "proximity_home_bonus", 1.2)
+    if distance <= home_thresh and home_bonus > 0:
+        score += home_bonus
     return score
 
 def calc_momentum_bonus(team, config=DEFAULT_CONFIG):
@@ -1993,7 +2000,7 @@ def _compute_upset_alert(seed_a, seed_b, projected_margin, win_prob_a, hist):
 
 
 def _make_pick_dict(game_num, round_of, round_name, region, a, b, result, pick_team,
-                    data_dir=None, year=None):
+                    data_dir=None, year=None, game_id=None):
     """Build a pick dict from prediction result."""
     hist = get_seed_matchup_history(a["seed"], b["seed"])
     upset_alert = _compute_upset_alert(
@@ -2060,6 +2067,7 @@ def _make_pick_dict(game_num, round_of, round_name, region, a, b, result, pick_t
         "round": round_of,
         "round_name": round_name,
         "region": region,
+        "game_id": game_id,
         "team_a": a["team"], "seed_a": a["seed"],
         "team_b": b["team"], "seed_b": b["seed"],
         "pick": pick_team["team"],
@@ -2166,7 +2174,7 @@ def generate_bracket_picks(bracket, config=DEFAULT_CONFIG, upset_aggression=0.0,
             else:
                 pick_a = _should_pick_upset(result["win_prob_a"], a["seed"], b["seed"], upset_aggression)
                 pick_team = a if pick_a else b
-            pd = _make_pick_dict(game_num, 64, "Round of 64", region, a, b, result, pick_team, **_h2h_kw)
+            pd = _make_pick_dict(game_num, 64, "Round of 64", region, a, b, result, pick_team, game_id=gid, **_h2h_kw)
             pd["venue_city"] = venue_city
             picks.append(pd)
             r64_winners.append(pick_team)
@@ -2193,7 +2201,7 @@ def generate_bracket_picks(bracket, config=DEFAULT_CONFIG, upset_aggression=0.0,
                 else:
                     pick_a = _should_pick_upset(result["win_prob_a"], a["seed"], b["seed"], upset_aggression)
                     pick_team = a if pick_a else b
-                pd = _make_pick_dict(game_num, round_of, round_name, region, a, b, result, pick_team, **_h2h_kw)
+                pd = _make_pick_dict(game_num, round_of, round_name, region, a, b, result, pick_team, game_id=gid, **_h2h_kw)
                 pd["venue_city"] = venue_city
                 picks.append(pd)
                 winners.append(pick_team)
@@ -2228,7 +2236,7 @@ def generate_bracket_picks(bracket, config=DEFAULT_CONFIG, upset_aggression=0.0,
         else:
             pick_a = _should_pick_upset(result["win_prob_a"], a["seed"], b["seed"], upset_aggression)
             pick_team = a if pick_a else b
-        pd = _make_pick_dict(game_num, 4, "Final Four", None, a, b, result, pick_team)
+        pd = _make_pick_dict(game_num, 4, "Final Four", None, a, b, result, pick_team, game_id=gid)
         pd["venue_city"] = f4_city
         picks.append(pd)
         ff_winners.append(pick_team)
@@ -2248,7 +2256,7 @@ def generate_bracket_picks(bracket, config=DEFAULT_CONFIG, upset_aggression=0.0,
         else:
             pick_a = _should_pick_upset(result["win_prob_a"], a["seed"], b["seed"], upset_aggression)
             pick_team = a if pick_a else b
-        pd = _make_pick_dict(game_num, 2, "Championship", None, a, b, result, pick_team, **_h2h_kw)
+        pd = _make_pick_dict(game_num, 2, "Championship", None, a, b, result, pick_team, game_id=gid, **_h2h_kw)
         pd["venue_city"] = champ_city
         picks.append(pd)
         champion = pick_team["team"]
