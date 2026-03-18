@@ -751,6 +751,8 @@ async function loadYear(year) {
 async function fetchBracket() {
   if (!currentYear) return;
   showLoading('Simulating...');
+  // Clear analyze cache since we're getting fresh server-side predictions
+  for (const k in _analyzeCache) delete _analyzeCache[k];
   try {
     const hasLocked = Object.keys(lockedPicks).length > 0;
     let data;
@@ -920,6 +922,73 @@ function renderF4ByRegion(byRegion, numSims) {
 // Bracket state machine (adapted from existing output/index.html)
 // ---------------------------------------------------------------------------
 function seedWinProb(sA, sB) { return 1 / (1 + Math.exp(-.145 * (sB - sA))); }
+
+// Cache for /analyze results so we don't refetch the same matchup
+const _analyzeCache = {};
+
+// After recomputeBracket, fetch real predictions for any novel matchups
+// that fell back to seedWinProb. Updates bracketState + DOM when responses arrive.
+async function enrichNovelMatchups() {
+  const promises = [];
+  for (const [gid, st] of Object.entries(bracketState)) {
+    if (!st.teamA || !st.teamB) continue;
+    // Check if this matchup exists in precomputed PICKS
+    const inPicks = PICKS.some(pp =>
+      pp.game_id === gid &&
+      ((pp.team_a === st.teamA && pp.team_b === st.teamB) ||
+       (pp.team_b === st.teamA && pp.team_a === st.teamB))
+    );
+    if (inPicks) continue;
+    // Build cache key
+    const cacheKey = `${st.teamA}|${st.teamB}|${gid}`;
+    if (_analyzeCache[cacheKey]) {
+      // Use cached result immediately
+      const c = _analyzeCache[cacheKey];
+      st.probA = c.probA;
+      st.margin = c.margin;
+      continue;
+    }
+    // Parse region/round from gameId
+    let regionParam = '', roundParam = '';
+    if (!gid.startsWith('FF')) {
+      const parts = gid.split('-');
+      regionParam = `&region=${encodeURIComponent(parts[0])}`;
+      const rndMap = {64:'Round of 64',32:'Round of 32',16:'Sweet 16',8:'Elite 8'};
+      const roundNum = parseInt(parts[1]);
+      if (rndMap[roundNum]) roundParam = `&round_name=${encodeURIComponent(rndMap[roundNum])}`;
+    } else {
+      const isChamp = gid === 'FF-2-0';
+      roundParam = `&round_name=${encodeURIComponent(isChamp ? 'Championship' : 'Final Four')}`;
+    }
+    const seedParams = (st.seedA != null && st.seedB != null)
+      ? `&seed_a=${st.seedA}&seed_b=${st.seedB}` : '';
+    const url = `/analyze?team_a=${encodeURIComponent(st.teamA)}&team_b=${encodeURIComponent(st.teamB)}&year=${currentYear || 2026}${seedParams}${regionParam}${roundParam}`;
+    promises.push(
+      apiFetch(url).then(data => {
+        const flipped = data.team_a !== st.teamA;
+        const probA = flipped ? (1 - (data.win_prob_a ?? 0.5)) : (data.win_prob_a ?? 0.5);
+        const margin = data.projected_spread || 0;
+        st.probA = probA;
+        st.margin = margin;
+        _analyzeCache[cacheKey] = { probA, margin };
+        // Inject into PICKS so the analysis popup finds it without re-fetching
+        data.game_id = gid;
+        const existing = PICKS.findIndex(pp => pp.game_id === gid &&
+          ((pp.team_a === st.teamA && pp.team_b === st.teamB) ||
+           (pp.team_b === st.teamA && pp.team_a === st.teamB)));
+        if (existing >= 0) {
+          PICKS[existing] = data;
+        } else {
+          PICKS.push(data);
+        }
+      }).catch(() => {})
+    );
+  }
+  if (promises.length > 0) {
+    await Promise.all(promises);
+    renderBracket(); // re-render with real probabilities
+  }
+}
 
 // Returns the MODEL's win probability for teamName based on pick p.
 // Uses win_prob_a/b when present (added in current engine version).
@@ -1148,6 +1217,7 @@ function togglePick(gameId, teamName) {
     lockedPicks[gameId] = teamName;
   }
   recomputeBracket();
+  enrichNovelMatchups(); // async: fetch real predictions for novel matchups
   _syncHash();
 }
 

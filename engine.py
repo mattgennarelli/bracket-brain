@@ -332,29 +332,30 @@ def calc_injury_penalty(team, config=DEFAULT_CONFIG):
     roster = team.get("roster", [])
     total_team_poss = sum(float(p.get("poss", 0)) for p in roster) or 0.0
 
-    # --- Primary path: BPR × playing time × dampening ---
-    if total_team_poss > 0 and any(i.get("poss") for i in injuries):
-        total = 0.0
-        for i in injuries:
-            bpr_val = float(i.get("bpr") or 0.0)
-            poss = float(i.get("poss") or 0.0)
-            if poss <= 0 or bpr_val <= 0:
-                continue
-            severity = _INJURY_SEVERITY.get(str(i.get("status", "out")).lower(), 1.0)
-            # poss_per_game: player's season poss × 5 (players on court) × pace / total team player-poss
-            poss_per_game = poss * 5.0 * adj_tempo / total_team_poss
-            total += severity * bpr_val * poss_per_game / 100.0 * INJURY_DAMPENING
-        return min(total, 10.0)
-
-    # --- Fallback: absolute BPR, no roster poss context ---
+    # --- Per-player penalty: use best available formula for each player ---
+    # Primary formula (preferred): BPR × playing-time-fraction × dampening.
+    #   Requires roster poss context AND per-player poss.
+    # Fallback formula: BPR × (tempo/100) × dampening.
+    #   Used when roster poss is unavailable OR player has no poss data.
+    # Legacy formula: bpr_share × injury_penalty_per_level (old data format).
+    #
+    # IMPORTANT: we evaluate per-player, not per-list, to avoid a path-switch
+    # bug where removing one player with poss > 0 causes all remaining
+    # poss=0 players to jump from "skipped in primary" to "counted in fallback".
     total = 0.0
     for i in injuries:
         severity = _INJURY_SEVERITY.get(str(i.get("status", "out")).lower(), 1.0)
-        bpr_abs = i.get("bpr")
-        if bpr_abs is not None:
-            bpr_val = float(bpr_abs)
-            if bpr_val <= 0:
-                continue
+        if severity <= 0:
+            continue
+        bpr_val = float(i.get("bpr") or 0.0)
+        poss = float(i.get("poss") or 0.0)
+
+        if bpr_val > 0 and poss > 0 and total_team_poss > 0:
+            # Primary: BPR × playing time fraction × dampening
+            poss_per_game = poss * 5.0 * adj_tempo / total_team_poss
+            total += severity * bpr_val * poss_per_game / 100.0 * INJURY_DAMPENING
+        elif bpr_val > 0:
+            # Fallback: absolute BPR without poss weighting
             total += severity * bpr_val * (adj_tempo / 100.0) * INJURY_DAMPENING
         else:
             # Legacy: bpr_share × injury_penalty_per_level
