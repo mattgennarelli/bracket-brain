@@ -115,10 +115,15 @@ def _find_espn_id(team_name: str) -> str | None:
     norm = _normalize_team_for_match(team_name)
     if norm in teams:
         return teams[norm]["id"]
-    # Progressive substring match
+    # Try expanding "st" -> "state" for abbreviated names like "Ohio St." -> "ohio st" -> "ohio state"
+    import re as _re
+    expanded = _re.sub(r'\bst\b', 'state', norm)
+    if expanded != norm and expanded in teams:
+        return teams[expanded]["id"]
+    # Progressive substring match — threshold 0.65 so "ohio st" (7) matches "ohio state" (10)
     for key, val in teams.items():
         if norm in key or key in norm:
-            if len(norm) >= len(key) * 0.75:
+            if len(norm) >= len(key) * 0.65:
                 return val["id"]
     return None
 
