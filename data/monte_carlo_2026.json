@@ -1,251 +1,2230 @@
 {
-  "year": 2026,
   "num_simulations": 10000,
   "champion_probs": {
-    "Michigan": 0.2691,
-    "Duke": 0.2304,
-    "Arizona": 0.2294,
-    "Florida": 0.0763,
-    "Houston": 0.0608,
-    "Purdue": 0.0388,
-    "Illinois": 0.0348,
-    "Iowa St.": 0.0158,
-    "Connecticut": 0.0107,
+    "Michigan": 0.2517,
+    "Arizona": 0.2492,
+    "Duke": 0.2288,
+    "Florida": 0.083,
+    "Houston": 0.055,
+    "Illinois": 0.0386,
+    "Purdue": 0.0358,
+    "Iowa St.": 0.0184,
+    "Connecticut": 0.0067,
     "Gonzaga": 0.0051,
-    "Michigan St.": 0.0046,
     "Vanderbilt": 0.0039,
-    "St. John's": 0.0039,
-    "Texas Tech": 0.0025,
-    "Kansas": 0.0024,
-    "Louisville": 0.0019,
+    "Michigan St.": 0.0035,
+    "Kansas": 0.003,
+    "St. John's": 0.0029,
+    "Virginia": 0.0027,
+    "Tennessee": 0.0025,
+    "Texas Tech": 0.002,
     "Alabama": 0.0018,
-    "Virginia": 0.0018,
-    "Arkansas": 0.0016,
-    "Tennessee": 0.0016,
-    "Nebraska": 0.0011,
-    "Wisconsin": 0.0008,
-    "Ohio St.": 0.0004,
+    "Louisville": 0.0015,
+    "Arkansas": 0.0013,
+    "Wisconsin": 0.0009,
+    "Nebraska": 0.0007,
+    "Kentucky": 0.0004,
+    "Ohio St.": 0.0003,
     "UCLA": 0.0002,
-    "Miami FL": 0.0001,
-    "Clemson": 0.0001,
-    "Kentucky": 0.0001
+    "North Carolina": 0.0001
   },
   "final_four_probs": {
-    "Michigan": 0.739,
-    "Arizona": 0.6467,
-    "Duke": 0.6247,
-    "Florida": 0.3527,
-    "Houston": 0.2826,
-    "Illinois": 0.2566,
-    "Purdue": 0.2272,
-    "Connecticut": 0.1316,
-    "Iowa St.": 0.1244,
-    "Vanderbilt": 0.0693,
-    "Gonzaga": 0.0674,
-    "Michigan St.": 0.067,
-    "St. John's": 0.0614,
-    "Louisville": 0.043,
-    "Kansas": 0.0425,
-    "Virginia": 0.0381,
-    "Tennessee": 0.0322,
-    "Texas Tech": 0.0302,
-    "Alabama": 0.0285,
-    "Arkansas": 0.0281,
-    "Nebraska": 0.0278,
-    "Wisconsin": 0.0251,
-    "UCLA": 0.0178,
-    "Ohio St.": 0.0117,
-    "Kentucky": 0.006,
-    "Clemson": 0.0031,
-    "North Carolina": 0.0028,
-    "Iowa": 0.0025,
-    "BYU": 0.002,
-    "Saint Mary's": 0.0013,
-    "Miami FL": 0.0011,
-    "Villanova": 0.0011,
-    "Texas A&M": 0.0011,
-    "Santa Clara": 0.001,
-    "Utah St.": 0.0006,
-    "Georgia": 0.0004,
+    "Michigan": 0.7221,
+    "Arizona": 0.6786,
+    "Duke": 0.6588,
+    "Florida": 0.3579,
+    "Illinois": 0.2696,
+    "Houston": 0.2664,
+    "Purdue": 0.1973,
+    "Iowa St.": 0.1311,
+    "Connecticut": 0.1058,
+    "Vanderbilt": 0.0728,
+    "Gonzaga": 0.0721,
+    "Michigan St.": 0.0706,
+    "St. John's": 0.0493,
+    "Kansas": 0.0474,
+    "Virginia": 0.0471,
+    "Louisville": 0.0443,
+    "Tennessee": 0.0356,
+    "Alabama": 0.0302,
+    "Texas Tech": 0.0286,
+    "Arkansas": 0.0248,
+    "Nebraska": 0.0226,
+    "Wisconsin": 0.0202,
+    "Ohio St.": 0.0142,
+    "UCLA": 0.0089,
+    "Kentucky": 0.0042,
+    "Iowa": 0.0037,
+    "BYU": 0.0031,
+    "North Carolina": 0.0024,
+    "Clemson": 0.0022,
+    "Saint Mary's": 0.0017,
+    "Utah St.": 0.0013,
+    "Miami FL": 0.001,
+    "Villanova": 0.0008,
+    "Georgia": 0.0007,
+    "Texas A&M": 0.0006,
     "Missouri": 0.0004,
-    "Texas": 0.0003,
-    "Saint Louis": 0.0002,
-    "South Florida": 0.0002,
-    "VCU": 0.0002,
-    "TCU": 0.0001
+    "Texas": 0.0004,
+    "Santa Clara": 0.0004,
+    "TCU": 0.0004,
+    "UCF": 0.0003,
+    "VCU": 0.0001
   },
   "elite_eight_probs": {
-    "Michigan": 0.8762,
-    "Arizona": 0.8567,
-    "Duke": 0.7691,
-    "Florida": 0.687,
-    "Purdue": 0.6192,
-    "Illinois": 0.4906,
-    "Iowa St.": 0.486,
-    "Houston": 0.4788,
-    "Connecticut": 0.4131,
-    "Gonzaga": 0.3266,
-    "Michigan St.": 0.2712,
-    "Virginia": 0.2328,
-    "Louisville": 0.2052,
-    "Tennessee": 0.2031,
-    "Vanderbilt": 0.1793,
-    "St. John's": 0.1147,
-    "UCLA": 0.1061,
-    "Nebraska": 0.0971,
-    "Kansas": 0.0875,
-    "Arkansas": 0.0684,
-    "Wisconsin": 0.064,
-    "Kentucky": 0.062,
-    "Alabama": 0.061,
-    "Texas Tech": 0.0586,
-    "Ohio St.": 0.0277,
-    "BYU": 0.0248,
-    "Iowa": 0.0192,
-    "Clemson": 0.0171,
-    "Santa Clara": 0.0158,
-    "Miami FL": 0.0153,
-    "North Carolina": 0.0146,
-    "Missouri": 0.0085,
-    "Saint Mary's": 0.0081,
-    "Villanova": 0.0074,
-    "Texas A&M": 0.0066,
-    "Texas": 0.0056,
-    "Utah St.": 0.0035,
-    "Georgia": 0.0032,
-    "South Florida": 0.0023,
-    "UCF": 0.0021,
-    "VCU": 0.0013,
-    "Saint Louis": 0.0009,
-    "TCU": 0.0006,
-    "McNeese St.": 0.0003,
-    "Northern Iowa": 0.0003,
-    "Miami OH": 0.0003,
+    "Michigan": 0.8739,
+    "Arizona": 0.8673,
+    "Duke": 0.7871,
+    "Florida": 0.6831,
+    "Purdue": 0.5938,
+    "Illinois": 0.5085,
+    "Iowa St.": 0.479,
+    "Houston": 0.4619,
+    "Connecticut": 0.3854,
+    "Gonzaga": 0.3489,
+    "Michigan St.": 0.3036,
+    "Virginia": 0.2595,
+    "Louisville": 0.2256,
+    "Tennessee": 0.2027,
+    "Vanderbilt": 0.186,
+    "Nebraska": 0.0934,
+    "St. John's": 0.093,
+    "Kansas": 0.088,
+    "UCLA": 0.08,
+    "Arkansas": 0.0671,
+    "Alabama": 0.0612,
+    "Texas Tech": 0.0599,
+    "Wisconsin": 0.0537,
+    "Kentucky": 0.0474,
+    "BYU": 0.0322,
+    "Ohio St.": 0.0308,
+    "Iowa": 0.0213,
+    "Clemson": 0.0162,
+    "North Carolina": 0.0139,
+    "Miami FL": 0.0119,
+    "Santa Clara": 0.0114,
+    "Saint Mary's": 0.009,
+    "Missouri": 0.0077,
+    "Utah St.": 0.0072,
+    "Texas A&M": 0.0056,
+    "Texas": 0.0055,
+    "Villanova": 0.0045,
+    "Georgia": 0.0037,
+    "UCF": 0.0032,
+    "South Florida": 0.0022,
+    "Saint Louis": 0.0012,
+    "VCU": 0.0011,
+    "TCU": 0.001,
+    "Northern Iowa": 0.0001,
+    "Hawaii": 0.0001,
     "Akron": 0.0001,
-    "Cal Baptist": 0.0001
+    "High Point": 0.0001
   },
   "sweet_sixteen_probs": {
-    "Michigan": 0.9767,
-    "Arizona": 0.9564,
-    "Duke": 0.9266,
-    "Purdue": 0.9133,
-    "Houston": 0.9036,
-    "Florida": 0.8906,
-    "Illinois": 0.8899,
-    "Gonzaga": 0.8023,
-    "Iowa St.": 0.7881,
-    "Connecticut": 0.7375,
-    "Alabama": 0.5594,
-    "Virginia": 0.5566,
-    "Vanderbilt": 0.5525,
-    "Michigan St.": 0.5372,
-    "St. John's": 0.5123,
-    "Arkansas": 0.5069,
-    "Wisconsin": 0.4908,
-    "Kansas": 0.4782,
-    "Louisville": 0.4414,
-    "Tennessee": 0.4386,
-    "Nebraska": 0.436,
-    "Texas Tech": 0.4322,
-    "UCLA": 0.2454,
-    "Kentucky": 0.1518,
-    "BYU": 0.1372,
-    "North Carolina": 0.0939,
-    "Ohio St.": 0.0661,
-    "Texas": 0.0605,
-    "Santa Clara": 0.0601,
-    "Iowa": 0.0573,
-    "Miami FL": 0.0548,
-    "Clemson": 0.0521,
-    "Saint Mary's": 0.0483,
-    "Texas A&M": 0.0478,
-    "Missouri": 0.0319,
-    "Villanova": 0.0255,
-    "South Florida": 0.0195,
-    "Utah St.": 0.0181,
-    "UCF": 0.0171,
-    "VCU": 0.0161,
-    "Georgia": 0.0154,
-    "McNeese St.": 0.011,
-    "Saint Louis": 0.0079,
-    "Northern Iowa": 0.0074,
-    "TCU": 0.0073,
-    "Akron": 0.0062,
-    "Miami OH": 0.0044,
-    "Hofstra": 0.0022,
-    "Cal Baptist": 0.0021,
-    "North Dakota St.": 0.0019,
-    "High Point": 0.0014,
-    "Hawaii": 0.0009,
-    "Troy": 0.0005,
-    "Wright St.": 0.0004,
-    "Idaho": 0.0003,
-    "Penn": 0.0001
+    "Michigan": 0.9792,
+    "Arizona": 0.9584,
+    "Duke": 0.9245,
+    "Purdue": 0.9142,
+    "Houston": 0.9002,
+    "Florida": 0.8933,
+    "Illinois": 0.8895,
+    "Iowa St.": 0.8232,
+    "Gonzaga": 0.7836,
+    "Connecticut": 0.7561,
+    "Virginia": 0.5791,
+    "Vanderbilt": 0.568,
+    "Alabama": 0.5647,
+    "Michigan St.": 0.5407,
+    "Kansas": 0.5251,
+    "Arkansas": 0.503,
+    "Wisconsin": 0.4947,
+    "St. John's": 0.466,
+    "Louisville": 0.4384,
+    "Texas Tech": 0.4296,
+    "Nebraska": 0.4237,
+    "Tennessee": 0.4175,
+    "UCLA": 0.2205,
+    "BYU": 0.163,
+    "Kentucky": 0.1276,
+    "North Carolina": 0.0949,
+    "Ohio St.": 0.0698,
+    "Iowa": 0.0548,
+    "Texas": 0.053,
+    "Clemson": 0.0519,
+    "Saint Mary's": 0.0506,
+    "Texas A&M": 0.0492,
+    "Santa Clara": 0.0492,
+    "Miami FL": 0.0491,
+    "Missouri": 0.0367,
+    "Utah St.": 0.0237,
+    "UCF": 0.0234,
+    "South Florida": 0.0203,
+    "Villanova": 0.0179,
+    "VCU": 0.0156,
+    "Georgia": 0.0145,
+    "Northern Iowa": 0.0079,
+    "McNeese St.": 0.0076,
+    "Saint Louis": 0.0063,
+    "TCU": 0.0057,
+    "Akron": 0.0038,
+    "Miami OH": 0.0032,
+    "Hofstra": 0.0019,
+    "High Point": 0.0015,
+    "Cal Baptist": 0.001,
+    "Hawaii": 0.0008,
+    "Troy": 0.0007,
+    "North Dakota St.": 0.0006,
+    "Kennesaw St.": 0.0004,
+    "Wright St.": 0.0002
   },
   "round_of_32_probs": {
-    "Michigan": 0.9997,
-    "Duke": 0.9993,
-    "Iowa St.": 0.9992,
-    "Florida": 0.9989,
-    "Arizona": 0.9989,
-    "Purdue": 0.9987,
-    "Illinois": 0.9986,
-    "Houston": 0.9983,
-    "Connecticut": 0.997,
-    "Gonzaga": 0.9946,
-    "Virginia": 0.9794,
-    "Nebraska": 0.9786,
-    "Michigan St.": 0.9779,
-    "Arkansas": 0.9763,
-    "Alabama": 0.9674,
-    "Wisconsin": 0.9579,
-    "Kansas": 0.9575,
-    "Tennessee": 0.9415,
-    "St. John's": 0.9378,
-    "Texas Tech": 0.931,
-    "Vanderbilt": 0.9299,
-    "Louisville": 0.8482,
-    "UCLA": 0.7893,
-    "Ohio St.": 0.7414,
-    "North Carolina": 0.6685,
-    "BYU": 0.5976,
-    "Georgia": 0.5588,
-    "Villanova": 0.556,
-    "Kentucky": 0.5529,
-    "Texas A&M": 0.5414,
-    "Miami FL": 0.524,
-    "Clemson": 0.5217,
-    "Iowa": 0.4783,
-    "Missouri": 0.476,
-    "Saint Mary's": 0.4586,
-    "Santa Clara": 0.4471,
-    "Utah St.": 0.444,
-    "Saint Louis": 0.4412,
-    "Texas": 0.4024,
-    "VCU": 0.3315,
-    "TCU": 0.2586,
-    "UCF": 0.2107,
-    "South Florida": 0.1518,
-    "McNeese St.": 0.0701,
-    "Akron": 0.069,
-    "Northern Iowa": 0.0622,
-    "Miami OH": 0.0585,
-    "Cal Baptist": 0.0425,
-    "High Point": 0.0421,
-    "Hofstra": 0.0326,
-    "Hawaii": 0.0237,
-    "North Dakota St.": 0.0221,
-    "Troy": 0.0214,
-    "Wright St.": 0.0206,
-    "Kennesaw St.": 0.0054,
-    "Furman": 0.003,
-    "Idaho": 0.0017,
-    "Penn": 0.0014,
-    "Queens": 0.0013,
-    "Long Island": 0.0011,
-    "Prairie View A&M": 0.0011,
-    "Tennessee St.": 0.0008,
-    "Siena": 0.0007,
-    "UMBC": 0.0003
+    "Arizona": 0.9993,
+    "Purdue": 0.9993,
+    "Michigan": 0.9991,
+    "Duke": 0.9987,
+    "Florida": 0.9986,
+    "Iowa St.": 0.9986,
+    "Illinois": 0.9979,
+    "Houston": 0.9969,
+    "Connecticut": 0.9959,
+    "Gonzaga": 0.9936,
+    "Virginia": 0.9838,
+    "Arkansas": 0.9808,
+    "Michigan St.": 0.9802,
+    "Nebraska": 0.9795,
+    "Alabama": 0.9664,
+    "Kansas": 0.9653,
+    "Wisconsin": 0.9571,
+    "Tennessee": 0.9508,
+    "Vanderbilt": 0.9431,
+    "Texas Tech": 0.9408,
+    "St. John's": 0.9304,
+    "Louisville": 0.8532,
+    "Ohio St.": 0.7739,
+    "UCLA": 0.7575,
+    "North Carolina": 0.677,
+    "BYU": 0.6288,
+    "Georgia": 0.6007,
+    "Kentucky": 0.5636,
+    "Texas A&M": 0.5335,
+    "Clemson": 0.5222,
+    "Villanova": 0.5063,
+    "Missouri": 0.5054,
+    "Miami FL": 0.4946,
+    "Utah St.": 0.4937,
+    "Iowa": 0.4778,
+    "Saint Mary's": 0.4665,
+    "Santa Clara": 0.4364,
+    "Saint Louis": 0.3993,
+    "Texas": 0.3712,
+    "VCU": 0.323,
+    "UCF": 0.2425,
+    "TCU": 0.2261,
+    "South Florida": 0.1468,
+    "Northern Iowa": 0.0696,
+    "Akron": 0.0592,
+    "McNeese St.": 0.0569,
+    "Miami OH": 0.0492,
+    "High Point": 0.0429,
+    "Cal Baptist": 0.0347,
+    "Hofstra": 0.0336,
+    "Troy": 0.0205,
+    "North Dakota St.": 0.0198,
+    "Hawaii": 0.0192,
+    "Wright St.": 0.0162,
+    "Kennesaw St.": 0.0064,
+    "Furman": 0.0041,
+    "Idaho": 0.0031,
+    "Penn": 0.0021,
+    "Prairie View A&M": 0.0014,
+    "Tennessee St.": 0.0014,
+    "Siena": 0.0013,
+    "UMBC": 0.0009,
+    "Queens": 0.0007,
+    "Long Island": 0.0007
+  },
+  "game_probs": {
+    "1Florida_vs_16Prairie View A&M": {
+      "Florida": 0.9986,
+      "Prairie View A&M": 0.0014
+    },
+    "8Clemson_vs_9Iowa": {
+      "Clemson": 0.5222,
+      "Iowa": 0.4778
+    },
+    "5Vanderbilt_vs_12McNeese St.": {
+      "Vanderbilt": 0.9431,
+      "McNeese St.": 0.0569
+    },
+    "4Nebraska_vs_13Troy": {
+      "Nebraska": 0.9795,
+      "Troy": 0.0205
+    },
+    "6North Carolina_vs_11VCU": {
+      "North Carolina": 0.677,
+      "VCU": 0.323
+    },
+    "3Illinois_vs_14Penn": {
+      "Illinois": 0.9979,
+      "Penn": 0.0021
+    },
+    "7Saint Mary's_vs_10Texas A&M": {
+      "Texas A&M": 0.5335,
+      "Saint Mary's": 0.4665
+    },
+    "2Houston_vs_15Idaho": {
+      "Houston": 0.9969,
+      "Idaho": 0.0031
+    },
+    "1Florida_vs_8Clemson": {
+      "Florida": 0.9018,
+      "Clemson": 0.0982
+    },
+    "5Vanderbilt_vs_4Nebraska": {
+      "Vanderbilt": 0.5942,
+      "Nebraska": 0.4058
+    },
+    "11VCU_vs_3Illinois": {
+      "Illinois": 0.9532,
+      "VCU": 0.0468
+    },
+    "10Texas A&M_vs_2Houston": {
+      "Houston": 0.9105,
+      "Texas A&M": 0.0895
+    },
+    "1Florida_vs_5Vanderbilt": {
+      "Florida": 0.7226,
+      "Vanderbilt": 0.2774
+    },
+    "3Illinois_vs_2Houston": {
+      "Illinois": 0.5355,
+      "Houston": 0.4645
+    },
+    "1Florida_vs_3Illinois": {
+      "Florida": 0.5352,
+      "Illinois": 0.4648
+    },
+    "1Duke_vs_16Siena": {
+      "Duke": 0.9987,
+      "Siena": 0.0013
+    },
+    "8Ohio St._vs_9TCU": {
+      "Ohio St.": 0.7739,
+      "TCU": 0.2261
+    },
+    "5St. John's_vs_12Northern Iowa": {
+      "St. John's": 0.9304,
+      "Northern Iowa": 0.0696
+    },
+    "4Kansas_vs_13Cal Baptist": {
+      "Kansas": 0.9653,
+      "Cal Baptist": 0.0347
+    },
+    "6Louisville_vs_11South Florida": {
+      "Louisville": 0.8532,
+      "South Florida": 0.1468
+    },
+    "3Michigan St._vs_14North Dakota St.": {
+      "Michigan St.": 0.9802,
+      "North Dakota St.": 0.0198
+    },
+    "7UCLA_vs_10UCF": {
+      "UCLA": 0.7575,
+      "UCF": 0.2425
+    },
+    "2Connecticut_vs_15Furman": {
+      "Connecticut": 0.9959,
+      "Furman": 0.0041
+    },
+    "1Duke_vs_8Ohio St.": {
+      "Duke": 0.9112,
+      "Ohio St.": 0.0888
+    },
+    "12Northern Iowa_vs_4Kansas": {
+      "Kansas": 0.9134,
+      "Northern Iowa": 0.0866
+    },
+    "11South Florida_vs_3Michigan St.": {
+      "Michigan St.": 0.8758,
+      "South Florida": 0.1242
+    },
+    "7UCLA_vs_2Connecticut": {
+      "Connecticut": 0.7113,
+      "UCLA": 0.2887
+    },
+    "1Duke_vs_4Kansas": {
+      "Duke": 0.8643,
+      "Kansas": 0.1357
+    },
+    "3Michigan St._vs_7UCLA": {
+      "Michigan St.": 0.685,
+      "UCLA": 0.315
+    },
+    "1Duke_vs_3Michigan St.": {
+      "Duke": 0.829,
+      "Michigan St.": 0.171
+    },
+    "1Michigan_vs_16UMBC": {
+      "Michigan": 0.9991,
+      "UMBC": 0.0009
+    },
+    "8Georgia_vs_9Saint Louis": {
+      "Georgia": 0.6007,
+      "Saint Louis": 0.3993
+    },
+    "5Texas Tech_vs_12Akron": {
+      "Texas Tech": 0.9408,
+      "Akron": 0.0592
+    },
+    "4Alabama_vs_13Hofstra": {
+      "Alabama": 0.9664,
+      "Hofstra": 0.0336
+    },
+    "6Tennessee_vs_11Miami OH": {
+      "Tennessee": 0.9508,
+      "Miami OH": 0.0492
+    },
+    "3Virginia_vs_14Wright St.": {
+      "Virginia": 0.9838,
+      "Wright St.": 0.0162
+    },
+    "7Kentucky_vs_10Santa Clara": {
+      "Kentucky": 0.5636,
+      "Santa Clara": 0.4364
+    },
+    "2Iowa St._vs_15Tennessee St.": {
+      "Iowa St.": 0.9986,
+      "Tennessee St.": 0.0014
+    },
+    "1Michigan_vs_8Georgia": {
+      "Michigan": 0.9767,
+      "Georgia": 0.0233
+    },
+    "5Texas Tech_vs_4Alabama": {
+      "Alabama": 0.5613,
+      "Texas Tech": 0.4387
+    },
+    "6Tennessee_vs_3Virginia": {
+      "Virginia": 0.5701,
+      "Tennessee": 0.4299
+    },
+    "10Santa Clara_vs_2Iowa St.": {
+      "Iowa St.": 0.8885,
+      "Santa Clara": 0.1115
+    },
+    "1Michigan_vs_4Alabama": {
+      "Michigan": 0.906,
+      "Alabama": 0.094
+    },
+    "6Tennessee_vs_2Iowa St.": {
+      "Iowa St.": 0.5514,
+      "Tennessee": 0.4486
+    },
+    "1Michigan_vs_6Tennessee": {
+      "Michigan": 0.8597,
+      "Tennessee": 0.1403
+    },
+    "1Arizona_vs_16Long Island": {
+      "Arizona": 0.9993,
+      "Long Island": 0.0007
+    },
+    "8Villanova_vs_9Utah St.": {
+      "Villanova": 0.5063,
+      "Utah St.": 0.4937
+    },
+    "5Wisconsin_vs_12High Point": {
+      "Wisconsin": 0.9571,
+      "High Point": 0.0429
+    },
+    "4Arkansas_vs_13Hawaii": {
+      "Arkansas": 0.9808,
+      "Hawaii": 0.0192
+    },
+    "6BYU_vs_11Texas": {
+      "BYU": 0.6288,
+      "Texas": 0.3712
+    },
+    "3Gonzaga_vs_14Kennesaw St.": {
+      "Gonzaga": 0.9936,
+      "Kennesaw St.": 0.0064
+    },
+    "7Miami FL_vs_10Missouri": {
+      "Missouri": 0.5054,
+      "Miami FL": 0.4946
+    },
+    "2Purdue_vs_15Queens": {
+      "Purdue": 0.9993,
+      "Queens": 0.0007
+    },
+    "1Arizona_vs_9Utah St.": {
+      "Arizona": 0.9528,
+      "Utah St.": 0.0472
+    },
+    "5Wisconsin_vs_4Arkansas": {
+      "Wisconsin": 0.5078,
+      "Arkansas": 0.4922
+    },
+    "6BYU_vs_3Gonzaga": {
+      "Gonzaga": 0.7447,
+      "BYU": 0.2553
+    },
+    "10Missouri_vs_2Purdue": {
+      "Purdue": 0.9279,
+      "Missouri": 0.0721
+    },
+    "1Arizona_vs_4Arkansas": {
+      "Arizona": 0.8931,
+      "Arkansas": 0.1069
+    },
+    "3Gonzaga_vs_2Purdue": {
+      "Purdue": 0.5905,
+      "Gonzaga": 0.4095
+    },
+    "1Arizona_vs_3Gonzaga": {
+      "Arizona": 0.8445,
+      "Gonzaga": 0.1555
+    },
+    "Final Four_Illinois_vs_Duke": {
+      "Duke": 0.667,
+      "Illinois": 0.333
+    },
+    "Final Four_Michigan_vs_Arizona": {
+      "Arizona": 0.5313,
+      "Michigan": 0.4687
+    },
+    "Championship_Illinois_vs_Arizona": {
+      "Arizona": 0.7004,
+      "Illinois": 0.2996
+    },
+    "6North Carolina_vs_3Illinois": {
+      "Illinois": 0.8619,
+      "North Carolina": 0.1381
+    },
+    "1Florida_vs_4Nebraska": {
+      "Florida": 0.8165,
+      "Nebraska": 0.1835
+    },
+    "1Florida_vs_2Houston": {
+      "Houston": 0.5139,
+      "Florida": 0.4861
+    },
+    "5St. John's_vs_4Kansas": {
+      "Kansas": 0.5164,
+      "St. John's": 0.4836
+    },
+    "3Michigan St._vs_2Connecticut": {
+      "Michigan St.": 0.5155,
+      "Connecticut": 0.4845
+    },
+    "1Michigan_vs_9Saint Louis": {
+      "Michigan": 0.9852,
+      "Saint Louis": 0.0148
+    },
+    "7Kentucky_vs_2Iowa St.": {
+      "Iowa St.": 0.7747,
+      "Kentucky": 0.2253
+    },
+    "3Virginia_vs_7Kentucky": {
+      "Virginia": 0.6277,
+      "Kentucky": 0.3723
+    },
+    "1Michigan_vs_3Virginia": {
+      "Michigan": 0.8778,
+      "Virginia": 0.1222
+    },
+    "1Arizona_vs_8Villanova": {
+      "Arizona": 0.9652,
+      "Villanova": 0.0348
+    },
+    "11Texas_vs_3Gonzaga": {
+      "Gonzaga": 0.8632,
+      "Texas": 0.1368
+    },
+    "1Arizona_vs_5Wisconsin": {
+      "Arizona": 0.9168,
+      "Wisconsin": 0.0832
+    },
+    "Final Four_Florida_vs_Duke": {
+      "Duke": 0.5439,
+      "Florida": 0.4561
+    },
+    "Championship_Florida_vs_Arizona": {
+      "Arizona": 0.6074,
+      "Florida": 0.3926
+    },
+    "4Nebraska_vs_3Illinois": {
+      "Illinois": 0.7422,
+      "Nebraska": 0.2578
+    },
+    "1Duke_vs_9TCU": {
+      "Duke": 0.9752,
+      "TCU": 0.0248
+    },
+    "6Louisville_vs_3Michigan St.": {
+      "Louisville": 0.5042,
+      "Michigan St.": 0.4958
+    },
+    "1Michigan_vs_5Texas Tech": {
+      "Michigan": 0.8735,
+      "Texas Tech": 0.1265
+    },
+    "3Virginia_vs_2Iowa St.": {
+      "Iowa St.": 0.6012,
+      "Virginia": 0.3988
+    },
+    "1Michigan_vs_2Iowa St.": {
+      "Michigan": 0.7693,
+      "Iowa St.": 0.2307
+    },
+    "1Arizona_vs_2Purdue": {
+      "Arizona": 0.729,
+      "Purdue": 0.271
+    },
+    "Final Four_Nebraska_vs_Duke": {
+      "Duke": 0.8356,
+      "Nebraska": 0.1644
+    },
+    "Final Four_Michigan_vs_Purdue": {
+      "Michigan": 0.7286,
+      "Purdue": 0.2714
+    },
+    "Championship_Duke_vs_Michigan": {
+      "Duke": 0.5213,
+      "Michigan": 0.4787
+    },
+    "5Vanderbilt_vs_3Illinois": {
+      "Illinois": 0.5904,
+      "Vanderbilt": 0.4096
+    },
+    "1Duke_vs_5St. John's": {
+      "Duke": 0.8341,
+      "St. John's": 0.1659
+    },
+    "12Akron_vs_4Alabama": {
+      "Alabama": 0.9494,
+      "Akron": 0.0506
+    },
+    "3Gonzaga_vs_10Missouri": {
+      "Gonzaga": 0.8478,
+      "Missouri": 0.1522
+    },
+    "4Arkansas_vs_3Gonzaga": {
+      "Gonzaga": 0.5132,
+      "Arkansas": 0.4868
+    },
+    "Final Four_Vanderbilt_vs_Duke": {
+      "Duke": 0.8386,
+      "Vanderbilt": 0.1614
+    },
+    "Final Four_Michigan_vs_Gonzaga": {
+      "Michigan": 0.8327,
+      "Gonzaga": 0.1673
+    },
+    "6Louisville_vs_2Connecticut": {
+      "Connecticut": 0.5207,
+      "Louisville": 0.4793
+    },
+    "1Duke_vs_6Louisville": {
+      "Duke": 0.884,
+      "Louisville": 0.116
+    },
+    "6Tennessee_vs_7Kentucky": {
+      "Tennessee": 0.6333,
+      "Kentucky": 0.3667
+    },
+    "5Texas Tech_vs_6Tennessee": {
+      "Texas Tech": 0.5746,
+      "Tennessee": 0.4254
+    },
+    "7Miami FL_vs_2Purdue": {
+      "Purdue": 0.9015,
+      "Miami FL": 0.0985
+    },
+    "11Texas_vs_2Purdue": {
+      "Purdue": 0.9235,
+      "Texas": 0.0765
+    },
+    "Final Four_Tennessee_vs_Arizona": {
+      "Arizona": 0.8448,
+      "Tennessee": 0.1552
+    },
+    "Championship_Duke_vs_Arizona": {
+      "Duke": 0.5248,
+      "Arizona": 0.4752
+    },
+    "10UCF_vs_2Connecticut": {
+      "Connecticut": 0.9095,
+      "UCF": 0.0905
+    },
+    "1Duke_vs_2Connecticut": {
+      "Duke": 0.7898,
+      "Connecticut": 0.2102
+    },
+    "Final Four_Illinois_vs_Connecticut": {
+      "Illinois": 0.6318,
+      "Connecticut": 0.3682
+    },
+    "Championship_Connecticut_vs_Arizona": {
+      "Arizona": 0.8533,
+      "Connecticut": 0.1467
+    },
+    "7Saint Mary's_vs_2Houston": {
+      "Houston": 0.8944,
+      "Saint Mary's": 0.1056
+    },
+    "6Louisville_vs_7UCLA": {
+      "Louisville": 0.5968,
+      "UCLA": 0.4032
+    },
+    "Final Four_Florida_vs_Louisville": {
+      "Florida": 0.7702,
+      "Louisville": 0.2298
+    },
+    "Championship_Louisville_vs_Michigan": {
+      "Michigan": 0.873,
+      "Louisville": 0.127
+    },
+    "11Miami OH_vs_3Virginia": {
+      "Virginia": 0.9463,
+      "Miami OH": 0.0537
+    },
+    "5Texas Tech_vs_2Iowa St.": {
+      "Iowa St.": 0.5153,
+      "Texas Tech": 0.4847
+    },
+    "Final Four_Texas Tech_vs_Arizona": {
+      "Arizona": 0.8593,
+      "Texas Tech": 0.1407
+    },
+    "1Florida_vs_9Iowa": {
+      "Florida": 0.8866,
+      "Iowa": 0.1134
+    },
+    "4Nebraska_vs_2Houston": {
+      "Houston": 0.8071,
+      "Nebraska": 0.1929
+    },
+    "4Kansas_vs_3Michigan St.": {
+      "Kansas": 0.5437,
+      "Michigan St.": 0.4563
+    },
+    "Final Four_Houston_vs_Kansas": {
+      "Houston": 0.6852,
+      "Kansas": 0.3148
+    },
+    "Championship_Kansas_vs_Michigan": {
+      "Michigan": 0.9118,
+      "Kansas": 0.0882
+    },
+    "6Louisville_vs_14North Dakota St.": {
+      "Louisville": 0.9825,
+      "North Dakota St.": 0.0175
+    },
+    "Final Four_Iowa St._vs_Arizona": {
+      "Arizona": 0.7431,
+      "Iowa St.": 0.2569
+    },
+    "Championship_Duke_vs_Iowa St.": {
+      "Duke": 0.6943,
+      "Iowa St.": 0.3057
+    },
+    "8Clemson_vs_5Vanderbilt": {
+      "Vanderbilt": 0.7864,
+      "Clemson": 0.2136
+    },
+    "8Clemson_vs_2Houston": {
+      "Houston": 0.8571,
+      "Clemson": 0.1429
+    },
+    "Final Four_Houston_vs_Duke": {
+      "Duke": 0.6049,
+      "Houston": 0.3951
+    },
+    "Championship_Houston_vs_Arizona": {
+      "Arizona": 0.6601,
+      "Houston": 0.3399
+    },
+    "Final Four_Florida_vs_Connecticut": {
+      "Florida": 0.6882,
+      "Connecticut": 0.3118
+    },
+    "5Vanderbilt_vs_2Houston": {
+      "Houston": 0.6467,
+      "Vanderbilt": 0.3533
+    },
+    "Championship_Duke_vs_Purdue": {
+      "Duke": 0.619,
+      "Purdue": 0.381
+    },
+    "9Iowa_vs_4Nebraska": {
+      "Iowa": 0.5146,
+      "Nebraska": 0.4854
+    },
+    "6BYU_vs_2Purdue": {
+      "Purdue": 0.8432,
+      "BYU": 0.1568
+    },
+    "Final Four_Houston_vs_Michigan St.": {
+      "Houston": 0.7196,
+      "Michigan St.": 0.2804
+    },
+    "Championship_Houston_vs_Michigan": {
+      "Michigan": 0.6101,
+      "Houston": 0.3899
+    },
+    "1Duke_vs_12Northern Iowa": {
+      "Duke": 1.0
+    },
+    "3Illinois_vs_10Texas A&M": {
+      "Illinois": 0.9176,
+      "Texas A&M": 0.0824
+    },
+    "3Illinois_vs_7Saint Mary's": {
+      "Illinois": 0.8675,
+      "Saint Mary's": 0.1325
+    },
+    "4Kansas_vs_2Connecticut": {
+      "Connecticut": 0.5307,
+      "Kansas": 0.4693
+    },
+    "Championship_Illinois_vs_Michigan": {
+      "Michigan": 0.7278,
+      "Illinois": 0.2722
+    },
+    "5St. John's_vs_2Connecticut": {
+      "St. John's": 0.5383,
+      "Connecticut": 0.4617
+    },
+    "5Wisconsin_vs_10Missouri": {
+      "Wisconsin": 0.6,
+      "Missouri": 0.4
+    },
+    "Final Four_Florida_vs_St. John's": {
+      "Florida": 0.7674,
+      "St. John's": 0.2326
+    },
+    "Final Four_Michigan_vs_Wisconsin": {
+      "Michigan": 0.8792,
+      "Wisconsin": 0.1208
+    },
+    "Championship_Florida_vs_Michigan": {
+      "Michigan": 0.6407,
+      "Florida": 0.3593
+    },
+    "6Louisville_vs_10UCF": {
+      "Louisville": 0.8889,
+      "UCF": 0.1111
+    },
+    "5St. John's_vs_6Louisville": {
+      "Louisville": 0.5297,
+      "St. John's": 0.4703
+    },
+    "Final Four_Nebraska_vs_Louisville": {
+      "Nebraska": 0.5385,
+      "Louisville": 0.4615
+    },
+    "Championship_Nebraska_vs_Michigan": {
+      "Michigan": 0.9355,
+      "Nebraska": 0.0645
+    },
+    "8Clemson_vs_4Nebraska": {
+      "Nebraska": 0.5656,
+      "Clemson": 0.4344
+    },
+    "8Ohio St._vs_4Kansas": {
+      "Kansas": 0.513,
+      "Ohio St.": 0.487
+    },
+    "Final Four_Nebraska_vs_Connecticut": {
+      "Nebraska": 0.5357,
+      "Connecticut": 0.4643
+    },
+    "5St. John's_vs_13Cal Baptist": {
+      "St. John's": 0.9844,
+      "Cal Baptist": 0.0156
+    },
+    "6North Carolina_vs_2Houston": {
+      "Houston": 0.8902,
+      "North Carolina": 0.1098
+    },
+    "8Ohio St._vs_5St. John's": {
+      "St. John's": 0.6246,
+      "Ohio St.": 0.3754
+    },
+    "5St. John's_vs_3Michigan St.": {
+      "St. John's": 0.5269,
+      "Michigan St.": 0.4731
+    },
+    "12High Point_vs_4Arkansas": {
+      "Arkansas": 0.9716,
+      "High Point": 0.0284
+    },
+    "1Arizona_vs_6BYU": {
+      "Arizona": 0.9599,
+      "BYU": 0.0401
+    },
+    "8Clemson_vs_3Illinois": {
+      "Illinois": 0.8723,
+      "Clemson": 0.1277
+    },
+    "5Texas Tech_vs_13Hofstra": {
+      "Texas Tech": 0.9716,
+      "Hofstra": 0.0284
+    },
+    "Final Four_Iowa St._vs_Purdue": {
+      "Purdue": 0.5018,
+      "Iowa St.": 0.4982
+    },
+    "3Virginia_vs_10Santa Clara": {
+      "Virginia": 0.8182,
+      "Santa Clara": 0.1818
+    },
+    "Final Four_Vanderbilt_vs_Connecticut": {
+      "Vanderbilt": 0.5109,
+      "Connecticut": 0.4891
+    },
+    "Championship_Vanderbilt_vs_Arizona": {
+      "Arizona": 0.8444,
+      "Vanderbilt": 0.1556
+    },
+    "5Wisconsin_vs_3Gonzaga": {
+      "Gonzaga": 0.5149,
+      "Wisconsin": 0.4851
+    },
+    "Final Four_Iowa St._vs_Gonzaga": {
+      "Iowa St.": 0.5,
+      "Gonzaga": 0.5
+    },
+    "4Kansas_vs_7UCLA": {
+      "Kansas": 0.6176,
+      "UCLA": 0.3824
+    },
+    "Final Four_Illinois_vs_UCLA": {
+      "Illinois": 0.8333,
+      "UCLA": 0.1667
+    },
+    "5Texas Tech_vs_3Virginia": {
+      "Virginia": 0.6384,
+      "Texas Tech": 0.3616
+    },
+    "5Wisconsin_vs_2Purdue": {
+      "Purdue": 0.7148,
+      "Wisconsin": 0.2852
+    },
+    "Final Four_Virginia_vs_Purdue": {
+      "Purdue": 0.7,
+      "Virginia": 0.3
+    },
+    "Championship_Florida_vs_Iowa St.": {
+      "Florida": 0.625,
+      "Iowa St.": 0.375
+    },
+    "Final Four_Houston_vs_Connecticut": {
+      "Houston": 0.6952,
+      "Connecticut": 0.3048
+    },
+    "6Tennessee_vs_10Santa Clara": {
+      "Tennessee": 0.7116,
+      "Santa Clara": 0.2884
+    },
+    "16Prairie View A&M_vs_9Iowa": {
+      "Iowa": 1.0
+    },
+    "9Iowa_vs_2Houston": {
+      "Houston": 0.7941,
+      "Iowa": 0.2059
+    },
+    "11South Florida_vs_2Connecticut": {
+      "Connecticut": 0.9392,
+      "South Florida": 0.0608
+    },
+    "Final Four_Iowa_vs_Duke": {
+      "Duke": 0.9643,
+      "Iowa": 0.0357
+    },
+    "5Vanderbilt_vs_13Troy": {
+      "Vanderbilt": 0.9947,
+      "Troy": 0.0053
+    },
+    "1Florida_vs_6North Carolina": {
+      "Florida": 0.9271,
+      "North Carolina": 0.0729
+    },
+    "1Michigan_vs_7Kentucky": {
+      "Michigan": 0.9474,
+      "Kentucky": 0.0526
+    },
+    "Final Four_Florida_vs_Kansas": {
+      "Florida": 0.7059,
+      "Kansas": 0.2941
+    },
+    "9Iowa_vs_5Vanderbilt": {
+      "Vanderbilt": 0.718,
+      "Iowa": 0.282
+    },
+    "3Michigan St._vs_10UCF": {
+      "Michigan St.": 0.8739,
+      "UCF": 0.1261
+    },
+    "1Duke_vs_10UCF": {
+      "Duke": 1.0
+    },
+    "8Georgia_vs_5Texas Tech": {
+      "Texas Tech": 0.7097,
+      "Georgia": 0.2903
+    },
+    "5Texas Tech_vs_7Kentucky": {
+      "Texas Tech": 0.6364,
+      "Kentucky": 0.3636
+    },
+    "Final Four_Texas Tech_vs_Purdue": {
+      "Purdue": 0.7674,
+      "Texas Tech": 0.2326
+    },
+    "Championship_Duke_vs_Texas Tech": {
+      "Duke": 0.8,
+      "Texas Tech": 0.2
+    },
+    "Championship_Florida_vs_Purdue": {
+      "Purdue": 0.5,
+      "Florida": 0.5
+    },
+    "9Utah St._vs_5Wisconsin": {
+      "Wisconsin": 0.7008,
+      "Utah St.": 0.2992
+    },
+    "Final Four_Nebraska_vs_Michigan St.": {
+      "Michigan St.": 0.6154,
+      "Nebraska": 0.3846
+    },
+    "Championship_Michigan St._vs_Michigan": {
+      "Michigan": 0.899,
+      "Michigan St.": 0.101
+    },
+    "4Alabama_vs_2Iowa St.": {
+      "Iowa St.": 0.6354,
+      "Alabama": 0.3646
+    },
+    "8Ohio St._vs_2Connecticut": {
+      "Connecticut": 0.6,
+      "Ohio St.": 0.4
+    },
+    "Final Four_Houston_vs_Ohio St.": {
+      "Houston": 0.7556,
+      "Ohio St.": 0.2444
+    },
+    "4Arkansas_vs_6BYU": {
+      "Arkansas": 0.6923,
+      "BYU": 0.3077
+    },
+    "Final Four_Michigan_vs_Arkansas": {
+      "Michigan": 0.9064,
+      "Arkansas": 0.0936
+    },
+    "Championship_Florida_vs_Arkansas": {
+      "Florida": 0.75,
+      "Arkansas": 0.25
+    },
+    "1Duke_vs_7UCLA": {
+      "Duke": 0.95,
+      "UCLA": 0.05
+    },
+    "3Gonzaga_vs_7Miami FL": {
+      "Gonzaga": 0.8163,
+      "Miami FL": 0.1837
+    },
+    "Championship_Vanderbilt_vs_Michigan": {
+      "Michigan": 0.8571,
+      "Vanderbilt": 0.1429
+    },
+    "5Wisconsin_vs_13Hawaii": {
+      "Wisconsin": 0.9784,
+      "Hawaii": 0.0216
+    },
+    "6North Carolina_vs_14Penn": {
+      "North Carolina": 1.0
+    },
+    "Final Four_Illinois_vs_Louisville": {
+      "Illinois": 0.6512,
+      "Louisville": 0.3488
+    },
+    "Final Four_Alabama_vs_Arizona": {
+      "Arizona": 0.9163,
+      "Alabama": 0.0837
+    },
+    "Final Four_Illinois_vs_Michigan St.": {
+      "Illinois": 0.5947,
+      "Michigan St.": 0.4053
+    },
+    "4Arkansas_vs_2Purdue": {
+      "Purdue": 0.7307,
+      "Arkansas": 0.2693
+    },
+    "Final Four_Iowa St._vs_Arkansas": {
+      "Iowa St.": 0.6,
+      "Arkansas": 0.4
+    },
+    "Final Four_Houston_vs_St. John's": {
+      "Houston": 0.854,
+      "St. John's": 0.146
+    },
+    "Championship_St. John's_vs_Arizona": {
+      "Arizona": 0.7419,
+      "St. John's": 0.2581
+    },
+    "Final Four_Clemson_vs_Connecticut": {
+      "Connecticut": 0.5,
+      "Clemson": 0.5
+    },
+    "8Georgia_vs_4Alabama": {
+      "Alabama": 0.7711,
+      "Georgia": 0.2289
+    },
+    "4Alabama_vs_3Virginia": {
+      "Alabama": 0.5731,
+      "Virginia": 0.4269
+    },
+    "4Alabama_vs_6Tennessee": {
+      "Alabama": 0.6299,
+      "Tennessee": 0.3701
+    },
+    "Final Four_Florida_vs_Michigan St.": {
+      "Florida": 0.7854,
+      "Michigan St.": 0.2146
+    },
+    "Championship_Florida_vs_Alabama": {
+      "Florida": 0.6875,
+      "Alabama": 0.3125
+    },
+    "10Texas A&M_vs_15Idaho": {
+      "Texas A&M": 1.0
+    },
+    "6North Carolina_vs_10Texas A&M": {
+      "North Carolina": 0.6216,
+      "Texas A&M": 0.3784
+    },
+    "8Clemson_vs_6North Carolina": {
+      "North Carolina": 1.0
+    },
+    "Final Four_North Carolina_vs_Connecticut": {
+      "Connecticut": 1.0
+    },
+    "Championship_Connecticut_vs_Michigan": {
+      "Michigan": 0.8543,
+      "Connecticut": 0.1457
+    },
+    "Championship_Duke_vs_Arkansas": {
+      "Duke": 0.875,
+      "Arkansas": 0.125
+    },
+    "6BYU_vs_10Missouri": {
+      "BYU": 0.6479,
+      "Missouri": 0.3521
+    },
+    "12McNeese St._vs_4Nebraska": {
+      "Nebraska": 0.8791,
+      "McNeese St.": 0.1209
+    },
+    "1Florida_vs_7Saint Mary's": {
+      "Florida": 0.9,
+      "Saint Mary's": 0.1
+    },
+    "9Utah St._vs_4Arkansas": {
+      "Arkansas": 0.6972,
+      "Utah St.": 0.3028
+    },
+    "1Florida_vs_12McNeese St.": {
+      "Florida": 1.0
+    },
+    "8Ohio St._vs_3Michigan St.": {
+      "Ohio St.": 0.5333,
+      "Michigan St.": 0.4667
+    },
+    "Championship_Houston_vs_Purdue": {
+      "Purdue": 0.5057,
+      "Houston": 0.4943
+    },
+    "4Alabama_vs_7Kentucky": {
+      "Alabama": 0.625,
+      "Kentucky": 0.375
+    },
+    "8Villanova_vs_5Wisconsin": {
+      "Wisconsin": 0.6585,
+      "Villanova": 0.3415
+    },
+    "5Wisconsin_vs_6BYU": {
+      "BYU": 0.5294,
+      "Wisconsin": 0.4706
+    },
+    "Final Four_Alabama_vs_BYU": {
+      "Alabama": 1.0
+    },
+    "Championship_Houston_vs_Alabama": {
+      "Houston": 0.8571,
+      "Alabama": 0.1429
+    },
+    "Final Four_Vanderbilt_vs_St. John's": {
+      "Vanderbilt": 0.5526,
+      "St. John's": 0.4474
+    },
+    "1Arizona_vs_10Missouri": {
+      "Arizona": 0.9844,
+      "Missouri": 0.0156
+    },
+    "4Kansas_vs_6Louisville": {
+      "Kansas": 0.6065,
+      "Louisville": 0.3935
+    },
+    "Final Four_Houston_vs_Louisville": {
+      "Houston": 0.7238,
+      "Louisville": 0.2762
+    },
+    "Championship_Houston_vs_Gonzaga": {
+      "Houston": 0.7857,
+      "Gonzaga": 0.2143
+    },
+    "Final Four_Illinois_vs_St. John's": {
+      "Illinois": 0.6493,
+      "St. John's": 0.3507
+    },
+    "Championship_Connecticut_vs_Purdue": {
+      "Purdue": 0.7407,
+      "Connecticut": 0.2593
+    },
+    "11Texas_vs_7Miami FL": {
+      "Texas": 0.5385,
+      "Miami FL": 0.4615
+    },
+    "1Arizona_vs_7Miami FL": {
+      "Arizona": 0.9352,
+      "Miami FL": 0.0648
+    },
+    "Final Four_Vanderbilt_vs_Michigan St.": {
+      "Vanderbilt": 0.5,
+      "Michigan St.": 0.5
+    },
+    "4Nebraska_vs_7Saint Mary's": {
+      "Nebraska": 0.75,
+      "Saint Mary's": 0.25
+    },
+    "9Saint Louis_vs_4Alabama": {
+      "Alabama": 0.8485,
+      "Saint Louis": 0.1515
+    },
+    "Final Four_Saint Mary's_vs_Michigan St.": {
+      "Michigan St.": 0.5,
+      "Saint Mary's": 0.5
+    },
+    "Final Four_Virginia_vs_Arizona": {
+      "Arizona": 0.8589,
+      "Virginia": 0.1411
+    },
+    "Championship_Michigan St._vs_Arizona": {
+      "Arizona": 0.8974,
+      "Michigan St.": 0.1026
+    },
+    "9TCU_vs_4Kansas": {
+      "Kansas": 0.8438,
+      "TCU": 0.1562
+    },
+    "Final Four_Tennessee_vs_Gonzaga": {
+      "Tennessee": 0.6286,
+      "Gonzaga": 0.3714
+    },
+    "Championship_Florida_vs_Gonzaga": {
+      "Florida": 0.6154,
+      "Gonzaga": 0.3846
+    },
+    "9Iowa_vs_3Illinois": {
+      "Illinois": 0.8692,
+      "Iowa": 0.1308
+    },
+    "5Vanderbilt_vs_6North Carolina": {
+      "Vanderbilt": 0.6296,
+      "North Carolina": 0.3704
+    },
+    "Championship_St. John's_vs_Purdue": {
+      "Purdue": 0.8571,
+      "St. John's": 0.1429
+    },
+    "9Utah St._vs_3Gonzaga": {
+      "Gonzaga": 0.72,
+      "Utah St.": 0.28
+    },
+    "Final Four_Michigan_vs_Utah St.": {
+      "Michigan": 1.0
+    },
+    "Championship_Duke_vs_Gonzaga": {
+      "Duke": 0.8356,
+      "Gonzaga": 0.1644
+    },
+    "Championship_Illinois_vs_Gonzaga": {
+      "Illinois": 0.6429,
+      "Gonzaga": 0.3571
+    },
+    "Championship_St. John's_vs_Michigan": {
+      "Michigan": 0.8235,
+      "St. John's": 0.1765
+    },
+    "Final Four_Alabama_vs_Purdue": {
+      "Purdue": 0.5873,
+      "Alabama": 0.4127
+    },
+    "Championship_Illinois_vs_Virginia": {
+      "Illinois": 0.6429,
+      "Virginia": 0.3571
+    },
+    "1Michigan_vs_10Santa Clara": {
+      "Michigan": 0.981,
+      "Santa Clara": 0.019
+    },
+    "6Tennessee_vs_14Wright St.": {
+      "Tennessee": 1.0
+    },
+    "5St. John's_vs_7UCLA": {
+      "St. John's": 0.6667,
+      "UCLA": 0.3333
+    },
+    "11VCU_vs_2Houston": {
+      "Houston": 0.9444,
+      "VCU": 0.0556
+    },
+    "Final Four_Illinois_vs_Kansas": {
+      "Illinois": 0.7059,
+      "Kansas": 0.2941
+    },
+    "Championship_Houston_vs_Iowa St.": {
+      "Houston": 0.5484,
+      "Iowa St.": 0.4516
+    },
+    "11Miami OH_vs_2Iowa St.": {
+      "Iowa St.": 1.0
+    },
+    "12Akron_vs_13Hofstra": {
+      "Hofstra": 0.5263,
+      "Akron": 0.4737
+    },
+    "1Michigan_vs_12Akron": {
+      "Michigan": 0.9737,
+      "Akron": 0.0263
+    },
+    "Final Four_Tennessee_vs_Purdue": {
+      "Purdue": 0.7612,
+      "Tennessee": 0.2388
+    },
+    "8Villanova_vs_4Arkansas": {
+      "Arkansas": 0.8229,
+      "Villanova": 0.1771
+    },
+    "Championship_Houston_vs_Tennessee": {
+      "Houston": 0.6875,
+      "Tennessee": 0.3125
+    },
+    "4Arkansas_vs_10Missouri": {
+      "Arkansas": 0.8333,
+      "Missouri": 0.1667
+    },
+    "6North Carolina_vs_7Saint Mary's": {
+      "Saint Mary's": 0.5532,
+      "North Carolina": 0.4468
+    },
+    "16Prairie View A&M_vs_8Clemson": {
+      "Clemson": 1.0
+    },
+    "Championship_Nebraska_vs_Arizona": {
+      "Arizona": 0.9048,
+      "Nebraska": 0.0952
+    },
+    "10Santa Clara_vs_15Tennessee St.": {
+      "Santa Clara": 1.0
+    },
+    "11South Florida_vs_7UCLA": {
+      "UCLA": 0.7708,
+      "South Florida": 0.2292
+    },
+    "1Duke_vs_11South Florida": {
+      "Duke": 1.0
+    },
+    "12McNeese St._vs_13Troy": {
+      "McNeese St.": 0.6,
+      "Troy": 0.4
+    },
+    "1Florida_vs_13Troy": {
+      "Florida": 1.0
+    },
+    "11South Florida_vs_14North Dakota St.": {
+      "South Florida": 0.8889,
+      "North Dakota St.": 0.1111
+    },
+    "1Michigan_vs_13Hofstra": {
+      "Michigan": 1.0
+    },
+    "Championship_Kansas_vs_Gonzaga": {
+      "Kansas": 0.6667,
+      "Gonzaga": 0.3333
+    },
+    "Final Four_Houston_vs_UCLA": {
+      "Houston": 0.9565,
+      "UCLA": 0.0435
+    },
+    "1Florida_vs_10Texas A&M": {
+      "Florida": 0.9231,
+      "Texas A&M": 0.0769
+    },
+    "Final Four_Texas Tech_vs_Gonzaga": {
+      "Gonzaga": 0.5833,
+      "Texas Tech": 0.4167
+    },
+    "Championship_Illinois_vs_Iowa St.": {
+      "Iowa St.": 0.5192,
+      "Illinois": 0.4808
+    },
+    "Final Four_Texas Tech_vs_Arkansas": {
+      "Texas Tech": 0.6667,
+      "Arkansas": 0.3333
+    },
+    "Championship_Florida_vs_Texas Tech": {
+      "Florida": 0.8125,
+      "Texas Tech": 0.1875
+    },
+    "Final Four_Virginia_vs_Arkansas": {
+      "Arkansas": 0.7,
+      "Virginia": 0.3
+    },
+    "Final Four_Kentucky_vs_Arizona": {
+      "Arizona": 0.8846,
+      "Kentucky": 0.1154
+    },
+    "Final Four_Saint Mary's_vs_Duke": {
+      "Duke": 0.8333,
+      "Saint Mary's": 0.1667
+    },
+    "Final Four_Alabama_vs_Gonzaga": {
+      "Alabama": 0.5789,
+      "Gonzaga": 0.4211
+    },
+    "Final Four_Florida_vs_Ohio St.": {
+      "Florida": 0.8723,
+      "Ohio St.": 0.1277
+    },
+    "Championship_Illinois_vs_Purdue": {
+      "Purdue": 0.6747,
+      "Illinois": 0.3253
+    },
+    "Final Four_Illinois_vs_Ohio St.": {
+      "Illinois": 0.75,
+      "Ohio St.": 0.25
+    },
+    "6BYU_vs_7Miami FL": {
+      "BYU": 0.5233,
+      "Miami FL": 0.4767
+    },
+    "Championship_Kansas_vs_Arizona": {
+      "Arizona": 0.8667,
+      "Kansas": 0.1333
+    },
+    "Final Four_Vanderbilt_vs_Louisville": {
+      "Louisville": 0.6129,
+      "Vanderbilt": 0.3871
+    },
+    "8Georgia_vs_7Kentucky": {
+      "Georgia": 1.0
+    },
+    "Final Four_Georgia_vs_Purdue": {
+      "Georgia": 0.5,
+      "Purdue": 0.5
+    },
+    "Championship_Illinois_vs_Georgia": {
+      "Illinois": 1.0
+    },
+    "Final Four_Clemson_vs_Duke": {
+      "Duke": 0.8125,
+      "Clemson": 0.1875
+    },
+    "8Villanova_vs_2Purdue": {
+      "Purdue": 0.88,
+      "Villanova": 0.12
+    },
+    "Championship_Houston_vs_Texas Tech": {
+      "Texas Tech": 0.6,
+      "Houston": 0.4
+    },
+    "Final Four_Vanderbilt_vs_UCLA": {
+      "Vanderbilt": 0.7778,
+      "UCLA": 0.2222
+    },
+    "Championship_Kansas_vs_Purdue": {
+      "Purdue": 0.5652,
+      "Kansas": 0.4348
+    },
+    "Final Four_Michigan_vs_Missouri": {
+      "Michigan": 1.0
+    },
+    "8Ohio St._vs_6Louisville": {
+      "Louisville": 0.6066,
+      "Ohio St.": 0.3934
+    },
+    "Championship_Connecticut_vs_Iowa St.": {
+      "Iowa St.": 0.6111,
+      "Connecticut": 0.3889
+    },
+    "Final Four_Clemson_vs_Kansas": {
+      "Kansas": 1.0
+    },
+    "9TCU_vs_5St. John's": {
+      "St. John's": 0.7917,
+      "TCU": 0.2083
+    },
+    "9TCU_vs_2Connecticut": {
+      "Connecticut": 0.6667,
+      "TCU": 0.3333
+    },
+    "Championship_Vanderbilt_vs_Gonzaga": {
+      "Gonzaga": 0.5,
+      "Vanderbilt": 0.5
+    },
+    "Championship_Louisville_vs_Arizona": {
+      "Arizona": 0.9531,
+      "Louisville": 0.0469
+    },
+    "Championship_Clemson_vs_Michigan": {
+      "Michigan": 1.0
+    },
+    "Final Four_Virginia_vs_Gonzaga": {
+      "Gonzaga": 0.5135,
+      "Virginia": 0.4865
+    },
+    "Championship_Duke_vs_Virginia": {
+      "Duke": 0.7381,
+      "Virginia": 0.2619
+    },
+    "1Florida_vs_11VCU": {
+      "Florida": 1.0
+    },
+    "Final Four_Vanderbilt_vs_Ohio St.": {
+      "Vanderbilt": 0.6667,
+      "Ohio St.": 0.3333
+    },
+    "Championship_Ohio St._vs_Michigan": {
+      "Michigan": 0.8333,
+      "Ohio St.": 0.1667
+    },
+    "9Utah St._vs_2Purdue": {
+      "Purdue": 0.9286,
+      "Utah St.": 0.0714
+    },
+    "8Ohio St._vs_7UCLA": {
+      "Ohio St.": 0.6667,
+      "UCLA": 0.3333
+    },
+    "Championship_Kansas_vs_Iowa St.": {
+      "Kansas": 0.5,
+      "Iowa St.": 0.5
+    },
+    "Final Four_Texas Tech_vs_Wisconsin": {
+      "Texas Tech": 0.7143,
+      "Wisconsin": 0.2857
+    },
+    "Championship_Michigan St._vs_Iowa St.": {
+      "Iowa St.": 0.7,
+      "Michigan St.": 0.3
+    },
+    "Final Four_Iowa_vs_Michigan St.": {
+      "Iowa": 0.75,
+      "Michigan St.": 0.25
+    },
+    "10Missouri_vs_15Queens": {
+      "Missouri": 1.0
+    },
+    "Final Four_Tennessee_vs_Wisconsin": {
+      "Tennessee": 0.5455,
+      "Wisconsin": 0.4545
+    },
+    "Championship_Duke_vs_Tennessee": {
+      "Duke": 0.8485,
+      "Tennessee": 0.1515
+    },
+    "Championship_Illinois_vs_Alabama": {
+      "Illinois": 0.6364,
+      "Alabama": 0.3636
+    },
+    "Championship_Michigan St._vs_Gonzaga": {
+      "Michigan St.": 0.625,
+      "Gonzaga": 0.375
+    },
+    "Final Four_Michigan_vs_BYU": {
+      "Michigan": 1.0
+    },
+    "11Texas_vs_10Missouri": {
+      "Missouri": 0.5,
+      "Texas": 0.5
+    },
+    "Championship_Houston_vs_Virginia": {
+      "Houston": 0.8,
+      "Virginia": 0.2
+    },
+    "10UCF_vs_15Furman": {
+      "UCF": 1.0
+    },
+    "16Long Island_vs_9Utah St.": {
+      "Utah St.": 1.0
+    },
+    "11Texas_vs_14Kennesaw St.": {
+      "Texas": 0.9286,
+      "Kennesaw St.": 0.0714
+    },
+    "1Arizona_vs_11Texas": {
+      "Arizona": 1.0
+    },
+    "Championship_Connecticut_vs_Wisconsin": {
+      "Connecticut": 1.0
+    },
+    "Championship_Duke_vs_Alabama": {
+      "Duke": 0.8,
+      "Alabama": 0.2
+    },
+    "Championship_Vanderbilt_vs_Purdue": {
+      "Purdue": 0.75,
+      "Vanderbilt": 0.25
+    },
+    "8Villanova_vs_3Gonzaga": {
+      "Gonzaga": 0.7647,
+      "Villanova": 0.2353
+    },
+    "Final Four_Michigan_vs_Villanova": {
+      "Michigan": 1.0
+    },
+    "11VCU_vs_14Penn": {
+      "VCU": 1.0
+    },
+    "5Vanderbilt_vs_7Saint Mary's": {
+      "Vanderbilt": 0.625,
+      "Saint Mary's": 0.375
+    },
+    "5Vanderbilt_vs_10Texas A&M": {
+      "Vanderbilt": 0.8182,
+      "Texas A&M": 0.1818
+    },
+    "16UMBC_vs_9Saint Louis": {
+      "Saint Louis": 1.0
+    },
+    "Final Four_Alabama_vs_Wisconsin": {
+      "Wisconsin": 0.5714,
+      "Alabama": 0.4286
+    },
+    "9TCU_vs_3Michigan St.": {
+      "Michigan St.": 0.5,
+      "TCU": 0.5
+    },
+    "Championship_Michigan St._vs_Virginia": {
+      "Michigan St.": 0.5,
+      "Virginia": 0.5
+    },
+    "Final Four_Kentucky_vs_Gonzaga": {
+      "Gonzaga": 0.5,
+      "Kentucky": 0.5
+    },
+    "8Clemson_vs_10Texas A&M": {
+      "Clemson": 1.0
+    },
+    "16Siena_vs_8Ohio St.": {
+      "Ohio St.": 1.0
+    },
+    "Championship_Florida_vs_Wisconsin": {
+      "Florida": 0.8,
+      "Wisconsin": 0.2
+    },
+    "Championship_UCLA_vs_Michigan": {
+      "Michigan": 0.8571,
+      "UCLA": 0.1429
+    },
+    "Championship_Illinois_vs_Texas Tech": {
+      "Illinois": 0.5556,
+      "Texas Tech": 0.4444
+    },
+    "Final Four_Iowa St._vs_Wisconsin": {
+      "Iowa St.": 0.6957,
+      "Wisconsin": 0.3043
+    },
+    "4Nebraska_vs_6North Carolina": {
+      "Nebraska": 0.7,
+      "North Carolina": 0.3
+    },
+    "9Saint Louis_vs_3Virginia": {
+      "Virginia": 1.0
+    },
+    "Championship_Iowa_vs_Michigan": {
+      "Michigan": 1.0
+    },
+    "Championship_Saint Mary's_vs_Arizona": {
+      "Arizona": 1.0
+    },
+    "6BYU_vs_14Kennesaw St.": {
+      "BYU": 0.9444,
+      "Kennesaw St.": 0.0556
+    },
+    "Final Four_Vanderbilt_vs_Kansas": {
+      "Vanderbilt": 0.5161,
+      "Kansas": 0.4839
+    },
+    "11Miami OH_vs_14Wright St.": {
+      "Miami OH": 0.75,
+      "Wright St.": 0.25
+    },
+    "Final Four_North Carolina_vs_Duke": {
+      "Duke": 0.9474,
+      "North Carolina": 0.0526
+    },
+    "Championship_Illinois_vs_Wisconsin": {
+      "Illinois": 1.0
+    },
+    "4Nebraska_vs_10Texas A&M": {
+      "Nebraska": 0.8,
+      "Texas A&M": 0.2
+    },
+    "Championship_Vanderbilt_vs_Texas Tech": {
+      "Vanderbilt": 0.75,
+      "Texas Tech": 0.25
+    },
+    "Championship_Illinois_vs_Tennessee": {
+      "Illinois": 0.6154,
+      "Tennessee": 0.3846
+    },
+    "Final Four_Nebraska_vs_Ohio St.": {
+      "Nebraska": 0.8,
+      "Ohio St.": 0.2
+    },
+    "Final Four_North Carolina_vs_St. John's": {
+      "St. John's": 1.0
+    },
+    "Championship_Florida_vs_Tennessee": {
+      "Florida": 0.6471,
+      "Tennessee": 0.3529
+    },
+    "Championship_Florida_vs_Virginia": {
+      "Florida": 0.9412,
+      "Virginia": 0.0588
+    },
+    "Final Four_Texas Tech_vs_BYU": {
+      "Texas Tech": 1.0
+    },
+    "Championship_Vanderbilt_vs_Iowa St.": {
+      "Iowa St.": 0.6,
+      "Vanderbilt": 0.4
+    },
+    "Final Four_Virginia_vs_Wisconsin": {
+      "Virginia": 0.8,
+      "Wisconsin": 0.2
+    },
+    "Final Four_Iowa St._vs_Utah St.": {
+      "Iowa St.": 1.0
+    },
+    "12Northern Iowa_vs_13Cal Baptist": {
+      "Northern Iowa": 0.8077,
+      "Cal Baptist": 0.1923
+    },
+    "7Saint Mary's_vs_15Idaho": {
+      "Saint Mary's": 1.0
+    },
+    "Final Four_Kentucky_vs_Purdue": {
+      "Purdue": 0.8182,
+      "Kentucky": 0.1818
+    },
+    "12High Point_vs_13Hawaii": {
+      "Hawaii": 0.5714,
+      "High Point": 0.4286
+    },
+    "1Arizona_vs_13Hawaii": {
+      "Arizona": 0.875,
+      "Hawaii": 0.125
+    },
+    "5Texas Tech_vs_10Santa Clara": {
+      "Texas Tech": 1.0
+    },
+    "9TCU_vs_12Northern Iowa": {
+      "Northern Iowa": 1.0
+    },
+    "12Northern Iowa_vs_3Michigan St.": {
+      "Michigan St.": 1.0
+    },
+    "5Wisconsin_vs_11Texas": {
+      "Wisconsin": 0.6,
+      "Texas": 0.4
+    },
+    "Final Four_Michigan_vs_Texas": {
+      "Michigan": 1.0
+    },
+    "Championship_Connecticut_vs_Gonzaga": {
+      "Connecticut": 0.8,
+      "Gonzaga": 0.2
+    },
+    "9Saint Louis_vs_5Texas Tech": {
+      "Texas Tech": 0.7667,
+      "Saint Louis": 0.2333
+    },
+    "Championship_Michigan St._vs_Purdue": {
+      "Purdue": 0.6,
+      "Michigan St.": 0.4
+    },
+    "Championship_Ohio St._vs_Arizona": {
+      "Arizona": 1.0
+    },
+    "Final Four_Nebraska_vs_Kansas": {
+      "Kansas": 0.6667,
+      "Nebraska": 0.3333
+    },
+    "Championship_Louisville_vs_Iowa St.": {
+      "Iowa St.": 0.6,
+      "Louisville": 0.4
+    },
+    "Championship_Kansas_vs_Wisconsin": {
+      "Kansas": 1.0
+    },
+    "7UCLA_vs_15Furman": {
+      "UCLA": 1.0
+    },
+    "Final Four_Virginia_vs_Miami FL": {
+      "Virginia": 1.0
+    },
+    "9Iowa_vs_12McNeese St.": {
+      "Iowa": 1.0
+    },
+    "8Ohio St._vs_12Northern Iowa": {
+      "Ohio St.": 1.0
+    },
+    "11VCU_vs_10Texas A&M": {
+      "Texas A&M": 0.8333,
+      "VCU": 0.1667
+    },
+    "Final Four_Texas A&M_vs_Duke": {
+      "Duke": 1.0
+    },
+    "4Arkansas_vs_7Miami FL": {
+      "Arkansas": 0.7143,
+      "Miami FL": 0.2857
+    },
+    "4Arkansas_vs_11Texas": {
+      "Texas": 0.6667,
+      "Arkansas": 0.3333
+    },
+    "16UMBC_vs_8Georgia": {
+      "Georgia": 1.0
+    },
+    "Final Four_Santa Clara_vs_Arizona": {
+      "Arizona": 0.6667,
+      "Santa Clara": 0.3333
+    },
+    "Championship_Vanderbilt_vs_Wisconsin": {
+      "Vanderbilt": 1.0
+    },
+    "1Arizona_vs_12High Point": {
+      "Arizona": 1.0
+    },
+    "Championship_Duke_vs_Wisconsin": {
+      "Duke": 0.9231,
+      "Wisconsin": 0.0769
+    },
+    "8Georgia_vs_6Tennessee": {
+      "Tennessee": 0.8333,
+      "Georgia": 0.1667
+    },
+    "7Kentucky_vs_15Tennessee St.": {
+      "Kentucky": 1.0
+    },
+    "4Nebraska_vs_11VCU": {
+      "VCU": 1.0
+    },
+    "Final Four_VCU_vs_Duke": {
+      "Duke": 1.0
+    },
+    "Championship_Houston_vs_Arkansas": {
+      "Arkansas": 0.6,
+      "Houston": 0.4
+    },
+    "Championship_Ohio St._vs_Purdue": {
+      "Purdue": 1.0
+    },
+    "16Siena_vs_9TCU": {
+      "TCU": 1.0
+    },
+    "Championship_St. John's_vs_Iowa St.": {
+      "Iowa St.": 0.8,
+      "St. John's": 0.2
+    },
+    "Final Four_Florida_vs_UCLA": {
+      "Florida": 0.9167,
+      "UCLA": 0.0833
+    },
+    "Final Four_Florida_vs_TCU": {
+      "TCU": 1.0
+    },
+    "Championship_TCU_vs_Arizona": {
+      "Arizona": 1.0
+    },
+    "8Villanova_vs_6BYU": {
+      "Villanova": 0.5,
+      "BYU": 0.5
+    },
+    "Final Four_Iowa_vs_Connecticut": {
+      "Iowa": 0.6667,
+      "Connecticut": 0.3333
+    },
+    "Championship_Kansas_vs_Virginia": {
+      "Virginia": 1.0
+    },
+    "Championship_Louisville_vs_Purdue": {
+      "Purdue": 1.0
+    },
+    "Championship_Vanderbilt_vs_Alabama": {
+      "Alabama": 1.0
+    },
+    "Final Four_Nebraska_vs_St. John's": {
+      "Nebraska": 0.5455,
+      "St. John's": 0.4545
+    },
+    "8Georgia_vs_2Iowa St.": {
+      "Iowa St.": 0.8571,
+      "Georgia": 0.1429
+    },
+    "Championship_Michigan St._vs_Arkansas": {
+      "Arkansas": 0.6667,
+      "Michigan St.": 0.3333
+    },
+    "14Kennesaw St._vs_2Purdue": {
+      "Purdue": 1.0
+    },
+    "16Long Island_vs_8Villanova": {
+      "Villanova": 1.0
+    },
+    "Championship_Connecticut_vs_Virginia": {
+      "Connecticut": 0.6667,
+      "Virginia": 0.3333
+    },
+    "9Saint Louis_vs_2Iowa St.": {
+      "Iowa St.": 1.0
+    },
+    "11South Florida_vs_10UCF": {
+      "UCF": 0.7143,
+      "South Florida": 0.2857
+    },
+    "9TCU_vs_6Louisville": {
+      "Louisville": 1.0
+    },
+    "Championship_Illinois_vs_Arkansas": {
+      "Illinois": 0.8571,
+      "Arkansas": 0.1429
+    },
+    "Championship_Houston_vs_Wisconsin": {
+      "Wisconsin": 0.6667,
+      "Houston": 0.3333
+    },
+    "9Utah St._vs_6BYU": {
+      "BYU": 0.6667,
+      "Utah St.": 0.3333
+    },
+    "9Utah St._vs_12High Point": {
+      "Utah St.": 1.0
+    },
+    "Final Four_Tennessee_vs_Arkansas": {
+      "Arkansas": 0.5,
+      "Tennessee": 0.5
+    },
+    "9Iowa_vs_6North Carolina": {
+      "Iowa": 1.0
+    },
+    "5St. John's_vs_10UCF": {
+      "St. John's": 1.0
+    },
+    "Final Four_Iowa_vs_Kansas": {
+      "Kansas": 0.5,
+      "Iowa": 0.5
+    },
+    "Championship_Ohio St._vs_Arkansas": {
+      "Ohio St.": 1.0
+    },
+    "9Iowa_vs_7Saint Mary's": {
+      "Saint Mary's": 1.0
+    },
+    "8Clemson_vs_12McNeese St.": {
+      "Clemson": 1.0
+    },
+    "11Miami OH_vs_7Kentucky": {
+      "Kentucky": 1.0
+    },
+    "Championship_Nebraska_vs_Gonzaga": {
+      "Nebraska": 1.0
+    },
+    "1Duke_vs_13Cal Baptist": {
+      "Duke": 1.0
+    },
+    "Championship_Kansas_vs_Kentucky": {
+      "Kentucky": 1.0
+    },
+    "Championship_Nebraska_vs_Texas Tech": {
+      "Texas Tech": 1.0
+    },
+    "Final Four_Saint Mary's_vs_Connecticut": {
+      "Saint Mary's": 1.0
+    },
+    "Championship_Connecticut_vs_Tennessee": {
+      "Tennessee": 0.5,
+      "Connecticut": 0.5
+    },
+    "13Hawaii_vs_2Purdue": {
+      "Purdue": 1.0
+    },
+    "4Alabama_vs_10Santa Clara": {
+      "Alabama": 0.6,
+      "Santa Clara": 0.4
+    },
+    "Final Four_Santa Clara_vs_Arkansas": {
+      "Arkansas": 1.0
+    },
+    "8Georgia_vs_3Virginia": {
+      "Virginia": 0.875,
+      "Georgia": 0.125
+    },
+    "Final Four_Michigan_vs_Miami FL": {
+      "Michigan": 1.0
+    },
+    "Championship_Michigan St._vs_Texas Tech": {
+      "Texas Tech": 1.0
+    },
+    "Championship_Clemson_vs_Arizona": {
+      "Arizona": 1.0
+    },
+    "Championship_St. John's_vs_Virginia": {
+      "Virginia": 1.0
+    },
+    "Championship_Vanderbilt_vs_Virginia": {
+      "Virginia": 0.6667,
+      "Vanderbilt": 0.3333
+    },
+    "4Kansas_vs_10UCF": {
+      "UCF": 0.5,
+      "Kansas": 0.5
+    },
+    "Final Four_Vanderbilt_vs_UCF": {
+      "Vanderbilt": 1.0
+    },
+    "Championship_Connecticut_vs_Kentucky": {
+      "Kentucky": 1.0
+    },
+    "Championship_Nebraska_vs_Purdue": {
+      "Purdue": 0.8333,
+      "Nebraska": 0.1667
+    },
+    "Final Four_Georgia_vs_Arizona": {
+      "Arizona": 1.0
+    },
+    "Final Four_Clemson_vs_Louisville": {
+      "Clemson": 0.5,
+      "Louisville": 0.5
+    },
+    "11VCU_vs_7Saint Mary's": {
+      "Saint Mary's": 0.6667,
+      "VCU": 0.3333
+    },
+    "5Vanderbilt_vs_11VCU": {
+      "Vanderbilt": 1.0
+    },
+    "Final Four_Texas Tech_vs_Miami FL": {
+      "Miami FL": 1.0
+    },
+    "Championship_Houston_vs_Miami FL": {
+      "Houston": 1.0
+    },
+    "Championship_UCLA_vs_Arizona": {
+      "Arizona": 0.8,
+      "UCLA": 0.2
+    },
+    "Championship_North Carolina_vs_Arkansas": {
+      "North Carolina": 1.0
+    },
+    "Championship_Nebraska_vs_Iowa St.": {
+      "Iowa St.": 1.0
+    },
+    "Championship_Connecticut_vs_Alabama": {
+      "Alabama": 1.0
+    },
+    "Championship_Kansas_vs_Texas Tech": {
+      "Kansas": 1.0
+    },
+    "Championship_Connecticut_vs_Arkansas": {
+      "Arkansas": 1.0
+    },
+    "14North Dakota St._vs_2Connecticut": {
+      "Connecticut": 1.0
+    },
+    "7Miami FL_vs_15Queens": {
+      "Miami FL": 1.0
+    },
+    "Championship_Iowa_vs_Arizona": {
+      "Arizona": 1.0
+    },
+    "Championship_Florida_vs_Kentucky": {
+      "Florida": 1.0
+    },
+    "Championship_Michigan St._vs_Wisconsin": {
+      "Wisconsin": 1.0
+    },
+    "Final Four_Texas A&M_vs_UCLA": {
+      "UCLA": 1.0
+    },
+    "Final Four_Houston_vs_UCF": {
+      "Houston": 1.0
+    },
+    "Championship_St. John's_vs_Gonzaga": {
+      "Gonzaga": 1.0
+    },
+    "12Akron_vs_2Iowa St.": {
+      "Iowa St.": 1.0
+    },
+    "9TCU_vs_7UCLA": {
+      "UCLA": 0.5,
+      "TCU": 0.5
+    },
+    "Final Four_Virginia_vs_BYU": {
+      "BYU": 1.0
+    },
+    "Championship_Florida_vs_BYU": {
+      "Florida": 1.0
+    },
+    "4Kansas_vs_11South Florida": {
+      "Kansas": 1.0
+    },
+    "Final Four_Illinois_vs_TCU": {
+      "Illinois": 1.0
+    },
+    "Championship_Louisville_vs_Gonzaga": {
+      "Gonzaga": 0.5,
+      "Louisville": 0.5
+    },
+    "Final Four_Alabama_vs_Arkansas": {
+      "Arkansas": 0.6667,
+      "Alabama": 0.3333
+    },
+    "14North Dakota St._vs_7UCLA": {
+      "UCLA": 1.0
+    },
+    "Championship_St. John's_vs_Texas Tech": {
+      "Texas Tech": 0.5,
+      "St. John's": 0.5
+    },
+    "Championship_Vanderbilt_vs_Tennessee": {
+      "Tennessee": 1.0
+    },
+    "Final Four_Virginia_vs_Utah St.": {
+      "Utah St.": 1.0
+    },
+    "Championship_Duke_vs_Utah St.": {
+      "Duke": 1.0
+    },
+    "Championship_Michigan St._vs_Kentucky": {
+      "Michigan St.": 1.0
+    },
+    "5Wisconsin_vs_7Miami FL": {
+      "Wisconsin": 1.0
+    },
+    "Championship_Kansas_vs_Arkansas": {
+      "Arkansas": 1.0
+    },
+    "Championship_Saint Mary's_vs_Michigan": {
+      "Michigan": 1.0
+    },
+    "8Villanova_vs_12High Point": {
+      "High Point": 1.0
+    },
+    "12High Point_vs_2Purdue": {
+      "Purdue": 1.0
+    },
+    "Championship_Vanderbilt_vs_Arkansas": {
+      "Vanderbilt": 1.0
+    },
+    "14Wright St._vs_2Iowa St.": {
+      "Iowa St.": 1.0
+    },
+    "Championship_Louisville_vs_Texas Tech": {
+      "Louisville": 1.0
+    },
+    "Final Four_Houston_vs_TCU": {
+      "Houston": 1.0
+    },
+    "11Miami OH_vs_10Santa Clara": {
+      "Santa Clara": 1.0
+    },
+    "Final Four_North Carolina_vs_Louisville": {
+      "North Carolina": 1.0
+    },
+    "Championship_North Carolina_vs_Arizona": {
+      "Arizona": 1.0
+    },
+    "Championship_Duke_vs_Kentucky": {
+      "Duke": 0.5,
+      "Kentucky": 0.5
+    },
+    "Final Four_Clemson_vs_Michigan St.": {
+      "Michigan St.": 1.0
+    },
+    "Championship_Kansas_vs_Santa Clara": {
+      "Kansas": 1.0
+    },
+    "9Utah St._vs_10Missouri": {
+      "Utah St.": 1.0
+    },
+    "Final Four_North Carolina_vs_UCLA": {
+      "North Carolina": 1.0
+    },
+    "Championship_North Carolina_vs_Michigan": {
+      "Michigan": 1.0
+    },
+    "Championship_St. John's_vs_Tennessee": {
+      "St. John's": 1.0
+    },
+    "8Ohio St._vs_13Cal Baptist": {
+      "Ohio St.": 1.0
+    },
+    "Final Four_Iowa St._vs_BYU": {
+      "Iowa St.": 1.0
+    },
+    "8Ohio St._vs_10UCF": {
+      "UCF": 1.0
+    },
+    "5St. John's_vs_11South Florida": {
+      "St. John's": 1.0
+    },
+    "Championship_Saint Mary's_vs_Kentucky": {
+      "Kentucky": 1.0
+    },
+    "Final Four_Kentucky_vs_Arkansas": {
+      "Kentucky": 1.0
+    },
+    "Championship_Nebraska_vs_Kentucky": {
+      "Nebraska": 1.0
+    },
+    "Final Four_Saint Mary's_vs_Louisville": {
+      "Louisville": 1.0
+    },
+    "Championship_Connecticut_vs_Texas Tech": {
+      "Texas Tech": 1.0
+    },
+    "Final Four_Tennessee_vs_BYU": {
+      "Tennessee": 1.0
+    },
+    "Final Four_Nebraska_vs_UCLA": {
+      "UCLA": 1.0
+    },
+    "Championship_Michigan St._vs_Alabama": {
+      "Alabama": 1.0
+    },
+    "8Villanova_vs_7Miami FL": {
+      "Miami FL": 1.0
+    },
+    "Final Four_Alabama_vs_Miami FL": {
+      "Miami FL": 1.0
+    },
+    "Championship_Duke_vs_Miami FL": {
+      "Duke": 1.0
+    }
   }
 }

@@ -455,6 +455,8 @@ def analyze_matchup_endpoint(
     year: int = Query(default=2026),
     seed_a: Optional[int] = Query(default=None),
     seed_b: Optional[int] = Query(default=None),
+    region: Optional[str] = Query(default=None),
+    round_name: Optional[str] = Query(default=None),
 ):
     """Return full matchup analysis for display. Used when matchup is not in
     pre-generated picks (e.g. downstream game after user changed an upstream pick)."""
@@ -464,7 +466,10 @@ def analyze_matchup_endpoint(
         raw_a = dict(raw_a, seed=seed_a)
     if seed_b is not None:
         raw_b = dict(raw_b, seed=seed_b)
-    analysis = get_matchup_analysis_display(raw_a, raw_b, data_dir=DATA_DIR, year=year)
+    analysis = get_matchup_analysis_display(
+        raw_a, raw_b, data_dir=DATA_DIR, year=year,
+        region=region, round_name=round_name,
+    )
     return analysis
 
 

@@ -1273,7 +1273,19 @@ async function showAnalysis(gameId) {
     try {
       const seedParams = (st.seedA != null && st.seedB != null)
         ? `&seed_a=${st.seedA}&seed_b=${st.seedB}` : '';
-      orig = await apiFetch(`/analyze?team_a=${encodeURIComponent(st.teamA)}&team_b=${encodeURIComponent(st.teamB)}&year=${currentYear || 2026}${seedParams}`);
+      // Parse region/round from gameId for venue lookup
+      let regionParam = '', roundParam = '';
+      if (!gameId.startsWith('FF')) {
+        const parts = gameId.split('-');
+        regionParam = `&region=${encodeURIComponent(parts[0])}`;
+        const roundNum2 = parseInt(parts[1]);
+        const rndMap = {64:'Round of 64',32:'Round of 32',16:'Sweet 16',8:'Elite 8'};
+        if (rndMap[roundNum2]) roundParam = `&round_name=${encodeURIComponent(rndMap[roundNum2])}`;
+      } else {
+        const isChamp = gameId === 'FF-2-0';
+        roundParam = `&round_name=${encodeURIComponent(isChamp ? 'Championship' : 'Final Four')}`;
+      }
+      orig = await apiFetch(`/analyze?team_a=${encodeURIComponent(st.teamA)}&team_b=${encodeURIComponent(st.teamB)}&year=${currentYear || 2026}${seedParams}${regionParam}${roundParam}`);
     } catch (e) {
       orig = { insight: 'Could not load analysis for this matchup.', stats_a: {}, stats_b: {}, factors_a: {}, factors_b: {}, key_factors: [] };
     }
@@ -1581,9 +1593,56 @@ async function showAnalysis(gameId) {
 
   const insightHtml = insight ? `<div class="ap-insight">${insight}</div>` : '';
 
+  const venueCity = orig?.venue_city;
+  const proxA = factorsA?.proximity, proxB = factorsB?.proximity;
+  const injFactorA = factorsA?.injuries, injFactorB = factorsB?.injuries;
+  // injuries factor is stored as -penalty (negative = penalty), convert to display
+  const injPtsA = injFactorA != null ? -injFactorA : null;
+  const injPtsB = injFactorB != null ? -injFactorB : null;
+  const hasSituational = venueCity || proxA != null || injPtsA != null || injPtsB != null;
+  const situationalSection = hasSituational ? (() => {
+    const locRow = venueCity
+      ? `<div style="display:flex;align-items:center;gap:6px;font-size:.8rem;margin-bottom:8px">
+           <span style="color:var(--muted)">📍 Game site:</span>
+           <strong>${venueCity}</strong>
+         </div>` : '';
+    const fmtPts = v => v != null ? (v >= 0 ? '+' : '') + v.toFixed(1) + ' pts' : '—';
+    const colorPts = v => v == null ? '' : v > 0.1 ? 'color:var(--green)' : v < -0.1 ? 'color:var(--red)' : 'color:var(--muted)';
+    const travelRow = (proxA != null || proxB != null) ? `
+      <div class="signal-row">
+        <span class="signal-label">Travel adj.</span>
+        <div style="flex:1"></div>
+        <div class="signal-vals">
+          <span class="signal-val-a" style="${colorPts(proxA)}">${fmtPts(proxA)}</span>
+          <span class="signal-val-b" style="${colorPts(proxB)}">${fmtPts(proxB)}</span>
+        </div>
+      </div>` : '';
+    const injRow = (injPtsA != null || injPtsB != null) ? `
+      <div class="signal-row">
+        <span class="signal-label">Injury adj.</span>
+        <div style="flex:1"></div>
+        <div class="signal-vals">
+          <span class="signal-val-a" style="${colorPts(-injPtsA)}">${injPtsA != null ? (injPtsA > 0.05 ? '−' + injPtsA.toFixed(1) + ' pts' : '—') : '—'}</span>
+          <span class="signal-val-b" style="${colorPts(-injPtsB)}">${injPtsB != null ? (injPtsB > 0.05 ? '−' + injPtsB.toFixed(1) + ' pts' : '—') : '—'}</span>
+        </div>
+      </div>` : '';
+    if (!locRow && !travelRow && !injRow) return '';
+    return `<div class="ap-section">
+      <div class="ap-section-title">Situational</div>
+      <div style="display:flex;justify-content:space-between;font-size:.7rem;color:var(--muted);margin-bottom:6px">
+        <span></span>
+        <div class="signal-vals" style="gap:18px">
+          <span style="color:var(--green);font-weight:700">${st.teamA}</span>
+          <span style="color:var(--red);font-weight:700">${st.teamB}</span>
+        </div>
+      </div>
+      ${locRow}${travelRow}${injRow}
+    </div>`;
+  })() : '';
+
   content.innerHTML = `
     <div class="ap-header">
-      <div class="ap-round">${roundLabel}</div>
+      <div class="ap-round">${roundLabel}${venueCity ? ` · <span style="font-weight:400;color:var(--muted)">${venueCity}</span>` : ''}</div>
       <h3>(${st.seedA}) ${st.teamA} vs (${st.seedB}) ${st.teamB}
         <span class="conf-badge conf-${conf}">${confLabel}</span></h3>
     </div>
@@ -1610,6 +1669,7 @@ async function showAnalysis(gameId) {
       ${upsetHtml}
       ${pickBoxHtml}
       ${insightHtml}
+      ${situationalSection}
       ${factorsSection}
       ${injurySection}
       ${rosterSection}

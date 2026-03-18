@@ -841,17 +841,34 @@ def _load_school_locations() -> dict:
     return _school_locations
 
 
+_historical_venues: dict = {}
+
 def _load_venues(year: int) -> dict:
-    global _venues_cache
+    global _venues_cache, _historical_venues
     if year in _venues_cache:
         return _venues_cache[year]
+    # Try year-specific file first (e.g. venues_2026.json)
     path = os.path.join(_DATA_DIR, f"venues_{year}.json")
     if os.path.isfile(path):
         with open(path) as f:
             data = json.load(f)
         _venues_cache[year] = data
         return data
-    return {}
+    # Fall back to venues_historical.json which covers 2008-2025
+    if not _historical_venues:
+        hist_path = os.path.join(_DATA_DIR, "venues_historical.json")
+        if os.path.isfile(hist_path):
+            with open(hist_path) as f:
+                raw = json.load(f)
+            for k, v in raw.items():
+                if not k.startswith("_"):
+                    try:
+                        _historical_venues[int(k)] = v
+                    except ValueError:
+                        pass
+    result = _historical_venues.get(year, {})
+    _venues_cache[year] = result
+    return result
 
 
 def _get_game_site(venues: dict, region: str, round_name: str) -> list | None:
@@ -866,6 +883,20 @@ def _get_game_site(venues: dict, region: str, round_name: str) -> list | None:
         return venues.get(rkey) or venues.get("F4")
     region_venues = venues.get("regions", {}).get(region, {})
     return region_venues.get(rkey)
+
+
+def _get_venue_city(venues: dict, region: str, round_name: str) -> str | None:
+    """Return human-readable city label for the game venue."""
+    if not venues:
+        return None
+    round_map = {"Round of 64": "R64", "Round of 32": "R32",
+                 "Sweet 16": "S16", "Elite 8": "E8",
+                 "Final Four": "F4", "Championship": "Championship"}
+    rkey = round_map.get(round_name, round_name)
+    cities = venues.get("city_labels", {})
+    if rkey in ("F4", "Championship"):
+        return cities.get(rkey) or cities.get("F4")
+    return cities.get(region, {}).get(rkey)
 
 # ===========================================================================
 # ENRICHMENT — Auto-fill intangibles from built-in databases
@@ -1766,25 +1797,38 @@ def _generate_key_factors(result, team_a, team_b):
     return factors[:4]
 
 
-def get_matchup_analysis_display(team_a, team_b, data_dir=None, year=None, config=DEFAULT_CONFIG):
+def get_matchup_analysis_display(team_a, team_b, data_dir=None, year=None, config=DEFAULT_CONFIG,
+                                  game_site=None, region=None, round_name=None, venue_city=None):
     """Return matchup analysis in pick-compatible format for API/frontend display.
     team_a, team_b can be team names (str) or team dicts. Returns dict with stats_a,
     stats_b, key_factors, insight, head_to_head, upset_alert, win_prob_a, etc.
+    game_site: [lat, lon] of game location for proximity calculation.
+    venue_city: human-readable city name for display.
     """
     a = enrich_team(team_a) if isinstance(team_a, dict) else enrich_team({"team": team_a})
     b = enrich_team(team_b) if isinstance(team_b, dict) else enrich_team({"team": team_b})
     a.setdefault("seed", 8)
     b.setdefault("seed", 8)
-    result = predict_game(a, b, config=config)
+    # If game_site not provided, try to infer from venues
+    if game_site is None and year and region and round_name:
+        venues = _load_venues(year)
+        game_site = _get_game_site(venues, region, round_name)
+        if venue_city is None:
+            venue_city = _get_venue_city(venues, region, round_name)
+    result = predict_game(a, b, game_site=game_site, config=config, round_name=round_name or "Round of 64")
     hist = get_seed_matchup_history(a.get("seed", 8), b.get("seed", 8))
     h2h = get_head_to_head(a["team"], b["team"], data_dir=data_dir, current_year=year or 2026)
     upset_alert = _compute_upset_alert(
         a["seed"], b["seed"], result["predicted_margin"],
         result["win_prob_a"], hist)
     pick_team = a if result["win_prob_a"] >= 0.5 else b
-    pick_dict = _make_pick_dict(0, 64, "Round of 64", None, a, b, result, pick_team,
+    rnd_name = round_name or "Round of 64"
+    rnd_of = {"Round of 64": 64, "Round of 32": 32, "Sweet 16": 16, "Elite 8": 8,
+              "Final Four": 4, "Championship": 2}.get(rnd_name, 64)
+    pick_dict = _make_pick_dict(0, rnd_of, rnd_name, region, a, b, result, pick_team,
                                 data_dir=data_dir, year=year or 2026)
     pick_dict["upset_alert"] = upset_alert
+    pick_dict["venue_city"] = venue_city
     return pick_dict
 
 
@@ -2004,6 +2048,8 @@ def generate_bracket_picks(bracket, config=DEFAULT_CONFIG, upset_aggression=0.0,
     picks = []
     game_num = 0
 
+    venues = _load_venues(year) if year else {}
+
     enriched_bracket = {}
     for region in REGIONS:
         if region not in bracket:
@@ -2025,14 +2071,18 @@ def generate_bracket_picks(bracket, config=DEFAULT_CONFIG, upset_aggression=0.0,
                 continue
             game_num += 1
             gid = _game_id_for_pick(region, 64, gi)
-            result = predict_game(a, b, config=config, round_name="Round of 64")
+            game_site = _get_game_site(venues, region, "Round of 64")
+            venue_city = _get_venue_city(venues, region, "Round of 64")
+            result = predict_game(a, b, game_site=game_site, config=config, round_name="Round of 64")
             locked_team = locked_picks.get(gid)
             if locked_team in (a["team"], b["team"]):
                 pick_team = a if locked_team == a["team"] else b
             else:
                 pick_a = _should_pick_upset(result["win_prob_a"], a["seed"], b["seed"], upset_aggression)
                 pick_team = a if pick_a else b
-            picks.append(_make_pick_dict(game_num, 64, "Round of 64", region, a, b, result, pick_team, **_h2h_kw))
+            pd = _make_pick_dict(game_num, 64, "Round of 64", region, a, b, result, pick_team, **_h2h_kw)
+            pd["venue_city"] = venue_city
+            picks.append(pd)
             r64_winners.append(pick_team)
 
         def _play_round(teams_in, round_of, round_name):
@@ -2047,14 +2097,18 @@ def generate_bracket_picks(bracket, config=DEFAULT_CONFIG, upset_aggression=0.0,
                 nonlocal game_num
                 game_num += 1
                 gid = _game_id_for_pick(region, round_of, gi)
-                result = predict_game(a, b, config=config, round_name=round_name)
+                game_site = _get_game_site(venues, region, round_name)
+                venue_city = _get_venue_city(venues, region, round_name)
+                result = predict_game(a, b, game_site=game_site, config=config, round_name=round_name)
                 locked_team = locked_picks.get(gid)
                 if locked_team in (a["team"], b["team"]):
                     pick_team = a if locked_team == a["team"] else b
                 else:
                     pick_a = _should_pick_upset(result["win_prob_a"], a["seed"], b["seed"], upset_aggression)
                     pick_team = a if pick_a else b
-                picks.append(_make_pick_dict(game_num, round_of, round_name, region, a, b, result, pick_team, **_h2h_kw))
+                pd = _make_pick_dict(game_num, round_of, round_name, region, a, b, result, pick_team, **_h2h_kw)
+                pd["venue_city"] = venue_city
+                picks.append(pd)
                 winners.append(pick_team)
             return winners
 
@@ -2078,14 +2132,18 @@ def generate_bracket_picks(bracket, config=DEFAULT_CONFIG, upset_aggression=0.0,
             continue
         game_num += 1
         gid = _game_id_for_pick(None, 4, ff_gi)
-        result = predict_game(a, b, config=config, round_name="Final Four")
+        f4_site = _get_game_site(venues, None, "Final Four")
+        f4_city = _get_venue_city(venues, None, "Final Four")
+        result = predict_game(a, b, game_site=f4_site, config=config, round_name="Final Four")
         locked_team = locked_picks.get(gid)
         if locked_team in (a["team"], b["team"]):
             pick_team = a if locked_team == a["team"] else b
         else:
             pick_a = _should_pick_upset(result["win_prob_a"], a["seed"], b["seed"], upset_aggression)
             pick_team = a if pick_a else b
-        picks.append(_make_pick_dict(game_num, 4, "Final Four", None, a, b, result, pick_team))
+        pd = _make_pick_dict(game_num, 4, "Final Four", None, a, b, result, pick_team)
+        pd["venue_city"] = f4_city
+        picks.append(pd)
         ff_winners.append(pick_team)
 
     # Championship
@@ -2094,14 +2152,18 @@ def generate_bracket_picks(bracket, config=DEFAULT_CONFIG, upset_aggression=0.0,
         a, b = ff_winners[0], ff_winners[1]
         game_num += 1
         gid = "FF-2-0"
-        result = predict_game(a, b, config=config, round_name="Championship")
+        champ_site = _get_game_site(venues, None, "Championship")
+        champ_city = _get_venue_city(venues, None, "Championship")
+        result = predict_game(a, b, game_site=champ_site, config=config, round_name="Championship")
         locked_team = locked_picks.get(gid)
         if locked_team in (a["team"], b["team"]):
             pick_team = a if locked_team == a["team"] else b
         else:
             pick_a = _should_pick_upset(result["win_prob_a"], a["seed"], b["seed"], upset_aggression)
             pick_team = a if pick_a else b
-        picks.append(_make_pick_dict(game_num, 2, "Championship", None, a, b, result, pick_team, **_h2h_kw))
+        pd = _make_pick_dict(game_num, 2, "Championship", None, a, b, result, pick_team, **_h2h_kw)
+        pd["venue_city"] = champ_city
+        picks.append(pd)
         champion = pick_team["team"]
 
     final_four = [region_winners[r]["team"] for r in quadrant_order if r in region_winners]
