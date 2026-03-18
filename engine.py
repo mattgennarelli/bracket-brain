@@ -872,8 +872,10 @@ def _load_venues(year: int) -> dict:
     return result
 
 
-def _get_game_site(venues: dict, region: str, round_name: str) -> list | None:
-    """Return [lat, lon] for the venue where this round/region game is played."""
+def _get_game_site(venues: dict, region: str, round_name: str,
+                    seed_a: int = None, seed_b: int = None) -> list | None:
+    """Return [lat, lon] for the venue where this round/region game is played.
+    For R64/R32, pass seed_a/seed_b to resolve pod-level venues."""
     if not venues:
         return None
     round_map = {"Round of 64": "R64", "Round of 32": "R32",
@@ -883,11 +885,19 @@ def _get_game_site(venues: dict, region: str, round_name: str) -> list | None:
     if rkey in ("F4", "Championship"):
         return venues.get(rkey) or venues.get("F4")
     region_venues = venues.get("regions", {}).get(region, {})
+    if rkey in ("R64", "R32") and seed_a is not None:
+        pod = SEED_TO_POD.get(seed_a)
+        if pod:
+            pod_key = f"pod_{pod}"
+            if pod_key in region_venues:
+                return region_venues[pod_key]
     return region_venues.get(rkey)
 
 
-def _get_venue_city(venues: dict, region: str, round_name: str) -> str | None:
-    """Return human-readable city label for the game venue."""
+def _get_venue_city(venues: dict, region: str, round_name: str,
+                    seed_a: int = None, seed_b: int = None) -> str | None:
+    """Return human-readable city label for the game venue.
+    For R64/R32, pass seed_a/seed_b to resolve pod-level city labels."""
     if not venues:
         return None
     round_map = {"Round of 64": "R64", "Round of 32": "R32",
@@ -897,7 +907,14 @@ def _get_venue_city(venues: dict, region: str, round_name: str) -> str | None:
     cities = venues.get("city_labels", {})
     if rkey in ("F4", "Championship"):
         return cities.get(rkey) or cities.get("F4")
-    return cities.get(region, {}).get(rkey)
+    region_cities = cities.get(region, {})
+    if rkey in ("R64", "R32") and seed_a is not None:
+        pod = SEED_TO_POD.get(seed_a)
+        if pod:
+            pod_key = f"pod_{pod}"
+            if pod_key in region_cities:
+                return region_cities[pod_key]
+    return region_cities.get(rkey)
 
 # ===========================================================================
 # ENRICHMENT — Auto-fill intangibles from built-in databases
@@ -995,6 +1012,8 @@ def enrich_team(team):
 
 FIRST_ROUND_MATCHUPS = [(1,16),(8,9),(5,12),(4,13),(6,11),(3,14),(7,10),(2,15)]
 REGIONS = ["South", "East", "Midwest", "West"]
+SEED_TO_POD = {1:'A',16:'A',8:'A',9:'A', 5:'B',12:'B',4:'B',13:'B',
+               6:'C',11:'C',3:'C',14:'C', 7:'D',10:'D',2:'D',15:'D'}
 
 def simulate_region(teams_by_seed, config=DEFAULT_CONFIG, region_name=None, venues=None):
     enriched = {s: enrich_team(t) for s, t in teams_by_seed.items()}
@@ -1002,9 +1021,10 @@ def simulate_region(teams_by_seed, config=DEFAULT_CONFIG, region_name=None, venu
     results = {"Round of 64": [], "Round of 32": [], "Sweet 16": [], "Elite 8": []}
 
     def play_round(teams, round_name):
-        site = _get_game_site(venues, region_name, round_name) if venues else None
         winners = []
         for i in range(0, len(teams), 2):
+            sa, sb = teams[i].get("seed"), teams[i+1].get("seed")
+            site = _get_game_site(venues, region_name, round_name, seed_a=sa, seed_b=sb) if venues else None
             w = simulate_game(teams[i], teams[i+1], game_site=site, config=config)
             results[round_name].append({
                 "team_a": teams[i]["team"], "seed_a": teams[i]["seed"],
@@ -1014,9 +1034,9 @@ def simulate_region(teams_by_seed, config=DEFAULT_CONFIG, region_name=None, venu
             winners.append(w)
         return winners
 
-    r64_site = _get_game_site(venues, region_name, "Round of 64") if venues else None
     r64_winners = []
     for a, b in matchups:
+        r64_site = _get_game_site(venues, region_name, "Round of 64", seed_a=a.get("seed"), seed_b=b.get("seed")) if venues else None
         w = simulate_game(a, b, game_site=r64_site, config=config)
         results["Round of 64"].append({"team_a": a["team"], "seed_a": a["seed"],
             "team_b": b["team"], "seed_b": b["seed"], "winner": w["team"]})
@@ -1813,9 +1833,10 @@ def get_matchup_analysis_display(team_a, team_b, data_dir=None, year=None, confi
     # If game_site not provided, try to infer from venues
     if game_site is None and year and region and round_name:
         venues = _load_venues(year)
-        game_site = _get_game_site(venues, region, round_name)
+        sa, sb = a.get("seed"), b.get("seed")
+        game_site = _get_game_site(venues, region, round_name, seed_a=sa, seed_b=sb)
         if venue_city is None:
-            venue_city = _get_venue_city(venues, region, round_name)
+            venue_city = _get_venue_city(venues, region, round_name, seed_a=sa, seed_b=sb)
     result = predict_game(a, b, game_site=game_site, config=config, round_name=round_name or "Round of 64")
     hist = get_seed_matchup_history(a.get("seed", 8), b.get("seed", 8))
     h2h = get_head_to_head(a["team"], b["team"], data_dir=data_dir, current_year=year or 2026)
@@ -2072,8 +2093,8 @@ def generate_bracket_picks(bracket, config=DEFAULT_CONFIG, upset_aggression=0.0,
                 continue
             game_num += 1
             gid = _game_id_for_pick(region, 64, gi)
-            game_site = _get_game_site(venues, region, "Round of 64")
-            venue_city = _get_venue_city(venues, region, "Round of 64")
+            game_site = _get_game_site(venues, region, "Round of 64", seed_a=seed_a, seed_b=seed_b)
+            venue_city = _get_venue_city(venues, region, "Round of 64", seed_a=seed_a, seed_b=seed_b)
             result = predict_game(a, b, game_site=game_site, config=config, round_name="Round of 64")
             locked_team = locked_picks.get(gid)
             if locked_team in (a["team"], b["team"]):
@@ -2098,8 +2119,9 @@ def generate_bracket_picks(bracket, config=DEFAULT_CONFIG, upset_aggression=0.0,
                 nonlocal game_num
                 game_num += 1
                 gid = _game_id_for_pick(region, round_of, gi)
-                game_site = _get_game_site(venues, region, round_name)
-                venue_city = _get_venue_city(venues, region, round_name)
+                sa, sb = a.get("seed"), b.get("seed")
+                game_site = _get_game_site(venues, region, round_name, seed_a=sa, seed_b=sb)
+                venue_city = _get_venue_city(venues, region, round_name, seed_a=sa, seed_b=sb)
                 result = predict_game(a, b, game_site=game_site, config=config, round_name=round_name)
                 locked_team = locked_picks.get(gid)
                 if locked_team in (a["team"], b["team"]):

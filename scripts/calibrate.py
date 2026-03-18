@@ -254,7 +254,8 @@ def score_model(pairs, config, recency_weight=None, round_weight=None):
 
         try:
             venues = _load_venues(yr)
-            game_site = _get_game_site(venues, g.get("region"), rname) if venues else None
+            sa, sb = a.get("seed"), b.get("seed")
+            game_site = _get_game_site(venues, g.get("region"), rname, seed_a=sa, seed_b=sb) if venues else None
             result = predict_game(enrich_team(a), enrich_team(b), game_site=game_site,
                                   config=config, round_name=rname)
         except Exception:

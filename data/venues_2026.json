@@ -1,33 +1,77 @@
 {
-  "_comment": "2026 NCAA Tournament venue locations by region and round. [lat, lon]",
-  "_sources": "NCAA official bracket 2026",
+  "_comment": "2026 NCAA Tournament venue locations by region, pod, and round. [lat, lon]. Pods: A=(1,16,8,9) B=(5,12,4,13) C=(6,11,3,14) D=(7,10,2,15). Each pod plays R64+R32 at its venue. S16/E8 are single-site regionals.",
+  "_sources": "CBS Sports 2026 bracket, NCAA official bracket 2026",
   "first_four": [39.7589, -84.1916],
   "regions": {
     "East": {
-      "R64": [40.7357, -74.1724],
-      "R32": [40.7357, -74.1724],
-      "S16": [42.3601, -71.0589],
-      "E8":  [42.3601, -71.0589]
+      "pod_A": [34.8526, -82.3940],
+      "pod_B": [32.7157, -117.1611],
+      "pod_C": [42.8864, -78.8784],
+      "pod_D": [39.9526, -75.1652],
+      "S16": [38.8981, -77.0209],
+      "E8":  [38.8981, -77.0209]
     },
     "West": {
-      "R64": [47.6062, -122.3321],
-      "R32": [47.6062, -122.3321],
-      "S16": [34.0522, -118.2437],
-      "E8":  [34.0522, -118.2437]
+      "pod_A": [32.7157, -117.1611],
+      "pod_B": [45.5316, -122.6668],
+      "pod_C": [45.5316, -122.6668],
+      "pod_D": [38.6270, -90.1994],
+      "S16": [37.3328, -121.9010],
+      "E8":  [37.3328, -121.9010]
     },
     "South": {
-      "R64": [29.7604, -95.3698],
-      "R32": [29.7604, -95.3698],
-      "S16": [29.9511, -90.0715],
-      "E8":  [29.9511, -90.0715]
+      "pod_A": [27.9506, -82.4572],
+      "pod_B": [35.4634, -97.5151],
+      "pod_C": [34.8526, -82.3940],
+      "pod_D": [35.4634, -97.5151],
+      "S16": [29.7508, -95.3621],
+      "E8":  [29.7508, -95.3621]
     },
     "Midwest": {
-      "R64": [39.7684, -86.1581],
-      "R32": [39.7684, -86.1581],
-      "S16": [41.8827, -87.6233],
-      "E8":  [41.8827, -87.6233]
+      "pod_A": [42.8864, -78.8784],
+      "pod_B": [27.9506, -82.4572],
+      "pod_C": [39.9526, -75.1652],
+      "pod_D": [38.6270, -90.1994],
+      "S16": [41.8807, -87.6742],
+      "E8":  [41.8807, -87.6742]
     }
   },
-  "F4":           [29.4241, -98.4936],
-  "Championship": [29.4241, -98.4936]
+  "F4":           [39.7601, -86.1638],
+  "Championship": [39.7601, -86.1638],
+  "city_labels": {
+    "East": {
+      "pod_A": "Greenville, SC",
+      "pod_B": "San Diego, CA",
+      "pod_C": "Buffalo, NY",
+      "pod_D": "Philadelphia, PA",
+      "S16": "Washington, DC",
+      "E8":  "Washington, DC"
+    },
+    "West": {
+      "pod_A": "San Diego, CA",
+      "pod_B": "Portland, OR",
+      "pod_C": "Portland, OR",
+      "pod_D": "St. Louis, MO",
+      "S16": "San Jose, CA",
+      "E8":  "San Jose, CA"
+    },
+    "South": {
+      "pod_A": "Tampa, FL",
+      "pod_B": "Oklahoma City, OK",
+      "pod_C": "Greenville, SC",
+      "pod_D": "Oklahoma City, OK",
+      "S16": "Houston, TX",
+      "E8":  "Houston, TX"
+    },
+    "Midwest": {
+      "pod_A": "Buffalo, NY",
+      "pod_B": "Tampa, FL",
+      "pod_C": "Philadelphia, PA",
+      "pod_D": "St. Louis, MO",
+      "S16": "Chicago, IL",
+      "E8":  "Chicago, IL"
+    },
+    "F4": "Indianapolis, IN",
+    "Championship": "Indianapolis, IN"
+  }
 }
