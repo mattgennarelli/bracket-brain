@@ -259,7 +259,8 @@ def calc_injury_penalty(team, config=DEFAULT_CONFIG):
     Legacy path — bpr_share × injury_penalty_per_level (old data format).
     Result is capped at 10 pts.
     """
-    if "injury_impact" in team and team["injury_impact"] is not None:
+    if "injury_impact" in team and team["injury_impact"] is not None and not team.get("injuries"):
+        # Trust precomputed value only when no raw injuries list exists to recalculate from
         return min(team["injury_impact"], 10.0)
     if "injury_level" in team and config.injury_penalty_per_level > 0:
         return team["injury_level"] * config.injury_penalty_per_level

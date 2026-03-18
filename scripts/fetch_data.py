@@ -143,6 +143,7 @@ def merge_injuries(merged, injuries_data):
             roster = val.get("roster", [])
         merged[key]["injuries"] = inj_list
         merged[key]["roster"] = roster
+        merged[key].pop("injury_impact", None)  # clear stale precomputed value
         merged[key]["injury_impact"] = calc_injury_penalty(merged[key], DEFAULT_CONFIG)
 
 
