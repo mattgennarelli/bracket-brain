@@ -141,9 +141,12 @@ def merge_injuries(merged, injuries_data):
         else:
             inj_list = val.get("injuries", [])
             roster = val.get("roster", [])
-        merged[key]["injuries"] = inj_list
-        merged[key]["roster"] = roster
-        merged[key].pop("injury_impact", None)  # clear stale precomputed value
+        existing_inj = merged[key].get("injuries", [])
+        if inj_list or not existing_inj:
+            merged[key]["injuries"] = inj_list
+        if roster or not merged[key].get("roster"):
+            merged[key]["roster"] = roster
+        merged[key].pop("injury_impact", None)
         merged[key]["injury_impact"] = calc_injury_penalty(merged[key], DEFAULT_CONFIG)
 
 
@@ -216,7 +219,21 @@ def _find_torvik_key(team_name, torvik_keys):
     for k in torvik_keys:
         if _normalize_team_for_match(k) == norm:
             return k
-    return None
+    # Also try with "state" <-> "st" equivalence (ESPN uses "State", Torvik uses "St.")
+    import re as _re
+    norm_st = _re.sub(r'\bstate\b', 'st', norm)
+    if norm_st != norm:
+        for k in torvik_keys:
+            if _normalize_team_for_match(k) == norm_st:
+                return k
+    # Fallback: prefix match for mascot-appended names ("wisconsin badgers" -> "wisconsin")
+    best, best_len = None, 0
+    for candidate in (norm, norm_st):
+        for k in torvik_keys:
+            nk = _normalize_team_for_match(k)
+            if nk and candidate.startswith(nk + " ") and len(nk) > best_len:
+                best, best_len = k, len(nk)
+    return best
 
 
 def compute_conf_strength_scores(merged):
