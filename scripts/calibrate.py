@@ -343,6 +343,8 @@ PARAM_SPEC = [
     ("star_player_max_bonus", 0.0, 8.0),
     ("proximity_max_bonus", 0.0, 5.0),
     ("proximity_neutral_distance", 600, 1800),
+    ("proximity_home_threshold_mi", 30, 200),
+    ("proximity_home_bonus", 0.0, 4.0),
     ("momentum_max_bonus", 0.0, 5.0),
     ("win_pct_max_bonus", 0.0, 5.0),
     ("conf_rating_max_bonus", 0.0, 4.0),
