@@ -8663,10 +8663,30 @@
       "actual_score_home": null,
       "actual_score_away": null,
       "settled_at": null
+    },
+    {
+      "bet_type": "total",
+      "bet_side": "UNDER",
+      "bet_odds": -110,
+      "edge": -0.3,
+      "stars": "",
+      "kelly_units": 0.0,
+      "model_total": 135.7,
+      "vegas_total": 136.0,
+      "model_margin": 34.5,
+      "vegas_spread": -27.5,
+      "home_team": "Duke Blue Devils",
+      "away_team": "Siena Saints",
+      "commence_time": "2026-03-19T18:50:50Z",
+      "date": "2026-03-18",
+      "result": null,
+      "actual_score_home": null,
+      "actual_score_away": null,
+      "settled_at": null
     }
   ],
   "stats": {
-    "total_picks": 406,
+    "total_picks": 407,
     "settled": 73,
     "wins": 38,
     "losses": 35,
