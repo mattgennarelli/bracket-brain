@@ -471,6 +471,7 @@ def analyze_matchup_endpoint(
         raw_a = dict(raw_a, seed=seed_a)
     if seed_b is not None:
         raw_b = dict(raw_b, seed=seed_b)
+    config = _load_config()
     # Apply injury status overrides from user
     if injury_overrides:
         import json as _json
@@ -491,9 +492,9 @@ def analyze_matchup_endpoint(
                     inj = dict(inj, status=new_status)
                 new_injuries.append(inj)
             team_dict = dict(team_dict, injuries=new_injuries)
-            # Recompute injury_impact with overridden statuses
+            # Recompute injury_impact with overridden statuses (use same config as analysis)
             from engine import calc_injury_penalty
-            team_dict["injury_impact"] = calc_injury_penalty(team_dict)
+            team_dict["injury_impact"] = calc_injury_penalty(team_dict, config)
             if team_name == team_a:
                 raw_a = team_dict
             else:
@@ -501,6 +502,7 @@ def analyze_matchup_endpoint(
     analysis = get_matchup_analysis_display(
         raw_a, raw_b, data_dir=DATA_DIR, year=year,
         region=region, round_name=round_name,
+        config=config,
     )
     return analysis
 
