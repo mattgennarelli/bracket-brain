@@ -1332,37 +1332,33 @@ async function showAnalysis(gameId) {
   const overlay = document.getElementById('analysis-overlay');
   const content = document.getElementById('analysis-content');
 
+  // Always fetch live /analyze for consistency — injury overrides use the same
+  // computation path, so baseline and overridden results are always comparable.
   let orig = null;
-  const teamMatch = (pp) => (pp.team_a === st.teamA && pp.team_b === st.teamB) ||
-      (pp.team_b === st.teamA && pp.team_a === st.teamB);
-  for (const pp of PICKS) {
-    if (pp.game_id && pp.game_id === gameId && teamMatch(pp)) { orig = pp; break; }
-    if (!pp.game_id && teamMatch(pp)) { orig = pp; break; }
-  }
 
-  if (!orig) {
-    content.innerHTML = '<div style="padding:20px;text-align:center;color:var(--muted)">Loading analysis...</div>';
-    panel.classList.add('show');
-    overlay.classList.add('show');
-    try {
-      const seedParams = (st.seedA != null && st.seedB != null)
-        ? `&seed_a=${st.seedA}&seed_b=${st.seedB}` : '';
-      // Parse region/round from gameId for venue lookup
-      let regionParam = '', roundParam = '';
-      if (!gameId.startsWith('FF')) {
-        const parts = gameId.split('-');
-        regionParam = `&region=${encodeURIComponent(parts[0])}`;
-        const roundNum2 = parseInt(parts[1]);
-        const rndMap = {64:'Round of 64',32:'Round of 32',16:'Sweet 16',8:'Elite 8'};
-        if (rndMap[roundNum2]) roundParam = `&round_name=${encodeURIComponent(rndMap[roundNum2])}`;
-      } else {
-        const isChamp = gameId === 'FF-2-0';
-        roundParam = `&round_name=${encodeURIComponent(isChamp ? 'Championship' : 'Final Four')}`;
-      }
-      orig = await apiFetch(`/analyze?team_a=${encodeURIComponent(st.teamA)}&team_b=${encodeURIComponent(st.teamB)}&year=${currentYear || 2026}${seedParams}${regionParam}${roundParam}`);
-    } catch (e) {
-      orig = { insight: 'Could not load analysis for this matchup.', stats_a: {}, stats_b: {}, factors_a: {}, factors_b: {}, key_factors: [] };
-    }
+  // Build params for /analyze
+  const seedParams = (st.seedA != null && st.seedB != null)
+    ? `&seed_a=${st.seedA}&seed_b=${st.seedB}` : '';
+  let regionParam = '', roundParam = '';
+  if (!gameId.startsWith('FF')) {
+    const parts = gameId.split('-');
+    regionParam = `&region=${encodeURIComponent(parts[0])}`;
+    const roundNum2 = parseInt(parts[1]);
+    const rndMap = {64:'Round of 64',32:'Round of 32',16:'Sweet 16',8:'Elite 8'};
+    if (rndMap[roundNum2]) roundParam = `&round_name=${encodeURIComponent(rndMap[roundNum2])}`;
+  } else {
+    const isChamp = gameId === 'FF-2-0';
+    roundParam = `&round_name=${encodeURIComponent(isChamp ? 'Championship' : 'Final Four')}`;
+  }
+  const analyzeUrl = `/analyze?team_a=${encodeURIComponent(st.teamA)}&team_b=${encodeURIComponent(st.teamB)}&year=${currentYear || 2026}${seedParams}${regionParam}${roundParam}`;
+
+  content.innerHTML = '<div style="padding:20px;text-align:center;color:var(--muted)">Loading analysis...</div>';
+  panel.classList.add('show');
+  overlay.classList.add('show');
+  try {
+    orig = await apiFetch(analyzeUrl);
+  } catch (e) {
+    orig = { insight: 'Could not load analysis for this matchup.', stats_a: {}, stats_b: {}, factors_a: {}, factors_b: {}, key_factors: [] };
   }
 
   // Normalise so display order (st.teamA left, st.teamB right) matches API response
@@ -1763,30 +1759,17 @@ async function showAnalysis(gameId) {
       content.querySelectorAll('.inj-override').forEach(s => {
         const team = s.dataset.team;
         const player = s.dataset.player;
-        const origStatus = (s.querySelector('option[data-orig]')?.dataset?.orig) || s.options[0]?.defaultSelected;
         overrides[`${team}|${player}`] = s.value;
       });
-      // Build override param — only include changed statuses
+      // Build override param
       const overrideParam = encodeURIComponent(JSON.stringify(overrides));
-      const seedParams = (st.seedA != null && st.seedB != null)
-        ? `&seed_a=${st.seedA}&seed_b=${st.seedB}` : '';
-      let regionParam = '', roundParam = '';
-      if (!gameId.startsWith('FF')) {
-        const parts = gameId.split('-');
-        regionParam = `&region=${encodeURIComponent(parts[0])}`;
-        const rndMap = {64:'Round of 64',32:'Round of 32',16:'Sweet 16',8:'Elite 8'};
-        const roundNum2 = parseInt(parts[1]);
-        if (rndMap[roundNum2]) roundParam = `&round_name=${encodeURIComponent(rndMap[roundNum2])}`;
-      } else {
-        const isChamp = gameId === 'FF-2-0';
-        roundParam = `&round_name=${encodeURIComponent(isChamp ? 'Championship' : 'Final Four')}`;
-      }
       // Show loading state on the prob section
       const probSection = content.querySelector('.ap-prob-section');
       if (probSection) probSection.style.opacity = '0.5';
       try {
+        // Use same analyzeUrl base as the popup opener for consistency
         const updated = await apiFetch(
-          `/analyze?team_a=${encodeURIComponent(st.teamA)}&team_b=${encodeURIComponent(st.teamB)}&year=${currentYear || 2026}${seedParams}${regionParam}${roundParam}&injury_overrides=${overrideParam}`
+          `${analyzeUrl}&injury_overrides=${overrideParam}`
         );
         // Update probabilities and margin in-place
         const newPA = updated.win_prob_a ?? 0.5;

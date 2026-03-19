@@ -269,7 +269,9 @@ def _lookup_team(name: str, year: int) -> dict:
                 break
     if stats is None:
         raise HTTPException(status_code=404, detail=f"Team not found: '{name}' (year {year})")
-    return stats
+    # Deep copy to prevent mutation of cached/shared data between requests
+    import copy
+    return copy.deepcopy(stats)
 
 
 # ---------------------------------------------------------------------------
