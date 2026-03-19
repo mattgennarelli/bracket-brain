@@ -503,9 +503,84 @@
     "em_adj_d": 95.288,
     "conf_strength_score": 0.5692,
     "conf_tourney_momentum": 0.2,
-    "injuries": [],
-    "roster": [],
-    "injury_impact": 0.0
+    "injuries": [
+      {
+        "player": "Jason Jakstys",
+        "status": "out",
+        "bpr": 0.7124,
+        "poss": 83.0,
+        "bpr_share": 0.0123,
+        "importance": 0.0123
+      }
+    ],
+    "roster": [
+      {
+        "player": "keaton wagler",
+        "bpr": 9.5694,
+        "poss": 1763.0
+      },
+      {
+        "player": "david mirkovic",
+        "bpr": 7.2869,
+        "poss": 1530.0
+      },
+      {
+        "player": "andrej stojakovic",
+        "bpr": 5.0365,
+        "poss": 1280.0
+      },
+      {
+        "player": "kylan boswell",
+        "bpr": 7.0538,
+        "poss": 1268.0
+      },
+      {
+        "player": "ben humrichous",
+        "bpr": 5.2234,
+        "poss": 1192.0
+      },
+      {
+        "player": "tomislav ivisic",
+        "bpr": 6.8683,
+        "poss": 1186.0
+      },
+      {
+        "player": "jake davis",
+        "bpr": 3.9597,
+        "poss": 1057.0
+      },
+      {
+        "player": "zvonimir ivisic",
+        "bpr": 7.9796,
+        "poss": 934.0
+      },
+      {
+        "player": "mihailo petrovic",
+        "bpr": 0.0156,
+        "poss": 180.0
+      },
+      {
+        "player": "brandon lee",
+        "bpr": 0.1667,
+        "poss": 124.0
+      },
+      {
+        "player": "jason jakstys",
+        "bpr": 0.7124,
+        "poss": 83.0
+      },
+      {
+        "player": "blake fagbemi",
+        "bpr": -1.1642,
+        "poss": 68.0
+      },
+      {
+        "player": "aj redd",
+        "bpr": -2.0533,
+        "poss": 44.0
+      }
+    ],
+    "injury_impact": 0.010885800466727836
   },
   {
     "team": "Iowa St.",
@@ -1002,9 +1077,100 @@
     "em_adj_d": 97.6562,
     "conf_strength_score": 0.8697,
     "conf_tourney_momentum": 0.2,
-    "injuries": [],
-    "roster": [],
-    "injury_impact": 0.0
+    "injuries": [
+      {
+        "player": "LeJuan Watts",
+        "status": "questionable",
+        "bpr": 4.2662,
+        "poss": 1448.0,
+        "bpr_share": 0.1082,
+        "importance": 0.1082
+      },
+      {
+        "player": "JT Toppin",
+        "status": "out",
+        "bpr": 8.7205,
+        "poss": 1498.0,
+        "bpr_share": 0.2211,
+        "importance": 0.2211
+      },
+      {
+        "player": "LaTrell Hoover",
+        "status": "out",
+        "bpr": -0.9757,
+        "poss": 0.0,
+        "bpr_share": 0.0,
+        "importance": 0.0
+      }
+    ],
+    "roster": [
+      {
+        "player": "christian anderson",
+        "bpr": 9.5739,
+        "poss": 2031.0
+      },
+      {
+        "player": "donovan atwell",
+        "bpr": 6.0554,
+        "poss": 1894.0
+      },
+      {
+        "player": "jaylen petty",
+        "bpr": 4.4582,
+        "poss": 1587.0
+      },
+      {
+        "player": "jt toppin",
+        "bpr": 8.7205,
+        "poss": 1498.0
+      },
+      {
+        "player": "lejuan watts",
+        "bpr": 4.2662,
+        "poss": 1448.0
+      },
+      {
+        "player": "tyeree bryan",
+        "bpr": 1.4299,
+        "poss": 918.0
+      },
+      {
+        "player": "luke bamgboye",
+        "bpr": 3.341,
+        "poss": 534.0
+      },
+      {
+        "player": "leon horner",
+        "bpr": 1.2863,
+        "poss": 314.0
+      },
+      {
+        "player": "josiah moseley",
+        "bpr": 0.2211,
+        "poss": 248.0
+      },
+      {
+        "player": "nolan groves",
+        "bpr": -0.7249,
+        "poss": 215.0
+      },
+      {
+        "player": "marial akuentok",
+        "bpr": -1.9448,
+        "poss": 146.0
+      },
+      {
+        "player": "jazz henderson",
+        "bpr": 0.0896,
+        "poss": 68.0
+      },
+      {
+        "player": "jack francis",
+        "bpr": -2.6998,
+        "poss": 19.0
+      }
+    ],
+    "injury_impact": 2.6086749539801652
   },
   {
     "team": "Michigan St.",
@@ -1785,9 +1951,100 @@
     "em_adj_d": 88.5911,
     "conf_strength_score": 0.9873,
     "conf_tourney_momentum": 0.2,
-    "injuries": [],
-    "roster": [],
-    "injury_impact": 0.0
+    "injuries": [
+      {
+        "player": "Henry Burt",
+        "status": "out",
+        "bpr": -3.2885,
+        "poss": 0.0,
+        "bpr_share": 0.0,
+        "importance": 0.0
+      },
+      {
+        "player": "Connor Essegian",
+        "status": "out",
+        "bpr": 2.5873,
+        "poss": 182.0,
+        "bpr_share": 0.0632,
+        "importance": 0.0632
+      },
+      {
+        "player": "Ugnius Jarusevicius",
+        "status": "out",
+        "bpr": 0.8304,
+        "poss": 18.0,
+        "bpr_share": 0.0203,
+        "importance": 0.0203
+      }
+    ],
+    "roster": [
+      {
+        "player": "pryce sandfort",
+        "bpr": 8.3296,
+        "poss": 1791.0
+      },
+      {
+        "player": "sam hoiberg",
+        "bpr": 8.0055,
+        "poss": 1718.0
+      },
+      {
+        "player": "jamarques lawrence",
+        "bpr": 3.5364,
+        "poss": 1516.0
+      },
+      {
+        "player": "rienk mast",
+        "bpr": 5.5326,
+        "poss": 1497.0
+      },
+      {
+        "player": "braden frager",
+        "bpr": 4.3261,
+        "poss": 1194.0
+      },
+      {
+        "player": "berke buyuktuncel",
+        "bpr": 4.1413,
+        "poss": 1180.0
+      },
+      {
+        "player": "cale jacobsen",
+        "bpr": 3.1351,
+        "poss": 1088.0
+      },
+      {
+        "player": "jared garcia",
+        "bpr": -0.7648,
+        "poss": 390.0
+      },
+      {
+        "player": "connor essegian",
+        "bpr": 2.5873,
+        "poss": 182.0
+      },
+      {
+        "player": "leo curtis",
+        "bpr": -1.1974,
+        "poss": 106.0
+      },
+      {
+        "player": "kendall blue",
+        "bpr": -0.2701,
+        "poss": 104.0
+      },
+      {
+        "player": "justin bolis",
+        "bpr": -1.1883,
+        "poss": 41.0
+      },
+      {
+        "player": "ugnius jarusevicius",
+        "bpr": 0.8304,
+        "poss": 18.0
+      }
+    ],
+    "injury_impact": 0.08996951557895155
   },
   {
     "team": "Wisconsin",
@@ -1861,9 +2118,97 @@
     "em_adj_d": 100.0171,
     "conf_strength_score": 0.6893,
     "conf_tourney_momentum": 0.4,
-    "injuries": [],
-    "roster": [],
-    "injury_impact": 0.0
+    "injuries": [
+      {
+        "player": "Jack Janicki",
+        "status": "questionable",
+        "bpr": 0.8032,
+        "poss": 732.0,
+        "bpr_share": 0.0208,
+        "importance": 0.0208
+      },
+      {
+        "player": "Nolan Winter",
+        "status": "questionable",
+        "bpr": 7.3756,
+        "poss": 1604.0,
+        "bpr_share": 0.1907,
+        "importance": 0.1907
+      }
+    ],
+    "roster": [
+      {
+        "player": "john blackwell",
+        "bpr": 7.2596,
+        "poss": 1908.0
+      },
+      {
+        "player": "nick boyd",
+        "bpr": 7.9954,
+        "poss": 1856.0
+      },
+      {
+        "player": "nolan winter",
+        "bpr": 7.3756,
+        "poss": 1604.0
+      },
+      {
+        "player": "andrew rohde",
+        "bpr": 3.5767,
+        "poss": 1490.0
+      },
+      {
+        "player": "aleksas bieliauskas",
+        "bpr": 1.9008,
+        "poss": 1136.0
+      },
+      {
+        "player": "austin rapp",
+        "bpr": 5.0723,
+        "poss": 1132.0
+      },
+      {
+        "player": "braeden carrington",
+        "bpr": 3.8531,
+        "poss": 1012.0
+      },
+      {
+        "player": "jack janicki",
+        "bpr": 0.8032,
+        "poss": 732.0
+      },
+      {
+        "player": "will garlock",
+        "bpr": -1.0191,
+        "poss": 350.0
+      },
+      {
+        "player": "hayden jones",
+        "bpr": -0.9465,
+        "poss": 338.0
+      },
+      {
+        "player": "zach kinziger",
+        "bpr": 0.8403,
+        "poss": 138.0
+      },
+      {
+        "player": "jack robison",
+        "bpr": -1.0171,
+        "poss": 58.0
+      },
+      {
+        "player": "riccardo greppi",
+        "bpr": -2.346,
+        "poss": 31.0
+      },
+      {
+        "player": "isaac gard",
+        "bpr": -2.2252,
+        "poss": 26.0
+      }
+    ],
+    "injury_impact": 0.43336009907550466
   },
   {
     "team": "Kansas",
@@ -2013,9 +2358,100 @@
     "em_adj_d": 98.4324,
     "conf_strength_score": 0.6466,
     "conf_tourney_momentum": 0.2,
-    "injuries": [],
-    "roster": [],
-    "injury_impact": 0.0
+    "injuries": [
+      {
+        "player": "Josh Ojianwuna",
+        "status": "out",
+        "bpr": 3.3284,
+        "poss": 0.0,
+        "bpr_share": 0.0833,
+        "importance": 0.0833
+      },
+      {
+        "player": "Taison Chatman",
+        "status": "questionable",
+        "bpr": 1.5783,
+        "poss": 600.0,
+        "bpr_share": 0.0395,
+        "importance": 0.0395
+      },
+      {
+        "player": "Myles Herro",
+        "status": "out",
+        "bpr": -0.2915,
+        "poss": 0.0,
+        "bpr_share": 0.0,
+        "importance": 0.0
+      }
+    ],
+    "roster": [
+      {
+        "player": "bruce thornton",
+        "bpr": 10.2344,
+        "poss": 2004.0
+      },
+      {
+        "player": "devin royal",
+        "bpr": 4.4606,
+        "poss": 1681.0
+      },
+      {
+        "player": "john mobley jr.",
+        "bpr": 5.7416,
+        "poss": 1592.0
+      },
+      {
+        "player": "amare bynum",
+        "bpr": 3.6958,
+        "poss": 1546.0
+      },
+      {
+        "player": "christoph tilly",
+        "bpr": 5.3193,
+        "poss": 1336.0
+      },
+      {
+        "player": "gabe cupps",
+        "bpr": 0.3372,
+        "poss": 658.0
+      },
+      {
+        "player": "taison chatman",
+        "bpr": 1.5783,
+        "poss": 600.0
+      },
+      {
+        "player": "ivan njegovan",
+        "bpr": 0.4502,
+        "poss": 551.0
+      },
+      {
+        "player": "brandon noel",
+        "bpr": 1.8784,
+        "poss": 525.0
+      },
+      {
+        "player": "colin white",
+        "bpr": -0.014,
+        "poss": 412.0
+      },
+      {
+        "player": "puff johnson",
+        "bpr": 1.3771,
+        "poss": 170.0
+      },
+      {
+        "player": "mathieu grujicic",
+        "bpr": 1.5784,
+        "poss": 58.0
+      },
+      {
+        "player": "braylen nash",
+        "bpr": -2.266,
+        "poss": 12.0
+      }
+    ],
+    "injury_impact": 1.3550010168178266
   },
   {
     "team": "UCLA",
@@ -2089,9 +2525,100 @@
     "em_adj_d": 101.2438,
     "conf_strength_score": 0.4952,
     "conf_tourney_momentum": 0.4,
-    "injuries": [],
-    "roster": [],
-    "injury_impact": 0.0
+    "injuries": [
+      {
+        "player": "Tyler Bilodeau",
+        "status": "questionable",
+        "bpr": 6.1606,
+        "poss": 1549.0,
+        "bpr_share": 0.1543,
+        "importance": 0.1543
+      },
+      {
+        "player": "Evan Manjikian",
+        "status": "out",
+        "bpr": -0.2299,
+        "poss": 0.0,
+        "bpr_share": 0.0,
+        "importance": 0.0
+      },
+      {
+        "player": "Donovan Dent",
+        "status": "probable",
+        "bpr": 6.5547,
+        "poss": 1857.0,
+        "bpr_share": 0.1642,
+        "importance": 0.1642
+      }
+    ],
+    "roster": [
+      {
+        "player": "donovan dent",
+        "bpr": 6.5547,
+        "poss": 1857.0
+      },
+      {
+        "player": "trent perry",
+        "bpr": 5.5748,
+        "poss": 1616.0
+      },
+      {
+        "player": "tyler bilodeau",
+        "bpr": 6.1606,
+        "poss": 1549.0
+      },
+      {
+        "player": "eric dailey jr.",
+        "bpr": 4.8598,
+        "poss": 1501.0
+      },
+      {
+        "player": "skyy clark",
+        "bpr": 6.2853,
+        "poss": 1136.0
+      },
+      {
+        "player": "xavier booker",
+        "bpr": 0.877,
+        "poss": 1084.0
+      },
+      {
+        "player": "jamar brown",
+        "bpr": 2.6171,
+        "poss": 916.0
+      },
+      {
+        "player": "brandon williams",
+        "bpr": 1.3546,
+        "poss": 648.0
+      },
+      {
+        "player": "steven jamerson ii",
+        "bpr": 3.7101,
+        "poss": 516.0
+      },
+      {
+        "player": "eric freeny",
+        "bpr": 1.9211,
+        "poss": 452.0
+      },
+      {
+        "player": "anthony peoples jr.",
+        "bpr": -1.2761,
+        "poss": 18.0
+      },
+      {
+        "player": "jack seidler",
+        "bpr": -3.3406,
+        "poss": 14.0
+      },
+      {
+        "player": "christian horry",
+        "bpr": -0.515,
+        "poss": 12.0
+      }
+    ],
+    "injury_impact": 0.3272195572276397
   },
   {
     "team": "Saint Mary's",
@@ -2249,8 +2776,78 @@
     "em_adj_o": 120.4662,
     "em_adj_d": 95.4186,
     "conf_strength_score": 0.3668,
-    "injuries": [],
-    "roster": [],
+    "injuries": [
+      {
+        "player": "Peyton McCollum",
+        "status": "out",
+        "bpr": -1.2291,
+        "poss": 0.0,
+        "bpr_share": 0.0,
+        "importance": 0.0
+      }
+    ],
+    "roster": [
+      {
+        "player": "bennett stirtz",
+        "bpr": 9.1349,
+        "poss": 1960.0
+      },
+      {
+        "player": "cooper koch",
+        "bpr": 3.3398,
+        "poss": 1456.0
+      },
+      {
+        "player": "kael combs",
+        "bpr": 1.9541,
+        "poss": 1334.0
+      },
+      {
+        "player": "tavion banks",
+        "bpr": 5.4279,
+        "poss": 1228.0
+      },
+      {
+        "player": "alvaro folgueiras",
+        "bpr": 6.2196,
+        "poss": 1090.0
+      },
+      {
+        "player": "cam manyawu",
+        "bpr": 5.8748,
+        "poss": 980.0
+      },
+      {
+        "player": "isaia howard",
+        "bpr": 4.7169,
+        "poss": 976.0
+      },
+      {
+        "player": "tate sage",
+        "bpr": 0.93,
+        "poss": 831.0
+      },
+      {
+        "player": "brendan hausen",
+        "bpr": 2.4988,
+        "poss": 344.0
+      },
+      {
+        "player": "trevin jirak",
+        "bpr": -1.0547,
+        "poss": 220.0
+      },
+      {
+        "player": "joey matteoni",
+        "bpr": -0.9127,
+        "poss": 64.0
+      },
+      {
+        "player": "jacob koch",
+        "bpr": -2.8332,
+        "poss": 14.0
+      }
+    ],
     "injury_impact": 0.0
   },
   {
@@ -2418,9 +3015,82 @@
     "em_adj_d": 104.1272,
     "conf_strength_score": 0.6795,
     "conf_tourney_momentum": 0.7,
-    "injuries": [],
-    "roster": [],
-    "injury_impact": 0.0
+    "injuries": [
+      {
+        "player": "Gehrig Normand",
+        "status": "out",
+        "bpr": 0.1754,
+        "poss": 0.0,
+        "bpr_share": 0.005,
+        "importance": 0.005
+      },
+      {
+        "player": "Chris Tadjo",
+        "status": "out",
+        "bpr": -0.1691,
+        "poss": 0.0,
+        "bpr_share": 0.0,
+        "importance": 0.0
+      }
+    ],
+    "roster": [
+      {
+        "player": "elijah mahi",
+        "bpr": 5.5868,
+        "poss": 1706.0
+      },
+      {
+        "player": "christian hammond",
+        "bpr": 3.9655,
+        "poss": 1665.0
+      },
+      {
+        "player": "jake ensminger",
+        "bpr": 6.0192,
+        "poss": 1478.0
+      },
+      {
+        "player": "allen graves",
+        "bpr": 7.6731,
+        "poss": 1290.0
+      },
+      {
+        "player": "brenton knapper",
+        "bpr": 3.3806,
+        "poss": 1170.0
+      },
+      {
+        "player": "sash gavalyugov",
+        "bpr": 3.003,
+        "poss": 1126.0
+      },
+      {
+        "player": "bukky oboye",
+        "bpr": 2.8243,
+        "poss": 1034.0
+      },
+      {
+        "player": "thierry darlan",
+        "bpr": 1.7096,
+        "poss": 1034.0
+      },
+      {
+        "player": "kj cochran",
+        "bpr": -0.0832,
+        "poss": 710.0
+      },
+      {
+        "player": "francis chukwudebelu",
+        "bpr": 1.0325,
+        "poss": 235.0
+      },
+      {
+        "player": "brendan yarusso",
+        "bpr": -4.5821,
+        "poss": 12.0
+      }
+    ],
+    "injury_impact": 0.07288651280904557
   },
   {
     "team": "Utah St.",
@@ -2763,9 +3433,84 @@
     "em_adj_o": 109.3296,
     "em_adj_d": 91.2759,
     "conf_strength_score": 1.0,
-    "injuries": [],
-    "roster": [],
-    "injury_impact": 0.0
+    "injuries": [
+      {
+        "player": "Jalen Haynes",
+        "status": "out",
+        "bpr": 2.5614,
+        "poss": 0.0,
+        "bpr_share": 0.0745,
+        "importance": 0.0745
+      }
+    ],
+    "roster": [
+      {
+        "player": "day day thomas",
+        "bpr": 5.6371,
+        "poss": 1719.0
+      },
+      {
+        "player": "baba miller",
+        "bpr": 7.2027,
+        "poss": 1700.0
+      },
+      {
+        "player": "moustapha thiam",
+        "bpr": 3.8878,
+        "poss": 1462.0
+      },
+      {
+        "player": "jalen celestine",
+        "bpr": 4.0415,
+        "poss": 1286.0
+      },
+      {
+        "player": "jizzle james",
+        "bpr": 3.5341,
+        "poss": 1160.0
+      },
+      {
+        "player": "sencire harris",
+        "bpr": 3.6428,
+        "poss": 918.0
+      },
+      {
+        "player": "kerr kriisa",
+        "bpr": 1.0909,
+        "poss": 712.0
+      },
+      {
+        "player": "shon abaev",
+        "bpr": 0.6911,
+        "poss": 687.0
+      },
+      {
+        "player": "keyshuan tillery",
+        "bpr": 2.0758,
+        "poss": 660.0
+      },
+      {
+        "player": "tyler mckinley",
+        "bpr": -0.6235,
+        "poss": 536.0
+      },
+      {
+        "player": "halvine dzellat",
+        "bpr": -0.5405,
+        "poss": 357.0
+      },
+      {
+        "player": "jordi rodriguez",
+        "bpr": -0.3776,
+        "poss": 209.0
+      },
+      {
+        "player": "grant darbyshire",
+        "bpr": -0.1084,
+        "poss": 18.0
+      }
+    ],
+    "injury_impact": 1.0396912838610048
   },
   {
     "team": "BYU",
@@ -5004,8 +5749,83 @@
     "em_adj_o": 114.4873,
     "em_adj_d": 103.365,
     "conf_strength_score": 0.4419,
-    "injuries": [],
-    "roster": [],
+    "injuries": [
+      {
+        "player": "Julian Bowie",
+        "status": "out",
+        "bpr": -0.5238,
+        "poss": 52.0,
+        "bpr_share": 0.0,
+        "importance": 0.0
+      }
+    ],
+    "roster": [
+      {
+        "player": "andrew meadow",
+        "bpr": 2.7176,
+        "poss": 1488.0
+      },
+      {
+        "player": "dylan andrews",
+        "bpr": 2.0469,
+        "poss": 1465.0
+      },
+      {
+        "player": "javan buchanan",
+        "bpr": 4.1066,
+        "poss": 1350.0
+      },
+      {
+        "player": "drew fielder",
+        "bpr": 4.1312,
+        "poss": 1174.0
+      },
+      {
+        "player": "rj keene",
+        "bpr": 3.8406,
+        "poss": 1070.0
+      },
+      {
+        "player": "aginaldo neto",
+        "bpr": 0.1661,
+        "poss": 979.0
+      },
+      {
+        "player": "pearson carmichael",
+        "bpr": 2.2958,
+        "poss": 926.0
+      },
+      {
+        "player": "dominic parolin",
+        "bpr": 2.5691,
+        "poss": 844.0
+      },
+      {
+        "player": "spencer ahrens",
+        "bpr": -0.1208,
+        "poss": 642.0
+      },
+      {
+        "player": "bhan buom",
+        "bpr": 0.088,
+        "poss": 144.0
+      },
+      {
+        "player": "julian bowie",
+        "bpr": -0.5238,
+        "poss": 52.0
+      },
+      {
+        "player": "rayzhon bergersen",
+        "bpr": -0.519,
+        "poss": 13.0
+      },
+      {
+        "player": "ethan lathan",
+        "bpr": -0.0577,
+        "poss": 12.0
+      }
+    ],
     "injury_impact": 0.0
   },
   {
@@ -5155,9 +5975,98 @@
     "em_adj_o": 112.2394,
     "em_adj_d": 102.2894,
     "conf_strength_score": 0.7696,
-    "injuries": [],
-    "roster": [],
-    "injury_impact": 0.0
+    "injuries": [
+      {
+        "player": "Robert Vaihola",
+        "status": "out",
+        "bpr": 2.2012,
+        "poss": 178.0,
+        "bpr_share": 0.0891,
+        "importance": 0.0891
+      },
+      {
+        "player": "BJ Omot",
+        "status": "out",
+        "bpr": 0.1287,
+        "poss": 0.0,
+        "bpr_share": 0.0052,
+        "importance": 0.0052
+      },
+      {
+        "player": "Chance Stephens",
+        "status": "out",
+        "bpr": -1.3991,
+        "poss": 0.0,
+        "bpr_share": 0.0,
+        "importance": 0.0
+      },
+      {
+        "player": "Jaylen Crocker-Johnson",
+        "status": "out",
+        "bpr": 2.2637,
+        "poss": 1220.0,
+        "bpr_share": 0.0917,
+        "importance": 0.0917
+      }
+    ],
+    "roster": [
+      {
+        "player": "cade tyson",
+        "bpr": 4.8515,
+        "poss": 1782.0
+      },
+      {
+        "player": "isaac asuma",
+        "bpr": 4.3823,
+        "poss": 1742.0
+      },
+      {
+        "player": "langston reynolds",
+        "bpr": 2.6463,
+        "poss": 1666.0
+      },
+      {
+        "player": "bobby durkin",
+        "bpr": 3.4818,
+        "poss": 1623.0
+      },
+      {
+        "player": "jaylen crocker-johnson",
+        "bpr": 2.2637,
+        "poss": 1220.0
+      },
+      {
+        "player": "grayson grove",
+        "bpr": 2.8678,
+        "poss": 952.0
+      },
+      {
+        "player": "kai shinholster",
+        "bpr": -0.4902,
+        "poss": 582.0
+      },
+      {
+        "player": "chansey willis jr.",
+        "bpr": 0.9038,
+        "poss": 314.0
+      },
+      {
+        "player": "robert vaihola",
+        "bpr": 2.2012,
+        "poss": 178.0
+      },
+      {
+        "player": "nehemiah turner",
+        "bpr": 0.9673,
+        "poss": 60.0
+      },
+      {
+        "player": "maximus gizzi",
+        "bpr": -2.1096,
+        "poss": 38.0
+      }
+    ],
+    "injury_impact": 0.6319231943602408
   },
   {
     "team": "Stanford",
@@ -5230,9 +6139,113 @@
     "em_adj_o": 115.0802,
     "em_adj_d": 100.6086,
     "conf_strength_score": 0.5258,
-    "injuries": [],
-    "roster": [],
-    "injury_impact": 0.0
+    "injuries": [
+      {
+        "player": "Chisom Okpara",
+        "status": "questionable",
+        "bpr": 1.3136,
+        "poss": 850.0,
+        "bpr_share": 0.0537,
+        "importance": 0.0537
+      },
+      {
+        "player": "Anthony Batson",
+        "status": "questionable",
+        "bpr": -0.0099,
+        "poss": 0.0,
+        "bpr_share": 0.0,
+        "importance": 0.0
+      },
+      {
+        "player": "Tallis Toure",
+        "status": "questionable",
+        "bpr": -2.8474,
+        "poss": 11.0,
+        "bpr_share": 0.0,
+        "importance": 0.0
+      },
+      {
+        "player": "Kristers Skrinda",
+        "status": "questionable",
+        "bpr": -0.1403,
+        "poss": 92.0,
+        "bpr_share": 0.0,
+        "importance": 0.0
+      }
+    ],
+    "roster": [
+      {
+        "player": "ebuka okorie",
+        "bpr": 7.427,
+        "poss": 1784.0
+      },
+      {
+        "player": "benny gealer",
+        "bpr": 4.4915,
+        "poss": 1584.0
+      },
+      {
+        "player": "aidan cammann",
+        "bpr": 3.2368,
+        "poss": 1188.0
+      },
+      {
+        "player": "ryan agarwal",
+        "bpr": 1.0528,
+        "poss": 1170.0
+      },
+      {
+        "player": "jeremy dent-smith",
+        "bpr": 2.4989,
+        "poss": 1114.0
+      },
+      {
+        "player": "aj rohosy",
+        "bpr": 1.3536,
+        "poss": 1079.0
+      },
+      {
+        "player": "chisom okpara",
+        "bpr": 1.3136,
+        "poss": 850.0
+      },
+      {
+        "player": "oskar giltay",
+        "bpr": 1.6758,
+        "poss": 754.0
+      },
+      {
+        "player": "donavin young",
+        "bpr": -0.0873,
+        "poss": 500.0
+      },
+      {
+        "player": "cameron grant",
+        "bpr": -1.6229,
+        "poss": 368.0
+      },
+      {
+        "player": "jaylen thompson",
+        "bpr": 0.9188,
+        "poss": 332.0
+      },
+      {
+        "player": "kristers skrinda",
+        "bpr": -0.1403,
+        "poss": 92.0
+      },
+      {
+        "player": "evan stinson",
+        "bpr": -0.5311,
+        "poss": 40.0
+      },
+      {
+        "player": "tallis toure",
+        "bpr": -2.8474,
+        "poss": 11.0
+      }
+    ],
+    "injury_impact": 0.04130680287182361
   },
   {
     "team": "Seton Hall",
@@ -6211,8 +7224,86 @@
     "em_adj_d": 91.5734,
     "conf_strength_score": 0.1721,
     "conf_tourney_momentum": 1.0,
-    "injuries": [],
-    "roster": [],
+    "injuries": [
+      {
+        "player": "Marino Dubravcic",
+        "status": "out",
+        "bpr": -1.7704,
+        "poss": 0.0,
+        "bpr_share": 0.0,
+        "importance": 0.0
+      },
+      {
+        "player": "Cade Courbat",
+        "status": "out",
+        "bpr": -3.4378,
+        "poss": 38.0,
+        "bpr_share": 0.0,
+        "importance": 0.0
+      }
+    ],
+    "roster": [
+      {
+        "player": "trey campbell",
+        "bpr": 4.8064,
+        "poss": 1848.0
+      },
+      {
+        "player": "leon bond iii",
+        "bpr": 3.1915,
+        "poss": 1828.0
+      },
+      {
+        "player": "ben schwieger",
+        "bpr": 3.5787,
+        "poss": 1536.0
+      },
+      {
+        "player": "will hornseth",
+        "bpr": 2.1188,
+        "poss": 1436.0
+      },
+      {
+        "player": "max weisbrod",
+        "bpr": 1.3353,
+        "poss": 1352.0
+      },
+      {
+        "player": "tristan smith",
+        "bpr": 5.0018,
+        "poss": 879.0
+      },
+      {
+        "player": "kyle pock",
+        "bpr": -0.5508,
+        "poss": 639.0
+      },
+      {
+        "player": "ismael diouf",
+        "bpr": -1.1016,
+        "poss": 528.0
+      },
+      {
+        "player": "rj taylor",
+        "bpr": -0.4615,
+        "poss": 464.0
+      },
+      {
+        "player": "geon hutchins",
+        "bpr": -1.4808,
+        "poss": 371.0
+      },
+      {
+        "player": "chase courbat",
+        "bpr": -3.4378,
+        "poss": 38.0
+      },
+      {
+        "player": "hunter jacobson",
+        "bpr": -4.1456,
+        "poss": 25.0
+      }
+    ],
     "injury_impact": 0.0
   },
   {
@@ -6621,9 +7712,102 @@
     "em_adj_o": 117.9661,
     "em_adj_d": 104.2568,
     "conf_strength_score": 0.2888,
-    "injuries": [],
-    "roster": [],
-    "injury_impact": 0.0
+    "injuries": [
+      {
+        "player": "Parsa Fallah",
+        "status": "out",
+        "bpr": 3.9651,
+        "poss": 1257.0,
+        "bpr_share": 0.146,
+        "importance": 0.146
+      },
+      {
+        "player": "Andrija Vukovic",
+        "status": "questionable",
+        "bpr": 1.1501,
+        "poss": 758.0,
+        "bpr_share": 0.0423,
+        "importance": 0.0423
+      }
+    ],
+    "roster": [
+      {
+        "player": "kanye clary",
+        "bpr": 3.5901,
+        "poss": 1698.0
+      },
+      {
+        "player": "anthony roy",
+        "bpr": 5.0511,
+        "poss": 1605.0
+      },
+      {
+        "player": "christian coleman",
+        "bpr": 3.4806,
+        "poss": 1526.0
+      },
+      {
+        "player": "vyctorius miller",
+        "bpr": 3.0876,
+        "poss": 1468.0
+      },
+      {
+        "player": "jaylen curry",
+        "bpr": 4.0588,
+        "poss": 1420.0
+      },
+      {
+        "player": "parsa fallah",
+        "bpr": 3.9651,
+        "poss": 1257.0
+      },
+      {
+        "player": "isaiah coleman",
+        "bpr": 1.2741,
+        "poss": 1130.0
+      },
+      {
+        "player": "andrija vukovic",
+        "bpr": 1.1501,
+        "poss": 758.0
+      },
+      {
+        "player": "ryan crotty",
+        "bpr": 0.4938,
+        "poss": 506.0
+      },
+      {
+        "player": "benjamin ahmed",
+        "bpr": -0.2083,
+        "poss": 435.0
+      },
+      {
+        "player": "lefteris mantzoukas",
+        "bpr": -0.6945,
+        "poss": 406.0
+      },
+      {
+        "player": "daniel guetta",
+        "bpr": -2.5414,
+        "poss": 194.0
+      },
+      {
+        "player": "mekhi ragland",
+        "bpr": -1.2073,
+        "poss": 130.0
+      },
+      {
+        "player": "kirk cole",
+        "bpr": -1.8227,
+        "poss": 100.0
+      },
+      {
+        "player": "robert jennings",
+        "bpr": 1.0097,
+        "poss": 77.0
+      }
+    ],
+    "injury_impact": 0.8788005918247132
   },
   {
     "team": "Marquette",
@@ -6780,9 +7964,95 @@
     "em_adj_o": 114.5153,
     "em_adj_d": 107.9949,
     "conf_strength_score": 0.6312,
-    "injuries": [],
-    "roster": [],
-    "injury_impact": 0.0
+    "injuries": [
+      {
+        "player": "Sebastian Rancik",
+        "status": "questionable",
+        "bpr": 3.2687,
+        "poss": 1446.0,
+        "bpr_share": 0.1631,
+        "importance": 0.1631
+      },
+      {
+        "player": "Jon Mani",
+        "status": "out",
+        "bpr": -0.7624,
+        "poss": 0.0,
+        "bpr_share": 0.0,
+        "importance": 0.0
+      },
+      {
+        "player": "Leonardo Van Elswyk",
+        "status": "out",
+        "bpr": -1.2168,
+        "poss": 0.0,
+        "bpr_share": 0.0,
+        "importance": 0.0
+      }
+    ],
+    "roster": [
+      {
+        "player": "barrington hargress",
+        "bpr": 5.2908,
+        "poss": 1815.0
+      },
+      {
+        "player": "isaiah johnson",
+        "bpr": 4.9762,
+        "poss": 1730.0
+      },
+      {
+        "player": "bangot dak",
+        "bpr": 3.7249,
+        "poss": 1454.0
+      },
+      {
+        "player": "sebastian rancik",
+        "bpr": 3.2687,
+        "poss": 1446.0
+      },
+      {
+        "player": "josiah sanders",
+        "bpr": 0.116,
+        "poss": 944.0
+      },
+      {
+        "player": "jalin holland",
+        "bpr": -0.0126,
+        "poss": 892.0
+      },
+      {
+        "player": "alon michaeli",
+        "bpr": -1.0141,
+        "poss": 887.0
+      },
+      {
+        "player": "felix kossaras",
+        "bpr": 0.5638,
+        "poss": 781.0
+      },
+      {
+        "player": "elijah malone",
+        "bpr": 1.7676,
+        "poss": 700.0
+      },
+      {
+        "player": "ian inman",
+        "bpr": -0.6247,
+        "poss": 354.0
+      },
+      {
+        "player": "fawaz ifaola",
+        "bpr": -0.1001,
+        "poss": 252.0
+      },
+      {
+        "player": "andrew crawford",
+        "bpr": 0.337,
+        "poss": 48.0
+      }
+    ],
+    "injury_impact": 0.17214018445990914
   },
   {
     "team": "Georgetown",
@@ -7006,9 +8276,94 @@
     "em_adj_o": 115.5086,
     "em_adj_d": 101.6337,
     "conf_strength_score": 0.593,
-    "injuries": [],
-    "roster": [],
-    "injury_impact": 0.0
+    "injuries": [
+      {
+        "player": "Nic McClain",
+        "status": "out",
+        "bpr": 2.9669,
+        "poss": 650.0,
+        "bpr_share": 0.1055,
+        "importance": 0.1055
+      }
+    ],
+    "roster": [
+      {
+        "player": "tyler lundblade",
+        "bpr": 3.9657,
+        "poss": 1888.0
+      },
+      {
+        "player": "jabez jenkins",
+        "bpr": 1.7332,
+        "poss": 1312.0
+      },
+      {
+        "player": "sam orme",
+        "bpr": 5.108,
+        "poss": 1280.0
+      },
+      {
+        "player": "drew scharnowski",
+        "bpr": 3.4583,
+        "poss": 1148.0
+      },
+      {
+        "player": "brigham rogers",
+        "bpr": 4.0062,
+        "poss": 950.0
+      },
+      {
+        "player": "jack smiley",
+        "bpr": 3.5533,
+        "poss": 934.0
+      },
+      {
+        "player": "isaiah west",
+        "bpr": -0.3367,
+        "poss": 906.0
+      },
+      {
+        "player": "eoin dillon",
+        "bpr": 3.3437,
+        "poss": 878.0
+      },
+      {
+        "player": "nic mcclain",
+        "bpr": 2.9669,
+        "poss": 650.0
+      },
+      {
+        "player": "win miller",
+        "bpr": -3.5237,
+        "poss": 408.0
+      },
+      {
+        "player": "aidan noyes",
+        "bpr": -0.1356,
+        "poss": 380.0
+      },
+      {
+        "player": "cooper haynes",
+        "bpr": -1.7019,
+        "poss": 100.0
+      },
+      {
+        "player": "jake dykstra",
+        "bpr": -1.4634,
+        "poss": 56.0
+      },
+      {
+        "player": "keith robbins",
+        "bpr": -4.328,
+        "poss": 52.0
+      },
+      {
+        "player": "graydon lemke",
+        "bpr": -1.872,
+        "poss": 28.0
+      }
+    ],
+    "injury_impact": 0.36372957531696076
   },
   {
     "team": "Syracuse",
@@ -7081,8 +8436,78 @@
     "em_adj_o": 114.1428,
     "em_adj_d": 101.0945,
     "conf_strength_score": 0.5204,
-    "injuries": [],
-    "roster": [],
+    "injuries": [
+      {
+        "player": "Aaron Womack",
+        "status": "out",
+        "bpr": -0.1581,
+        "poss": 0.0,
+        "bpr_share": 0.0,
+        "importance": 0.0
+      }
+    ],
+    "roster": [
+      {
+        "player": "naithan george",
+        "bpr": 5.154,
+        "poss": 1772.0
+      },
+      {
+        "player": "nate kingz",
+        "bpr": 5.032,
+        "poss": 1728.0
+      },
+      {
+        "player": "william kyle iii",
+        "bpr": 2.3615,
+        "poss": 1524.0
+      },
+      {
+        "player": "jj starling",
+        "bpr": 1.3996,
+        "poss": 1496.0
+      },
+      {
+        "player": "donnie freeman",
+        "bpr": 4.2572,
+        "poss": 1246.0
+      },
+      {
+        "player": "tyler betsey",
+        "bpr": 1.3595,
+        "poss": 922.0
+      },
+      {
+        "player": "kiyan anthony",
+        "bpr": -1.2929,
+        "poss": 916.0
+      },
+      {
+        "player": "sadiq white jr.",
+        "bpr": 0.9498,
+        "poss": 786.0
+      },
+      {
+        "player": "ibrahim souare",
+        "bpr": 0.8805,
+        "poss": 398.0
+      },
+      {
+        "player": "bryce zephir",
+        "bpr": -0.8727,
+        "poss": 176.0
+      },
+      {
+        "player": "luke fennell",
+        "bpr": 0.0808,
+        "poss": 102.0
+      },
+      {
+        "player": "tiefing diawara",
+        "bpr": -0.9782,
+        "poss": 9.0
+      }
+    ],
     "injury_impact": 0.0
   },
   {
@@ -7248,8 +8673,84 @@
     "em_adj_o": 115.0142,
     "em_adj_d": 101.3226,
     "conf_strength_score": 0.461,
-    "injuries": [],
-    "roster": [],
+    "injuries": [
+      {
+        "player": "Ty Bevins",
+        "status": "questionable",
+        "bpr": -1.2407,
+        "poss": 86.0,
+        "bpr_share": 0.0,
+        "importance": 0.0
+      },
+      {
+        "player": "Mohamed Binzagr",
+        "status": "questionable",
+        "bpr": -1.2734,
+        "poss": 0.0,
+        "bpr_share": 0.0,
+        "importance": 0.0
+      },
+      {
+        "player": "Jalen Rougier-Roane",
+        "status": "out",
+        "bpr": -0.3751,
+        "poss": 0.0,
+        "bpr_share": 0.0,
+        "importance": 0.0
+      }
+    ],
+    "roster": [
+      {
+        "player": "trey autry",
+        "bpr": 3.1807,
+        "poss": 1548.0
+      },
+      {
+        "player": "christian jones",
+        "bpr": 3.0161,
+        "poss": 1476.0
+      },
+      {
+        "player": "jean aranguren",
+        "bpr": 4.21,
+        "poss": 1354.0
+      },
+      {
+        "player": "rafael castro",
+        "bpr": 6.3238,
+        "poss": 1267.0
+      },
+      {
+        "player": "tyrone marshall",
+        "bpr": 3.1612,
+        "poss": 1252.0
+      },
+      {
+        "player": "tre dinkins",
+        "bpr": 2.4815,
+        "poss": 1158.0
+      },
+      {
+        "player": "garrett johnson",
+        "bpr": 1.4687,
+        "poss": 1134.0
+      },
+      {
+        "player": "luke hunger",
+        "bpr": 1.3429,
+        "poss": 1054.0
+      },
+      {
+        "player": "bubu benjamin",
+        "bpr": 1.4173,
+        "poss": 959.0
+      },
+      {
+        "player": "ty bevins",
+        "bpr": -1.2407,
+        "poss": 86.0
+      }
+    ],
     "injury_impact": 0.0
   },
   {
@@ -7323,9 +8824,95 @@
     "em_adj_o": 113.8302,
     "em_adj_d": 96.9577,
     "conf_strength_score": 0.4661,
-    "injuries": [],
-    "roster": [],
-    "injury_impact": 0.0
+    "injuries": [
+      {
+        "player": "Jaret Valencia",
+        "status": "out",
+        "bpr": 0.4627,
+        "poss": 214.0,
+        "bpr_share": 0.0208,
+        "importance": 0.0208
+      },
+      {
+        "player": "Pierre Couisnard",
+        "status": "out",
+        "bpr": -0.9222,
+        "poss": 0.0,
+        "bpr_share": 0.0,
+        "importance": 0.0
+      },
+      {
+        "player": "Tyrus Rathan-Mayes",
+        "status": "out",
+        "bpr": 0.469,
+        "poss": 0.0,
+        "bpr_share": 0.021,
+        "importance": 0.021
+      }
+    ],
+    "roster": [
+      {
+        "player": "kenyon giles",
+        "bpr": 4.0628,
+        "poss": 2044.0
+      },
+      {
+        "player": "karon boyd",
+        "bpr": 2.598,
+        "poss": 1902.0
+      },
+      {
+        "player": "michael gray jr.",
+        "bpr": 1.4865,
+        "poss": 1546.0
+      },
+      {
+        "player": "tj williams",
+        "bpr": 2.7173,
+        "poss": 1204.0
+      },
+      {
+        "player": "will berg",
+        "bpr": 4.5479,
+        "poss": 1192.0
+      },
+      {
+        "player": "dre kindell",
+        "bpr": 2.7304,
+        "poss": 958.0
+      },
+      {
+        "player": "emmanuel okorafor",
+        "bpr": 0.4625,
+        "poss": 951.0
+      },
+      {
+        "player": "dillon battie",
+        "bpr": 2.1671,
+        "poss": 866.0
+      },
+      {
+        "player": "brian amuneke",
+        "bpr": -1.4098,
+        "poss": 448.0
+      },
+      {
+        "player": "jaret valencia",
+        "bpr": 0.4627,
+        "poss": 214.0
+      },
+      {
+        "player": "noah hill",
+        "bpr": 0.5851,
+        "poss": 156.0
+      },
+      {
+        "player": "henry thengvall",
+        "bpr": -1.9031,
+        "poss": 36.0
+      }
+    ],
+    "injury_impact": 0.2034832104458363
   },
   {
     "team": "Creighton",
@@ -7398,9 +8985,113 @@
     "em_adj_o": 115.3715,
     "em_adj_d": 104.883,
     "conf_strength_score": 0.788,
-    "injuries": [],
-    "roster": [],
-    "injury_impact": 0.0
+    "injuries": [
+      {
+        "player": "Liam McChesney",
+        "status": "out",
+        "bpr": 0.2876,
+        "poss": 14.0,
+        "bpr_share": 0.0104,
+        "importance": 0.0104
+      },
+      {
+        "player": "Josh Townley-Thomas",
+        "status": "questionable",
+        "bpr": -3.484,
+        "poss": 0.0,
+        "bpr_share": 0.0,
+        "importance": 0.0
+      },
+      {
+        "player": "Jackson McAndrew",
+        "status": "out",
+        "bpr": 3.198,
+        "poss": 147.0,
+        "bpr_share": 0.1152,
+        "importance": 0.1152
+      },
+      {
+        "player": "Aleksa Dimitrijevic",
+        "status": "out",
+        "bpr": -0.1965,
+        "poss": 0.0,
+        "bpr_share": 0.0,
+        "importance": 0.0
+      }
+    ],
+    "roster": [
+      {
+        "player": "josh dix",
+        "bpr": 4.4167,
+        "poss": 1788.0
+      },
+      {
+        "player": "jasen green",
+        "bpr": 4.3757,
+        "poss": 1504.0
+      },
+      {
+        "player": "nik graves",
+        "bpr": 4.4433,
+        "poss": 1445.0
+      },
+      {
+        "player": "austin swartz",
+        "bpr": 1.9921,
+        "poss": 1118.0
+      },
+      {
+        "player": "isaac traudt",
+        "bpr": 2.422,
+        "poss": 1004.0
+      },
+      {
+        "player": "blake harper",
+        "bpr": 2.2741,
+        "poss": 992.0
+      },
+      {
+        "player": "fedor zugic",
+        "bpr": 0.0175,
+        "poss": 860.0
+      },
+      {
+        "player": "ty davis",
+        "bpr": -0.5526,
+        "poss": 614.0
+      },
+      {
+        "player": "owen freeman",
+        "bpr": 4.0881,
+        "poss": 494.0
+      },
+      {
+        "player": "hudson greer",
+        "bpr": 0.2452,
+        "poss": 456.0
+      },
+      {
+        "player": "kerem konan",
+        "bpr": -0.0115,
+        "poss": 415.0
+      },
+      {
+        "player": "jackson mcandrew",
+        "bpr": 3.198,
+        "poss": 147.0
+      },
+      {
+        "player": "shane thomas",
+        "bpr": -0.6405,
+        "poss": 104.0
+      },
+      {
+        "player": "liam mcchesney",
+        "bpr": 0.2876,
+        "poss": 14.0
+      }
+    ],
+    "injury_impact": 0.08745322499224706
   },
   {
     "team": "Miami OH",
@@ -8160,9 +9851,97 @@
     "em_adj_o": 114.1722,
     "em_adj_d": 106.7795,
     "conf_strength_score": 0.34,
-    "injuries": [],
-    "roster": [],
-    "injury_impact": 0.0
+    "injuries": [
+      {
+        "player": "Matija Belic",
+        "status": "out",
+        "bpr": -0.6783,
+        "poss": 370.0,
+        "bpr_share": 0.0,
+        "importance": 0.0
+      },
+      {
+        "player": "Jared Harris",
+        "status": "questionable",
+        "bpr": 1.3803,
+        "poss": 200.0,
+        "bpr_share": 0.0754,
+        "importance": 0.0754
+      }
+    ],
+    "roster": [
+      {
+        "player": "leland walker",
+        "bpr": 2.2231,
+        "poss": 1546.0
+      },
+      {
+        "player": "khaden bennett",
+        "bpr": 3.729,
+        "poss": 1530.0
+      },
+      {
+        "player": "nasir meyer",
+        "bpr": 2.9935,
+        "poss": 1409.0
+      },
+      {
+        "player": "damarion dennis",
+        "bpr": 4.9913,
+        "poss": 1256.0
+      },
+      {
+        "player": "adam harakow",
+        "bpr": 0.8825,
+        "poss": 1014.0
+      },
+      {
+        "player": "uriyah rojas",
+        "bpr": 1.4485,
+        "poss": 896.0
+      },
+      {
+        "player": "gavin gores",
+        "bpr": 0.6606,
+        "poss": 827.0
+      },
+      {
+        "player": "kiani saxon",
+        "bpr": -1.93,
+        "poss": 798.0
+      },
+      {
+        "player": "abou magassa",
+        "bpr": -0.2323,
+        "poss": 464.0
+      },
+      {
+        "player": "simm saadi",
+        "bpr": -1.4619,
+        "poss": 449.0
+      },
+      {
+        "player": "matija belic",
+        "bpr": -0.6783,
+        "poss": 370.0
+      },
+      {
+        "player": "jared harris",
+        "bpr": 1.3803,
+        "poss": 200.0
+      },
+      {
+        "player": "garrett spielman",
+        "bpr": -1.6477,
+        "poss": 30.0
+      },
+      {
+        "player": "talan taylor",
+        "bpr": -1.2564,
+        "poss": 15.0
+      }
+    ],
+    "injury_impact": 0.010126182137471046
   },
   {
     "team": "Cal Baptist",
@@ -9893,9 +11672,79 @@
     "em_adj_d": 96.6387,
     "conf_strength_score": 0.439,
     "conf_tourney_momentum": 1.0,
-    "injuries": [],
-    "roster": [],
-    "injury_impact": 0.0
+    "injuries": [
+      {
+        "player": "Aaron Hunkin-Claytor",
+        "status": "out",
+        "bpr": 1.5569,
+        "poss": 727.0,
+        "bpr_share": 0.0938,
+        "importance": 0.0938
+      }
+    ],
+    "roster": [
+      {
+        "player": "hunter erickson",
+        "bpr": 1.628,
+        "poss": 1718.0
+      },
+      {
+        "player": "dre bullock",
+        "bpr": 2.6467,
+        "poss": 1579.0
+      },
+      {
+        "player": "gytis nemeiksa",
+        "bpr": 1.4903,
+        "poss": 1308.0
+      },
+      {
+        "player": "harry rouhliadeff",
+        "bpr": 1.3668,
+        "poss": 1280.0
+      },
+      {
+        "player": "isaac finlinson",
+        "bpr": -1.174,
+        "poss": 1252.0
+      },
+      {
+        "player": "isaac johnson",
+        "bpr": 4.8272,
+        "poss": 1178.0
+      },
+      {
+        "player": "isaiah kerr",
+        "bpr": -0.1211,
+        "poss": 1045.0
+      },
+      {
+        "player": "aaron hunkin-claytor",
+        "bpr": 1.5569,
+        "poss": 727.0
+      },
+      {
+        "player": "yacine toumi",
+        "bpr": -1.6377,
+        "poss": 480.0
+      },
+      {
+        "player": "aj economou",
+        "bpr": -2.8789,
+        "poss": 172.0
+      },
+      {
+        "player": "jalen myers",
+        "bpr": -0.0579,
+        "poss": 96.0
+      },
+      {
+        "player": "hunter carter",
+        "bpr": -0.2913,
+        "poss": 66.0
+      }
+    ],
+    "injury_impact": 0.2167408167470273
   },
   {
     "team": "Rutgers",
@@ -9968,9 +11817,92 @@
     "em_adj_o": 109.7888,
     "em_adj_d": 105.4152,
     "conf_strength_score": 0.7799,
-    "injuries": [],
-    "roster": [],
-    "injury_impact": 0.0
+    "injuries": [
+      {
+        "player": "Baye Fall",
+        "status": "out",
+        "bpr": -0.0632,
+        "poss": 76.0,
+        "bpr_share": 0.0,
+        "importance": 0.0
+      },
+      {
+        "player": "Dorian Jones",
+        "status": "out",
+        "bpr": 0.6766,
+        "poss": 0.0,
+        "bpr_share": 0.0499,
+        "importance": 0.0499
+      }
+    ],
+    "roster": [
+      {
+        "player": "tariq francis",
+        "bpr": 4.9469,
+        "poss": 1542.0
+      },
+      {
+        "player": "jamichael davis",
+        "bpr": 2.4592,
+        "poss": 1444.0
+      },
+      {
+        "player": "darren buchanan jr.",
+        "bpr": 1.1079,
+        "poss": 1340.0
+      },
+      {
+        "player": "dylan grant",
+        "bpr": 1.2435,
+        "poss": 1326.0
+      },
+      {
+        "player": "harun zrno",
+        "bpr": -0.3126,
+        "poss": 1060.0
+      },
+      {
+        "player": "emmanuel ogbole",
+        "bpr": 0.255,
+        "poss": 1021.0
+      },
+      {
+        "player": "lino mark",
+        "bpr": 1.4444,
+        "poss": 838.0
+      },
+      {
+        "player": "kaden powers",
+        "bpr": 0.3689,
+        "poss": 738.0
+      },
+      {
+        "player": "bryce dortch",
+        "bpr": 0.9471,
+        "poss": 724.0
+      },
+      {
+        "player": "denis badalau",
+        "bpr": -2.13,
+        "poss": 494.0
+      },
+      {
+        "player": "christopher nwuli",
+        "bpr": 0.0982,
+        "poss": 482.0
+      },
+      {
+        "player": "baye fall",
+        "bpr": -0.0632,
+        "poss": 76.0
+      },
+      {
+        "player": "gevonte ware",
+        "bpr": -0.5867,
+        "poss": 64.0
+      }
+    ],
+    "injury_impact": 0.2707170278755521
   },
   {
     "team": "George Mason",
@@ -10043,9 +11975,97 @@
     "em_adj_o": 112.6567,
     "em_adj_d": 104.1713,
     "conf_strength_score": 0.4055,
-    "injuries": [],
-    "roster": [],
-    "injury_impact": 0.0
+    "injuries": [
+      {
+        "player": "Brayden O'Connor",
+        "status": "out",
+        "bpr": 2.2117,
+        "poss": 24.0,
+        "bpr_share": 0.1031,
+        "importance": 0.1031
+      },
+      {
+        "player": "Jermahri Hill",
+        "status": "questionable",
+        "bpr": 0.7964,
+        "poss": 896.0,
+        "bpr_share": 0.0371,
+        "importance": 0.0371
+      }
+    ],
+    "roster": [
+      {
+        "player": "jahari long",
+        "bpr": 3.7487,
+        "poss": 1762.0
+      },
+      {
+        "player": "kory mincy",
+        "bpr": 3.9211,
+        "poss": 1756.0
+      },
+      {
+        "player": "riley allenspach",
+        "bpr": 2.9359,
+        "poss": 1247.0
+      },
+      {
+        "player": "masai troutman",
+        "bpr": 0.3764,
+        "poss": 1242.0
+      },
+      {
+        "player": "fatt hill",
+        "bpr": 0.7964,
+        "poss": 896.0
+      },
+      {
+        "player": "malik presley",
+        "bpr": -1.4062,
+        "poss": 832.0
+      },
+      {
+        "player": "emmanuel kanga",
+        "bpr": 3.1368,
+        "poss": 652.0
+      },
+      {
+        "player": "nick ellington",
+        "bpr": 1.8721,
+        "poss": 626.0
+      },
+      {
+        "player": "dola adebayo",
+        "bpr": 2.4602,
+        "poss": 496.0
+      },
+      {
+        "player": "stas sivka",
+        "bpr": -1.2895,
+        "poss": 478.0
+      },
+      {
+        "player": "devin booker",
+        "bpr": -1.83,
+        "poss": 302.0
+      },
+      {
+        "player": "brayden o'connor",
+        "bpr": 2.2117,
+        "poss": 24.0
+      },
+      {
+        "player": "t.j. prosise",
+        "bpr": -1.1538,
+        "poss": 11.0
+      },
+      {
+        "player": "ben woodward",
+        "bpr": -1.1188,
+        "poss": 9.0
+      }
+    ],
+    "injury_impact": 0.03613927703975422
   },
   {
     "team": "UT Rio Grande Valley",
@@ -10543,9 +12563,79 @@
     "em_adj_o": 111.7796,
     "em_adj_d": 99.7191,
     "conf_strength_score": 0.5456,
-    "injuries": [],
-    "roster": [],
-    "injury_impact": 0.0
+    "injuries": [
+      {
+        "player": "Gavin Walsh",
+        "status": "questionable",
+        "bpr": 2.1673,
+        "poss": 550.0,
+        "bpr_share": 0.1147,
+        "importance": 0.1147
+      }
+    ],
+    "roster": [
+      {
+        "player": "nolan hodge",
+        "bpr": 2.4506,
+        "poss": 1706.0
+      },
+      {
+        "player": "greedy williams",
+        "bpr": 2.7429,
+        "poss": 1584.0
+      },
+      {
+        "player": "christian may",
+        "bpr": 1.3212,
+        "poss": 1558.0
+      },
+      {
+        "player": "noah ross",
+        "bpr": 2.0775,
+        "poss": 1520.0
+      },
+      {
+        "player": "patrick wessler",
+        "bpr": 4.1381,
+        "poss": 1397.0
+      },
+      {
+        "player": "madison durr",
+        "bpr": 1.1803,
+        "poss": 1108.0
+      },
+      {
+        "player": "gavin walsh",
+        "bpr": 2.1673,
+        "poss": 550.0
+      },
+      {
+        "player": "jahnathan lamothe",
+        "bpr": -0.1144,
+        "poss": 450.0
+      },
+      {
+        "player": "makoi mabor makoi",
+        "bpr": -4.5355,
+        "poss": 378.0
+      },
+      {
+        "player": "makel smith",
+        "bpr": -0.9948,
+        "poss": 22.0
+      },
+      {
+        "player": "grady whitt",
+        "bpr": -1.1844,
+        "poss": 16.0
+      },
+      {
+        "player": "jojo fullwood",
+        "bpr": -3.4952,
+        "poss": 15.0
+      }
+    ],
+    "injury_impact": 0.045045684026399954
   },
   {
     "team": "Washington St.",
@@ -11303,8 +13393,83 @@
     "em_adj_o": 109.7624,
     "em_adj_d": 102.5204,
     "conf_strength_score": 0.5173,
-    "injuries": [],
-    "roster": [],
+    "injuries": [
+      {
+        "player": "Matthew Zobrist",
+        "status": "questionable",
+        "bpr": -2.0416,
+        "poss": 92.0,
+        "bpr_share": 0.0,
+        "importance": 0.0
+      }
+    ],
+    "roster": [
+      {
+        "player": "alex huibregtse",
+        "bpr": 2.8309,
+        "poss": 1720.0
+      },
+      {
+        "player": "jaquan johnson",
+        "bpr": 5.4976,
+        "poss": 1669.0
+      },
+      {
+        "player": "aj smith",
+        "bpr": 2.951,
+        "poss": 1401.0
+      },
+      {
+        "player": "ahmet jonovic",
+        "bpr": 1.5329,
+        "poss": 1349.0
+      },
+      {
+        "player": "timoty van der knaap",
+        "bpr": -2.3943,
+        "poss": 1270.0
+      },
+      {
+        "player": "montana wheeler",
+        "bpr": 0.8817,
+        "poss": 1216.0
+      },
+      {
+        "player": "demarion burch",
+        "bpr": -1.3545,
+        "poss": 999.0
+      },
+      {
+        "player": "corey thomas",
+        "bpr": 2.281,
+        "poss": 990.0
+      },
+      {
+        "player": "kai yu",
+        "bpr": -2.2903,
+        "poss": 374.0
+      },
+      {
+        "player": "dietrich richardson",
+        "bpr": -1.5476,
+        "poss": 188.0
+      },
+      {
+        "player": "matthew zobrist",
+        "bpr": -2.0416,
+        "poss": 92.0
+      },
+      {
+        "player": "handy toussaint iii",
+        "bpr": -0.7525,
+        "poss": 14.0
+      },
+      {
+        "player": "gus rugaard",
+        "bpr": -1.4709,
+        "poss": 14.0
+      }
+    ],
     "injury_impact": 0.0
   },
   {
@@ -11835,9 +14000,79 @@
     "em_adj_o": 102.0001,
     "em_adj_d": 96.8737,
     "conf_strength_score": 0.4557,
-    "injuries": [],
-    "roster": [],
-    "injury_impact": 0.0
+    "injuries": [
+      {
+        "player": "Will McClendon",
+        "status": "out",
+        "bpr": 1.3161,
+        "poss": 125.0,
+        "bpr_share": 0.1094,
+        "importance": 0.1094
+      }
+    ],
+    "roster": [
+      {
+        "player": "david terrell jr.",
+        "bpr": 3.4917,
+        "poss": 1716.0
+      },
+      {
+        "player": "je'shawn stevenson",
+        "bpr": 3.6334,
+        "poss": 1712.0
+      },
+      {
+        "player": "dylan arnett",
+        "bpr": 0.2296,
+        "poss": 1378.0
+      },
+      {
+        "player": "cole franklin",
+        "bpr": -0.248,
+        "poss": 1304.0
+      },
+      {
+        "player": "reece robinson",
+        "bpr": 2.3191,
+        "poss": 1191.0
+      },
+      {
+        "player": "demarion watson",
+        "bpr": 0.1109,
+        "poss": 692.0
+      },
+      {
+        "player": "buddy hammer jr.",
+        "bpr": 0.9337,
+        "poss": 654.0
+      },
+      {
+        "player": "cahmai crosby",
+        "bpr": -1.6935,
+        "poss": 472.0
+      },
+      {
+        "player": "ej horton",
+        "bpr": -2.2571,
+        "poss": 442.0
+      },
+      {
+        "player": "josiah shackleford",
+        "bpr": -1.2185,
+        "poss": 439.0
+      },
+      {
+        "player": "curtis stinson jr.",
+        "bpr": -0.9913,
+        "poss": 410.0
+      },
+      {
+        "player": "will mcclendon",
+        "bpr": 1.3161,
+        "poss": 125.0
+      }
+    ],
+    "injury_impact": 0.03044240305718423
   },
   {
     "team": "Penn St.",
@@ -11910,8 +14145,86 @@
     "em_adj_o": 109.9934,
     "em_adj_d": 113.8408,
     "conf_strength_score": 0.4246,
-    "injuries": [],
-    "roster": [],
+    "injuries": [
+      {
+        "player": "Reggie Grodin",
+        "status": "out",
+        "bpr": -0.8248,
+        "poss": 0.0,
+        "bpr_share": 0.0,
+        "importance": 0.0
+      },
+      {
+        "player": "Tibor Mirtic",
+        "status": "out",
+        "bpr": -0.1003,
+        "poss": 358.0,
+        "bpr_share": 0.0,
+        "importance": 0.0
+      }
+    ],
+    "roster": [
+      {
+        "player": "kayden mingo",
+        "bpr": 2.823,
+        "poss": 1528.0
+      },
+      {
+        "player": "josh reed",
+        "bpr": 2.0451,
+        "poss": 1519.0
+      },
+      {
+        "player": "freddie dilione v",
+        "bpr": 2.4681,
+        "poss": 1464.0
+      },
+      {
+        "player": "ivan juric",
+        "bpr": 0.6188,
+        "poss": 1340.0
+      },
+      {
+        "player": "melih tunca",
+        "bpr": 1.8252,
+        "poss": 1193.0
+      },
+      {
+        "player": "dominick stewart",
+        "bpr": 0.2064,
+        "poss": 1190.0
+      },
+      {
+        "player": "eli rice",
+        "bpr": 0.9511,
+        "poss": 984.0
+      },
+      {
+        "player": "mason blackwood",
+        "bpr": -2.0504,
+        "poss": 508.0
+      },
+      {
+        "player": "sasa ciani",
+        "bpr": -0.1849,
+        "poss": 464.0
+      },
+      {
+        "player": "tibor mirtic",
+        "bpr": -0.1003,
+        "poss": 358.0
+      },
+      {
+        "player": "justin houser",
+        "bpr": -1.5607,
+        "poss": 189.0
+      },
+      {
+        "player": "chris lotito",
+        "bpr": -1.3127,
+        "poss": 8.0
+      }
+    ],
     "injury_impact": 0.0
   },
   {
@@ -12061,8 +14374,83 @@
     "em_adj_o": 109.2521,
     "em_adj_d": 108.7778,
     "conf_strength_score": 0.5925,
-    "injuries": [],
-    "roster": [],
+    "injuries": [
+      {
+        "player": "AJ Smith",
+        "status": "out",
+        "bpr": -1.4172,
+        "poss": 198.0,
+        "bpr_share": 0.0,
+        "importance": 0.0
+      }
+    ],
+    "roster": [
+      {
+        "player": "aiden tobiason",
+        "bpr": 2.1805,
+        "poss": 1818.0
+      },
+      {
+        "player": "derrian ford",
+        "bpr": 1.241,
+        "poss": 1768.0
+      },
+      {
+        "player": "jordan mason",
+        "bpr": 1.7185,
+        "poss": 1722.0
+      },
+      {
+        "player": "gavin griffiths",
+        "bpr": 2.0629,
+        "poss": 1426.0
+      },
+      {
+        "player": "babatunde durodola",
+        "bpr": 1.0406,
+        "poss": 978.0
+      },
+      {
+        "player": "masiah gilyard",
+        "bpr": 0.1928,
+        "poss": 860.0
+      },
+      {
+        "player": "jamai felt",
+        "bpr": 1.3075,
+        "poss": 662.0
+      },
+      {
+        "player": "ayuba bryant jr.",
+        "bpr": -1.2721,
+        "poss": 331.0
+      },
+      {
+        "player": "aj smith",
+        "bpr": -1.4172,
+        "poss": 198.0
+      },
+      {
+        "player": "cam wallace",
+        "bpr": -1.6392,
+        "poss": 182.0
+      },
+      {
+        "player": "mohamed keita",
+        "bpr": -1.6262,
+        "poss": 154.0
+      },
+      {
+        "player": "spencer mahoney",
+        "bpr": -2.5006,
+        "poss": 88.0
+      },
+      {
+        "player": "connor gal",
+        "bpr": -1.3095,
+        "poss": 12.0
+      }
+    ],
     "injury_impact": 0.0
   },
   {
@@ -14409,8 +16797,88 @@
     "em_adj_o": 109.6776,
     "em_adj_d": 104.0532,
     "conf_strength_score": 0.4014,
-    "injuries": [],
-    "roster": [],
+    "injuries": [
+      {
+        "player": "Bryson McGlothin",
+        "status": "questionable",
+        "bpr": -1.1831,
+        "poss": 13.0,
+        "bpr_share": 0.0,
+        "importance": 0.0
+      }
+    ],
+    "roster": [
+      {
+        "player": "will johnston",
+        "bpr": 0.9323,
+        "poss": 1468.0
+      },
+      {
+        "player": "aj lopez",
+        "bpr": 1.2135,
+        "poss": 1404.0
+      },
+      {
+        "player": "aiden argabright",
+        "bpr": 3.0537,
+        "poss": 1220.0
+      },
+      {
+        "player": "mike walz",
+        "bpr": 2.8089,
+        "poss": 1116.0
+      },
+      {
+        "player": "mikkel tyne",
+        "bpr": -0.6993,
+        "poss": 980.0
+      },
+      {
+        "player": "collin tanner",
+        "bpr": -0.6186,
+        "poss": 856.0
+      },
+      {
+        "player": "jaden daughtry",
+        "bpr": 2.9441,
+        "poss": 816.0
+      },
+      {
+        "player": "david thomas",
+        "bpr": 0.8456,
+        "poss": 724.0
+      },
+      {
+        "player": "apostolos roumoglou",
+        "bpr": 0.8181,
+        "poss": 686.0
+      },
+      {
+        "player": "jonathan beagle",
+        "bpr": 2.8165,
+        "poss": 606.0
+      },
+      {
+        "player": "jaylen robinson",
+        "bpr": -1.3609,
+        "poss": 500.0
+      },
+      {
+        "player": "will harper iii",
+        "bpr": -0.27,
+        "poss": 226.0
+      },
+      {
+        "player": "bryson mcglothin",
+        "bpr": -1.1831,
+        "poss": 13.0
+      },
+      {
+        "player": "kirby mooney",
+        "bpr": -1.6916,
+        "poss": 12.0
+      }
+    ],
     "injury_impact": 0.0
   },
   {
@@ -14484,9 +16952,110 @@
     "em_adj_o": 110.0241,
     "em_adj_d": 103.9101,
     "conf_strength_score": 0.4088,
-    "injuries": [],
-    "roster": [],
-    "injury_impact": 0.0
+    "injuries": [
+      {
+        "player": "Bryant Selebangue",
+        "status": "out",
+        "bpr": 2.2284,
+        "poss": 288.0,
+        "bpr_share": 0.1481,
+        "importance": 0.1481
+      },
+      {
+        "player": "Louie Semona",
+        "status": "out",
+        "bpr": -1.3697,
+        "poss": 80.0,
+        "bpr_share": 0.0,
+        "importance": 0.0
+      },
+      {
+        "player": "Lawson Rice",
+        "status": "out",
+        "bpr": -0.9817,
+        "poss": 0.0,
+        "bpr_share": 0.0,
+        "importance": 0.0
+      }
+    ],
+    "roster": [
+      {
+        "player": "grant newell",
+        "bpr": 1.6741,
+        "poss": 1398.0
+      },
+      {
+        "player": "teagan moore",
+        "bpr": 4.4909,
+        "poss": 1346.0
+      },
+      {
+        "player": "ryan myers",
+        "bpr": 0.6863,
+        "poss": 1212.0
+      },
+      {
+        "player": "armelo boone",
+        "bpr": 0.4446,
+        "poss": 1206.0
+      },
+      {
+        "player": "lj hackman",
+        "bpr": 1.6622,
+        "poss": 1170.0
+      },
+      {
+        "player": "terrion murdix",
+        "bpr": 3.8078,
+        "poss": 994.0
+      },
+      {
+        "player": "blaise keita",
+        "bpr": 0.0489,
+        "poss": 684.0
+      },
+      {
+        "player": "cam haffner",
+        "bpr": -2.0985,
+        "poss": 606.0
+      },
+      {
+        "player": "leeroy odiahi",
+        "bpr": -1.602,
+        "poss": 484.0
+      },
+      {
+        "player": "noah boyde",
+        "bpr": -3.2361,
+        "poss": 420.0
+      },
+      {
+        "player": "kade unseld",
+        "bpr": -3.1496,
+        "poss": 386.0
+      },
+      {
+        "player": "jack edelen",
+        "bpr": -2.3726,
+        "poss": 360.0
+      },
+      {
+        "player": "bryant selebangue",
+        "bpr": 2.2284,
+        "poss": 288.0
+      },
+      {
+        "player": "cade stinnett",
+        "bpr": -0.3781,
+        "poss": 156.0
+      },
+      {
+        "player": "louie semona",
+        "bpr": -1.3697,
+        "poss": 80.0
+      }
+    ],
+    "injury_impact": 0.12473256131932084
   },
   {
     "team": "Merrimack",
@@ -15062,8 +17631,96 @@
     "em_adj_o": 102.1511,
     "em_adj_d": 101.1067,
     "conf_strength_score": 0.6759,
-    "injuries": [],
-    "roster": [],
+    "injuries": [
+      {
+        "player": "Ryan Pettis",
+        "status": "out",
+        "bpr": -2.2051,
+        "poss": 62.0,
+        "bpr_share": 0.0,
+        "importance": 0.0
+      },
+      {
+        "player": "Jack Whitbourn",
+        "status": "questionable",
+        "bpr": -0.7865,
+        "poss": 417.0,
+        "bpr_share": 0.0,
+        "importance": 0.0
+      }
+    ],
+    "roster": [
+      {
+        "player": "dejour reaves",
+        "bpr": 4.0681,
+        "poss": 1634.0
+      },
+      {
+        "player": "rikus schulte",
+        "bpr": 3.0014,
+        "poss": 1470.0
+      },
+      {
+        "player": "akira jacobs",
+        "bpr": 0.1622,
+        "poss": 1378.0
+      },
+      {
+        "player": "christian henry",
+        "bpr": 1.7298,
+        "poss": 1286.0
+      },
+      {
+        "player": "louis lesmond",
+        "bpr": -2.2965,
+        "poss": 781.0
+      },
+      {
+        "player": "abass bodija",
+        "bpr": -1.4152,
+        "poss": 750.0
+      },
+      {
+        "player": "roor akhuar",
+        "bpr": 0.1968,
+        "poss": 685.0
+      },
+      {
+        "player": "marcus greene",
+        "bpr": -1.9588,
+        "poss": 678.0
+      },
+      {
+        "player": "jack whitbourn",
+        "bpr": -0.7865,
+        "poss": 417.0
+      },
+      {
+        "player": "kingston price",
+        "bpr": -0.5349,
+        "poss": 197.0
+      },
+      {
+        "player": "ryan pettis",
+        "bpr": -2.2051,
+        "poss": 62.0
+      },
+      {
+        "player": "zarique nutter",
+        "bpr": -0.9917,
+        "poss": 56.0
+      },
+      {
+        "player": "jameson o'toole",
+        "bpr": -1.607,
+        "poss": 14.0
+      },
+      {
+        "player": "jace howard",
+        "bpr": -1.0253,
+        "poss": 13.0
+      }
+    ],
     "injury_impact": 0.0
   },
   {
@@ -15698,8 +18355,112 @@
     "em_adj_d": 103.4108,
     "conf_strength_score": 0.7155,
     "conf_tourney_momentum": 1.0,
-    "injuries": [],
-    "roster": [],
+    "injuries": [
+      {
+        "player": "Devin Ceaser",
+        "status": "out",
+        "bpr": -1.029,
+        "poss": 40.0,
+        "bpr_share": 0.0,
+        "importance": 0.0
+      },
+      {
+        "player": "Regimantas Ciunys",
+        "status": "out",
+        "bpr": -1.3848,
+        "poss": 0.0,
+        "bpr_share": 0.0,
+        "importance": 0.0
+      },
+      {
+        "player": "Daylon Dickerson",
+        "status": "out",
+        "bpr": -1.5183,
+        "poss": 446.0,
+        "bpr_share": 0.0,
+        "importance": 0.0
+      },
+      {
+        "player": "Jake Stout",
+        "status": "out",
+        "bpr": -1.4708,
+        "poss": 40.0,
+        "bpr_share": 0.0,
+        "importance": 0.0
+      }
+    ],
+    "roster": [
+      {
+        "player": "dj armstrong",
+        "bpr": 2.428,
+        "poss": 1706.0
+      },
+      {
+        "player": "ace valentine",
+        "bpr": 2.0266,
+        "poss": 1642.0
+      },
+      {
+        "player": "jah'likai king",
+        "bpr": -1.4137,
+        "poss": 1638.0
+      },
+      {
+        "player": "caden diggs",
+        "bpr": 0.2666,
+        "poss": 1166.0
+      },
+      {
+        "player": "josh odunowo",
+        "bpr": 1.1174,
+        "poss": 1125.0
+      },
+      {
+        "player": "jose roberto tanchyn",
+        "bpr": 1.6134,
+        "poss": 948.0
+      },
+      {
+        "player": "riley jacobs",
+        "bpr": -2.2331,
+        "poss": 762.0
+      },
+      {
+        "player": "cougar downing",
+        "bpr": -1.8803,
+        "poss": 563.0
+      },
+      {
+        "player": "daylon dickerson",
+        "bpr": -1.5183,
+        "poss": 446.0
+      },
+      {
+        "player": "paul greene",
+        "bpr": -2.8948,
+        "poss": 264.0
+      },
+      {
+        "player": "tim eze",
+        "bpr": -3.4643,
+        "poss": 97.0
+      },
+      {
+        "player": "devin ceaser",
+        "bpr": -1.029,
+        "poss": 40.0
+      },
+      {
+        "player": "jake stout",
+        "bpr": -1.4708,
+        "poss": 40.0
+      },
+      {
+        "player": "saahil thakkar",
+        "bpr": -1.8314,
+        "poss": 13.0
+      }
+    ],
     "injury_impact": 0.0
   },
   {
@@ -15774,9 +18535,123 @@
     "em_adj_d": 103.403,
     "conf_strength_score": 0.4782,
     "conf_tourney_momentum": 1.0,
-    "injuries": [],
-    "roster": [],
-    "injury_impact": 0.0
+    "injuries": [
+      {
+        "player": "Reid Ducharme",
+        "status": "out",
+        "bpr": 0.9872,
+        "poss": 0.0,
+        "bpr_share": 0.0846,
+        "importance": 0.0846
+      },
+      {
+        "player": "Tasman Goodrick",
+        "status": "out",
+        "bpr": 0.9461,
+        "poss": 346.0,
+        "bpr_share": 0.0811,
+        "importance": 0.0811
+      },
+      {
+        "player": "Antonio Chandler",
+        "status": "out",
+        "bpr": 1.2354,
+        "poss": 1037.0,
+        "bpr_share": 0.1059,
+        "importance": 0.1059
+      },
+      {
+        "player": "Owen Schlager",
+        "status": "out",
+        "bpr": -0.7425,
+        "poss": 86.0,
+        "bpr_share": 0.0,
+        "importance": 0.0
+      }
+    ],
+    "roster": [
+      {
+        "player": "gavin doty",
+        "bpr": 3.195,
+        "poss": 2014.0
+      },
+      {
+        "player": "justice shoats",
+        "bpr": 1.1247,
+        "poss": 1948.0
+      },
+      {
+        "player": "brendan coyle",
+        "bpr": 0.2282,
+        "poss": 1654.0
+      },
+      {
+        "player": "francis folefac",
+        "bpr": 1.8572,
+        "poss": 1522.0
+      },
+      {
+        "player": "antonio chandler",
+        "bpr": 1.2354,
+        "poss": 1037.0
+      },
+      {
+        "player": "christian jones",
+        "bpr": -2.5915,
+        "poss": 960.0
+      },
+      {
+        "player": "riley mulvey",
+        "bpr": 2.0968,
+        "poss": 674.0
+      },
+      {
+        "player": "isaiah henderson",
+        "bpr": -3.8012,
+        "poss": 614.0
+      },
+      {
+        "player": "tasman goodrick",
+        "bpr": 0.9461,
+        "poss": 346.0
+      },
+      {
+        "player": "owen schlager",
+        "bpr": -0.7425,
+        "poss": 86.0
+      },
+      {
+        "player": "marcus jackson",
+        "bpr": -0.2742,
+        "poss": 70.0
+      },
+      {
+        "player": "tajae jones",
+        "bpr": -2.0126,
+        "poss": 22.0
+      },
+      {
+        "player": "chris torres",
+        "bpr": -4.1657,
+        "poss": 16.0
+      },
+      {
+        "player": "mosi clayton",
+        "bpr": -2.0997,
+        "poss": 11.0
+      },
+      {
+        "player": "danny murray",
+        "bpr": -2.1562,
+        "poss": 11.0
+      },
+      {
+        "player": "cooper nadler",
+        "bpr": -1.9554,
+        "poss": 10.0
+      }
+    ],
+    "injury_impact": 0.6664621921774232
   },
   {
     "team": "Campbell",
@@ -15975,9 +18850,97 @@
     "em_adj_o": 102.268,
     "em_adj_d": 108.4409,
     "conf_strength_score": 0.6258,
-    "injuries": [],
-    "roster": [],
-    "injury_impact": 0.0
+    "injuries": [
+      {
+        "player": "Riley Parker",
+        "status": "out",
+        "bpr": 0.519,
+        "poss": 33.0,
+        "bpr_share": 0.1192,
+        "importance": 0.1192
+      },
+      {
+        "player": "Timo George",
+        "status": "out",
+        "bpr": -0.0888,
+        "poss": 486.0,
+        "bpr_share": 0.0,
+        "importance": 0.0
+      }
+    ],
+    "roster": [
+      {
+        "player": "joel foxwell",
+        "bpr": 2.394,
+        "poss": 2002.0
+      },
+      {
+        "player": "garrett nuckolls",
+        "bpr": -0.1294,
+        "poss": 1450.0
+      },
+      {
+        "player": "james o'donnell",
+        "bpr": -0.3049,
+        "poss": 1233.0
+      },
+      {
+        "player": "cameron williams",
+        "bpr": -1.412,
+        "poss": 1200.0
+      },
+      {
+        "player": "mikah ballew",
+        "bpr": -2.2122,
+        "poss": 1197.0
+      },
+      {
+        "player": "jermaine ballisager webb",
+        "bpr": 0.9018,
+        "poss": 1128.0
+      },
+      {
+        "player": "dante censori-hercules",
+        "bpr": 0.5382,
+        "poss": 1126.0
+      },
+      {
+        "player": "matus hronsky",
+        "bpr": -1.1609,
+        "poss": 940.0
+      },
+      {
+        "player": "timo george",
+        "bpr": -0.0888,
+        "poss": 486.0
+      },
+      {
+        "player": "navaughn long",
+        "bpr": -2.9598,
+        "poss": 210.0
+      },
+      {
+        "player": "kelson gebbers",
+        "bpr": -1.7741,
+        "poss": 122.0
+      },
+      {
+        "player": "samuel noland",
+        "bpr": -1.9091,
+        "poss": 85.0
+      },
+      {
+        "player": "riley parker",
+        "bpr": 0.519,
+        "poss": 33.0
+      },
+      {
+        "player": "preston lee",
+        "bpr": -1.4945,
+        "poss": 16.0
+      }
+    ],
+    "injury_impact": 0.0031347030107038315
   },
   {
     "team": "Charleston",
@@ -16624,9 +19587,74 @@
     "em_adj_o": 107.841,
     "em_adj_d": 104.9103,
     "conf_strength_score": 0.4556,
-    "injuries": [],
-    "roster": [],
-    "injury_impact": 0.0
+    "injuries": [
+      {
+        "player": "Peyton Law",
+        "status": "out",
+        "bpr": 1.3266,
+        "poss": 402.0,
+        "bpr_share": 0.1691,
+        "importance": 0.1691
+      }
+    ],
+    "roster": [
+      {
+        "player": "adam olsen",
+        "bpr": 1.1456,
+        "poss": 1814.0
+      },
+      {
+        "player": "chaze harris",
+        "bpr": 3.2559,
+        "poss": 1694.0
+      },
+      {
+        "player": "jayden cooper",
+        "bpr": -1.2243,
+        "poss": 1571.0
+      },
+      {
+        "player": "randy brady",
+        "bpr": 1.2106,
+        "poss": 1411.0
+      },
+      {
+        "player": "hantz louis jeune",
+        "bpr": -1.7809,
+        "poss": 1170.0
+      },
+      {
+        "player": "stephen williams",
+        "bpr": 0.2573,
+        "poss": 756.0
+      },
+      {
+        "player": "john broom",
+        "bpr": 0.651,
+        "poss": 682.0
+      },
+      {
+        "player": "jj wheat",
+        "bpr": -0.7941,
+        "poss": 647.0
+      },
+      {
+        "player": "peyton law",
+        "bpr": 1.3266,
+        "poss": 402.0
+      },
+      {
+        "player": "brian hawthorne",
+        "bpr": -2.7457,
+        "poss": 272.0
+      },
+      {
+        "player": "maxwell land",
+        "bpr": -1.518,
+        "poss": 12.0
+      }
+    ],
+    "injury_impact": 0.0991173831211074
   },
   {
     "team": "East Tennessee St.",
@@ -17527,52 +20555,99 @@
     "em_adj_o": 103.4461,
     "em_adj_d": 107.5013,
     "conf_strength_score": 0.5085,
-    "injuries": [],
+    "injuries": [
+      {
+        "player": "Zyair Greene",
+        "status": "questionable",
+        "bpr": -1.196,
+        "poss": 29.0,
+        "bpr_share": 0.0,
+        "importance": 0.0
+      },
+      {
+        "player": "Jayan Walker",
+        "status": "questionable",
+        "bpr": -0.9323,
+        "poss": 76.0,
+        "bpr_share": 0.0,
+        "importance": 0.0
+      }
+    ],
     "roster": [
       {
         "player": "ian scott",
-        "bpr": 3.2915,
+        "bpr": 3.2918,
         "poss": 1596.0
       },
       {
         "player": "camp wagner",
-        "bpr": 0.4218,
+        "bpr": 0.4145,
         "poss": 1526.0
       },
       {
         "player": "xavier hall",
-        "bpr": 0.7525,
+        "bpr": 0.7379,
         "poss": 1442.0
       },
       {
         "player": "sterling young",
-        "bpr": -0.4839,
+        "bpr": -0.5032,
         "poss": 1156.0
       },
       {
         "player": "bruno alocen",
-        "bpr": 0.2772,
+        "bpr": 0.26,
         "poss": 1114.0
       },
       {
         "player": "jo van buggenhout",
-        "bpr": -1.4329,
+        "bpr": -1.4233,
         "poss": 912.0
       },
       {
         "player": "enel st. bernard",
-        "bpr": 1.8631,
+        "bpr": 1.8576,
         "poss": 886.0
       },
       {
         "player": "derek vorst",
-        "bpr": -1.258,
+        "bpr": -1.2441,
         "poss": 737.0
       },
       {
         "player": "markus harding",
-        "bpr": -1.781,
+        "bpr": -1.7899,
         "poss": 710.0
+      },
+      {
+        "player": "hunter harding",
+        "bpr": -0.4364,
+        "poss": 136.0
+      },
+      {
+        "player": "sivert w\u00e6rstad nordheim",
+        "bpr": -1.6069,
+        "poss": 95.0
+      },
+      {
+        "player": "cooper bean",
+        "bpr": -4.6251,
+        "poss": 94.0
+      },
+      {
+        "player": "jayan walker",
+        "bpr": -0.9323,
+        "poss": 76.0
+      },
+      {
+        "player": "zyair greene",
+        "bpr": -1.196,
+        "poss": 29.0
+      },
+      {
+        "player": "caden huttenlocker",
+        "bpr": -1.3734,
+        "poss": 17.0
       }
     ],
     "injury_impact": 0.0
@@ -17649,8 +20724,98 @@
     "em_adj_d": 98.8125,
     "conf_strength_score": 0.714,
     "conf_tourney_momentum": 1.0,
-    "injuries": [],
-    "roster": [],
+    "injuries": [
+      {
+        "player": "Shane Frazier",
+        "status": "out",
+        "bpr": -2.4606,
+        "poss": 22.0,
+        "bpr_share": 0.0,
+        "importance": 0.0
+      }
+    ],
+    "roster": [
+      {
+        "player": "cam gillus",
+        "bpr": 1.4934,
+        "poss": 1770.0
+      },
+      {
+        "player": "bryce harris",
+        "bpr": 3.126,
+        "poss": 1756.0
+      },
+      {
+        "player": "ose okojie",
+        "bpr": 1.0349,
+        "poss": 1401.0
+      },
+      {
+        "player": "alex cotton",
+        "bpr": 0.1106,
+        "poss": 1293.0
+      },
+      {
+        "player": "cedric taylor iii",
+        "bpr": 2.4243,
+        "poss": 1256.0
+      },
+      {
+        "player": "travelle bryson",
+        "bpr": -1.2881,
+        "poss": 860.0
+      },
+      {
+        "player": "danas kazakevicius",
+        "bpr": -2.8993,
+        "poss": 736.0
+      },
+      {
+        "player": "isaiah brown",
+        "bpr": -2.282,
+        "poss": 536.0
+      },
+      {
+        "player": "ed holland iii",
+        "bpr": -2.6522,
+        "poss": 344.0
+      },
+      {
+        "player": "calvin robins jr.",
+        "bpr": -1.5272,
+        "poss": 251.0
+      },
+      {
+        "player": "jeremiah johnson",
+        "bpr": -1.7234,
+        "poss": 185.0
+      },
+      {
+        "player": "bj powell",
+        "bpr": -3.7773,
+        "poss": 106.0
+      },
+      {
+        "player": "julian johnson",
+        "bpr": -2.1592,
+        "poss": 58.0
+      },
+      {
+        "player": "stefan isailovic",
+        "bpr": -3.2414,
+        "poss": 42.0
+      },
+      {
+        "player": "river smith",
+        "bpr": -3.4581,
+        "poss": 24.0
+      },
+      {
+        "player": "shane frazier",
+        "bpr": -2.4606,
+        "poss": 22.0
+      }
+    ],
     "injury_impact": 0.0
   },
   {
@@ -17799,9 +20964,105 @@
     "em_adj_o": 101.4437,
     "em_adj_d": 98.0126,
     "conf_strength_score": 0.4201,
-    "injuries": [],
-    "roster": [],
-    "injury_impact": 0.0
+    "injuries": [
+      {
+        "player": "Jason Schofield",
+        "status": "out",
+        "bpr": 0.9959,
+        "poss": 690.0,
+        "bpr_share": 0.1371,
+        "importance": 0.1371
+      },
+      {
+        "player": "Elijah Lewis",
+        "status": "out",
+        "bpr": 1.2144,
+        "poss": 1160.0,
+        "bpr_share": 0.1671,
+        "importance": 0.1671
+      },
+      {
+        "player": "Tarik Watson",
+        "status": "out",
+        "bpr": -1.5335,
+        "poss": 206.0,
+        "bpr_share": 0.0,
+        "importance": 0.0
+      }
+    ],
+    "roster": [
+      {
+        "player": "jadin collins-roberts",
+        "bpr": 0.2625,
+        "poss": 1532.0
+      },
+      {
+        "player": "rhyjon blackwell",
+        "bpr": 0.1686,
+        "poss": 1519.0
+      },
+      {
+        "player": "justin menard",
+        "bpr": 2.5414,
+        "poss": 1481.0
+      },
+      {
+        "player": "elijah lewis",
+        "bpr": 1.2144,
+        "poss": 1160.0
+      },
+      {
+        "player": "jaden daughtry",
+        "bpr": 1.5844,
+        "poss": 1054.0
+      },
+      {
+        "player": "parby kabamba",
+        "bpr": 0.3791,
+        "poss": 827.0
+      },
+      {
+        "player": "myles parker",
+        "bpr": 0.1203,
+        "poss": 736.0
+      },
+      {
+        "player": "jason schofield",
+        "bpr": 0.9959,
+        "poss": 690.0
+      },
+      {
+        "player": "jordan gabriel",
+        "bpr": -1.2865,
+        "poss": 273.0
+      },
+      {
+        "player": "martin kawa",
+        "bpr": -2.0609,
+        "poss": 238.0
+      },
+      {
+        "player": "trace salton",
+        "bpr": -1.1693,
+        "poss": 234.0
+      },
+      {
+        "player": "tarik watson",
+        "bpr": -1.5335,
+        "poss": 206.0
+      },
+      {
+        "player": "ricky mckenzie",
+        "bpr": -2.7781,
+        "poss": 98.0
+      },
+      {
+        "player": "antoni vlogianitis",
+        "bpr": -1.8934,
+        "poss": 24.0
+      }
+    ],
+    "injury_impact": 0.4133934830810255
   },
   {
     "team": "Mercer",
@@ -18024,8 +21285,91 @@
     "em_adj_o": 106.0057,
     "em_adj_d": 110.0956,
     "conf_strength_score": 0.5841,
-    "injuries": [],
-    "roster": [],
+    "injuries": [
+      {
+        "player": "Dallas Hobbs",
+        "status": "questionable",
+        "bpr": -2.3633,
+        "poss": 244.0,
+        "bpr_share": 0.0,
+        "importance": 0.0
+      },
+      {
+        "player": "Aaron Powell",
+        "status": "out",
+        "bpr": -0.5643,
+        "poss": 0.0,
+        "bpr_share": 0.0,
+        "importance": 0.0
+      }
+    ],
+    "roster": [
+      {
+        "player": "jalen smith",
+        "bpr": -0.3023,
+        "poss": 1634.0
+      },
+      {
+        "player": "trae broadnax",
+        "bpr": 3.2134,
+        "poss": 1531.0
+      },
+      {
+        "player": "nick anderson",
+        "bpr": 2.9821,
+        "poss": 1491.0
+      },
+      {
+        "player": "cam carroll",
+        "bpr": -0.2252,
+        "poss": 1164.0
+      },
+      {
+        "player": "eternity eguagie",
+        "bpr": -2.4723,
+        "poss": 857.0
+      },
+      {
+        "player": "jimmy oladokun jr.",
+        "bpr": -1.1747,
+        "poss": 822.0
+      },
+      {
+        "player": "stephen giwa",
+        "bpr": -0.2748,
+        "poss": 731.0
+      },
+      {
+        "player": "andrew akuchie",
+        "bpr": -0.0992,
+        "poss": 690.0
+      },
+      {
+        "player": "bodey howell",
+        "bpr": -2.2297,
+        "poss": 383.0
+      },
+      {
+        "player": "dallas hobbs",
+        "bpr": -2.3633,
+        "poss": 244.0
+      },
+      {
+        "player": "jordan williams",
+        "bpr": -4.6333,
+        "poss": 204.0
+      },
+      {
+        "player": "trey patterson",
+        "bpr": -1.7153,
+        "poss": 167.0
+      },
+      {
+        "player": "evan cochran",
+        "bpr": -1.2394,
+        "poss": 8.0
+      }
+    ],
     "injury_impact": 0.0
   },
   {
@@ -18668,9 +22012,69 @@
     "em_adj_o": 113.4789,
     "em_adj_d": 111.9552,
     "conf_strength_score": 0.6247,
-    "injuries": [],
-    "roster": [],
-    "injury_impact": 0.0
+    "injuries": [
+      {
+        "player": "Daniel Freitag",
+        "status": "questionable",
+        "bpr": 3.8326,
+        "poss": 1212.0,
+        "bpr_share": 0.5267,
+        "importance": 0.5267
+      }
+    ],
+    "roster": [
+      {
+        "player": "ryan sabol",
+        "bpr": 1.4477,
+        "poss": 1873.0
+      },
+      {
+        "player": "noah batchelor",
+        "bpr": 0.3516,
+        "poss": 1571.0
+      },
+      {
+        "player": "angelo brizzi",
+        "bpr": 1.2589,
+        "poss": 1561.0
+      },
+      {
+        "player": "derrick talton jr",
+        "bpr": 0.3862,
+        "poss": 1304.0
+      },
+      {
+        "player": "daniel freitag",
+        "bpr": 3.8326,
+        "poss": 1212.0
+      },
+      {
+        "player": "tim oboh",
+        "bpr": -1.2729,
+        "poss": 1090.0
+      },
+      {
+        "player": "ezra mckenna",
+        "bpr": -0.8339,
+        "poss": 801.0
+      },
+      {
+        "player": "mikhail pocknett",
+        "bpr": -1.525,
+        "poss": 480.0
+      },
+      {
+        "player": "kyle jones",
+        "bpr": -0.7255,
+        "poss": 280.0
+      },
+      {
+        "player": "matas buteliauskas",
+        "bpr": -1.6867,
+        "poss": 54.0
+      }
+    ],
+    "injury_impact": 0.18111339209310426
   },
   {
     "team": "Quinnipiac",
@@ -19196,8 +22600,78 @@
     "em_adj_o": 109.1284,
     "em_adj_d": 112.4978,
     "conf_strength_score": 0.5466,
-    "injuries": [],
-    "roster": [],
+    "injuries": [
+      {
+        "player": "Elijah Elliott",
+        "status": "out",
+        "bpr": -2.5948,
+        "poss": 422.0,
+        "bpr_share": 0.0,
+        "importance": 0.0
+      }
+    ],
+    "roster": [
+      {
+        "player": "jackson paveletzke",
+        "bpr": 1.8329,
+        "poss": 1952.0
+      },
+      {
+        "player": "aidan hadaway",
+        "bpr": 1.8131,
+        "poss": 1718.0
+      },
+      {
+        "player": "ajay sheldon",
+        "bpr": 0.3983,
+        "poss": 1652.0
+      },
+      {
+        "player": "javan simmons",
+        "bpr": 2.2272,
+        "poss": 1428.0
+      },
+      {
+        "player": "jj kelly",
+        "bpr": 0.1665,
+        "poss": 1369.0
+      },
+      {
+        "player": "jalen breath",
+        "bpr": -1.3744,
+        "poss": 591.0
+      },
+      {
+        "player": "dior conners",
+        "bpr": -2.8079,
+        "poss": 588.0
+      },
+      {
+        "player": "kiir kuany",
+        "bpr": -3.6164,
+        "poss": 426.0
+      },
+      {
+        "player": "elijah elliott",
+        "bpr": -2.5948,
+        "poss": 422.0
+      },
+      {
+        "player": "jesse burris",
+        "bpr": -2.3004,
+        "poss": 332.0
+      },
+      {
+        "player": "ayden evans",
+        "bpr": -1.5875,
+        "poss": 122.0
+      },
+      {
+        "player": "jordan fisher",
+        "bpr": -1.1927,
+        "poss": 10.0
+      }
+    ],
     "injury_impact": 0.0
   },
   {
@@ -19918,8 +23392,83 @@
     "em_adj_o": 105.1317,
     "em_adj_d": 107.6227,
     "conf_strength_score": 0.6175,
-    "injuries": [],
-    "roster": [],
+    "injuries": [
+      {
+        "player": "Caelum Swanton-Rodger",
+        "status": "questionable",
+        "bpr": -0.1007,
+        "poss": 1084.0,
+        "bpr_share": 0.0,
+        "importance": 0.0
+      }
+    ],
+    "roster": [
+      {
+        "player": "jordan battle",
+        "bpr": 1.7242,
+        "poss": 1871.0
+      },
+      {
+        "player": "ketron shaw",
+        "bpr": -2.2497,
+        "poss": 1556.0
+      },
+      {
+        "player": "lj thomas",
+        "bpr": 0.3552,
+        "poss": 1422.0
+      },
+      {
+        "player": "robert davis jr.",
+        "bpr": -1.167,
+        "poss": 1359.0
+      },
+      {
+        "player": "jared turner",
+        "bpr": 1.8546,
+        "poss": 1187.0
+      },
+      {
+        "player": "caelum swanton-rodger",
+        "bpr": -0.1007,
+        "poss": 1084.0
+      },
+      {
+        "player": "zacch wiggins",
+        "bpr": 0.2852,
+        "poss": 1050.0
+      },
+      {
+        "player": "scottie hubbard",
+        "bpr": 0.1293,
+        "poss": 875.0
+      },
+      {
+        "player": "drew mckenna",
+        "bpr": -0.9298,
+        "poss": 464.0
+      },
+      {
+        "player": "donovan raymond",
+        "bpr": -2.2754,
+        "poss": 323.0
+      },
+      {
+        "player": "ben nacey",
+        "bpr": -3.4865,
+        "poss": 100.0
+      },
+      {
+        "player": "rieco hellams",
+        "bpr": -4.4613,
+        "poss": 38.0
+      },
+      {
+        "player": "cooper jones",
+        "bpr": -3.35,
+        "poss": 4.0
+      }
+    ],
     "injury_impact": 0.0
   },
   {
@@ -23268,8 +26817,88 @@
     "em_adj_o": 102.2398,
     "em_adj_d": 111.3254,
     "conf_strength_score": 0.5666,
-    "injuries": [],
-    "roster": [],
+    "injuries": [
+      {
+        "player": "Josiah Dotzler",
+        "status": "out",
+        "bpr": -1.0048,
+        "poss": 0.0,
+        "bpr_share": 0.0,
+        "importance": 0.0
+      }
+    ],
+    "roster": [
+      {
+        "player": "jordan crawford",
+        "bpr": -0.3543,
+        "poss": 1624.0
+      },
+      {
+        "player": "uzziah buntyn",
+        "bpr": 0.4933,
+        "poss": 1538.0
+      },
+      {
+        "player": "cameron fens",
+        "bpr": 0.7576,
+        "poss": 1334.0
+      },
+      {
+        "player": "isaac bruns",
+        "bpr": -0.4855,
+        "poss": 987.0
+      },
+      {
+        "player": "vince buzelis",
+        "bpr": -1.5498,
+        "poss": 918.0
+      },
+      {
+        "player": "silas bennion",
+        "bpr": -1.3631,
+        "poss": 798.0
+      },
+      {
+        "player": "ethan kizer",
+        "bpr": -2.7819,
+        "poss": 750.0
+      },
+      {
+        "player": "evan anderson",
+        "bpr": -2.4354,
+        "poss": 636.0
+      },
+      {
+        "player": "jake brack",
+        "bpr": -2.0597,
+        "poss": 550.0
+      },
+      {
+        "player": "jesse mcintosh",
+        "bpr": -1.5649,
+        "poss": 536.0
+      },
+      {
+        "player": "shey eberwein",
+        "bpr": -3.0196,
+        "poss": 380.0
+      },
+      {
+        "player": "trent hudgens jr.",
+        "bpr": -1.0725,
+        "poss": 290.0
+      },
+      {
+        "player": "ashton smith",
+        "bpr": -0.981,
+        "poss": 41.0
+      },
+      {
+        "player": "caleb kizer",
+        "bpr": -1.4149,
+        "poss": 29.0
+      }
+    ],
     "injury_impact": 0.0
   },
   {
@@ -24643,8 +28272,78 @@
     "em_adj_o": 102.4645,
     "em_adj_d": 110.9766,
     "conf_strength_score": 0.4775,
-    "injuries": [],
-    "roster": [],
+    "injuries": [
+      {
+        "player": "Chas Lewless",
+        "status": "out",
+        "bpr": -2.2859,
+        "poss": 456.0,
+        "bpr_share": 0.0,
+        "importance": 0.0
+      }
+    ],
+    "roster": [
+      {
+        "player": "shelton williams-dryden",
+        "bpr": 1.4982,
+        "poss": 1894.0
+      },
+      {
+        "player": "kolten griffin",
+        "bpr": -1.433,
+        "poss": 1774.0
+      },
+      {
+        "player": "josh smith",
+        "bpr": 0.2042,
+        "poss": 1403.0
+      },
+      {
+        "player": "malcolm noel",
+        "bpr": -0.984,
+        "poss": 1127.0
+      },
+      {
+        "player": "kenneth chime",
+        "bpr": -0.7806,
+        "poss": 1057.0
+      },
+      {
+        "player": "javar daniel",
+        "bpr": 1.1903,
+        "poss": 994.0
+      },
+      {
+        "player": "brady hardewig",
+        "bpr": -1.7018,
+        "poss": 874.0
+      },
+      {
+        "player": "matija \u017eu\u017eic",
+        "bpr": -2.6011,
+        "poss": 625.0
+      },
+      {
+        "player": "chas lewless",
+        "bpr": -2.2859,
+        "poss": 456.0
+      },
+      {
+        "player": "xavier shegog",
+        "bpr": -3.4323,
+        "poss": 407.0
+      },
+      {
+        "player": "eric baldassarre",
+        "bpr": -2.4583,
+        "poss": 54.0
+      },
+      {
+        "player": "cameron merritt",
+        "bpr": -4.4881,
+        "poss": 10.0
+      }
+    ],
     "injury_impact": 0.0
   },
   {
@@ -25789,8 +29488,88 @@
     "em_adj_o": 103.9301,
     "em_adj_d": 113.6065,
     "conf_strength_score": 0.5094,
-    "injuries": [],
-    "roster": [],
+    "injuries": [
+      {
+        "player": "Jamie Phillips",
+        "status": "questionable",
+        "bpr": -1.8758,
+        "poss": 816.0,
+        "bpr_share": 0.0,
+        "importance": 0.0
+      }
+    ],
+    "roster": [
+      {
+        "player": "ethan copeland",
+        "bpr": 1.6373,
+        "poss": 1712.0
+      },
+      {
+        "player": "jake johnson",
+        "bpr": -0.8687,
+        "poss": 1500.0
+      },
+      {
+        "player": "collin kuhl",
+        "bpr": 1.0478,
+        "poss": 1240.0
+      },
+      {
+        "player": "calvin sirmans iii",
+        "bpr": -1.5069,
+        "poss": 1196.0
+      },
+      {
+        "player": "finley sheridan",
+        "bpr": -0.4677,
+        "poss": 1011.0
+      },
+      {
+        "player": "alex doyle",
+        "bpr": -3.0931,
+        "poss": 886.0
+      },
+      {
+        "player": "jamie phillips jr.",
+        "bpr": -1.8758,
+        "poss": 816.0
+      },
+      {
+        "player": "daniel macgregor",
+        "bpr": -2.2931,
+        "poss": 637.0
+      },
+      {
+        "player": "matar diop",
+        "bpr": -4.4259,
+        "poss": 620.0
+      },
+      {
+        "player": "sean morgan",
+        "bpr": -4.2961,
+        "poss": 326.0
+      },
+      {
+        "player": "j.r. leonard",
+        "bpr": -2.8962,
+        "poss": 311.0
+      },
+      {
+        "player": "janusz ratowski",
+        "bpr": -2.4002,
+        "poss": 282.0
+      },
+      {
+        "player": "miller mcgowan",
+        "bpr": -1.4755,
+        "poss": 10.0
+      },
+      {
+        "player": "isaac jones",
+        "bpr": -1.6575,
+        "poss": 8.0
+      }
+    ],
     "injury_impact": 0.0
   },
   {
@@ -26089,9 +29868,97 @@
     "em_adj_o": 107.393,
     "em_adj_d": 116.5424,
     "conf_strength_score": 0.6451,
-    "injuries": [],
-    "roster": [],
-    "injury_impact": 0.0
+    "injuries": [
+      {
+        "player": "Josiah Harris",
+        "status": "questionable",
+        "bpr": -0.6288,
+        "poss": 1013.0,
+        "bpr_share": 0.0,
+        "importance": 0.0
+      },
+      {
+        "player": "Dayan Nessah",
+        "status": "questionable",
+        "bpr": 0.826,
+        "poss": 1132.0,
+        "bpr_share": 0.1782,
+        "importance": 0.1782
+      }
+    ],
+    "roster": [
+      {
+        "player": "tre beard",
+        "bpr": 1.096,
+        "poss": 1550.0
+      },
+      {
+        "player": "jaidon lipscomb",
+        "bpr": 2.7139,
+        "poss": 1500.0
+      },
+      {
+        "player": "chevalier emery",
+        "bpr": -1.9364,
+        "poss": 1194.0
+      },
+      {
+        "player": "foster wonders",
+        "bpr": -3.6713,
+        "poss": 1144.0
+      },
+      {
+        "player": "dayan nessah",
+        "bpr": 0.826,
+        "poss": 1132.0
+      },
+      {
+        "player": "preist ryan",
+        "bpr": -3.4201,
+        "poss": 1116.0
+      },
+      {
+        "player": "josiah harris",
+        "bpr": -0.6288,
+        "poss": 1013.0
+      },
+      {
+        "player": "holden pierre-louis",
+        "bpr": -2.7348,
+        "poss": 745.0
+      },
+      {
+        "player": "kamari jones",
+        "bpr": -3.0884,
+        "poss": 426.0
+      },
+      {
+        "player": "david giddens",
+        "bpr": -2.1387,
+        "poss": 297.0
+      },
+      {
+        "player": "ivan spirov",
+        "bpr": -3.1221,
+        "poss": 186.0
+      },
+      {
+        "player": "manny hill",
+        "bpr": -2.1895,
+        "poss": 172.0
+      },
+      {
+        "player": "lucas burton",
+        "bpr": -2.3063,
+        "poss": 128.0
+      },
+      {
+        "player": "kevo st.hilaire",
+        "bpr": -1.3401,
+        "poss": 94.0
+      }
+    ],
+    "injury_impact": 0.036502545279966846
   },
   {
     "team": "Le Moyne",
@@ -26239,52 +30106,76 @@
     "em_adj_o": 102.3546,
     "em_adj_d": 109.7088,
     "conf_strength_score": 0.9058,
-    "injuries": [],
+    "injuries": [
+      {
+        "player": "Clash Peters",
+        "status": "out",
+        "bpr": -0.1415,
+        "poss": 0.0,
+        "bpr_share": 0.0,
+        "importance": 0.0
+      }
+    ],
     "roster": [
       {
         "player": "micah tucker",
-        "bpr": -0.643,
+        "bpr": -0.6422,
         "poss": 1610.0
       },
       {
         "player": "malachi brown",
-        "bpr": -0.3621,
+        "bpr": -0.368,
         "poss": 1598.0
       },
       {
         "player": "jelani hamilton",
-        "bpr": 2.7919,
+        "bpr": 2.7985,
         "poss": 1408.0
       },
       {
         "player": "anthony enoh",
-        "bpr": -2.1165,
+        "bpr": -2.118,
         "poss": 1078.0
       },
       {
         "player": "joah chappelle",
-        "bpr": -2.6252,
+        "bpr": -2.6143,
         "poss": 1044.0
       },
       {
         "player": "trey scott iii",
-        "bpr": -1.4428,
+        "bpr": -1.442,
         "poss": 896.0
       },
       {
         "player": "ayouba berthe",
-        "bpr": -4.1817,
+        "bpr": -4.1545,
         "poss": 824.0
       },
       {
         "player": "christian beam",
-        "bpr": -3.8364,
+        "bpr": -3.8233,
         "poss": 637.0
       },
       {
         "player": "jakai newton",
-        "bpr": -0.6477,
+        "bpr": -0.6512,
         "poss": 580.0
+      },
+      {
+        "player": "james cooper",
+        "bpr": -1.2328,
+        "poss": 252.0
+      },
+      {
+        "player": "christopher jones",
+        "bpr": -2.8408,
+        "poss": 222.0
+      },
+      {
+        "player": "isaiah sherrard",
+        "bpr": -4.0755,
+        "poss": 180.0
       }
     ],
     "injury_impact": 0.0
@@ -27866,9 +31757,124 @@
     "em_adj_o": 86.3735,
     "em_adj_d": 96.9671,
     "conf_strength_score": 0.3054,
-    "injuries": [],
-    "roster": [],
-    "injury_impact": 0.0
+    "injuries": [
+      {
+        "player": "Pierce Spencer",
+        "status": "out",
+        "bpr": 0.9349,
+        "poss": 67.0,
+        "bpr_share": 0.227,
+        "importance": 0.227
+      },
+      {
+        "player": "Mo Njie",
+        "status": "questionable",
+        "bpr": -2.4557,
+        "poss": 246.0,
+        "bpr_share": 0.0,
+        "importance": 0.0
+      },
+      {
+        "player": "Stanley Borden",
+        "status": "questionable",
+        "bpr": -1.7094,
+        "poss": 15.0,
+        "bpr_share": 0.0,
+        "importance": 0.0
+      },
+      {
+        "player": "Austin Nunez",
+        "status": "questionable",
+        "bpr": -3.8915,
+        "poss": 1021.0,
+        "bpr_share": 0.0,
+        "importance": 0.0
+      },
+      {
+        "player": "Macaleab Rich",
+        "status": "out",
+        "bpr": -1.0471,
+        "poss": 250.0,
+        "bpr_share": 0.0,
+        "importance": 0.0
+      },
+      {
+        "player": "Vasean Allette",
+        "status": "out",
+        "bpr": 3.1832,
+        "poss": 0.0,
+        "bpr_share": 0.773,
+        "importance": 0.773
+      }
+    ],
+    "roster": [
+      {
+        "player": "jamir simpson",
+        "bpr": -1.142,
+        "poss": 1718.0
+      },
+      {
+        "player": "dorian hayes",
+        "bpr": -3.3114,
+        "poss": 1272.0
+      },
+      {
+        "player": "brent moss",
+        "bpr": -0.5017,
+        "poss": 1266.0
+      },
+      {
+        "player": "baboucarr njie",
+        "bpr": -1.1131,
+        "poss": 1219.0
+      },
+      {
+        "player": "austin nunez",
+        "bpr": -3.8915,
+        "poss": 1021.0
+      },
+      {
+        "player": "matheo coffi",
+        "bpr": -2.4397,
+        "poss": 933.0
+      },
+      {
+        "player": "kaidon rayfield",
+        "bpr": -1.1993,
+        "poss": 817.0
+      },
+      {
+        "player": "daniel akitoby",
+        "bpr": -0.7015,
+        "poss": 554.0
+      },
+      {
+        "player": "lj brown",
+        "bpr": -2.3428,
+        "poss": 338.0
+      },
+      {
+        "player": "macaleab rich",
+        "bpr": -1.0471,
+        "poss": 250.0
+      },
+      {
+        "player": "mo njie",
+        "bpr": -2.4557,
+        "poss": 246.0
+      },
+      {
+        "player": "pierce spencer",
+        "bpr": 0.9349,
+        "poss": 67.0
+      },
+      {
+        "player": "stanley borden",
+        "bpr": -1.7094,
+        "poss": 15.0
+      }
+    ],
+    "injury_impact": 1.3232692449039796
   },
   {
     "team": "Stonehill",
@@ -30525,52 +34531,84 @@
     "em_creator_count": 1,
     "em_adj_o": 107.1967,
     "em_adj_d": 104.1151,
-    "injuries": [],
+    "injuries": [
+      {
+        "player": "Amarion Nimmers",
+        "status": "out",
+        "bpr": -1.9359,
+        "poss": 20.0,
+        "bpr_share": 0.0,
+        "importance": 0.0
+      },
+      {
+        "player": "Gvidas Gicevicius",
+        "status": "out",
+        "bpr": -1.4985,
+        "poss": 0.0,
+        "bpr_share": 0.0,
+        "importance": 0.0
+      }
+    ],
     "roster": [
       {
         "player": "corey stephenson",
-        "bpr": 3.1682,
+        "bpr": 3.1833,
         "poss": 1649.0
       },
       {
         "player": "zawdie jackson",
-        "bpr": 2.4722,
+        "bpr": 2.4792,
         "poss": 1558.0
       },
       {
         "player": "eric dibami",
-        "bpr": 0.9029,
+        "bpr": 0.9183,
         "poss": 1464.0
       },
       {
         "player": "hamed olayinka",
-        "bpr": 1.3998,
+        "bpr": 1.4162,
         "poss": 1253.0
       },
       {
         "player": "julian mackey",
-        "bpr": -0.517,
+        "bpr": -0.4914,
         "poss": 1131.0
       },
       {
         "player": "brit harris",
-        "bpr": -0.2258,
+        "bpr": -0.2302,
         "poss": 960.0
       },
       {
         "player": "ashton williamson",
-        "bpr": -0.7166,
+        "bpr": -0.6846,
         "poss": 956.0
       },
       {
         "player": "ibrahim olajuwon",
-        "bpr": -3.4669,
+        "bpr": -3.4472,
         "poss": 704.0
       },
       {
         "player": "thiago sucatzky",
-        "bpr": -1.9584,
+        "bpr": -1.9458,
         "poss": 692.0
+      },
+      {
+        "player": "kennedy brown",
+        "bpr": -2.1334,
+        "poss": 170.0
+      },
+      {
+        "player": "amarion nimmers",
+        "bpr": -1.9359,
+        "poss": 20.0
+      },
+      {
+        "player": "renato ruiz",
+        "bpr": -4.1277,
+        "poss": 11.0
       }
     ],
     "injury_impact": 0.0,

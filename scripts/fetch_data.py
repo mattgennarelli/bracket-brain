@@ -247,6 +247,39 @@ def _find_torvik_key(team_name, torvik_keys):
         for k in torvik_keys:
             if _normalize_team_for_match(k) == norm_st:
                 return k
+    # Try stripping common mascot suffixes before falling back to prefix match
+    _MASCOTS = [
+        "blue devils", "tar heels", "wildcats", "crimson tide", "tigers",
+        "bulldogs", "huskies", "hoosiers", "spartans", "wolverines",
+        "fighting irish", "bears", "cougars", "aggies", "volunteers",
+        "razorbacks", "rebels", "gamecocks", "commodores", "jayhawks",
+        "longhorns", "sooners", "mountaineers", "seminoles", "hurricanes",
+        "gators", "cardinals", "hoyas", "friars", "musketeers", "pirates",
+        "red storm", "golden eagles", "flyers", "bonnies", "billikens",
+        "gaels", "zags", "antelopes", "red raiders", "bruins", "buckeyes",
+        "cowboys", "nittany lions", "wolfpack", "golden panthers", "panthers",
+        "hawks", "owls", "eagles", "broncos", "braves", "bulls", "buffaloes",
+        "bluejays", "rams", "patriots", "colonials", "warriors", "bison",
+        "fighting illini", "sycamores", "hawkeyes", "bearcats", "vikings",
+        "golden gophers", "cornhuskers", "mean green", "bobcats", "monarchs",
+        "scarlet knights", "bearkats", "broncos", "saints", "jaguars",
+        "coyotes", "mustangs", "cardinal", "hatters", "orange", "pilots",
+        "spiders", "seahawks", "roadrunners", "wolves", "hilltoppers",
+        "shockers", "badgers", "retrievers", "ragin' cajuns", "red foxes",
+    ]
+    for candidate in (norm, norm_st):
+        for mascot in _MASCOTS:
+            if candidate.endswith(" " + mascot):
+                stripped = candidate[: -(len(mascot) + 1)].strip()
+                if stripped:
+                    for k in torvik_keys:
+                        if _normalize_team_for_match(k) == stripped:
+                            return k
+                    stripped_st = _re.sub(r'\bstate\b', 'st', stripped)
+                    if stripped_st != stripped:
+                        for k in torvik_keys:
+                            if _normalize_team_for_match(k) == stripped_st:
+                                return k
     # Fallback: prefix match for mascot-appended names ("wisconsin badgers" -> "wisconsin")
     # Check BOTH directions but require >= 65% length overlap to prevent
     # "florida international" matching "florida"

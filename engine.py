@@ -491,6 +491,18 @@ def predict_game(team_a, team_b, game_site=None, config=DEFAULT_CONFIG, round_na
     creator_margin = calc_creator_count_bonus(team_a, team_b, config)
 
     # All factor adjustments
+    # Injury impact decays in later rounds — players listed as "out" in early March
+    # often return by Sweet 16 / Final Four (2-4 weeks later).
+    _INJ_ROUND_DECAY = {
+        "Round of 64": 1.0,
+        "Round of 32": 0.85,
+        "Sweet 16": 0.6,
+        "Elite 8": 0.4,
+        "Final Four": 0.25,
+        "Championship": 0.2,
+    }
+    inj_decay = _INJ_ROUND_DECAY.get(round_name, 1.0)
+
     factor_names = ["experience", "coach", "pedigree", "preseason", "proximity",
                     "momentum", "star_player", "depth", "size", "injuries",
                     "luck_regression", "win_pct", "conf", "conf_tourney"]
@@ -504,7 +516,7 @@ def predict_game(team_a, team_b, game_site=None, config=DEFAULT_CONFIG, round_na
         lambda t: calc_star_player_bonus(t, config),
         lambda t: calc_depth_bonus(t, config),
         lambda t: calc_size_bonus(t, config),
-        lambda t: -calc_injury_penalty(t, config),
+        lambda t: -calc_injury_penalty(t, config) * inj_decay,
         lambda t: calc_luck_regression(t, config),
         lambda t: calc_win_pct_bonus(t, config),
         lambda t: calc_conf_bonus(t, config),
