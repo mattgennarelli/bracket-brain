@@ -1721,14 +1721,28 @@ async function showAnalysis(gameId) {
   const totalM = flipped ? -(orig?.predicted_margin || 0) : (orig?.predicted_margin || 0);
   const extrasSum = possM + ftM + foulM + sosM + runsM;
 
+  // Build detailed factor rows from factors_a / factors_b
+  const _factorLabels = {
+    experience: 'Experience', coach: 'Coaching', pedigree: 'Program Pedigree',
+    preseason: 'Preseason Ranking', proximity: 'Travel / Proximity',
+    momentum: 'Momentum', star_player: 'Star Power', depth: 'Roster Depth',
+    size: 'Size', injuries: 'Injuries', luck_regression: 'Luck Regression',
+    win_pct: 'Win %', conf: 'Conference', conf_tourney: 'Conf. Tourney'
+  };
+  const factorRows = Object.entries(_factorLabels).map(([key, label]) => {
+    const a = factorsA?.[key] || 0, b = factorsB?.[key] || 0;
+    let net = flipped ? -(a - b) : (a - b);
+    if (Math.abs(net) < 0.05) return '';
+    return _marginRow(label, net, st.teamA, st.teamB);
+  }).filter(Boolean).join('');
+
   const marginBreakdown = (orig?.base_margin != null) ? `
     <div class="ap-section">
-      <div class="ap-section-title">How the Model Gets Here</div>
+      <div class="ap-section-title">Margin Breakdown</div>
       <div class="margin-stack">
         ${_marginRow('Matchup Efficiency', baseM, st.teamA, st.teamB)}
-        ${_marginRow('Intangible Factors', factorM, st.teamA, st.teamB)}
-        ${Math.abs(extrasSum) >= 0.1 ? _marginRow('Stat Adjustments', extrasSum, st.teamA, st.teamB) : ''}
-        ${Math.abs(upsetB) >= 0.1 ? _marginRow('Underdog Resilience', upsetB, st.teamA, st.teamB) : ''}
+        ${factorRows}
+        ${Math.abs(extrasSum) >= 0.1 ? _marginRow('Possession & FT Edge', extrasSum, st.teamA, st.teamB) : ''}
         <div class="margin-total">
           <span>Predicted Margin</span>
           <strong style="color:${totalM >= 0 ? 'var(--green)' : 'var(--red)'}">${favA ? st.teamA : st.teamB} −${Math.abs(totalM).toFixed(1)}</strong>
@@ -1864,27 +1878,29 @@ async function showAnalysis(gameId) {
           if (pbTeam) pbTeam.textContent = `(${updated.pick_seed || ''}) ${updated.pick}`;
           if (pbProb) pbProb.textContent = (Math.max(newPA, newPB) * 100).toFixed(0) + '%';
         }
-        // Update "How the Model Gets Here" margin breakdown
+        // Update margin breakdown with detailed factors
         const marginStack = content.querySelector('.margin-stack');
         if (marginStack && updated.base_margin != null) {
-          const newFlipped = flipped;
-          const newBaseM = newFlipped ? -(updated.base_margin || 0) : (updated.base_margin || 0);
-          const newFactorM = newFlipped ? -(updated.factor_margin || 0) : (updated.factor_margin || 0);
-          const newPossM = newFlipped ? -(updated.possession_edge_margin || 0) : (updated.possession_edge_margin || 0);
-          const newFtM = newFlipped ? -(updated.ft_edge_margin || 0) : (updated.ft_edge_margin || 0);
-          const newFoulM = newFlipped ? -(updated.foul_rate_margin || 0) : (updated.foul_rate_margin || 0);
-          const newSosM = newFlipped ? -(updated.sos_edge_margin || 0) : (updated.sos_edge_margin || 0);
-          const newRunsM = newFlipped ? -(updated.runs_margin || 0) : (updated.runs_margin || 0);
+          const nf = flipped;
+          const newBaseM = nf ? -(updated.base_margin || 0) : (updated.base_margin || 0);
+          const newPossM = nf ? -(updated.possession_edge_margin || 0) : (updated.possession_edge_margin || 0);
+          const newFtM = nf ? -(updated.ft_edge_margin || 0) : (updated.ft_edge_margin || 0);
+          const newFoulM = nf ? -(updated.foul_rate_margin || 0) : (updated.foul_rate_margin || 0);
+          const newSosM = nf ? -(updated.sos_edge_margin || 0) : (updated.sos_edge_margin || 0);
+          const newRunsM = nf ? -(updated.runs_margin || 0) : (updated.runs_margin || 0);
           const newExtrasSum = newPossM + newFtM + newFoulM + newSosM + newRunsM;
-          const newUpsetB = newFlipped ? -(updated.upset_tolerance_bonus || 0) : (updated.upset_tolerance_bonus || 0);
-          const newTotalM = newFlipped ? -(updated.predicted_margin || 0) : (updated.predicted_margin || 0);
+          const newTotalM = nf ? -(updated.predicted_margin || 0) : (updated.predicted_margin || 0);
           const newFavA = newTotalM >= 0;
+          const updFA = updated.factors_a || {};
+          const updFB = updated.factors_b || {};
           let rows = _marginRow('Matchup Efficiency', newBaseM, st.teamA, st.teamB);
-          rows += _marginRow('Intangible Factors', newFactorM, st.teamA, st.teamB);
-          if (Math.abs(newExtrasSum) >= 0.1) rows += _marginRow('Stat Adjustments', newExtrasSum, st.teamA, st.teamB);
-          if (Math.abs(newUpsetB) >= 0.1) rows += _marginRow('Underdog Resilience', newUpsetB, st.teamA, st.teamB);
+          Object.entries(_factorLabels).forEach(([key, label]) => {
+            const a = updFA[key] || 0, b = updFB[key] || 0;
+            let net = nf ? -(a - b) : (a - b);
+            if (Math.abs(net) >= 0.05) rows += _marginRow(label, net, st.teamA, st.teamB);
+          });
+          if (Math.abs(newExtrasSum) >= 0.1) rows += _marginRow('Possession & FT Edge', newExtrasSum, st.teamA, st.teamB);
           rows += `<div class="margin-total"><span>Predicted Margin</span><strong style="color:${newTotalM >= 0 ? 'var(--green)' : 'var(--red)'}">${newFavA ? st.teamA : st.teamB} −${Math.abs(newTotalM).toFixed(1)}</strong></div>`;
-          // Preserve Vegas line if present
           const vegasDiv = marginStack.querySelector('.margin-vegas');
           const vegasHtml = vegasDiv ? vegasDiv.outerHTML : '';
           marginStack.innerHTML = rows + vegasHtml;
