@@ -6,7 +6,7 @@ import os
 import pytest
 
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
-from engine import enrich_team, _normalize_team_for_match, predict_game, ModelConfig
+from engine import calc_momentum_bonus, enrich_team, _normalize_team_for_match, predict_game, ModelConfig
 
 
 # ---------------------------------------------------------------------------
@@ -70,6 +70,22 @@ def test_pedigree_normalizes_connecticut():
 def test_pedigree_normalizes_michigan_state():
     t = enrich_team(_base_team(team="Michigan St."))
     assert t["pedigree_score"] == 0.85
+
+
+def test_coach_score_prefers_static_lookup_over_team_data():
+    t = enrich_team(_base_team(team="Duke", coach="Jon Scheyer", coach_tourney_score=0.88))
+    assert t["coach_tourney_score"] == 0.60
+
+
+def test_coach_score_uses_low_fallback_when_static_lookup_missing():
+    t = enrich_team(_base_team(team="Test Team", coach="Unlisted Coach", coach_tourney_score=0.88))
+    assert t["coach_tourney_score"] == 0.3
+
+
+def test_momentum_none_falls_back_to_recent_form():
+    team = _base_team(momentum=None, adj_o=110.0, adj_d=100.0, adj_o_recent=112.0, adj_d_recent=98.0)
+    bonus = calc_momentum_bonus(team)
+    assert bonus > 0
 
 
 def test_three_rate_default_set():

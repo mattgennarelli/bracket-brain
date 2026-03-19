@@ -115,19 +115,43 @@ def load_evanmiya(year):
 
 
 def load_coaches(year):
-    """Load optional coaches_YYYY.csv -> dict team -> coach."""
+    """Load optional coaches_YYYY.csv -> dict team -> coach metadata."""
     path = os.path.join(DATA_DIR, f"coaches_{year}.csv")
     if not os.path.isfile(path):
         return {}
     import csv
     out = {}
+    numeric_fields = (
+        "career_ncaa_pre",
+        "career_s16_pre",
+        "career_ff_pre",
+        "career_titles_pre",
+        "school_ncaa_pre",
+        "school_s16_pre",
+        "school_ff_pre",
+        "school_titles_pre",
+        "coach_resume_points_pre",
+        "coach_tourney_score",
+    )
     with open(path, newline="", encoding="utf-8-sig") as f:
         reader = csv.DictReader(f)
         for row in reader:
             team = normalize_team(row.get("team") or row.get("Team") or row.get("school") or row.get("School"))
             coach = (row.get("coach") or row.get("Coach") or "").strip()
             if team and coach:
-                out[team] = coach
+                entry = {"coach": coach}
+                source = (row.get("source") or row.get("Source") or "").strip()
+                if source:
+                    entry["coach_source"] = source
+                for field in numeric_fields:
+                    raw = row.get(field)
+                    if raw in (None, ""):
+                        continue
+                    try:
+                        entry[field] = float(raw)
+                    except (TypeError, ValueError):
+                        continue
+                out[team] = entry
     return out
 
 
@@ -147,10 +171,14 @@ def merge_coaches(merged, coaches_data):
     if not coaches_data:
         return
     merged_keys = set(merged.keys())
-    for team_name, coach in coaches_data.items():
+    for team_name, coach_data in coaches_data.items():
         key = _find_torvik_key(team_name, merged_keys) or normalize_team(team_name)
-        if key in merged and coach:
-            merged[key]["coach"] = coach
+        if key in merged and coach_data:
+            merged[key]["coach"] = coach_data.get("coach", "")
+            for field, value in coach_data.items():
+                if field == "coach":
+                    continue
+                merged[key][field] = value
 
 
 def merge_injuries(merged, injuries_data):

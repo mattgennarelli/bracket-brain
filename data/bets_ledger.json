@@ -66,7 +66,7 @@
       "actual_score_home": 79.0,
       "actual_score_away": 89.0,
       "settled_at": "2026-03-19T03:39:26.725837+00:00",
-      "ncaa_tournament": false
+      "ncaa_tournament": true
     },
     {
       "home_team": "BYU Cougars",

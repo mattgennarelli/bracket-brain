@@ -1,10 +1,49 @@
-team,player,status,return_round
-Duke,Patrick Ngongba,probable,
-Duke,Caleb Foster,out,
-Duke,Ifeanyi Ufochukwu,out,
-Texas Tech,JT Toppin,out,
-Texas Tech,LeJuan Watts,questionable,
-Texas Tech,LaTrell Hoover,out,
-Louisville,Mikel Brown Jr.,out,
-Kentucky,Jayland Lowe,healthy,
-Kentucky,Jayden Quaintance,out,
+team,player,status,return_round,source_url,source_type,verified_at,confidence,notes
+Duke,Patrick Ngongba,probable,,https://www.espn.com/mens-college-basketball/story/_/id/48162553/duke-caleb-foster-indefinitely-foot-fracture,national_media,2026-03-19,high,Scheyer said he hoped Ngongba would return healthy for the NCAA tournament after missing the ACC tournament
+Duke,Caleb Foster,out,,https://www.espn.com/mens-college-basketball/story/_/id/48162553/duke-caleb-foster-indefinitely-foot-fracture,national_media,2026-03-19,high,Fractured right foot and out indefinitely
+Duke,Ifeanyi Ufochukwu,out,,,,,
+Texas Tech,JT Toppin,out,,https://texastech.com/news/2026/2/18/mens-basketball-injury-update-on-jt-toppin,official_team,2026-03-19,high,Official team release confirmed season-ending torn ACL
+Texas Tech,LeJuan Watts,questionable,,,,,
+Texas Tech,LaTrell Hoover,out,,,,,
+Louisville,Mikel Brown Jr.,out,Sweet 16,https://www.cardchronicle.com/basketball/101494/mikel-brown-jr-out-for-ncaa-tournament-opening-weekend,local_media,2026-03-19,medium,Louisville announced Brown will miss opening weekend due to back injury
+Kentucky,Jaland Lowe,out,,https://www.espn.com/mens-college-basketball/story/_/id/47593715/kentucky-pg-jaland-lowe-season-ending-shoulder-surgery,national_media,2026-03-19,high,Season-ending shoulder surgery announced on January 12
+Kentucky,Jayden Quaintance,out,,,,,
+BYU,Richie Saunders,out,,https://byucougars.com/news/2026/02/15/richie-saunders-suffers-season-ending-injury,official_school,2026-03-19,high,Official BYU release confirmed season-ending ACL tear
+North Carolina,Caleb Wilson,out,,https://goheels.com/news/2026/3/6/mens-basketball-caleb-wilson-breaks-right-thumb-in-practice-will-miss-rest-of-the-season,official_school,2026-03-19,high,Official UNC release confirmed he will miss the rest of the season
+Michigan,L.J. Cason,out,,https://www.espn.com/mens-college-basketball/story/_/id/48066469/michigan-loses-lj-cason-rest-season-torn-acl,national_media,2026-03-19,high,Michigan announced Cason tore his ACL and will miss the rest of the season
+Illinois,Jason Jakstys,out,,https://dailyillini.com/sports-stories/mens-sports/men-basketball/2026/01/31/jason-jakstys-out-blood-clot-2/,student_media,2026-03-19,high,Underwood said Jakstys would miss the rest of the season while treating a blood clot in his shoulder
+Nebraska,Connor Essegian,out,,https://huskers.com/news/2025/11/29/essegian-sidelined-by-ankle-injury,official_school,2026-03-19,high,Nebraska announced Essegian would miss the remainder of the season with a significant ankle injury
+Nebraska,Ugnius Jarusevicius,out,,https://www.ketv.com/article/nebraska-basketball-head-coach-injury-update/70261422,local_media,2026-03-19,medium,Hoiberg said Jarusevicius would likely miss the rest of the season with a back injury
+Nebraska,Henry Burt,out,,https://www.insidenu.com/northwestern-mens-basketball/61181/gamethread-how-to-watch-northwestern-mens-basketball-at-no-7-nebraska-tv-streaming-radio-betting-line-injury-report,local_media,2026-03-19,low,Big Ten injury report listed Burt as out for Nebraska
+Penn,Ethan Roberts,out,,,user_override,2026-03-19,high,User-provided current tournament availability says Roberts is out
+Iowa,Peyton McCollum,out,,https://www.teamrankings.com/ncaa-basketball/matchup/hawkeyes-terrapins-2026-02-11/injuries,odds_aggregator,2026-03-19,medium,TeamRankings listed McCollum as shut down for the remainder of the season with a foot injury
+Ohio State Buckeyes,Taison Chatman,healthy,,https://www.youtube.com/watch?v=rPf8UxMtpxY,local_media,2026-03-19,high,Chatman spoke on March 18 about Ohio State's NCAA tournament readiness and had been playing rotation minutes in March
+Connecticut,Jaylin Stewart,questionable,,https://www.ctinsider.com/sports/uconn-mens-basketball/article/injury-news-dan-hurley-silas-demary-jaylin-stewart-22080303.php,local_media,2026-03-19,medium,Hurley said Stewart remains questionable for the opener
+Connecticut,Silas Demary,probable,,https://www.ctinsider.com/sports/uconn-mens-basketball/article/injury-news-dan-hurley-silas-demary-jaylin-stewart-22080303.php,local_media,2026-03-19,medium,Hurley described the ankle sprain as very minor with no swelling and was optimistic for Friday
+Gonzaga,Braden Huff,out,,https://www.slipperstillfits.com/news/27265/braden-huffs-injury-report-before-start-of-ncaa-tournament,local_media,2026-03-19,medium,Huff said he will not play in the first-round game
+Gonzaga,Jalen Warley,probable,,https://www.houstonchronicle.com/sports/article/no-12-gonzaga-beats-santa-clara-79-68-to-win-the-22069909.php,ap,2026-03-19,medium,Warley played in Gonzaga's March 10 WCC title win after earlier quad-contusion absences
+Alabama,Aden Holloway,out,,https://www.rollbamaroll.com/alabama-crimson-tide-basketball/80342/march-madness-alabama-favored-over-hofstra-in-round-1,local_media,2026-03-19,medium,Public reports indicate Holloway will be absent for the opener due to off-court availability issues
+Clemson,Carter Welling,questionable,,https://www.si.com/college/clemson/basketball/clemson-center-availability-in-jeopardy-following-acc-tournament-win-over-wake-forest,media,2026-03-19,low,Latest public update only confirmed knee injury and uncertain availability after ACC tournament
+Michigan St.,Kaleb Glenn,out,,https://michiganstate.rivals.com/news/michigan-state-forward-kaleb-glenn-to-miss-entire-2025-2026-season,school_media,2026-03-19,high,Preseason announcement said Glenn would miss the entire 2025-26 season
+Michigan St.,Divine Ugochukwu,out,,https://www.wilx.com/2026/02/06/michigan-state-guard-divine-ugochukwu-miss-rest-season-with-foot-injury/,local_media,2026-03-19,high,Tom Izzo announced Ugochukwu is out for the season with a foot injury
+Arkansas,Karter Knox,out,,https://www.si.com/college/arkansas/men-s-basketball/after-weeks-of-questions-razorback-fans-now-know-karter-knox-s-status,media,2026-03-19,medium,Knox underwent a left meniscus procedure on February 20 with no return timetable
+St. John's,Casper Pohto,out,,https://www.covers.com/sport/basketball/ncaab/matchup/367672/,odds_aggregator,2026-03-19,medium,Covers listed Pohto as out for the remainder of the season with a hip injury
+St. John's,Imran Suljanovic,out,,https://www.covers.com/sport/basketball/ncaab/matchup/367672/,odds_aggregator,2026-03-19,medium,Covers listed Suljanovic as out for the remainder of the season with a knee injury
+Vanderbilt,Frankie Collins,out,,https://www.saturdaydownsouth.com/news/college-basketball/frankie-collins-no-longer-with-vanderbilt-basketball-per-hc-mark-byington/,media,2026-03-19,high,Byington said Collins left the team and would not return this season
+Tennessee,Cade Phillips,out,,https://sports.yahoo.com/articles/tennessee-forward-miss-remainder-2025-020547236.html,media,2026-03-19,high,Tennessee announced Phillips would miss the remainder of the season for shoulder surgery
+Saint Mary's,Kevin Gad,out,,https://www.lines.com/ncaab/teams/saint-mary-s/injuries,odds_aggregator,2026-03-19,medium,Lines listed Gad as out indefinitely with a shoulder injury
+Miami (FL),Marcus Allen,out,,https://apnews.com/article/bf1583db68c219bc81a687e8272f9653,ap,2026-03-19,high,Miami announced Allen would miss the remainder of the season after a lymphoma diagnosis
+Miami (FL),Treyvon Maddox,out,,https://www.canesinsight.com/articles/availability-report-key-piece-for-hurricanes-will-be-out-again-in-acc-showdown-in-boston.11088/,local_media,2026-03-19,medium,Miami availability report said Maddox was out while redshirting
+South Florida Bulls,Xavier Brown,out,,https://www.foxsports.com/college-basketball/south-florida-bulls-team,aggregator,2026-03-19,medium,Fox Sports player news said Brown is out for the season per the American availability report
+South Florida Bulls,De'Ante Green,out,,https://www.foxsports.com/college-basketball/deante-green-2-player,aggregator,2026-03-19,medium,Fox Sports player news said Green is out for the remainder of the season
+Missouri,Annor Boateng,out,,https://www.kctv5.com/2026/02/04/mizzous-boateng-ruled-out-season-after-undergoing-surgery-leg-injury/,local_media,2026-03-19,high,Mizzou announced Boateng would miss the remainder of the season after leg surgery
+Missouri,Jevon Porter,out,,https://www.cbssports.com/college-basketball/gametracker/preview/NCAAB_20260214_TEXAS%40MIZZOU,media,2026-03-19,medium,Field Level preview noted Porter had sustained a leg injury and remained unavailable in mid-February
+Texas A&M,Mackenzie Mgbako,out,,https://www.saturdaydownsouth.com/news/college-basketball/bucky-mcmillan-gives-update-on-mackenzie-mgbako-comments-on-plans-for-next-season/,media,2026-03-19,high,McMillan confirmed Mgbako would not return this spring
+Texas,Lassina Traore,out,,https://www.expressnews.com/sports/college/longhorns/mens-basketball/article/texas-basketball-sean-miller-sec-lassina-traore-22063950.php,local_media,2026-03-19,medium,Sean Miller said there was a real chance Traore would not play again this season
+Villanova,Zion Stanford,out,,https://www.inquirer.com/college-sports/villanova/villanova-basketball-roster-zion-stanford-matt-hodge-injury-20260307.html,local_media,2026-03-19,medium,Stanford stepped away from the team for the remainder of the season
+Villanova,Matthew Hodge,out,,https://villanova.com/news/2026/3/2/mens-basketball-hodge-injury-is-a-torn-acl-in-right-knee.aspx,official_school,2026-03-19,high,Villanova confirmed a torn ACL that ended his season
+Wisconsin,Nolan Winter,healthy,,https://www.buckys5thquarter.com/wisconsin-badgers-mens-basketball/89314/wisconsin-badgers-basketball-news-greg-gard-injury-updates-positive-nolan-winter-jack-janicki,local_media,2026-03-19,high,Gard said Winter was fully available and healthy ahead of the opener
+Wisconsin,Jack Janicki,questionable,,https://www.buckys5thquarter.com/wisconsin-badgers-mens-basketball/89314/wisconsin-badgers-basketball-news-greg-gard-injury-updates-positive-nolan-winter-jack-janicki,local_media,2026-03-19,medium,Janicki resumed non-contact work but had not been cleared for full practice before the opener
+UCLA,Tyler Bilodeau,probable,,https://talksport.com/betting/4124893/ucla-bruins-vs-ucf-knights-odds-tips-big-ten-tournament-2026/,betting_media,2026-03-19,medium,Public matchup reporting said Bilodeau was expected to suit up even if his workload remained uncertain
+UCLA,Donovan Dent,probable,,https://talksport.com/betting/4124893/ucla-bruins-vs-ucf-knights-odds-tips-big-ten-tournament-2026/,betting_media,2026-03-19,medium,Public matchup reporting said Dent was expected to suit up even if his workload remained uncertain
+Hawaii Warriors,Aaron Hunkin-Claytor,out,,https://www.rotowire.com/cbasketball/player/aaron-hunkin-claytor-24953,aggregator,2026-03-19,medium,RotoWire reported Hunkin-Claytor would miss the rest of the season with a severe turf toe injury

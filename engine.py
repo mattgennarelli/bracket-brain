@@ -208,8 +208,9 @@ def calc_proximity_bonus(team, game_site=None, config=DEFAULT_CONFIG):
     return score
 
 def calc_momentum_bonus(team, config=DEFAULT_CONFIG):
-    if "momentum" in team:
-        return max(-1, min(1, team["momentum"])) * config.momentum_max_bonus
+    momentum = team.get("momentum")
+    if momentum is not None:
+        return max(-1, min(1, momentum)) * config.momentum_max_bonus
     recent_o = team.get("adj_o_recent", team.get("adj_o", 85))
     season_o = team.get("adj_o", 85)
     recent_d = team.get("adj_d_recent", team.get("adj_d", 112))
@@ -1067,16 +1068,31 @@ COACH_SCORES = {
 }
 
 PEDIGREE = {
+    # Tier 1: All-time blue bloods (multiple titles, perennial contenders)
     "Kansas": 0.95, "Duke": 0.95, "North Carolina": 0.95, "Kentucky": 0.95,
-    "UCLA": 0.90, "UConn": 0.90, "Villanova": 0.85, "Indiana": 0.80,
-    "Michigan St": 0.85, "Louisville": 0.80, "Syracuse": 0.75, "Ohio St": 0.70,
-    "Michigan": 0.70, "Florida": 0.75, "Arizona": 0.70, "Georgetown": 0.65,
-    "Wisconsin": 0.65, "Gonzaga": 0.65, "Purdue": 0.65, "Virginia": 0.65,
+    # Tier 2: Historic powerhouses
+    "UCLA": 0.90, "UConn": 0.90, "Connecticut": 0.90,
+    "Villanova": 0.85, "Indiana": 0.80, "Michigan St": 0.85, "Michigan State": 0.85,
+    "Louisville": 0.80, "Syracuse": 0.75,
+    # Tier 3: Consistent tournament programs
+    "Ohio St": 0.70, "Ohio State": 0.70, "Michigan": 0.70, "Florida": 0.75,
+    "Arizona": 0.70, "Georgetown": 0.65, "Wisconsin": 0.65, "Gonzaga": 0.65,
+    "Purdue": 0.65, "Virginia": 0.65,
+    "NC State": 0.60, "North Carolina St": 0.60,  # 2 titles, 2024 F4
+    "Texas": 0.55, "Illinois": 0.55, "Oklahoma": 0.50, "LSU": 0.45,
+    # Tier 4: Strong recent programs
     "Baylor": 0.60, "Houston": 0.60, "Alabama": 0.55, "Tennessee": 0.55,
-    "Arkansas": 0.60, "Iowa St": 0.50, "Marquette": 0.55, "Xavier": 0.50,
-    "Creighton": 0.45, "Memphis": 0.55, "St. John's": 0.55, "Cincinnati": 0.55,
-    "Maryland": 0.55, "Oregon": 0.50, "Texas Tech": 0.45, "Clemson": 0.35,
-    "Auburn": 0.50, "San Diego St": 0.40, "BYU": 0.35,
+    "Arkansas": 0.60, "Iowa St": 0.50, "Iowa State": 0.50,
+    "Marquette": 0.55, "Xavier": 0.50, "Creighton": 0.45,
+    "Memphis": 0.55, "St. John's": 0.55, "Cincinnati": 0.55,
+    "Maryland": 0.55, "Oregon": 0.50, "Texas Tech": 0.45,
+    "Auburn": 0.50, "San Diego St": 0.40, "San Diego State": 0.40,
+    # Tier 5: Moderate tournament history
+    "Texas A&M": 0.40, "SMU": 0.35, "Clemson": 0.35, "BYU": 0.35,
+    "Iowa": 0.40, "Missouri": 0.40, "Pittsburgh": 0.45, "Wake Forest": 0.35,
+    "Minnesota": 0.30, "Notre Dame": 0.40, "West Virginia": 0.40,
+    "Utah": 0.35, "Colorado": 0.30, "Washington": 0.30,
+    "Saint Mary's": 0.30, "VCU": 0.30, "Butler": 0.40,
 }
 
 _NORMALIZED_PEDIGREE = None
@@ -1096,8 +1112,13 @@ def _get_pedigree_score(team_name):
 
 def enrich_team(team):
     t = dict(team)
-    if "coach_tourney_score" not in t:
-        t["coach_tourney_score"] = COACH_SCORES.get(t.get("coach",""), 0.3)
+    coach_name = t.get("coach", "")
+    static_coach_score = COACH_SCORES.get(coach_name)
+    if static_coach_score is not None:
+        # User-authored coach constants are the primary signal when available.
+        t["coach_tourney_score"] = static_coach_score
+    else:
+        t["coach_tourney_score"] = 0.3
     if "pedigree_score" not in t:
         t["pedigree_score"] = _get_pedigree_score(t["team"])
     # Attach school lat/lon for proximity calculations (needed by /analyze endpoint)
@@ -1620,6 +1641,7 @@ _MASCOT_SUFFIXES = {
     "waves", "lions", "leopards", "big green", "crimson", "quakers",
     "engineers", "bantams", "mean green", "roadrunners",
     "chanticleers", "thunderbirds", "aces", "sycamores",
+    "mountain hawks", "pride",
 }
 
 
@@ -1640,8 +1662,9 @@ def _strip_mascot(name):
 def is_ncaa_tournament_game(home_team, away_team, year=2026):
     """Check if a game is an NCAA tournament matchup by matching both teams against the bracket.
 
-    Uses mascot stripping + normalization to match Odds API names ('Duke Blue Devils')
-    against bracket short names ('Duke').
+    Includes First Four play-in games — checks bracket.first_four[] entries in addition
+    to the 64-team bracket.  Uses mascot stripping + normalization to match Odds API
+    names ('Duke Blue Devils') against bracket short names ('Duke').
     """
     data_dir = os.path.join(os.path.dirname(os.path.abspath(__file__)), "data")
     bracket_path = os.path.join(data_dir, f"bracket_{year}.json")
@@ -1665,6 +1688,13 @@ def is_ncaa_tournament_game(home_team, away_team, year=2026):
                 t = entry.get("team", "") if isinstance(entry, dict) else ""
                 if t:
                     bracket_teams.add(_normalize_team_for_match(t))
+
+    # Include First Four play-in teams (both sides) so play-in games are recognized
+    for ff in bracket.get("first_four", []):
+        for key in ("team_a", "team_b"):
+            t = ff.get(key, "")
+            if t:
+                bracket_teams.add(_normalize_team_for_match(t))
 
     h_norm = _normalize_team_for_match(_strip_mascot(home_team))
     a_norm = _normalize_team_for_match(_strip_mascot(away_team))

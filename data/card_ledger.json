@@ -20,7 +20,8 @@
       "result": null,
       "actual_score_home": null,
       "actual_score_away": null,
-      "settled_at": null
+      "settled_at": null,
+      "ncaa_tournament": false
     },
     {
       "bet_type": "spread",
@@ -42,7 +43,8 @@
       "result": null,
       "actual_score_home": null,
       "actual_score_away": null,
-      "settled_at": null
+      "settled_at": null,
+      "ncaa_tournament": false
     },
     {
       "bet_type": "total",
@@ -62,7 +64,8 @@
       "result": null,
       "actual_score_home": null,
       "actual_score_away": null,
-      "settled_at": null
+      "settled_at": null,
+      "ncaa_tournament": false
     },
     {
       "bet_type": "ml",
@@ -84,7 +87,8 @@
       "result": null,
       "actual_score_home": null,
       "actual_score_away": null,
-      "settled_at": null
+      "settled_at": null,
+      "ncaa_tournament": false
     },
     {
       "bet_type": "spread",
@@ -106,7 +110,8 @@
       "result": null,
       "actual_score_home": null,
       "actual_score_away": null,
-      "settled_at": null
+      "settled_at": null,
+      "ncaa_tournament": false
     },
     {
       "bet_type": "total",
@@ -126,7 +131,8 @@
       "result": null,
       "actual_score_home": null,
       "actual_score_away": null,
-      "settled_at": null
+      "settled_at": null,
+      "ncaa_tournament": false
     },
     {
       "bet_type": "ml",
@@ -148,7 +154,8 @@
       "result": "W",
       "actual_score_home": 78.0,
       "actual_score_away": 68.0,
-      "settled_at": "2026-03-14T14:09:36.762065+00:00"
+      "settled_at": "2026-03-14T14:09:36.762065+00:00",
+      "ncaa_tournament": false
     },
     {
       "bet_type": "spread",
@@ -170,7 +177,8 @@
       "result": "L",
       "actual_score_home": 78.0,
       "actual_score_away": 68.0,
-      "settled_at": "2026-03-14T14:09:36.762136+00:00"
+      "settled_at": "2026-03-14T14:09:36.762136+00:00",
+      "ncaa_tournament": false
     },
     {
       "bet_type": "total",
@@ -190,7 +198,8 @@
       "result": "W",
       "actual_score_home": 78.0,
       "actual_score_away": 68.0,
-      "settled_at": "2026-03-14T14:09:36.762197+00:00"
+      "settled_at": "2026-03-14T14:09:36.762197+00:00",
+      "ncaa_tournament": false
     },
     {
       "bet_type": "ml",
@@ -212,7 +221,8 @@
       "result": null,
       "actual_score_home": null,
       "actual_score_away": null,
-      "settled_at": null
+      "settled_at": null,
+      "ncaa_tournament": false
     },
     {
       "bet_type": "spread",
@@ -234,7 +244,8 @@
       "result": null,
       "actual_score_home": null,
       "actual_score_away": null,
-      "settled_at": null
+      "settled_at": null,
+      "ncaa_tournament": false
     },
     {
       "bet_type": "total",
@@ -254,7 +265,8 @@
       "result": null,
       "actual_score_home": null,
       "actual_score_away": null,
-      "settled_at": null
+      "settled_at": null,
+      "ncaa_tournament": false
     },
     {
       "bet_type": "ml",
@@ -276,7 +288,8 @@
       "result": "W",
       "actual_score_home": 58.0,
       "actual_score_away": 74.0,
-      "settled_at": "2026-03-14T14:09:36.762372+00:00"
+      "settled_at": "2026-03-14T14:09:36.762372+00:00",
+      "ncaa_tournament": true
     },
     {
       "bet_type": "spread",
@@ -298,7 +311,8 @@
       "result": "L",
       "actual_score_home": 58.0,
       "actual_score_away": 74.0,
-      "settled_at": "2026-03-14T14:09:36.762412+00:00"
+      "settled_at": "2026-03-14T14:09:36.762412+00:00",
+      "ncaa_tournament": true
     },
     {
       "bet_type": "total",
@@ -318,7 +332,8 @@
       "result": "L",
       "actual_score_home": 58.0,
       "actual_score_away": 74.0,
-      "settled_at": "2026-03-14T14:09:36.762435+00:00"
+      "settled_at": "2026-03-14T14:09:36.762435+00:00",
+      "ncaa_tournament": true
     },
     {
       "bet_type": "ml",
@@ -340,7 +355,8 @@
       "result": "L",
       "actual_score_home": 79.0,
       "actual_score_away": 80.0,
-      "settled_at": "2026-03-14T14:09:36.762470+00:00"
+      "settled_at": "2026-03-14T14:09:36.762470+00:00",
+      "ncaa_tournament": false
     },
     {
       "bet_type": "spread",
@@ -362,7 +378,8 @@
       "result": "L",
       "actual_score_home": 79.0,
       "actual_score_away": 80.0,
-      "settled_at": "2026-03-14T14:09:36.762500+00:00"
+      "settled_at": "2026-03-14T14:09:36.762500+00:00",
+      "ncaa_tournament": false
     },
     {
       "bet_type": "total",
@@ -382,7 +399,8 @@
       "result": "L",
       "actual_score_home": 79.0,
       "actual_score_away": 80.0,
-      "settled_at": "2026-03-14T14:09:36.762520+00:00"
+      "settled_at": "2026-03-14T14:09:36.762520+00:00",
+      "ncaa_tournament": false
     },
     {
       "bet_type": "ml",
@@ -404,7 +422,8 @@
       "result": "W",
       "actual_score_home": 82.0,
       "actual_score_away": 80.0,
-      "settled_at": "2026-03-14T14:09:36.762548+00:00"
+      "settled_at": "2026-03-14T14:09:36.762548+00:00",
+      "ncaa_tournament": true
     },
     {
       "bet_type": "spread",
@@ -426,7 +445,8 @@
       "result": "L",
       "actual_score_home": 82.0,
       "actual_score_away": 80.0,
-      "settled_at": "2026-03-14T14:09:36.762575+00:00"
+      "settled_at": "2026-03-14T14:09:36.762575+00:00",
+      "ncaa_tournament": true
     },
     {
       "bet_type": "total",
@@ -446,7 +466,8 @@
       "result": "W",
       "actual_score_home": 82.0,
       "actual_score_away": 80.0,
-      "settled_at": "2026-03-14T14:09:36.762595+00:00"
+      "settled_at": "2026-03-14T14:09:36.762595+00:00",
+      "ncaa_tournament": true
     },
     {
       "bet_type": "ml",
@@ -468,7 +489,8 @@
       "result": "W",
       "actual_score_home": 84.0,
       "actual_score_away": 62.0,
-      "settled_at": "2026-03-14T14:09:36.762623+00:00"
+      "settled_at": "2026-03-14T14:09:36.762623+00:00",
+      "ncaa_tournament": true
     },
     {
       "bet_type": "spread",
@@ -490,7 +512,8 @@
       "result": "W",
       "actual_score_home": 84.0,
       "actual_score_away": 62.0,
-      "settled_at": "2026-03-14T14:09:36.762671+00:00"
+      "settled_at": "2026-03-14T14:09:36.762671+00:00",
+      "ncaa_tournament": true
     },
     {
       "bet_type": "total",
@@ -510,7 +533,8 @@
       "result": "W",
       "actual_score_home": 84.0,
       "actual_score_away": 62.0,
-      "settled_at": "2026-03-14T14:09:36.762695+00:00"
+      "settled_at": "2026-03-14T14:09:36.762695+00:00",
+      "ncaa_tournament": true
     },
     {
       "bet_type": "ml",
@@ -532,7 +556,8 @@
       "result": null,
       "actual_score_home": null,
       "actual_score_away": null,
-      "settled_at": null
+      "settled_at": null,
+      "ncaa_tournament": false
     },
     {
       "bet_type": "spread",
@@ -554,7 +579,8 @@
       "result": null,
       "actual_score_home": null,
       "actual_score_away": null,
-      "settled_at": null
+      "settled_at": null,
+      "ncaa_tournament": false
     },
     {
       "bet_type": "total",
@@ -574,7 +600,8 @@
       "result": null,
       "actual_score_home": null,
       "actual_score_away": null,
-      "settled_at": null
+      "settled_at": null,
+      "ncaa_tournament": false
     },
     {
       "bet_type": "ml",
@@ -596,7 +623,8 @@
       "result": null,
       "actual_score_home": null,
       "actual_score_away": null,
-      "settled_at": null
+      "settled_at": null,
+      "ncaa_tournament": false
     },
     {
       "bet_type": "spread",
@@ -618,7 +646,8 @@
       "result": null,
       "actual_score_home": null,
       "actual_score_away": null,
-      "settled_at": null
+      "settled_at": null,
+      "ncaa_tournament": false
     },
     {
       "bet_type": "total",
@@ -638,7 +667,8 @@
       "result": null,
       "actual_score_home": null,
       "actual_score_away": null,
-      "settled_at": null
+      "settled_at": null,
+      "ncaa_tournament": false
     },
     {
       "bet_type": "ml",
@@ -660,7 +690,8 @@
       "result": null,
       "actual_score_home": null,
       "actual_score_away": null,
-      "settled_at": null
+      "settled_at": null,
+      "ncaa_tournament": false
     },
     {
       "bet_type": "spread",
@@ -682,7 +713,8 @@
       "result": null,
       "actual_score_home": null,
       "actual_score_away": null,
-      "settled_at": null
+      "settled_at": null,
+      "ncaa_tournament": false
     },
     {
       "bet_type": "total",
@@ -702,7 +734,8 @@
       "result": null,
       "actual_score_home": null,
       "actual_score_away": null,
-      "settled_at": null
+      "settled_at": null,
+      "ncaa_tournament": false
     },
     {
       "bet_type": "ml",
@@ -724,7 +757,8 @@
       "result": "W",
       "actual_score_home": 67.0,
       "actual_score_away": 51.0,
-      "settled_at": "2026-03-14T14:09:36.762917+00:00"
+      "settled_at": "2026-03-14T14:09:36.762917+00:00",
+      "ncaa_tournament": false
     },
     {
       "bet_type": "spread",
@@ -746,7 +780,8 @@
       "result": "L",
       "actual_score_home": 67.0,
       "actual_score_away": 51.0,
-      "settled_at": "2026-03-14T14:09:36.762973+00:00"
+      "settled_at": "2026-03-14T14:09:36.762973+00:00",
+      "ncaa_tournament": false
     },
     {
       "bet_type": "total",
@@ -766,7 +801,8 @@
       "result": "L",
       "actual_score_home": 67.0,
       "actual_score_away": 51.0,
-      "settled_at": "2026-03-14T14:09:36.762994+00:00"
+      "settled_at": "2026-03-14T14:09:36.762994+00:00",
+      "ncaa_tournament": false
     },
     {
       "bet_type": "ml",
@@ -788,7 +824,8 @@
       "result": null,
       "actual_score_home": null,
       "actual_score_away": null,
-      "settled_at": null
+      "settled_at": null,
+      "ncaa_tournament": false
     },
     {
       "bet_type": "spread",
@@ -810,7 +847,8 @@
       "result": null,
       "actual_score_home": null,
       "actual_score_away": null,
-      "settled_at": null
+      "settled_at": null,
+      "ncaa_tournament": false
     },
     {
       "bet_type": "total",
@@ -830,7 +868,8 @@
       "result": null,
       "actual_score_home": null,
       "actual_score_away": null,
-      "settled_at": null
+      "settled_at": null,
+      "ncaa_tournament": false
     },
     {
       "bet_type": "ml",
@@ -852,7 +891,8 @@
       "result": null,
       "actual_score_home": null,
       "actual_score_away": null,
-      "settled_at": null
+      "settled_at": null,
+      "ncaa_tournament": true
     },
     {
       "bet_type": "spread",
@@ -874,7 +914,8 @@
       "result": null,
       "actual_score_home": null,
       "actual_score_away": null,
-      "settled_at": null
+      "settled_at": null,
+      "ncaa_tournament": true
     },
     {
       "bet_type": "total",
@@ -894,7 +935,8 @@
       "result": null,
       "actual_score_home": null,
       "actual_score_away": null,
-      "settled_at": null
+      "settled_at": null,
+      "ncaa_tournament": true
     },
     {
       "bet_type": "ml",
@@ -916,7 +958,8 @@
       "result": null,
       "actual_score_home": null,
       "actual_score_away": null,
-      "settled_at": null
+      "settled_at": null,
+      "ncaa_tournament": false
     },
     {
       "bet_type": "spread",
@@ -938,7 +981,8 @@
       "result": null,
       "actual_score_home": null,
       "actual_score_away": null,
-      "settled_at": null
+      "settled_at": null,
+      "ncaa_tournament": false
     },
     {
       "bet_type": "total",
@@ -958,7 +1002,8 @@
       "result": null,
       "actual_score_home": null,
       "actual_score_away": null,
-      "settled_at": null
+      "settled_at": null,
+      "ncaa_tournament": false
     },
     {
       "bet_type": "ml",
@@ -980,7 +1025,8 @@
       "result": "W",
       "actual_score_home": 82.0,
       "actual_score_away": 79.0,
-      "settled_at": "2026-03-14T14:09:36.763134+00:00"
+      "settled_at": "2026-03-14T14:09:36.763134+00:00",
+      "ncaa_tournament": false
     },
     {
       "bet_type": "spread",
@@ -1002,7 +1048,8 @@
       "result": "W",
       "actual_score_home": 82.0,
       "actual_score_away": 79.0,
-      "settled_at": "2026-03-14T14:09:36.763158+00:00"
+      "settled_at": "2026-03-14T14:09:36.763158+00:00",
+      "ncaa_tournament": false
     },
     {
       "bet_type": "total",
@@ -1022,7 +1069,8 @@
       "result": "L",
       "actual_score_home": 82.0,
       "actual_score_away": 79.0,
-      "settled_at": "2026-03-14T14:09:36.763173+00:00"
+      "settled_at": "2026-03-14T14:09:36.763173+00:00",
+      "ncaa_tournament": false
     },
     {
       "bet_type": "ml",
@@ -1044,7 +1092,8 @@
       "result": "W",
       "actual_score_home": 69.0,
       "actual_score_away": 47.0,
-      "settled_at": "2026-03-14T14:09:36.763193+00:00"
+      "settled_at": "2026-03-14T14:09:36.763193+00:00",
+      "ncaa_tournament": true
     },
     {
       "bet_type": "spread",
@@ -1066,7 +1115,8 @@
       "result": "L",
       "actual_score_home": 69.0,
       "actual_score_away": 47.0,
-      "settled_at": "2026-03-14T14:09:36.763213+00:00"
+      "settled_at": "2026-03-14T14:09:36.763213+00:00",
+      "ncaa_tournament": true
     },
     {
       "bet_type": "total",
@@ -1086,7 +1136,8 @@
       "result": "W",
       "actual_score_home": 69.0,
       "actual_score_away": 47.0,
-      "settled_at": "2026-03-14T14:09:36.763227+00:00"
+      "settled_at": "2026-03-14T14:09:36.763227+00:00",
+      "ncaa_tournament": true
     },
     {
       "bet_type": "ml",
@@ -1108,7 +1159,8 @@
       "result": "W",
       "actual_score_home": 73.0,
       "actual_score_away": 61.0,
-      "settled_at": "2026-03-14T14:09:36.763248+00:00"
+      "settled_at": "2026-03-14T14:09:36.763248+00:00",
+      "ncaa_tournament": true
     },
     {
       "bet_type": "spread",
@@ -1130,7 +1182,8 @@
       "result": "W",
       "actual_score_home": 73.0,
       "actual_score_away": 61.0,
-      "settled_at": "2026-03-14T14:09:36.763268+00:00"
+      "settled_at": "2026-03-14T14:09:36.763268+00:00",
+      "ncaa_tournament": true
     },
     {
       "bet_type": "total",
@@ -1150,7 +1203,8 @@
       "result": "W",
       "actual_score_home": 73.0,
       "actual_score_away": 61.0,
-      "settled_at": "2026-03-14T14:09:36.763282+00:00"
+      "settled_at": "2026-03-14T14:09:36.763282+00:00",
+      "ncaa_tournament": true
     },
     {
       "bet_type": "ml",
@@ -1172,7 +1226,8 @@
       "result": null,
       "actual_score_home": null,
       "actual_score_away": null,
-      "settled_at": null
+      "settled_at": null,
+      "ncaa_tournament": false
     },
     {
       "bet_type": "spread",
@@ -1194,7 +1249,8 @@
       "result": null,
       "actual_score_home": null,
       "actual_score_away": null,
-      "settled_at": null
+      "settled_at": null,
+      "ncaa_tournament": false
     },
     {
       "bet_type": "total",
@@ -1214,7 +1270,8 @@
       "result": null,
       "actual_score_home": null,
       "actual_score_away": null,
-      "settled_at": null
+      "settled_at": null,
+      "ncaa_tournament": false
     },
     {
       "bet_type": "ml",
@@ -1236,7 +1293,8 @@
       "result": null,
       "actual_score_home": null,
       "actual_score_away": null,
-      "settled_at": null
+      "settled_at": null,
+      "ncaa_tournament": false
     },
     {
       "bet_type": "spread",
@@ -1258,7 +1316,8 @@
       "result": null,
       "actual_score_home": null,
       "actual_score_away": null,
-      "settled_at": null
+      "settled_at": null,
+      "ncaa_tournament": false
     },
     {
       "bet_type": "total",
@@ -1278,7 +1337,8 @@
       "result": null,
       "actual_score_home": null,
       "actual_score_away": null,
-      "settled_at": null
+      "settled_at": null,
+      "ncaa_tournament": false
     },
     {
       "bet_type": "ml",
@@ -1300,7 +1360,8 @@
       "result": null,
       "actual_score_home": null,
       "actual_score_away": null,
-      "settled_at": null
+      "settled_at": null,
+      "ncaa_tournament": false
     },
     {
       "bet_type": "spread",
@@ -1322,7 +1383,8 @@
       "result": null,
       "actual_score_home": null,
       "actual_score_away": null,
-      "settled_at": null
+      "settled_at": null,
+      "ncaa_tournament": false
     },
     {
       "bet_type": "total",
@@ -1342,7 +1404,8 @@
       "result": null,
       "actual_score_home": null,
       "actual_score_away": null,
-      "settled_at": null
+      "settled_at": null,
+      "ncaa_tournament": false
     },
     {
       "bet_type": "ml",
@@ -1364,7 +1427,8 @@
       "result": null,
       "actual_score_home": null,
       "actual_score_away": null,
-      "settled_at": null
+      "settled_at": null,
+      "ncaa_tournament": false
     },
     {
       "bet_type": "spread",
@@ -1386,7 +1450,8 @@
       "result": null,
       "actual_score_home": null,
       "actual_score_away": null,
-      "settled_at": null
+      "settled_at": null,
+      "ncaa_tournament": false
     },
     {
       "bet_type": "total",
@@ -1406,7 +1471,8 @@
       "result": null,
       "actual_score_home": null,
       "actual_score_away": null,
-      "settled_at": null
+      "settled_at": null,
+      "ncaa_tournament": false
     },
     {
       "bet_type": "ml",
@@ -1428,7 +1494,8 @@
       "result": null,
       "actual_score_home": null,
       "actual_score_away": null,
-      "settled_at": null
+      "settled_at": null,
+      "ncaa_tournament": false
     },
     {
       "bet_type": "spread",
@@ -1450,7 +1517,8 @@
       "result": null,
       "actual_score_home": null,
       "actual_score_away": null,
-      "settled_at": null
+      "settled_at": null,
+      "ncaa_tournament": false
     },
     {
       "bet_type": "total",
@@ -1470,7 +1538,8 @@
       "result": null,
       "actual_score_home": null,
       "actual_score_away": null,
-      "settled_at": null
+      "settled_at": null,
+      "ncaa_tournament": false
     },
     {
       "bet_type": "ml",
@@ -1492,7 +1561,8 @@
       "result": null,
       "actual_score_home": null,
       "actual_score_away": null,
-      "settled_at": null
+      "settled_at": null,
+      "ncaa_tournament": false
     },
     {
       "bet_type": "spread",
@@ -1514,7 +1584,8 @@
       "result": null,
       "actual_score_home": null,
       "actual_score_away": null,
-      "settled_at": null
+      "settled_at": null,
+      "ncaa_tournament": false
     },
     {
       "bet_type": "total",
@@ -1534,7 +1605,8 @@
       "result": null,
       "actual_score_home": null,
       "actual_score_away": null,
-      "settled_at": null
+      "settled_at": null,
+      "ncaa_tournament": false
     },
     {
       "bet_type": "ml",
@@ -1556,7 +1628,8 @@
       "result": "L",
       "actual_score_home": 74.0,
       "actual_score_away": 91.0,
-      "settled_at": "2026-03-14T23:57:38.987288+00:00"
+      "settled_at": "2026-03-14T23:57:38.987288+00:00",
+      "ncaa_tournament": true
     },
     {
       "bet_type": "spread",
@@ -1578,7 +1651,8 @@
       "result": "L",
       "actual_score_home": 74.0,
       "actual_score_away": 91.0,
-      "settled_at": "2026-03-14T23:57:38.987343+00:00"
+      "settled_at": "2026-03-14T23:57:38.987343+00:00",
+      "ncaa_tournament": true
     },
     {
       "bet_type": "total",
@@ -1598,7 +1672,8 @@
       "result": "W",
       "actual_score_home": 74.0,
       "actual_score_away": 91.0,
-      "settled_at": "2026-03-14T23:57:38.987368+00:00"
+      "settled_at": "2026-03-14T23:57:38.987368+00:00",
+      "ncaa_tournament": true
     },
     {
       "bet_type": "ml",
@@ -1620,7 +1695,8 @@
       "result": "W",
       "actual_score_home": 68.0,
       "actual_score_away": 65.0,
-      "settled_at": "2026-03-14T23:57:38.987400+00:00"
+      "settled_at": "2026-03-14T23:57:38.987400+00:00",
+      "ncaa_tournament": true
     },
     {
       "bet_type": "spread",
@@ -1642,7 +1718,8 @@
       "result": "W",
       "actual_score_home": 68.0,
       "actual_score_away": 65.0,
-      "settled_at": "2026-03-14T23:57:38.987430+00:00"
+      "settled_at": "2026-03-14T23:57:38.987430+00:00",
+      "ncaa_tournament": true
     },
     {
       "bet_type": "total",
@@ -1662,7 +1739,8 @@
       "result": "L",
       "actual_score_home": 68.0,
       "actual_score_away": 65.0,
-      "settled_at": "2026-03-14T23:57:38.987450+00:00"
+      "settled_at": "2026-03-14T23:57:38.987450+00:00",
+      "ncaa_tournament": true
     },
     {
       "bet_type": "ml",
@@ -1684,7 +1762,8 @@
       "result": null,
       "actual_score_home": null,
       "actual_score_away": null,
-      "settled_at": null
+      "settled_at": null,
+      "ncaa_tournament": false
     },
     {
       "bet_type": "spread",
@@ -1706,7 +1785,8 @@
       "result": null,
       "actual_score_home": null,
       "actual_score_away": null,
-      "settled_at": null
+      "settled_at": null,
+      "ncaa_tournament": false
     },
     {
       "bet_type": "total",
@@ -1726,7 +1806,8 @@
       "result": null,
       "actual_score_home": null,
       "actual_score_away": null,
-      "settled_at": null
+      "settled_at": null,
+      "ncaa_tournament": false
     },
     {
       "bet_type": "ml",
@@ -1748,7 +1829,8 @@
       "result": null,
       "actual_score_home": null,
       "actual_score_away": null,
-      "settled_at": null
+      "settled_at": null,
+      "ncaa_tournament": false
     },
     {
       "bet_type": "spread",
@@ -1770,7 +1852,8 @@
       "result": null,
       "actual_score_home": null,
       "actual_score_away": null,
-      "settled_at": null
+      "settled_at": null,
+      "ncaa_tournament": false
     },
     {
       "bet_type": "total",
@@ -1790,7 +1873,8 @@
       "result": null,
       "actual_score_home": null,
       "actual_score_away": null,
-      "settled_at": null
+      "settled_at": null,
+      "ncaa_tournament": false
     },
     {
       "bet_type": "ml",
@@ -1812,7 +1896,8 @@
       "result": null,
       "actual_score_home": null,
       "actual_score_away": null,
-      "settled_at": null
+      "settled_at": null,
+      "ncaa_tournament": false
     },
     {
       "bet_type": "spread",
@@ -1834,7 +1919,8 @@
       "result": null,
       "actual_score_home": null,
       "actual_score_away": null,
-      "settled_at": null
+      "settled_at": null,
+      "ncaa_tournament": false
     },
     {
       "bet_type": "total",
@@ -1854,7 +1940,8 @@
       "result": null,
       "actual_score_home": null,
       "actual_score_away": null,
-      "settled_at": null
+      "settled_at": null,
+      "ncaa_tournament": false
     },
     {
       "bet_type": "ml",
@@ -1876,7 +1963,8 @@
       "result": null,
       "actual_score_home": null,
       "actual_score_away": null,
-      "settled_at": null
+      "settled_at": null,
+      "ncaa_tournament": false
     },
     {
       "bet_type": "spread",
@@ -1898,7 +1986,8 @@
       "result": null,
       "actual_score_home": null,
       "actual_score_away": null,
-      "settled_at": null
+      "settled_at": null,
+      "ncaa_tournament": false
     },
     {
       "bet_type": "total",
@@ -1918,7 +2007,8 @@
       "result": null,
       "actual_score_home": null,
       "actual_score_away": null,
-      "settled_at": null
+      "settled_at": null,
+      "ncaa_tournament": false
     },
     {
       "bet_type": "ml",
@@ -1940,7 +2030,8 @@
       "result": null,
       "actual_score_home": null,
       "actual_score_away": null,
-      "settled_at": null
+      "settled_at": null,
+      "ncaa_tournament": false
     },
     {
       "bet_type": "spread",
@@ -1962,7 +2053,8 @@
       "result": null,
       "actual_score_home": null,
       "actual_score_away": null,
-      "settled_at": null
+      "settled_at": null,
+      "ncaa_tournament": false
     },
     {
       "bet_type": "total",
@@ -1982,7 +2074,8 @@
       "result": null,
       "actual_score_home": null,
       "actual_score_away": null,
-      "settled_at": null
+      "settled_at": null,
+      "ncaa_tournament": false
     },
     {
       "bet_type": "ml",
@@ -2004,7 +2097,8 @@
       "result": "L",
       "actual_score_home": 74.0,
       "actual_score_away": 91.0,
-      "settled_at": "2026-03-14T23:57:38.987754+00:00"
+      "settled_at": "2026-03-14T23:57:38.987754+00:00",
+      "ncaa_tournament": true
     },
     {
       "bet_type": "spread",
@@ -2026,7 +2120,8 @@
       "result": "L",
       "actual_score_home": 74.0,
       "actual_score_away": 91.0,
-      "settled_at": "2026-03-14T23:57:38.987785+00:00"
+      "settled_at": "2026-03-14T23:57:38.987785+00:00",
+      "ncaa_tournament": true
     },
     {
       "bet_type": "total",
@@ -2046,7 +2141,8 @@
       "result": "W",
       "actual_score_home": 74.0,
       "actual_score_away": 91.0,
-      "settled_at": "2026-03-14T23:57:38.987805+00:00"
+      "settled_at": "2026-03-14T23:57:38.987805+00:00",
+      "ncaa_tournament": true
     },
     {
       "bet_type": "ml",
@@ -2068,7 +2164,8 @@
       "result": null,
       "actual_score_home": null,
       "actual_score_away": null,
-      "settled_at": null
+      "settled_at": null,
+      "ncaa_tournament": false
     },
     {
       "bet_type": "spread",
@@ -2090,7 +2187,8 @@
       "result": null,
       "actual_score_home": null,
       "actual_score_away": null,
-      "settled_at": null
+      "settled_at": null,
+      "ncaa_tournament": false
     },
     {
       "bet_type": "total",
@@ -2110,7 +2208,8 @@
       "result": null,
       "actual_score_home": null,
       "actual_score_away": null,
-      "settled_at": null
+      "settled_at": null,
+      "ncaa_tournament": false
     },
     {
       "bet_type": "ml",
@@ -2132,7 +2231,8 @@
       "result": "W",
       "actual_score_home": 68.0,
       "actual_score_away": 65.0,
-      "settled_at": "2026-03-14T23:57:38.987890+00:00"
+      "settled_at": "2026-03-14T23:57:38.987890+00:00",
+      "ncaa_tournament": true
     },
     {
       "bet_type": "spread",
@@ -2154,7 +2254,8 @@
       "result": "L",
       "actual_score_home": 68.0,
       "actual_score_away": 65.0,
-      "settled_at": "2026-03-14T23:57:38.987920+00:00"
+      "settled_at": "2026-03-14T23:57:38.987920+00:00",
+      "ncaa_tournament": true
     },
     {
       "bet_type": "total",
@@ -2174,7 +2275,8 @@
       "result": "L",
       "actual_score_home": 68.0,
       "actual_score_away": 65.0,
-      "settled_at": "2026-03-14T23:57:38.987939+00:00"
+      "settled_at": "2026-03-14T23:57:38.987939+00:00",
+      "ncaa_tournament": true
     },
     {
       "bet_type": "ml",
@@ -2196,7 +2298,8 @@
       "result": null,
       "actual_score_home": null,
       "actual_score_away": null,
-      "settled_at": null
+      "settled_at": null,
+      "ncaa_tournament": false
     },
     {
       "bet_type": "spread",
@@ -2218,7 +2321,8 @@
       "result": null,
       "actual_score_home": null,
       "actual_score_away": null,
-      "settled_at": null
+      "settled_at": null,
+      "ncaa_tournament": false
     },
     {
       "bet_type": "total",
@@ -2238,7 +2342,8 @@
       "result": null,
       "actual_score_home": null,
       "actual_score_away": null,
-      "settled_at": null
+      "settled_at": null,
+      "ncaa_tournament": false
     },
     {
       "bet_type": "ml",
@@ -2260,7 +2365,8 @@
       "result": "W",
       "actual_score_home": 93.0,
       "actual_score_away": 90.0,
-      "settled_at": "2026-03-14T23:57:38.988022+00:00"
+      "settled_at": "2026-03-14T23:57:38.988022+00:00",
+      "ncaa_tournament": false
     },
     {
       "bet_type": "spread",
@@ -2282,7 +2388,8 @@
       "result": "W",
       "actual_score_home": 93.0,
       "actual_score_away": 90.0,
-      "settled_at": "2026-03-14T23:57:38.988046+00:00"
+      "settled_at": "2026-03-14T23:57:38.988046+00:00",
+      "ncaa_tournament": false
     },
     {
       "bet_type": "total",
@@ -2302,7 +2409,8 @@
       "result": "W",
       "actual_score_home": 93.0,
       "actual_score_away": 90.0,
-      "settled_at": "2026-03-14T23:57:38.988062+00:00"
+      "settled_at": "2026-03-14T23:57:38.988062+00:00",
+      "ncaa_tournament": false
     },
     {
       "bet_type": "ml",
@@ -2324,7 +2432,8 @@
       "result": "W",
       "actual_score_home": 66.0,
       "actual_score_away": 73.0,
-      "settled_at": "2026-03-14T23:57:38.988082+00:00"
+      "settled_at": "2026-03-14T23:57:38.988082+00:00",
+      "ncaa_tournament": true
     },
     {
       "bet_type": "spread",
@@ -2346,7 +2455,8 @@
       "result": "W",
       "actual_score_home": 66.0,
       "actual_score_away": 73.0,
-      "settled_at": "2026-03-14T23:57:38.988102+00:00"
+      "settled_at": "2026-03-14T23:57:38.988102+00:00",
+      "ncaa_tournament": true
     },
     {
       "bet_type": "total",
@@ -2366,7 +2476,8 @@
       "result": "L",
       "actual_score_home": 66.0,
       "actual_score_away": 73.0,
-      "settled_at": "2026-03-14T23:57:38.988116+00:00"
+      "settled_at": "2026-03-14T23:57:38.988116+00:00",
+      "ncaa_tournament": true
     },
     {
       "bet_type": "ml",
@@ -2388,7 +2499,8 @@
       "result": null,
       "actual_score_home": null,
       "actual_score_away": null,
-      "settled_at": null
+      "settled_at": null,
+      "ncaa_tournament": false
     },
     {
       "bet_type": "spread",
@@ -2410,7 +2522,8 @@
       "result": null,
       "actual_score_home": null,
       "actual_score_away": null,
-      "settled_at": null
+      "settled_at": null,
+      "ncaa_tournament": false
     },
     {
       "bet_type": "total",
@@ -2430,7 +2543,8 @@
       "result": null,
       "actual_score_home": null,
       "actual_score_away": null,
-      "settled_at": null
+      "settled_at": null,
+      "ncaa_tournament": false
     },
     {
       "bet_type": "ml",
@@ -2452,7 +2566,8 @@
       "result": null,
       "actual_score_home": null,
       "actual_score_away": null,
-      "settled_at": null
+      "settled_at": null,
+      "ncaa_tournament": false
     },
     {
       "bet_type": "spread",
@@ -2474,7 +2589,8 @@
       "result": null,
       "actual_score_home": null,
       "actual_score_away": null,
-      "settled_at": null
+      "settled_at": null,
+      "ncaa_tournament": false
     },
     {
       "bet_type": "total",
@@ -2494,7 +2610,8 @@
       "result": null,
       "actual_score_home": null,
       "actual_score_away": null,
-      "settled_at": null
+      "settled_at": null,
+      "ncaa_tournament": false
     },
     {
       "bet_type": "ml",
@@ -2516,7 +2633,8 @@
       "result": "W",
       "actual_score_home": 79.0,
       "actual_score_away": 74.0,
-      "settled_at": "2026-03-15T03:56:40.565058+00:00"
+      "settled_at": "2026-03-15T03:56:40.565058+00:00",
+      "ncaa_tournament": true
     },
     {
       "bet_type": "spread",
@@ -2538,7 +2656,8 @@
       "result": "W",
       "actual_score_home": 79.0,
       "actual_score_away": 74.0,
-      "settled_at": "2026-03-15T03:56:40.565142+00:00"
+      "settled_at": "2026-03-15T03:56:40.565142+00:00",
+      "ncaa_tournament": true
     },
     {
       "bet_type": "total",
@@ -2558,7 +2677,8 @@
       "result": "W",
       "actual_score_home": 79.0,
       "actual_score_away": 74.0,
-      "settled_at": "2026-03-15T03:56:40.565178+00:00"
+      "settled_at": "2026-03-15T03:56:40.565178+00:00",
+      "ncaa_tournament": true
     },
     {
       "bet_type": "ml",
@@ -2580,7 +2700,8 @@
       "result": null,
       "actual_score_home": null,
       "actual_score_away": null,
-      "settled_at": null
+      "settled_at": null,
+      "ncaa_tournament": false
     },
     {
       "bet_type": "spread",
@@ -2602,7 +2723,8 @@
       "result": null,
       "actual_score_home": null,
       "actual_score_away": null,
-      "settled_at": null
+      "settled_at": null,
+      "ncaa_tournament": false
     },
     {
       "bet_type": "total",
@@ -2622,7 +2744,8 @@
       "result": null,
       "actual_score_home": null,
       "actual_score_away": null,
-      "settled_at": null
+      "settled_at": null,
+      "ncaa_tournament": false
     },
     {
       "bet_type": "ml",
@@ -2644,7 +2767,8 @@
       "result": "L",
       "actual_score_home": 72.0,
       "actual_score_away": 52.0,
-      "settled_at": "2026-03-15T03:56:40.565276+00:00"
+      "settled_at": "2026-03-15T03:56:40.565276+00:00",
+      "ncaa_tournament": true
     },
     {
       "bet_type": "spread",
@@ -2666,7 +2790,8 @@
       "result": "L",
       "actual_score_home": 72.0,
       "actual_score_away": 52.0,
-      "settled_at": "2026-03-15T03:56:40.565315+00:00"
+      "settled_at": "2026-03-15T03:56:40.565315+00:00",
+      "ncaa_tournament": true
     },
     {
       "bet_type": "total",
@@ -2686,7 +2811,8 @@
       "result": "L",
       "actual_score_home": 72.0,
       "actual_score_away": 52.0,
-      "settled_at": "2026-03-15T03:56:40.565341+00:00"
+      "settled_at": "2026-03-15T03:56:40.565341+00:00",
+      "ncaa_tournament": true
     },
     {
       "bet_type": "ml",
@@ -2708,7 +2834,8 @@
       "result": null,
       "actual_score_home": null,
       "actual_score_away": null,
-      "settled_at": null
+      "settled_at": null,
+      "ncaa_tournament": false
     },
     {
       "bet_type": "spread",
@@ -2730,7 +2857,8 @@
       "result": null,
       "actual_score_home": null,
       "actual_score_away": null,
-      "settled_at": null
+      "settled_at": null,
+      "ncaa_tournament": false
     },
     {
       "bet_type": "total",
@@ -2750,7 +2878,8 @@
       "result": null,
       "actual_score_home": null,
       "actual_score_away": null,
-      "settled_at": null
+      "settled_at": null,
+      "ncaa_tournament": false
     },
     {
       "bet_type": "ml",
@@ -2772,7 +2901,8 @@
       "result": "W",
       "actual_score_home": 74.0,
       "actual_score_away": 70.0,
-      "settled_at": "2026-03-15T03:56:40.565426+00:00"
+      "settled_at": "2026-03-15T03:56:40.565426+00:00",
+      "ncaa_tournament": true
     },
     {
       "bet_type": "spread",
@@ -2794,7 +2924,8 @@
       "result": "L",
       "actual_score_home": 74.0,
       "actual_score_away": 70.0,
-      "settled_at": "2026-03-15T03:56:40.565461+00:00"
+      "settled_at": "2026-03-15T03:56:40.565461+00:00",
+      "ncaa_tournament": true
     },
     {
       "bet_type": "total",
@@ -2814,7 +2945,8 @@
       "result": "W",
       "actual_score_home": 74.0,
       "actual_score_away": 70.0,
-      "settled_at": "2026-03-15T03:56:40.565484+00:00"
+      "settled_at": "2026-03-15T03:56:40.565484+00:00",
+      "ncaa_tournament": true
     },
     {
       "bet_type": "ml",
@@ -2836,7 +2968,8 @@
       "result": null,
       "actual_score_home": null,
       "actual_score_away": null,
-      "settled_at": null
+      "settled_at": null,
+      "ncaa_tournament": false
     },
     {
       "bet_type": "spread",
@@ -2858,7 +2991,8 @@
       "result": null,
       "actual_score_home": null,
       "actual_score_away": null,
-      "settled_at": null
+      "settled_at": null,
+      "ncaa_tournament": false
     },
     {
       "bet_type": "total",
@@ -2878,7 +3012,8 @@
       "result": null,
       "actual_score_home": null,
       "actual_score_away": null,
-      "settled_at": null
+      "settled_at": null,
+      "ncaa_tournament": false
     },
     {
       "bet_type": "ml",
@@ -2900,7 +3035,8 @@
       "result": null,
       "actual_score_home": null,
       "actual_score_away": null,
-      "settled_at": null
+      "settled_at": null,
+      "ncaa_tournament": false
     },
     {
       "bet_type": "spread",
@@ -2922,7 +3058,8 @@
       "result": null,
       "actual_score_home": null,
       "actual_score_away": null,
-      "settled_at": null
+      "settled_at": null,
+      "ncaa_tournament": false
     },
     {
       "bet_type": "total",
@@ -2942,7 +3079,8 @@
       "result": null,
       "actual_score_home": null,
       "actual_score_away": null,
-      "settled_at": null
+      "settled_at": null,
+      "ncaa_tournament": false
     },
     {
       "bet_type": "ml",
@@ -2964,7 +3102,8 @@
       "result": null,
       "actual_score_home": null,
       "actual_score_away": null,
-      "settled_at": null
+      "settled_at": null,
+      "ncaa_tournament": false
     },
     {
       "bet_type": "spread",
@@ -2986,7 +3125,8 @@
       "result": null,
       "actual_score_home": null,
       "actual_score_away": null,
-      "settled_at": null
+      "settled_at": null,
+      "ncaa_tournament": false
     },
     {
       "bet_type": "total",
@@ -3006,7 +3146,8 @@
       "result": null,
       "actual_score_home": null,
       "actual_score_away": null,
-      "settled_at": null
+      "settled_at": null,
+      "ncaa_tournament": false
     },
     {
       "bet_type": "spread",
@@ -3028,7 +3169,8 @@
       "result": null,
       "actual_score_home": null,
       "actual_score_away": null,
-      "settled_at": null
+      "settled_at": null,
+      "ncaa_tournament": false
     },
     {
       "bet_type": "total",
@@ -3048,7 +3190,8 @@
       "result": "L",
       "actual_score_home": 74.0,
       "actual_score_away": 70.0,
-      "settled_at": "2026-03-15T03:56:40.565701+00:00"
+      "settled_at": "2026-03-15T03:56:40.565701+00:00",
+      "ncaa_tournament": true
     },
     {
       "bet_type": "total",
@@ -3068,7 +3211,8 @@
       "result": null,
       "actual_score_home": null,
       "actual_score_away": null,
-      "settled_at": null
+      "settled_at": null,
+      "ncaa_tournament": false
     },
     {
       "bet_type": "ml",
@@ -3090,7 +3234,8 @@
       "result": "L",
       "actual_score_home": 86.0,
       "actual_score_away": 75.0,
-      "settled_at": "2026-03-15T19:25:27.116309+00:00"
+      "settled_at": "2026-03-15T19:25:27.116309+00:00",
+      "ncaa_tournament": true
     },
     {
       "bet_type": "spread",
@@ -3112,7 +3257,8 @@
       "result": "L",
       "actual_score_home": 86.0,
       "actual_score_away": 75.0,
-      "settled_at": "2026-03-15T19:25:27.116402+00:00"
+      "settled_at": "2026-03-15T19:25:27.116402+00:00",
+      "ncaa_tournament": true
     },
     {
       "bet_type": "total",
@@ -3132,7 +3278,8 @@
       "result": "L",
       "actual_score_home": 86.0,
       "actual_score_away": 75.0,
-      "settled_at": "2026-03-15T19:25:27.116438+00:00"
+      "settled_at": "2026-03-15T19:25:27.116438+00:00",
+      "ncaa_tournament": true
     },
     {
       "bet_type": "ml",
@@ -3154,7 +3301,8 @@
       "result": null,
       "actual_score_home": null,
       "actual_score_away": null,
-      "settled_at": null
+      "settled_at": null,
+      "ncaa_tournament": false
     },
     {
       "bet_type": "spread",
@@ -3176,7 +3324,8 @@
       "result": null,
       "actual_score_home": null,
       "actual_score_away": null,
-      "settled_at": null
+      "settled_at": null,
+      "ncaa_tournament": false
     },
     {
       "bet_type": "total",
@@ -3196,7 +3345,8 @@
       "result": null,
       "actual_score_home": null,
       "actual_score_away": null,
-      "settled_at": null
+      "settled_at": null,
+      "ncaa_tournament": false
     },
     {
       "bet_type": "ml",
@@ -3218,7 +3368,8 @@
       "result": null,
       "actual_score_home": null,
       "actual_score_away": null,
-      "settled_at": null
+      "settled_at": null,
+      "ncaa_tournament": false
     },
     {
       "bet_type": "spread",
@@ -3240,7 +3391,8 @@
       "result": null,
       "actual_score_home": null,
       "actual_score_away": null,
-      "settled_at": null
+      "settled_at": null,
+      "ncaa_tournament": false
     },
     {
       "bet_type": "total",
@@ -3260,7 +3412,8 @@
       "result": null,
       "actual_score_home": null,
       "actual_score_away": null,
-      "settled_at": null
+      "settled_at": null,
+      "ncaa_tournament": false
     },
     {
       "bet_type": "ml",
@@ -3282,7 +3435,8 @@
       "result": "L",
       "actual_score_home": 72.0,
       "actual_score_away": 80.0,
-      "settled_at": "2026-03-15T21:42:54.008466+00:00"
+      "settled_at": "2026-03-15T21:42:54.008466+00:00",
+      "ncaa_tournament": true
     },
     {
       "bet_type": "spread",
@@ -3304,7 +3458,8 @@
       "result": "L",
       "actual_score_home": 72.0,
       "actual_score_away": 80.0,
-      "settled_at": "2026-03-15T21:42:54.008534+00:00"
+      "settled_at": "2026-03-15T21:42:54.008534+00:00",
+      "ncaa_tournament": true
     },
     {
       "bet_type": "total",
@@ -3324,7 +3479,8 @@
       "result": "W",
       "actual_score_home": 72.0,
       "actual_score_away": 80.0,
-      "settled_at": "2026-03-15T21:42:54.008569+00:00"
+      "settled_at": "2026-03-15T21:42:54.008569+00:00",
+      "ncaa_tournament": true
     },
     {
       "bet_type": "spread",
@@ -3346,7 +3502,8 @@
       "result": null,
       "actual_score_home": null,
       "actual_score_away": null,
-      "settled_at": null
+      "settled_at": null,
+      "ncaa_tournament": false
     },
     {
       "bet_type": "ml",
@@ -3368,7 +3525,8 @@
       "result": "L",
       "actual_score_home": 86.0,
       "actual_score_away": 75.0,
-      "settled_at": "2026-03-15T19:25:27.116714+00:00"
+      "settled_at": "2026-03-15T19:25:27.116714+00:00",
+      "ncaa_tournament": true
     },
     {
       "bet_type": "spread",
@@ -3390,7 +3548,8 @@
       "result": "W",
       "actual_score_home": 86.0,
       "actual_score_away": 75.0,
-      "settled_at": "2026-03-15T19:25:27.116760+00:00"
+      "settled_at": "2026-03-15T19:25:27.116760+00:00",
+      "ncaa_tournament": true
     },
     {
       "bet_type": "total",
@@ -3410,7 +3569,8 @@
       "result": "L",
       "actual_score_home": 86.0,
       "actual_score_away": 75.0,
-      "settled_at": "2026-03-15T19:25:27.116788+00:00"
+      "settled_at": "2026-03-15T19:25:27.116788+00:00",
+      "ncaa_tournament": true
     },
     {
       "bet_type": "ml",
@@ -3432,7 +3592,8 @@
       "result": null,
       "actual_score_home": null,
       "actual_score_away": null,
-      "settled_at": null
+      "settled_at": null,
+      "ncaa_tournament": false
     },
     {
       "bet_type": "spread",
@@ -3454,7 +3615,8 @@
       "result": null,
       "actual_score_home": null,
       "actual_score_away": null,
-      "settled_at": null
+      "settled_at": null,
+      "ncaa_tournament": false
     },
     {
       "bet_type": "total",
@@ -3474,7 +3636,8 @@
       "result": null,
       "actual_score_home": null,
       "actual_score_away": null,
-      "settled_at": null
+      "settled_at": null,
+      "ncaa_tournament": false
     },
     {
       "bet_type": "ml",
@@ -3496,7 +3659,8 @@
       "result": null,
       "actual_score_home": null,
       "actual_score_away": null,
-      "settled_at": null
+      "settled_at": null,
+      "ncaa_tournament": false
     },
     {
       "bet_type": "spread",
@@ -3518,7 +3682,8 @@
       "result": null,
       "actual_score_home": null,
       "actual_score_away": null,
-      "settled_at": null
+      "settled_at": null,
+      "ncaa_tournament": false
     },
     {
       "bet_type": "total",
@@ -3538,7 +3703,8 @@
       "result": null,
       "actual_score_home": null,
       "actual_score_away": null,
-      "settled_at": null
+      "settled_at": null,
+      "ncaa_tournament": false
     },
     {
       "bet_type": "ml",
@@ -3560,7 +3726,8 @@
       "result": "L",
       "actual_score_home": 72.0,
       "actual_score_away": 80.0,
-      "settled_at": "2026-03-15T21:42:54.009433+00:00"
+      "settled_at": "2026-03-15T21:42:54.009433+00:00",
+      "ncaa_tournament": true
     },
     {
       "bet_type": "spread",
@@ -3582,7 +3749,8 @@
       "result": "L",
       "actual_score_home": 72.0,
       "actual_score_away": 80.0,
-      "settled_at": "2026-03-15T21:42:54.009595+00:00"
+      "settled_at": "2026-03-15T21:42:54.009595+00:00",
+      "ncaa_tournament": true
     },
     {
       "bet_type": "total",
@@ -3602,7 +3770,8 @@
       "result": "W",
       "actual_score_home": 72.0,
       "actual_score_away": 80.0,
-      "settled_at": "2026-03-15T21:42:54.010018+00:00"
+      "settled_at": "2026-03-15T21:42:54.010018+00:00",
+      "ncaa_tournament": true
     },
     {
       "bet_type": "ml",
@@ -3624,7 +3793,8 @@
       "result": null,
       "actual_score_home": null,
       "actual_score_away": null,
-      "settled_at": null
+      "settled_at": null,
+      "ncaa_tournament": false
     },
     {
       "bet_type": "spread",
@@ -3646,7 +3816,8 @@
       "result": null,
       "actual_score_home": null,
       "actual_score_away": null,
-      "settled_at": null
+      "settled_at": null,
+      "ncaa_tournament": false
     },
     {
       "bet_type": "total",
@@ -3666,7 +3837,8 @@
       "result": null,
       "actual_score_home": null,
       "actual_score_away": null,
-      "settled_at": null
+      "settled_at": null,
+      "ncaa_tournament": false
     },
     {
       "bet_type": "ml",
@@ -3688,7 +3860,8 @@
       "result": "W",
       "actual_score_home": 86.0,
       "actual_score_away": 83.0,
-      "settled_at": "2026-03-18T01:35:33.787523+00:00"
+      "settled_at": "2026-03-18T01:35:33.787523+00:00",
+      "ncaa_tournament": true
     },
     {
       "bet_type": "spread",
@@ -3710,7 +3883,8 @@
       "result": "W",
       "actual_score_home": 86.0,
       "actual_score_away": 83.0,
-      "settled_at": "2026-03-18T01:35:33.787562+00:00"
+      "settled_at": "2026-03-18T01:35:33.787562+00:00",
+      "ncaa_tournament": true
     },
     {
       "bet_type": "total",
@@ -3730,7 +3904,8 @@
       "result": "W",
       "actual_score_home": 86.0,
       "actual_score_away": 83.0,
-      "settled_at": "2026-03-18T01:35:33.787579+00:00"
+      "settled_at": "2026-03-18T01:35:33.787579+00:00",
+      "ncaa_tournament": true
     },
     {
       "bet_type": "ml",
@@ -3752,7 +3927,8 @@
       "result": null,
       "actual_score_home": null,
       "actual_score_away": null,
-      "settled_at": null
+      "settled_at": null,
+      "ncaa_tournament": false
     },
     {
       "bet_type": "spread",
@@ -3774,7 +3950,8 @@
       "result": null,
       "actual_score_home": null,
       "actual_score_away": null,
-      "settled_at": null
+      "settled_at": null,
+      "ncaa_tournament": false
     },
     {
       "bet_type": "total",
@@ -3794,7 +3971,8 @@
       "result": null,
       "actual_score_home": null,
       "actual_score_away": null,
-      "settled_at": null
+      "settled_at": null,
+      "ncaa_tournament": false
     },
     {
       "bet_type": "ml",
@@ -3816,7 +3994,8 @@
       "result": null,
       "actual_score_home": null,
       "actual_score_away": null,
-      "settled_at": null
+      "settled_at": null,
+      "ncaa_tournament": false
     },
     {
       "bet_type": "spread",
@@ -3838,7 +4017,8 @@
       "result": null,
       "actual_score_home": null,
       "actual_score_away": null,
-      "settled_at": null
+      "settled_at": null,
+      "ncaa_tournament": false
     },
     {
       "bet_type": "total",
@@ -3858,7 +4038,8 @@
       "result": null,
       "actual_score_home": null,
       "actual_score_away": null,
-      "settled_at": null
+      "settled_at": null,
+      "ncaa_tournament": false
     },
     {
       "bet_type": "ml",
@@ -3880,7 +4061,8 @@
       "result": null,
       "actual_score_home": null,
       "actual_score_away": null,
-      "settled_at": null
+      "settled_at": null,
+      "ncaa_tournament": false
     },
     {
       "bet_type": "spread",
@@ -3902,7 +4084,8 @@
       "result": null,
       "actual_score_home": null,
       "actual_score_away": null,
-      "settled_at": null
+      "settled_at": null,
+      "ncaa_tournament": false
     },
     {
       "bet_type": "total",
@@ -3922,7 +4105,8 @@
       "result": null,
       "actual_score_home": null,
       "actual_score_away": null,
-      "settled_at": null
+      "settled_at": null,
+      "ncaa_tournament": false
     },
     {
       "bet_type": "ml",
@@ -3944,7 +4128,8 @@
       "result": null,
       "actual_score_home": null,
       "actual_score_away": null,
-      "settled_at": null
+      "settled_at": null,
+      "ncaa_tournament": false
     },
     {
       "bet_type": "spread",
@@ -3966,7 +4151,8 @@
       "result": null,
       "actual_score_home": null,
       "actual_score_away": null,
-      "settled_at": null
+      "settled_at": null,
+      "ncaa_tournament": false
     },
     {
       "bet_type": "total",
@@ -3986,7 +4172,8 @@
       "result": null,
       "actual_score_home": null,
       "actual_score_away": null,
-      "settled_at": null
+      "settled_at": null,
+      "ncaa_tournament": false
     },
     {
       "bet_type": "ml",
@@ -4008,7 +4195,8 @@
       "result": "W",
       "actual_score_home": 68.0,
       "actual_score_away": 66.0,
-      "settled_at": "2026-03-18T17:24:43.293130+00:00"
+      "settled_at": "2026-03-18T17:24:43.293130+00:00",
+      "ncaa_tournament": true
     },
     {
       "bet_type": "spread",
@@ -4030,7 +4218,8 @@
       "result": "L",
       "actual_score_home": 68.0,
       "actual_score_away": 66.0,
-      "settled_at": "2026-03-18T17:24:43.293173+00:00"
+      "settled_at": "2026-03-18T17:24:43.293173+00:00",
+      "ncaa_tournament": true
     },
     {
       "bet_type": "total",
@@ -4050,7 +4239,8 @@
       "result": "L",
       "actual_score_home": 68.0,
       "actual_score_away": 66.0,
-      "settled_at": "2026-03-18T17:24:43.293190+00:00"
+      "settled_at": "2026-03-18T17:24:43.293190+00:00",
+      "ncaa_tournament": true
     },
     {
       "bet_type": "ml",
@@ -4072,7 +4262,8 @@
       "result": null,
       "actual_score_home": null,
       "actual_score_away": null,
-      "settled_at": null
+      "settled_at": null,
+      "ncaa_tournament": false
     },
     {
       "bet_type": "spread",
@@ -4094,7 +4285,8 @@
       "result": null,
       "actual_score_home": null,
       "actual_score_away": null,
-      "settled_at": null
+      "settled_at": null,
+      "ncaa_tournament": false
     },
     {
       "bet_type": "total",
@@ -4114,7 +4306,8 @@
       "result": null,
       "actual_score_home": null,
       "actual_score_away": null,
-      "settled_at": null
+      "settled_at": null,
+      "ncaa_tournament": false
     },
     {
       "bet_type": "ml",
@@ -4136,7 +4329,8 @@
       "result": null,
       "actual_score_home": null,
       "actual_score_away": null,
-      "settled_at": null
+      "settled_at": null,
+      "ncaa_tournament": false
     },
     {
       "bet_type": "spread",
@@ -4158,7 +4352,8 @@
       "result": null,
       "actual_score_home": null,
       "actual_score_away": null,
-      "settled_at": null
+      "settled_at": null,
+      "ncaa_tournament": false
     },
     {
       "bet_type": "total",
@@ -4178,7 +4373,8 @@
       "result": null,
       "actual_score_home": null,
       "actual_score_away": null,
-      "settled_at": null
+      "settled_at": null,
+      "ncaa_tournament": false
     },
     {
       "bet_type": "ml",
@@ -4200,7 +4396,8 @@
       "result": null,
       "actual_score_home": null,
       "actual_score_away": null,
-      "settled_at": null
+      "settled_at": null,
+      "ncaa_tournament": false
     },
     {
       "bet_type": "spread",
@@ -4222,7 +4419,8 @@
       "result": null,
       "actual_score_home": null,
       "actual_score_away": null,
-      "settled_at": null
+      "settled_at": null,
+      "ncaa_tournament": false
     },
     {
       "bet_type": "total",
@@ -4242,7 +4440,8 @@
       "result": null,
       "actual_score_home": null,
       "actual_score_away": null,
-      "settled_at": null
+      "settled_at": null,
+      "ncaa_tournament": false
     },
     {
       "bet_type": "ml",
@@ -4264,7 +4463,8 @@
       "result": null,
       "actual_score_home": null,
       "actual_score_away": null,
-      "settled_at": null
+      "settled_at": null,
+      "ncaa_tournament": false
     },
     {
       "bet_type": "spread",
@@ -4286,7 +4486,8 @@
       "result": null,
       "actual_score_home": null,
       "actual_score_away": null,
-      "settled_at": null
+      "settled_at": null,
+      "ncaa_tournament": false
     },
     {
       "bet_type": "total",
@@ -4306,7 +4507,8 @@
       "result": null,
       "actual_score_home": null,
       "actual_score_away": null,
-      "settled_at": null
+      "settled_at": null,
+      "ncaa_tournament": false
     },
     {
       "bet_type": "ml",
@@ -4328,7 +4530,8 @@
       "result": null,
       "actual_score_home": null,
       "actual_score_away": null,
-      "settled_at": null
+      "settled_at": null,
+      "ncaa_tournament": false
     },
     {
       "bet_type": "spread",
@@ -4350,7 +4553,8 @@
       "result": null,
       "actual_score_home": null,
       "actual_score_away": null,
-      "settled_at": null
+      "settled_at": null,
+      "ncaa_tournament": false
     },
     {
       "bet_type": "total",
@@ -4370,7 +4574,8 @@
       "result": null,
       "actual_score_home": null,
       "actual_score_away": null,
-      "settled_at": null
+      "settled_at": null,
+      "ncaa_tournament": false
     },
     {
       "bet_type": "ml",
@@ -4392,7 +4597,8 @@
       "result": "L",
       "actual_score_home": 79.0,
       "actual_score_away": 89.0,
-      "settled_at": "2026-03-19T03:39:29.195882+00:00"
+      "settled_at": "2026-03-19T03:39:29.195882+00:00",
+      "ncaa_tournament": true
     },
     {
       "bet_type": "spread",
@@ -4414,7 +4620,8 @@
       "result": "L",
       "actual_score_home": 79.0,
       "actual_score_away": 89.0,
-      "settled_at": "2026-03-19T03:39:29.195922+00:00"
+      "settled_at": "2026-03-19T03:39:29.195922+00:00",
+      "ncaa_tournament": true
     },
     {
       "bet_type": "total",
@@ -4434,7 +4641,8 @@
       "result": "W",
       "actual_score_home": 79.0,
       "actual_score_away": 89.0,
-      "settled_at": "2026-03-19T03:39:29.195937+00:00"
+      "settled_at": "2026-03-19T03:39:29.195937+00:00",
+      "ncaa_tournament": true
     },
     {
       "bet_type": "ml",
@@ -4456,7 +4664,8 @@
       "result": null,
       "actual_score_home": null,
       "actual_score_away": null,
-      "settled_at": null
+      "settled_at": null,
+      "ncaa_tournament": false
     },
     {
       "bet_type": "spread",
@@ -4478,7 +4687,8 @@
       "result": null,
       "actual_score_home": null,
       "actual_score_away": null,
-      "settled_at": null
+      "settled_at": null,
+      "ncaa_tournament": false
     },
     {
       "bet_type": "total",
@@ -4498,7 +4708,8 @@
       "result": null,
       "actual_score_home": null,
       "actual_score_away": null,
-      "settled_at": null
+      "settled_at": null,
+      "ncaa_tournament": false
     },
     {
       "bet_type": "ml",
@@ -4520,7 +4731,8 @@
       "result": null,
       "actual_score_home": null,
       "actual_score_away": null,
-      "settled_at": null
+      "settled_at": null,
+      "ncaa_tournament": false
     },
     {
       "bet_type": "spread",
@@ -4542,7 +4754,8 @@
       "result": null,
       "actual_score_home": null,
       "actual_score_away": null,
-      "settled_at": null
+      "settled_at": null,
+      "ncaa_tournament": false
     },
     {
       "bet_type": "total",
@@ -4562,7 +4775,8 @@
       "result": null,
       "actual_score_home": null,
       "actual_score_away": null,
-      "settled_at": null
+      "settled_at": null,
+      "ncaa_tournament": false
     },
     {
       "bet_type": "ml",
@@ -4584,7 +4798,8 @@
       "result": null,
       "actual_score_home": null,
       "actual_score_away": null,
-      "settled_at": null
+      "settled_at": null,
+      "ncaa_tournament": false
     },
     {
       "bet_type": "spread",
@@ -4606,7 +4821,8 @@
       "result": null,
       "actual_score_home": null,
       "actual_score_away": null,
-      "settled_at": null
+      "settled_at": null,
+      "ncaa_tournament": false
     },
     {
       "bet_type": "total",
@@ -4626,7 +4842,8 @@
       "result": null,
       "actual_score_home": null,
       "actual_score_away": null,
-      "settled_at": null
+      "settled_at": null,
+      "ncaa_tournament": false
     },
     {
       "bet_type": "ml",
@@ -4648,7 +4865,8 @@
       "result": null,
       "actual_score_home": null,
       "actual_score_away": null,
-      "settled_at": null
+      "settled_at": null,
+      "ncaa_tournament": true
     },
     {
       "bet_type": "spread",
@@ -4670,7 +4888,8 @@
       "result": null,
       "actual_score_home": null,
       "actual_score_away": null,
-      "settled_at": null
+      "settled_at": null,
+      "ncaa_tournament": true
     },
     {
       "bet_type": "total",
@@ -4690,7 +4909,8 @@
       "result": null,
       "actual_score_home": null,
       "actual_score_away": null,
-      "settled_at": null
+      "settled_at": null,
+      "ncaa_tournament": true
     },
     {
       "bet_type": "ml",
@@ -4712,7 +4932,8 @@
       "result": null,
       "actual_score_home": null,
       "actual_score_away": null,
-      "settled_at": null
+      "settled_at": null,
+      "ncaa_tournament": false
     },
     {
       "bet_type": "spread",
@@ -4734,7 +4955,8 @@
       "result": null,
       "actual_score_home": null,
       "actual_score_away": null,
-      "settled_at": null
+      "settled_at": null,
+      "ncaa_tournament": false
     },
     {
       "bet_type": "total",
@@ -4754,7 +4976,8 @@
       "result": null,
       "actual_score_home": null,
       "actual_score_away": null,
-      "settled_at": null
+      "settled_at": null,
+      "ncaa_tournament": false
     },
     {
       "bet_type": "ml",
@@ -4776,7 +4999,8 @@
       "result": null,
       "actual_score_home": null,
       "actual_score_away": null,
-      "settled_at": null
+      "settled_at": null,
+      "ncaa_tournament": true
     },
     {
       "bet_type": "spread",
@@ -4798,7 +5022,8 @@
       "result": null,
       "actual_score_home": null,
       "actual_score_away": null,
-      "settled_at": null
+      "settled_at": null,
+      "ncaa_tournament": true
     },
     {
       "bet_type": "total",
@@ -4818,7 +5043,8 @@
       "result": null,
       "actual_score_home": null,
       "actual_score_away": null,
-      "settled_at": null
+      "settled_at": null,
+      "ncaa_tournament": true
     },
     {
       "bet_type": "ml",
@@ -4840,7 +5066,8 @@
       "result": null,
       "actual_score_home": null,
       "actual_score_away": null,
-      "settled_at": null
+      "settled_at": null,
+      "ncaa_tournament": true
     },
     {
       "bet_type": "spread",
@@ -4862,7 +5089,8 @@
       "result": null,
       "actual_score_home": null,
       "actual_score_away": null,
-      "settled_at": null
+      "settled_at": null,
+      "ncaa_tournament": true
     },
     {
       "bet_type": "total",
@@ -4882,7 +5110,8 @@
       "result": null,
       "actual_score_home": null,
       "actual_score_away": null,
-      "settled_at": null
+      "settled_at": null,
+      "ncaa_tournament": true
     },
     {
       "bet_type": "ml",
@@ -4904,7 +5133,8 @@
       "result": null,
       "actual_score_home": null,
       "actual_score_away": null,
-      "settled_at": null
+      "settled_at": null,
+      "ncaa_tournament": true
     },
     {
       "bet_type": "spread",
@@ -4926,7 +5156,8 @@
       "result": null,
       "actual_score_home": null,
       "actual_score_away": null,
-      "settled_at": null
+      "settled_at": null,
+      "ncaa_tournament": true
     },
     {
       "bet_type": "total",
@@ -4946,7 +5177,8 @@
       "result": null,
       "actual_score_home": null,
       "actual_score_away": null,
-      "settled_at": null
+      "settled_at": null,
+      "ncaa_tournament": true
     },
     {
       "bet_type": "ml",
@@ -4968,7 +5200,8 @@
       "result": null,
       "actual_score_home": null,
       "actual_score_away": null,
-      "settled_at": null
+      "settled_at": null,
+      "ncaa_tournament": false
     },
     {
       "bet_type": "spread",
@@ -4990,7 +5223,8 @@
       "result": null,
       "actual_score_home": null,
       "actual_score_away": null,
-      "settled_at": null
+      "settled_at": null,
+      "ncaa_tournament": false
     },
     {
       "bet_type": "total",
@@ -5010,7 +5244,8 @@
       "result": null,
       "actual_score_home": null,
       "actual_score_away": null,
-      "settled_at": null
+      "settled_at": null,
+      "ncaa_tournament": false
     },
     {
       "bet_type": "ml",
@@ -5032,7 +5267,8 @@
       "result": null,
       "actual_score_home": null,
       "actual_score_away": null,
-      "settled_at": null
+      "settled_at": null,
+      "ncaa_tournament": true
     },
     {
       "bet_type": "spread",
@@ -5054,7 +5290,8 @@
       "result": null,
       "actual_score_home": null,
       "actual_score_away": null,
-      "settled_at": null
+      "settled_at": null,
+      "ncaa_tournament": true
     },
     {
       "bet_type": "total",
@@ -5074,7 +5311,8 @@
       "result": null,
       "actual_score_home": null,
       "actual_score_away": null,
-      "settled_at": null
+      "settled_at": null,
+      "ncaa_tournament": true
     },
     {
       "bet_type": "ml",
@@ -5096,7 +5334,8 @@
       "result": null,
       "actual_score_home": null,
       "actual_score_away": null,
-      "settled_at": null
+      "settled_at": null,
+      "ncaa_tournament": true
     },
     {
       "bet_type": "spread",
@@ -5118,7 +5357,8 @@
       "result": null,
       "actual_score_home": null,
       "actual_score_away": null,
-      "settled_at": null
+      "settled_at": null,
+      "ncaa_tournament": true
     },
     {
       "bet_type": "total",
@@ -5138,7 +5378,8 @@
       "result": null,
       "actual_score_home": null,
       "actual_score_away": null,
-      "settled_at": null
+      "settled_at": null,
+      "ncaa_tournament": true
     },
     {
       "bet_type": "ml",
@@ -5160,7 +5401,8 @@
       "result": null,
       "actual_score_home": null,
       "actual_score_away": null,
-      "settled_at": null
+      "settled_at": null,
+      "ncaa_tournament": true
     },
     {
       "bet_type": "spread",
@@ -5182,7 +5424,8 @@
       "result": null,
       "actual_score_home": null,
       "actual_score_away": null,
-      "settled_at": null
+      "settled_at": null,
+      "ncaa_tournament": true
     },
     {
       "bet_type": "total",
@@ -5202,7 +5445,8 @@
       "result": null,
       "actual_score_home": null,
       "actual_score_away": null,
-      "settled_at": null
+      "settled_at": null,
+      "ncaa_tournament": true
     },
     {
       "bet_type": "ml",
@@ -5224,7 +5468,8 @@
       "result": null,
       "actual_score_home": null,
       "actual_score_away": null,
-      "settled_at": null
+      "settled_at": null,
+      "ncaa_tournament": true
     },
     {
       "bet_type": "spread",
@@ -5246,7 +5491,8 @@
       "result": null,
       "actual_score_home": null,
       "actual_score_away": null,
-      "settled_at": null
+      "settled_at": null,
+      "ncaa_tournament": true
     },
     {
       "bet_type": "total",
@@ -5266,7 +5512,8 @@
       "result": null,
       "actual_score_home": null,
       "actual_score_away": null,
-      "settled_at": null
+      "settled_at": null,
+      "ncaa_tournament": true
     },
     {
       "bet_type": "ml",
@@ -5288,7 +5535,8 @@
       "result": null,
       "actual_score_home": null,
       "actual_score_away": null,
-      "settled_at": null
+      "settled_at": null,
+      "ncaa_tournament": false
     },
     {
       "bet_type": "spread",
@@ -5310,7 +5558,8 @@
       "result": null,
       "actual_score_home": null,
       "actual_score_away": null,
-      "settled_at": null
+      "settled_at": null,
+      "ncaa_tournament": false
     },
     {
       "bet_type": "total",
@@ -5330,7 +5579,8 @@
       "result": null,
       "actual_score_home": null,
       "actual_score_away": null,
-      "settled_at": null
+      "settled_at": null,
+      "ncaa_tournament": false
     },
     {
       "bet_type": "ml",
@@ -5352,7 +5602,8 @@
       "result": null,
       "actual_score_home": null,
       "actual_score_away": null,
-      "settled_at": null
+      "settled_at": null,
+      "ncaa_tournament": true
     },
     {
       "bet_type": "spread",
@@ -5374,7 +5625,8 @@
       "result": null,
       "actual_score_home": null,
       "actual_score_away": null,
-      "settled_at": null
+      "settled_at": null,
+      "ncaa_tournament": true
     },
     {
       "bet_type": "total",
@@ -5394,7 +5646,8 @@
       "result": null,
       "actual_score_home": null,
       "actual_score_away": null,
-      "settled_at": null
+      "settled_at": null,
+      "ncaa_tournament": true
     },
     {
       "bet_type": "ml",
@@ -5416,7 +5669,8 @@
       "result": null,
       "actual_score_home": null,
       "actual_score_away": null,
-      "settled_at": null
+      "settled_at": null,
+      "ncaa_tournament": true
     },
     {
       "bet_type": "spread",
@@ -5438,7 +5692,8 @@
       "result": null,
       "actual_score_home": null,
       "actual_score_away": null,
-      "settled_at": null
+      "settled_at": null,
+      "ncaa_tournament": true
     },
     {
       "bet_type": "total",
@@ -5458,7 +5713,8 @@
       "result": null,
       "actual_score_home": null,
       "actual_score_away": null,
-      "settled_at": null
+      "settled_at": null,
+      "ncaa_tournament": true
     },
     {
       "bet_type": "ml",
@@ -5480,7 +5736,8 @@
       "result": null,
       "actual_score_home": null,
       "actual_score_away": null,
-      "settled_at": null
+      "settled_at": null,
+      "ncaa_tournament": true
     },
     {
       "bet_type": "spread",
@@ -5502,7 +5759,8 @@
       "result": null,
       "actual_score_home": null,
       "actual_score_away": null,
-      "settled_at": null
+      "settled_at": null,
+      "ncaa_tournament": true
     },
     {
       "bet_type": "total",
@@ -5522,7 +5780,8 @@
       "result": null,
       "actual_score_home": null,
       "actual_score_away": null,
-      "settled_at": null
+      "settled_at": null,
+      "ncaa_tournament": true
     },
     {
       "bet_type": "ml",
@@ -5544,7 +5803,8 @@
       "result": null,
       "actual_score_home": null,
       "actual_score_away": null,
-      "settled_at": null
+      "settled_at": null,
+      "ncaa_tournament": true
     },
     {
       "bet_type": "spread",
@@ -5566,7 +5826,8 @@
       "result": null,
       "actual_score_home": null,
       "actual_score_away": null,
-      "settled_at": null
+      "settled_at": null,
+      "ncaa_tournament": true
     },
     {
       "bet_type": "total",
@@ -5586,7 +5847,8 @@
       "result": null,
       "actual_score_home": null,
       "actual_score_away": null,
-      "settled_at": null
+      "settled_at": null,
+      "ncaa_tournament": true
     },
     {
       "bet_type": "ml",
@@ -5608,7 +5870,8 @@
       "result": null,
       "actual_score_home": null,
       "actual_score_away": null,
-      "settled_at": null
+      "settled_at": null,
+      "ncaa_tournament": true
     },
     {
       "bet_type": "spread",
@@ -5630,7 +5893,8 @@
       "result": null,
       "actual_score_home": null,
       "actual_score_away": null,
-      "settled_at": null
+      "settled_at": null,
+      "ncaa_tournament": true
     },
     {
       "bet_type": "total",
@@ -5650,7 +5914,8 @@
       "result": null,
       "actual_score_home": null,
       "actual_score_away": null,
-      "settled_at": null
+      "settled_at": null,
+      "ncaa_tournament": true
     },
     {
       "bet_type": "ml",
@@ -5672,7 +5937,8 @@
       "result": null,
       "actual_score_home": null,
       "actual_score_away": null,
-      "settled_at": null
+      "settled_at": null,
+      "ncaa_tournament": true
     },
     {
       "bet_type": "spread",
@@ -5694,7 +5960,8 @@
       "result": null,
       "actual_score_home": null,
       "actual_score_away": null,
-      "settled_at": null
+      "settled_at": null,
+      "ncaa_tournament": true
     },
     {
       "bet_type": "total",
@@ -5714,7 +5981,8 @@
       "result": null,
       "actual_score_home": null,
       "actual_score_away": null,
-      "settled_at": null
+      "settled_at": null,
+      "ncaa_tournament": true
     },
     {
       "bet_type": "ml",
@@ -5736,7 +6004,8 @@
       "result": null,
       "actual_score_home": null,
       "actual_score_away": null,
-      "settled_at": null
+      "settled_at": null,
+      "ncaa_tournament": true
     },
     {
       "bet_type": "spread",
@@ -5758,7 +6027,8 @@
       "result": null,
       "actual_score_home": null,
       "actual_score_away": null,
-      "settled_at": null
+      "settled_at": null,
+      "ncaa_tournament": true
     },
     {
       "bet_type": "total",
@@ -5778,7 +6048,8 @@
       "result": null,
       "actual_score_home": null,
       "actual_score_away": null,
-      "settled_at": null
+      "settled_at": null,
+      "ncaa_tournament": true
     },
     {
       "bet_type": "ml",
@@ -5800,7 +6071,8 @@
       "result": null,
       "actual_score_home": null,
       "actual_score_away": null,
-      "settled_at": null
+      "settled_at": null,
+      "ncaa_tournament": true
     },
     {
       "bet_type": "spread",
@@ -5822,7 +6094,8 @@
       "result": null,
       "actual_score_home": null,
       "actual_score_away": null,
-      "settled_at": null
+      "settled_at": null,
+      "ncaa_tournament": true
     },
     {
       "bet_type": "total",
@@ -5842,7 +6115,8 @@
       "result": null,
       "actual_score_home": null,
       "actual_score_away": null,
-      "settled_at": null
+      "settled_at": null,
+      "ncaa_tournament": true
     },
     {
       "bet_type": "ml",
@@ -5864,7 +6138,8 @@
       "result": null,
       "actual_score_home": null,
       "actual_score_away": null,
-      "settled_at": null
+      "settled_at": null,
+      "ncaa_tournament": true
     },
     {
       "bet_type": "spread",
@@ -5886,7 +6161,8 @@
       "result": null,
       "actual_score_home": null,
       "actual_score_away": null,
-      "settled_at": null
+      "settled_at": null,
+      "ncaa_tournament": true
     },
     {
       "bet_type": "total",
@@ -5906,7 +6182,8 @@
       "result": null,
       "actual_score_home": null,
       "actual_score_away": null,
-      "settled_at": null
+      "settled_at": null,
+      "ncaa_tournament": true
     },
     {
       "bet_type": "ml",
@@ -5928,7 +6205,8 @@
       "result": null,
       "actual_score_home": null,
       "actual_score_away": null,
-      "settled_at": null
+      "settled_at": null,
+      "ncaa_tournament": true
     },
     {
       "bet_type": "spread",
@@ -5950,7 +6228,8 @@
       "result": null,
       "actual_score_home": null,
       "actual_score_away": null,
-      "settled_at": null
+      "settled_at": null,
+      "ncaa_tournament": true
     },
     {
       "bet_type": "total",
@@ -5970,7 +6249,8 @@
       "result": null,
       "actual_score_home": null,
       "actual_score_away": null,
-      "settled_at": null
+      "settled_at": null,
+      "ncaa_tournament": true
     },
     {
       "bet_type": "ml",
@@ -5992,7 +6272,8 @@
       "result": null,
       "actual_score_home": null,
       "actual_score_away": null,
-      "settled_at": null
+      "settled_at": null,
+      "ncaa_tournament": false
     },
     {
       "bet_type": "spread",
@@ -6014,7 +6295,8 @@
       "result": null,
       "actual_score_home": null,
       "actual_score_away": null,
-      "settled_at": null
+      "settled_at": null,
+      "ncaa_tournament": false
     },
     {
       "bet_type": "total",
@@ -6034,7 +6316,8 @@
       "result": null,
       "actual_score_home": null,
       "actual_score_away": null,
-      "settled_at": null
+      "settled_at": null,
+      "ncaa_tournament": false
     },
     {
       "bet_type": "ml",
@@ -6056,7 +6339,8 @@
       "result": null,
       "actual_score_home": null,
       "actual_score_away": null,
-      "settled_at": null
+      "settled_at": null,
+      "ncaa_tournament": true
     },
     {
       "bet_type": "spread",
@@ -6078,7 +6362,8 @@
       "result": null,
       "actual_score_home": null,
       "actual_score_away": null,
-      "settled_at": null
+      "settled_at": null,
+      "ncaa_tournament": true
     },
     {
       "bet_type": "total",
@@ -6098,7 +6383,8 @@
       "result": null,
       "actual_score_home": null,
       "actual_score_away": null,
-      "settled_at": null
+      "settled_at": null,
+      "ncaa_tournament": true
     },
     {
       "bet_type": "ml",
@@ -6120,7 +6406,8 @@
       "result": null,
       "actual_score_home": null,
       "actual_score_away": null,
-      "settled_at": null
+      "settled_at": null,
+      "ncaa_tournament": true
     },
     {
       "bet_type": "spread",
@@ -6142,7 +6429,8 @@
       "result": null,
       "actual_score_home": null,
       "actual_score_away": null,
-      "settled_at": null
+      "settled_at": null,
+      "ncaa_tournament": true
     },
     {
       "bet_type": "total",
@@ -6162,7 +6450,8 @@
       "result": null,
       "actual_score_home": null,
       "actual_score_away": null,
-      "settled_at": null
+      "settled_at": null,
+      "ncaa_tournament": true
     },
     {
       "bet_type": "ml",
@@ -6184,7 +6473,8 @@
       "result": null,
       "actual_score_home": null,
       "actual_score_away": null,
-      "settled_at": null
+      "settled_at": null,
+      "ncaa_tournament": false
     },
     {
       "bet_type": "spread",
@@ -6206,7 +6496,8 @@
       "result": null,
       "actual_score_home": null,
       "actual_score_away": null,
-      "settled_at": null
+      "settled_at": null,
+      "ncaa_tournament": false
     },
     {
       "bet_type": "total",
@@ -6226,7 +6517,8 @@
       "result": null,
       "actual_score_home": null,
       "actual_score_away": null,
-      "settled_at": null
+      "settled_at": null,
+      "ncaa_tournament": false
     },
     {
       "bet_type": "ml",
@@ -6248,7 +6540,8 @@
       "result": null,
       "actual_score_home": null,
       "actual_score_away": null,
-      "settled_at": null
+      "settled_at": null,
+      "ncaa_tournament": false
     },
     {
       "bet_type": "spread",
@@ -6270,7 +6563,8 @@
       "result": null,
       "actual_score_home": null,
       "actual_score_away": null,
-      "settled_at": null
+      "settled_at": null,
+      "ncaa_tournament": false
     },
     {
       "bet_type": "total",
@@ -6290,7 +6584,8 @@
       "result": null,
       "actual_score_home": null,
       "actual_score_away": null,
-      "settled_at": null
+      "settled_at": null,
+      "ncaa_tournament": false
     },
     {
       "bet_type": "ml",
@@ -6312,7 +6607,8 @@
       "result": null,
       "actual_score_home": null,
       "actual_score_away": null,
-      "settled_at": null
+      "settled_at": null,
+      "ncaa_tournament": false
     },
     {
       "bet_type": "spread",
@@ -6334,7 +6630,8 @@
       "result": null,
       "actual_score_home": null,
       "actual_score_away": null,
-      "settled_at": null
+      "settled_at": null,
+      "ncaa_tournament": false
     },
     {
       "bet_type": "total",
@@ -6354,7 +6651,8 @@
       "result": null,
       "actual_score_home": null,
       "actual_score_away": null,
-      "settled_at": null
+      "settled_at": null,
+      "ncaa_tournament": false
     },
     {
       "bet_type": "ml",
@@ -6376,7 +6674,8 @@
       "result": null,
       "actual_score_home": null,
       "actual_score_away": null,
-      "settled_at": null
+      "settled_at": null,
+      "ncaa_tournament": false
     },
     {
       "bet_type": "spread",
@@ -6398,7 +6697,8 @@
       "result": null,
       "actual_score_home": null,
       "actual_score_away": null,
-      "settled_at": null
+      "settled_at": null,
+      "ncaa_tournament": false
     },
     {
       "bet_type": "total",
@@ -6418,7 +6718,8 @@
       "result": null,
       "actual_score_home": null,
       "actual_score_away": null,
-      "settled_at": null
+      "settled_at": null,
+      "ncaa_tournament": false
     },
     {
       "bet_type": "ml",
@@ -6440,7 +6741,8 @@
       "result": "L",
       "actual_score_home": 79.0,
       "actual_score_away": 89.0,
-      "settled_at": "2026-03-19T03:39:29.197190+00:00"
+      "settled_at": "2026-03-19T03:39:29.197190+00:00",
+      "ncaa_tournament": true
     },
     {
       "bet_type": "spread",
@@ -6462,7 +6764,8 @@
       "result": "L",
       "actual_score_home": 79.0,
       "actual_score_away": 89.0,
-      "settled_at": "2026-03-19T03:39:29.197210+00:00"
+      "settled_at": "2026-03-19T03:39:29.197210+00:00",
+      "ncaa_tournament": true
     },
     {
       "bet_type": "total",
@@ -6482,7 +6785,8 @@
       "result": "W",
       "actual_score_home": 79.0,
       "actual_score_away": 89.0,
-      "settled_at": "2026-03-19T03:39:29.197223+00:00"
+      "settled_at": "2026-03-19T03:39:29.197223+00:00",
+      "ncaa_tournament": true
     },
     {
       "bet_type": "ml",
@@ -6504,7 +6808,8 @@
       "result": null,
       "actual_score_home": null,
       "actual_score_away": null,
-      "settled_at": null
+      "settled_at": null,
+      "ncaa_tournament": false
     },
     {
       "bet_type": "spread",
@@ -6526,7 +6831,8 @@
       "result": null,
       "actual_score_home": null,
       "actual_score_away": null,
-      "settled_at": null
+      "settled_at": null,
+      "ncaa_tournament": false
     },
     {
       "bet_type": "total",
@@ -6546,7 +6852,8 @@
       "result": null,
       "actual_score_home": null,
       "actual_score_away": null,
-      "settled_at": null
+      "settled_at": null,
+      "ncaa_tournament": false
     },
     {
       "bet_type": "ml",
@@ -6568,7 +6875,8 @@
       "result": null,
       "actual_score_home": null,
       "actual_score_away": null,
-      "settled_at": null
+      "settled_at": null,
+      "ncaa_tournament": false
     },
     {
       "bet_type": "spread",
@@ -6590,7 +6898,8 @@
       "result": null,
       "actual_score_home": null,
       "actual_score_away": null,
-      "settled_at": null
+      "settled_at": null,
+      "ncaa_tournament": false
     },
     {
       "bet_type": "total",
@@ -6610,7 +6919,8 @@
       "result": null,
       "actual_score_home": null,
       "actual_score_away": null,
-      "settled_at": null
+      "settled_at": null,
+      "ncaa_tournament": false
     },
     {
       "bet_type": "ml",
@@ -6632,7 +6942,8 @@
       "result": null,
       "actual_score_home": null,
       "actual_score_away": null,
-      "settled_at": null
+      "settled_at": null,
+      "ncaa_tournament": false
     },
     {
       "bet_type": "spread",
@@ -6654,7 +6965,8 @@
       "result": null,
       "actual_score_home": null,
       "actual_score_away": null,
-      "settled_at": null
+      "settled_at": null,
+      "ncaa_tournament": false
     },
     {
       "bet_type": "total",
@@ -6674,7 +6986,8 @@
       "result": null,
       "actual_score_home": null,
       "actual_score_away": null,
-      "settled_at": null
+      "settled_at": null,
+      "ncaa_tournament": false
     },
     {
       "bet_type": "ml",
@@ -6696,7 +7009,8 @@
       "result": null,
       "actual_score_home": null,
       "actual_score_away": null,
-      "settled_at": null
+      "settled_at": null,
+      "ncaa_tournament": true
     },
     {
       "bet_type": "spread",
@@ -6718,7 +7032,8 @@
       "result": null,
       "actual_score_home": null,
       "actual_score_away": null,
-      "settled_at": null
+      "settled_at": null,
+      "ncaa_tournament": true
     },
     {
       "bet_type": "total",
@@ -6738,7 +7053,8 @@
       "result": null,
       "actual_score_home": null,
       "actual_score_away": null,
-      "settled_at": null
+      "settled_at": null,
+      "ncaa_tournament": true
     },
     {
       "bet_type": "ml",
@@ -6760,7 +7076,8 @@
       "result": null,
       "actual_score_home": null,
       "actual_score_away": null,
-      "settled_at": null
+      "settled_at": null,
+      "ncaa_tournament": false
     },
     {
       "bet_type": "spread",
@@ -6782,7 +7099,8 @@
       "result": null,
       "actual_score_home": null,
       "actual_score_away": null,
-      "settled_at": null
+      "settled_at": null,
+      "ncaa_tournament": false
     },
     {
       "bet_type": "total",
@@ -6802,7 +7120,8 @@
       "result": null,
       "actual_score_home": null,
       "actual_score_away": null,
-      "settled_at": null
+      "settled_at": null,
+      "ncaa_tournament": false
     },
     {
       "bet_type": "ml",
@@ -6824,7 +7143,8 @@
       "result": null,
       "actual_score_home": null,
       "actual_score_away": null,
-      "settled_at": null
+      "settled_at": null,
+      "ncaa_tournament": true
     },
     {
       "bet_type": "spread",
@@ -6846,7 +7166,8 @@
       "result": null,
       "actual_score_home": null,
       "actual_score_away": null,
-      "settled_at": null
+      "settled_at": null,
+      "ncaa_tournament": true
     },
     {
       "bet_type": "total",
@@ -6866,7 +7187,8 @@
       "result": null,
       "actual_score_home": null,
       "actual_score_away": null,
-      "settled_at": null
+      "settled_at": null,
+      "ncaa_tournament": true
     },
     {
       "bet_type": "ml",
@@ -6888,7 +7210,8 @@
       "result": null,
       "actual_score_home": null,
       "actual_score_away": null,
-      "settled_at": null
+      "settled_at": null,
+      "ncaa_tournament": true
     },
     {
       "bet_type": "spread",
@@ -6910,7 +7233,8 @@
       "result": null,
       "actual_score_home": null,
       "actual_score_away": null,
-      "settled_at": null
+      "settled_at": null,
+      "ncaa_tournament": true
     },
     {
       "bet_type": "total",
@@ -6930,7 +7254,8 @@
       "result": null,
       "actual_score_home": null,
       "actual_score_away": null,
-      "settled_at": null
+      "settled_at": null,
+      "ncaa_tournament": true
     },
     {
       "bet_type": "ml",
@@ -6952,7 +7277,8 @@
       "result": null,
       "actual_score_home": null,
       "actual_score_away": null,
-      "settled_at": null
+      "settled_at": null,
+      "ncaa_tournament": true
     },
     {
       "bet_type": "spread",
@@ -6974,7 +7300,8 @@
       "result": null,
       "actual_score_home": null,
       "actual_score_away": null,
-      "settled_at": null
+      "settled_at": null,
+      "ncaa_tournament": true
     },
     {
       "bet_type": "total",
@@ -6994,7 +7321,8 @@
       "result": null,
       "actual_score_home": null,
       "actual_score_away": null,
-      "settled_at": null
+      "settled_at": null,
+      "ncaa_tournament": true
     },
     {
       "bet_type": "ml",
@@ -7016,7 +7344,8 @@
       "result": null,
       "actual_score_home": null,
       "actual_score_away": null,
-      "settled_at": null
+      "settled_at": null,
+      "ncaa_tournament": false
     },
     {
       "bet_type": "spread",
@@ -7038,7 +7367,8 @@
       "result": null,
       "actual_score_home": null,
       "actual_score_away": null,
-      "settled_at": null
+      "settled_at": null,
+      "ncaa_tournament": false
     },
     {
       "bet_type": "total",
@@ -7058,7 +7388,8 @@
       "result": null,
       "actual_score_home": null,
       "actual_score_away": null,
-      "settled_at": null
+      "settled_at": null,
+      "ncaa_tournament": false
     },
     {
       "bet_type": "ml",
@@ -7080,7 +7411,8 @@
       "result": null,
       "actual_score_home": null,
       "actual_score_away": null,
-      "settled_at": null
+      "settled_at": null,
+      "ncaa_tournament": true
     },
     {
       "bet_type": "spread",
@@ -7102,7 +7434,8 @@
       "result": null,
       "actual_score_home": null,
       "actual_score_away": null,
-      "settled_at": null
+      "settled_at": null,
+      "ncaa_tournament": true
     },
     {
       "bet_type": "total",
@@ -7122,7 +7455,8 @@
       "result": null,
       "actual_score_home": null,
       "actual_score_away": null,
-      "settled_at": null
+      "settled_at": null,
+      "ncaa_tournament": true
     },
     {
       "bet_type": "ml",
@@ -7144,7 +7478,8 @@
       "result": null,
       "actual_score_home": null,
       "actual_score_away": null,
-      "settled_at": null
+      "settled_at": null,
+      "ncaa_tournament": true
     },
     {
       "bet_type": "spread",
@@ -7166,7 +7501,8 @@
       "result": null,
       "actual_score_home": null,
       "actual_score_away": null,
-      "settled_at": null
+      "settled_at": null,
+      "ncaa_tournament": true
     },
     {
       "bet_type": "total",
@@ -7186,7 +7522,8 @@
       "result": null,
       "actual_score_home": null,
       "actual_score_away": null,
-      "settled_at": null
+      "settled_at": null,
+      "ncaa_tournament": true
     },
     {
       "bet_type": "ml",
@@ -7208,7 +7545,8 @@
       "result": null,
       "actual_score_home": null,
       "actual_score_away": null,
-      "settled_at": null
+      "settled_at": null,
+      "ncaa_tournament": true
     },
     {
       "bet_type": "spread",
@@ -7230,7 +7568,8 @@
       "result": null,
       "actual_score_home": null,
       "actual_score_away": null,
-      "settled_at": null
+      "settled_at": null,
+      "ncaa_tournament": true
     },
     {
       "bet_type": "total",
@@ -7250,7 +7589,8 @@
       "result": null,
       "actual_score_home": null,
       "actual_score_away": null,
-      "settled_at": null
+      "settled_at": null,
+      "ncaa_tournament": true
     },
     {
       "bet_type": "ml",
@@ -7272,7 +7612,8 @@
       "result": null,
       "actual_score_home": null,
       "actual_score_away": null,
-      "settled_at": null
+      "settled_at": null,
+      "ncaa_tournament": true
     },
     {
       "bet_type": "spread",
@@ -7294,7 +7635,8 @@
       "result": null,
       "actual_score_home": null,
       "actual_score_away": null,
-      "settled_at": null
+      "settled_at": null,
+      "ncaa_tournament": true
     },
     {
       "bet_type": "total",
@@ -7314,7 +7656,8 @@
       "result": null,
       "actual_score_home": null,
       "actual_score_away": null,
-      "settled_at": null
+      "settled_at": null,
+      "ncaa_tournament": true
     },
     {
       "bet_type": "ml",
@@ -7336,7 +7679,8 @@
       "result": null,
       "actual_score_home": null,
       "actual_score_away": null,
-      "settled_at": null
+      "settled_at": null,
+      "ncaa_tournament": true
     },
     {
       "bet_type": "spread",
@@ -7358,7 +7702,8 @@
       "result": null,
       "actual_score_home": null,
       "actual_score_away": null,
-      "settled_at": null
+      "settled_at": null,
+      "ncaa_tournament": true
     },
     {
       "bet_type": "total",
@@ -7378,7 +7723,8 @@
       "result": null,
       "actual_score_home": null,
       "actual_score_away": null,
-      "settled_at": null
+      "settled_at": null,
+      "ncaa_tournament": true
     },
     {
       "bet_type": "ml",
@@ -7400,7 +7746,8 @@
       "result": null,
       "actual_score_home": null,
       "actual_score_away": null,
-      "settled_at": null
+      "settled_at": null,
+      "ncaa_tournament": true
     },
     {
       "bet_type": "spread",
@@ -7422,7 +7769,8 @@
       "result": null,
       "actual_score_home": null,
       "actual_score_away": null,
-      "settled_at": null
+      "settled_at": null,
+      "ncaa_tournament": true
     },
     {
       "bet_type": "total",
@@ -7442,7 +7790,8 @@
       "result": null,
       "actual_score_home": null,
       "actual_score_away": null,
-      "settled_at": null
+      "settled_at": null,
+      "ncaa_tournament": true
     },
     {
       "bet_type": "ml",
@@ -7464,7 +7813,8 @@
       "result": null,
       "actual_score_home": null,
       "actual_score_away": null,
-      "settled_at": null
+      "settled_at": null,
+      "ncaa_tournament": true
     },
     {
       "bet_type": "spread",
@@ -7486,7 +7836,8 @@
       "result": null,
       "actual_score_home": null,
       "actual_score_away": null,
-      "settled_at": null
+      "settled_at": null,
+      "ncaa_tournament": true
     },
     {
       "bet_type": "total",
@@ -7506,7 +7857,8 @@
       "result": null,
       "actual_score_home": null,
       "actual_score_away": null,
-      "settled_at": null
+      "settled_at": null,
+      "ncaa_tournament": true
     },
     {
       "bet_type": "ml",
@@ -7528,7 +7880,8 @@
       "result": null,
       "actual_score_home": null,
       "actual_score_away": null,
-      "settled_at": null
+      "settled_at": null,
+      "ncaa_tournament": false
     },
     {
       "bet_type": "spread",
@@ -7550,7 +7903,8 @@
       "result": null,
       "actual_score_home": null,
       "actual_score_away": null,
-      "settled_at": null
+      "settled_at": null,
+      "ncaa_tournament": false
     },
     {
       "bet_type": "total",
@@ -7570,7 +7924,8 @@
       "result": null,
       "actual_score_home": null,
       "actual_score_away": null,
-      "settled_at": null
+      "settled_at": null,
+      "ncaa_tournament": false
     },
     {
       "bet_type": "ml",
@@ -7592,7 +7947,8 @@
       "result": null,
       "actual_score_home": null,
       "actual_score_away": null,
-      "settled_at": null
+      "settled_at": null,
+      "ncaa_tournament": true
     },
     {
       "bet_type": "spread",
@@ -7614,7 +7970,8 @@
       "result": null,
       "actual_score_home": null,
       "actual_score_away": null,
-      "settled_at": null
+      "settled_at": null,
+      "ncaa_tournament": true
     },
     {
       "bet_type": "total",
@@ -7634,7 +7991,8 @@
       "result": null,
       "actual_score_home": null,
       "actual_score_away": null,
-      "settled_at": null
+      "settled_at": null,
+      "ncaa_tournament": true
     },
     {
       "bet_type": "ml",
@@ -7656,7 +8014,8 @@
       "result": null,
       "actual_score_home": null,
       "actual_score_away": null,
-      "settled_at": null
+      "settled_at": null,
+      "ncaa_tournament": true
     },
     {
       "bet_type": "spread",
@@ -7678,7 +8037,8 @@
       "result": null,
       "actual_score_home": null,
       "actual_score_away": null,
-      "settled_at": null
+      "settled_at": null,
+      "ncaa_tournament": true
     },
     {
       "bet_type": "total",
@@ -7698,7 +8058,8 @@
       "result": null,
       "actual_score_home": null,
       "actual_score_away": null,
-      "settled_at": null
+      "settled_at": null,
+      "ncaa_tournament": true
     },
     {
       "bet_type": "ml",
@@ -7720,7 +8081,8 @@
       "result": null,
       "actual_score_home": null,
       "actual_score_away": null,
-      "settled_at": null
+      "settled_at": null,
+      "ncaa_tournament": true
     },
     {
       "bet_type": "spread",
@@ -7742,7 +8104,8 @@
       "result": null,
       "actual_score_home": null,
       "actual_score_away": null,
-      "settled_at": null
+      "settled_at": null,
+      "ncaa_tournament": true
     },
     {
       "bet_type": "total",
@@ -7762,7 +8125,8 @@
       "result": null,
       "actual_score_home": null,
       "actual_score_away": null,
-      "settled_at": null
+      "settled_at": null,
+      "ncaa_tournament": true
     },
     {
       "bet_type": "ml",
@@ -7784,7 +8148,8 @@
       "result": null,
       "actual_score_home": null,
       "actual_score_away": null,
-      "settled_at": null
+      "settled_at": null,
+      "ncaa_tournament": true
     },
     {
       "bet_type": "spread",
@@ -7806,7 +8171,8 @@
       "result": null,
       "actual_score_home": null,
       "actual_score_away": null,
-      "settled_at": null
+      "settled_at": null,
+      "ncaa_tournament": true
     },
     {
       "bet_type": "total",
@@ -7826,7 +8192,8 @@
       "result": null,
       "actual_score_home": null,
       "actual_score_away": null,
-      "settled_at": null
+      "settled_at": null,
+      "ncaa_tournament": true
     },
     {
       "bet_type": "ml",
@@ -7848,7 +8215,8 @@
       "result": null,
       "actual_score_home": null,
       "actual_score_away": null,
-      "settled_at": null
+      "settled_at": null,
+      "ncaa_tournament": true
     },
     {
       "bet_type": "spread",
@@ -7870,7 +8238,8 @@
       "result": null,
       "actual_score_home": null,
       "actual_score_away": null,
-      "settled_at": null
+      "settled_at": null,
+      "ncaa_tournament": true
     },
     {
       "bet_type": "total",
@@ -7890,7 +8259,8 @@
       "result": null,
       "actual_score_home": null,
       "actual_score_away": null,
-      "settled_at": null
+      "settled_at": null,
+      "ncaa_tournament": true
     },
     {
       "bet_type": "ml",
@@ -7912,7 +8282,8 @@
       "result": null,
       "actual_score_home": null,
       "actual_score_away": null,
-      "settled_at": null
+      "settled_at": null,
+      "ncaa_tournament": true
     },
     {
       "bet_type": "spread",
@@ -7934,7 +8305,8 @@
       "result": null,
       "actual_score_home": null,
       "actual_score_away": null,
-      "settled_at": null
+      "settled_at": null,
+      "ncaa_tournament": true
     },
     {
       "bet_type": "total",
@@ -7954,7 +8326,8 @@
       "result": null,
       "actual_score_home": null,
       "actual_score_away": null,
-      "settled_at": null
+      "settled_at": null,
+      "ncaa_tournament": true
     },
     {
       "bet_type": "ml",
@@ -7976,7 +8349,8 @@
       "result": null,
       "actual_score_home": null,
       "actual_score_away": null,
-      "settled_at": null
+      "settled_at": null,
+      "ncaa_tournament": true
     },
     {
       "bet_type": "spread",
@@ -7998,7 +8372,8 @@
       "result": null,
       "actual_score_home": null,
       "actual_score_away": null,
-      "settled_at": null
+      "settled_at": null,
+      "ncaa_tournament": true
     },
     {
       "bet_type": "total",
@@ -8018,7 +8393,8 @@
       "result": null,
       "actual_score_home": null,
       "actual_score_away": null,
-      "settled_at": null
+      "settled_at": null,
+      "ncaa_tournament": true
     },
     {
       "bet_type": "ml",
@@ -8040,7 +8416,8 @@
       "result": null,
       "actual_score_home": null,
       "actual_score_away": null,
-      "settled_at": null
+      "settled_at": null,
+      "ncaa_tournament": true
     },
     {
       "bet_type": "spread",
@@ -8062,7 +8439,8 @@
       "result": null,
       "actual_score_home": null,
       "actual_score_away": null,
-      "settled_at": null
+      "settled_at": null,
+      "ncaa_tournament": true
     },
     {
       "bet_type": "total",
@@ -8082,7 +8460,8 @@
       "result": null,
       "actual_score_home": null,
       "actual_score_away": null,
-      "settled_at": null
+      "settled_at": null,
+      "ncaa_tournament": true
     },
     {
       "bet_type": "ml",
@@ -8104,7 +8483,8 @@
       "result": null,
       "actual_score_home": null,
       "actual_score_away": null,
-      "settled_at": null
+      "settled_at": null,
+      "ncaa_tournament": true
     },
     {
       "bet_type": "spread",
@@ -8126,7 +8506,8 @@
       "result": null,
       "actual_score_home": null,
       "actual_score_away": null,
-      "settled_at": null
+      "settled_at": null,
+      "ncaa_tournament": true
     },
     {
       "bet_type": "total",
@@ -8146,7 +8527,8 @@
       "result": null,
       "actual_score_home": null,
       "actual_score_away": null,
-      "settled_at": null
+      "settled_at": null,
+      "ncaa_tournament": true
     },
     {
       "bet_type": "ml",
@@ -8168,7 +8550,8 @@
       "result": null,
       "actual_score_home": null,
       "actual_score_away": null,
-      "settled_at": null
+      "settled_at": null,
+      "ncaa_tournament": true
     },
     {
       "bet_type": "spread",
@@ -8190,7 +8573,8 @@
       "result": null,
       "actual_score_home": null,
       "actual_score_away": null,
-      "settled_at": null
+      "settled_at": null,
+      "ncaa_tournament": true
     },
     {
       "bet_type": "total",
@@ -8210,7 +8594,8 @@
       "result": null,
       "actual_score_home": null,
       "actual_score_away": null,
-      "settled_at": null
+      "settled_at": null,
+      "ncaa_tournament": true
     },
     {
       "bet_type": "ml",
@@ -8232,7 +8617,8 @@
       "result": null,
       "actual_score_home": null,
       "actual_score_away": null,
-      "settled_at": null
+      "settled_at": null,
+      "ncaa_tournament": true
     },
     {
       "bet_type": "spread",
@@ -8254,7 +8640,8 @@
       "result": null,
       "actual_score_home": null,
       "actual_score_away": null,
-      "settled_at": null
+      "settled_at": null,
+      "ncaa_tournament": true
     },
     {
       "bet_type": "total",
@@ -8274,7 +8661,8 @@
       "result": null,
       "actual_score_home": null,
       "actual_score_away": null,
-      "settled_at": null
+      "settled_at": null,
+      "ncaa_tournament": true
     },
     {
       "bet_type": "ml",
@@ -8296,7 +8684,8 @@
       "result": null,
       "actual_score_home": null,
       "actual_score_away": null,
-      "settled_at": null
+      "settled_at": null,
+      "ncaa_tournament": false
     },
     {
       "bet_type": "spread",
@@ -8318,7 +8707,8 @@
       "result": null,
       "actual_score_home": null,
       "actual_score_away": null,
-      "settled_at": null
+      "settled_at": null,
+      "ncaa_tournament": false
     },
     {
       "bet_type": "total",
@@ -8338,7 +8728,8 @@
       "result": null,
       "actual_score_home": null,
       "actual_score_away": null,
-      "settled_at": null
+      "settled_at": null,
+      "ncaa_tournament": false
     },
     {
       "bet_type": "ml",
@@ -8360,7 +8751,8 @@
       "result": null,
       "actual_score_home": null,
       "actual_score_away": null,
-      "settled_at": null
+      "settled_at": null,
+      "ncaa_tournament": true
     },
     {
       "bet_type": "spread",
@@ -8382,7 +8774,8 @@
       "result": null,
       "actual_score_home": null,
       "actual_score_away": null,
-      "settled_at": null
+      "settled_at": null,
+      "ncaa_tournament": true
     },
     {
       "bet_type": "total",
@@ -8402,7 +8795,8 @@
       "result": null,
       "actual_score_home": null,
       "actual_score_away": null,
-      "settled_at": null
+      "settled_at": null,
+      "ncaa_tournament": true
     },
     {
       "bet_type": "ml",
@@ -8424,7 +8818,8 @@
       "result": null,
       "actual_score_home": null,
       "actual_score_away": null,
-      "settled_at": null
+      "settled_at": null,
+      "ncaa_tournament": true
     },
     {
       "bet_type": "spread",
@@ -8446,7 +8841,8 @@
       "result": null,
       "actual_score_home": null,
       "actual_score_away": null,
-      "settled_at": null
+      "settled_at": null,
+      "ncaa_tournament": true
     },
     {
       "bet_type": "total",
@@ -8466,7 +8862,8 @@
       "result": null,
       "actual_score_home": null,
       "actual_score_away": null,
-      "settled_at": null
+      "settled_at": null,
+      "ncaa_tournament": true
     },
     {
       "bet_type": "ml",
@@ -8488,7 +8885,8 @@
       "result": null,
       "actual_score_home": null,
       "actual_score_away": null,
-      "settled_at": null
+      "settled_at": null,
+      "ncaa_tournament": false
     },
     {
       "bet_type": "spread",
@@ -8510,7 +8908,8 @@
       "result": null,
       "actual_score_home": null,
       "actual_score_away": null,
-      "settled_at": null
+      "settled_at": null,
+      "ncaa_tournament": false
     },
     {
       "bet_type": "ml",
@@ -8532,7 +8931,8 @@
       "result": null,
       "actual_score_home": null,
       "actual_score_away": null,
-      "settled_at": null
+      "settled_at": null,
+      "ncaa_tournament": true
     },
     {
       "bet_type": "spread",
@@ -8554,7 +8954,8 @@
       "result": null,
       "actual_score_home": null,
       "actual_score_away": null,
-      "settled_at": null
+      "settled_at": null,
+      "ncaa_tournament": true
     },
     {
       "bet_type": "spread",
@@ -8576,7 +8977,8 @@
       "result": null,
       "actual_score_home": null,
       "actual_score_away": null,
-      "settled_at": null
+      "settled_at": null,
+      "ncaa_tournament": false
     },
     {
       "bet_type": "spread",
@@ -8598,7 +9000,8 @@
       "result": null,
       "actual_score_home": null,
       "actual_score_away": null,
-      "settled_at": null
+      "settled_at": null,
+      "ncaa_tournament": true
     },
     {
       "bet_type": "total",
@@ -8618,7 +9021,8 @@
       "result": null,
       "actual_score_home": null,
       "actual_score_away": null,
-      "settled_at": null
+      "settled_at": null,
+      "ncaa_tournament": true
     },
     {
       "bet_type": "ml",
@@ -8640,7 +9044,8 @@
       "result": null,
       "actual_score_home": null,
       "actual_score_away": null,
-      "settled_at": null
+      "settled_at": null,
+      "ncaa_tournament": true
     },
     {
       "bet_type": "spread",
@@ -8662,7 +9067,8 @@
       "result": null,
       "actual_score_home": null,
       "actual_score_away": null,
-      "settled_at": null
+      "settled_at": null,
+      "ncaa_tournament": true
     },
     {
       "bet_type": "total",
@@ -8682,1931 +9088,12 @@
       "result": null,
       "actual_score_home": null,
       "actual_score_away": null,
-      "settled_at": null
-    },
-    {
-      "bet_type": "ml",
-      "bet_side": "Ohio State Buckeyes",
-      "bet_odds": -139,
-      "model_prob": 0.5397,
-      "implied_prob": 0.5579,
-      "edge": -0.0182,
-      "stars": "",
-      "kelly_units": 0.0,
-      "model_margin": 1.2,
-      "model_total": 148.4,
-      "vegas_spread": -2.0,
-      "vegas_total": 146.0,
-      "home_team": "Ohio State Buckeyes",
-      "away_team": "TCU Horned Frogs",
-      "commence_time": "2026-03-19T16:15:00Z",
-      "date": "2026-03-19",
-      "result": null,
-      "actual_score_home": null,
-      "actual_score_away": null,
-      "settled_at": null
-    },
-    {
-      "bet_type": "spread",
-      "bet_team": "TCU Horned Frogs",
-      "bet_spread": 2.0,
-      "bet_odds": -107,
-      "edge": -0.8,
-      "stars": "",
-      "kelly_units": 0.25,
-      "cover_margin": 0.8,
-      "model_margin": 1.2,
-      "vegas_spread": -2.0,
-      "model_total": 148.4,
-      "vegas_total": 146.0,
-      "home_team": "Ohio State Buckeyes",
-      "away_team": "TCU Horned Frogs",
-      "commence_time": "2026-03-19T16:15:00Z",
-      "date": "2026-03-19",
-      "result": null,
-      "actual_score_home": null,
-      "actual_score_away": null,
-      "settled_at": null
-    },
-    {
-      "bet_type": "total",
-      "bet_side": "OVER",
-      "bet_odds": -110,
-      "edge": 2.4,
-      "stars": "",
-      "kelly_units": 1.31,
-      "model_total": 148.4,
-      "vegas_total": 146.0,
-      "model_margin": 1.2,
-      "vegas_spread": -2.0,
-      "home_team": "Ohio State Buckeyes",
-      "away_team": "TCU Horned Frogs",
-      "commence_time": "2026-03-19T16:15:00Z",
-      "date": "2026-03-19",
-      "result": null,
-      "actual_score_home": null,
-      "actual_score_away": null,
-      "settled_at": null
-    },
-    {
-      "bet_type": "ml",
-      "bet_side": "Nebraska Cornhuskers",
-      "bet_odds": -1000,
-      "model_prob": 0.9433,
-      "implied_prob": 0.8721,
-      "edge": 0.0712,
-      "stars": "",
-      "kelly_units": 3.76,
-      "model_margin": 18.2,
-      "model_total": 139.0,
-      "vegas_spread": -13.0,
-      "vegas_total": 138.0,
-      "home_team": "Nebraska Cornhuskers",
-      "away_team": "Troy Trojans",
-      "commence_time": "2026-03-19T16:40:00Z",
-      "date": "2026-03-19",
-      "result": null,
-      "actual_score_home": null,
-      "actual_score_away": null,
-      "settled_at": null
-    },
-    {
-      "bet_type": "spread",
-      "bet_team": "Nebraska Cornhuskers",
-      "bet_spread": -13.0,
-      "bet_odds": -106,
-      "edge": 5.2,
-      "stars": "",
-      "kelly_units": 3.45,
-      "cover_margin": 5.2,
-      "model_margin": 18.2,
-      "vegas_spread": -13.0,
-      "model_total": 139.0,
-      "vegas_total": 138.0,
-      "home_team": "Nebraska Cornhuskers",
-      "away_team": "Troy Trojans",
-      "commence_time": "2026-03-19T16:40:00Z",
-      "date": "2026-03-19",
-      "result": null,
-      "actual_score_home": null,
-      "actual_score_away": null,
-      "settled_at": null
-    },
-    {
-      "bet_type": "total",
-      "bet_side": "OVER",
-      "bet_odds": -110,
-      "edge": 1.0,
-      "stars": "",
-      "kelly_units": 0.26,
-      "model_total": 139.0,
-      "vegas_total": 138.0,
-      "model_margin": 18.2,
-      "vegas_spread": -13.0,
-      "home_team": "Nebraska Cornhuskers",
-      "away_team": "Troy Trojans",
-      "commence_time": "2026-03-19T16:40:00Z",
-      "date": "2026-03-19",
-      "result": null,
-      "actual_score_home": null,
-      "actual_score_away": null,
-      "settled_at": null
-    },
-    {
-      "bet_type": "ml",
-      "bet_side": "Louisville Cardinals",
-      "bet_odds": -185,
-      "model_prob": 0.676,
-      "implied_prob": 0.6234,
-      "edge": 0.0526,
-      "stars": "",
-      "kelly_units": 0.77,
-      "model_margin": 5.7,
-      "model_total": 170.4,
-      "vegas_spread": -4.5,
-      "vegas_total": 163.0,
-      "home_team": "Louisville Cardinals",
-      "away_team": "South Florida Bulls",
-      "commence_time": "2026-03-19T17:30:00Z",
-      "date": "2026-03-19",
-      "result": null,
-      "actual_score_home": null,
-      "actual_score_away": null,
-      "settled_at": null
-    },
-    {
-      "bet_type": "spread",
-      "bet_team": "Louisville Cardinals",
-      "bet_spread": -4.5,
-      "bet_odds": -107,
-      "edge": 1.2,
-      "stars": "",
-      "kelly_units": 0.55,
-      "cover_margin": 1.2,
-      "model_margin": 5.7,
-      "vegas_spread": -4.5,
-      "model_total": 170.4,
-      "vegas_total": 163.0,
-      "home_team": "Louisville Cardinals",
-      "away_team": "South Florida Bulls",
-      "commence_time": "2026-03-19T17:30:00Z",
-      "date": "2026-03-19",
-      "result": null,
-      "actual_score_home": null,
-      "actual_score_away": null,
-      "settled_at": null
-    },
-    {
-      "bet_type": "total",
-      "bet_side": "OVER",
-      "bet_odds": -110,
-      "edge": 7.4,
-      "stars": "",
-      "kelly_units": 4.74,
-      "model_total": 170.4,
-      "vegas_total": 163.0,
-      "model_margin": 5.7,
-      "vegas_spread": -4.5,
-      "home_team": "Louisville Cardinals",
-      "away_team": "South Florida Bulls",
-      "commence_time": "2026-03-19T17:30:00Z",
-      "date": "2026-03-19",
-      "result": null,
-      "actual_score_home": null,
-      "actual_score_away": null,
-      "settled_at": null
-    },
-    {
-      "bet_type": "ml",
-      "bet_side": "Wisconsin Badgers",
-      "bet_odds": -500,
-      "model_prob": 0.8764,
-      "implied_prob": 0.7966,
-      "edge": 0.0798,
-      "stars": "",
-      "kelly_units": 2.58,
-      "model_margin": 14.0,
-      "model_total": 173.0,
-      "vegas_spread": -10.0,
-      "vegas_total": 162.0,
-      "home_team": "Wisconsin Badgers",
-      "away_team": "High Point Panthers",
-      "commence_time": "2026-03-19T17:50:00Z",
-      "date": "2026-03-19",
-      "result": null,
-      "actual_score_home": null,
-      "actual_score_away": null,
-      "settled_at": null
-    },
-    {
-      "bet_type": "spread",
-      "bet_team": "Wisconsin Badgers",
-      "bet_spread": -10.0,
-      "bet_odds": -110,
-      "edge": 4.0,
-      "stars": "",
-      "kelly_units": 2.48,
-      "cover_margin": 4.0,
-      "model_margin": 14.0,
-      "vegas_spread": -10.0,
-      "model_total": 173.0,
-      "vegas_total": 162.0,
-      "home_team": "Wisconsin Badgers",
-      "away_team": "High Point Panthers",
-      "commence_time": "2026-03-19T17:50:00Z",
-      "date": "2026-03-19",
-      "result": null,
-      "actual_score_home": null,
-      "actual_score_away": null,
-      "settled_at": null
-    },
-    {
-      "bet_type": "total",
-      "bet_side": "OVER",
-      "bet_odds": -110,
-      "edge": 11.0,
-      "stars": "\u2605",
-      "kelly_units": 5.0,
-      "model_total": 173.0,
-      "vegas_total": 162.0,
-      "model_margin": 14.0,
-      "vegas_spread": -10.0,
-      "home_team": "Wisconsin Badgers",
-      "away_team": "High Point Panthers",
-      "commence_time": "2026-03-19T17:50:00Z",
-      "date": "2026-03-19",
-      "result": null,
-      "actual_score_home": null,
-      "actual_score_away": null,
-      "settled_at": null
-    },
-    {
-      "bet_type": "ml",
-      "bet_side": "Duke Blue Devils",
-      "bet_odds": -20000,
-      "model_prob": 0.9975,
-      "implied_prob": 0.9807,
-      "edge": 0.0168,
-      "stars": "",
-      "kelly_units": 4.98,
-      "model_margin": 32.3,
-      "model_total": 137.5,
-      "vegas_spread": -27.5,
-      "vegas_total": 135.5,
-      "home_team": "Duke Blue Devils",
-      "away_team": "Siena Saints",
-      "commence_time": "2026-03-19T18:50:50Z",
-      "date": "2026-03-19",
-      "result": null,
-      "actual_score_home": null,
-      "actual_score_away": null,
-      "settled_at": null
-    },
-    {
-      "bet_type": "spread",
-      "bet_team": "Duke Blue Devils",
-      "bet_spread": -27.5,
-      "bet_odds": -110,
-      "edge": 4.8,
-      "stars": "",
-      "kelly_units": 3.04,
-      "cover_margin": 4.8,
-      "model_margin": 32.3,
-      "vegas_spread": -27.5,
-      "model_total": 137.5,
-      "vegas_total": 135.5,
-      "home_team": "Duke Blue Devils",
-      "away_team": "Siena Saints",
-      "commence_time": "2026-03-19T18:50:50Z",
-      "date": "2026-03-19",
-      "result": null,
-      "actual_score_home": null,
-      "actual_score_away": null,
-      "settled_at": null
-    },
-    {
-      "bet_type": "total",
-      "bet_side": "OVER",
-      "bet_odds": -110,
-      "edge": 2.0,
-      "stars": "",
-      "kelly_units": 1.01,
-      "model_total": 137.5,
-      "vegas_total": 135.5,
-      "model_margin": 32.3,
-      "vegas_spread": -27.5,
-      "home_team": "Duke Blue Devils",
-      "away_team": "Siena Saints",
-      "commence_time": "2026-03-19T18:50:50Z",
-      "date": "2026-03-19",
-      "result": null,
-      "actual_score_home": null,
-      "actual_score_away": null,
-      "settled_at": null
-    },
-    {
-      "bet_type": "ml",
-      "bet_side": "Michigan St Spartans",
-      "bet_odds": -1800,
-      "model_prob": 0.9598,
-      "implied_prob": 0.9087,
-      "edge": 0.0511,
-      "stars": "",
-      "kelly_units": 2.36,
-      "model_margin": 20.2,
-      "model_total": 143.0,
-      "vegas_spread": -16.0,
-      "vegas_total": 143.5,
-      "home_team": "Michigan St Spartans",
-      "away_team": "North Dakota St Bison",
-      "commence_time": "2026-03-19T20:05:59Z",
-      "date": "2026-03-19",
-      "result": null,
-      "actual_score_home": null,
-      "actual_score_away": null,
-      "settled_at": null
-    },
-    {
-      "bet_type": "spread",
-      "bet_team": "Michigan St Spartans",
-      "bet_spread": -16.0,
-      "bet_odds": -110,
-      "edge": 4.2,
-      "stars": "",
-      "kelly_units": 2.62,
-      "cover_margin": 4.2,
-      "model_margin": 20.2,
-      "vegas_spread": -16.0,
-      "model_total": 143.0,
-      "vegas_total": 143.5,
-      "home_team": "Michigan St Spartans",
-      "away_team": "North Dakota St Bison",
-      "commence_time": "2026-03-19T20:05:59Z",
-      "date": "2026-03-19",
-      "result": null,
-      "actual_score_home": null,
-      "actual_score_away": null,
-      "settled_at": null
-    },
-    {
-      "bet_type": "total",
-      "bet_side": "UNDER",
-      "bet_odds": -110,
-      "edge": -0.5,
-      "stars": "",
-      "kelly_units": 0.0,
-      "model_total": 143.0,
-      "vegas_total": 143.5,
-      "model_margin": 20.2,
-      "vegas_spread": -16.0,
-      "home_team": "Michigan St Spartans",
-      "away_team": "North Dakota St Bison",
-      "commence_time": "2026-03-19T20:05:59Z",
-      "date": "2026-03-19",
-      "result": null,
-      "actual_score_home": null,
-      "actual_score_away": null,
-      "settled_at": null
-    },
-    {
-      "bet_type": "ml",
-      "bet_side": "Arkansas Razorbacks",
-      "bet_odds": -1450,
-      "model_prob": 0.93,
-      "implied_prob": 0.8989,
-      "edge": 0.0311,
-      "stars": "",
-      "kelly_units": 0.0,
-      "model_margin": 18.3,
-      "model_total": 168.1,
-      "vegas_spread": -15.5,
-      "vegas_total": 159.0,
-      "home_team": "Arkansas Razorbacks",
-      "away_team": "Hawai'i Rainbow Warriors",
-      "commence_time": "2026-03-19T20:25:05Z",
-      "date": "2026-03-19",
-      "result": null,
-      "actual_score_home": null,
-      "actual_score_away": null,
-      "settled_at": null
-    },
-    {
-      "bet_type": "spread",
-      "bet_team": "Arkansas Razorbacks",
-      "bet_spread": -15.5,
-      "bet_odds": -110,
-      "edge": 2.8,
-      "stars": "",
-      "kelly_units": 1.61,
-      "cover_margin": 2.8,
-      "model_margin": 18.3,
-      "vegas_spread": -15.5,
-      "model_total": 168.1,
-      "vegas_total": 159.0,
-      "home_team": "Arkansas Razorbacks",
-      "away_team": "Hawai'i Rainbow Warriors",
-      "commence_time": "2026-03-19T20:25:05Z",
-      "date": "2026-03-19",
-      "result": null,
-      "actual_score_home": null,
-      "actual_score_away": null,
-      "settled_at": null
-    },
-    {
-      "bet_type": "total",
-      "bet_side": "OVER",
-      "bet_odds": -110,
-      "edge": 9.1,
-      "stars": "",
-      "kelly_units": 5.0,
-      "model_total": 168.1,
-      "vegas_total": 159.0,
-      "model_margin": 18.3,
-      "vegas_spread": -15.5,
-      "home_team": "Arkansas Razorbacks",
-      "away_team": "Hawai'i Rainbow Warriors",
-      "commence_time": "2026-03-19T20:25:05Z",
-      "date": "2026-03-19",
-      "result": null,
-      "actual_score_home": null,
-      "actual_score_away": null,
-      "settled_at": null
-    },
-    {
-      "bet_type": "ml",
-      "bet_side": "North Carolina Tar Heels",
-      "bet_odds": -150,
-      "model_prob": 0.5778,
-      "implied_prob": 0.5745,
-      "edge": 0.0033,
-      "stars": "",
-      "kelly_units": 0.0,
-      "model_margin": 2.3,
-      "model_total": 158.6,
-      "vegas_spread": -2.5,
-      "vegas_total": 151.5,
-      "home_team": "North Carolina Tar Heels",
-      "away_team": "VCU Rams",
-      "commence_time": "2026-03-19T22:50:00Z",
-      "date": "2026-03-19",
-      "result": null,
-      "actual_score_home": null,
-      "actual_score_away": null,
-      "settled_at": null
-    },
-    {
-      "bet_type": "spread",
-      "bet_team": "VCU Rams",
-      "bet_spread": 2.5,
-      "bet_odds": -110,
-      "edge": -0.2,
-      "stars": "",
-      "kelly_units": 0.0,
-      "cover_margin": 0.2,
-      "model_margin": 2.3,
-      "vegas_spread": -2.5,
-      "model_total": 158.6,
-      "vegas_total": 151.5,
-      "home_team": "North Carolina Tar Heels",
-      "away_team": "VCU Rams",
-      "commence_time": "2026-03-19T22:50:00Z",
-      "date": "2026-03-19",
-      "result": null,
-      "actual_score_home": null,
-      "actual_score_away": null,
-      "settled_at": null
-    },
-    {
-      "bet_type": "total",
-      "bet_side": "OVER",
-      "bet_odds": -110,
-      "edge": 7.1,
-      "stars": "",
-      "kelly_units": 4.55,
-      "model_total": 158.6,
-      "vegas_total": 151.5,
-      "model_margin": 2.3,
-      "vegas_spread": -2.5,
-      "home_team": "North Carolina Tar Heels",
-      "away_team": "VCU Rams",
-      "commence_time": "2026-03-19T22:50:00Z",
-      "date": "2026-03-19",
-      "result": null,
-      "actual_score_home": null,
-      "actual_score_away": null,
-      "settled_at": null
-    },
-    {
-      "bet_type": "ml",
-      "bet_side": "Michigan Wolverines",
-      "bet_odds": -50000,
-      "model_prob": 0.9988,
-      "implied_prob": 0.9761,
-      "edge": 0.0227,
-      "stars": "",
-      "kelly_units": 3.99,
-      "model_margin": 37.5,
-      "model_total": 159.4,
-      "vegas_spread": -31.0,
-      "vegas_total": 151.5,
-      "home_team": "Michigan Wolverines",
-      "away_team": "Howard Bison",
-      "commence_time": "2026-03-19T23:10:42Z",
-      "date": "2026-03-19",
-      "result": null,
-      "actual_score_home": null,
-      "actual_score_away": null,
-      "settled_at": null
-    },
-    {
-      "bet_type": "spread",
-      "bet_team": "Michigan Wolverines",
-      "bet_spread": -31.0,
-      "bet_odds": -105,
-      "edge": 6.5,
-      "stars": "",
-      "kelly_units": 4.32,
-      "cover_margin": 6.5,
-      "model_margin": 37.5,
-      "vegas_spread": -31.0,
-      "model_total": 159.4,
-      "vegas_total": 151.5,
-      "home_team": "Michigan Wolverines",
-      "away_team": "Howard Bison",
-      "commence_time": "2026-03-19T23:10:42Z",
-      "date": "2026-03-19",
-      "result": null,
-      "actual_score_home": null,
-      "actual_score_away": null,
-      "settled_at": null
-    },
-    {
-      "bet_type": "total",
-      "bet_side": "OVER",
-      "bet_odds": -110,
-      "edge": 7.9,
-      "stars": "",
-      "kelly_units": 5.0,
-      "model_total": 159.4,
-      "vegas_total": 151.5,
-      "model_margin": 37.5,
-      "vegas_spread": -31.0,
-      "home_team": "Michigan Wolverines",
-      "away_team": "Howard Bison",
-      "commence_time": "2026-03-19T23:10:42Z",
-      "date": "2026-03-19",
-      "result": null,
-      "actual_score_home": null,
-      "actual_score_away": null,
-      "settled_at": null
-    },
-    {
-      "bet_type": "ml",
-      "bet_side": "BYU Cougars",
-      "bet_odds": -140,
-      "model_prob": 0.5389,
-      "implied_prob": 0.562,
-      "edge": -0.0231,
-      "stars": "",
-      "kelly_units": 0.0,
-      "model_margin": 1.2,
-      "model_total": 170.8,
-      "vegas_spread": -2.5,
-      "vegas_total": 157.5,
-      "home_team": "BYU Cougars",
-      "away_team": "Texas Longhorns",
-      "commence_time": "2026-03-19T23:25:00Z",
-      "date": "2026-03-19",
-      "result": null,
-      "actual_score_home": null,
-      "actual_score_away": null,
-      "settled_at": null
-    },
-    {
-      "bet_type": "spread",
-      "bet_team": "Texas Longhorns",
-      "bet_spread": 2.5,
-      "bet_odds": -110,
-      "edge": -1.3,
-      "stars": "",
-      "kelly_units": 0.49,
-      "cover_margin": 1.3,
-      "model_margin": 1.2,
-      "vegas_spread": -2.5,
-      "model_total": 170.8,
-      "vegas_total": 157.5,
-      "home_team": "BYU Cougars",
-      "away_team": "Texas Longhorns",
-      "commence_time": "2026-03-19T23:25:00Z",
-      "date": "2026-03-19",
-      "result": null,
-      "actual_score_home": null,
-      "actual_score_away": null,
-      "settled_at": null
-    },
-    {
-      "bet_type": "total",
-      "bet_side": "OVER",
-      "bet_odds": -110,
-      "edge": 13.3,
-      "stars": "\u2605",
-      "kelly_units": 5.0,
-      "model_total": 170.8,
-      "vegas_total": 157.5,
-      "model_margin": 1.2,
-      "vegas_spread": -2.5,
-      "home_team": "BYU Cougars",
-      "away_team": "Texas Longhorns",
-      "commence_time": "2026-03-19T23:25:00Z",
-      "date": "2026-03-19",
-      "result": null,
-      "actual_score_home": null,
-      "actual_score_away": null,
-      "settled_at": null
-    },
-    {
-      "bet_type": "ml",
-      "bet_side": "Saint Mary's Gaels",
-      "bet_odds": -159,
-      "model_prob": 0.605,
-      "implied_prob": 0.5906,
-      "edge": 0.0144,
-      "stars": "",
-      "kelly_units": 0.0,
-      "model_margin": 3.2,
-      "model_total": 154.3,
-      "vegas_spread": -3.0,
-      "vegas_total": 147.5,
-      "home_team": "Saint Mary's Gaels",
-      "away_team": "Texas A&M Aggies",
-      "commence_time": "2026-03-19T23:35:00Z",
-      "date": "2026-03-19",
-      "result": null,
-      "actual_score_home": null,
-      "actual_score_away": null,
-      "settled_at": null
-    },
-    {
-      "bet_type": "spread",
-      "bet_team": "Saint Mary's Gaels",
-      "bet_spread": -3.0,
-      "bet_odds": -110,
-      "edge": 0.2,
-      "stars": "",
-      "kelly_units": 0.0,
-      "cover_margin": 0.2,
-      "model_margin": 3.2,
-      "vegas_spread": -3.0,
-      "model_total": 154.3,
-      "vegas_total": 147.5,
-      "home_team": "Saint Mary's Gaels",
-      "away_team": "Texas A&M Aggies",
-      "commence_time": "2026-03-19T23:35:00Z",
-      "date": "2026-03-19",
-      "result": null,
-      "actual_score_home": null,
-      "actual_score_away": null,
-      "settled_at": null
-    },
-    {
-      "bet_type": "total",
-      "bet_side": "OVER",
-      "bet_odds": -110,
-      "edge": 6.8,
-      "stars": "",
-      "kelly_units": 4.37,
-      "model_total": 154.3,
-      "vegas_total": 147.5,
-      "model_margin": 3.2,
-      "vegas_spread": -3.0,
-      "home_team": "Saint Mary's Gaels",
-      "away_team": "Texas A&M Aggies",
-      "commence_time": "2026-03-19T23:35:00Z",
-      "date": "2026-03-19",
-      "result": null,
-      "actual_score_home": null,
-      "actual_score_away": null,
-      "settled_at": null
-    },
-    {
-      "bet_type": "ml",
-      "bet_side": "Illinois Fighting Illini",
-      "bet_odds": -10000,
-      "model_prob": 0.9898,
-      "implied_prob": 0.9579,
-      "edge": 0.0319,
-      "stars": "",
-      "kelly_units": 0.0,
-      "model_margin": 27.5,
-      "model_total": 154.3,
-      "vegas_spread": -25.5,
-      "vegas_total": 151.0,
-      "home_team": "Illinois Fighting Illini",
-      "away_team": "Pennsylvania Quakers",
-      "commence_time": "2026-03-20T01:25:00Z",
-      "date": "2026-03-19",
-      "result": null,
-      "actual_score_home": null,
-      "actual_score_away": null,
-      "settled_at": null
-    },
-    {
-      "bet_type": "spread",
-      "bet_team": "Illinois Fighting Illini",
-      "bet_spread": -25.5,
-      "bet_odds": -110,
-      "edge": 2.0,
-      "stars": "",
-      "kelly_units": 1.01,
-      "cover_margin": 2.0,
-      "model_margin": 27.5,
-      "vegas_spread": -25.5,
-      "model_total": 154.3,
-      "vegas_total": 151.0,
-      "home_team": "Illinois Fighting Illini",
-      "away_team": "Pennsylvania Quakers",
-      "commence_time": "2026-03-20T01:25:00Z",
-      "date": "2026-03-19",
-      "result": null,
-      "actual_score_home": null,
-      "actual_score_away": null,
-      "settled_at": null
-    },
-    {
-      "bet_type": "total",
-      "bet_side": "OVER",
-      "bet_odds": -110,
-      "edge": 3.3,
-      "stars": "",
-      "kelly_units": 1.98,
-      "model_total": 154.3,
-      "vegas_total": 151.0,
-      "model_margin": 27.5,
-      "vegas_spread": -25.5,
-      "home_team": "Illinois Fighting Illini",
-      "away_team": "Pennsylvania Quakers",
-      "commence_time": "2026-03-20T01:25:00Z",
-      "date": "2026-03-19",
-      "result": null,
-      "actual_score_home": null,
-      "actual_score_away": null,
-      "settled_at": null
-    },
-    {
-      "bet_type": "ml",
-      "bet_side": "Saint Louis Billikens",
-      "bet_odds": 116,
-      "model_prob": 0.5126,
-      "implied_prob": 0.4425,
-      "edge": 0.0701,
-      "stars": "",
-      "kelly_units": 0.92,
-      "model_margin": -0.4,
-      "model_total": 184.2,
-      "vegas_spread": -2.0,
-      "vegas_total": 168.5,
-      "home_team": "Georgia Bulldogs",
-      "away_team": "Saint Louis Billikens",
-      "commence_time": "2026-03-20T01:45:00Z",
-      "date": "2026-03-19",
-      "result": null,
-      "actual_score_home": null,
-      "actual_score_away": null,
-      "settled_at": null
-    },
-    {
-      "bet_type": "spread",
-      "bet_team": "Saint Louis Billikens",
-      "bet_spread": 2.0,
-      "bet_odds": -110,
-      "edge": -2.4,
-      "stars": "",
-      "kelly_units": 1.31,
-      "cover_margin": 2.4,
-      "model_margin": -0.4,
-      "vegas_spread": -2.0,
-      "model_total": 184.2,
-      "vegas_total": 168.5,
-      "home_team": "Georgia Bulldogs",
-      "away_team": "Saint Louis Billikens",
-      "commence_time": "2026-03-20T01:45:00Z",
-      "date": "2026-03-19",
-      "result": null,
-      "actual_score_home": null,
-      "actual_score_away": null,
-      "settled_at": null
-    },
-    {
-      "bet_type": "total",
-      "bet_side": "OVER",
-      "bet_odds": -110,
-      "edge": 15.7,
-      "stars": "\u2605\u2605",
-      "kelly_units": 5.0,
-      "model_total": 184.2,
-      "vegas_total": 168.5,
-      "model_margin": -0.4,
-      "vegas_spread": -2.0,
-      "home_team": "Georgia Bulldogs",
-      "away_team": "Saint Louis Billikens",
-      "commence_time": "2026-03-20T01:45:00Z",
-      "date": "2026-03-19",
-      "result": null,
-      "actual_score_home": null,
-      "actual_score_away": null,
-      "settled_at": null
-    },
-    {
-      "bet_type": "ml",
-      "bet_side": "Gonzaga Bulldogs",
-      "bet_odds": -6000,
-      "model_prob": 0.9593,
-      "implied_prob": 0.9436,
-      "edge": 0.0157,
-      "stars": "",
-      "kelly_units": 0.0,
-      "model_margin": 21.4,
-      "model_total": 163.6,
-      "vegas_spread": -21.0,
-      "vegas_total": 153.5,
-      "home_team": "Gonzaga Bulldogs",
-      "away_team": "Kennesaw St Owls",
-      "commence_time": "2026-03-20T02:00:00Z",
-      "date": "2026-03-19",
-      "result": null,
-      "actual_score_home": null,
-      "actual_score_away": null,
-      "settled_at": null
-    },
-    {
-      "bet_type": "spread",
-      "bet_team": "Gonzaga Bulldogs",
-      "bet_spread": -21.0,
-      "bet_odds": -110,
-      "edge": 0.4,
-      "stars": "",
-      "kelly_units": 0.0,
-      "cover_margin": 0.4,
-      "model_margin": 21.4,
-      "vegas_spread": -21.0,
-      "model_total": 163.6,
-      "vegas_total": 153.5,
-      "home_team": "Gonzaga Bulldogs",
-      "away_team": "Kennesaw St Owls",
-      "commence_time": "2026-03-20T02:00:00Z",
-      "date": "2026-03-19",
-      "result": null,
-      "actual_score_home": null,
-      "actual_score_away": null,
-      "settled_at": null
-    },
-    {
-      "bet_type": "total",
-      "bet_side": "OVER",
-      "bet_odds": -110,
-      "edge": 10.1,
-      "stars": "\u2605",
-      "kelly_units": 5.0,
-      "model_total": 163.6,
-      "vegas_total": 153.5,
-      "model_margin": 21.4,
-      "vegas_spread": -21.0,
-      "home_team": "Gonzaga Bulldogs",
-      "away_team": "Kennesaw St Owls",
-      "commence_time": "2026-03-20T02:00:00Z",
-      "date": "2026-03-19",
-      "result": null,
-      "actual_score_home": null,
-      "actual_score_away": null,
-      "settled_at": null
-    },
-    {
-      "bet_type": "ml",
-      "bet_side": "Houston Cougars",
-      "bet_odds": -10000,
-      "model_prob": 0.9906,
-      "implied_prob": 0.9541,
-      "edge": 0.0365,
-      "stars": "",
-      "kelly_units": 0.51,
-      "model_margin": 26.9,
-      "model_total": 137.8,
-      "vegas_spread": -23.5,
-      "vegas_total": 138.0,
-      "home_team": "Houston Cougars",
-      "away_team": "Idaho Vandals",
-      "commence_time": "2026-03-20T02:10:00Z",
-      "date": "2026-03-19",
-      "result": null,
-      "actual_score_home": null,
-      "actual_score_away": null,
-      "settled_at": null
-    },
-    {
-      "bet_type": "spread",
-      "bet_team": "Houston Cougars",
-      "bet_spread": -23.5,
-      "bet_odds": -114,
-      "edge": 3.4,
-      "stars": "",
-      "kelly_units": 1.9,
-      "cover_margin": 3.4,
-      "model_margin": 26.9,
-      "vegas_spread": -23.5,
-      "model_total": 137.8,
-      "vegas_total": 138.0,
-      "home_team": "Houston Cougars",
-      "away_team": "Idaho Vandals",
-      "commence_time": "2026-03-20T02:10:00Z",
-      "date": "2026-03-19",
-      "result": null,
-      "actual_score_home": null,
-      "actual_score_away": null,
-      "settled_at": null
-    },
-    {
-      "bet_type": "total",
-      "bet_side": "UNDER",
-      "bet_odds": -110,
-      "edge": -0.2,
-      "stars": "",
-      "kelly_units": 0.0,
-      "model_total": 137.8,
-      "vegas_total": 138.0,
-      "model_margin": 26.9,
-      "vegas_spread": -23.5,
-      "home_team": "Houston Cougars",
-      "away_team": "Idaho Vandals",
-      "commence_time": "2026-03-20T02:10:00Z",
-      "date": "2026-03-19",
-      "result": null,
-      "actual_score_home": null,
-      "actual_score_away": null,
-      "settled_at": null
-    },
-    {
-      "bet_type": "ml",
-      "bet_side": "Kentucky Wildcats",
-      "bet_odds": -155,
-      "model_prob": 0.5152,
-      "implied_prob": 0.5872,
-      "edge": -0.072,
-      "stars": "",
-      "kelly_units": 0.0,
-      "model_margin": 0.5,
-      "model_total": 166.3,
-      "vegas_spread": -3.0,
-      "vegas_total": 160.0,
-      "home_team": "Kentucky Wildcats",
-      "away_team": "Santa Clara Broncos",
-      "commence_time": "2026-03-20T16:15:00Z",
-      "date": "2026-03-19",
-      "result": null,
-      "actual_score_home": null,
-      "actual_score_away": null,
-      "settled_at": null
-    },
-    {
-      "bet_type": "spread",
-      "bet_team": "Santa Clara Broncos",
-      "bet_spread": 3.0,
-      "bet_odds": -105,
-      "edge": -2.5,
-      "stars": "",
-      "kelly_units": 1.59,
-      "cover_margin": 2.5,
-      "model_margin": 0.5,
-      "vegas_spread": -3.0,
-      "model_total": 166.3,
-      "vegas_total": 160.0,
-      "home_team": "Kentucky Wildcats",
-      "away_team": "Santa Clara Broncos",
-      "commence_time": "2026-03-20T16:15:00Z",
-      "date": "2026-03-19",
-      "result": null,
-      "actual_score_home": null,
-      "actual_score_away": null,
-      "settled_at": null
-    },
-    {
-      "bet_type": "total",
-      "bet_side": "OVER",
-      "bet_odds": -110,
-      "edge": 6.3,
-      "stars": "",
-      "kelly_units": 4.05,
-      "model_total": 166.3,
-      "vegas_total": 160.0,
-      "model_margin": 0.5,
-      "vegas_spread": -3.0,
-      "home_team": "Kentucky Wildcats",
-      "away_team": "Santa Clara Broncos",
-      "commence_time": "2026-03-20T16:15:00Z",
-      "date": "2026-03-19",
-      "result": null,
-      "actual_score_home": null,
-      "actual_score_away": null,
-      "settled_at": null
-    },
-    {
-      "bet_type": "ml",
-      "bet_side": "Texas Tech Red Raiders",
-      "bet_odds": -323,
-      "model_prob": 0.8192,
-      "implied_prob": 0.7294,
-      "edge": 0.0898,
-      "stars": "",
-      "kelly_units": 2.35,
-      "model_margin": 10.9,
-      "model_total": 163.4,
-      "vegas_spread": -7.5,
-      "vegas_total": 156.0,
-      "home_team": "Texas Tech Red Raiders",
-      "away_team": "Akron Zips",
-      "commence_time": "2026-03-20T16:40:00Z",
-      "date": "2026-03-19",
-      "result": null,
-      "actual_score_home": null,
-      "actual_score_away": null,
-      "settled_at": null
-    },
-    {
-      "bet_type": "spread",
-      "bet_team": "Texas Tech Red Raiders",
-      "bet_spread": -7.5,
-      "bet_odds": -115,
-      "edge": 3.4,
-      "stars": "",
-      "kelly_units": 1.86,
-      "cover_margin": 3.4,
-      "model_margin": 10.9,
-      "vegas_spread": -7.5,
-      "model_total": 163.4,
-      "vegas_total": 156.0,
-      "home_team": "Texas Tech Red Raiders",
-      "away_team": "Akron Zips",
-      "commence_time": "2026-03-20T16:40:00Z",
-      "date": "2026-03-19",
-      "result": null,
-      "actual_score_home": null,
-      "actual_score_away": null,
-      "settled_at": null
-    },
-    {
-      "bet_type": "total",
-      "bet_side": "OVER",
-      "bet_odds": -110,
-      "edge": 7.4,
-      "stars": "",
-      "kelly_units": 4.74,
-      "model_total": 163.4,
-      "vegas_total": 156.0,
-      "model_margin": 10.9,
-      "vegas_spread": -7.5,
-      "home_team": "Texas Tech Red Raiders",
-      "away_team": "Akron Zips",
-      "commence_time": "2026-03-20T16:40:00Z",
-      "date": "2026-03-19",
-      "result": null,
-      "actual_score_home": null,
-      "actual_score_away": null,
-      "settled_at": null
-    },
-    {
-      "bet_type": "ml",
-      "bet_side": "Arizona Wildcats",
-      "bet_odds": -20000,
-      "model_prob": 0.9984,
-      "implied_prob": 0.9807,
-      "edge": 0.0177,
-      "stars": "",
-      "kelly_units": 5.0,
-      "model_margin": 37.8,
-      "model_total": 155.5,
-      "vegas_spread": -30.5,
-      "vegas_total": 150.5,
-      "home_team": "Arizona Wildcats",
-      "away_team": "LIU Sharks",
-      "commence_time": "2026-03-20T17:35:00Z",
-      "date": "2026-03-19",
-      "result": null,
-      "actual_score_home": null,
-      "actual_score_away": null,
-      "settled_at": null
-    },
-    {
-      "bet_type": "spread",
-      "bet_team": "Arizona Wildcats",
-      "bet_spread": -30.5,
-      "bet_odds": -110,
-      "edge": 7.3,
-      "stars": "\u2605",
-      "kelly_units": 4.68,
-      "cover_margin": 7.3,
-      "model_margin": 37.8,
-      "vegas_spread": -30.5,
-      "model_total": 155.5,
-      "vegas_total": 150.5,
-      "home_team": "Arizona Wildcats",
-      "away_team": "LIU Sharks",
-      "commence_time": "2026-03-20T17:35:00Z",
-      "date": "2026-03-19",
-      "result": null,
-      "actual_score_home": null,
-      "actual_score_away": null,
-      "settled_at": null
-    },
-    {
-      "bet_type": "total",
-      "bet_side": "OVER",
-      "bet_odds": -110,
-      "edge": 5.0,
-      "stars": "",
-      "kelly_units": 3.18,
-      "model_total": 155.5,
-      "vegas_total": 150.5,
-      "model_margin": 37.8,
-      "vegas_spread": -30.5,
-      "home_team": "Arizona Wildcats",
-      "away_team": "LIU Sharks",
-      "commence_time": "2026-03-20T17:35:00Z",
-      "date": "2026-03-19",
-      "result": null,
-      "actual_score_home": null,
-      "actual_score_away": null,
-      "settled_at": null
-    },
-    {
-      "bet_type": "ml",
-      "bet_side": "Virginia Cavaliers",
-      "bet_odds": -2800,
-      "model_prob": 0.9678,
-      "implied_prob": 0.926,
-      "edge": 0.0418,
-      "stars": "",
-      "kelly_units": 0.66,
-      "model_margin": 21.3,
-      "model_total": 147.3,
-      "vegas_spread": -18.0,
-      "vegas_total": 145.0,
-      "home_team": "Virginia Cavaliers",
-      "away_team": "Wright St Raiders",
-      "commence_time": "2026-03-20T17:50:03Z",
-      "date": "2026-03-19",
-      "result": null,
-      "actual_score_home": null,
-      "actual_score_away": null,
-      "settled_at": null
-    },
-    {
-      "bet_type": "spread",
-      "bet_team": "Virginia Cavaliers",
-      "bet_spread": -18.0,
-      "bet_odds": -110,
-      "edge": 3.3,
-      "stars": "",
-      "kelly_units": 1.98,
-      "cover_margin": 3.3,
-      "model_margin": 21.3,
-      "vegas_spread": -18.0,
-      "model_total": 147.3,
-      "vegas_total": 145.0,
-      "home_team": "Virginia Cavaliers",
-      "away_team": "Wright St Raiders",
-      "commence_time": "2026-03-20T17:50:03Z",
-      "date": "2026-03-19",
-      "result": null,
-      "actual_score_home": null,
-      "actual_score_away": null,
-      "settled_at": null
-    },
-    {
-      "bet_type": "total",
-      "bet_side": "OVER",
-      "bet_odds": -110,
-      "edge": 2.3,
-      "stars": "",
-      "kelly_units": 1.24,
-      "model_total": 147.3,
-      "vegas_total": 145.0,
-      "model_margin": 21.3,
-      "vegas_spread": -18.0,
-      "home_team": "Virginia Cavaliers",
-      "away_team": "Wright St Raiders",
-      "commence_time": "2026-03-20T17:50:03Z",
-      "date": "2026-03-19",
-      "result": null,
-      "actual_score_home": null,
-      "actual_score_away": null,
-      "settled_at": null
-    },
-    {
-      "bet_type": "ml",
-      "bet_side": "Iowa State Cyclones",
-      "bet_odds": -10000,
-      "model_prob": 0.7026,
-      "implied_prob": 0.9541,
-      "edge": -0.2515,
-      "stars": "\u2605\u2605\u2605",
-      "kelly_units": 0.0,
-      "model_margin": 6.1,
-      "model_total": 140.3,
-      "vegas_spread": -24.5,
-      "vegas_total": 149.0,
-      "home_team": "Iowa State Cyclones",
-      "away_team": "Tennessee St Tigers",
-      "commence_time": "2026-03-20T18:50:00Z",
-      "date": "2026-03-19",
-      "result": null,
-      "actual_score_home": null,
-      "actual_score_away": null,
-      "settled_at": null
-    },
-    {
-      "bet_type": "spread",
-      "bet_team": "Tennessee St Tigers",
-      "bet_spread": 24.5,
-      "bet_odds": -110,
-      "edge": -18.4,
-      "stars": "\u2605\u2605\u2605",
-      "kelly_units": 5.0,
-      "cover_margin": 18.4,
-      "model_margin": 6.1,
-      "vegas_spread": -24.5,
-      "model_total": 140.3,
-      "vegas_total": 149.0,
-      "home_team": "Iowa State Cyclones",
-      "away_team": "Tennessee St Tigers",
-      "commence_time": "2026-03-20T18:50:00Z",
-      "date": "2026-03-19",
-      "result": null,
-      "actual_score_home": null,
-      "actual_score_away": null,
-      "settled_at": null
-    },
-    {
-      "bet_type": "total",
-      "bet_side": "UNDER",
-      "bet_odds": -110,
-      "edge": -8.7,
-      "stars": "",
-      "kelly_units": 5.0,
-      "model_total": 140.3,
-      "vegas_total": 149.0,
-      "model_margin": 6.1,
-      "vegas_spread": -24.5,
-      "home_team": "Iowa State Cyclones",
-      "away_team": "Tennessee St Tigers",
-      "commence_time": "2026-03-20T18:50:00Z",
-      "date": "2026-03-19",
-      "result": null,
-      "actual_score_home": null,
-      "actual_score_away": null,
-      "settled_at": null
-    },
-    {
-      "bet_type": "ml",
-      "bet_side": "Alabama Crimson Tide",
-      "bet_odds": -820,
-      "model_prob": 0.8243,
-      "implied_prob": 0.8534,
-      "edge": -0.0291,
-      "stars": "",
-      "kelly_units": 0.0,
-      "model_margin": 11.3,
-      "model_total": 167.1,
-      "vegas_spread": -11.5,
-      "vegas_total": 159.5,
-      "home_team": "Alabama Crimson Tide",
-      "away_team": "Hofstra Pride",
-      "commence_time": "2026-03-20T19:15:56Z",
-      "date": "2026-03-19",
-      "result": null,
-      "actual_score_home": null,
-      "actual_score_away": null,
-      "settled_at": null
-    },
-    {
-      "bet_type": "spread",
-      "bet_team": "Hofstra Pride",
-      "bet_spread": 11.5,
-      "bet_odds": -110,
-      "edge": -0.2,
-      "stars": "",
-      "kelly_units": 0.0,
-      "cover_margin": 0.2,
-      "model_margin": 11.3,
-      "vegas_spread": -11.5,
-      "model_total": 167.1,
-      "vegas_total": 159.5,
-      "home_team": "Alabama Crimson Tide",
-      "away_team": "Hofstra Pride",
-      "commence_time": "2026-03-20T19:15:56Z",
-      "date": "2026-03-19",
-      "result": null,
-      "actual_score_home": null,
-      "actual_score_away": null,
-      "settled_at": null
-    },
-    {
-      "bet_type": "total",
-      "bet_side": "OVER",
-      "bet_odds": -110,
-      "edge": 7.6,
-      "stars": "",
-      "kelly_units": 4.86,
-      "model_total": 167.1,
-      "vegas_total": 159.5,
-      "model_margin": 11.3,
-      "vegas_spread": -11.5,
-      "home_team": "Alabama Crimson Tide",
-      "away_team": "Hofstra Pride",
-      "commence_time": "2026-03-20T19:15:56Z",
-      "date": "2026-03-19",
-      "result": null,
-      "actual_score_home": null,
-      "actual_score_away": null,
-      "settled_at": null
-    },
-    {
-      "bet_type": "ml",
-      "bet_side": "Utah State Aggies",
-      "bet_odds": -130,
-      "model_prob": 0.6142,
-      "implied_prob": 0.5368,
-      "edge": 0.0774,
-      "stars": "",
-      "kelly_units": 1.13,
-      "model_margin": -3.3,
-      "model_total": 147.2,
-      "vegas_spread": 1.5,
-      "vegas_total": 147.0,
-      "home_team": "Villanova Wildcats",
-      "away_team": "Utah State Aggies",
-      "commence_time": "2026-03-20T20:10:00Z",
-      "date": "2026-03-19",
-      "result": null,
-      "actual_score_home": null,
-      "actual_score_away": null,
-      "settled_at": null
-    },
-    {
-      "bet_type": "spread",
-      "bet_team": "Utah State Aggies",
-      "bet_spread": -1.5,
-      "bet_odds": -110,
-      "edge": -1.8,
-      "stars": "",
-      "kelly_units": 0.86,
-      "cover_margin": 1.8,
-      "model_margin": -3.3,
-      "vegas_spread": 1.5,
-      "model_total": 147.2,
-      "vegas_total": 147.0,
-      "home_team": "Villanova Wildcats",
-      "away_team": "Utah State Aggies",
-      "commence_time": "2026-03-20T20:10:00Z",
-      "date": "2026-03-19",
-      "result": null,
-      "actual_score_home": null,
-      "actual_score_away": null,
-      "settled_at": null
-    },
-    {
-      "bet_type": "total",
-      "bet_side": "OVER",
-      "bet_odds": -110,
-      "edge": 0.2,
-      "stars": "",
-      "kelly_units": 0.0,
-      "model_total": 147.2,
-      "vegas_total": 147.0,
-      "model_margin": -3.3,
-      "vegas_spread": 1.5,
-      "home_team": "Villanova Wildcats",
-      "away_team": "Utah State Aggies",
-      "commence_time": "2026-03-20T20:10:00Z",
-      "date": "2026-03-19",
-      "result": null,
-      "actual_score_home": null,
-      "actual_score_away": null,
-      "settled_at": null
-    },
-    {
-      "bet_type": "ml",
-      "bet_side": "Tennessee Volunteers",
-      "bet_odds": -600,
-      "model_prob": 0.9346,
-      "implied_prob": 0.8182,
-      "edge": 0.1164,
-      "stars": "\u2605",
-      "kelly_units": 5.0,
-      "model_margin": 17.9,
-      "model_total": 156.3,
-      "vegas_spread": -11.5,
-      "vegas_total": 149.0,
-      "home_team": "Tennessee Volunteers",
-      "away_team": "Miami (OH) RedHawks",
-      "commence_time": "2026-03-20T20:25:38Z",
-      "date": "2026-03-19",
-      "result": null,
-      "actual_score_home": null,
-      "actual_score_away": null,
-      "settled_at": null
-    },
-    {
-      "bet_type": "spread",
-      "bet_team": "Tennessee Volunteers",
-      "bet_spread": -11.5,
-      "bet_odds": -110,
-      "edge": 6.4,
-      "stars": "",
-      "kelly_units": 4.11,
-      "cover_margin": 6.4,
-      "model_margin": 17.9,
-      "vegas_spread": -11.5,
-      "model_total": 156.3,
-      "vegas_total": 149.0,
-      "home_team": "Tennessee Volunteers",
-      "away_team": "Miami (OH) RedHawks",
-      "commence_time": "2026-03-20T20:25:38Z",
-      "date": "2026-03-19",
-      "result": null,
-      "actual_score_home": null,
-      "actual_score_away": null,
-      "settled_at": null
-    },
-    {
-      "bet_type": "total",
-      "bet_side": "OVER",
-      "bet_odds": -110,
-      "edge": 7.3,
-      "stars": "",
-      "kelly_units": 4.68,
-      "model_total": 156.3,
-      "vegas_total": 149.0,
-      "model_margin": 17.9,
-      "vegas_spread": -11.5,
-      "home_team": "Tennessee Volunteers",
-      "away_team": "Miami (OH) RedHawks",
-      "commence_time": "2026-03-20T20:25:38Z",
-      "date": "2026-03-19",
-      "result": null,
-      "actual_score_home": null,
-      "actual_score_away": null,
-      "settled_at": null
-    },
-    {
-      "bet_type": "ml",
-      "bet_side": "Iowa Hawkeyes",
-      "bet_odds": -135,
-      "model_prob": 0.5241,
-      "implied_prob": 0.5514,
-      "edge": -0.0273,
-      "stars": "",
-      "kelly_units": 0.0,
-      "model_margin": -0.7,
-      "model_total": 128.8,
-      "vegas_spread": 2.5,
-      "vegas_total": 128.5,
-      "home_team": "Clemson Tigers",
-      "away_team": "Iowa Hawkeyes",
-      "commence_time": "2026-03-20T22:50:00Z",
-      "date": "2026-03-19",
-      "result": null,
-      "actual_score_home": null,
-      "actual_score_away": null,
-      "settled_at": null
-    },
-    {
-      "bet_type": "spread",
-      "bet_team": "Clemson Tigers",
-      "bet_spread": 2.5,
-      "bet_odds": -110,
-      "edge": 1.8,
-      "stars": "",
-      "kelly_units": 0.86,
-      "cover_margin": 1.8,
-      "model_margin": -0.7,
-      "vegas_spread": 2.5,
-      "model_total": 128.8,
-      "vegas_total": 128.5,
-      "home_team": "Clemson Tigers",
-      "away_team": "Iowa Hawkeyes",
-      "commence_time": "2026-03-20T22:50:00Z",
-      "date": "2026-03-19",
-      "result": null,
-      "actual_score_home": null,
-      "actual_score_away": null,
-      "settled_at": null
-    },
-    {
-      "bet_type": "total",
-      "bet_side": "OVER",
-      "bet_odds": -110,
-      "edge": 0.3,
-      "stars": "",
-      "kelly_units": 0.0,
-      "model_total": 128.8,
-      "vegas_total": 128.5,
-      "model_margin": -0.7,
-      "vegas_spread": 2.5,
-      "home_team": "Clemson Tigers",
-      "away_team": "Iowa Hawkeyes",
-      "commence_time": "2026-03-20T22:50:00Z",
-      "date": "2026-03-19",
-      "result": null,
-      "actual_score_home": null,
-      "actual_score_away": null,
-      "settled_at": null
-    },
-    {
-      "bet_type": "ml",
-      "bet_side": "St. John's Red Storm",
-      "bet_odds": -550,
-      "model_prob": 0.8338,
-      "implied_prob": 0.8088,
-      "edge": 0.025,
-      "stars": "",
-      "kelly_units": 0.0,
-      "model_margin": 11.2,
-      "model_total": 132.1,
-      "vegas_spread": -9.5,
-      "vegas_total": 131.5,
-      "home_team": "St. John's Red Storm",
-      "away_team": "Northern Iowa Panthers",
-      "commence_time": "2026-03-20T23:10:00Z",
-      "date": "2026-03-19",
-      "result": null,
-      "actual_score_home": null,
-      "actual_score_away": null,
-      "settled_at": null
-    },
-    {
-      "bet_type": "spread",
-      "bet_team": "St. John's Red Storm",
-      "bet_spread": -9.5,
-      "bet_odds": -110,
-      "edge": 1.7,
-      "stars": "",
-      "kelly_units": 0.79,
-      "cover_margin": 1.7,
-      "model_margin": 11.2,
-      "vegas_spread": -9.5,
-      "model_total": 132.1,
-      "vegas_total": 131.5,
-      "home_team": "St. John's Red Storm",
-      "away_team": "Northern Iowa Panthers",
-      "commence_time": "2026-03-20T23:10:00Z",
-      "date": "2026-03-19",
-      "result": null,
-      "actual_score_home": null,
-      "actual_score_away": null,
-      "settled_at": null
-    },
-    {
-      "bet_type": "total",
-      "bet_side": "OVER",
-      "bet_odds": -110,
-      "edge": 0.6,
-      "stars": "",
-      "kelly_units": 0.0,
-      "model_total": 132.1,
-      "vegas_total": 131.5,
-      "model_margin": 11.2,
-      "vegas_spread": -9.5,
-      "home_team": "St. John's Red Storm",
-      "away_team": "Northern Iowa Panthers",
-      "commence_time": "2026-03-20T23:10:00Z",
-      "date": "2026-03-19",
-      "result": null,
-      "actual_score_home": null,
-      "actual_score_away": null,
-      "settled_at": null
-    },
-    {
-      "bet_type": "ml",
-      "bet_side": "UCLA Bruins",
-      "bet_odds": -235,
-      "model_prob": 0.6837,
-      "implied_prob": 0.6742,
-      "edge": 0.0095,
-      "stars": "",
-      "kelly_units": 0.0,
-      "model_margin": 5.6,
-      "model_total": 156.2,
-      "vegas_spread": -5.5,
-      "vegas_total": 152.5,
-      "home_team": "UCLA Bruins",
-      "away_team": "UCF Knights",
-      "commence_time": "2026-03-20T23:25:00Z",
-      "date": "2026-03-19",
-      "result": null,
-      "actual_score_home": null,
-      "actual_score_away": null,
-      "settled_at": null
-    },
-    {
-      "bet_type": "spread",
-      "bet_team": "UCLA Bruins",
-      "bet_spread": -5.5,
-      "bet_odds": -110,
-      "edge": 0.1,
-      "stars": "",
-      "kelly_units": 0.0,
-      "cover_margin": 0.1,
-      "model_margin": 5.6,
-      "vegas_spread": -5.5,
-      "model_total": 156.2,
-      "vegas_total": 152.5,
-      "home_team": "UCLA Bruins",
-      "away_team": "UCF Knights",
-      "commence_time": "2026-03-20T23:25:00Z",
-      "date": "2026-03-19",
-      "result": null,
-      "actual_score_home": null,
-      "actual_score_away": null,
-      "settled_at": null
-    },
-    {
-      "bet_type": "total",
-      "bet_side": "OVER",
-      "bet_odds": -110,
-      "edge": 3.7,
-      "stars": "",
-      "kelly_units": 2.27,
-      "model_total": 156.2,
-      "vegas_total": 152.5,
-      "model_margin": 5.6,
-      "vegas_spread": -5.5,
-      "home_team": "UCLA Bruins",
-      "away_team": "UCF Knights",
-      "commence_time": "2026-03-20T23:25:00Z",
-      "date": "2026-03-19",
-      "result": null,
-      "actual_score_home": null,
-      "actual_score_away": null,
-      "settled_at": null
-    },
-    {
-      "bet_type": "ml",
-      "bet_side": "Purdue Boilermakers",
-      "bet_odds": -15000,
-      "model_prob": 0.9974,
-      "implied_prob": 0.9589,
-      "edge": 0.0385,
-      "stars": "",
-      "kelly_units": 5.0,
-      "model_margin": 33.2,
-      "model_total": 171.0,
-      "vegas_spread": -25.5,
-      "vegas_total": 163.5,
-      "home_team": "Purdue Boilermakers",
-      "away_team": "Queens University Royals",
-      "commence_time": "2026-03-20T23:35:00Z",
-      "date": "2026-03-19",
-      "result": null,
-      "actual_score_home": null,
-      "actual_score_away": null,
-      "settled_at": null
-    },
-    {
-      "bet_type": "spread",
-      "bet_team": "Purdue Boilermakers",
-      "bet_spread": -25.5,
-      "bet_odds": -110,
-      "edge": 7.7,
-      "stars": "\u2605",
-      "kelly_units": 4.92,
-      "cover_margin": 7.7,
-      "model_margin": 33.2,
-      "vegas_spread": -25.5,
-      "model_total": 171.0,
-      "vegas_total": 163.5,
-      "home_team": "Purdue Boilermakers",
-      "away_team": "Queens University Royals",
-      "commence_time": "2026-03-20T23:35:00Z",
-      "date": "2026-03-19",
-      "result": null,
-      "actual_score_home": null,
-      "actual_score_away": null,
-      "settled_at": null
-    },
-    {
-      "bet_type": "total",
-      "bet_side": "OVER",
-      "bet_odds": -110,
-      "edge": 7.5,
-      "stars": "",
-      "kelly_units": 4.8,
-      "model_total": 171.0,
-      "vegas_total": 163.5,
-      "model_margin": 33.2,
-      "vegas_spread": -25.5,
-      "home_team": "Purdue Boilermakers",
-      "away_team": "Queens University Royals",
-      "commence_time": "2026-03-20T23:35:00Z",
-      "date": "2026-03-19",
-      "result": null,
-      "actual_score_home": null,
-      "actual_score_away": null,
-      "settled_at": null
-    },
-    {
-      "bet_type": "ml",
-      "bet_side": "Kansas Jayhawks",
-      "bet_odds": -1200,
-      "model_prob": 0.9344,
-      "implied_prob": 0.887,
-      "edge": 0.0474,
-      "stars": "",
-      "kelly_units": 1.47,
-      "model_margin": 17.5,
-      "model_total": 136.5,
-      "vegas_spread": -14.0,
-      "vegas_total": 138.0,
-      "home_team": "Kansas Jayhawks",
-      "away_team": "Cal Baptist Lancers",
-      "commence_time": "2026-03-21T01:45:00Z",
-      "date": "2026-03-19",
-      "result": null,
-      "actual_score_home": null,
-      "actual_score_away": null,
-      "settled_at": null
-    },
-    {
-      "bet_type": "spread",
-      "bet_team": "Kansas Jayhawks",
-      "bet_spread": -14.0,
-      "bet_odds": -106,
-      "edge": 3.5,
-      "stars": "",
-      "kelly_units": 2.27,
-      "cover_margin": 3.5,
-      "model_margin": 17.5,
-      "vegas_spread": -14.0,
-      "model_total": 136.5,
-      "vegas_total": 138.0,
-      "home_team": "Kansas Jayhawks",
-      "away_team": "Cal Baptist Lancers",
-      "commence_time": "2026-03-21T01:45:00Z",
-      "date": "2026-03-19",
-      "result": null,
-      "actual_score_home": null,
-      "actual_score_away": null,
-      "settled_at": null
-    },
-    {
-      "bet_type": "total",
-      "bet_side": "UNDER",
-      "bet_odds": -110,
-      "edge": -1.5,
-      "stars": "",
-      "kelly_units": 0.64,
-      "model_total": 136.5,
-      "vegas_total": 138.0,
-      "model_margin": 17.5,
-      "vegas_spread": -14.0,
-      "home_team": "Kansas Jayhawks",
-      "away_team": "Cal Baptist Lancers",
-      "commence_time": "2026-03-21T01:45:00Z",
-      "date": "2026-03-19",
-      "result": null,
-      "actual_score_home": null,
-      "actual_score_away": null,
-      "settled_at": null
-    },
-    {
-      "bet_type": "ml",
-      "bet_side": "UConn Huskies",
-      "bet_odds": -5000,
-      "model_prob": 0.9841,
-      "implied_prob": 0.9418,
-      "edge": 0.0423,
-      "stars": "",
-      "kelly_units": 1.89,
-      "model_margin": 24.5,
-      "model_total": 137.7,
-      "vegas_spread": -20.5,
-      "vegas_total": 136.5,
-      "home_team": "UConn Huskies",
-      "away_team": "Furman Paladins",
-      "commence_time": "2026-03-21T02:00:00Z",
-      "date": "2026-03-19",
-      "result": null,
-      "actual_score_home": null,
-      "actual_score_away": null,
-      "settled_at": null
-    },
-    {
-      "bet_type": "spread",
-      "bet_team": "UConn Huskies",
-      "bet_spread": -20.5,
-      "bet_odds": -109,
-      "edge": 4.0,
-      "stars": "",
-      "kelly_units": 2.52,
-      "cover_margin": 4.0,
-      "model_margin": 24.5,
-      "vegas_spread": -20.5,
-      "model_total": 137.7,
-      "vegas_total": 136.5,
-      "home_team": "UConn Huskies",
-      "away_team": "Furman Paladins",
-      "commence_time": "2026-03-21T02:00:00Z",
-      "date": "2026-03-19",
-      "result": null,
-      "actual_score_home": null,
-      "actual_score_away": null,
-      "settled_at": null
-    },
-    {
-      "bet_type": "total",
-      "bet_side": "OVER",
-      "bet_odds": -110,
-      "edge": 1.2,
-      "stars": "",
-      "kelly_units": 0.41,
-      "model_total": 137.7,
-      "vegas_total": 136.5,
-      "model_margin": 24.5,
-      "vegas_spread": -20.5,
-      "home_team": "UConn Huskies",
-      "away_team": "Furman Paladins",
-      "commence_time": "2026-03-21T02:00:00Z",
-      "date": "2026-03-19",
-      "result": null,
-      "actual_score_home": null,
-      "actual_score_away": null,
-      "settled_at": null
-    },
-    {
-      "bet_type": "ml",
-      "bet_side": "Miami Hurricanes",
-      "bet_odds": -130,
-      "model_prob": 0.703,
-      "implied_prob": 0.5427,
-      "edge": 0.1603,
-      "stars": "\u2605\u2605",
-      "kelly_units": 3.17,
-      "model_margin": 6.2,
-      "model_total": 154.8,
-      "vegas_spread": -2.0,
-      "vegas_total": 146.5,
-      "home_team": "Miami Hurricanes",
-      "away_team": "Missouri Tigers",
-      "commence_time": "2026-03-21T02:10:00Z",
-      "date": "2026-03-19",
-      "result": null,
-      "actual_score_home": null,
-      "actual_score_away": null,
-      "settled_at": null
-    },
-    {
-      "bet_type": "spread",
-      "bet_team": "Miami Hurricanes",
-      "bet_spread": -2.0,
-      "bet_odds": -110,
-      "edge": 4.2,
-      "stars": "",
-      "kelly_units": 2.62,
-      "cover_margin": 4.2,
-      "model_margin": 6.2,
-      "vegas_spread": -2.0,
-      "model_total": 154.8,
-      "vegas_total": 146.5,
-      "home_team": "Miami Hurricanes",
-      "away_team": "Missouri Tigers",
-      "commence_time": "2026-03-21T02:10:00Z",
-      "date": "2026-03-19",
-      "result": null,
-      "actual_score_home": null,
-      "actual_score_away": null,
-      "settled_at": null
-    },
-    {
-      "bet_type": "total",
-      "bet_side": "OVER",
-      "bet_odds": -110,
-      "edge": 8.3,
-      "stars": "",
-      "kelly_units": 5.0,
-      "model_total": 154.8,
-      "vegas_total": 146.5,
-      "model_margin": 6.2,
-      "vegas_spread": -2.0,
-      "home_team": "Miami Hurricanes",
-      "away_team": "Missouri Tigers",
-      "commence_time": "2026-03-21T02:10:00Z",
-      "date": "2026-03-19",
-      "result": null,
-      "actual_score_home": null,
-      "actual_score_away": null,
-      "settled_at": null
+      "settled_at": null,
+      "ncaa_tournament": true
     }
   ],
   "stats": {
-    "total_picks": 497,
+    "total_picks": 407,
     "settled": 79,
     "wins": 40,
     "losses": 39,

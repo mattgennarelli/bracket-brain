@@ -328,6 +328,80 @@ def score_model(pairs, config, recency_weight=None, round_weight=None):
     }
 
 
+PRIOR_GATE_RECENT_YEARS = (2023, 2024, 2025)
+
+
+def _filter_pairs_by_years(pairs, years):
+    """Return only pairs whose season is in years."""
+    allowed = set(years)
+    return [p for p in pairs if p[4] in allowed]
+
+
+def _build_prior_variants(config):
+    """Build the four launch-gate variants for coach/pedigree."""
+    return {
+        "base": replace(config, num_sims=1),
+        "coach_zero": replace(config, num_sims=1, coach_tourney_max_bonus=0.0),
+        "pedigree_zero": replace(config, num_sims=1, pedigree_max_bonus=0.0),
+        "both_zero": replace(config, num_sims=1, coach_tourney_max_bonus=0.0, pedigree_max_bonus=0.0),
+    }
+
+
+def evaluate_prior_gate(pairs, config, recent_years=PRIOR_GATE_RECENT_YEARS):
+    """Evaluate whether coach/pedigree should survive launch gating.
+
+    Keep a prior only if the base config beats the corresponding zeroed variant on
+    both all-years and the recent-year slice.
+    """
+    recent_pairs = _filter_pairs_by_years(pairs, recent_years)
+    variants = _build_prior_variants(config)
+    report = {}
+    for name, variant in variants.items():
+        report[name] = {
+            "all": score_model(pairs, variant),
+            "recent": score_model(recent_pairs, variant) if recent_pairs else None,
+        }
+
+    base_all = report["base"]["all"]["brier_score"]
+    base_recent = report["base"]["recent"]["brier_score"] if report["base"]["recent"] else None
+    coach_all = report["coach_zero"]["all"]["brier_score"]
+    coach_recent = report["coach_zero"]["recent"]["brier_score"] if report["coach_zero"]["recent"] else None
+    pedigree_all = report["pedigree_zero"]["all"]["brier_score"]
+    pedigree_recent = report["pedigree_zero"]["recent"]["brier_score"] if report["pedigree_zero"]["recent"] else None
+
+    keep_coach = base_all < coach_all and (base_recent < coach_recent if base_recent is not None and coach_recent is not None else True)
+    keep_pedigree = base_all < pedigree_all and (base_recent < pedigree_recent if base_recent is not None and pedigree_recent is not None else True)
+
+    gated = replace(config, num_sims=1)
+    if not keep_coach:
+        gated.coach_tourney_max_bonus = 0.0
+    if not keep_pedigree:
+        gated.pedigree_max_bonus = 0.0
+    return report, keep_coach, keep_pedigree, gated
+
+
+def print_prior_gate_report(report, keep_coach, keep_pedigree, recent_years=PRIOR_GATE_RECENT_YEARS):
+    """Print a concise coach/pedigree ablation report."""
+    recent_label = f"{recent_years[0]}-{recent_years[-1]}"
+    print(f"\n{'=' * 60}")
+    print("  COACH / PEDIGREE ABLATION")
+    print(f"{'=' * 60}")
+    for name in ("base", "coach_zero", "pedigree_zero", "both_zero"):
+        row = report.get(name, {})
+        all_metrics = row.get("all") or {}
+        recent_metrics = row.get("recent") or {}
+        recent_text = "n/a"
+        if recent_metrics:
+            recent_text = f"Brier={recent_metrics['brier_score']:.4f}  Acc={recent_metrics['accuracy']:.1%}"
+        print(
+            f"  {name:13s}  "
+            f"all: Brier={all_metrics.get('brier_score', 0):.4f}  Acc={all_metrics.get('accuracy', 0):.1%}  "
+            f"{recent_label}: {recent_text}"
+        )
+    print(f"\n  Coach gate:    {'KEEP' if keep_coach else 'ZERO'}")
+    print(f"  Pedigree gate: {'KEEP' if keep_pedigree else 'ZERO'}")
+
+
 PARAM_SPEC = [
     # seed_weight removed: efficiency model already captures seed info;
     # 0.0 ties or beats 0.18 on 2023-2025 folds (Brier diff < 0.002)
@@ -1015,6 +1089,7 @@ def main():
     report_only = "--report-only" in sys.argv
     phase2_only = "--phase2-only" in sys.argv
     priors_only = "--priors-only" in sys.argv
+    no_gate = "--no-gate" in sys.argv
     holdout_year = None
     exclude_years = None
     objective_name = "brier"
@@ -1169,9 +1244,19 @@ def main():
         default_val = getattr(DEFAULT_CONFIG, k)
         print(f"  {k}: {default_val} -> {v}")
 
+    if priors_only and not no_gate:
+        gate_report, keep_coach, keep_pedigree, gated_config = evaluate_prior_gate(pairs, opt_config)
+        print_prior_gate_report(gate_report, keep_coach, keep_pedigree)
+        opt_config = gated_config
+        optimized["coach_tourney_max_bonus"] = round(float(opt_config.coach_tourney_max_bonus), 4)
+        optimized["pedigree_max_bonus"] = round(float(opt_config.pedigree_max_bonus), 4)
+
     # Score with optimized config (full data)
     opt_metrics = score_model(pairs, opt_config)
-    print_report(opt_metrics, "OPTIMIZED CONFIG (all data)")
+    label = "OPTIMIZED CONFIG (all data)"
+    if priors_only:
+        label = "OPTIMIZED + GATED CONFIG (all data)"
+    print_report(opt_metrics, label)
 
     # NOTE: --holdout eval uses the final model which WAS trained on holdout_year data.
     # The honest out-of-sample estimate is the cross-validated Brier printed above.
