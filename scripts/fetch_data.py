@@ -145,7 +145,19 @@ def merge_injuries(merged, injuries_data):
         existing_inj = merged[key].get("injuries", [])
         # Prefer non-empty over empty when multiple keys map to same team (e.g. UCLA vs UCLA Bruins)
         if inj_list or not existing_inj:
-            merged[key]["injuries"] = inj_list
+            # Deduplicate: merge by normalized player name (e.g. "Mikel Brown" vs "Mikel Brown Jr.")
+            combined = list(existing_inj) + list(inj_list)
+            seen = {}
+            for inj in combined:
+                # Normalize: strip Jr./Sr./III, lowercase
+                pname = inj.get("player", "").lower().strip()
+                for suffix in (" jr.", " jr", " sr.", " sr", " ii", " iii", " iv"):
+                    if pname.endswith(suffix):
+                        pname = pname[:-len(suffix)].strip()
+                # Keep the entry with higher BPR data (more complete)
+                if pname not in seen or (inj.get("bpr", 0) > seen[pname].get("bpr", 0)):
+                    seen[pname] = inj
+            merged[key]["injuries"] = list(seen.values())
         if roster or not merged[key].get("roster"):
             merged[key]["roster"] = roster
         # Enrich injury BPR/poss from roster when ESPN used fallback values

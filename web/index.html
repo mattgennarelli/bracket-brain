@@ -1728,7 +1728,7 @@ async function showAnalysis(gameId) {
         ${_marginRow('Matchup Efficiency', baseM, st.teamA, st.teamB)}
         ${_marginRow('Intangible Factors', factorM, st.teamA, st.teamB)}
         ${Math.abs(extrasSum) >= 0.1 ? _marginRow('Stat Adjustments', extrasSum, st.teamA, st.teamB) : ''}
-        ${Math.abs(upsetB) >= 0.1 ? _marginRow('Upset Adjustment', upsetB, st.teamA, st.teamB) : ''}
+        ${Math.abs(upsetB) >= 0.1 ? _marginRow('Underdog Resilience', upsetB, st.teamA, st.teamB) : ''}
         <div class="margin-total">
           <span>Predicted Margin</span>
           <strong style="color:${totalM >= 0 ? 'var(--green)' : 'var(--red)'}">${favA ? st.teamA : st.teamB} −${Math.abs(totalM).toFixed(1)}</strong>
@@ -1863,6 +1863,31 @@ async function showAnalysis(gameId) {
           const pbProb = pickBox.querySelector('.pb-prob');
           if (pbTeam) pbTeam.textContent = `(${updated.pick_seed || ''}) ${updated.pick}`;
           if (pbProb) pbProb.textContent = (Math.max(newPA, newPB) * 100).toFixed(0) + '%';
+        }
+        // Update "How the Model Gets Here" margin breakdown
+        const marginStack = content.querySelector('.margin-stack');
+        if (marginStack && updated.base_margin != null) {
+          const newFlipped = flipped;
+          const newBaseM = newFlipped ? -(updated.base_margin || 0) : (updated.base_margin || 0);
+          const newFactorM = newFlipped ? -(updated.factor_margin || 0) : (updated.factor_margin || 0);
+          const newPossM = newFlipped ? -(updated.possession_edge_margin || 0) : (updated.possession_edge_margin || 0);
+          const newFtM = newFlipped ? -(updated.ft_edge_margin || 0) : (updated.ft_edge_margin || 0);
+          const newFoulM = newFlipped ? -(updated.foul_rate_margin || 0) : (updated.foul_rate_margin || 0);
+          const newSosM = newFlipped ? -(updated.sos_edge_margin || 0) : (updated.sos_edge_margin || 0);
+          const newRunsM = newFlipped ? -(updated.runs_margin || 0) : (updated.runs_margin || 0);
+          const newExtrasSum = newPossM + newFtM + newFoulM + newSosM + newRunsM;
+          const newUpsetB = newFlipped ? -(updated.upset_tolerance_bonus || 0) : (updated.upset_tolerance_bonus || 0);
+          const newTotalM = newFlipped ? -(updated.predicted_margin || 0) : (updated.predicted_margin || 0);
+          const newFavA = newTotalM >= 0;
+          let rows = _marginRow('Matchup Efficiency', newBaseM, st.teamA, st.teamB);
+          rows += _marginRow('Intangible Factors', newFactorM, st.teamA, st.teamB);
+          if (Math.abs(newExtrasSum) >= 0.1) rows += _marginRow('Stat Adjustments', newExtrasSum, st.teamA, st.teamB);
+          if (Math.abs(newUpsetB) >= 0.1) rows += _marginRow('Underdog Resilience', newUpsetB, st.teamA, st.teamB);
+          rows += `<div class="margin-total"><span>Predicted Margin</span><strong style="color:${newTotalM >= 0 ? 'var(--green)' : 'var(--red)'}">${newFavA ? st.teamA : st.teamB} −${Math.abs(newTotalM).toFixed(1)}</strong></div>`;
+          // Preserve Vegas line if present
+          const vegasDiv = marginStack.querySelector('.margin-vegas');
+          const vegasHtml = vegasDiv ? vegasDiv.outerHTML : '';
+          marginStack.innerHTML = rows + vegasHtml;
         }
         // Update injury impact display (use data-team for reliable matching)
         const newStatsA = updated.stats_a || {};

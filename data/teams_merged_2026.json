@@ -1670,20 +1670,10 @@
         "poss": 1133.0,
         "bpr_share": 0.1152,
         "importance": 0.1152
-      },
-      {
-        "player": "Mikel Brown Jr.",
-        "status": "out",
-        "bpr": 6.4315,
-        "poss": 1133.0,
-        "bpr_share": 0.1152,
-        "importance": 0.1152,
-        "source": "espn_news",
-        "updated_at": "2026-03-18T21:22:25.108016+00:00"
       }
     ],
     "roster": [],
-    "injury_impact": 5.380256448933719
+    "injury_impact": 2.6901282244668594
   },
   {
     "team": "Alabama",
