@@ -1919,9 +1919,13 @@ def _generate_key_factors(result, team_a, team_b):
     """Generate list of key factors driving the pick."""
     factors = []
     margin = result["predicted_margin"]
-    if abs(margin) >= 3:
+    base_margin = result.get("base_margin", margin)
+    if abs(base_margin) >= 3:
+        better = team_a["team"] if base_margin > 0 else team_b["team"]
+        factors.append(f"{better}: {abs(base_margin):.0f}-pt efficiency edge")
+    elif abs(margin) >= 3:
         better = team_a["team"] if margin > 0 else team_b["team"]
-        factors.append(f"{better}: {abs(margin):.0f}-pt efficiency edge")
+        factors.append(f"{better}: {abs(margin):.0f}-pt overall edge")
 
     sos_m = result.get("sos_margin", 0)
     if abs(sos_m) > 0.5:
