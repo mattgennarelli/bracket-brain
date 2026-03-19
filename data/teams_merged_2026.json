@@ -70,6 +70,7 @@
     "em_adj_o": 128.5847,
     "em_adj_d": 85.3065,
     "conf_strength_score": 0.6508,
+    "coach": "Jon Scheyer",
     "conf_tourney_momentum": 1.0,
     "injuries": [
       {
@@ -90,14 +91,13 @@
       },
       {
         "player": "Patrick Ngongba",
-        "status": "out",
+        "status": "probable",
         "bpr": 9.977,
         "poss": 1106.0,
         "bpr_share": 0.1526,
         "importance": 0.1526,
         "source": "espn_news",
-        "updated_at": "2026-03-18T21:22:21.237490+00:00",
-        "return_round": "Sweet 16"
+        "updated_at": "2026-03-18T21:22:21.237490+00:00"
       }
     ],
     "roster": [
@@ -162,7 +162,7 @@
         "poss": 38.0
       }
     ],
-    "injury_impact": 3.1532342798397845
+    "injury_impact": 1.2489432515877301
   },
   {
     "team": "Michigan",
@@ -235,6 +235,7 @@
     "em_adj_o": 128.8237,
     "em_adj_d": 83.9695,
     "conf_strength_score": 0.4513,
+    "coach": "Dusty May",
     "conf_tourney_momentum": 0.7,
     "injuries": [
       {
@@ -407,6 +408,7 @@
     "em_adj_o": 123.2374,
     "em_adj_d": 86.0396,
     "conf_strength_score": 0.4743,
+    "coach": "Tommy Lloyd",
     "conf_tourney_momentum": 1.0,
     "injuries": [],
     "roster": [
@@ -554,6 +556,7 @@
     "em_adj_o": 123.3638,
     "em_adj_d": 88.1966,
     "conf_strength_score": 0.9517,
+    "coach": "Todd Golden",
     "conf_tourney_momentum": 0.4,
     "injuries": [],
     "roster": [
@@ -696,6 +699,7 @@
     "em_adj_o": 123.0245,
     "em_adj_d": 90.0903,
     "conf_strength_score": 0.6525,
+    "coach": "Kelvin Sampson",
     "conf_tourney_momentum": 0.7,
     "injuries": [],
     "roster": [
@@ -838,6 +842,7 @@
     "em_adj_o": 131.1822,
     "em_adj_d": 95.288,
     "conf_strength_score": 0.5692,
+    "coach": "Brad Underwood",
     "conf_tourney_momentum": 0.2,
     "injuries": [
       {
@@ -989,6 +994,7 @@
     "em_adj_o": 124.3159,
     "em_adj_d": 87.8907,
     "conf_strength_score": 0.0844,
+    "coach": "T. J. Otzelberger",
     "conf_tourney_momentum": 0.4,
     "injuries": [],
     "roster": [
@@ -1131,6 +1137,7 @@
     "em_adj_o": 131.0638,
     "em_adj_d": 98.3677,
     "conf_strength_score": 0.2509,
+    "coach": "Matt Painter",
     "conf_tourney_momentum": 1.0,
     "injuries": [],
     "roster": [
@@ -1273,6 +1280,7 @@
     "em_adj_o": 122.999,
     "em_adj_d": 92.8132,
     "conf_strength_score": 0.5008,
+    "coach": "Dan Hurley",
     "conf_tourney_momentum": 0.7,
     "injuries": [
       {
@@ -1432,6 +1440,7 @@
     "em_adj_o": 123.5713,
     "em_adj_d": 95.9951,
     "conf_strength_score": 0.1522,
+    "coach": "Mark Byington",
     "conf_tourney_momentum": 0.7,
     "injuries": [
       {
@@ -1593,6 +1602,7 @@
     "em_adj_o": 121.7625,
     "em_adj_d": 89.096,
     "conf_strength_score": 0.2582,
+    "coach": "Mark Few",
     "conf_tourney_momentum": 1.0,
     "injuries": [
       {
@@ -1757,6 +1767,7 @@
     "em_adj_o": 122.4134,
     "em_adj_d": 97.6562,
     "conf_strength_score": 0.8697,
+    "coach": "Grant McCasland",
     "conf_tourney_momentum": 0.2,
     "injuries": [
       {
@@ -1918,6 +1929,7 @@
     "em_adj_o": 121.0397,
     "em_adj_d": 89.6627,
     "conf_strength_score": 0.6851,
+    "coach": "Tom Izzo",
     "conf_tourney_momentum": 0.2,
     "injuries": [
       {
@@ -2082,6 +2094,7 @@
     "em_adj_o": 123.4923,
     "em_adj_d": 94.6253,
     "conf_strength_score": 0.463,
+    "coach": "Ryan Odom",
     "conf_tourney_momentum": 0.7,
     "injuries": [],
     "roster": [
@@ -2229,6 +2242,7 @@
     "em_adj_o": 118.1521,
     "em_adj_d": 91.0412,
     "conf_strength_score": 0.3615,
+    "coach": "Rick Pitino",
     "conf_tourney_momentum": 1.0,
     "injuries": [
       {
@@ -2393,6 +2407,7 @@
     "em_adj_o": 123.3123,
     "em_adj_d": 94.9515,
     "conf_strength_score": 0.4655,
+    "coach": "Rick Barnes",
     "conf_tourney_momentum": 0.2,
     "injuries": [
       {
@@ -2544,6 +2559,7 @@
     "em_adj_o": 122.7489,
     "em_adj_d": 97.1475,
     "conf_strength_score": 0.5728,
+    "coach": "Pat Kelsey",
     "conf_tourney_momentum": 0.2,
     "injuries": [
       {
@@ -2700,6 +2716,7 @@
     "em_adj_o": 124.4999,
     "em_adj_d": 101.6282,
     "conf_strength_score": 0.4262,
+    "coach": "Nate Oats",
     "conf_tourney_momentum": 0.2,
     "injuries": [
       {
@@ -2890,6 +2907,7 @@
     "em_adj_o": 125.7889,
     "em_adj_d": 99.9478,
     "conf_strength_score": 0.569,
+    "coach": "John Calipari",
     "conf_tourney_momentum": 1.0,
     "injuries": [
       {
@@ -3041,6 +3059,7 @@
     "em_adj_o": 117.8989,
     "em_adj_d": 88.5911,
     "conf_strength_score": 0.9873,
+    "coach": "Fred Hoiberg",
     "conf_tourney_momentum": 0.2,
     "injuries": [
       {
@@ -3208,6 +3227,7 @@
     "em_adj_o": 124.5512,
     "em_adj_d": 100.0171,
     "conf_strength_score": 0.6893,
+    "coach": "Greg Gard",
     "conf_tourney_momentum": 0.4,
     "injuries": [
       {
@@ -3372,6 +3392,7 @@
     "em_adj_o": 118.3942,
     "em_adj_d": 87.4813,
     "conf_strength_score": 0.552,
+    "coach": "Bill Self",
     "conf_tourney_momentum": 0.4,
     "injuries": [],
     "roster": [
@@ -3524,6 +3545,7 @@
     "em_adj_o": 123.1905,
     "em_adj_d": 98.4324,
     "conf_strength_score": 0.6466,
+    "coach": "Jake Diebler",
     "conf_tourney_momentum": 0.2,
     "injuries": [
       {
@@ -3691,6 +3713,7 @@
     "em_adj_o": 118.8854,
     "em_adj_d": 101.2438,
     "conf_strength_score": 0.4952,
+    "coach": "Mick Cronin",
     "conf_tourney_momentum": 0.4,
     "injuries": [
       {
@@ -3858,6 +3881,7 @@
     "em_adj_o": 118.0791,
     "em_adj_d": 94.6824,
     "conf_strength_score": 0.6277,
+    "coach": "Randy Bennett",
     "conf_tourney_momentum": 0.4,
     "injuries": [
       {
@@ -4009,6 +4033,7 @@
     "em_adj_o": 120.4662,
     "em_adj_d": 95.4186,
     "conf_strength_score": 0.3668,
+    "coach": "Ben McCollum",
     "injuries": [
       {
         "player": "Peyton McCollum",
@@ -4154,6 +4179,7 @@
     "em_adj_o": 121.3671,
     "em_adj_d": 91.8923,
     "conf_strength_score": 0.4668,
+    "coach": "Hubert Davis",
     "conf_tourney_momentum": 0.2,
     "injuries": [
       {
@@ -4328,6 +4354,7 @@
     "em_adj_o": 122.3685,
     "em_adj_d": 104.1272,
     "conf_strength_score": 0.6795,
+    "coach": "Herb Sendek",
     "conf_tourney_momentum": 0.7,
     "injuries": [
       {
@@ -4477,6 +4504,7 @@
     "em_adj_o": 117.6363,
     "em_adj_d": 97.9786,
     "conf_strength_score": 0.5636,
+    "coach": "Jerrod Calhoun",
     "conf_tourney_momentum": 1.0,
     "injuries": [],
     "roster": [
@@ -4614,6 +4642,7 @@
     "em_adj_o": 117.6969,
     "em_adj_d": 91.1884,
     "conf_strength_score": 0.4699,
+    "coach": "Brad Brownell",
     "conf_tourney_momentum": 0.4,
     "injuries": [
       {
@@ -4776,6 +4805,7 @@
     "em_adj_o": 117.8947,
     "em_adj_d": 96.5283,
     "conf_strength_score": 0.5046,
+    "coach": "Mark Pope",
     "conf_tourney_momentum": 0.2,
     "injuries": [
       {
@@ -5090,6 +5120,7 @@
     "em_adj_o": 122.7296,
     "em_adj_d": 97.6481,
     "conf_strength_score": 0.2086,
+    "coach": "Kevin Young",
     "conf_tourney_momentum": 0.2,
     "injuries": [
       {
@@ -5270,6 +5301,7 @@
     "em_adj_o": 120.2447,
     "em_adj_d": 97.9944,
     "conf_strength_score": 0.561,
+    "coach": "Darian DeVries",
     "injuries": [],
     "roster": [
       {
@@ -5411,6 +5443,7 @@
     "em_adj_o": 121.3402,
     "em_adj_d": 97.1949,
     "conf_strength_score": 0.5242,
+    "coach": "Jai Lucas",
     "conf_tourney_momentum": 0.4,
     "injuries": [
       {
@@ -5565,6 +5598,7 @@
     "em_adj_o": 118.1667,
     "em_adj_d": 93.3107,
     "conf_strength_score": 0.6424,
+    "coach": "Kevin Willard",
     "conf_tourney_momentum": 0.2,
     "injuries": [
       {
@@ -5722,6 +5756,7 @@
     "em_adj_o": 124.1126,
     "em_adj_d": 100.657,
     "conf_strength_score": 0.5782,
+    "coach": "Mike White",
     "injuries": [],
     "roster": [
       {
@@ -5863,6 +5898,7 @@
     "em_adj_o": 123.0925,
     "em_adj_d": 99.0735,
     "conf_strength_score": 0.4886,
+    "coach": "Will Wade",
     "conf_tourney_momentum": 0.2,
     "injuries": [
       {
@@ -6014,6 +6050,7 @@
     "em_adj_o": 117.3626,
     "em_adj_d": 97.4799,
     "conf_strength_score": 0.831,
+    "coach": "Bucky McMillan",
     "injuries": [
       {
         "player": "Mackenzie Mgbako",
@@ -6174,6 +6211,7 @@
     "em_adj_o": 124.823,
     "em_adj_d": 105.078,
     "conf_strength_score": 0.4777,
+    "coach": "Porter Moser",
     "injuries": [],
     "roster": [
       {
@@ -6310,6 +6348,7 @@
     "em_adj_o": 122.9395,
     "em_adj_d": 104.8948,
     "conf_strength_score": 0.5037,
+    "coach": "Steven Pearl",
     "injuries": [
       {
         "player": "Emeka Opurum",
@@ -6455,6 +6494,7 @@
     "em_adj_o": 120.6962,
     "em_adj_d": 100.486,
     "conf_strength_score": 0.5079,
+    "coach": "Andy Enfield",
     "injuries": [
       {
         "player": "B.J. Edwards",
@@ -6600,6 +6640,7 @@
     "em_adj_o": 120.4438,
     "em_adj_d": 94.522,
     "conf_strength_score": 0.579,
+    "coach": "Josh Schertz",
     "conf_tourney_momentum": 0.0,
     "injuries": [],
     "roster": [
@@ -6742,6 +6783,7 @@
     "em_adj_o": 106.9615,
     "em_adj_d": 95.8986,
     "conf_strength_score": 0.6973,
+    "coach": "Brian Dutcher",
     "injuries": [],
     "roster": [
       {
@@ -6883,6 +6925,7 @@
     "em_adj_o": 121.0366,
     "em_adj_d": 102.8865,
     "conf_strength_score": 0.7435,
+    "coach": "Sean Miller",
     "injuries": [
       {
         "player": "Lassina Traore",
@@ -7028,6 +7071,7 @@
     "em_adj_o": 117.7477,
     "em_adj_d": 101.6956,
     "conf_strength_score": 0.7908,
+    "coach": "Dennis Gates",
     "injuries": [
       {
         "player": "Jevon Porter",
@@ -7186,6 +7230,7 @@
     "em_adj_o": 121.792,
     "em_adj_d": 102.7269,
     "conf_strength_score": 0.6062,
+    "coach": "Scott Drew",
     "injuries": [
       {
         "player": "JJ White",
@@ -7342,6 +7387,7 @@
     "em_adj_o": 117.0716,
     "em_adj_d": 98.0678,
     "conf_strength_score": 0.3596,
+    "coach": "Phil Martelli Jr.",
     "conf_tourney_momentum": 1.0,
     "injuries": [],
     "roster": [
@@ -7484,6 +7530,7 @@
     "em_adj_o": 112.2294,
     "em_adj_d": 91.7882,
     "conf_strength_score": 0.6062,
+    "coach": "Jamie Dixon",
     "conf_tourney_momentum": 0.2,
     "injuries": [],
     "roster": [
@@ -7626,6 +7673,7 @@
     "em_adj_o": 116.8237,
     "em_adj_d": 95.17,
     "conf_strength_score": 0.4952,
+    "coach": "Bryan Hodgson",
     "conf_tourney_momentum": 1.0,
     "injuries": [
       {
@@ -7785,6 +7833,7 @@
     "em_adj_o": 115.8554,
     "em_adj_d": 102.6478,
     "conf_strength_score": 0.6665,
+    "coach": "Luke Loucks",
     "injuries": [],
     "roster": [
       {
@@ -7921,6 +7970,7 @@
     "em_adj_o": 117.1535,
     "em_adj_d": 99.236,
     "conf_strength_score": 0.5777,
+    "coach": "Danny Sprinkle",
     "injuries": [],
     "roster": [
       {
@@ -8067,6 +8117,7 @@
     "em_adj_o": 113.8079,
     "em_adj_d": 95.8236,
     "conf_strength_score": 0.7681,
+    "coach": "Eric Olen",
     "injuries": [],
     "roster": [
       {
@@ -8203,6 +8254,7 @@
     "em_adj_o": 116.62,
     "em_adj_d": 100.9341,
     "conf_strength_score": 0.7313,
+    "coach": "Mike Young",
     "injuries": [],
     "roster": [
       {
@@ -8334,6 +8386,7 @@
     "em_adj_o": 111.1402,
     "em_adj_d": 94.3331,
     "conf_strength_score": 0.8027,
+    "coach": "Bryce Drew",
     "injuries": [],
     "roster": [
       {
@@ -8470,6 +8523,7 @@
     "em_adj_o": 114.4873,
     "em_adj_d": 103.365,
     "conf_strength_score": 0.4419,
+    "coach": "Leon Rice",
     "injuries": [
       {
         "player": "Julian Bowie",
@@ -8620,6 +8674,7 @@
     "em_adj_o": 116.6728,
     "em_adj_d": 100.153,
     "conf_strength_score": 0.6583,
+    "coach": "Johnny Dawkins",
     "conf_tourney_momentum": 0.2,
     "injuries": [],
     "roster": [
@@ -8767,6 +8822,7 @@
     "em_adj_o": 112.2394,
     "em_adj_d": 102.2894,
     "conf_strength_score": 0.7696,
+    "coach": "Niko Medved",
     "injuries": [
       {
         "player": "Robert Vaihola",
@@ -8931,6 +8987,7 @@
     "em_adj_o": 115.0802,
     "em_adj_d": 100.6086,
     "conf_strength_score": 0.5258,
+    "coach": "Kyle Smith",
     "injuries": [
       {
         "player": "Chisom Okpara",
@@ -9110,6 +9167,7 @@
     "em_adj_o": 109.5657,
     "em_adj_d": 91.8356,
     "conf_strength_score": 0.3031,
+    "coach": "Shaheen Holloway",
     "conf_tourney_momentum": 0.4,
     "injuries": [
       {
@@ -9398,6 +9456,7 @@
     "em_adj_o": 107.8823,
     "em_adj_d": 86.0046,
     "conf_strength_score": 0.5188,
+    "coach": "Ross Hodge",
     "injuries": [],
     "roster": [
       {
@@ -9534,6 +9593,7 @@
     "em_adj_o": 115.9351,
     "em_adj_d": 104.2165,
     "conf_strength_score": 0.3199,
+    "coach": "Chris Collins",
     "injuries": [
       {
         "player": "Arrinten Page",
@@ -9679,6 +9739,7 @@
     "em_adj_o": 111.0847,
     "em_adj_d": 96.2472,
     "conf_strength_score": 0.3523,
+    "coach": "Chris Beard",
     "conf_tourney_momentum": 0.4,
     "injuries": [
       {
@@ -9840,6 +9901,7 @@
     "em_adj_o": 120.5088,
     "em_adj_d": 100.483,
     "conf_strength_score": 0.8021,
+    "coach": "Eric Konkol",
     "injuries": [],
     "roster": [
       {
@@ -9976,6 +10038,7 @@
     "em_adj_o": 112.0446,
     "em_adj_d": 98.2069,
     "conf_strength_score": 0.4091,
+    "coach": "Eric Musselman",
     "injuries": [],
     "roster": [
       {
@@ -10122,6 +10185,7 @@
     "em_adj_o": 115.1441,
     "em_adj_d": 103.0512,
     "conf_strength_score": 0.4642,
+    "coach": "Steve Forbes",
     "injuries": [],
     "roster": [
       {
@@ -10258,6 +10322,7 @@
     "em_adj_o": 114.3337,
     "em_adj_d": 97.3563,
     "conf_strength_score": 0.5179,
+    "coach": "Mark Madsen",
     "injuries": [
       {
         "player": "Rytis Petraitis",
@@ -10439,6 +10504,7 @@
     "em_adj_o": 120.0669,
     "em_adj_d": 101.163,
     "conf_strength_score": 0.1359,
+    "coach": "Matt McMahon",
     "injuries": [
       {
         "player": "Dedan Thomas",
@@ -10589,6 +10655,7 @@
     "em_adj_o": 112.9805,
     "em_adj_d": 91.5734,
     "conf_strength_score": 0.1721,
+    "coach": "Ben Jacobson",
     "conf_tourney_momentum": 1.0,
     "injuries": [
       {
@@ -10743,6 +10810,7 @@
     "em_adj_o": 119.8305,
     "em_adj_d": 101.2013,
     "conf_strength_score": 0.7668,
+    "coach": "John Groce",
     "conf_tourney_momentum": 1.0,
     "injuries": [],
     "roster": [
@@ -11026,6 +11094,7 @@
     "em_adj_o": 111.5674,
     "em_adj_d": 95.1896,
     "conf_strength_score": 0.357,
+    "coach": "Bill Armstrong",
     "conf_tourney_momentum": 1.0,
     "injuries": [],
     "roster": [
@@ -11337,6 +11406,7 @@
     "em_adj_o": 117.9661,
     "em_adj_d": 104.2568,
     "conf_strength_score": 0.2888,
+    "coach": "Steve Lutz",
     "injuries": [
       {
         "player": "Parsa Fallah",
@@ -11505,6 +11575,7 @@
     "em_adj_o": 108.0495,
     "em_adj_d": 100.0996,
     "conf_strength_score": 0.6643,
+    "coach": "Shaka Smart",
     "injuries": [
       {
         "player": "Sean Jones",
@@ -11650,6 +11721,7 @@
     "em_adj_o": 114.5153,
     "em_adj_d": 107.9949,
     "conf_strength_score": 0.6312,
+    "coach": "Tad Boyle",
     "injuries": [
       {
         "player": "Sebastian Rancik",
@@ -11811,6 +11883,7 @@
     "em_adj_o": 112.1335,
     "em_adj_d": 101.3649,
     "conf_strength_score": 0.6079,
+    "coach": "Ed Cooley",
     "conf_tourney_momentum": 0.4,
     "injuries": [],
     "roster": [
@@ -11953,6 +12026,7 @@
     "em_adj_o": 113.2569,
     "em_adj_d": 101.5702,
     "conf_strength_score": 0.5542,
+    "coach": "Steve Alford",
     "injuries": [],
     "roster": [
       {
@@ -12099,6 +12173,7 @@
     "em_adj_o": 115.5086,
     "em_adj_d": 101.6337,
     "conf_strength_score": 0.593,
+    "coach": "Evan Bradds",
     "injuries": [
       {
         "player": "Nic McClain",
@@ -12404,6 +12479,7 @@
     "em_adj_o": 108.43,
     "em_adj_d": 93.3087,
     "conf_strength_score": 0.3446,
+    "coach": "Anthony Grant",
     "injuries": [
       {
         "player": "Evan Dickey",
@@ -12562,6 +12638,7 @@
     "em_adj_o": 115.0142,
     "em_adj_d": 101.3226,
     "conf_strength_score": 0.461,
+    "coach": "Chris Caputo",
     "injuries": [
       {
         "player": "Ty Bevins",
@@ -12713,6 +12790,7 @@
     "em_adj_o": 113.8302,
     "em_adj_d": 96.9577,
     "conf_strength_score": 0.4661,
+    "coach": "Paul Mills",
     "injuries": [
       {
         "player": "Jaret Valencia",
@@ -12874,6 +12952,7 @@
     "em_adj_o": 115.3715,
     "em_adj_d": 104.883,
     "conf_strength_score": 0.788,
+    "coach": "Greg McDermott",
     "injuries": [
       {
         "player": "Liam McChesney",
@@ -13028,6 +13107,7 @@
     "ppg": 84.1,
     "opp_ppg": 73.6,
     "conf_strength_score": 0.6286,
+    "coach": "Travis Steele",
     "injuries": [],
     "roster": [
       {
@@ -13159,6 +13239,7 @@
     "em_adj_o": 110.2877,
     "em_adj_d": 99.3267,
     "conf_strength_score": 0.3211,
+    "coach": "Todd Phillips",
     "injuries": [
       {
         "player": "Tyler Hendricks",
@@ -13309,6 +13390,7 @@
     "em_adj_o": 117.6291,
     "em_adj_d": 104.6307,
     "conf_strength_score": 0.2656,
+    "coach": "Ali Farokhmanesh",
     "injuries": [],
     "roster": [
       {
@@ -13445,6 +13527,7 @@
     "em_adj_o": 112.5742,
     "em_adj_d": 100.6437,
     "conf_strength_score": 0.7854,
+    "coach": "Matt Braeuer",
     "conf_tourney_momentum": 0.7,
     "injuries": [],
     "roster": [
@@ -13587,6 +13670,7 @@
     "em_adj_o": 109.46,
     "em_adj_d": 99.9514,
     "conf_strength_score": 0.5066,
+    "coach": "Dana Altman",
     "injuries": [],
     "roster": [
       {
@@ -13733,6 +13817,7 @@
     "em_adj_o": 111.7937,
     "em_adj_d": 100.0464,
     "conf_strength_score": 0.4738,
+    "coach": "Speedy Claxton",
     "conf_tourney_momentum": 1.0,
     "injuries": [],
     "roster": [
@@ -13865,6 +13950,7 @@
     "em_adj_o": 120.1335,
     "em_adj_d": 105.6339,
     "conf_strength_score": 0.3586,
+    "coach": "James Jones",
     "injuries": [],
     "roster": [
       {
@@ -14011,6 +14097,7 @@
     "em_adj_o": 119.3403,
     "em_adj_d": 102.4818,
     "conf_strength_score": 0.403,
+    "coach": "Flynn Clayman",
     "conf_tourney_momentum": 1.0,
     "injuries": [],
     "roster": [
@@ -14163,6 +14250,7 @@
     "em_adj_o": 113.9411,
     "em_adj_d": 106.1109,
     "conf_strength_score": 0.3928,
+    "coach": "Richard Pitino",
     "injuries": [
       {
         "player": "Michael Wolf",
@@ -14314,6 +14402,7 @@
     "em_adj_o": 114.1722,
     "em_adj_d": 106.7795,
     "conf_strength_score": 0.34,
+    "coach": "Sundance Wicks",
     "injuries": [
       {
         "player": "Matija Belic",
@@ -14452,6 +14541,7 @@
     "ppg": 70.6,
     "opp_ppg": 65.3,
     "conf_strength_score": 0.5676,
+    "coach": "Rick Croy",
     "injuries": [],
     "roster": [],
     "injury_impact": 0.0
@@ -14527,6 +14617,7 @@
     "em_adj_o": 114.3746,
     "em_adj_d": 97.8542,
     "conf_strength_score": 0.3364,
+    "coach": "Micah Shrewsberry",
     "injuries": [
       {
         "player": "Markus Burton",
@@ -14690,6 +14781,7 @@
     "em_adj_o": 103.3316,
     "em_adj_d": 100.8929,
     "conf_strength_score": 0.9578,
+    "coach": "Steve Donahue",
     "injuries": [],
     "roster": [
       {
@@ -14836,6 +14928,7 @@
     "em_adj_o": 109.4698,
     "em_adj_d": 105.5032,
     "conf_strength_score": 0.7247,
+    "coach": "Chris Jans",
     "injuries": [
       {
         "player": "Gai Chol",
@@ -14981,6 +15074,7 @@
     "em_adj_o": 109.1057,
     "em_adj_d": 103.1525,
     "conf_strength_score": 0.5021,
+    "coach": "Lamont Paris",
     "injuries": [],
     "roster": [
       {
@@ -15122,6 +15216,7 @@
     "em_adj_o": 107.3277,
     "em_adj_d": 98.0275,
     "conf_strength_score": 0.7549,
+    "coach": "Chris Holtmann",
     "injuries": [],
     "roster": [
       {
@@ -15263,6 +15358,7 @@
     "em_adj_o": 109.9892,
     "em_adj_d": 102.8437,
     "conf_strength_score": 0.4409,
+    "coach": "Jeff Capel III",
     "injuries": [],
     "roster": [
       {
@@ -15389,6 +15485,7 @@
     "em_adj_o": 110.9901,
     "em_adj_d": 104.1121,
     "conf_strength_score": 0.3572,
+    "coach": "Casey Alexander",
     "injuries": [],
     "roster": [
       {
@@ -15530,6 +15627,7 @@
     "em_adj_o": 102.2924,
     "em_adj_d": 96.1612,
     "conf_strength_score": 0.5981,
+    "coach": "Chris Victor",
     "injuries": [],
     "roster": [
       {
@@ -15661,6 +15759,7 @@
     "em_adj_o": 106.3754,
     "em_adj_d": 103.9657,
     "conf_strength_score": 0.641,
+    "coach": "Matt McKillop",
     "injuries": [
       {
         "player": "Joe Hurlburt",
@@ -15811,6 +15910,7 @@
     "em_adj_o": 115.5314,
     "em_adj_d": 104.8045,
     "conf_strength_score": 0.4153,
+    "coach": "Chris Mudge",
     "injuries": [],
     "roster": [
       {
@@ -15927,6 +16027,7 @@
     "em_adj_o": 108.0766,
     "em_adj_d": 103.6775,
     "conf_strength_score": 0.5922,
+    "coach": "Dave Smart",
     "injuries": [],
     "roster": [
       {
@@ -16053,6 +16154,7 @@
     "em_adj_o": 103.0726,
     "em_adj_d": 96.7294,
     "conf_strength_score": 0.6392,
+    "coach": "Russell Turner",
     "conf_tourney_momentum": 0.7,
     "injuries": [],
     "roster": [
@@ -16190,6 +16292,7 @@
     "em_adj_o": 108.3432,
     "em_adj_d": 104.1013,
     "conf_strength_score": 0.6674,
+    "coach": "Josh Pastner",
     "injuries": [
       {
         "player": "Ladji Dembele",
@@ -16343,6 +16446,7 @@
     "em_adj_o": 112.2049,
     "em_adj_d": 93.9692,
     "conf_strength_score": 0.5628,
+    "coach": "Ryan Pedon",
     "injuries": [],
     "roster": [
       {
@@ -16444,6 +16548,7 @@
     "ppg": 72.1,
     "opp_ppg": 68.9,
     "conf_strength_score": 0.8285,
+    "coach": "Robert Ehsan",
     "injuries": [],
     "roster": [
       {
@@ -16585,6 +16690,7 @@
     "em_adj_o": 112.7803,
     "em_adj_d": 102.188,
     "conf_strength_score": 0.4945,
+    "coach": "John Tauer",
     "injuries": [],
     "roster": [
       {
@@ -16736,6 +16842,7 @@
     "em_adj_o": 105.8462,
     "em_adj_d": 96.822,
     "conf_strength_score": 0.3858,
+    "coach": "Buzz Williams",
     "injuries": [],
     "roster": [
       {
@@ -16872,6 +16979,7 @@
     "em_adj_o": 112.9294,
     "em_adj_d": 101.4742,
     "conf_strength_score": 0.468,
+    "coach": "David Richman",
     "conf_tourney_momentum": 1.0,
     "injuries": [],
     "roster": [
@@ -17014,6 +17122,7 @@
     "em_adj_o": 111.7042,
     "em_adj_d": 107.7134,
     "conf_strength_score": 0.4766,
+    "coach": "Alex Jensen",
     "injuries": [],
     "roster": [
       {
@@ -17155,6 +17264,7 @@
     "em_adj_o": 108.8039,
     "em_adj_d": 96.6387,
     "conf_strength_score": 0.439,
+    "coach": "Eran Ganot",
     "conf_tourney_momentum": 1.0,
     "injuries": [
       {
@@ -17301,6 +17411,7 @@
     "em_adj_o": 109.7888,
     "em_adj_d": 105.4152,
     "conf_strength_score": 0.7799,
+    "coach": "Steve Pikiell",
     "injuries": [
       {
         "player": "Baye Fall",
@@ -17459,6 +17570,7 @@
     "em_adj_o": 112.6567,
     "em_adj_d": 104.1713,
     "conf_strength_score": 0.4055,
+    "coach": "Tony Skinn",
     "injuries": [
       {
         "player": "Brayden O'Connor",
@@ -17597,6 +17709,7 @@
     "ppg": 72.8,
     "opp_ppg": 69.7,
     "conf_strength_score": 0.3552,
+    "coach": "Kahil Fennell",
     "injuries": [],
     "roster": [],
     "injury_impact": 0.0
@@ -17672,6 +17785,7 @@
     "em_adj_o": 115.6061,
     "em_adj_d": 107.6434,
     "conf_strength_score": 0.6458,
+    "coach": "Ritchie McKay",
     "injuries": [],
     "roster": [
       {
@@ -17818,6 +17932,7 @@
     "em_adj_o": 110.427,
     "em_adj_d": 104.2123,
     "conf_strength_score": 0.5141,
+    "coach": "Dru Joyce III",
     "injuries": [],
     "roster": [
       {
@@ -17974,6 +18089,7 @@
     "em_adj_o": 109.6469,
     "em_adj_d": 98.8857,
     "conf_strength_score": 0.3344,
+    "coach": "Clint Allard",
     "injuries": [],
     "roster": [
       {
@@ -18110,6 +18226,7 @@
     "em_adj_o": 108.3379,
     "em_adj_d": 101.1166,
     "conf_strength_score": 0.5818,
+    "coach": "John Jakus",
     "injuries": [],
     "roster": [
       {
@@ -18251,6 +18368,7 @@
     "em_adj_o": 110.8258,
     "em_adj_d": 102.1827,
     "conf_strength_score": 0.3312,
+    "coach": "Chris Gerlufsen",
     "injuries": [],
     "roster": [
       {
@@ -18387,6 +18505,7 @@
     "em_adj_o": 111.7796,
     "em_adj_d": 99.7191,
     "conf_strength_score": 0.5456,
+    "coach": "Takayo Siddle",
     "injuries": [
       {
         "player": "Gavin Walsh",
@@ -18532,6 +18651,7 @@
     "em_adj_o": 111.342,
     "em_adj_d": 107.2449,
     "conf_strength_score": 0.698,
+    "coach": "David Riley",
     "injuries": [
       {
         "player": "Tomas Thrastarson",
@@ -18684,7 +18804,8 @@
     "em_creator_count": 1,
     "em_adj_o": 111.3784,
     "em_adj_d": 105.9789,
-    "conf_strength_score": 0.684
+    "conf_strength_score": 0.684,
+    "coach": "Joe Pasternack"
   },
   {
     "team": "Montana St.",
@@ -18757,6 +18878,7 @@
     "em_adj_o": 108.5493,
     "em_adj_d": 107.2081,
     "conf_strength_score": 0.5935,
+    "coach": "Matt Logie",
     "injuries": [],
     "roster": [
       {
@@ -18888,6 +19010,7 @@
     "em_adj_o": 104.8108,
     "em_adj_d": 98.8227,
     "conf_strength_score": 0.6096,
+    "coach": "Scott Nagy",
     "injuries": [],
     "roster": [
       {
@@ -19024,6 +19147,7 @@
     "em_adj_o": 113.8269,
     "em_adj_d": 104.0551,
     "conf_strength_score": 0.6213,
+    "coach": "Clint Sargent",
     "conf_tourney_momentum": 1.0,
     "injuries": [],
     "roster": [
@@ -19156,6 +19280,7 @@
     "em_adj_o": 106.0223,
     "em_adj_d": 103.9045,
     "conf_strength_score": 0.6436,
+    "coach": "Vance Walberg",
     "injuries": [],
     "roster": [
       {
@@ -19302,6 +19427,7 @@
     "em_adj_o": 112.8968,
     "em_adj_d": 107.6425,
     "conf_strength_score": 0.4335,
+    "coach": "Tod Kowalczyk",
     "injuries": [],
     "roster": [
       {
@@ -19438,6 +19564,7 @@
     "em_adj_o": 105.5265,
     "em_adj_d": 103.708,
     "conf_strength_score": 0.3517,
+    "coach": "Penny Hardaway",
     "injuries": [
       {
         "player": "Julius Thedford",
@@ -19598,6 +19725,7 @@
     "em_adj_o": 109.7624,
     "em_adj_d": 102.5204,
     "conf_strength_score": 0.5173,
+    "coach": "Brian Wardle",
     "injuries": [
       {
         "player": "Matthew Zobrist",
@@ -19748,6 +19876,7 @@
     "em_adj_o": 113.5141,
     "em_adj_d": 107.5949,
     "conf_strength_score": 0.5411,
+    "coach": "Ryan Miller",
     "injuries": [],
     "roster": [
       {
@@ -19879,6 +20008,7 @@
     "em_adj_o": 109.9148,
     "em_adj_d": 104.4979,
     "conf_strength_score": 0.2213,
+    "coach": "Alex Pribble",
     "conf_tourney_momentum": 1.0,
     "injuries": [],
     "roster": [
@@ -20016,6 +20146,7 @@
     "em_adj_o": 110.0251,
     "em_adj_d": 103.2818,
     "conf_strength_score": 0.4461,
+    "coach": "Andy Kennedy",
     "injuries": [],
     "roster": [
       {
@@ -20152,6 +20283,7 @@
     "em_adj_o": 111.051,
     "em_adj_d": 106.8707,
     "conf_strength_score": 0.4619,
+    "coach": "Steve Smiley",
     "injuries": [],
     "roster": [
       {
@@ -20439,6 +20571,7 @@
     "em_adj_o": 102.0001,
     "em_adj_d": 96.8737,
     "conf_strength_score": 0.4557,
+    "coach": "Daniyal Robinson",
     "injuries": [
       {
         "player": "Will McClendon",
@@ -20584,6 +20717,7 @@
     "em_adj_o": 109.9934,
     "em_adj_d": 113.8408,
     "conf_strength_score": 0.4246,
+    "coach": "Mike Rhoades",
     "injuries": [
       {
         "player": "Reggie Grodin",
@@ -20737,6 +20871,7 @@
     "em_adj_o": 110.5108,
     "em_adj_d": 105.6536,
     "conf_strength_score": 0.343,
+    "coach": "Scott Cross",
     "conf_tourney_momentum": 1.0,
     "injuries": [],
     "roster": [
@@ -20884,6 +21019,7 @@
     "em_adj_o": 109.2521,
     "em_adj_d": 108.7778,
     "conf_strength_score": 0.5925,
+    "coach": "Adam Fisher",
     "injuries": [
       {
         "player": "AJ Smith",
@@ -21034,6 +21170,7 @@
     "em_adj_o": 109.3964,
     "em_adj_d": 103.6176,
     "conf_strength_score": 0.5218,
+    "coach": "John Shulman",
     "injuries": [],
     "roster": [
       {
@@ -21185,6 +21322,7 @@
     "em_adj_o": 111.5858,
     "em_adj_d": 100.1435,
     "conf_strength_score": 0.3788,
+    "coach": "Antoine Pettway",
     "conf_tourney_momentum": 1.0,
     "injuries": [
       {
@@ -21344,6 +21482,7 @@
     "em_adj_o": 110.3381,
     "em_adj_d": 102.9506,
     "conf_strength_score": 0.4044,
+    "coach": "Ryan Pannone",
     "injuries": [],
     "roster": [
       {
@@ -21470,6 +21609,7 @@
     "em_adj_o": 104.3555,
     "em_adj_d": 103.2419,
     "conf_strength_score": 0.4702,
+    "coach": "Fran McCaffery",
     "conf_tourney_momentum": 1.0,
     "injuries": [
       {
@@ -21647,6 +21787,7 @@
     "em_adj_o": 105.7015,
     "em_adj_d": 99.5202,
     "conf_strength_score": 0.9587,
+    "coach": "Jon Perry",
     "injuries": [],
     "roster": [
       {
@@ -21793,6 +21934,7 @@
     "em_adj_o": 103.9979,
     "em_adj_d": 99.4279,
     "conf_strength_score": 0.5587,
+    "coach": "Stan Johnson",
     "injuries": [],
     "roster": [
       {
@@ -21934,6 +22076,7 @@
     "em_adj_o": 112.6238,
     "em_adj_d": 110.5333,
     "conf_strength_score": 0.9393,
+    "coach": "Dan Monson",
     "injuries": [
       {
         "player": "Andrew Cook",
@@ -22084,6 +22227,7 @@
     "em_adj_o": 113.3063,
     "em_adj_d": 105.0083,
     "conf_strength_score": 0.3789,
+    "coach": "Andrew Toole",
     "injuries": [],
     "roster": [
       {
@@ -22225,6 +22369,7 @@
     "em_adj_o": 102.9323,
     "em_adj_d": 98.538,
     "conf_strength_score": 0.4196,
+    "coach": "Archie Miller",
     "injuries": [
       {
         "player": "Mouhamed Sow",
@@ -22394,6 +22539,7 @@
     "em_adj_o": 105.3464,
     "em_adj_d": 100.825,
     "conf_strength_score": 0.5748,
+    "coach": "Todd Simon",
     "injuries": [],
     "roster": [
       {
@@ -22691,6 +22837,7 @@
     "em_adj_o": 121.0946,
     "em_adj_d": 113.598,
     "conf_strength_score": 0.5939,
+    "coach": "Jon Jaques",
     "injuries": [],
     "roster": [
       {
@@ -22847,6 +22994,7 @@
     "em_adj_o": 110.5875,
     "em_adj_d": 108.1091,
     "conf_strength_score": 0.4792,
+    "coach": "Rob Senderoff",
     "injuries": [],
     "roster": [
       {
@@ -22988,6 +23136,7 @@
     "em_adj_o": 108.7951,
     "em_adj_d": 106.9945,
     "conf_strength_score": 0.6191,
+    "coach": "Nick McDevitt",
     "injuries": [],
     "roster": [
       {
@@ -23119,6 +23268,7 @@
     "em_adj_o": 102.9841,
     "em_adj_d": 98.4062,
     "conf_strength_score": 0.7485,
+    "coach": "Jase Coburn",
     "injuries": [],
     "roster": [
       {
@@ -23235,6 +23385,7 @@
     "em_adj_o": 109.9096,
     "em_adj_d": 105.9215,
     "conf_strength_score": 0.6048,
+    "coach": "Corey Gipson",
     "injuries": [],
     "roster": [
       {
@@ -23376,6 +23527,7 @@
     "em_adj_o": 108.4395,
     "em_adj_d": 105.3519,
     "conf_strength_score": 0.4739,
+    "coach": "Brian Earl",
     "injuries": [],
     "roster": [
       {
@@ -23653,6 +23805,7 @@
     "em_adj_o": 104.6203,
     "em_adj_d": 103.9336,
     "conf_strength_score": 0.7805,
+    "coach": "Roger Powell",
     "injuries": [],
     "roster": [
       {
@@ -23789,6 +23942,7 @@
     "em_adj_o": 105.315,
     "em_adj_d": 105.614,
     "conf_strength_score": 0.2996,
+    "coach": "Justin Joyner",
     "injuries": [],
     "roster": [
       {
@@ -23930,6 +24084,7 @@
     "em_adj_o": 103.8784,
     "em_adj_d": 104.3116,
     "conf_strength_score": 0.6061,
+    "coach": "Jim Les",
     "injuries": [],
     "roster": [
       {
@@ -24071,6 +24226,7 @@
     "em_adj_o": 106.7931,
     "em_adj_d": 104.0707,
     "conf_strength_score": 0.9592,
+    "coach": "Tommy Amaker",
     "injuries": [],
     "roster": [
       {
@@ -24217,6 +24373,7 @@
     "em_adj_o": 105.5558,
     "em_adj_d": 106.9897,
     "conf_strength_score": 0.5769,
+    "coach": "Travis DeCuire",
     "conf_tourney_momentum": 0.7,
     "injuries": [],
     "roster": [
@@ -24359,6 +24516,7 @@
     "em_adj_o": 106.1094,
     "em_adj_d": 104.9226,
     "conf_strength_score": 0.6566,
+    "coach": "Andy Newman",
     "injuries": [],
     "roster": [
       {
@@ -24495,6 +24653,7 @@
     "em_adj_o": 109.6776,
     "em_adj_d": 104.0532,
     "conf_strength_score": 0.4014,
+    "coach": "Chris Mooney",
     "injuries": [
       {
         "player": "Bryson McGlothin",
@@ -24650,6 +24809,7 @@
     "em_adj_o": 110.0241,
     "em_adj_d": 103.9101,
     "conf_strength_score": 0.4088,
+    "coach": "Hank Plona",
     "injuries": [
       {
         "player": "Bryant Selebangue",
@@ -24826,6 +24986,7 @@
     "em_adj_o": 106.6321,
     "em_adj_d": 101.3212,
     "conf_strength_score": 0.8674,
+    "coach": "Joe Gallo",
     "conf_tourney_momentum": 0.7,
     "injuries": [],
     "roster": [
@@ -24963,6 +25124,7 @@
     "em_adj_o": 102.916,
     "em_adj_d": 102.7254,
     "conf_strength_score": 0.6142,
+    "coach": "King Rice",
     "conf_tourney_momentum": 0.7,
     "injuries": [],
     "roster": [
@@ -25266,6 +25428,7 @@
     "em_adj_o": 114.0282,
     "em_adj_d": 111.3315,
     "conf_strength_score": 0.4377,
+    "coach": "Mark Prosser",
     "conf_tourney_momentum": 0.7,
     "injuries": [],
     "roster": [
@@ -25413,6 +25576,7 @@
     "em_adj_o": 106.9618,
     "em_adj_d": 103.9846,
     "conf_strength_score": 0.2706,
+    "coach": "Frank Martin",
     "injuries": [],
     "roster": [
       {
@@ -25554,6 +25718,7 @@
     "em_adj_o": 101.1038,
     "em_adj_d": 102.1478,
     "conf_strength_score": 0.2353,
+    "coach": "Pat Skerry",
     "injuries": [],
     "roster": [
       {
@@ -25745,6 +25910,7 @@
     "em_adj_o": 102.1511,
     "em_adj_d": 101.1067,
     "conf_strength_score": 0.6759,
+    "coach": "Mike Magpayo",
     "injuries": [
       {
         "player": "Ryan Pettis",
@@ -25908,6 +26074,7 @@
     "em_adj_o": 113.925,
     "em_adj_d": 113.0915,
     "conf_strength_score": 0.4474,
+    "coach": "Greg Kampe",
     "injuries": [],
     "roster": [
       {
@@ -26039,6 +26206,7 @@
     "em_adj_o": 114.2415,
     "em_adj_d": 106.6781,
     "conf_strength_score": 0.5287,
+    "coach": "Darrin Horn",
     "injuries": [],
     "roster": [
       {
@@ -26170,6 +26338,7 @@
     "em_adj_o": 111.5305,
     "em_adj_d": 112.0755,
     "conf_strength_score": 0.7393,
+    "coach": "Doug Gottlieb",
     "injuries": [],
     "roster": [
       {
@@ -26442,6 +26611,7 @@
     "em_adj_o": 100.7531,
     "em_adj_d": 100.6011,
     "conf_strength_score": 0.4663,
+    "coach": "K. T. Turner",
     "injuries": [],
     "roster": [
       {
@@ -26573,6 +26743,7 @@
     "em_adj_o": 106.1711,
     "em_adj_d": 110.7463,
     "conf_strength_score": 0.717,
+    "coach": "Jon Judkins",
     "injuries": [],
     "roster": [
       {
@@ -26704,6 +26875,7 @@
     "em_adj_o": 103.8297,
     "em_adj_d": 102.4542,
     "conf_strength_score": 0.8022,
+    "coach": "Dustin Kerns",
     "injuries": [
       {
         "player": "KJ Vasser",
@@ -26839,6 +27011,7 @@
     "em_adj_o": 106.2875,
     "em_adj_d": 103.4108,
     "conf_strength_score": 0.7155,
+    "coach": "Jim Ferry",
     "conf_tourney_momentum": 1.0,
     "injuries": [
       {
@@ -27019,6 +27192,7 @@
     "em_adj_o": 105.0641,
     "em_adj_d": 103.403,
     "conf_strength_score": 0.4782,
+    "coach": "Gerry McNamara",
     "conf_tourney_momentum": 1.0,
     "injuries": [
       {
@@ -27209,6 +27383,7 @@
     "em_adj_o": 112.3074,
     "em_adj_d": 110.2154,
     "conf_strength_score": 0.6739,
+    "coach": "John Andrzejek",
     "injuries": [],
     "roster": [
       {
@@ -27320,6 +27495,7 @@
     "ppg": 75.3,
     "opp_ppg": 77.7,
     "conf_strength_score": 0.5258,
+    "coach": "Mark Montgomery",
     "conf_tourney_momentum": 0.7,
     "injuries": [],
     "roster": [
@@ -27462,6 +27638,7 @@
     "em_adj_o": 102.268,
     "em_adj_d": 108.4409,
     "conf_strength_score": 0.6258,
+    "coach": "Shantay Legans",
     "injuries": [
       {
         "player": "Riley Parker",
@@ -27625,6 +27802,7 @@
     "em_adj_o": 105.5548,
     "em_adj_d": 106.1194,
     "conf_strength_score": 0.8901,
+    "coach": "Chris Mack",
     "injuries": [
       {
         "player": "Will Mortimore",
@@ -27780,6 +27958,7 @@
     "em_adj_o": 106.2311,
     "em_adj_d": 111.0003,
     "conf_strength_score": 0.4315,
+    "coach": "Ethan Faulkner",
     "injuries": [],
     "roster": [
       {
@@ -27906,6 +28085,7 @@
     "em_adj_o": 98.4252,
     "em_adj_d": 100.1918,
     "conf_strength_score": 0.4134,
+    "coach": "Talvin Hester",
     "injuries": [
       {
         "player": "Will Jeffress",
@@ -28064,6 +28244,7 @@
     "em_adj_o": 104.945,
     "em_adj_d": 105.4838,
     "conf_strength_score": 0.5859,
+    "coach": "Dedrique Taylor",
     "injuries": [],
     "roster": [
       {
@@ -28200,6 +28381,7 @@
     "em_adj_o": 107.8873,
     "em_adj_d": 102.4756,
     "conf_strength_score": 0.4183,
+    "coach": "Bob Richey",
     "conf_tourney_momentum": 1.0,
     "injuries": [],
     "roster": [
@@ -28337,6 +28519,7 @@
     "em_adj_o": 107.0518,
     "em_adj_d": 105.5502,
     "conf_strength_score": 0.4535,
+    "coach": "Jason Hooten",
     "injuries": [],
     "roster": [
       {
@@ -28458,6 +28641,7 @@
     "em_adj_o": 107.841,
     "em_adj_d": 104.9103,
     "conf_strength_score": 0.4556,
+    "coach": "Richie Riley",
     "injuries": [
       {
         "player": "Peyton Law",
@@ -28598,6 +28782,7 @@
     "em_adj_o": 108.8006,
     "em_adj_d": 101.7434,
     "conf_strength_score": 0.6736,
+    "coach": "Brooks Savage",
     "injuries": [],
     "roster": [
       {
@@ -28709,6 +28894,7 @@
     "em_adj_o": 122.1919,
     "em_adj_d": 117.0636,
     "conf_strength_score": 0.5956,
+    "coach": "Grant Leonard",
     "conf_tourney_momentum": 1.0
   },
   {
@@ -28782,6 +28968,7 @@
     "em_adj_o": 107.7953,
     "em_adj_d": 104.5502,
     "conf_strength_score": 0.7641,
+    "coach": "Cuonzo Martin",
     "injuries": [
       {
         "player": "Amar Kuljuhovic",
@@ -28922,6 +29109,7 @@
     "em_adj_o": 103.8983,
     "em_adj_d": 106.5174,
     "conf_strength_score": 0.5235,
+    "coach": "Stacy Hollowell",
     "injuries": [],
     "roster": [
       {
@@ -29073,6 +29261,7 @@
     "em_adj_o": 103.4708,
     "em_adj_d": 108.7208,
     "conf_strength_score": 0.5971,
+    "coach": "Ron Hunter",
     "injuries": [],
     "roster": [
       {
@@ -29204,6 +29393,7 @@
     "em_adj_o": 103.9188,
     "em_adj_d": 99.7785,
     "conf_strength_score": 0.7459,
+    "coach": "Zach Spiker",
     "injuries": [],
     "roster": [
       {
@@ -29461,6 +29651,7 @@
     "em_adj_o": 102.1855,
     "em_adj_d": 106.17,
     "conf_strength_score": 0.8649,
+    "coach": "Ray Harper",
     "injuries": [
       {
         "player": "Bencao Vungo",
@@ -29619,6 +29810,7 @@
     "em_adj_o": 103.4461,
     "em_adj_d": 107.5013,
     "conf_strength_score": 0.5085,
+    "coach": "Matthew Graves",
     "injuries": [
       {
         "player": "Zyair Greene",
@@ -29787,6 +29979,7 @@
     "em_adj_o": 104.1024,
     "em_adj_d": 98.8125,
     "conf_strength_score": 0.714,
+    "coach": "Kenny Blakeney",
     "conf_tourney_momentum": 1.0,
     "injuries": [
       {
@@ -29953,6 +30146,7 @@
     "em_adj_o": 107.0841,
     "em_adj_d": 105.8732,
     "conf_strength_score": 0.0,
+    "coach": "Kevin Hovde",
     "injuries": [],
     "roster": [
       {
@@ -30094,6 +30288,7 @@
     "em_adj_o": 101.4437,
     "em_adj_d": 98.0126,
     "conf_strength_score": 0.4201,
+    "coach": "John Dunne",
     "injuries": [
       {
         "player": "Jason Schofield",
@@ -30265,6 +30460,7 @@
     "em_adj_o": 109.5445,
     "em_adj_d": 109.9023,
     "conf_strength_score": 0.4909,
+    "coach": "Ryan Ridder",
     "injuries": [],
     "roster": [
       {
@@ -30406,6 +30602,7 @@
     "em_adj_o": 109.0418,
     "em_adj_d": 109.7025,
     "conf_strength_score": 0.4728,
+    "coach": "Preston Spradlin",
     "injuries": [],
     "roster": [
       {
@@ -30547,6 +30744,7 @@
     "em_adj_o": 106.0057,
     "em_adj_d": 110.0956,
     "conf_strength_score": 0.5841,
+    "coach": "Rob Lanier",
     "injuries": [
       {
         "player": "Dallas Hobbs",
@@ -30705,6 +30903,7 @@
     "em_adj_o": 111.0471,
     "em_adj_d": 101.7705,
     "conf_strength_score": 0.5997,
+    "coach": "Cornelius Jackson",
     "injuries": [],
     "roster": [
       {
@@ -30846,6 +31045,7 @@
     "em_adj_o": 106.0189,
     "em_adj_d": 111.3621,
     "conf_strength_score": 0.7194,
+    "coach": "JR Blount",
     "injuries": [],
     "roster": [
       {
@@ -31001,7 +31201,8 @@
     "em_creator_count": 2,
     "em_adj_o": 107.7285,
     "em_adj_d": 114.974,
-    "conf_strength_score": 0.2676
+    "conf_strength_score": 0.2676,
+    "coach": "Tim Miles"
   },
   {
     "team": "La Salle",
@@ -31074,6 +31275,7 @@
     "em_adj_o": 101.8739,
     "em_adj_d": 107.1242,
     "conf_strength_score": 0.7647,
+    "coach": "Darris Nichols",
     "injuries": [],
     "roster": [
       {
@@ -31225,6 +31427,7 @@
     "em_adj_o": 107.4738,
     "em_adj_d": 108.7839,
     "conf_strength_score": 0.2659,
+    "coach": "Eric Henderson",
     "injuries": [],
     "roster": [
       {
@@ -31351,6 +31554,7 @@
     "em_adj_o": 107.7107,
     "em_adj_d": 112.2314,
     "conf_strength_score": 0.4386,
+    "coach": "Mike DeGeorge",
     "injuries": [],
     "roster": [
       {
@@ -31502,6 +31706,7 @@
     "em_adj_o": 106.7362,
     "em_adj_d": 105.5745,
     "conf_strength_score": 0.2862,
+    "coach": "Nolan Smith",
     "conf_tourney_momentum": 1.0,
     "injuries": [],
     "roster": [
@@ -31624,6 +31829,7 @@
     "em_adj_o": 113.4789,
     "em_adj_d": 111.9552,
     "conf_strength_score": 0.6247,
+    "coach": "George Halcovage",
     "injuries": [
       {
         "player": "Daniel Freitag",
@@ -31759,6 +31965,7 @@
     "em_adj_o": 103.5671,
     "em_adj_d": 101.8052,
     "conf_strength_score": 0.4267,
+    "coach": "Tom Pecora",
     "injuries": [],
     "roster": [
       {
@@ -31880,6 +32087,7 @@
     "ppg": 72.8,
     "opp_ppg": 73.7,
     "conf_strength_score": 0.2407,
+    "coach": "Jay Ladner",
     "injuries": [],
     "roster": [
       {
@@ -32031,6 +32239,7 @@
     "em_adj_o": 106.7689,
     "em_adj_d": 106.9418,
     "conf_strength_score": 0.3792,
+    "coach": "Bryan Petersen",
     "injuries": [],
     "roster": [
       {
@@ -32166,7 +32375,8 @@
     "em_creator_count": 1,
     "em_adj_o": 109.1255,
     "em_adj_d": 108.4477,
-    "conf_strength_score": 0.6499
+    "conf_strength_score": 0.6499,
+    "coach": "Tim Craft"
   },
   {
     "team": "Bethune Cookman",
@@ -32289,6 +32499,7 @@
     "em_adj_o": 110.4044,
     "em_adj_d": 109.0623,
     "conf_strength_score": 0.4374,
+    "coach": "Eric Haut",
     "injuries": [],
     "roster": [
       {
@@ -32420,6 +32631,7 @@
     "em_adj_o": 109.1284,
     "em_adj_d": 112.4978,
     "conf_strength_score": 0.5466,
+    "coach": "Jeff Boals",
     "injuries": [
       {
         "player": "Elijah Elliott",
@@ -32565,6 +32777,7 @@
     "em_adj_o": 103.9237,
     "em_adj_d": 108.7045,
     "conf_strength_score": 0.5801,
+    "coach": "Geno Ford",
     "injuries": [],
     "roster": [
       {
@@ -32701,6 +32914,7 @@
     "em_adj_o": 102.8501,
     "em_adj_d": 107.3717,
     "conf_strength_score": 0.4215,
+    "coach": "Terrence Johnson",
     "injuries": [],
     "roster": [
       {
@@ -32822,6 +33036,7 @@
     "em_adj_o": 108.2718,
     "em_adj_d": 113.556,
     "conf_strength_score": 0.2804,
+    "coach": "Charlie Henry",
     "injuries": [],
     "roster": [
       {
@@ -32958,6 +33173,7 @@
     "em_adj_o": 97.7411,
     "em_adj_d": 105.8838,
     "conf_strength_score": 0.6444,
+    "coach": "Justin Gray",
     "injuries": [],
     "roster": [
       {
@@ -33089,6 +33305,7 @@
     "em_adj_o": 115.6187,
     "em_adj_d": 115.6173,
     "conf_strength_score": 0.7419,
+    "coach": "Tim Bergstraser",
     "injuries": [],
     "roster": [
       {
@@ -33215,6 +33432,7 @@
     "em_adj_o": 112.8688,
     "em_adj_d": 109.6628,
     "conf_strength_score": 0.6453,
+    "coach": "Lennie Acuff",
     "injuries": [],
     "roster": [
       {
@@ -33356,6 +33574,7 @@
     "em_adj_o": 107.7164,
     "em_adj_d": 105.9132,
     "conf_strength_score": 0.5027,
+    "coach": "Kevin Carroll",
     "injuries": [],
     "roster": [
       {
@@ -33487,6 +33706,7 @@
     "em_adj_o": 105.2897,
     "em_adj_d": 103.9023,
     "conf_strength_score": 0.4529,
+    "coach": "Rod Strickland",
     "conf_tourney_momentum": 1.0,
     "injuries": [],
     "roster": [
@@ -33629,6 +33849,7 @@
     "em_adj_o": 105.1317,
     "em_adj_d": 107.6227,
     "conf_strength_score": 0.6175,
+    "coach": "Mike Jones",
     "injuries": [
       {
         "player": "Caelum Swanton-Rodger",
@@ -33779,6 +34000,7 @@
     "em_adj_o": 100.2613,
     "em_adj_d": 103.7099,
     "conf_strength_score": 0.4277,
+    "coach": "Billy Donlon",
     "injuries": [],
     "roster": [
       {
@@ -33920,6 +34142,7 @@
     "em_adj_o": 103.1101,
     "em_adj_d": 107.3092,
     "conf_strength_score": 0.1871,
+    "coach": "Pat Chambers",
     "injuries": [],
     "roster": [
       {
@@ -34056,6 +34279,7 @@
     "em_adj_o": 104.9041,
     "em_adj_d": 108.51,
     "conf_strength_score": 0.6951,
+    "coach": "Chris Crutchfield",
     "injuries": [],
     "roster": [
       {
@@ -34192,6 +34416,7 @@
     "em_adj_o": 104.914,
     "em_adj_d": 107.9689,
     "conf_strength_score": 0.6781,
+    "coach": "Chris Acker",
     "injuries": [],
     "roster": [
       {
@@ -34308,6 +34533,7 @@
     "em_adj_o": 109.6837,
     "em_adj_d": 102.7587,
     "conf_strength_score": 0.9829,
+    "coach": "Bashir Mason",
     "injuries": [],
     "roster": [
       {
@@ -34444,6 +34670,7 @@
     "em_adj_o": 105.2751,
     "em_adj_d": 109.5259,
     "conf_strength_score": 0.8433,
+    "coach": "Zach Chu",
     "injuries": [],
     "roster": [
       {
@@ -34580,6 +34807,7 @@
     "em_adj_o": 101.3788,
     "em_adj_d": 111.0522,
     "conf_strength_score": 0.4903,
+    "coach": "Duane Simpkins",
     "injuries": [],
     "roster": [
       {
@@ -34721,6 +34949,7 @@
     "em_adj_o": 103.9678,
     "em_adj_d": 105.3325,
     "conf_strength_score": 0.2565,
+    "coach": "Dan Geriot",
     "injuries": [],
     "roster": [
       {
@@ -34862,6 +35091,7 @@
     "em_adj_o": 105.9759,
     "em_adj_d": 112.5774,
     "conf_strength_score": 0.7418,
+    "coach": "Andy Bronkema",
     "injuries": [],
     "roster": [
       {
@@ -34998,6 +35228,7 @@
     "em_adj_o": 110.102,
     "em_adj_d": 109.3451,
     "conf_strength_score": 0.843,
+    "coach": "Joe Jones",
     "injuries": [],
     "roster": [
       {
@@ -35129,6 +35360,7 @@
     "em_adj_o": 105.7986,
     "em_adj_d": 108.1789,
     "conf_strength_score": 0.2218,
+    "coach": "Matt Langel",
     "injuries": [],
     "roster": [
       {
@@ -35270,6 +35502,7 @@
     "em_adj_o": 101.8625,
     "em_adj_d": 107.0084,
     "conf_strength_score": 0.7604,
+    "coach": "Tevon Saddler",
     "injuries": [],
     "roster": [
       {
@@ -35391,6 +35624,7 @@
     "em_adj_o": 97.3934,
     "em_adj_d": 111.3858,
     "conf_strength_score": 0.4239,
+    "coach": "Gus Argenal",
     "injuries": [],
     "roster": [
       {
@@ -35527,6 +35761,7 @@
     "em_adj_o": 103.5828,
     "em_adj_d": 112.2544,
     "conf_strength_score": 0.5562,
+    "coach": "Kevin Johnson",
     "injuries": [],
     "roster": [
       {
@@ -35683,6 +35918,7 @@
     "em_adj_o": 103.5729,
     "em_adj_d": 109.6585,
     "conf_strength_score": 0.6643,
+    "coach": "Mitch Henderson",
     "injuries": [
       {
         "player": "Jack Stanton",
@@ -35838,6 +36074,7 @@
     "em_adj_o": 101.2977,
     "em_adj_d": 105.7471,
     "conf_strength_score": 0.5606,
+    "coach": "Brad Korn",
     "injuries": [],
     "roster": [
       {
@@ -35954,6 +36191,7 @@
     "em_adj_o": 104.053,
     "em_adj_d": 108.1854,
     "conf_strength_score": 0.2936,
+    "coach": "Saah Nimley",
     "injuries": [],
     "roster": [
       {
@@ -36090,6 +36328,7 @@
     "em_adj_o": 101.8274,
     "em_adj_d": 108.6242,
     "conf_strength_score": 0.5091,
+    "coach": "Jordan Fee",
     "injuries": [],
     "roster": [
       {
@@ -36367,6 +36606,7 @@
     "em_adj_o": 96.5076,
     "em_adj_d": 103.5782,
     "conf_strength_score": 0.3705,
+    "coach": "Brette Tanner",
     "injuries": [],
     "roster": [
       {
@@ -36508,6 +36748,7 @@
     "em_adj_o": 107.2743,
     "em_adj_d": 109.6062,
     "conf_strength_score": 0.3072,
+    "coach": "John Becker",
     "injuries": [],
     "roster": [
       {
@@ -36659,6 +36900,7 @@
     "em_adj_o": 104.2622,
     "em_adj_d": 107.4339,
     "conf_strength_score": 0.4162,
+    "coach": "Mike Morrell",
     "injuries": [],
     "roster": [
       {
@@ -36790,6 +37032,7 @@
     "em_adj_o": 104.6002,
     "em_adj_d": 108.013,
     "conf_strength_score": 0.346,
+    "coach": "Chris Casey",
     "injuries": [],
     "roster": [
       {
@@ -36926,6 +37169,7 @@
     "em_adj_o": 101.2319,
     "em_adj_d": 108.6337,
     "conf_strength_score": 0.778,
+    "coach": "Michael Schwartz",
     "injuries": [
       {
         "player": "Trevion LaBeaux",
@@ -37092,6 +37336,7 @@
     "em_adj_o": 106.9161,
     "em_adj_d": 114.5251,
     "conf_strength_score": 0.0977,
+    "coach": "Ryan Looney",
     "injuries": [],
     "roster": [
       {
@@ -37213,6 +37458,7 @@
     "em_adj_o": 101.6448,
     "em_adj_d": 100.9529,
     "conf_strength_score": 0.6476,
+    "coach": "Brian Barone",
     "injuries": [],
     "roster": [
       {
@@ -37359,6 +37605,7 @@
     "em_adj_o": 104.7094,
     "em_adj_d": 113.045,
     "conf_strength_score": 0.8814,
+    "coach": "Rob Jeter",
     "injuries": [],
     "roster": [
       {
@@ -37485,6 +37732,7 @@
     "ppg": 65.8,
     "opp_ppg": 62.8,
     "conf_strength_score": 0.6224,
+    "coach": "Jeremy Shulman",
     "injuries": [],
     "roster": [
       {
@@ -37626,6 +37874,7 @@
     "em_adj_o": 110.2843,
     "em_adj_d": 110.682,
     "conf_strength_score": 0.1587,
+    "coach": "Billy Taylor",
     "injuries": [],
     "roster": [
       {
@@ -37732,6 +37981,7 @@
     "ppg": 72.8,
     "opp_ppg": 77.3,
     "conf_strength_score": 0.4498,
+    "coach": "Jon Coffman",
     "injuries": [],
     "roster": [
       {
@@ -37863,6 +38113,7 @@
     "em_adj_o": 101.6861,
     "em_adj_d": 112.4918,
     "conf_strength_score": 0.5513,
+    "coach": "Mike Bibby",
     "injuries": [],
     "roster": [
       {
@@ -37979,6 +38230,7 @@
     "em_adj_o": 104.4337,
     "em_adj_d": 111.0063,
     "conf_strength_score": 0.629,
+    "coach": "Paul Sather",
     "conf_tourney_momentum": 0.7,
     "injuries": [],
     "roster": [
@@ -38131,6 +38383,7 @@
     "em_adj_o": 109.9816,
     "em_adj_d": 111.7636,
     "conf_strength_score": 0.5947,
+    "coach": "Kevin Giltner",
     "injuries": [],
     "roster": [
       {
@@ -38272,6 +38525,7 @@
     "em_adj_o": 101.5338,
     "em_adj_d": 108.0237,
     "conf_strength_score": 0.9379,
+    "coach": "Ronnie Thomas",
     "injuries": [],
     "roster": [
       {
@@ -38413,6 +38667,7 @@
     "em_adj_o": 97.7386,
     "em_adj_d": 107.703,
     "conf_strength_score": 0.4332,
+    "coach": "Joe Golding",
     "injuries": [],
     "roster": [
       {
@@ -38705,6 +38960,7 @@
     "em_adj_o": 99.8165,
     "em_adj_d": 105.1288,
     "conf_strength_score": 0.4103,
+    "coach": "Kyle Gerdeman",
     "injuries": [],
     "roster": [
       {
@@ -38841,6 +39097,7 @@
     "em_adj_o": 111.8601,
     "em_adj_d": 112.0701,
     "conf_strength_score": 0.5844,
+    "coach": "Bart Lundy",
     "injuries": [],
     "roster": [
       {
@@ -38982,6 +39239,7 @@
     "em_adj_o": 110.9463,
     "em_adj_d": 112.721,
     "conf_strength_score": 0.4273,
+    "coach": "Shane Heirman",
     "injuries": [],
     "roster": [
       {
@@ -39123,6 +39381,7 @@
     "em_adj_o": 99.622,
     "em_adj_d": 111.3576,
     "conf_strength_score": 0.7908,
+    "coach": "Drew Valentine",
     "injuries": [],
     "roster": [
       {
@@ -39274,6 +39533,7 @@
     "em_adj_o": 100.7566,
     "em_adj_d": 113.0455,
     "conf_strength_score": 0.5334,
+    "coach": "Martin Ingelsby",
     "injuries": [],
     "roster": [
       {
@@ -39420,6 +39680,7 @@
     "em_adj_o": 102.2398,
     "em_adj_d": 111.3254,
     "conf_strength_score": 0.5666,
+    "coach": "Eric Peterson",
     "injuries": [
       {
         "player": "Josiah Dotzler",
@@ -39575,6 +39836,7 @@
     "em_adj_o": 99.1717,
     "em_adj_d": 104.7561,
     "conf_strength_score": 0.5244,
+    "coach": "Donny Lind",
     "injuries": [
       {
         "player": "Jaxon Hartman",
@@ -40008,6 +40270,7 @@
     "em_adj_o": 103.0128,
     "em_adj_d": 104.9504,
     "conf_strength_score": 0.2109,
+    "coach": "Byron Smith",
     "conf_tourney_momentum": 1.0,
     "injuries": [],
     "roster": [
@@ -40160,6 +40423,7 @@
     "em_adj_o": 102.2529,
     "em_adj_d": 107.4294,
     "conf_strength_score": 0.567,
+    "coach": "Quinton Ferrell",
     "injuries": [],
     "roster": [
       {
@@ -40296,6 +40560,7 @@
     "em_adj_o": 105.4008,
     "em_adj_d": 106.6076,
     "conf_strength_score": 0.5494,
+    "coach": "Brett Reed",
     "conf_tourney_momentum": 1.0,
     "injuries": [],
     "roster": [
@@ -40438,6 +40703,7 @@
     "em_adj_o": 101.6701,
     "em_adj_d": 109.49,
     "conf_strength_score": 0.5624,
+    "coach": "Gary Manchel",
     "conf_tourney_momentum": 0.7,
     "injuries": [],
     "roster": [
@@ -40585,6 +40851,7 @@
     "em_adj_o": 104.648,
     "em_adj_d": 113.1235,
     "conf_strength_score": 0.8511,
+    "coach": "Jordan Mincy",
     "injuries": [],
     "roster": [
       {
@@ -40701,6 +40968,7 @@
     "ppg": 62.8,
     "opp_ppg": 69.7,
     "conf_strength_score": 0.7152,
+    "coach": "Quannas White",
     "injuries": [],
     "roster": [
       {
@@ -40958,6 +41226,7 @@
     "em_adj_o": 105.4626,
     "em_adj_d": 116.6619,
     "conf_strength_score": 0.3414,
+    "coach": "Jerod Haase",
     "injuries": [],
     "roster": [
       {
@@ -41099,6 +41368,7 @@
     "em_adj_o": 95.7168,
     "em_adj_d": 104.9868,
     "conf_strength_score": 0.5091,
+    "coach": "Mike Martin",
     "injuries": [],
     "roster": [
       {
@@ -41235,6 +41505,7 @@
     "em_adj_o": 103.9352,
     "em_adj_d": 109.0734,
     "conf_strength_score": 0.7371,
+    "coach": "Jonathan Mattox",
     "conf_tourney_momentum": 0.7,
     "injuries": [],
     "roster": [
@@ -41367,6 +41638,7 @@
     "em_adj_o": 107.0749,
     "em_adj_d": 117.2268,
     "conf_strength_score": 0.5587,
+    "coach": "Ben Howlett",
     "injuries": [],
     "roster": [
       {
@@ -41513,6 +41785,7 @@
     "em_adj_o": 97.4281,
     "em_adj_d": 107.398,
     "conf_strength_score": 0.7232,
+    "coach": "Charlie Ward",
     "injuries": [],
     "roster": [
       {
@@ -41659,6 +41932,7 @@
     "em_adj_o": 106.5064,
     "em_adj_d": 114.9345,
     "conf_strength_score": 0.2506,
+    "coach": "Bill Coen",
     "injuries": [],
     "roster": [
       {
@@ -41805,6 +42079,7 @@
     "em_adj_o": 98.6292,
     "em_adj_d": 108.3166,
     "conf_strength_score": 0.4591,
+    "coach": "Jaret von Rosenberg",
     "injuries": [],
     "roster": [
       {
@@ -41941,6 +42216,7 @@
     "em_adj_o": 102.4645,
     "em_adj_d": 110.9766,
     "conf_strength_score": 0.4775,
+    "coach": "Dave Moore",
     "injuries": [
       {
         "player": "Chas Lewless",
@@ -42086,6 +42362,7 @@
     "em_adj_o": 97.3662,
     "em_adj_d": 105.3684,
     "conf_strength_score": 0.4903,
+    "coach": "David Kiefer",
     "injuries": [],
     "roster": [
       {
@@ -42227,6 +42504,7 @@
     "em_adj_o": 108.2048,
     "em_adj_d": 113.7931,
     "conf_strength_score": 0.5426,
+    "coach": "Anthony Latina",
     "injuries": [],
     "roster": [
       {
@@ -42353,6 +42631,7 @@
     "em_adj_o": 117.0977,
     "em_adj_d": 123.8217,
     "conf_strength_score": 0.4315,
+    "coach": "Doug Davenport",
     "injuries": [],
     "roster": [
       {
@@ -42494,6 +42773,7 @@
     "em_adj_o": 107.9306,
     "em_adj_d": 112.8046,
     "conf_strength_score": 0.7895,
+    "coach": "A. W. Hamilton",
     "injuries": [],
     "roster": [
       {
@@ -42625,6 +42905,7 @@
     "em_adj_o": 96.6813,
     "em_adj_d": 103.7258,
     "conf_strength_score": 0.2487,
+    "coach": "Patrick Crarey II",
     "injuries": [],
     "roster": [
       {
@@ -42771,6 +43052,7 @@
     "em_adj_o": 97.6153,
     "em_adj_d": 107.8997,
     "conf_strength_score": 0.2983,
+    "coach": "Kory Barnett",
     "injuries": [],
     "roster": [
       {
@@ -42907,6 +43189,7 @@
     "em_adj_o": 92.0289,
     "em_adj_d": 107.02,
     "conf_strength_score": 0.5033,
+    "coach": "David Ragland",
     "injuries": [],
     "roster": [
       {
@@ -43159,6 +43442,7 @@
     "em_adj_o": 108.5047,
     "em_adj_d": 113.4942,
     "conf_strength_score": 0.627,
+    "coach": "Ivan Thomas",
     "injuries": [],
     "roster": [
       {
@@ -43310,6 +43594,7 @@
     "em_adj_o": 97.2587,
     "em_adj_d": 105.8764,
     "conf_strength_score": 0.6429,
+    "coach": "Rick Cabrera",
     "injuries": [],
     "roster": [
       {
@@ -43431,6 +43716,7 @@
     "em_adj_o": 100.731,
     "em_adj_d": 110.4731,
     "conf_strength_score": 0.6181,
+    "coach": "Johnny Jones",
     "injuries": [],
     "roster": [
       {
@@ -43582,6 +43868,7 @@
     "em_adj_o": 104.8453,
     "em_adj_d": 112.2192,
     "conf_strength_score": 0.7043,
+    "coach": "Donte Jackson",
     "injuries": [],
     "roster": [
       {
@@ -43728,6 +44015,7 @@
     "em_adj_o": 99.6885,
     "em_adj_d": 108.1046,
     "conf_strength_score": 0.5247,
+    "coach": "Tony Madlock",
     "injuries": [],
     "roster": [
       {
@@ -43874,6 +44162,7 @@
     "em_adj_o": 104.9601,
     "em_adj_d": 103.5911,
     "conf_strength_score": 0.5043,
+    "coach": "Craig Doty",
     "injuries": [],
     "roster": [
       {
@@ -44015,6 +44304,7 @@
     "em_adj_o": 103.9301,
     "em_adj_d": 113.6065,
     "conf_strength_score": 0.5094,
+    "coach": "Donnie Jones",
     "injuries": [
       {
         "player": "Jamie Phillips",
@@ -44170,6 +44460,7 @@
     "em_adj_o": 105.0976,
     "em_adj_d": 114.0936,
     "conf_strength_score": 0.6392,
+    "coach": "Mont\u00e9 Ross",
     "injuries": [],
     "roster": [
       {
@@ -44306,6 +44597,7 @@
     "em_adj_o": 105.6892,
     "em_adj_d": 112.3855,
     "conf_strength_score": 0.6178,
+    "coach": "Patrick Sellers",
     "injuries": [],
     "roster": [
       {
@@ -44447,6 +44739,7 @@
     "em_adj_o": 103.9173,
     "em_adj_d": 114.2912,
     "conf_strength_score": 0.5648,
+    "coach": "Dan Earl",
     "injuries": [],
     "roster": [
       {
@@ -44598,6 +44891,7 @@
     "em_adj_o": 107.393,
     "em_adj_d": 116.5424,
     "conf_strength_score": 0.6451,
+    "coach": "Rob Summers",
     "injuries": [
       {
         "player": "Josiah Harris",
@@ -44761,6 +45055,7 @@
     "em_adj_o": 100.6794,
     "em_adj_d": 106.8861,
     "conf_strength_score": 0.6296,
+    "coach": "Nate Champion",
     "injuries": [],
     "roster": [
       {
@@ -45047,6 +45342,7 @@
     "em_adj_o": 100.1353,
     "em_adj_d": 108.5266,
     "conf_strength_score": 0.2301,
+    "coach": "Donald Copeland",
     "injuries": [],
     "roster": [
       {
@@ -45188,6 +45484,7 @@
     "em_adj_o": 102.2573,
     "em_adj_d": 113.6389,
     "conf_strength_score": 0.5124,
+    "coach": "Shane Burcar",
     "injuries": [],
     "roster": [
       {
@@ -45324,6 +45621,7 @@
     "em_adj_o": 100.8193,
     "em_adj_d": 113.352,
     "conf_strength_score": 0.5545,
+    "coach": "Dwayne Killings",
     "injuries": [],
     "roster": [
       {
@@ -45465,6 +45763,7 @@
     "em_adj_o": 105.6324,
     "em_adj_d": 114.5173,
     "conf_strength_score": 0.5847,
+    "coach": "Pat Duquette",
     "injuries": [],
     "roster": [
       {
@@ -45606,6 +45905,7 @@
     "em_adj_o": 99.0189,
     "em_adj_d": 112.9512,
     "conf_strength_score": 0.5509,
+    "coach": "Mike McGarvey",
     "injuries": [],
     "roster": [
       {
@@ -45752,6 +46052,7 @@
     "em_adj_o": 93.3091,
     "em_adj_d": 109.1036,
     "conf_strength_score": 0.6957,
+    "coach": "Grant Billmeier",
     "injuries": [],
     "roster": [
       {
@@ -45893,6 +46194,7 @@
     "em_adj_o": 104.015,
     "em_adj_d": 110.1373,
     "conf_strength_score": 0.2642,
+    "coach": "Tobin Anderson",
     "injuries": [],
     "roster": [
       {
@@ -46084,6 +46386,7 @@
     "em_adj_o": 98.4484,
     "em_adj_d": 113.878,
     "conf_strength_score": 0.3901,
+    "coach": "Mike Scott",
     "injuries": [],
     "roster": [
       {
@@ -46205,6 +46508,7 @@
     "em_adj_o": 100.459,
     "em_adj_d": 113.0827,
     "conf_strength_score": 0.1618,
+    "coach": "John Griffin III",
     "injuries": [],
     "roster": [
       {
@@ -46326,6 +46630,7 @@
     "ppg": 67.7,
     "opp_ppg": 72.9,
     "conf_strength_score": 0.798,
+    "coach": "Darrell Walker",
     "injuries": [],
     "roster": [
       {
@@ -46457,6 +46762,7 @@
     "em_adj_o": 104.9083,
     "em_adj_d": 123.5613,
     "conf_strength_score": 0.5908,
+    "coach": "Bobby Kennen",
     "injuries": [],
     "roster": [
       {
@@ -46593,6 +46899,7 @@
     "em_adj_o": 93.8671,
     "em_adj_d": 109.4132,
     "conf_strength_score": 0.6204,
+    "coach": "Ted Hotaling",
     "injuries": [],
     "roster": [
       {
@@ -46729,6 +47036,7 @@
     "em_adj_o": 90.8255,
     "em_adj_d": 106.2039,
     "conf_strength_score": 0.5093,
+    "coach": "Marty Simmons",
     "injuries": [],
     "roster": [
       {
@@ -46865,6 +47173,7 @@
     "em_adj_o": 102.96,
     "em_adj_d": 113.6432,
     "conf_strength_score": 0.3655,
+    "coach": "Robert Jones",
     "injuries": [],
     "roster": [
       {
@@ -47001,6 +47310,7 @@
     "em_adj_o": 97.0761,
     "em_adj_d": 116.3357,
     "conf_strength_score": 0.6153,
+    "coach": "Mo Williams",
     "injuries": [
       {
         "player": "Daeshun Ruffin",
@@ -47161,6 +47471,7 @@
     "em_adj_o": 98.814,
     "em_adj_d": 112.0404,
     "conf_strength_score": 0.522,
+    "coach": "Dave Paulsen",
     "injuries": [],
     "roster": [
       {
@@ -47307,6 +47618,7 @@
     "em_adj_o": 101.9261,
     "em_adj_d": 117.28,
     "conf_strength_score": 0.5331,
+    "coach": "John Gallagher",
     "injuries": [],
     "roster": [
       {
@@ -47448,6 +47760,7 @@
     "em_adj_o": 122.0339,
     "em_adj_d": 101.2218,
     "conf_strength_score": 0.4284,
+    "coach": "Greg Paulus",
     "injuries": [],
     "roster": [
       {
@@ -47589,6 +47902,7 @@
     "em_adj_o": 86.3735,
     "em_adj_d": 96.9671,
     "conf_strength_score": 0.3054,
+    "coach": "Austin Claunch",
     "injuries": [
       {
         "player": "Pierce Spencer",
@@ -47779,6 +48093,7 @@
     "em_adj_o": 94.6821,
     "em_adj_d": 108.3485,
     "conf_strength_score": 0.5914,
+    "coach": "Chris Kraus",
     "injuries": [],
     "roster": [
       {
@@ -47930,6 +48245,7 @@
     "em_adj_o": 98.897,
     "em_adj_d": 116.9109,
     "conf_strength_score": 0.2987,
+    "coach": "Tony Pujol",
     "injuries": [],
     "roster": [
       {
@@ -48066,6 +48382,7 @@
     "em_adj_o": 98.3288,
     "em_adj_d": 113.6288,
     "conf_strength_score": 0.6603,
+    "coach": "Jack Castleberry",
     "injuries": [],
     "roster": [
       {
@@ -48207,6 +48524,7 @@
     "em_adj_o": 100.8273,
     "em_adj_d": 118.2486,
     "conf_strength_score": 0.3961,
+    "coach": "Landon Bussie",
     "injuries": [],
     "roster": [
       {
@@ -48328,6 +48646,7 @@
     "em_adj_o": 108.3645,
     "em_adj_d": 100.1623,
     "conf_strength_score": 0.3987,
+    "coach": "Matt Majkrzak",
     "injuries": [],
     "roster": [
       {
@@ -48479,6 +48798,7 @@
     "em_adj_o": 98.2924,
     "em_adj_d": 115.6568,
     "conf_strength_score": 0.3744,
+    "coach": "Kevin Kuwik",
     "injuries": [],
     "roster": [
       {
@@ -48635,6 +48955,7 @@
     "em_adj_o": 73.2131,
     "em_adj_d": 112.6951,
     "conf_strength_score": 0.4096,
+    "coach": "Joe Crispin",
     "injuries": [],
     "roster": [
       {
@@ -48791,6 +49112,7 @@
     "em_adj_o": 95.8315,
     "em_adj_d": 112.3597,
     "conf_strength_score": 0.2564,
+    "coach": "Jake Morton",
     "injuries": [],
     "roster": [
       {
@@ -48907,6 +49229,7 @@
     "em_adj_o": 93.8177,
     "em_adj_d": 95.3073,
     "conf_strength_score": 0.5163,
+    "coach": "Jim Christian",
     "injuries": [],
     "roster": [
       {
@@ -49063,6 +49386,7 @@
     "em_adj_o": 92.6238,
     "em_adj_d": 109.3032,
     "conf_strength_score": 0.5581,
+    "coach": "Stan Gouard",
     "injuries": [],
     "roster": [
       {
@@ -49214,6 +49538,7 @@
     "em_adj_o": 102.0202,
     "em_adj_d": 116.1908,
     "conf_strength_score": 0.5611,
+    "coach": "Ed Conroy",
     "injuries": [],
     "roster": [
       {
@@ -49410,6 +49735,7 @@
     "em_adj_o": 92.7067,
     "em_adj_d": 106.3544,
     "conf_strength_score": 0.5442,
+    "coach": "Chris Markwood",
     "injuries": [],
     "roster": [
       {
@@ -49546,6 +49872,7 @@
     "em_adj_o": 72.421,
     "em_adj_d": 98.3503,
     "conf_strength_score": 0.2469,
+    "coach": "Nathan Davis",
     "injuries": [],
     "roster": [
       {
@@ -49692,6 +50019,7 @@
     "em_adj_o": 96.519,
     "em_adj_d": 118.9132,
     "conf_strength_score": 0.5531,
+    "coach": "Luke McConnell",
     "injuries": [],
     "roster": [
       {
@@ -49833,6 +50161,7 @@
     "em_adj_o": 97.2273,
     "em_adj_d": 119.1812,
     "conf_strength_score": 0.4532,
+    "coach": "LeVelle Moton",
     "injuries": [],
     "roster": [
       {
@@ -49979,6 +50308,7 @@
     "em_adj_o": 93.7624,
     "em_adj_d": 115.935,
     "conf_strength_score": 0.7479,
+    "coach": "Erik Martin",
     "injuries": [],
     "roster": [
       {
@@ -50105,6 +50435,7 @@
     "em_adj_o": 97.9278,
     "em_adj_d": 118.0035,
     "conf_strength_score": 0.7243,
+    "coach": "Kevin Broadus",
     "injuries": [],
     "roster": [
       {
@@ -50216,6 +50547,7 @@
     "em_adj_o": 94.2238,
     "em_adj_d": 114.5298,
     "conf_strength_score": 0.3707,
+    "coach": "Jamion Christian",
     "injuries": [],
     "roster": [
       {
@@ -50342,6 +50674,7 @@
     "ppg": 60.0,
     "opp_ppg": 68.8,
     "conf_strength_score": 0.3735,
+    "coach": "Cleo Hill Jr.",
     "injuries": [],
     "roster": [
       {
@@ -50478,6 +50811,7 @@
     "em_adj_o": 95.799,
     "em_adj_d": 119.088,
     "conf_strength_score": 0.7666,
+    "coach": "Levell Sanders",
     "injuries": [],
     "roster": [
       {
@@ -50609,6 +50943,7 @@
     "em_adj_o": 86.7217,
     "em_adj_d": 110.7383,
     "conf_strength_score": 0.5924,
+    "coach": "Kevin Baggett",
     "injuries": [],
     "roster": [
       {
@@ -50805,6 +51140,7 @@
     "em_adj_o": 96.0936,
     "em_adj_d": 121.7042,
     "conf_strength_score": 0.4297,
+    "coach": "Andrew Wilson",
     "injuries": [],
     "roster": [
       {
@@ -50991,6 +51327,7 @@
     "em_adj_o": 85.1385,
     "em_adj_d": 98.5326,
     "conf_strength_score": 0.1756,
+    "coach": "Stan Waterman",
     "injuries": [],
     "roster": [
       {
@@ -51122,6 +51459,7 @@
     "em_adj_o": 92.7585,
     "em_adj_d": 106.7328,
     "conf_strength_score": 0.7045,
+    "coach": "Larry Stewart",
     "injuries": [],
     "roster": [
       {
@@ -51258,6 +51596,7 @@
     "em_adj_o": 95.8318,
     "em_adj_d": 116.2107,
     "conf_strength_score": 0.6189,
+    "coach": "George Ivory",
     "injuries": [],
     "roster": [
       {
@@ -51384,6 +51723,7 @@
     "em_adj_o": 94.394,
     "em_adj_d": 76.5783,
     "conf_strength_score": 0.4542,
+    "coach": "Chad Boudreau",
     "injuries": [],
     "roster": [
       {
@@ -51767,6 +52107,7 @@
     "em_creator_count": 1,
     "em_adj_o": 105.0107,
     "em_adj_d": 101.0347,
+    "coach": "Jim Shaw",
     "injuries": [],
     "roster": [
       {
@@ -52220,6 +52561,7 @@
     "em_creator_count": 2,
     "em_adj_o": 106.2634,
     "em_adj_d": 93.1191,
+    "coach": "Reggie Theus",
     "injuries": [],
     "roster": [
       {
@@ -52583,6 +52925,7 @@
     "em_creator_count": 2,
     "em_adj_o": 102.3399,
     "em_adj_d": 115.5874,
+    "coach": "Josh Loeffler",
     "injuries": [],
     "roster": [
       {
@@ -52685,6 +53028,7 @@
     "em_creator_count": 2,
     "em_adj_o": 99.8306,
     "em_adj_d": 103.6989,
+    "coach": "Marty Richter",
     "injuries": [],
     "roster": [
       {
@@ -52782,6 +53126,7 @@
     "em_creator_count": 1,
     "em_adj_o": 100.1651,
     "em_adj_d": 114.2608,
+    "coach": "Solomon Bozeman",
     "injuries": [],
     "roster": [
       {
@@ -53068,6 +53413,7 @@
     "em_creator_count": 0,
     "em_adj_o": 96.2661,
     "em_adj_d": 83.0216,
+    "coach": "Jeremy Luther",
     "injuries": [],
     "roster": [
       {
@@ -53175,6 +53521,7 @@
     "em_creator_count": 0,
     "em_adj_o": 84.4734,
     "em_adj_d": 89.6255,
+    "coach": "Mark Turgeon",
     "injuries": [],
     "roster": [
       {

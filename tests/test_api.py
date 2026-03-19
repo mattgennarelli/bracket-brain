@@ -67,6 +67,26 @@ def test_predict_known_matchup():
     assert isinstance(d["predicted_margin"], float)
 
 
+@pytest.mark.skipif(not HAS_TEAM_DATA, reason="teams_merged_2026.json not available in CI")
+def test_predict_home_a_game_site():
+    r = client.post("/predict", json={
+        "team_a": "Duke", "team_b": "Houston", "year": 2026,
+        "seed_a": 1, "seed_b": 2, "game_site": "home_a",
+    })
+    assert r.status_code == 200
+    d = r.json()
+    assert d["team_a"] == "Duke"
+    assert d["team_b"] == "Houston"
+
+
+def test_predict_invalid_game_site():
+    r = client.post("/predict", json={
+        "team_a": "Duke", "team_b": "Houston", "year": 2026,
+        "game_site": "not-a-site",
+    })
+    assert r.status_code == 422
+
+
 def test_predict_unknown_team():
     r = client.post("/predict", json={
         "team_a": "Nonexistent University", "team_b": "Duke", "year": 2026,

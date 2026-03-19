@@ -62,6 +62,16 @@ def test_experience_default_set():
     assert 0.0 <= t["experience"] <= 1.0
 
 
+def test_pedigree_normalizes_connecticut():
+    t = enrich_team(_base_team(team="Connecticut"))
+    assert t["pedigree_score"] == 0.90
+
+
+def test_pedigree_normalizes_michigan_state():
+    t = enrich_team(_base_team(team="Michigan St."))
+    assert t["pedigree_score"] == 0.85
+
+
 def test_three_rate_default_set():
     t = enrich_team(_base_team())
     assert "three_rate" in t

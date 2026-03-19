@@ -1079,12 +1079,27 @@ PEDIGREE = {
     "Auburn": 0.50, "San Diego St": 0.40, "BYU": 0.35,
 }
 
+_NORMALIZED_PEDIGREE = None
+
+
+def _get_pedigree_score(team_name):
+    """Return pedigree score using both exact and normalized team-name lookup."""
+    global _NORMALIZED_PEDIGREE
+    if team_name in PEDIGREE:
+        return PEDIGREE[team_name]
+    if _NORMALIZED_PEDIGREE is None:
+        _NORMALIZED_PEDIGREE = {
+            _normalize_team_for_match(name): score
+            for name, score in PEDIGREE.items()
+        }
+    return _NORMALIZED_PEDIGREE.get(_normalize_team_for_match(team_name), 0.15)
+
 def enrich_team(team):
     t = dict(team)
     if "coach_tourney_score" not in t:
         t["coach_tourney_score"] = COACH_SCORES.get(t.get("coach",""), 0.3)
     if "pedigree_score" not in t:
-        t["pedigree_score"] = PEDIGREE.get(t["team"], 0.15)
+        t["pedigree_score"] = _get_pedigree_score(t["team"])
     # Attach school lat/lon for proximity calculations (needed by /analyze endpoint)
     if "location" not in t:
         locs = _load_school_locations()

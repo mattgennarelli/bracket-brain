@@ -47,6 +47,7 @@ from engine import (
 from espn_scores import fetch_scores_for_picks, _scores_key as espn_scores_key
 from best_bets import get_full_card_json
 from odds_provider import get_api_key
+from scripts.fetch_data import build_merged_teams
 
 LEDGER_PATH = os.path.join(DATA_DIR, "bets_ledger.json")
 CARD_LEDGER_PATH = os.path.join(DATA_DIR, "card_ledger.json")
@@ -165,12 +166,54 @@ def _load_config(num_sims: int = 10000) -> ModelConfig:
     return config
 
 
+def _resolve_game_site(game_site, team_a: dict, team_b: dict):
+    """Convert API game_site values into the lat/lon tuple expected by engine.py."""
+    if game_site in (None, "", "neutral"):
+        return None
+    if isinstance(game_site, (list, tuple)) and len(game_site) == 2:
+        return tuple(game_site)
+    if not isinstance(game_site, str):
+        raise HTTPException(status_code=422, detail="game_site must be null, 'home_a', 'home_b', or 'lat,lon'")
+
+    site = game_site.strip().lower()
+    if site == "home_a":
+        loc = team_a.get("location")
+        return tuple(loc) if isinstance(loc, (list, tuple)) and len(loc) == 2 else None
+    if site == "home_b":
+        loc = team_b.get("location")
+        return tuple(loc) if isinstance(loc, (list, tuple)) and len(loc) == 2 else None
+
+    parts = [p.strip() for p in game_site.split(",")]
+    if len(parts) == 2:
+        try:
+            return float(parts[0]), float(parts[1])
+        except ValueError:
+            pass
+
+    raise HTTPException(status_code=422, detail="game_site must be null, 'home_a', 'home_b', or 'lat,lon'")
+
+
 def _config_mtime() -> str:
     """Return mtime of calibrated_config.json for cache busting."""
     cal_path = os.path.join(DATA_DIR, "calibrated_config.json")
     if os.path.isfile(cal_path):
         return str(int(os.path.getmtime(cal_path)))
     return "0"
+
+
+def _prediction_inputs_mtime(year: int) -> str:
+    """Return the newest mtime among files that affect predictions for a given year."""
+    paths = [
+        os.path.join(DATA_DIR, f"bracket_{year}.json"),
+        os.path.join(DATA_DIR, f"teams_merged_{year}.json"),
+        os.path.join(DATA_DIR, f"injuries_{year}.json"),
+        os.path.join(DATA_DIR, "calibrated_config.json"),
+    ]
+    latest = 0
+    for path in paths:
+        if os.path.isfile(path):
+            latest = max(latest, int(os.path.getmtime(path)))
+    return str(latest)
 
 
 def _add_final_four_by_region(result: dict, year: int) -> dict:
@@ -374,7 +417,7 @@ def predict(req: PredictRequest):
     team_a = enrich_team(raw_a)
     team_b = enrich_team(raw_b)
 
-    result = predict_game(team_a, team_b, game_site=req.game_site)
+    result = predict_game(team_a, team_b, game_site=_resolve_game_site(req.game_site, team_a, team_b))
 
     return {
         "team_a": team_a["team"],
@@ -761,10 +804,10 @@ def update_injury(
 
     # Also rebuild teams_merged so the engine picks it up
     try:
-        from scripts.fetch_data import main as rebuild_data
-        rebuild_data(year)
-    except Exception:
-        pass  # non-critical
+        build_merged_teams(year, skip_torvik_fetch=True)
+        _cache.clear()
+    except Exception as exc:
+        raise HTTPException(status_code=500, detail=f"Injury updated, but teams rebuild failed: {exc}")
 
     return {"ok": True, "team": team, "action": action, "injuries": injuries}
 
@@ -794,14 +837,19 @@ def get_monte_carlo(
         if not _check_rate_limit(ip):
             raise HTTPException(status_code=429, detail="Too many Monte Carlo requests. Try again in a minute.")
 
-    cache_key = f"mc_{year}_{sims}"
+    inputs_mtime = _prediction_inputs_mtime(year)
+    cache_key = f"mc_{year}_{sims}_{inputs_mtime}"
     cached = _cache_get(cache_key)
     if cached is not None:
         return cached
 
     # Use pre-computed file when available (sims=10000) for fast load; fallback to live
     precomputed_path = os.path.join(DATA_DIR, f"monte_carlo_{year}.json")
-    if sims == 10000 and os.path.isfile(precomputed_path):
+    precomputed_fresh = (
+        os.path.isfile(precomputed_path)
+        and int(os.path.getmtime(precomputed_path)) >= int(inputs_mtime or "0")
+    )
+    if sims == 10000 and precomputed_fresh:
         with open(precomputed_path) as f:
             result = json.load(f)
         result = _add_final_four_by_region(result, year)

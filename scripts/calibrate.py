@@ -14,6 +14,7 @@ Usage:
   python scripts/calibrate.py                # optimize + report (walk-forward, CV-based)
   python scripts/calibrate.py --report-only   # just score current params
   python scripts/calibrate.py --phase2-only   # optimize only Phase 2 + upset params (fast)
+  python scripts/calibrate.py --priors-only   # optimize only coach + pedigree weights (very fast)
   python scripts/calibrate.py --holdout 2025  # hold out 2025 for final eval
   python scripts/calibrate.py --exclude-years 2008,2009  # exclude years for data validation
   python scripts/calibrate.py --min-floor 0.1  # M1.1: force possession/conf >= 0.1
@@ -403,6 +404,11 @@ PARAM_SPEC_PHASE2 = [
     ("close_game_stdev_boost", 0.0, 0.3),
 ]
 
+PARAM_SPEC_PRIORS = [
+    ("coach_tourney_max_bonus", 0.0, 6.0),
+    ("pedigree_max_bonus", 0.0, 6.0),
+]
+
 
 def _pairs_by_year(pairs):
     """Group pairs by year. Returns {year: [(a,b,a_won,margin,yr,g), ...]}."""
@@ -717,6 +723,67 @@ def calibrate_phase2_only(pairs, objective_name="brier", maxiter=60, popsize=12,
     return optimized, config
 
 
+def calibrate_priors_only(pairs, objective_name="brier", maxiter=60, popsize=12, seed=42, reg_lambda=0.0):
+    """Optimize only coach + pedigree weights, starting from current calibrated_config."""
+    from scipy.optimize import differential_evolution
+
+    cal_path = os.path.join(DATA_DIR, "calibrated_config.json")
+    baseline = ModelConfig(num_sims=1)
+    if os.path.isfile(cal_path):
+        with open(cal_path) as f:
+            cal = json.load(f)
+        for k, v in cal.items():
+            if hasattr(baseline, k):
+                setattr(baseline, k, v)
+
+    eval_count = [0]
+    best_score = [1e9]
+    baseline_acc = [None]
+
+    def objective(x):
+        config = replace(baseline, num_sims=1)
+        for i, (name, _, _) in enumerate(PARAM_SPEC_PRIORS):
+            setattr(config, name, x[i])
+        metrics = score_model(pairs, config)
+        if baseline_acc[0] is None:
+            baseline_acc[0] = metrics["accuracy"]
+        eval_count[0] += 1
+        score = _compute_objective(metrics, objective_name, baseline_acc[0])
+        score += _compute_l2_penalty(x, PARAM_SPEC_PRIORS, reg_lambda)
+        if score < best_score[0]:
+            best_score[0] = score
+            if eval_count[0] % 25 == 0:
+                print(f"  [{eval_count[0]}] Best score: {best_score[0]:.5f}  Brier={metrics['brier_score']:.4f}")
+        return score
+
+    bounds = [(lo, hi) for _, lo, hi in PARAM_SPEC_PRIORS]
+    result = differential_evolution(
+        objective, bounds, seed=seed,
+        maxiter=maxiter, tol=1e-6, popsize=popsize,
+        mutation=(0.5, 1.5), recombination=0.8
+    )
+
+    optimized = {}
+    if os.path.isfile(cal_path):
+        with open(cal_path) as f:
+            optimized = dict(json.load(f))
+    else:
+        for name, _, _ in PARAM_SPEC:
+            if hasattr(ModelConfig(), name):
+                val = getattr(ModelConfig(), name)
+                if isinstance(val, (int, float)):
+                    optimized[name] = round(float(val), 4)
+    for i, (name, _, _) in enumerate(PARAM_SPEC_PRIORS):
+        optimized[name] = round(float(result.x[i]), 4)
+
+    config = replace(baseline, num_sims=1)
+    for k, v in optimized.items():
+        if hasattr(config, k):
+            setattr(config, k, v)
+
+    return optimized, config
+
+
 def _compute_cv_score(pairs_by_year, param_spec, x, objective_name, test_years, baseline_acc_ref,
                       games=None, brier_f4_weights=(0.6, 0.4), reg_lambda=0.0):
     """Evaluate param vector x on walk-forward CV. Returns (score, cv_brier).
@@ -947,6 +1014,7 @@ def save_report(out_path, baseline_metrics, optimized_metrics=None, cv_folds=Non
 def main():
     report_only = "--report-only" in sys.argv
     phase2_only = "--phase2-only" in sys.argv
+    priors_only = "--priors-only" in sys.argv
     holdout_year = None
     exclude_years = None
     objective_name = "brier"
@@ -1040,7 +1108,21 @@ def main():
         return
 
     seeds = [42, 123, 456][:multi_start] if multi_start <= 3 else [42 + r for r in range(multi_start)]
-    if phase2_only:
+    if priors_only:
+        print(f"\n--- Priors only: objective={objective_name}, maxiter={maxiter}, popsize={popsize} ---")
+        best_opt = None
+        best_score = 1e9
+        for run, s in enumerate(seeds):
+            if multi_start > 1:
+                print(f"\n  Multi-start run {run + 1}/{multi_start} (seed={s})")
+            opt, cfg = calibrate_priors_only(pairs, objective_name, maxiter, popsize, s, reg_lambda=reg_lambda)
+            m = score_model(pairs, cfg)
+            sc = _compute_objective(m, objective_name)
+            if sc < best_score:
+                best_score = sc
+                best_opt = (opt, cfg)
+        optimized, opt_config = best_opt
+    elif phase2_only:
         print(f"\n--- Phase 2 only: objective={objective_name}, maxiter={maxiter}, popsize={popsize} ---")
         best_opt = None
         best_score = 1e9

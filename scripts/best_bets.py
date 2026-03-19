@@ -542,7 +542,8 @@ def get_full_card_json(api_key, year=None):
         result = run_model(home_stats, away_stats, config)
         model_prob_home = result["win_prob_a"]
         model_margin = result["predicted_margin"]
-        model_total = result["predicted_score_a"] + result["predicted_score_b"]
+        model_total_raw = result["predicted_score_a"] + result["predicted_score_b"]
+        model_total = model_total_raw + TOTAL_BIAS_CORRECTION
 
         game_rec["model_prob_home"] = round(model_prob_home, 4)
         game_rec["model_margin"] = round(model_margin, 1)

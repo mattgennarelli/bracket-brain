@@ -114,6 +114,23 @@ def load_evanmiya(year):
     return out
 
 
+def load_coaches(year):
+    """Load optional coaches_YYYY.csv -> dict team -> coach."""
+    path = os.path.join(DATA_DIR, f"coaches_{year}.csv")
+    if not os.path.isfile(path):
+        return {}
+    import csv
+    out = {}
+    with open(path, newline="", encoding="utf-8-sig") as f:
+        reader = csv.DictReader(f)
+        for row in reader:
+            team = normalize_team(row.get("team") or row.get("Team") or row.get("school") or row.get("School"))
+            coach = (row.get("coach") or row.get("Coach") or "").strip()
+            if team and coach:
+                out[team] = coach
+    return out
+
+
 def load_injuries(year):
     """Load injury data from fetch_injuries.py output. Returns dict team -> list of injury dicts."""
     path = os.path.join(DATA_DIR, f"injuries_{year}.json")
@@ -123,6 +140,17 @@ def load_injuries(year):
     if not isinstance(data, dict):
         return {}
     return data
+
+
+def merge_coaches(merged, coaches_data):
+    """Overlay coach names onto merged teams so coach_tourney_score can vary."""
+    if not coaches_data:
+        return
+    merged_keys = set(merged.keys())
+    for team_name, coach in coaches_data.items():
+        key = _find_torvik_key(team_name, merged_keys) or normalize_team(team_name)
+        if key in merged and coach:
+            merged[key]["coach"] = coach
 
 
 def merge_injuries(merged, injuries_data):
@@ -427,27 +455,8 @@ def run_fetch_injuries(year, from_csv=None, enrich=False):
     return isinstance(data, dict) and len(data) > 0
 
 
-def main():
-    year = 2026
-    args = sys.argv[1:]
-    fetch_conf_tourney = False
-    fetch_injuries_flag = False
-    for a in args:
-        if a == "--no-fetch":
-            continue
-        if a == "--fetch-conf-tourney":
-            fetch_conf_tourney = True
-            continue
-        if a == "--fetch-injuries":
-            fetch_injuries_flag = True
-            continue
-        try:
-            year = int(a)
-            break
-        except ValueError:
-            pass
-    skip_torvik_fetch = "--no-fetch" in args
-
+def build_merged_teams(year=2026, *, fetch_conf_tourney=False, fetch_injuries_flag=False,
+                       skip_torvik_fetch=False):
     print(f"Data merge for {year}")
     print("=" * 50)
 
@@ -492,6 +501,11 @@ def main():
         print(f"Evan Miya: {len(evanmiya)} teams (star_score overlay)")
 
     merged = merge_sources(torvik, kenpom, evanmiya)
+
+    coaches_data = load_coaches(year)
+    if coaches_data:
+        merge_coaches(merged, coaches_data)
+        print(f"Coaches: {len(coaches_data)} teams (coach overlay)")
 
     # Derive ppg/opp_ppg from ppp_off, ppp_def, adj_tempo when missing
     for team, row in merged.items():
@@ -548,6 +562,35 @@ def main():
         json.dump(out_list, f, indent=2)
     print(f"\nMerged {len(out_list)} teams -> {out_path}")
     return 0
+
+
+def main():
+    year = 2026
+    args = sys.argv[1:]
+    fetch_conf_tourney = False
+    fetch_injuries_flag = False
+    for a in args:
+        if a == "--no-fetch":
+            continue
+        if a == "--fetch-conf-tourney":
+            fetch_conf_tourney = True
+            continue
+        if a == "--fetch-injuries":
+            fetch_injuries_flag = True
+            continue
+        try:
+            year = int(a)
+            break
+        except ValueError:
+            pass
+    skip_torvik_fetch = "--no-fetch" in args
+
+    return build_merged_teams(
+        year,
+        fetch_conf_tourney=fetch_conf_tourney,
+        fetch_injuries_flag=fetch_injuries_flag,
+        skip_torvik_fetch=skip_torvik_fetch,
+    )
 
 
 if __name__ == "__main__":
