@@ -307,6 +307,7 @@ def _build_bracket_scores_result(year: int, days: int = 21) -> dict:
             "team_b": away,
             "score_a": game.get("home_score"),
             "score_b": game.get("away_score"),
+            "scheduled_at": game.get("scheduled_at"),
             "completed": game.get("completed", False),
             "status_detail": game.get("status_detail", ""),
             "display_clock": game.get("display_clock", ""),
@@ -768,6 +769,7 @@ def get_bets_scores():
             result["scores"][pick_key] = {
                 "home_score": rec.get("home_score"),
                 "away_score": rec.get("away_score"),
+                "scheduled_at": rec.get("scheduled_at"),
                 "completed": rec.get("completed", False),
                 "status_detail": rec.get("status_detail", ""),
                 "display_clock": rec.get("display_clock", ""),
@@ -778,6 +780,7 @@ def get_bets_scores():
             result["scores"][pick_key_flip] = {
                 "home_score": rec.get("away_score"),
                 "away_score": rec.get("home_score"),
+                "scheduled_at": rec.get("scheduled_at"),
                 "completed": rec.get("completed", False),
                 "status_detail": rec.get("status_detail", ""),
                 "display_clock": rec.get("display_clock", ""),
@@ -1075,6 +1078,7 @@ def get_bets_card_scores():
             result["scores"][pick_key] = {
                 "home_score": rec.get("home_score"),
                 "away_score": rec.get("away_score"),
+                "scheduled_at": rec.get("scheduled_at"),
                 "completed": rec.get("completed", False),
                 "status_detail": rec.get("status_detail", ""),
                 "display_clock": rec.get("display_clock", ""),

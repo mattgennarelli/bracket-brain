@@ -1769,39 +1769,22 @@ def enrich_bracket_with_teams(bracket, teams_merged):
                 else:
                     continue
             merged = teams_merged[key]
-            adj_o = merged.get("adj_o")
-            adj_d = merged.get("adj_d")
+            canonical = {"team": tname, "seed": team_obj.get("seed")}
+            for k, v in merged.items():
+                if k in ("team", "seed"):
+                    continue
+                canonical[k] = v
+            team_obj.clear()
+            team_obj.update(canonical)
+            adj_o = team_obj.get("adj_o")
+            adj_d = team_obj.get("adj_d")
             team_obj["adj_o"] = adj_o if adj_o is not None else _BAD_DEFAULTS["adj_o"]
             team_obj["adj_d"] = adj_d if adj_d is not None else _BAD_DEFAULTS["adj_d"]
-            team_obj["adj_tempo"] = merged.get("adj_tempo") or _BAD_DEFAULTS["adj_tempo"]
-            team_obj["barthag"] = merged.get("barthag") if merged.get("barthag") is not None else _BAD_DEFAULTS["barthag"]
-            for k in ("to_rate", "orb_rate", "ft_pct", "ft_rate", "sos", "luck",
-                      "kp_adj_o", "kp_adj_d", "star_score",
-                      "three_rate", "three_pct", "three_pt_pct", "three_pt_pct_d", "two_pt_pct", "block_rate",
-                      "blk_rate", "ast_rate", "to_rate_d", "opp_orb_rate",
-                      "avg_experience", "experience",
-                      "efg_pct", "efg_d",
-                      "wins", "losses", "games", "ppg", "opp_ppg",
-                      "em_depth_score", "em_big_bpr", "em_guard_bpr", "em_creator_count",
-                      "em_adj_o", "em_adj_d", "em_opponent_adjust",
-                      "em_runs_margin", "em_runs_per_game", "em_runs_conceded",
-                      "em_star_concentration", "em_top5_bpr", "em_poss_weighted_bpr",
-                      "em_bpr", "em_obpr", "em_dbpr",
-                      "em_off_rank", "em_def_rank", "em_home_rank", "em_tempo_rank",
-                      "em_pace_adjust",
-                      "ppp_off", "ppp_def", "raw_tempo",
-                      "ft_rate_d", "three_pt_rate", "three_pt_rate_d", "two_pt_pct_d",
-                      "opp_ast_rate", "opp_ft_pct", "blked_rate",
-                      "wab", "elite_sos", "qual_o", "qual_d", "qual_barthag",
-                      "conf_adj_o", "conf_adj_d", "win_pct", "conf_win_pct", "conf_rating", "conf_strength_score",
-                      "momentum", "conf_tourney_momentum", "adj_o_recent", "adj_d_recent", "injuries", "injury_impact",
-                      "em_o_rate", "em_d_rate", "em_rel_rating", "em_roster_rank",
-                      "em_tempo", "top_player", "top_player_bpr", "roster"):
-                if k in merged and merged[k] is not None:
-                    team_obj[k] = merged[k]
+            team_obj["adj_tempo"] = team_obj.get("adj_tempo") or _BAD_DEFAULTS["adj_tempo"]
+            team_obj["barthag"] = team_obj.get("barthag") if team_obj.get("barthag") is not None else _BAD_DEFAULTS["barthag"]
             # Attach school lat/lon for proximity calculations
             locs = _load_school_locations()
-            if tname in locs and "location" not in team_obj:
+            if tname in locs and not team_obj.get("location"):
                 team_obj["location"] = locs[tname]
             enriched += 1
             enriched_names.add(tname)
@@ -2116,7 +2099,7 @@ def get_matchup_analysis_display(team_a, team_b, data_dir=None, year=None, confi
     a.setdefault("seed", 8)
     b.setdefault("seed", 8)
     # If game_site not provided, try to infer from venues
-    if game_site is None and year and region and round_name:
+    if game_site is None and year and round_name:
         venues = _load_venues(year)
         sa, sb = a.get("seed"), b.get("seed")
         game_site = _get_game_site(venues, region, round_name, seed_a=sa, seed_b=sb)

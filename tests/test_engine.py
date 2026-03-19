@@ -8,7 +8,8 @@ import pytest
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 from engine import (
     calc_momentum_bonus, enrich_team, _normalize_team_for_match,
-    predict_game, ModelConfig, resolve_ff_pairs,
+    predict_game, ModelConfig, resolve_ff_pairs, get_matchup_analysis_display,
+    enrich_bracket_with_teams,
 )
 
 
@@ -190,3 +191,39 @@ def test_resolve_ff_pairs_uses_layout_matchups():
 def test_resolve_ff_pairs_falls_back_to_legacy_layout():
     qo = ["East", "West", "Midwest", "South"]
     assert resolve_ff_pairs(qo, None) == [("East", "South"), ("West", "Midwest")]
+
+
+def test_final_four_analysis_infers_venue_without_region(monkeypatch):
+    monkeypatch.setattr(
+        "engine._load_venues",
+        lambda year: {"F4": [39.76, -86.16], "city_labels": {"F4": "Indianapolis, IN"}},
+    )
+    a = _base_team(team="Duke", seed=1, location=[36.0, -78.9])
+    b = _base_team(team="Florida", seed=1, location=[29.6, -82.3])
+    result = get_matchup_analysis_display(
+        a,
+        b,
+        year=2026,
+        round_name="Final Four",
+        config=ModelConfig(num_sims=1),
+    )
+    assert result["venue_city"] == "Indianapolis, IN"
+
+
+def test_enrich_bracket_with_teams_overlays_canonical_team_fields():
+    bracket = {"East": {1: {"team": "Duke", "seed": 1, "momentum": -0.875}}}
+    teams_merged = {
+        "duke": {
+            "team": "Duke",
+            "coach": "Jon Scheyer",
+            "momentum": None,
+            "adj_o": 120.0,
+            "adj_d": 90.0,
+            "adj_tempo": 67.0,
+            "barthag": 0.98,
+        }
+    }
+    enrich_bracket_with_teams(bracket, teams_merged)
+    duke = bracket["East"][1]
+    assert duke["coach"] == "Jon Scheyer"
+    assert duke["momentum"] is None

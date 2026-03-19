@@ -136,7 +136,6 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sa
   cursor:pointer; display:flex; align-items:center; justify-content:center; z-index:10;
   opacity:.75; transition:opacity .15s; line-height:1; pointer-events:auto; }
 .info-btn:hover { opacity:1; border-color:var(--primary); color:var(--primary); }
-.region-bracket.flipped .info-btn { right:auto; left:1px; }
 .analysis-overlay { display:none; position:fixed; inset:0; background:rgba(0,0,0,.45); z-index:199; backdrop-filter:blur(2px); }
 .analysis-overlay.show { display:block; }
 .analysis-panel { display:none; position:fixed; top:50%; left:50%; transform:translate(-50%,-50%);
@@ -720,13 +719,77 @@ function _lookupBracketScore(teamA, teamB) {
   return bracketScores[`${teamA}|${teamB}`] || bracketScores[`${teamB}|${teamA}`] || null;
 }
 
+function _formatCommenceDateTime(commenceTime, includeDate = true) {
+  if (!commenceTime) return '';
+  try {
+    const d = new Date(commenceTime);
+    const datePart = includeDate
+      ? d.toLocaleDateString('en-US', { month: 'short', day: 'numeric', timeZone: 'America/New_York' })
+      : '';
+    const timePart = d.toLocaleTimeString('en-US', {
+      hour: 'numeric',
+      minute: '2-digit',
+      hour12: true,
+      timeZone: 'America/New_York',
+    });
+    return `${datePart ? `${datePart} · ` : ''}${timePart} ET`;
+  } catch {
+    return '';
+  }
+}
+
+function _getScoreDisplayState(scoreRec, fallbackCommenceTime = '') {
+  if (!scoreRec) {
+    return {
+      scoreA: null,
+      scoreB: null,
+      completed: false,
+      live: false,
+      scheduled: false,
+      showScores: false,
+      label: '',
+    };
+  }
+
+  const scoreA = scoreRec.score_a != null ? scoreRec.score_a : scoreRec.home_score;
+  const scoreB = scoreRec.score_b != null ? scoreRec.score_b : scoreRec.away_score;
+  const hasScore = scoreA != null && scoreB != null;
+  const statusText = String(scoreRec.status_detail || '').trim();
+  const clockText = String(scoreRec.display_clock || '').trim();
+  const period = Number(scoreRec.period || 0);
+  const scheduledText = _formatCommenceDateTime(scoreRec.scheduled_at || fallbackCommenceTime, true);
+  const looksScheduled = !scoreRec.completed && (
+    period === 0 ||
+    clockText === '0:00' ||
+    /^\d{1,2}:\d{2}\s?(AM|PM)\b/i.test(statusText) ||
+    /^(Today|Tomorrow)\b/i.test(statusText) ||
+    /^[A-Z][a-z]{2}\s+\d{1,2}\b/.test(statusText)
+  );
+  const live = !scoreRec.completed && hasScore && !looksScheduled;
+  const scheduled = !scoreRec.completed && !live;
+  let label = '';
+  if (scoreRec.completed) label = 'Final';
+  else if (live) label = `LIVE ${clockText || statusText || ''}`.trim();
+  else if (scheduled) label = scheduledText || statusText || '';
+
+  return {
+    scoreA,
+    scoreB,
+    completed: !!scoreRec.completed,
+    live,
+    scheduled,
+    showScores: !!(scoreRec.completed || live),
+    label,
+  };
+}
+
 function _resolveGameOutcome(teamA, teamB, fallbackPick) {
   const scoreRec = _lookupBracketScore(teamA, teamB);
-  const scoreA = scoreRec?.score_a;
-  const scoreB = scoreRec?.score_b;
-  const hasScore = scoreA != null && scoreB != null;
-  const completed = !!(scoreRec && scoreRec.completed && hasScore);
-  const live = !!(scoreRec && !scoreRec.completed && hasScore);
+  const state = _getScoreDisplayState(scoreRec);
+  const scoreA = state.showScores ? state.scoreA : null;
+  const scoreB = state.showScores ? state.scoreB : null;
+  const completed = state.completed;
+  const live = state.live;
   let actualWinner = null;
   if (completed && scoreA !== scoreB) actualWinner = scoreA > scoreB ? teamA : teamB;
   return {
@@ -735,6 +798,8 @@ function _resolveGameOutcome(teamA, teamB, fallbackPick) {
     scoreB,
     completed,
     live,
+    scheduled: state.scheduled,
+    statusLabel: state.label,
     actualWinner,
     resolvedPick: actualWinner || fallbackPick,
   };
@@ -1145,11 +1210,10 @@ function recomputeBracket() {
         isLocked: !!lockedPicks[gid] && !outcome.completed,
         completed: outcome.completed,
         live: outcome.live,
+        statusLabel: outcome.statusLabel,
         actualWinner: outcome.actualWinner,
         scoreA: outcome.scoreA,
         scoreB: outcome.scoreB,
-        statusDetail: outcome.scoreRec?.status_detail || '',
-        displayClock: outcome.scoreRec?.display_clock || '',
       };
     }
   }
@@ -1189,11 +1253,10 @@ function recomputeBracket() {
           isLocked: !!lockedPicks[gid] && !outcome.completed,
           completed: outcome.completed,
           live: outcome.live,
+          statusLabel: outcome.statusLabel,
           actualWinner: outcome.actualWinner,
           scoreA: outcome.scoreA,
           scoreB: outcome.scoreB,
-          statusDetail: outcome.scoreRec?.status_detail || '',
-          displayClock: outcome.scoreRec?.display_clock || '',
         };
       }
     } else if (step.type === 'ff') {
@@ -1221,11 +1284,10 @@ function recomputeBracket() {
             isLocked: !!lockedPicks[gid] && !outcome.completed,
             completed: outcome.completed,
             live: outcome.live,
+            statusLabel: outcome.statusLabel,
             actualWinner: outcome.actualWinner,
             scoreA: outcome.scoreA,
             scoreB: outcome.scoreB,
-            statusDetail: outcome.scoreRec?.status_detail || '',
-            displayClock: outcome.scoreRec?.display_clock || '',
           };
         }
       } else if (roundOf === 2) {
@@ -1247,11 +1309,10 @@ function recomputeBracket() {
           isLocked: !!lockedPicks['FF-2-0'] && !outcome.completed,
           completed: outcome.completed,
           live: outcome.live,
+          statusLabel: outcome.statusLabel,
           actualWinner: outcome.actualWinner,
           scoreA: outcome.scoreA,
           scoreB: outcome.scoreB,
-          statusDetail: outcome.scoreRec?.status_detail || '',
-          displayClock: outcome.scoreRec?.display_clock || '',
         };
       }
     }
@@ -1277,9 +1338,9 @@ function renderBracket() {
           slot.dataset.team = t.name; slot.dataset.seed = t.seed || '';
           slot.querySelector('.sd').textContent = t.seed || '';
           slot.querySelector('.tm').textContent = t.name;
-          slot.querySelector('.sc').textContent = st.scoreA != null && idx === 0
+          slot.querySelector('.sc').textContent = (st.live || st.completed) && st.scoreA != null && idx === 0
             ? Math.round(st.scoreA)
-            : st.scoreB != null && idx === 1
+            : (st.live || st.completed) && st.scoreB != null && idx === 1
               ? Math.round(st.scoreB)
               : '';
           slot.classList.remove('empty');
@@ -1307,9 +1368,7 @@ function renderBracket() {
       });
       if (infoBtn) infoBtn.style.display = (st.teamA && st.teamB) ? 'flex' : 'none';
       if (statusEl) {
-        if (st.completed) statusEl.textContent = 'Final';
-        else if (st.live) statusEl.textContent = `LIVE ${st.displayClock || st.statusDetail || ''}`.trim();
-        else statusEl.textContent = '';
+        statusEl.textContent = st.statusLabel || '';
       }
     } else {
       slots.forEach(slot => {
@@ -2435,13 +2494,14 @@ function _matchupCardHtml(game, scores) {
   const timeStr = _formatCommenceTime(game.commence_time);
   const scoreKey = `${game.home_team}|${game.away_team}`;
   const scoreRec = scores[scoreKey] || scores[`${game.away_team}|${game.home_team}`];
+  const scoreState = _getScoreDisplayState(scoreRec, game.commence_time);
 
   let scoreStr = '';
-  if (scoreRec && scoreRec.home_score != null) {
-    const h = Math.round(scoreRec.home_score), a = Math.round(scoreRec.away_score);
-    scoreStr = scoreRec.completed
-      ? ` · <span class="mc-score">Final: ${game.home_team} ${h}-${a}</span>`
-      : ` · <span class="mc-score live-badge">LIVE ${game.home_team} ${h}-${a} ${scoreRec.display_clock||''}</span>`;
+  if (scoreState.showScores) {
+    const h = Math.round(scoreState.scoreA), a = Math.round(scoreState.scoreB);
+    scoreStr = scoreState.completed
+      ? ` · <span class="mc-score">Final: ${game.home_team} ${h}-${a} ${game.away_team}</span>`
+      : ` · <span class="mc-score live-badge">${game.home_team} ${h}-${a} ${game.away_team} ${scoreState.label}</span>`;
   }
 
   const header = `<div class="mc-header">
@@ -2564,11 +2624,7 @@ function toggleWhy(id) {
 }
 
 function _formatCommenceTime(commenceTime) {
-  if (!commenceTime) return '';
-  try {
-    const d = new Date(commenceTime);
-    return d.toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit', hour12: true, timeZone: 'America/New_York' }) + ' ET';
-  } catch { return ''; }
+  return _formatCommenceDateTime(commenceTime, false);
 }
 
 function _pickRowHtml(p, showDate, scoreOverlay) {
@@ -2598,16 +2654,16 @@ function _pickRowHtml(p, showDate, scoreOverlay) {
   const kelly = p.kelly_units != null ? p.kelly_units.toFixed(2) : null;
   const gameStr = `${p.away_team} @ ${p.home_team}`;
   const timeStr = _formatCommenceTime(p.commence_time);
+  const scoreState = _getScoreDisplayState(scoreOverlay, p.commence_time);
   let actualStr = '';
   if (result && p.actual_score_home != null) {
     actualStr = ` · ${p.home_team} ${Math.round(p.actual_score_home)}-${Math.round(p.actual_score_away)} ${p.away_team}`;
-  } else if (scoreOverlay && scoreOverlay.home_score != null && scoreOverlay.away_score != null) {
-    const h = Math.round(scoreOverlay.home_score);
-    const a = Math.round(scoreOverlay.away_score);
+  } else if (scoreState.showScores) {
+    const h = Math.round(scoreState.scoreA);
+    const a = Math.round(scoreState.scoreB);
     actualStr = ` · ${p.home_team} ${h}-${a} ${p.away_team}`;
-    if (!scoreOverlay.completed) {
-      const live = scoreOverlay.display_clock || (scoreOverlay.period === 1 ? '1H' : scoreOverlay.period === 2 ? '2H' : '');
-      actualStr += live ? ` <span class="live-badge">LIVE ${live}</span>` : ' <span class="live-badge">LIVE</span>';
+    if (scoreState.live) {
+      actualStr += ` <span class="live-badge">${scoreState.label}</span>`;
     }
   }
   // "Why this pick?" explanation
@@ -2938,8 +2994,8 @@ function renderMobileBracket() {
     const pA = st.probA != null ? st.probA : 0.5;
     const probAStr = (pA * 100).toFixed(0) + '%';
     const probBStr = ((1 - pA) * 100).toFixed(0) + '%';
-    const metaAStr = st.scoreA != null ? `${Math.round(st.scoreA)} · ${probAStr}` : probAStr;
-    const metaBStr = st.scoreB != null ? `${Math.round(st.scoreB)} · ${probBStr}` : probBStr;
+    const metaAStr = (st.live || st.completed) && st.scoreA != null ? `${Math.round(st.scoreA)} · ${probAStr}` : probAStr;
+    const metaBStr = (st.live || st.completed) && st.scoreB != null ? `${Math.round(st.scoreB)} · ${probBStr}` : probBStr;
     const seedDiff = Math.abs((st.seedA || 0) - (st.seedB || 0));
     const isUpsetA = st.pick === st.teamA && pA < 0.5 && seedDiff >= 3;
     const isUpsetB = st.pick === st.teamB && pA >= 0.5 && seedDiff >= 3;

@@ -144,6 +144,7 @@ def _parse_espn_event(event):
         "away_team": away["name"],
         "home_aliases": home.get("aliases", []),
         "away_aliases": away.get("aliases", []),
+        "scheduled_at": event.get("date") or comp.get("date"),
         "home_score": home["score"],
         "away_score": away["score"],
         "completed": completed,
