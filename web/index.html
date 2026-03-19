@@ -262,6 +262,8 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sa
 .ap-insight { font-size:.82rem; color:var(--muted); line-height:1.6; padding:10px 12px;
   background:var(--surface2); border-radius:8px; border-left:3px solid var(--primary);
   margin-bottom:14px; font-style:italic; }
+.ap-dampen-note { font-size:.75rem; color:var(--muted); margin-top:6px; padding:6px 10px;
+  background:var(--surface2); border-radius:6px; }
 
 /* Stat row kept for fallback */
 .stat-row { display:flex; justify-content:space-between; font-size:.8rem; padding:4px 0; color:var(--muted); }
@@ -1755,6 +1757,7 @@ async function showAnalysis(gameId) {
     : `<div class="ap-score-line"><span class="spread-chip">${spreadLabel}</span></div>`;
 
   const isUpsetPick = modelPick !== (favA ? st.teamA : st.teamB);
+  const pickDampened = orig?.pick_dampened;
   const pickBoxHtml = `
     <div class="pick-box${isUpsetPick || p < 0.56 ? ' tossup' : ''}">
       <div>
@@ -1762,7 +1765,8 @@ async function showAnalysis(gameId) {
         <div class="pb-team">(${pickSeed}) ${modelPick}</div>
       </div>
       <div class="pb-prob">${(pickProb * 100).toFixed(0)}%</div>
-    </div>`;
+    </div>
+    ${pickDampened ? '<div class="ap-dampen-note">Probability dampened in late rounds — pick may differ from margin direction.</div>' : ''}`;
 
   const insightHtml = insight ? `<div class="ap-insight">${insight}</div>` : '';
 
@@ -1774,9 +1778,12 @@ async function showAnalysis(gameId) {
   const foulM = flipped ? -(orig?.foul_rate_margin || 0) : (orig?.foul_rate_margin || 0);
   const sosM = flipped ? -(orig?.sos_margin || 0) : (orig?.sos_margin || 0);
   const runsM = flipped ? -(orig?.runs_margin || 0) : (orig?.runs_margin || 0);
+  const bigBprM = flipped ? -(orig?.big_bpr_margin || 0) : (orig?.big_bpr_margin || 0);
+  const guardBprM = flipped ? -(orig?.guard_bpr_margin || 0) : (orig?.guard_bpr_margin || 0);
+  const creatorM = flipped ? -(orig?.creator_margin || 0) : (orig?.creator_margin || 0);
   const upsetB = flipped ? -(orig?.upset_tolerance_bonus || 0) : (orig?.upset_tolerance_bonus || 0);
   const totalM = flipped ? -(orig?.predicted_margin || 0) : (orig?.predicted_margin || 0);
-  const extrasSum = possM + ftM + foulM + sosM + runsM;
+  const extrasSum = possM + ftM + foulM + sosM + runsM + bigBprM + guardBprM + creatorM;
 
   // Build detailed factor rows from factors_a / factors_b
   const _factorLabels = {
@@ -1800,6 +1807,7 @@ async function showAnalysis(gameId) {
         ${_marginRow('Matchup Efficiency', baseM, st.teamA, st.teamB)}
         ${factorRows}
         ${Math.abs(extrasSum) >= 0.1 ? _marginRow('Possession & FT Edge', extrasSum, st.teamA, st.teamB) : ''}
+        ${Math.abs(upsetB) >= 0.1 ? _marginRow('Upset Tolerance', upsetB, st.teamA, st.teamB) : ''}
         <div class="margin-total">
           <span>Predicted Margin</span>
           <strong style="color:${totalM >= 0 ? 'var(--green)' : 'var(--red)'}">${favA ? st.teamA : st.teamB} −${Math.abs(totalM).toFixed(1)}</strong>
@@ -1937,17 +1945,32 @@ async function showAnalysis(gameId) {
           if (pbTeam) pbTeam.textContent = `(${updated.pick_seed || ''}) ${updated.pick}`;
           if (pbProb) pbProb.textContent = (Math.max(newPA, newPB) * 100).toFixed(0) + '%';
         }
+        // Update dampen note
+        const dampenNote = content.querySelector('.ap-dampen-note');
+        const pickBoxEl = content.querySelector('.pick-box');
+        if (dampenNote) {
+          dampenNote.style.display = updated.pick_dampened ? '' : 'none';
+        } else if (updated.pick_dampened && pickBoxEl) {
+          const note = document.createElement('div');
+          note.className = 'ap-dampen-note';
+          note.textContent = 'Probability dampened in late rounds — pick may differ from margin direction.';
+          pickBoxEl.parentNode.insertBefore(note, pickBoxEl.nextSibling);
+        }
         // Update margin breakdown with detailed factors
         const marginStack = content.querySelector('.margin-stack');
         if (marginStack && updated.base_margin != null) {
           const nf = flipped;
           const newBaseM = nf ? -(updated.base_margin || 0) : (updated.base_margin || 0);
-          const newPossM = nf ? -(updated.possession_edge_margin || 0) : (updated.possession_edge_margin || 0);
-          const newFtM = nf ? -(updated.ft_edge_margin || 0) : (updated.ft_edge_margin || 0);
+          const newPossM = nf ? -(updated.possession_margin || 0) : (updated.possession_margin || 0);
+          const newFtM = nf ? -(updated.ft_margin || 0) : (updated.ft_margin || 0);
           const newFoulM = nf ? -(updated.foul_rate_margin || 0) : (updated.foul_rate_margin || 0);
-          const newSosM = nf ? -(updated.sos_edge_margin || 0) : (updated.sos_edge_margin || 0);
+          const newSosM = nf ? -(updated.sos_margin || 0) : (updated.sos_margin || 0);
           const newRunsM = nf ? -(updated.runs_margin || 0) : (updated.runs_margin || 0);
-          const newExtrasSum = newPossM + newFtM + newFoulM + newSosM + newRunsM;
+          const newBigBprM = nf ? -(updated.big_bpr_margin || 0) : (updated.big_bpr_margin || 0);
+          const newGuardBprM = nf ? -(updated.guard_bpr_margin || 0) : (updated.guard_bpr_margin || 0);
+          const newCreatorM = nf ? -(updated.creator_margin || 0) : (updated.creator_margin || 0);
+          const newUpsetB = nf ? -(updated.upset_tolerance_bonus || 0) : (updated.upset_tolerance_bonus || 0);
+          const newExtrasSum = newPossM + newFtM + newFoulM + newSosM + newRunsM + newBigBprM + newGuardBprM + newCreatorM;
           const newTotalM = nf ? -(updated.predicted_margin || 0) : (updated.predicted_margin || 0);
           const newFavA = newTotalM >= 0;
           const updFA = updated.factors_a || {};
@@ -1959,6 +1982,7 @@ async function showAnalysis(gameId) {
             if (Math.abs(net) >= 0.05) rows += _marginRow(label, net, st.teamA, st.teamB);
           });
           if (Math.abs(newExtrasSum) >= 0.1) rows += _marginRow('Possession & FT Edge', newExtrasSum, st.teamA, st.teamB);
+          if (Math.abs(newUpsetB) >= 0.1) rows += _marginRow('Upset Tolerance', newUpsetB, st.teamA, st.teamB);
           rows += `<div class="margin-total"><span>Predicted Margin</span><strong style="color:${newTotalM >= 0 ? 'var(--green)' : 'var(--red)'}">${newFavA ? st.teamA : st.teamB} −${Math.abs(newTotalM).toFixed(1)}</strong></div>`;
           const vegasDiv = marginStack.querySelector('.margin-vegas');
           const vegasHtml = vegasDiv ? vegasDiv.outerHTML : '';

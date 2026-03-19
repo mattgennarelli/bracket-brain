@@ -571,11 +571,14 @@ def predict_game(team_a, team_b, game_site=None, config=DEFAULT_CONFIG, round_na
 
     # Late-round dampening: shift toward 0.5 (models overconfident in Sweet 16+)
     late_rounds = ("Sweet 16", "Elite 8", "Final Four", "Championship")
+    pick_dampened = False
     if round_name in late_rounds:
         damp = getattr(config, "late_round_dampening", 0.0)
         if damp > 0:
             final_prob = 0.5 + (final_prob - 0.5) * (1.0 - damp)
             final_prob = max(0.001, min(0.999, final_prob))
+            # Pick can differ from margin direction when dampening flips the favorite
+            pick_dampened = (eff_prob >= 0.5) != (final_prob >= 0.5)
 
     # Detect if both teams are using default/fallback stats
     a_default = (team_a.get("adj_o") == 85 and team_a.get("adj_d") == 112)
@@ -598,13 +601,18 @@ def predict_game(team_a, team_b, game_site=None, config=DEFAULT_CONFIG, round_na
     effective_scale = round_scale * (1.0 + tempo_adjust)
     effective_scale = max(0.88, min(1.0, effective_scale))
 
+    # Derive scores so predicted_score_a - predicted_score_b = predicted_margin
+    scaled_total = (score_a + score_b) * effective_scale
+    predicted_score_a = round((scaled_total + adjusted_margin) / 2, 1)
+    predicted_score_b = round((scaled_total - adjusted_margin) / 2, 1)
+
     result = {
         "team_a": team_a["team"], "team_b": team_b["team"],
         "seed_a": seed_a, "seed_b": seed_b,
         "win_prob_a": round(final_prob, 4),
         "win_prob_b": round(1 - final_prob, 4),
-        "predicted_score_a": round((score_a + factor_margin/2) * effective_scale, 1),
-        "predicted_score_b": round((score_b - factor_margin/2) * effective_scale, 1),
+        "predicted_score_a": predicted_score_a,
+        "predicted_score_b": predicted_score_b,
         "predicted_margin": round(adjusted_margin, 1),
         "base_margin": round(base_margin, 1),
         "factor_margin": round(factor_margin, 1),
@@ -623,6 +631,7 @@ def predict_game(team_a, team_b, game_site=None, config=DEFAULT_CONFIG, round_na
         "volatility": round(vol, 3),
         "factors_a": {k: round(v, 2) for k, v in factors_a.items()},
         "factors_b": {k: round(v, 2) for k, v in factors_b.items()},
+        "pick_dampened": pick_dampened,
     }
     if warning:
         result["warning"] = warning
@@ -2316,6 +2325,7 @@ def _make_pick_dict(game_num, round_of, round_name, region, a, b, result, pick_t
         "historical_avg_margin": round(hist["avg_margin"], 1) if hist else None,
         "head_to_head": h2h,
         "upset_alert": upset_alert,
+        "pick_dampened": result.get("pick_dampened", False),
     }
     d["stats_a"]["injury_impact"] = round(abs(result["factors_a"].get("injuries", 0)), 1)
     d["stats_b"]["injury_impact"] = round(abs(result["factors_b"].get("injuries", 0)), 1)
