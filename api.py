@@ -774,12 +774,19 @@ def get_bets_card(year: int = Query(default=2026)):
     today = datetime.now().strftime("%Y-%m-%d")
 
     # Serve from saved daily snapshot (committed by GH Actions each morning)
+    # Fall back to most recent card file if today's doesn't exist yet (UTC vs ET mismatch)
     daily_path = os.path.join(DATA_DIR, f"card_{today}.json")
+    if not os.path.isfile(daily_path):
+        import glob as _glob
+        card_files = sorted(_glob.glob(os.path.join(DATA_DIR, "card_2*.json")))
+        if card_files:
+            daily_path = card_files[-1]
     if os.path.isfile(daily_path):
         with open(daily_path) as f:
             data = json.load(f)
         games = data.get("games", [])
-        return {"date": today, "games": games, "available": bool(games)}
+        card_date = os.path.basename(daily_path).replace("card_", "").replace(".json", "")
+        return {"date": card_date, "games": games, "available": bool(games)}
 
     # Fall back to live odds fetch if no saved file (e.g. before Actions runs)
     api_key = get_api_key()

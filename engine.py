@@ -77,10 +77,10 @@ class ModelConfig:
     em_opp_adjust_max_bonus: float = 2.0  # em_opponent_adjust: opponent quality adjustment
     em_adj_o_weight: float = 0.3          # blend weight for EvanMiya adj_o/adj_d in base score (0=Torvik only)
     em_runs_margin_max_bonus: float = 2.0  # scoring-burst margin bonus (ability to go on runs)
-    big_bpr_max_bonus: float = 1.5         # frontcourt quality differential (em_big_bpr)
-    guard_bpr_max_bonus: float = 1.5       # backcourt quality differential (em_guard_bpr)
-    creator_count_max_bonus: float = 1.0   # penalty for too many ball-dominant creators
-    ft_foul_rate_max_bonus: float = 2.0   # margin bonus from differential FT rate (foul drawing vs committing)
+    big_bpr_max_bonus: float = 0.0         # frontcourt quality differential (em_big_bpr) — default 0, let calibrator find signal
+    guard_bpr_max_bonus: float = 0.0       # backcourt quality differential (em_guard_bpr) — default 0, let calibrator find signal
+    creator_count_max_bonus: float = 0.0   # penalty for too many ball-dominant creators — default 0, let calibrator find signal
+    ft_foul_rate_max_bonus: float = 0.0   # margin bonus from differential FT rate — default 0, good config calibrated to 0.0
     score_scale: float = 0.942            # tournament scoring discount vs regular-season efficiency baseline
                                           # (calibrated: model over-predicts by 8.8 pts on 187 tournament games)
     score_scale_r64: float = 0.960

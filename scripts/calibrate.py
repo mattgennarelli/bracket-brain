@@ -830,17 +830,17 @@ def calibrate_walk_forward(pairs, objective_name="brier", maxiter=100, popsize=1
         # Merge fold opts: use median or mean per param (simplified: use last fold's opt)
         optimized = dict(fold_results[-1][1]) if fold_results else {}
 
-    # Param reduction: drop params with |optimized - default| < 0.05
+    # Param reduction: drop params with |optimized - default| < 0.02
     reduced_spec = [
         (n, lo, hi) for n, lo, hi in PARAM_SPEC
-        if abs(optimized.get(n, defaults.get(n, 0)) - defaults.get(n, 0)) >= 0.05
+        if abs(optimized.get(n, defaults.get(n, 0)) - defaults.get(n, 0)) >= 0.02
     ]
-    if len(reduced_spec) > 12:
+    if len(reduced_spec) > 20:
         ranked = [(n, abs(optimized.get(n, 0) - defaults.get(n, 0))) for n, _, _ in PARAM_SPEC]
         ranked.sort(key=lambda x: -x[1])
-        keep = {n for n, _ in ranked[:12]}
+        keep = {n for n, _ in ranked[:20]}
         reduced_spec = [(n, lo, hi) for n, lo, hi in PARAM_SPEC if n in keep]
-    print(f"\n  Reduced to {len(reduced_spec)} params (target ≤12): {[p[0] for p in reduced_spec]}")
+    print(f"\n  Reduced to {len(reduced_spec)} params (target ≤20): {[p[0] for p in reduced_spec]}")
 
     # Final calibration on all data except max year (warm start from CV-optimized if available)
     all_train = [p for p in pairs if p[4] < max(years)]

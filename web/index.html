@@ -2019,7 +2019,7 @@ function renderCard(cardData, historyData, scores) {
   // Today's card — game grid
   const games = cardData?.games || [];
   if (!cardData?.available || games.length === 0) {
-    gamesBody.innerHTML = '<div class="picks-empty">No games today, or the card hasn\'t been fetched yet.<br>Run <code>python scripts/save_card.py</code> each morning.</div>';
+    gamesBody.innerHTML = '<div class="picks-empty">No games on today\'s card yet. Check back soon!</div>';
   } else {
     const todayCardPicks = allPicks.filter(p => p.date === today);
     const resultByKey = {};
