@@ -19,7 +19,8 @@
       "result": "L",
       "actual_score_home": 79.0,
       "actual_score_away": 58.0,
-      "settled_at": "2026-03-19T02:40:07.218205+00:00"
+      "settled_at": "2026-03-19T02:40:07.218205+00:00",
+      "ncaa_tournament": false
     },
     {
       "home_team": "Bradley Braves",
@@ -42,7 +43,8 @@
       "result": "W",
       "actual_score_home": 66.0,
       "actual_score_away": 80.0,
-      "settled_at": "2026-03-19T03:39:26.725837+00:00"
+      "settled_at": "2026-03-19T03:39:26.725837+00:00",
+      "ncaa_tournament": false
     },
     {
       "home_team": "SMU Mustangs",
@@ -63,7 +65,8 @@
       "result": "W",
       "actual_score_home": 79.0,
       "actual_score_away": 89.0,
-      "settled_at": "2026-03-19T03:39:26.725837+00:00"
+      "settled_at": "2026-03-19T03:39:26.725837+00:00",
+      "ncaa_tournament": false
     },
     {
       "home_team": "BYU Cougars",
@@ -86,7 +89,8 @@
       "result": null,
       "actual_score_home": null,
       "actual_score_away": null,
-      "settled_at": null
+      "settled_at": null,
+      "ncaa_tournament": true
     },
     {
       "home_team": "Georgia Bulldogs",
@@ -107,7 +111,8 @@
       "result": null,
       "actual_score_home": null,
       "actual_score_away": null,
-      "settled_at": null
+      "settled_at": null,
+      "ncaa_tournament": true
     },
     {
       "home_team": "Arizona Wildcats",
@@ -131,7 +136,8 @@
       "result": null,
       "actual_score_home": null,
       "actual_score_away": null,
-      "settled_at": null
+      "settled_at": null,
+      "ncaa_tournament": true
     },
     {
       "home_team": "Villanova Wildcats",
@@ -154,7 +160,8 @@
       "result": null,
       "actual_score_home": null,
       "actual_score_away": null,
-      "settled_at": null
+      "settled_at": null,
+      "ncaa_tournament": true
     },
     {
       "home_team": "Duke Blue Devils",
@@ -178,7 +185,8 @@
       "result": null,
       "actual_score_home": null,
       "actual_score_away": null,
-      "settled_at": null
+      "settled_at": null,
+      "ncaa_tournament": true
     },
     {
       "home_team": "Michigan St Spartans",
@@ -202,7 +210,8 @@
       "result": null,
       "actual_score_home": null,
       "actual_score_away": null,
-      "settled_at": null
+      "settled_at": null,
+      "ncaa_tournament": true
     },
     {
       "home_team": "Purdue Boilermakers",
@@ -226,7 +235,8 @@
       "result": null,
       "actual_score_home": null,
       "actual_score_away": null,
-      "settled_at": null
+      "settled_at": null,
+      "ncaa_tournament": true
     },
     {
       "home_team": "Miami Hurricanes",
@@ -249,7 +259,8 @@
       "result": null,
       "actual_score_home": null,
       "actual_score_away": null,
-      "settled_at": null
+      "settled_at": null,
+      "ncaa_tournament": true
     }
   ],
   "stats": {
@@ -326,5 +337,80 @@
     "total_wagered": 14.49,
     "net_units": 3.05,
     "roi_pct": 21.07
+  },
+  "tournament_stats": {
+    "total_picks": 8,
+    "settled": 0,
+    "wins": 0,
+    "losses": 0,
+    "pushes": 0,
+    "hit_rate": null,
+    "by_type": {
+      "ml": {
+        "picks": 0,
+        "wins": 0,
+        "losses": 0,
+        "pushes": 0,
+        "net_units": 0.0,
+        "total_wagered": 0.0,
+        "hit_rate": null,
+        "roi_pct": null
+      },
+      "spread": {
+        "picks": 0,
+        "wins": 0,
+        "losses": 0,
+        "pushes": 0,
+        "net_units": 0.0,
+        "total_wagered": 0.0,
+        "hit_rate": null,
+        "roi_pct": null
+      },
+      "total": {
+        "picks": 0,
+        "wins": 0,
+        "losses": 0,
+        "pushes": 0,
+        "net_units": 0.0,
+        "total_wagered": 0.0,
+        "hit_rate": null,
+        "roi_pct": null
+      }
+    },
+    "by_stars": {
+      "\u2605": {
+        "picks": 0,
+        "wins": 0,
+        "losses": 0,
+        "pushes": 0,
+        "net_units": 0.0,
+        "total_wagered": 0.0,
+        "hit_rate": null,
+        "roi_pct": null
+      },
+      "\u2605\u2605": {
+        "picks": 0,
+        "wins": 0,
+        "losses": 0,
+        "pushes": 0,
+        "net_units": 0.0,
+        "total_wagered": 0.0,
+        "hit_rate": null,
+        "roi_pct": null
+      },
+      "\u2605\u2605\u2605": {
+        "picks": 0,
+        "wins": 0,
+        "losses": 0,
+        "pushes": 0,
+        "net_units": 0.0,
+        "total_wagered": 0.0,
+        "hit_rate": null,
+        "roi_pct": null
+      }
+    },
+    "total_wagered": 0.0,
+    "net_units": 0.0,
+    "roi_pct": 0.0
   }
 }
