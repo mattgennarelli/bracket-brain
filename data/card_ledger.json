@@ -4929,10 +4929,10 @@
       "away_team": "South Florida Bulls",
       "commence_time": "2026-03-19T17:30:00Z",
       "date": "2026-03-17",
-      "result": null,
-      "actual_score_home": null,
-      "actual_score_away": null,
-      "settled_at": null,
+      "result": "W",
+      "actual_score_home": 83.0,
+      "actual_score_away": 79.0,
+      "settled_at": "2026-03-19T20:12:28.148327+00:00",
       "ncaa_tournament": false
     },
     {
@@ -4952,10 +4952,10 @@
       "away_team": "South Florida Bulls",
       "commence_time": "2026-03-19T17:30:00Z",
       "date": "2026-03-17",
-      "result": null,
-      "actual_score_home": null,
-      "actual_score_away": null,
-      "settled_at": null,
+      "result": "W",
+      "actual_score_home": 83.0,
+      "actual_score_away": 79.0,
+      "settled_at": "2026-03-19T20:12:28.148368+00:00",
       "ncaa_tournament": false
     },
     {
@@ -4973,10 +4973,10 @@
       "away_team": "South Florida Bulls",
       "commence_time": "2026-03-19T17:30:00Z",
       "date": "2026-03-17",
-      "result": null,
-      "actual_score_home": null,
-      "actual_score_away": null,
-      "settled_at": null,
+      "result": "L",
+      "actual_score_home": 83.0,
+      "actual_score_away": 79.0,
+      "settled_at": "2026-03-19T20:12:28.148385+00:00",
       "ncaa_tournament": false
     },
     {
@@ -4996,10 +4996,10 @@
       "away_team": "High Point Panthers",
       "commence_time": "2026-03-19T17:50:00Z",
       "date": "2026-03-17",
-      "result": null,
-      "actual_score_home": null,
-      "actual_score_away": null,
-      "settled_at": null,
+      "result": "L",
+      "actual_score_home": 82.0,
+      "actual_score_away": 83.0,
+      "settled_at": "2026-03-19T20:12:28.148408+00:00",
       "ncaa_tournament": true
     },
     {
@@ -5019,10 +5019,10 @@
       "away_team": "High Point Panthers",
       "commence_time": "2026-03-19T17:50:00Z",
       "date": "2026-03-17",
-      "result": null,
-      "actual_score_home": null,
-      "actual_score_away": null,
-      "settled_at": null,
+      "result": "L",
+      "actual_score_home": 82.0,
+      "actual_score_away": 83.0,
+      "settled_at": "2026-03-19T20:12:28.148429+00:00",
       "ncaa_tournament": true
     },
     {
@@ -5040,10 +5040,10 @@
       "away_team": "High Point Panthers",
       "commence_time": "2026-03-19T17:50:00Z",
       "date": "2026-03-17",
-      "result": null,
-      "actual_score_home": null,
-      "actual_score_away": null,
-      "settled_at": null,
+      "result": "W",
+      "actual_score_home": 82.0,
+      "actual_score_away": 83.0,
+      "settled_at": "2026-03-19T20:12:28.148443+00:00",
       "ncaa_tournament": true
     },
     {
@@ -7073,10 +7073,10 @@
       "away_team": "South Florida Bulls",
       "commence_time": "2026-03-19T17:30:00Z",
       "date": "2026-03-18",
-      "result": null,
-      "actual_score_home": null,
-      "actual_score_away": null,
-      "settled_at": null,
+      "result": "W",
+      "actual_score_home": 83.0,
+      "actual_score_away": 79.0,
+      "settled_at": "2026-03-19T20:12:28.149640+00:00",
       "ncaa_tournament": false
     },
     {
@@ -7096,10 +7096,10 @@
       "away_team": "South Florida Bulls",
       "commence_time": "2026-03-19T17:30:00Z",
       "date": "2026-03-18",
-      "result": null,
-      "actual_score_home": null,
-      "actual_score_away": null,
-      "settled_at": null,
+      "result": "W",
+      "actual_score_home": 83.0,
+      "actual_score_away": 79.0,
+      "settled_at": "2026-03-19T20:12:28.149663+00:00",
       "ncaa_tournament": false
     },
     {
@@ -7117,10 +7117,10 @@
       "away_team": "South Florida Bulls",
       "commence_time": "2026-03-19T17:30:00Z",
       "date": "2026-03-18",
-      "result": null,
-      "actual_score_home": null,
-      "actual_score_away": null,
-      "settled_at": null,
+      "result": "L",
+      "actual_score_home": 83.0,
+      "actual_score_away": 79.0,
+      "settled_at": "2026-03-19T20:12:28.149676+00:00",
       "ncaa_tournament": false
     },
     {
@@ -7140,10 +7140,10 @@
       "away_team": "High Point Panthers",
       "commence_time": "2026-03-19T17:50:00Z",
       "date": "2026-03-18",
-      "result": null,
-      "actual_score_home": null,
-      "actual_score_away": null,
-      "settled_at": null,
+      "result": "L",
+      "actual_score_home": 82.0,
+      "actual_score_away": 83.0,
+      "settled_at": "2026-03-19T20:12:28.149696+00:00",
       "ncaa_tournament": true
     },
     {
@@ -7163,10 +7163,10 @@
       "away_team": "High Point Panthers",
       "commence_time": "2026-03-19T17:50:00Z",
       "date": "2026-03-18",
-      "result": null,
-      "actual_score_home": null,
-      "actual_score_away": null,
-      "settled_at": null,
+      "result": "L",
+      "actual_score_home": 82.0,
+      "actual_score_away": 83.0,
+      "settled_at": "2026-03-19T20:12:28.149717+00:00",
       "ncaa_tournament": true
     },
     {
@@ -7184,10 +7184,10 @@
       "away_team": "High Point Panthers",
       "commence_time": "2026-03-19T17:50:00Z",
       "date": "2026-03-18",
-      "result": null,
-      "actual_score_home": null,
-      "actual_score_away": null,
-      "settled_at": null,
+      "result": "W",
+      "actual_score_home": 82.0,
+      "actual_score_away": 83.0,
+      "settled_at": "2026-03-19T20:12:28.149730+00:00",
       "ncaa_tournament": true
     },
     {
@@ -9172,10 +9172,10 @@
       "away_team": "South Florida Bulls",
       "commence_time": "2026-03-19T17:30:00Z",
       "date": "2026-03-19",
-      "result": null,
-      "actual_score_home": null,
-      "actual_score_away": null,
-      "settled_at": null
+      "result": "W",
+      "actual_score_home": 83.0,
+      "actual_score_away": 79.0,
+      "settled_at": "2026-03-19T20:12:28.150974+00:00"
     },
     {
       "bet_type": "spread",
@@ -9194,10 +9194,10 @@
       "away_team": "South Florida Bulls",
       "commence_time": "2026-03-19T17:30:00Z",
       "date": "2026-03-19",
-      "result": null,
-      "actual_score_home": null,
-      "actual_score_away": null,
-      "settled_at": null
+      "result": "P",
+      "actual_score_home": 83.0,
+      "actual_score_away": 79.0,
+      "settled_at": "2026-03-19T20:12:28.150998+00:00"
     },
     {
       "bet_type": "total",
@@ -9214,10 +9214,10 @@
       "away_team": "South Florida Bulls",
       "commence_time": "2026-03-19T17:30:00Z",
       "date": "2026-03-19",
-      "result": null,
-      "actual_score_home": null,
-      "actual_score_away": null,
-      "settled_at": null
+      "result": "W",
+      "actual_score_home": 83.0,
+      "actual_score_away": 79.0,
+      "settled_at": "2026-03-19T20:12:28.151011+00:00"
     },
     {
       "bet_type": "ml",
@@ -9236,10 +9236,10 @@
       "away_team": "High Point Panthers",
       "commence_time": "2026-03-19T17:50:00Z",
       "date": "2026-03-19",
-      "result": null,
-      "actual_score_home": null,
-      "actual_score_away": null,
-      "settled_at": null
+      "result": "L",
+      "actual_score_home": 82.0,
+      "actual_score_away": 83.0,
+      "settled_at": "2026-03-19T20:12:28.151031+00:00"
     },
     {
       "bet_type": "spread",
@@ -9258,10 +9258,10 @@
       "away_team": "High Point Panthers",
       "commence_time": "2026-03-19T17:50:00Z",
       "date": "2026-03-19",
-      "result": null,
-      "actual_score_home": null,
-      "actual_score_away": null,
-      "settled_at": null
+      "result": "L",
+      "actual_score_home": 82.0,
+      "actual_score_away": 83.0,
+      "settled_at": "2026-03-19T20:12:28.151049+00:00"
     },
     {
       "bet_type": "total",
@@ -9278,10 +9278,10 @@
       "away_team": "High Point Panthers",
       "commence_time": "2026-03-19T17:50:00Z",
       "date": "2026-03-19",
-      "result": null,
-      "actual_score_home": null,
-      "actual_score_away": null,
-      "settled_at": null
+      "result": "W",
+      "actual_score_home": 82.0,
+      "actual_score_away": 83.0,
+      "settled_at": "2026-03-19T20:12:28.151062+00:00"
     },
     {
       "bet_type": "ml",
@@ -11034,53 +11034,53 @@
   ],
   "stats": {
     "total_picks": 498,
-    "settled": 94,
-    "wins": 51,
-    "losses": 43,
-    "pushes": 0,
-    "hit_rate": 0.5426,
+    "settled": 112,
+    "wins": 60,
+    "losses": 51,
+    "pushes": 1,
+    "hit_rate": 0.5405,
     "by_type": {
       "ml": {
-        "picks": 31,
-        "wins": 19,
-        "losses": 12,
+        "picks": 37,
+        "wins": 22,
+        "losses": 15,
         "pushes": 0,
-        "net_units": -1.71,
-        "total_wagered": 22.47,
-        "hit_rate": 0.6129,
-        "roi_pct": -7.6
+        "net_units": -7.19,
+        "total_wagered": 29.5,
+        "hit_rate": 0.5946,
+        "roi_pct": -24.38
       },
       "spread": {
-        "picks": 31,
-        "wins": 14,
-        "losses": 17,
-        "pushes": 0,
-        "net_units": -5.68,
-        "total_wagered": 29.45,
-        "hit_rate": 0.4516,
-        "roi_pct": -19.3
+        "picks": 37,
+        "wins": 16,
+        "losses": 20,
+        "pushes": 1,
+        "net_units": -10.6,
+        "total_wagered": 38.05,
+        "hit_rate": 0.4444,
+        "roi_pct": -27.86
       },
       "total": {
-        "picks": 32,
-        "wins": 18,
-        "losses": 14,
+        "picks": 38,
+        "wins": 22,
+        "losses": 16,
         "pushes": 0,
-        "net_units": -2.22,
-        "total_wagered": 83.45,
-        "hit_rate": 0.5625,
-        "roi_pct": -2.66
+        "net_units": 10.55,
+        "total_wagered": 107.15,
+        "hit_rate": 0.5789,
+        "roi_pct": 9.84
       }
     },
     "by_stars": {
       "\u2605": {
-        "picks": 92,
-        "wins": 51,
-        "losses": 41,
-        "pushes": 0,
-        "net_units": 0.39,
-        "total_wagered": 125.37,
-        "hit_rate": 0.5543,
-        "roi_pct": 0.31
+        "picks": 110,
+        "wins": 60,
+        "losses": 49,
+        "pushes": 1,
+        "net_units": 2.75,
+        "total_wagered": 164.7,
+        "hit_rate": 0.5505,
+        "roi_pct": 1.67
       },
       "\u2605\u2605": {
         "picks": 2,
@@ -11103,8 +11103,8 @@
         "roi_pct": null
       }
     },
-    "total_wagered": 135.37,
-    "net_units": -9.61,
-    "roi_pct": -7.1
+    "total_wagered": 174.7,
+    "net_units": -7.25,
+    "roi_pct": -4.15
   }
 }
