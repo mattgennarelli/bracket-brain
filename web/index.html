@@ -1627,6 +1627,26 @@ async function showAnalysis(gameId) {
       ${statsA.qual_d != null ? sigBar(statsA.qual_d||0, statsB.qual_d||0, 'Qual. Def', fmt1(statsA.qual_d), fmt1(statsB.qual_d||0), false) : ''}
     </div>` : '';
 
+  // ── At-a-Glance tile grid ──────────────────────────────────────────────────
+  const tileSection = `
+    <div class="ap-section">
+      <div class="ap-section-title">At a Glance — <span style="color:var(--green)">${st.teamA}</span> vs <span style="color:var(--red)">${st.teamB}</span></div>
+      <div class="stat-grid">
+        ${tile('Record', statsA.wins, statsB.wins, statsA.wins != null && statsA.losses != null ? statsA.wins+'–'+statsA.losses : '–', statsB.wins != null && statsB.losses != null ? statsB.wins+'–'+statsB.losses : '–')}
+        ${tile('Adj. O', adjOA, adjOB, fmt1(adjOA), fmt1(adjOB))}
+        ${tile('Adj. D', adjDA, adjDB, fmt1(adjDA), fmt1(adjDB), false)}
+        ${statsA.barthag != null ? tile('Barthag', statsA.barthag, statsB.barthag||0, statsA.barthag.toFixed(3), (statsB.barthag||0).toFixed(3)) : ''}
+        ${statsA.sos != null ? tile('SOS', statsA.sos, statsB.sos||0, statsA.sos.toFixed(3), (statsB.sos||0).toFixed(3)) : ''}
+        ${statsA.wab != null ? tile('WAB', statsA.wab, statsB.wab||0, fmt1(statsA.wab), fmt1(statsB.wab||0)) : ''}
+        ${tempoA != null ? tile('Tempo', tempoA, tempoB||0, fmt1(tempoA), fmt1(tempoB)) : ''}
+        ${statsA.star_score != null ? tile('Star Score', statsA.star_score, statsB.star_score||0, (statsA.star_score).toFixed(2), (statsB.star_score||0).toFixed(2)) : ''}
+        ${statsA.em_depth_score != null ? tile('Depth', statsA.em_depth_score, statsB.em_depth_score||0, (statsA.em_depth_score).toFixed(3), (statsB.em_depth_score||0).toFixed(3)) : ''}
+        ${statsA.experience != null ? tile('Experience', statsA.experience, statsB.experience||0, (statsA.experience).toFixed(3), (statsB.experience||0).toFixed(3)) : ''}
+        ${statsA.conf_strength != null ? tile('Conf Str', statsA.conf_strength, statsB.conf_strength||0, (statsA.conf_strength).toFixed(3), (statsB.conf_strength||0).toFixed(3)) : ''}
+        ${statsA.momentum != null ? tile('Momentum', statsA.momentum, statsB.momentum||0, (statsA.momentum||0).toFixed(2), (statsB.momentum||0).toFixed(2)) : ''}
+      </div>
+    </div>`;
+
   // ── Key factors & intangibles ──────────────────────────────────────────────
   const intangA = (factorsA.experience_bonus||0) + (factorsA.coach_bonus||0) + (factorsA.momentum_bonus||0);
   const intangB = (factorsB.experience_bonus||0) + (factorsB.coach_bonus||0) + (factorsB.momentum_bonus||0);
@@ -1852,6 +1872,7 @@ async function showAnalysis(gameId) {
       ${factorsSection}
       ${injurySection}
       ${rosterSection}
+      ${tileSection}
       ${effSection}
       ${emSection}
       ${shootingSection}
