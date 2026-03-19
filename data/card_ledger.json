@@ -11432,10 +11432,30 @@
       "actual_score_home": null,
       "actual_score_away": null,
       "settled_at": null
+    },
+    {
+      "bet_type": "total",
+      "bet_side": "UNDER",
+      "bet_odds": -110,
+      "edge": -0.2,
+      "stars": "",
+      "kelly_units": 0.0,
+      "model_total": 137.8,
+      "vegas_total": 138.0,
+      "model_margin": 26.9,
+      "vegas_spread": -24.0,
+      "home_team": "Houston Cougars",
+      "away_team": "Idaho Vandals",
+      "commence_time": "2026-03-20T02:10:00Z",
+      "date": "2026-03-19",
+      "result": null,
+      "actual_score_home": null,
+      "actual_score_away": null,
+      "settled_at": null
     }
   ],
   "stats": {
-    "total_picks": 517,
+    "total_picks": 518,
     "settled": 122,
     "wins": 65,
     "losses": 55,
