@@ -1670,6 +1670,23 @@ async function showAnalysis(gameId) {
         Lower seed has statistical profiles suggesting real upset potential.</div>
     </div>` : '';
 
+  // ── Vegas lines ──────────────────────────────────────────────────────────
+  const vegasSpread = orig?.vegas_spread;
+  const vegasTotal = orig?.vegas_total;
+  const vegasHome = orig?.vegas_home || '';
+  const hasVegas = vegasSpread != null;
+  let vegasLabel = '';
+  if (hasVegas) {
+    const homeIsA = vegasHome.toLowerCase().includes(st.teamA.toLowerCase());
+    if (vegasSpread < 0) {
+      vegasLabel = `${homeIsA ? st.teamA : st.teamB} −${Math.abs(vegasSpread).toFixed(1)}`;
+    } else if (vegasSpread > 0) {
+      vegasLabel = `${homeIsA ? st.teamB : st.teamA} −${Math.abs(vegasSpread).toFixed(1)}`;
+    } else {
+      vegasLabel = 'Pick\'em';
+    }
+  }
+
   const spreadLabel = orig?.spread_fav || `${favA ? st.teamA : st.teamB} −${spread}`;
   const scoreHtml = (scoreA && scoreB)
     ? `<div class="ap-score-line">
@@ -1691,26 +1708,6 @@ async function showAnalysis(gameId) {
     </div>`;
 
   const insightHtml = insight ? `<div class="ap-insight">${insight}</div>` : '';
-
-  // ── Vegas lines ──────────────────────────────────────────────────────────
-  const vegasSpread = orig?.vegas_spread;
-  const vegasTotal = orig?.vegas_total;
-  const vegasHome = orig?.vegas_home || '';
-  const hasVegas = vegasSpread != null;
-  // vegas_spread is from home team perspective; map to display teams
-  let vegasLabel = '';
-  if (hasVegas) {
-    // Determine which display team is the home team
-    const homeIsA = vegasHome.toLowerCase().includes(st.teamA.toLowerCase());
-    // vegas_spread < 0 means home team is favored
-    if (vegasSpread < 0) {
-      vegasLabel = `${homeIsA ? st.teamA : st.teamB} −${Math.abs(vegasSpread).toFixed(1)}`;
-    } else if (vegasSpread > 0) {
-      vegasLabel = `${homeIsA ? st.teamB : st.teamA} −${Math.abs(vegasSpread).toFixed(1)}`;
-    } else {
-      vegasLabel = 'Pick\'em';
-    }
-  }
 
   // ── Margin breakdown ────────────────────────────────────────────────────
   const baseM = flipped ? -(orig?.base_margin || 0) : (orig?.base_margin || 0);
