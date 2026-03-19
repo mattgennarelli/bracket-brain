@@ -172,6 +172,20 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sa
 .ap-score-line .spread-chip { background:var(--surface2); border:1px solid var(--border);
   border-radius:4px; padding:1px 7px; font-size:.72rem; font-weight:600; color:var(--text); }
 
+/* Vegas chip */
+.vegas-chip { background:rgba(217,119,6,.12); color:#d97706; border:1px solid rgba(217,119,6,.25);
+  padding:2px 8px; border-radius:4px; font-size:.72rem; font-weight:600; }
+/* Margin breakdown */
+.margin-stack { display:flex; flex-direction:column; gap:4px; }
+.margin-row { display:flex; justify-content:space-between; align-items:center;
+  padding:4px 8px; font-size:.8rem; background:var(--surface2); border-radius:4px; }
+.margin-label { color:var(--muted); }
+.margin-val { font-weight:600; font-size:.8rem; }
+.margin-total { display:flex; justify-content:space-between; align-items:center;
+  padding:6px 8px; font-size:.85rem; font-weight:700; border-top:2px solid var(--border); margin-top:4px; }
+.margin-vegas { display:flex; justify-content:space-between; align-items:center;
+  padding:4px 8px; font-size:.8rem; color:#d97706; }
+
 /* Section labels */
 .ap-section { margin-bottom:14px; }
 .ap-section-title { font-size:.65rem; font-weight:800; text-transform:uppercase; letter-spacing:.07em;
@@ -1426,6 +1440,16 @@ async function showAnalysis(gameId) {
     ast_rate: v => v != null ? v.toFixed(1) + '%' : null,         // 0-100
   };
 
+  function _marginRow(label, val, teamA, teamB) {
+    if (Math.abs(val) < 0.05) return '';
+    const team = val > 0 ? teamA : teamB;
+    const color = val > 0 ? 'var(--green)' : 'var(--red)';
+    return `<div class="margin-row">
+      <span class="margin-label">${label}</span>
+      <span class="margin-val" style="color:${color}">${val > 0 ? '+' : ''}${val.toFixed(1)} ${team}</span>
+    </div>`;
+  }
+
   function sigBar(vA, vB, label, dA, dB, higher = true) {
     if (vA == null || vB == null) return '';
     const offset = higher ? Math.min(vA, vB, 0) * -1 + 0.01 : 0;
@@ -1494,7 +1518,7 @@ async function showAnalysis(gameId) {
 
   const effSection = adjOA > 0 ? `
     <div class="ap-section">
-      <div class="ap-section-title">Efficiency</div>
+      <div class="ap-section-title">Team Ratings <span style="font-weight:400;font-size:.7rem;color:var(--muted)">(season averages)</span></div>
       <div style="display:flex;justify-content:space-between;font-size:.7rem;color:var(--muted);margin-bottom:6px">
         <span style="color:var(--green);font-weight:700">${st.teamA}</span>
         <span style="color:var(--red);font-weight:700">${st.teamB}</span>
@@ -1573,24 +1597,7 @@ async function showAnalysis(gameId) {
   const intangA = (factorsA.experience_bonus||0) + (factorsA.coach_bonus||0) + (factorsA.momentum_bonus||0);
   const intangB = (factorsB.experience_bonus||0) + (factorsB.coach_bonus||0) + (factorsB.momentum_bonus||0);
 
-  // Build key edge callouts
-  const edges = [];
-  if (adjOA > 0 && adjOB > 0) {
-    const offEdge = adjOA - adjOB, defEdge = adjDB - adjDA; // positive = teamA advantage
-    if (Math.abs(offEdge) >= 5) edges.push(`${offEdge > 0 ? st.teamA : st.teamB} has a ${Math.abs(offEdge).toFixed(0)}-pt offensive edge`);
-    if (Math.abs(defEdge) >= 5) edges.push(`${defEdge > 0 ? st.teamA : st.teamB} has a ${Math.abs(defEdge).toFixed(0)}-pt defensive edge`);
-  }
-  if (tpA != null && tpB != null && Math.abs(tpA - tpB) > 4)
-    edges.push(`${tpA > tpB ? st.teamA : st.teamB} shoots ${fmtStat.three_pt_pct(Math.abs(tpA-tpB))} better from three`);
-  if (orbA != null && orbB != null && Math.abs(orbA - orbB) > 4)
-    edges.push(`${orbA > orbB ? st.teamA : st.teamB} dominates the offensive glass`);
-  if (blkA != null && blkB != null && Math.abs(blkA - blkB) > 3)
-    edges.push(`${blkA > blkB ? st.teamA : st.teamB} has a significant shot-blocking edge`);
-  if (statsA.experience != null && statsB.experience != null) {
-    const expDiff = statsA.experience - statsB.experience;
-    if (Math.abs(expDiff) > 0.4) edges.push(`${expDiff > 0 ? st.teamA : st.teamB} is significantly more experienced`);
-  }
-  const allFactors = [...keyFactors, ...edges.filter(e => !keyFactors.some(kf => kf.includes(e.split(' ')[0])))];
+  const allFactors = keyFactors;
 
   const factorsSection = allFactors.length ? `
     <div class="ap-section">
@@ -1668,6 +1675,7 @@ async function showAnalysis(gameId) {
     ? `<div class="ap-score-line">
         <strong>${scoreA.toFixed(0)}</strong><span>–</span><strong>${scoreB.toFixed(0)}</strong>
         <span class="spread-chip">${spreadLabel}</span>
+        ${hasVegas ? `<span class="vegas-chip">Vegas: ${vegasLabel}</span>` : ''}
         ${total ? `<span>O/U ${total.toFixed(0)}</span>` : ''}
        </div>`
     : `<div class="ap-score-line"><span class="spread-chip">${spreadLabel}</span></div>`;
@@ -1683,6 +1691,57 @@ async function showAnalysis(gameId) {
     </div>`;
 
   const insightHtml = insight ? `<div class="ap-insight">${insight}</div>` : '';
+
+  // ── Vegas lines ──────────────────────────────────────────────────────────
+  const vegasSpread = orig?.vegas_spread;
+  const vegasTotal = orig?.vegas_total;
+  const vegasHome = orig?.vegas_home || '';
+  const hasVegas = vegasSpread != null;
+  // vegas_spread is from home team perspective; map to display teams
+  let vegasLabel = '';
+  if (hasVegas) {
+    // Determine which display team is the home team
+    const homeIsA = vegasHome.toLowerCase().includes(st.teamA.toLowerCase());
+    // vegas_spread < 0 means home team is favored
+    if (vegasSpread < 0) {
+      vegasLabel = `${homeIsA ? st.teamA : st.teamB} −${Math.abs(vegasSpread).toFixed(1)}`;
+    } else if (vegasSpread > 0) {
+      vegasLabel = `${homeIsA ? st.teamB : st.teamA} −${Math.abs(vegasSpread).toFixed(1)}`;
+    } else {
+      vegasLabel = 'Pick\'em';
+    }
+  }
+
+  // ── Margin breakdown ────────────────────────────────────────────────────
+  const baseM = flipped ? -(orig?.base_margin || 0) : (orig?.base_margin || 0);
+  const factorM = flipped ? -(orig?.factor_margin || 0) : (orig?.factor_margin || 0);
+  const possM = flipped ? -(orig?.possession_margin || 0) : (orig?.possession_margin || 0);
+  const ftM = flipped ? -(orig?.ft_margin || 0) : (orig?.ft_margin || 0);
+  const foulM = flipped ? -(orig?.foul_rate_margin || 0) : (orig?.foul_rate_margin || 0);
+  const sosM = flipped ? -(orig?.sos_margin || 0) : (orig?.sos_margin || 0);
+  const runsM = flipped ? -(orig?.runs_margin || 0) : (orig?.runs_margin || 0);
+  const upsetB = flipped ? -(orig?.upset_tolerance_bonus || 0) : (orig?.upset_tolerance_bonus || 0);
+  const totalM = flipped ? -(orig?.predicted_margin || 0) : (orig?.predicted_margin || 0);
+  const extrasSum = possM + ftM + foulM + sosM + runsM;
+
+  const marginBreakdown = (orig?.base_margin != null) ? `
+    <div class="ap-section">
+      <div class="ap-section-title">How the Model Gets Here</div>
+      <div class="margin-stack">
+        ${_marginRow('Matchup Efficiency', baseM, st.teamA, st.teamB)}
+        ${_marginRow('Intangible Factors', factorM, st.teamA, st.teamB)}
+        ${Math.abs(extrasSum) >= 0.1 ? _marginRow('Stat Adjustments', extrasSum, st.teamA, st.teamB) : ''}
+        ${Math.abs(upsetB) >= 0.1 ? _marginRow('Upset Adjustment', upsetB, st.teamA, st.teamB) : ''}
+        <div class="margin-total">
+          <span>Predicted Margin</span>
+          <strong style="color:${totalM >= 0 ? 'var(--green)' : 'var(--red)'}">${favA ? st.teamA : st.teamB} −${Math.abs(totalM).toFixed(1)}</strong>
+        </div>
+        ${hasVegas ? `<div class="margin-vegas">
+          <span>Vegas Line</span>
+          <strong>${vegasLabel}</strong>
+        </div>` : ''}
+      </div>
+    </div>` : '';
 
   const venueCity = orig?.venue_city;
   const proxA = factorsA?.proximity || 0, proxB = factorsB?.proximity || 0;
@@ -1740,6 +1799,7 @@ async function showAnalysis(gameId) {
       ${upsetHtml}
       ${pickBoxHtml}
       ${insightHtml}
+      ${marginBreakdown}
       ${situationalSection}
       ${factorsSection}
       ${injurySection}

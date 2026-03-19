@@ -511,7 +511,45 @@ def analyze_matchup_endpoint(
         region=region, round_name=round_name,
         config=config,
     )
+    # Attach Vegas lines if available from today's card
+    vegas = _lookup_vegas_lines(analysis.get("team_a", ""), analysis.get("team_b", ""))
+    if vegas:
+        analysis["vegas_spread"] = vegas["vegas_spread"]
+        analysis["vegas_total"] = vegas["vegas_total"]
+        analysis["vegas_home"] = vegas["home_team"]
     return analysis
+
+
+def _lookup_vegas_lines(team_a: str, team_b: str):
+    """Find Vegas spread/total from today's card for a given matchup."""
+    today = datetime.now().strftime("%Y-%m-%d")
+    card_path = os.path.join(DATA_DIR, f"card_{today}.json")
+    if not os.path.isfile(card_path):
+        import glob as _glob
+        card_files = sorted(_glob.glob(os.path.join(DATA_DIR, "card_2*.json")))
+        if not card_files:
+            return None
+        card_path = card_files[-1]
+    try:
+        with open(card_path) as f:
+            card = json.load(f)
+    except (json.JSONDecodeError, IOError):
+        return None
+    a_lower = team_a.lower()
+    b_lower = team_b.lower()
+    for game in card.get("games", []):
+        home = game.get("home_team", "").lower()
+        away = game.get("away_team", "").lower()
+        if ((a_lower in home or a_lower in away) and
+                (b_lower in home or b_lower in away)):
+            for pick in game.get("picks", []):
+                if pick.get("vegas_spread") is not None:
+                    return {
+                        "vegas_spread": pick["vegas_spread"],
+                        "vegas_total": pick.get("vegas_total"),
+                        "home_team": game["home_team"],
+                    }
+    return None
 
 
 @app.get("/bets/today")

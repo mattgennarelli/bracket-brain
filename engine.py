@@ -595,6 +595,7 @@ def predict_game(team_a, team_b, game_site=None, config=DEFAULT_CONFIG, round_na
         "big_bpr_margin": round(big_bpr_margin, 2),
         "guard_bpr_margin": round(guard_bpr_margin, 2),
         "creator_margin": round(creator_margin, 2),
+        "foul_rate_margin": round(foul_rate_margin, 2),
         "upset_tolerance_bonus": round(upset_bonus, 2),
         "efficiency_prob": round(eff_prob, 4),
         "seed_prob": round(seed_prob, 4),
@@ -1922,10 +1923,10 @@ def _generate_key_factors(result, team_a, team_b):
     base_margin = result.get("base_margin", margin)
     if abs(base_margin) >= 3:
         better = team_a["team"] if base_margin > 0 else team_b["team"]
-        factors.append(f"{better}: {abs(base_margin):.0f}-pt efficiency edge")
+        factors.append(f"{better}: {abs(base_margin):.0f}-pt matchup efficiency advantage")
     elif abs(margin) >= 3:
         better = team_a["team"] if margin > 0 else team_b["team"]
-        factors.append(f"{better}: {abs(margin):.0f}-pt overall edge")
+        factors.append(f"{better}: {abs(margin):.0f}-pt projected advantage")
 
     sos_m = result.get("sos_margin", 0)
     if abs(sos_m) > 0.5:
@@ -2166,6 +2167,9 @@ def _make_pick_dict(game_num, round_of, round_name, region, a, b, result, pick_t
         "big_bpr_margin":     round(result.get("big_bpr_margin", 0), 2),
         "guard_bpr_margin":   round(result.get("guard_bpr_margin", 0), 2),
         "creator_margin":     round(result.get("creator_margin", 0), 2),
+        "foul_rate_margin":   round(result.get("foul_rate_margin", 0), 2),
+        "upset_tolerance_bonus": round(result.get("upset_tolerance_bonus", 0), 2),
+        "predicted_margin":   round(result["predicted_margin"], 1),
         # Model signal probabilities
         "efficiency_prob":    round(result["efficiency_prob"], 4),
         "seed_prob":          round(result["seed_prob"], 4),
