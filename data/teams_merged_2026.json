@@ -96,7 +96,8 @@
         "bpr_share": 0.1526,
         "importance": 0.1526,
         "source": "espn_news",
-        "updated_at": "2026-03-18T21:22:21.237490+00:00"
+        "updated_at": "2026-03-18T21:22:21.237490+00:00",
+        "return_round": "Sweet 16"
       }
     ],
     "roster": [],
@@ -1079,14 +1080,6 @@
     "conf_tourney_momentum": 0.2,
     "injuries": [
       {
-        "player": "LeJuan Watts",
-        "status": "questionable",
-        "bpr": 4.2662,
-        "poss": 1448.0,
-        "bpr_share": 0.1082,
-        "importance": 0.1082
-      },
-      {
         "player": "JT Toppin",
         "status": "out",
         "bpr": 8.7205,
@@ -1095,12 +1088,16 @@
         "importance": 0.2211
       },
       {
+        "player": "LeJuan Watts",
+        "status": "questionable",
+        "bpr": 4.2662,
+        "poss": 1448.0,
+        "bpr_share": 0.1082,
+        "importance": 0.1082
+      },
+      {
         "player": "LaTrell Hoover",
-        "status": "out",
-        "bpr": -0.9757,
-        "poss": 0.0,
-        "bpr_share": 0.0,
-        "importance": 0.0
+        "status": "out"
       }
     ],
     "roster": [

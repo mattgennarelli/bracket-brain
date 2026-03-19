@@ -1516,9 +1516,16 @@ async function showAnalysis(gameId) {
   const netA = adjOA - adjDA, netB = adjOB - adjDB;
   const tempoA = statsA.adj_tempo, tempoB = statsB.adj_tempo;
 
+  // EvanMiya ratings
+  const emOA = statsA.em_adj_o, emOB = statsB.em_adj_o;
+  const emDA = statsA.em_adj_d, emDB = statsB.em_adj_d;
+  const emNetA = (emOA && emDA) ? emOA - emDA : null;
+  const emNetB = (emOB && emDB) ? emOB - emDB : null;
+  const oppAdjA = statsA.em_opponent_adjust, oppAdjB = statsB.em_opponent_adjust;
+
   const effSection = adjOA > 0 ? `
     <div class="ap-section">
-      <div class="ap-section-title">Team Ratings <span style="font-weight:400;font-size:.7rem;color:var(--muted)">(season averages)</span></div>
+      <div class="ap-section-title">Team Ratings <span style="font-weight:400;font-size:.7rem;color:var(--muted)">(Torvik)</span></div>
       <div style="display:flex;justify-content:space-between;font-size:.7rem;color:var(--muted);margin-bottom:6px">
         <span style="color:var(--green);font-weight:700">${st.teamA}</span>
         <span style="color:var(--red);font-weight:700">${st.teamB}</span>
@@ -1527,6 +1534,29 @@ async function showAnalysis(gameId) {
       ${sigBar(adjOA, adjOB, 'Adj. Offense', fmt1(adjOA), fmt1(adjOB))}
       ${sigBar(adjDA, adjDB, 'Adj. Defense', fmt1(adjDA), fmt1(adjDB), false)}
       ${tempoA && tempoB ? sigBar(tempoA, tempoB, 'Pace (poss/40)', fmt1(tempoA), fmt1(tempoB)) : ''}
+      ${statsA.barthag != null ? sigBar(statsA.barthag, statsB.barthag||0, 'Barthag', (statsA.barthag).toFixed(3), (statsB.barthag||0).toFixed(3)) : ''}
+      ${statsA.sos != null ? sigBar(statsA.sos, statsB.sos||0, 'SOS', (statsA.sos).toFixed(3), (statsB.sos||0).toFixed(3)) : ''}
+      ${statsA.elite_sos != null ? sigBar(statsA.elite_sos, statsB.elite_sos||0, 'Elite SOS', (statsA.elite_sos).toFixed(3), (statsB.elite_sos||0).toFixed(3)) : ''}
+      ${statsA.wab != null ? sigBar((statsA.wab||0)+10, (statsB.wab||0)+10, 'WAB', fmt1(statsA.wab), fmt1(statsB.wab||0)) : ''}
+    </div>` : '';
+
+  const emSection = (emOA != null) ? `
+    <div class="ap-section">
+      <div class="ap-section-title">EvanMiya Ratings</div>
+      <div style="display:flex;justify-content:space-between;font-size:.7rem;color:var(--muted);margin-bottom:6px">
+        <span style="color:var(--green);font-weight:700">${st.teamA}</span>
+        <span style="color:var(--red);font-weight:700">${st.teamB}</span>
+      </div>
+      ${emNetA != null ? sigBar(emNetA + 20, emNetB + 20, 'EM Net Eff', fmtPM(emNetA), fmtPM(emNetB)) : ''}
+      ${emOA ? sigBar(emOA, emOB, 'EM Adj. O', fmt1(emOA), fmt1(emOB)) : ''}
+      ${emDA ? sigBar(emDA, emDB, 'EM Adj. D', fmt1(emDA), fmt1(emDB), false) : ''}
+      ${oppAdjA != null ? sigBar(oppAdjA, oppAdjB||0, 'Opp. Adjust', (oppAdjA).toFixed(3), (oppAdjB||0).toFixed(3)) : ''}
+      ${statsA.em_bpr != null ? sigBar((statsA.em_bpr||0)+5, (statsB.em_bpr||0)+5, 'Team BPR', fmt1(statsA.em_bpr), fmt1(statsB.em_bpr||0)) : ''}
+      ${statsA.em_top5_bpr != null ? sigBar(statsA.em_top5_bpr||0, statsB.em_top5_bpr||0, 'Top-5 BPR', fmt1(statsA.em_top5_bpr), fmt1(statsB.em_top5_bpr||0)) : ''}
+      ${statsA.em_runs_per_game != null ? sigBar(statsA.em_runs_per_game||0, statsB.em_runs_per_game||0, 'Runs/Game', (statsA.em_runs_per_game||0).toFixed(2), (statsB.em_runs_per_game||0).toFixed(2)) : ''}
+      ${statsA.em_runs_conceded != null ? sigBar(statsA.em_runs_conceded||0, statsB.em_runs_conceded||0, 'Runs Conceded', (statsA.em_runs_conceded||0).toFixed(2), (statsB.em_runs_conceded||0).toFixed(2), false) : ''}
+      ${statsA.em_depth_score != null ? sigBar(statsA.em_depth_score||0, statsB.em_depth_score||0, 'Depth', (statsA.em_depth_score||0).toFixed(3), (statsB.em_depth_score||0).toFixed(3)) : ''}
+      ${statsA.em_star_concentration != null ? sigBar(statsA.em_star_concentration||0, statsB.em_star_concentration||0, 'Star Concentration', (statsA.em_star_concentration||0).toFixed(3), (statsB.em_star_concentration||0).toFixed(3)) : ''}
     </div>` : '';
 
   // ── Shooting ───────────────────────────────────────────────────────────────
@@ -1551,6 +1581,9 @@ async function showAnalysis(gameId) {
       ${sigBar(twA, twB,    '2PT%',        fmtStat.two_pt_pct(twA), fmtStat.two_pt_pct(twB))}
       ${sigBar(ftA, ftB,    'FT%',         fmtStat.ft_pct(ftA), fmtStat.ft_pct(ftB))}
       ${sigBar(ftRA, ftRB,  'FT rate',     fmtStat.ft_rate(ftRA), fmtStat.ft_rate(ftRB))}
+      ${statsA.ft_rate_d != null ? sigBar(statsA.ft_rate_d, statsB.ft_rate_d||0, 'Opp FT rate', fmt1(statsA.ft_rate_d), fmt1(statsB.ft_rate_d||0), false) : ''}
+      ${statsA.three_pt_rate_d != null ? sigBar(statsA.three_pt_rate_d||0, statsB.three_pt_rate_d||0, 'Opp 3PT rate', fmt1(statsA.three_pt_rate_d), fmt1(statsB.three_pt_rate_d||0), false) : ''}
+      ${statsA.two_pt_pct_d != null ? sigBar(statsA.two_pt_pct_d||0, statsB.two_pt_pct_d||0, 'Opp 2PT%', fmt1(statsA.two_pt_pct_d), fmt1(statsB.two_pt_pct_d||0), false) : ''}
     </div>` : '';
 
   // ── Rebounding & ball control ──────────────────────────────────────────────
@@ -1573,24 +1606,25 @@ async function showAnalysis(gameId) {
       ${sigBar(toA, toB,   'TO rate',    fmtStat.to_rate(toA), fmtStat.to_rate(toB), false)}
       ${sigBar(todA, todB, 'Force TOs',  fmtStat.to_rate_d(todA), fmtStat.to_rate_d(todB))}
       ${sigBar(astA, astB, 'Assist rate', fmtStat.ast_rate(astA), fmtStat.ast_rate(astB))}
+      ${statsA.opp_ast_rate != null ? sigBar(statsA.opp_ast_rate||0, statsB.opp_ast_rate||0, 'Opp Ast rate', fmt1(statsA.opp_ast_rate), fmt1(statsB.opp_ast_rate||0), false) : ''}
     </div>` : '';
 
   // ── Scoring output tiles ───────────────────────────────────────────────────
   const ppgA = statsA.ppg, ppgB = statsB.ppg;
   const oapA = statsA.opp_ppg, oapB = statsB.opp_ppg;
-  const scoringSection = (ppgA != null || adjOA > 0) ? `
+  const scoringSection = (ppgA != null) ? `
     <div class="ap-section">
-      <div class="ap-section-title">Scoring Output — <span style="color:var(--green)">${st.teamA}</span> vs <span style="color:var(--red)">${st.teamB}</span></div>
-      <div class="stat-grid">
-        ${tile('PPG', ppgA, ppgB, fmt1(ppgA), fmt1(ppgB))}
-        ${tile('OPPG', oapA, oapB, fmt1(oapA), fmt1(oapB), false)}
-        ${tile('Adj. O', adjOA, adjOB, fmt1(adjOA), fmt1(adjOB))}
-        ${tile('Adj. D', adjDA, adjDB, fmt1(adjDA), fmt1(adjDB), false)}
-        ${statsA.barthag != null ? tile('Barthag', statsA.barthag, statsB.barthag, statsA.barthag.toFixed(3), (statsB.barthag||0).toFixed(3)) : ''}
-        ${statsA.sos != null ? tile('SOS', statsA.sos, statsB.sos, statsA.sos.toFixed(3), (statsB.sos||0).toFixed(3)) : ''}
-        ${statsA.wab != null ? tile('WAB', statsA.wab, statsB.wab, fmt1(statsA.wab), fmt1(statsB.wab||0)) : ''}
-        ${tempoA != null ? tile('Tempo', tempoA, tempoB, fmt1(tempoA), fmt1(tempoB)) : ''}
+      <div class="ap-section-title">Scoring Output</div>
+      <div style="display:flex;justify-content:space-between;font-size:.7rem;color:var(--muted);margin-bottom:6px">
+        <span style="color:var(--green);font-weight:700">${st.teamA}</span>
+        <span style="color:var(--red);font-weight:700">${st.teamB}</span>
       </div>
+      ${sigBar(ppgA||0, ppgB||0, 'PPG', fmt1(ppgA), fmt1(ppgB))}
+      ${sigBar(oapA||0, oapB||0, 'Opp PPG', fmt1(oapA), fmt1(oapB), false)}
+      ${statsA.ppp_off != null ? sigBar(statsA.ppp_off||0, statsB.ppp_off||0, 'PPP Offense', (statsA.ppp_off||0).toFixed(3), (statsB.ppp_off||0).toFixed(3)) : ''}
+      ${statsA.ppp_def != null ? sigBar(statsA.ppp_def||0, statsB.ppp_def||0, 'PPP Defense', (statsA.ppp_def||0).toFixed(3), (statsB.ppp_def||0).toFixed(3), false) : ''}
+      ${statsA.qual_o != null ? sigBar(statsA.qual_o||0, statsB.qual_o||0, 'Qual. Off', fmt1(statsA.qual_o), fmt1(statsB.qual_o||0)) : ''}
+      ${statsA.qual_d != null ? sigBar(statsA.qual_d||0, statsB.qual_d||0, 'Qual. Def', fmt1(statsA.qual_d), fmt1(statsB.qual_d||0), false) : ''}
     </div>` : '';
 
   // ── Key factors & intangibles ──────────────────────────────────────────────
@@ -1816,6 +1850,7 @@ async function showAnalysis(gameId) {
       ${injurySection}
       ${rosterSection}
       ${effSection}
+      ${emSection}
       ${shootingSection}
       ${rebSection}
       ${scoringSection}

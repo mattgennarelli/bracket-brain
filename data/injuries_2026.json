@@ -25,7 +25,8 @@
         "bpr_share": 0.1526,
         "importance": 0.1526,
         "source": "espn_news",
-        "updated_at": "2026-03-18T21:22:21.237490+00:00"
+        "updated_at": "2026-03-18T21:22:21.237490+00:00",
+        "return_round": "Sweet 16"
       }
     ],
     "roster": []
@@ -139,7 +140,20 @@
     "roster": []
   },
   "Texas Tech": {
-    "injuries": [],
+    "injuries": [
+      {
+        "player": "JT Toppin",
+        "status": "out"
+      },
+      {
+        "player": "LeJuan Watts",
+        "status": "questionable"
+      },
+      {
+        "player": "LaTrell Hoover",
+        "status": "out"
+      }
+    ],
     "roster": []
   },
   "Michigan St.": {

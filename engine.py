@@ -334,24 +334,22 @@ _MIN_BPR_SHARE = 0.05
 INJURY_DAMPENING = 0.6
 
 
-def calc_injury_penalty(team, config=DEFAULT_CONFIG):
+_ROUND_INDEX = {
+    "Round of 64": 0, "Round of 32": 1, "Sweet 16": 2,
+    "Elite 8": 3, "Final Four": 4, "Championship": 5,
+}
+
+
+def calc_injury_penalty(team, config=DEFAULT_CONFIG, round_name=None):
     """Compute penalty (pts of margin) from injuries.
 
     Primary path — BPR × playing time × empirical dampening:
       penalty = sum(max(0, bpr_i) × poss_per_game_i / 100 × INJURY_DAMPENING × severity_i)
       where poss_per_game_i = player_poss × 5 × adj_tempo / total_team_player_poss
 
-      This matches the approach used by professional oddsmakers (FiveThirtyEight RAPTOR, ESPN BPI):
-      use a regularized individual impact metric (BPR), scale by playing time fraction, apply
-      an empirical dampening coefficient. The 0.6 dampening absorbs all unknowns: replacement
-      quality, coaching adjustments, team adaptation. No rotation modeling or depth-chart
-      assumptions needed — the coefficient handles it.
+    If a player has return_round set (e.g. "Sweet 16"), their penalty is zeroed
+    from that round onward (they're back and healthy).
 
-    Fallback path — absolute BPR without roster poss data:
-      penalty = severity × bpr × (adj_tempo / 100) × INJURY_DAMPENING
-      Used when roster total_poss is unavailable.
-
-    Legacy path — bpr_share × injury_penalty_per_level (old data format).
     Result is capped at 10 pts.
     """
     if "injury_impact" in team and team["injury_impact"] is not None and "injuries" not in team:
@@ -379,8 +377,16 @@ def calc_injury_penalty(team, config=DEFAULT_CONFIG):
     # IMPORTANT: we evaluate per-player, not per-list, to avoid a path-switch
     # bug where removing one player with poss > 0 causes all remaining
     # poss=0 players to jump from "skipped in primary" to "counted in fallback".
+    current_round_idx = _ROUND_INDEX.get(round_name, -1) if round_name else -1
+
     total = 0.0
     for i in injuries:
+        # Skip player if they're expected back by this round
+        ret = i.get("return_round")
+        if ret and current_round_idx >= 0:
+            ret_idx = _ROUND_INDEX.get(ret, 99)
+            if current_round_idx >= ret_idx:
+                continue  # Player is back
         severity = _INJURY_SEVERITY.get(str(i.get("status", "out")).lower(), 1.0)
         if severity <= 0:
             continue
@@ -491,8 +497,9 @@ def predict_game(team_a, team_b, game_site=None, config=DEFAULT_CONFIG, round_na
     creator_margin = calc_creator_count_bonus(team_a, team_b, config)
 
     # All factor adjustments
-    # Injury impact decays in later rounds — players listed as "out" in early March
-    # often return by Sweet 16 / Final Four (2-4 weeks later).
+    # Injury decay: if players have return_round set, calc_injury_penalty skips them.
+    # For players without return_round, apply a generic decay for later rounds
+    # (most "out" players return within 2-4 weeks).
     _INJ_ROUND_DECAY = {
         "Round of 64": 1.0,
         "Round of 32": 0.85,
@@ -502,6 +509,7 @@ def predict_game(team_a, team_b, game_site=None, config=DEFAULT_CONFIG, round_na
         "Championship": 0.2,
     }
     inj_decay = _INJ_ROUND_DECAY.get(round_name, 1.0)
+    _rn = round_name  # capture for lambda
 
     factor_names = ["experience", "coach", "pedigree", "preseason", "proximity",
                     "momentum", "star_player", "depth", "size", "injuries",
@@ -516,7 +524,7 @@ def predict_game(team_a, team_b, game_site=None, config=DEFAULT_CONFIG, round_na
         lambda t: calc_star_player_bonus(t, config),
         lambda t: calc_depth_bonus(t, config),
         lambda t: calc_size_bonus(t, config),
-        lambda t: -calc_injury_penalty(t, config) * inj_decay,
+        lambda t: -calc_injury_penalty(t, config, round_name=_rn) * inj_decay,
         lambda t: calc_luck_regression(t, config),
         lambda t: calc_win_pct_bonus(t, config),
         lambda t: calc_conf_bonus(t, config),
@@ -2098,7 +2106,7 @@ def _make_pick_dict(game_num, round_of, round_name, region, a, b, result, pick_t
         games = t.get("games")
         losses = (games - wins) if (wins is not None and games is not None) else None
         return {
-            # Core efficiency
+            # Core efficiency (Torvik)
             "adj_o":        _r(t.get("adj_o"), 1),
             "adj_d":        _r(t.get("adj_d"), 1),
             "adj_tempo":    _r(t.get("adj_tempo"), 1),
@@ -2107,23 +2115,46 @@ def _make_pick_dict(game_num, round_of, round_name, region, a, b, result, pick_t
             "losses":       losses,
             "barthag":      _r(t.get("barthag"), 3),
             "sos":          _r(t.get("sos"), 3),
+            "elite_sos":    _r(t.get("elite_sos"), 3),
+            "wab":          _r(t.get("wab"), 1),
             "conf_rating":  t.get("conf_rating"),
+            "conf_strength": _r(t.get("conf_strength_score"), 3),
+            "conf_win_pct": _r(t.get("conf_win_pct"), 3),
+            # EvanMiya ratings
+            "em_adj_o":     _r(t.get("em_adj_o"), 1),
+            "em_adj_d":     _r(t.get("em_adj_d"), 1),
+            "em_off_rank":  t.get("em_off_rank"),
+            "em_def_rank":  t.get("em_def_rank"),
+            "em_opponent_adjust": _r(t.get("em_opponent_adjust"), 3),
+            "em_tempo":     _r(t.get("em_tempo"), 1),
+            "em_bpr":       _r(t.get("em_bpr"), 1),
+            "em_obpr":      _r(t.get("em_obpr"), 1),
+            "em_dbpr":      _r(t.get("em_dbpr"), 1),
+            "em_runs_per_game": _r(t.get("em_runs_per_game"), 2),
+            "em_runs_conceded": _r(t.get("em_runs_conceded"), 2),
             "em_depth_score": _r(t.get("em_depth_score"), 3),
-            "em_big_bpr": _r(t.get("em_big_bpr"), 2),
+            "em_big_bpr":   _r(t.get("em_big_bpr"), 2),
             "em_guard_bpr": _r(t.get("em_guard_bpr"), 2),
+            "em_top5_bpr":  _r(t.get("em_top5_bpr"), 1),
             "em_creator_count": t.get("em_creator_count"),
+            "em_star_concentration": _r(t.get("em_star_concentration"), 3),
             # Scoring
             "ppg":          _r(t.get("ppg"), 1),
             "opp_ppg":      _r(t.get("opp_ppg"), 1),
+            "ppp_off":      _r(t.get("ppp_off"), 3),
+            "ppp_def":      _r(t.get("ppp_def"), 3),
             # Shooting
             "efg_pct":      _r(t.get("efg_pct"), 3),
-            "efg_d":        _r(t.get("efg_d"), 3),   # opp eFG% (lower = better D)
+            "efg_d":        _r(t.get("efg_d"), 3),
             "three_pt_pct": _r(t.get("three_pt_pct"), 3),
             "three_pt_pct_d": _r(t.get("three_pt_pct_d"), 3),
             "three_pt_rate": _r(t.get("three_pt_rate") or t.get("three_rate"), 3),
+            "three_pt_rate_d": _r(t.get("three_pt_rate_d"), 3),
             "two_pt_pct":   _r(t.get("two_pt_pct"), 3),
+            "two_pt_pct_d": _r(t.get("two_pt_pct_d"), 3),
             "ft_pct":       _r(t.get("ft_pct"), 3),
             "ft_rate":      _r(t.get("ft_rate"), 3),
+            "ft_rate_d":    _r(t.get("ft_rate_d"), 3),
             # Rebounding & ball control
             "orb_rate":     _r(t.get("orb_rate"), 3),
             "opp_orb_rate": _r(t.get("opp_orb_rate"), 3),
@@ -2132,16 +2163,20 @@ def _make_pick_dict(game_num, round_of, round_name, region, a, b, result, pick_t
             # Defense
             "blk_rate":     _r(t.get("blk_rate"), 3),
             "ast_rate":     _r(t.get("ast_rate"), 3),
+            "opp_ast_rate": _r(t.get("opp_ast_rate"), 3),
             # Roster
             "avg_experience": _r(t.get("avg_experience"), 2),
             "experience":   _r(t.get("experience"), 3),
             "top_player":   t.get("top_player"),
             "top_player_bpr": _r(t.get("top_player_bpr"), 2),
-            "em_depth_score": _r(t.get("em_depth_score"), 3),
-            "em_big_bpr": _r(t.get("em_big_bpr"), 2),
-            "em_guard_bpr": _r(t.get("em_guard_bpr"), 2),
-            "em_creator_count": t.get("em_creator_count"),
             "star_score":   _r(t.get("star_score"), 2),
+            # Momentum
+            "momentum":     _r(t.get("momentum"), 2),
+            "conf_tourney_momentum": _r(t.get("conf_tourney_momentum"), 2),
+            # Quality metrics
+            "qual_o":       _r(t.get("qual_o"), 1),
+            "qual_d":       _r(t.get("qual_d"), 1),
+            "qual_barthag": _r(t.get("qual_barthag"), 3),
             # Injuries
             "injuries":     t.get("injuries"),
             "injury_impact": _r(t.get("injury_impact"), 1),
