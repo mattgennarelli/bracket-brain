@@ -4795,10 +4795,10 @@
       "away_team": "TCU Horned Frogs",
       "commence_time": "2026-03-19T16:15:00Z",
       "date": "2026-03-17",
-      "result": null,
-      "actual_score_home": null,
-      "actual_score_away": null,
-      "settled_at": null,
+      "result": "L",
+      "actual_score_home": 64.0,
+      "actual_score_away": 66.0,
+      "settled_at": "2026-03-19T18:48:08.640950+00:00",
       "ncaa_tournament": false
     },
     {
@@ -4818,10 +4818,10 @@
       "away_team": "TCU Horned Frogs",
       "commence_time": "2026-03-19T16:15:00Z",
       "date": "2026-03-17",
-      "result": null,
-      "actual_score_home": null,
-      "actual_score_away": null,
-      "settled_at": null,
+      "result": "W",
+      "actual_score_home": 64.0,
+      "actual_score_away": 66.0,
+      "settled_at": "2026-03-19T18:48:08.640993+00:00",
       "ncaa_tournament": false
     },
     {
@@ -4839,10 +4839,10 @@
       "away_team": "TCU Horned Frogs",
       "commence_time": "2026-03-19T16:15:00Z",
       "date": "2026-03-17",
-      "result": null,
-      "actual_score_home": null,
-      "actual_score_away": null,
-      "settled_at": null,
+      "result": "L",
+      "actual_score_home": 64.0,
+      "actual_score_away": 66.0,
+      "settled_at": "2026-03-19T18:48:08.641010+00:00",
       "ncaa_tournament": false
     },
     {
@@ -4862,10 +4862,10 @@
       "away_team": "Troy Trojans",
       "commence_time": "2026-03-19T16:40:00Z",
       "date": "2026-03-17",
-      "result": null,
-      "actual_score_home": null,
-      "actual_score_away": null,
-      "settled_at": null,
+      "result": "W",
+      "actual_score_home": 76.0,
+      "actual_score_away": 47.0,
+      "settled_at": "2026-03-19T18:48:08.641046+00:00",
       "ncaa_tournament": true
     },
     {
@@ -4885,10 +4885,10 @@
       "away_team": "Troy Trojans",
       "commence_time": "2026-03-19T16:40:00Z",
       "date": "2026-03-17",
-      "result": null,
-      "actual_score_home": null,
-      "actual_score_away": null,
-      "settled_at": null,
+      "result": "W",
+      "actual_score_home": 76.0,
+      "actual_score_away": 47.0,
+      "settled_at": "2026-03-19T18:48:08.641067+00:00",
       "ncaa_tournament": true
     },
     {
@@ -4906,10 +4906,10 @@
       "away_team": "Troy Trojans",
       "commence_time": "2026-03-19T16:40:00Z",
       "date": "2026-03-17",
-      "result": null,
-      "actual_score_home": null,
-      "actual_score_away": null,
-      "settled_at": null,
+      "result": "W",
+      "actual_score_home": 76.0,
+      "actual_score_away": 47.0,
+      "settled_at": "2026-03-19T18:48:08.641080+00:00",
       "ncaa_tournament": true
     },
     {
@@ -6939,10 +6939,10 @@
       "away_team": "TCU Horned Frogs",
       "commence_time": "2026-03-19T16:15:00Z",
       "date": "2026-03-18",
-      "result": null,
-      "actual_score_home": null,
-      "actual_score_away": null,
-      "settled_at": null,
+      "result": "L",
+      "actual_score_home": 64.0,
+      "actual_score_away": 66.0,
+      "settled_at": "2026-03-19T18:48:08.642348+00:00",
       "ncaa_tournament": false
     },
     {
@@ -6962,10 +6962,10 @@
       "away_team": "TCU Horned Frogs",
       "commence_time": "2026-03-19T16:15:00Z",
       "date": "2026-03-18",
-      "result": null,
-      "actual_score_home": null,
-      "actual_score_away": null,
-      "settled_at": null,
+      "result": "W",
+      "actual_score_home": 64.0,
+      "actual_score_away": 66.0,
+      "settled_at": "2026-03-19T18:48:08.642369+00:00",
       "ncaa_tournament": false
     },
     {
@@ -6983,10 +6983,10 @@
       "away_team": "TCU Horned Frogs",
       "commence_time": "2026-03-19T16:15:00Z",
       "date": "2026-03-18",
-      "result": null,
-      "actual_score_home": null,
-      "actual_score_away": null,
-      "settled_at": null,
+      "result": "L",
+      "actual_score_home": 64.0,
+      "actual_score_away": 66.0,
+      "settled_at": "2026-03-19T18:48:08.642382+00:00",
       "ncaa_tournament": false
     },
     {
@@ -7006,10 +7006,10 @@
       "away_team": "Troy Trojans",
       "commence_time": "2026-03-19T16:40:00Z",
       "date": "2026-03-18",
-      "result": null,
-      "actual_score_home": null,
-      "actual_score_away": null,
-      "settled_at": null,
+      "result": "W",
+      "actual_score_home": 76.0,
+      "actual_score_away": 47.0,
+      "settled_at": "2026-03-19T18:48:08.642401+00:00",
       "ncaa_tournament": true
     },
     {
@@ -7029,10 +7029,10 @@
       "away_team": "Troy Trojans",
       "commence_time": "2026-03-19T16:40:00Z",
       "date": "2026-03-18",
-      "result": null,
-      "actual_score_home": null,
-      "actual_score_away": null,
-      "settled_at": null,
+      "result": "W",
+      "actual_score_home": 76.0,
+      "actual_score_away": 47.0,
+      "settled_at": "2026-03-19T18:48:08.642420+00:00",
       "ncaa_tournament": true
     },
     {
@@ -7050,10 +7050,10 @@
       "away_team": "Troy Trojans",
       "commence_time": "2026-03-19T16:40:00Z",
       "date": "2026-03-18",
-      "result": null,
-      "actual_score_home": null,
-      "actual_score_away": null,
-      "settled_at": null,
+      "result": "W",
+      "actual_score_home": 76.0,
+      "actual_score_away": 47.0,
+      "settled_at": "2026-03-19T18:48:08.642432+00:00",
       "ncaa_tournament": true
     },
     {
@@ -9108,10 +9108,10 @@
       "away_team": "Troy Trojans",
       "commence_time": "2026-03-19T16:40:00Z",
       "date": "2026-03-19",
-      "result": null,
-      "actual_score_home": null,
-      "actual_score_away": null,
-      "settled_at": null
+      "result": "W",
+      "actual_score_home": 76.0,
+      "actual_score_away": 47.0,
+      "settled_at": "2026-03-19T18:48:08.643775+00:00"
     },
     {
       "bet_type": "spread",
@@ -9130,10 +9130,10 @@
       "away_team": "Troy Trojans",
       "commence_time": "2026-03-19T16:40:00Z",
       "date": "2026-03-19",
-      "result": null,
-      "actual_score_home": null,
-      "actual_score_away": null,
-      "settled_at": null
+      "result": "W",
+      "actual_score_home": 76.0,
+      "actual_score_away": 47.0,
+      "settled_at": "2026-03-19T18:48:08.643798+00:00"
     },
     {
       "bet_type": "total",
@@ -9150,10 +9150,10 @@
       "away_team": "Troy Trojans",
       "commence_time": "2026-03-19T16:40:00Z",
       "date": "2026-03-19",
-      "result": null,
-      "actual_score_home": null,
-      "actual_score_away": null,
-      "settled_at": null
+      "result": "W",
+      "actual_score_home": 76.0,
+      "actual_score_away": 47.0,
+      "settled_at": "2026-03-19T18:48:08.643810+00:00"
     },
     {
       "bet_type": "ml",
@@ -11034,53 +11034,53 @@
   ],
   "stats": {
     "total_picks": 498,
-    "settled": 79,
-    "wins": 40,
-    "losses": 39,
+    "settled": 94,
+    "wins": 51,
+    "losses": 43,
     "pushes": 0,
-    "hit_rate": 0.5063,
+    "hit_rate": 0.5426,
     "by_type": {
       "ml": {
-        "picks": 26,
-        "wins": 16,
-        "losses": 10,
+        "picks": 31,
+        "wins": 19,
+        "losses": 12,
         "pushes": 0,
-        "net_units": -2.08,
-        "total_wagered": 18.71,
-        "hit_rate": 0.6154,
-        "roi_pct": -11.13
+        "net_units": -1.71,
+        "total_wagered": 22.47,
+        "hit_rate": 0.6129,
+        "roi_pct": -7.6
       },
       "spread": {
-        "picks": 26,
-        "wins": 9,
+        "picks": 31,
+        "wins": 14,
         "losses": 17,
         "pushes": 0,
-        "net_units": -9.75,
-        "total_wagered": 25.1,
-        "hit_rate": 0.3462,
-        "roi_pct": -38.85
+        "net_units": -5.68,
+        "total_wagered": 29.45,
+        "hit_rate": 0.4516,
+        "roi_pct": -19.3
       },
       "total": {
-        "picks": 27,
-        "wins": 15,
-        "losses": 12,
+        "picks": 32,
+        "wins": 18,
+        "losses": 14,
         "pushes": 0,
         "net_units": -2.22,
         "total_wagered": 83.45,
-        "hit_rate": 0.5556,
+        "hit_rate": 0.5625,
         "roi_pct": -2.66
       }
     },
     "by_stars": {
       "\u2605": {
-        "picks": 77,
-        "wins": 40,
-        "losses": 37,
+        "picks": 92,
+        "wins": 51,
+        "losses": 41,
         "pushes": 0,
-        "net_units": -4.05,
-        "total_wagered": 117.26,
-        "hit_rate": 0.5195,
-        "roi_pct": -3.46
+        "net_units": 0.39,
+        "total_wagered": 125.37,
+        "hit_rate": 0.5543,
+        "roi_pct": 0.31
       },
       "\u2605\u2605": {
         "picks": 2,
@@ -11103,8 +11103,8 @@
         "roi_pct": null
       }
     },
-    "total_wagered": 127.26,
-    "net_units": -14.05,
-    "roi_pct": -11.04
+    "total_wagered": 135.37,
+    "net_units": -9.61,
+    "roi_pct": -7.1
   }
 }
