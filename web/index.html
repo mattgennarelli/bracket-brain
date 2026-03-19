@@ -1655,8 +1655,11 @@ async function showAnalysis(gameId) {
         `<option value="${s}"${s===cur?' selected':''}>${s}</option>`
       ).join('');
       const col = statusColors[cur] || '#dc2626';
+      const bpr = i.bpr != null ? i.bpr : null;
+      const bprTag = bpr != null ? `<span style="font-size:.68rem;color:var(--muted);min-width:42px;text-align:right;">${bpr > 0 ? '+' : ''}${bpr.toFixed(1)} BPR</span>` : '';
       return `<div style="display:flex;align-items:center;gap:6px;margin:3px 0;">
         <span style="flex:1;font-weight:500;">${i.player}</span>
+        ${bprTag}
         <select class="inj-override" data-team="${team}" data-player="${i.player}"
           style="font-size:.72rem;padding:2px 4px;border-radius:4px;border:1px solid ${col};
           background:${col}18;color:${col};font-weight:600;cursor:pointer;">
