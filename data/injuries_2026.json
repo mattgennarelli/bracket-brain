@@ -72,7 +72,12 @@
     "roster": []
   },
   "Illinois": {
-    "injuries": [],
+    "injuries": [
+      {
+        "player": "Jason Jakstys",
+        "status": "out"
+      }
+    ],
     "roster": []
   },
   "Iowa St.": {
@@ -87,7 +92,7 @@
     "injuries": [
       {
         "player": "Jaylin Stewart",
-        "status": "out",
+        "status": "questionable",
         "bpr": 3.4506,
         "poss": 815.0,
         "bpr_share": 0.064,
@@ -95,7 +100,7 @@
       },
       {
         "player": "Silas Demary",
-        "status": "questionable",
+        "status": "probable",
         "bpr": 9.098,
         "poss": 1642.0,
         "bpr_share": 0.1687,
@@ -156,7 +161,16 @@
     "roster": []
   },
   "Michigan St.": {
-    "injuries": [],
+    "injuries": [
+      {
+        "player": "Kaleb Glenn",
+        "status": "out"
+      },
+      {
+        "player": "Divine Ugochukwu",
+        "status": "out"
+      }
+    ],
     "roster": []
   },
   "Virginia": {
@@ -215,7 +229,8 @@
         "bpr_share": 0.1152,
         "importance": 0.1152,
         "source": "espn_news",
-        "updated_at": "2026-03-18T21:22:25.108016+00:00"
+        "updated_at": "2026-03-18T21:22:25.108016+00:00",
+        "return_round": "Sweet 16"
       }
     ],
     "roster": []
@@ -224,7 +239,7 @@
     "injuries": [
       {
         "player": "Aden Holloway",
-        "status": "doubtful",
+        "status": "out",
         "bpr": 8.4141,
         "poss": 1499.0,
         "bpr_share": 0.1483,
@@ -271,11 +286,29 @@
     "roster": []
   },
   "Nebraska": {
-    "injuries": [],
+    "injuries": [
+      {
+        "player": "Connor Essegian",
+        "status": "out"
+      },
+      {
+        "player": "Ugnius Jarusevicius",
+        "status": "out"
+      },
+      {
+        "player": "Henry Burt",
+        "status": "out"
+      }
+    ],
     "roster": []
   },
   "Wisconsin": {
-    "injuries": [],
+    "injuries": [
+      {
+        "player": "Jack Janicki",
+        "status": "questionable"
+      }
+    ],
     "roster": []
   },
   "Kansas": {
@@ -287,7 +320,16 @@
     "roster": []
   },
   "UCLA": {
-    "injuries": [],
+    "injuries": [
+      {
+        "player": "Tyler Bilodeau",
+        "status": "probable"
+      },
+      {
+        "player": "Donovan Dent",
+        "status": "probable"
+      }
+    ],
     "roster": []
   },
   "Saint Mary's": {
@@ -304,7 +346,12 @@
     "roster": []
   },
   "Iowa": {
-    "injuries": [],
+    "injuries": [
+      {
+        "player": "Peyton McCollum",
+        "status": "out"
+      }
+    ],
     "roster": []
   },
   "North Carolina": {
@@ -340,7 +387,7 @@
     "injuries": [
       {
         "player": "Carter Welling",
-        "status": "out",
+        "status": "questionable",
         "bpr": 4.2987,
         "poss": 1114.0,
         "bpr_share": 0.1116,
@@ -432,7 +479,16 @@
     "roster": []
   },
   "Miami FL": {
-    "injuries": [],
+    "injuries": [
+      {
+        "player": "Marcus Allen",
+        "status": "out"
+      },
+      {
+        "player": "Treyvon Maddox",
+        "status": "out"
+      }
+    ],
     "roster": []
   },
   "Villanova": {
@@ -1183,7 +1239,12 @@
     "roster": []
   },
   "Penn": {
-    "injuries": [],
+    "injuries": [
+      {
+        "player": "Ethan Roberts",
+        "status": "out"
+      }
+    ],
     "roster": []
   },
   "Navy": {
@@ -6601,14 +6662,6 @@
         "importance": 0.0833
       },
       {
-        "player": "Taison Chatman",
-        "status": "questionable",
-        "bpr": 1.5783,
-        "poss": 600.0,
-        "bpr_share": 0.0395,
-        "importance": 0.0395
-      },
-      {
         "player": "Myles Herro",
         "status": "out",
         "bpr": -0.2915,
@@ -8657,7 +8710,7 @@
     "injuries": [
       {
         "player": "Tyler Bilodeau",
-        "status": "questionable",
+        "status": "probable",
         "bpr": 6.1606,
         "poss": 1549.0,
         "bpr_share": 0.1543,
@@ -9409,14 +9462,6 @@
         "poss": 732.0,
         "bpr_share": 0.0208,
         "importance": 0.0208
-      },
-      {
-        "player": "Nolan Winter",
-        "status": "questionable",
-        "bpr": 7.3756,
-        "poss": 1604.0,
-        "bpr_share": 0.1907,
-        "importance": 0.1907
       }
     ],
     "roster": [

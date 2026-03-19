@@ -26,6 +26,7 @@ import re
 import time
 from datetime import datetime, timezone, timedelta
 from typing import Optional, Dict
+from zoneinfo import ZoneInfo
 
 ROOT = os.path.dirname(os.path.abspath(__file__))
 DATA_DIR = os.path.join(ROOT, "data")
@@ -62,6 +63,7 @@ CACHE_TTL_SECONDS = 3600
 # Scores cache: 90 seconds for live score freshness
 SCORES_CACHE_TTL = 90
 BRACKET_RESPONSE_VERSION = 2
+ET_TZ = ZoneInfo("America/New_York")
 
 # Cache: key -> {"result": ..., "cached_at": timestamp}
 # Uses OrderedDict so we can evict the oldest entry when size limit is hit.
@@ -682,12 +684,13 @@ def _lookup_vegas_lines(team_a: str, team_b: str):
 
 @app.get("/bets/today")
 def get_bets_today(tournament_only: bool = Query(default=True)):
-    today = datetime.now().strftime("%Y-%m-%d")
+    today = _today_et_str()
     if not os.path.isfile(LEDGER_PATH):
         return {"date": today, "picks": [], "available": False}
     with open(LEDGER_PATH) as f:
         ledger = json.load(f)
-    picks = [p for p in ledger.get("picks", []) if p.get("date") == today]
+    picks = [_normalize_pick_date(p) for p in ledger.get("picks", [])]
+    picks = [p for p in picks if p.get("date") == today]
     # Tag picks that haven't been tagged yet
     for p in picks:
         if "ncaa_tournament" not in p:
@@ -710,6 +713,7 @@ def get_bets_history(tournament_only: bool = Query(default=True)):
         return {"picks": [], "stats": {}, "model_epoch": None}
     with open(LEDGER_PATH) as f:
         data = json.load(f)
+    data["picks"] = [_normalize_pick_date(p) for p in data.get("picks", [])]
 
     # Ensure all picks are tagged (idempotent)
     for p in data.get("picks", []):
@@ -754,7 +758,7 @@ def get_bets_scores():
 
     picks = ledger.get("picks", [])
     # Focus on recent picks (today + last 2 days)
-    today = datetime.now().strftime("%Y-%m-%d")
+    today = _today_et_str()
     recent = [p for p in picks if p.get("date") and p.get("date") >= _days_ago(2)]
 
     scores_by_key = fetch_scores_for_picks(recent, days=2)
@@ -795,6 +799,27 @@ def _days_ago(n):
     """Return YYYY-MM-DD for n days ago."""
     d = datetime.now(timezone.utc) - timedelta(days=n)
     return d.strftime("%Y-%m-%d")
+
+
+def _today_et_str() -> str:
+    return datetime.now(ET_TZ).strftime("%Y-%m-%d")
+
+
+def _pick_game_date(pick: dict) -> str:
+    commence_time = pick.get("commence_time")
+    if commence_time:
+        try:
+            dt = datetime.fromisoformat(str(commence_time).replace("Z", "+00:00"))
+            return dt.astimezone(ET_TZ).strftime("%Y-%m-%d")
+        except ValueError:
+            pass
+    return pick.get("date", "")
+
+
+def _normalize_pick_date(pick: dict) -> dict:
+    normalized = dict(pick)
+    normalized["date"] = _pick_game_date(pick)
+    return normalized
 
 
 @app.get("/injuries/{year}")
@@ -982,7 +1007,7 @@ def get_bets_card(year: int = Query(default=2026)):
     Reads from saved daily file (data/card_YYYY-MM-DD.json) written by save_card.py /
     GitHub Actions.  Falls back to live Odds API fetch only if no saved file exists.
     """
-    today = datetime.now().strftime("%Y-%m-%d")
+    today = _today_et_str()
 
     # Serve from saved daily snapshot (committed by GH Actions each morning)
     # Fall back to most recent card file if today's doesn't exist yet (UTC vs ET mismatch)
@@ -1066,7 +1091,8 @@ def get_bets_card_scores():
         ledger = json.load(f)
 
     picks = ledger.get("picks", [])
-    recent = [p for p in picks if p.get("date") and p.get("date") >= _days_ago(2)]
+    recent = [_normalize_pick_date(p) for p in picks]
+    recent = [p for p in recent if p.get("date") and p.get("date") >= _days_ago(2)]
     scores_by_key = fetch_scores_for_picks(recent, days=2)
 
     result = {"scores": {}}

@@ -20,6 +20,7 @@ import json
 import os
 import sys
 from datetime import datetime, timezone
+from zoneinfo import ZoneInfo
 
 SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
 ROOT = os.path.dirname(SCRIPT_DIR)
@@ -31,6 +32,7 @@ from odds_provider import get_api_key
 from settle_bets import compute_stats  # reuse stats computation
 
 CARD_LEDGER_PATH = os.path.join(DATA_DIR, "card_ledger.json")
+ET_TZ = ZoneInfo("America/New_York")
 
 
 def _pick_id(pick):
@@ -51,6 +53,16 @@ def save_ledger(ledger):
         json.dump(ledger, f, indent=2)
 
 
+def _game_date_et(commence_time: str, fallback: str) -> str:
+    if commence_time:
+        try:
+            dt = datetime.fromisoformat(str(commence_time).replace("Z", "+00:00"))
+            return dt.astimezone(ET_TZ).strftime("%Y-%m-%d")
+        except ValueError:
+            pass
+    return fallback
+
+
 def main():
     parser = argparse.ArgumentParser(description="Save today's full game card to disk")
     parser.add_argument("--api-key", default=None,
@@ -64,7 +76,7 @@ def main():
         print("ERROR: No API key. Set ODDS_API_KEY or BETSTACK_API_KEY (per ODDS_PROVIDER), or pass --api-key.")
         sys.exit(1)
 
-    today = datetime.now().strftime("%Y-%m-%d")
+    today = datetime.now(ET_TZ).strftime("%Y-%m-%d")
     print(f"Fetching full card for {today}...")
 
     games = get_full_card_json(api_key, year=args.year)
@@ -80,7 +92,7 @@ def main():
             pick["home_team"] = game["home_team"]
             pick["away_team"] = game["away_team"]
             pick["commence_time"] = game.get("commence_time", "")
-            pick["date"] = today
+            pick["date"] = _game_date_et(pick["commence_time"], today)
             pick["result"] = None
             pick["actual_score_home"] = None
             pick["actual_score_away"] = None

@@ -166,6 +166,25 @@ def load_injuries(year):
     return data
 
 
+def load_existing_rosters(year):
+    """Load roster snapshots from an existing merged teams file.
+
+    This preserves player-level roster context across incremental injury rebuilds,
+    even when the current injuries feed only contains explicit injury rows.
+    """
+    path = os.path.join(DATA_DIR, f"teams_merged_{year}.json")
+    data = load_json(path)
+    if not isinstance(data, list):
+        return {}
+    out = {}
+    for row in data:
+        team = normalize_team(row.get("team", ""))
+        roster = row.get("roster", [])
+        if team and roster:
+            out[team] = roster
+    return out
+
+
 def merge_coaches(merged, coaches_data):
     """Overlay coach names onto merged teams so coach_tourney_score can vary."""
     if not coaches_data:
@@ -179,6 +198,20 @@ def merge_coaches(merged, coaches_data):
                 if field == "coach":
                     continue
                 merged[key][field] = value
+
+
+def merge_existing_rosters(merged, roster_data):
+    """Seed merged teams with prior roster context before injury overlay."""
+    if not roster_data:
+        return 0
+    merged_keys = set(merged.keys())
+    restored = 0
+    for team_name, roster in roster_data.items():
+        key = _find_torvik_key(team_name, merged_keys) or normalize_team(team_name)
+        if key in merged and roster and not merged[key].get("roster"):
+            merged[key]["roster"] = roster
+            restored += 1
+    return restored
 
 
 def merge_injuries(merged, injuries_data):
@@ -529,6 +562,12 @@ def build_merged_teams(year=2026, *, fetch_conf_tourney=False, fetch_injuries_fl
         print(f"Evan Miya: {len(evanmiya)} teams (star_score overlay)")
 
     merged = merge_sources(torvik, kenpom, evanmiya)
+
+    existing_rosters = load_existing_rosters(year)
+    if existing_rosters:
+        restored = merge_existing_rosters(merged, existing_rosters)
+        if restored:
+            print(f"Roster fallback: {restored} teams")
 
     coaches_data = load_coaches(year)
     if coaches_data:

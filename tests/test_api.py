@@ -171,6 +171,44 @@ def test_bets_card_filters_to_tournament_games(tmp_path, monkeypatch):
     assert d["games"][0]["ncaa_tournament"] is True
 
 
+def test_bets_today_uses_game_date_from_commence_time(tmp_path, monkeypatch):
+    ledger_path = tmp_path / "bets_ledger.json"
+    ledger_path.write_text(json.dumps({
+        "picks": [
+            {
+                "date": "2026-03-19",
+                "home_team": "Duke",
+                "away_team": "Arizona",
+                "commence_time": "2026-03-20T17:00:00Z",
+                "bet_type": "ml",
+                "bet_side": "Duke",
+            },
+            {
+                "date": "2026-03-19",
+                "home_team": "Houston",
+                "away_team": "Florida",
+                "commence_time": "2026-03-21T05:00:00Z",
+                "bet_type": "ml",
+                "bet_side": "Houston",
+            },
+        ]
+    }))
+
+    monkeypatch.setattr(api, "DATA_DIR", str(tmp_path))
+    monkeypatch.setattr(api, "LEDGER_PATH", str(ledger_path))
+    monkeypatch.setattr(api, "_today_et_str", lambda: "2026-03-20")
+    monkeypatch.setattr(api, "_cache", {})
+    monkeypatch.setattr(api, "is_ncaa_tournament_game", lambda home, away, year=2026: True)
+
+    r = client.get("/bets/today")
+    assert r.status_code == 200
+    d = r.json()
+    assert d["date"] == "2026-03-20"
+    assert len(d["picks"]) == 1
+    assert d["picks"][0]["home_team"] == "Duke"
+    assert d["picks"][0]["date"] == "2026-03-20"
+
+
 def test_bracket_scores_maps_to_bracket_team_names(tmp_path, monkeypatch):
     bracket_path = tmp_path / "bracket_2026.json"
     bracket_path.write_text(json.dumps({

@@ -21,6 +21,7 @@ import json
 import os
 import sys
 from datetime import datetime, timezone
+from zoneinfo import ZoneInfo
 
 SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
 ROOT = os.path.dirname(SCRIPT_DIR)
@@ -31,6 +32,7 @@ from best_bets import get_best_bets_json, DEFAULT_ML_EDGE, DEFAULT_SPREAD_EDGE, 
 from engine import is_ncaa_tournament_game
 
 LEDGER_PATH = os.path.join(DATA_DIR, "bets_ledger.json")
+ET_TZ = ZoneInfo("America/New_York")
 
 
 def _pick_id(pick):
@@ -51,6 +53,16 @@ def save_ledger(ledger):
         json.dump(ledger, f, indent=2)
 
 
+def _game_date_et(commence_time: str, fallback: str) -> str:
+    if commence_time:
+        try:
+            dt = datetime.fromisoformat(str(commence_time).replace("Z", "+00:00"))
+            return dt.astimezone(ET_TZ).strftime("%Y-%m-%d")
+        except ValueError:
+            pass
+    return fallback
+
+
 def main():
     parser = argparse.ArgumentParser(description="Save today's best bets to disk")
     parser.add_argument("--api-key", default=os.environ.get("ODDS_API_KEY", ""))
@@ -66,7 +78,7 @@ def main():
         print("ERROR: No API key. Set ODDS_API_KEY or pass --api-key.")
         sys.exit(1)
 
-    today = datetime.now().strftime("%Y-%m-%d")
+    today = datetime.now(ET_TZ).strftime("%Y-%m-%d")
     print(f"Fetching picks for {today}...")
 
     total_min = 9999 if args.no_totals else args.total_edge
@@ -98,7 +110,7 @@ def main():
     # Annotate each pick with date + pending result
     now_iso = datetime.now(timezone.utc).isoformat()
     for pick in bets:
-        pick["date"] = today
+        pick["date"] = _game_date_et(pick.get("commence_time", ""), today)
         pick["generated_at"] = now_iso   # when this pick was saved (for model epoch filtering)
         pick["result"] = None          # null = pending
         pick["actual_score_home"] = None
