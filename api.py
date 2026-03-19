@@ -41,7 +41,7 @@ from pydantic import BaseModel, Field
 from engine import (
     predict_game, enrich_team, run_monte_carlo, load_bracket,
     generate_bracket_picks, load_teams_merged, _normalize_team_for_match,
-    get_matchup_analysis_display, is_ncaa_tournament_game,
+    get_matchup_analysis_display, is_ncaa_tournament_game, _strip_mascot,
     ModelConfig, DEFAULT_CONFIG, resolve_ff_pairs,
 )
 from espn_scores import (
@@ -61,6 +61,7 @@ CARD_CACHE_TTL = 900
 CACHE_TTL_SECONDS = 3600
 # Scores cache: 90 seconds for live score freshness
 SCORES_CACHE_TTL = 90
+BRACKET_RESPONSE_VERSION = 2
 
 # Cache: key -> {"result": ..., "cached_at": timestamp}
 # Uses OrderedDict so we can evict the oldest entry when size limit is hit.
@@ -264,6 +265,7 @@ def _tournament_team_map(year: int) -> Dict[str, str]:
             team = entry.get("team")
             if team:
                 out[_normalize_team_for_match(team)] = team
+                out[_normalize_team_for_match(_strip_mascot(team))] = team
     for ff in raw.get("first_four", []):
         if not isinstance(ff, dict):
             continue
@@ -271,7 +273,19 @@ def _tournament_team_map(year: int) -> Dict[str, str]:
             team = ff.get(key)
             if team:
                 out[_normalize_team_for_match(team)] = team
+                out[_normalize_team_for_match(_strip_mascot(team))] = team
     return out
+
+
+def _resolve_tournament_team(team_map: Dict[str, str], *names: str) -> Optional[str]:
+    for raw_name in names:
+        if not raw_name:
+            continue
+        for candidate in (raw_name, _strip_mascot(raw_name)):
+            norm = _normalize_team_for_match(candidate)
+            if norm in team_map:
+                return team_map[norm]
+    return None
 
 
 def _build_bracket_scores_result(year: int, days: int = 21) -> dict:
@@ -284,11 +298,9 @@ def _build_bracket_scores_result(year: int, days: int = 21) -> dict:
     games = fetch_espn_scoreboard(dates)
     result = {"scores": {}}
     for game in games:
-        home_norm = _normalize_team_for_match(game.get("home_team", ""))
-        away_norm = _normalize_team_for_match(game.get("away_team", ""))
-        home = team_map.get(home_norm)
-        away = team_map.get(away_norm)
-        if not home or not away:
+        home = _resolve_tournament_team(team_map, game.get("home_team", ""), *game.get("home_aliases", []))
+        away = _resolve_tournament_team(team_map, game.get("away_team", ""), *game.get("away_aliases", []))
+        if not home or not away or home == away:
             continue
         rec = {
             "team_a": home,
@@ -509,7 +521,7 @@ def get_bracket(
     year: int,
     upset_aggression: float = Query(default=0.0, ge=0.0, le=1.0),
 ):
-    cache_key = f"bracket_{year}_{upset_aggression:.2f}_{_config_mtime()}"
+    cache_key = f"bracket_v{BRACKET_RESPONSE_VERSION}_{year}_{upset_aggression:.2f}_{_config_mtime()}"
     cached = _cache_get(cache_key)
     if cached is not None:
         return cached

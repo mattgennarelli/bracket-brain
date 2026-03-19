@@ -124,6 +124,7 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sa
 .game-status { min-height:14px; margin-top:2px; text-align:center; font-size:.62rem; color:var(--muted); }
 .ff-center { display:flex; flex-direction:column; align-items:center; justify-content:center;
   min-width:200px; gap:8px; padding:10px 8px; }
+.ff-game-label { font-size:.62rem; font-weight:700; text-transform:uppercase; letter-spacing:.05em; color:var(--muted); text-align:center; }
 .ff-center .game { width:180px; }
 .ff-center .champ-banner { text-align:center; margin-top:10px; padding:8px; }
 .ff-center .champ-banner .trophy { font-size:1.8rem; }
@@ -667,7 +668,7 @@ let PICKS = [];
 let BRACKET = {};        // {region: [{team, seed}, ...]}
 let TEAM_STATS = {};     // {teamName: stats}
 let QUADRANT = ['South', 'East', 'West', 'Midwest'];
-let FF_PAIRS = [['South','East'],['Midwest','West']]; // [[TL,BL],[TR,BR]] — overwritten by API
+let FF_PAIRS = [['East','South'],['West','Midwest']]; // [left semi, right semi]
 let lockedPicks = {};
 let simPicks = {};
 let bracketState = {};
@@ -737,6 +738,16 @@ function _resolveGameOutcome(teamA, teamB, fallbackPick) {
     actualWinner,
     resolvedPick: actualWinner || fallbackPick,
   };
+}
+
+function _normalizeFfPairs(ffPairs, quadrantOrder) {
+  const qo = Array.isArray(quadrantOrder) && quadrantOrder.length === 4 ? quadrantOrder : QUADRANT;
+  if (!Array.isArray(ffPairs) || ffPairs.length !== 2) return null;
+  const normalized = ffPairs.map(pair => {
+    if (!Array.isArray(pair) || pair.length !== 2) return null;
+    return pair.map(v => typeof v === 'number' ? qo[v] : v);
+  });
+  return normalized.every(pair => Array.isArray(pair) && pair[0] && pair[1]) ? normalized : null;
 }
 
 async function loadBracketScores(year, silent = false) {
@@ -901,10 +912,11 @@ function ingestPicks(picks, champion, ffPairs, quadrantOrder) {
   PICKS = picks || [];
   BRACKET = {};
   TEAM_STATS = {};
-  if (ffPairs && ffPairs.length === 2) FF_PAIRS = ffPairs;
   // quadrantOrder = [TL, TR, BR, BL] = [#1, #2, #3, #4] overall seed regions
   // matches buildBracket() slot order: QUADRANT[0]=TL, [1]=TR, [2]=BR, [3]=BL
   if (quadrantOrder && quadrantOrder.length === 4) QUADRANT = quadrantOrder;
+  const normalizedFfPairs = _normalizeFfPairs(ffPairs, QUADRANT);
+  if (normalizedFfPairs) FF_PAIRS = normalizedFfPairs;
 
   // Build BRACKET from R64 picks
   for (const p of PICKS) {
@@ -1444,7 +1456,9 @@ function buildRegionHTML(region, flipped) {
 
 function buildFinalFourHTML() {
   let html = '<div class="ff-center"><div class="ff-label">Final Four</div>';
-  ['FF-4-0', 'FF-4-1'].forEach(gid => {
+  ['FF-4-0', 'FF-4-1'].forEach((gid, idx) => {
+    const ffLabel = Array.isArray(FF_PAIRS[idx]) ? `${FF_PAIRS[idx][0]} vs ${FF_PAIRS[idx][1]}` : 'Semifinal';
+    html += `<div class="ff-game-label">${ffLabel}</div>`;
     html += `<div class="game" data-game-id="${gid}" onclick="handleGameClick(event,'${gid}')">`;
     html += '<div class="team-slot empty" data-team="" data-seed=""><span class="sd"></span><span class="tm">\u2014</span><span class="sc"></span></div>';
     html += '<div class="team-slot empty" data-team="" data-seed=""><span class="sd"></span><span class="tm">\u2014</span><span class="sc"></span></div>';
@@ -2186,6 +2200,7 @@ function switchTab(name) {
       _picksLoadedDate = todayET;
     }
   }
+  if (name === 'bracket' && currentYear) loadBracketScores(currentYear, true);
   if (name === 'card' && !_cardLoaded) { loadCard(); _cardLoaded = true; }
 }
 

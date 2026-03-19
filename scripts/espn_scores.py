@@ -20,7 +20,7 @@ try:
 except ImportError:
     requests = None
 
-from engine import _normalize_team_for_match
+from engine import _normalize_team_for_match, _strip_mascot
 
 ESPN_SCOREBOARD_URL = "http://site.api.espn.com/apis/site/v2/sports/basketball/mens-college-basketball/scoreboard"
 
@@ -43,6 +43,32 @@ def _norm(name):
 def _scores_key(home, away):
     """Build lookup key for home|away pair."""
     return f"{_norm(home)}|{_norm(away)}"
+
+
+def _team_name_variants(team):
+    """Return short/canonical aliases for an ESPN team payload."""
+    if not isinstance(team, dict):
+        return []
+
+    names = []
+    for key in ("shortDisplayName", "displayName", "name", "location", "abbreviation"):
+        value = team.get(key)
+        if not value:
+            continue
+        value = " ".join(str(value).split()).strip()
+        if value:
+            names.append(value)
+        stripped = _strip_mascot(value)
+        if stripped and stripped != value:
+            names.append(stripped)
+
+    seen = set()
+    out = []
+    for name in names:
+        if name and name not in seen:
+            seen.add(name)
+            out.append(name)
+    return out
 
 
 def fetch_espn_scoreboard(dates):
@@ -89,7 +115,8 @@ def _parse_espn_event(event):
     home = away = None
     for c in competitors:
         team = c.get("team", {})
-        name = team.get("displayName") or team.get("shortDisplayName") or ""
+        variants = _team_name_variants(team)
+        name = variants[0] if variants else ""
         ha = c.get("homeAway", "")
         try:
             score = float(c.get("score", 0))
@@ -97,9 +124,9 @@ def _parse_espn_event(event):
             score = None
 
         if ha == "home":
-            home = {"name": name, "score": score}
+            home = {"name": name, "aliases": variants, "score": score}
         elif ha == "away":
-            away = {"name": name, "score": score}
+            away = {"name": name, "aliases": variants, "score": score}
 
     if not home or not away:
         return None
@@ -115,6 +142,8 @@ def _parse_espn_event(event):
     return {
         "home_team": home["name"],
         "away_team": away["name"],
+        "home_aliases": home.get("aliases", []),
+        "away_aliases": away.get("aliases", []),
         "home_score": home["score"],
         "away_score": away["score"],
         "completed": completed,
@@ -132,20 +161,21 @@ def build_scores_by_key(games):
     """
     out = {}
     for g in games:
-        home = g["home_team"]
-        away = g["away_team"]
-        key = _scores_key(home, away)
-        out[key] = g
-        # Also add flipped key (ESPN sometimes reverses home/away)
-        key_flip = _scores_key(away, home)
-        if key_flip not in out:
-            out[key_flip] = {
-                **g,
-                "home_team": away,
-                "away_team": home,
-                "home_score": g["away_score"],
-                "away_score": g["home_score"],
-            }
+        home_names = [g["home_team"], *g.get("home_aliases", [])]
+        away_names = [g["away_team"], *g.get("away_aliases", [])]
+        for home in home_names:
+            for away in away_names:
+                key = _scores_key(home, away)
+                out[key] = g
+                key_flip = _scores_key(away, home)
+                if key_flip not in out:
+                    out[key_flip] = {
+                        **g,
+                        "home_team": away,
+                        "away_team": home,
+                        "home_score": g["away_score"],
+                        "away_score": g["home_score"],
+                    }
     return out
 
 
