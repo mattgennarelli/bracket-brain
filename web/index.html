@@ -1601,8 +1601,8 @@ async function showAnalysis(gameId) {
   const injA = statsA?.injuries, injB = statsB?.injuries;
   const impA = statsA?.injury_impact, impB = statsB?.injury_impact;
   const hasInjuries = (injA && injA.length > 0) || (injB && injB.length > 0);
-  const statusOptions = ['out', 'doubtful', 'questionable', 'day-to-day', 'healthy'];
-  const statusColors = {out:'#dc2626',doubtful:'#d97706',questionable:'#ca8a04','day-to-day':'#65a30d',healthy:'#16a34a'};
+  const statusOptions = ['out', 'doubtful', 'questionable', 'probable', 'day-to-day', 'healthy'];
+  const statusColors = {out:'#dc2626',doubtful:'#d97706',questionable:'#ca8a04',probable:'#65a30d','day-to-day':'#65a30d',healthy:'#16a34a'};
   const fmtInjInteractive = (team, injs, imp) => {
     if (!injs || injs.length === 0) return '';
     const rows = injs.map(i => {
