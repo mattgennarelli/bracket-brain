@@ -1175,7 +1175,8 @@ def main():
         print("Loaded calibrated model parameters")
 
     print("Generating bracket picks (63 games)...")
-    bracket_result = generate_bracket_picks(bracket, config, upset_aggression=args.upset, quadrant_order=quadrant_order,
+    bracket_result = generate_bracket_picks(bracket, config, upset_aggression=args.upset,
+                                           quadrant_order=quadrant_order, ff_matchups=ff_matchups,
                                            data_dir=DATA_DIR, year=year)
     picks = bracket_result["picks"]
 

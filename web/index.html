@@ -68,10 +68,14 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sa
 @keyframes spin { to { transform:rotate(360deg); } }
 .loading-text { font-size:.88rem; color:var(--muted); font-weight:500; }
 
-.bracket-wrap { display:flex; flex-direction:column; align-items:center; padding:16px 8px; min-width:1400px; }
-.bracket-top, .bracket-bottom { display:flex; gap:0; justify-content:center; width:100%; }
-.bracket-bottom { margin-top:12px; }
-.region-bracket { flex:1; max-width:660px; overflow:visible; }
+.bracket-wrap { display:flex; align-items:center; justify-content:center; padding:16px 8px; min-width:1400px; }
+.bracket-grid { display:grid; grid-template-columns:minmax(0,1fr) auto minmax(0,1fr); grid-template-rows:auto auto; align-items:center; width:100%; }
+.bracket-cell--tl { grid-column:1; grid-row:1; }
+.bracket-cell--tr { grid-column:3; grid-row:1; }
+.bracket-cell--bl { grid-column:1; grid-row:2; }
+.bracket-cell--br { grid-column:3; grid-row:2; }
+.ff-center-wrap { grid-column:2; grid-row:1 / span 2; display:flex; align-items:center; justify-content:center; }
+.region-bracket { width:100%; max-width:660px; overflow:visible; }
 .region-label { text-align:center; font-size:.78rem; font-weight:700; text-transform:uppercase;
   letter-spacing:.08em; color:var(--primary); padding:2px 0 6px; }
 .rounds { display:flex; gap:0; align-items:stretch; }
@@ -374,12 +378,18 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sa
 .mc-teams { font-weight:700; font-size:.85rem; }
 .mc-time { font-size:.68rem; color:var(--muted); }
 .mc-nodata { padding:10px 14px; font-size:.72rem; color:var(--muted); font-style:italic; }
-.mc-pick { display:flex; align-items:center; gap:7px; padding:7px 14px;
-  border-bottom:1px solid var(--border); flex-wrap:wrap; }
+.mc-pick { padding:10px 14px; border-bottom:1px solid var(--border); }
 .mc-pick:last-child { border-bottom:none; }
-.mc-side { font-size:.8rem; font-weight:600; flex:1; min-width:80px; }
-.mc-proj { font-size:.68rem; color:var(--muted); flex-basis:100%; margin-top:1px; }
-.mc-odds { font-size:.72rem; color:var(--muted); }
+.mc-topline { display:flex; align-items:center; gap:8px; flex-wrap:wrap; }
+.mc-side { font-size:.82rem; font-weight:650; flex:1; min-width:120px; }
+.mc-odds { font-size:.72rem; color:var(--muted); font-weight:500; }
+.mc-meta { display:flex; align-items:center; gap:6px; flex-wrap:wrap; margin-top:6px; }
+.mc-chip { display:inline-flex; align-items:center; border-radius:999px; padding:2px 7px;
+  font-size:.65rem; font-weight:700; border:1px solid var(--border); background:var(--surface); color:var(--muted); }
+.mc-chip.units { color:var(--text); border-color:rgba(26,109,204,.18); background:rgba(26,109,204,.08); }
+.mc-chip.edge { color:var(--green); border-color:rgba(26,135,84,.22); background:rgba(26,135,84,.10); }
+.mc-chip.stars { color:var(--gold); border-color:rgba(217,119,6,.22); background:rgba(217,119,6,.10); letter-spacing:.03em; }
+.mc-proj { display:block; font-size:.68rem; color:var(--muted); margin-top:6px; line-height:1.35; }
 .mc-result { font-size:.65rem; font-weight:700; padding:1px 5px; border-radius:4px;
   margin-left:auto; }
 .mc-result.W { background:#d1fae5; color:#065f46; }
@@ -394,7 +404,11 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sa
 .error-banner.show { display:block; }
 @media (max-width:1400px) {
   .bracket-wrap { min-width:100%; }
-  .bracket-top, .bracket-bottom { flex-direction:column; align-items:center; }
+  .bracket-grid { grid-template-columns:1fr; grid-template-rows:auto; row-gap:16px; }
+  .bracket-cell--tl, .bracket-cell--tr, .bracket-cell--bl, .bracket-cell--br, .ff-center-wrap {
+    grid-column:1;
+    grid-row:auto;
+  }
   .region-bracket { max-width:100%; }
   .ff-center { flex-direction:row; flex-wrap:wrap; justify-content:center; }
 }
@@ -607,14 +621,10 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sa
     <div class="picks-panel" id="card-panel">
       <div id="card-stats-row" class="picks-stats-grid"></div>
       <div class="picks-header">
-        <h3 id="card-section-title">Today's Full Card</h3>
+        <h3 id="card-section-title">March Madness Card</h3>
         <span class="hit-rate-badge" id="card-hit-badge"></span>
       </div>
       <div id="card-games-body"><div class="picks-empty">Loading...</div></div>
-      <div style="margin-top:20px;display:none" id="card-history-section">
-        <h3 style="font-size:.9rem;font-weight:700;margin-bottom:10px">Card History</h3>
-        <div id="card-history-body"></div>
-      </div>
     </div>
   </div>
 </div>
@@ -912,7 +922,7 @@ function renderOdds(champProbs, numSims) {
 }
 
 function renderF4ByRegion(byRegion, numSims) {
-  const regionOrder = ['South', 'East', 'Midwest', 'West'];
+  const regionOrder = (Array.isArray(QUADRANT) && QUADRANT.length === 4) ? QUADRANT : ['South', 'East', 'Midwest', 'West'];
   const regions = Object.keys(byRegion).length
     ? [...regionOrder.filter(r => r in byRegion), ...Object.keys(byRegion).filter(r => !regionOrder.includes(r))]
     : regionOrder;
@@ -1276,16 +1286,14 @@ function onUpsetChange(val) {
 // ---------------------------------------------------------------------------
 function buildBracket() {
   const wrap = document.getElementById('bracket-wrap');
-  let html = '<div class="bracket-top">';
-  html += buildRegionHTML(QUADRANT[0], false);
-  html += buildFinalFourHTML();
-  html += buildRegionHTML(QUADRANT[1], true);
-  html += '</div><div class="bracket-bottom">';
-  html += buildRegionHTML(QUADRANT[3], false);
-  html += '<div class="ff-center"></div>';
-  html += buildRegionHTML(QUADRANT[2], true);
-  html += '</div>';
-  wrap.innerHTML = html;
+  wrap.innerHTML = `
+    <div class="bracket-grid">
+      <div class="bracket-cell--tl">${buildRegionHTML(QUADRANT[0], false)}</div>
+      <div class="bracket-cell--tr">${buildRegionHTML(QUADRANT[1], true)}</div>
+      <div class="bracket-cell--bl">${buildRegionHTML(QUADRANT[3], false)}</div>
+      <div class="bracket-cell--br">${buildRegionHTML(QUADRANT[2], true)}</div>
+      <div class="ff-center-wrap">${buildFinalFourHTML()}</div>
+    </div>`;
 }
 
 function buildRegionHTML(region, flipped) {
@@ -2127,21 +2135,20 @@ function _startPicksPoll() {
 let _cardScoresInterval = null;
 
 async function loadCard() {
-  document.getElementById('card-games-body').innerHTML = '<div class="picks-empty">Loading today\'s card...</div>';
+  document.getElementById('card-games-body').innerHTML = '<div class="picks-empty">Loading March Madness card...</div>';
   try {
-    const [cardData, historyData, scoresData] = await Promise.all([
+    const [cardData, scoresData] = await Promise.all([
       apiFetch('/bets/card').catch(() => ({ games: [], available: false })),
-      apiFetch('/bets/card/history').catch(() => ({ picks: [], stats: {} })),
       apiFetch('/bets/card/scores').catch(() => ({ scores: {} })),
     ]);
-    renderCard(cardData, historyData, scoresData?.scores || {});
-    _startCardScoresPoll(cardData, historyData);
+    renderCard(cardData, scoresData?.scores || {});
+    _startCardScoresPoll(cardData);
   } catch (e) {
     document.getElementById('card-games-body').innerHTML = `<div class="picks-empty">Error loading card: ${escapeHtml(e.message)}</div>`;
   }
 }
 
-function _startCardScoresPoll(cardData, historyData) {
+function _startCardScoresPoll(cardData) {
   if (_cardScoresInterval) clearInterval(_cardScoresInterval);
   const hasGames = (cardData?.games || []).length > 0;
   if (!hasGames) return;
@@ -2149,68 +2156,56 @@ function _startCardScoresPoll(cardData, historyData) {
     if (document.getElementById('tab-card')?.classList?.contains('active')) {
       try {
         const scoresData = await apiFetch('/bets/card/scores').catch(() => ({ scores: {} }));
-        renderCard(cardData, historyData, scoresData?.scores || {});
+        renderCard(cardData, scoresData?.scores || {});
       } catch (_) {}
     }
   }, 90000);
 }
 
-function renderCard(cardData, historyData, scores) {
+function renderCard(cardData, scores) {
   scores = scores || {};
   const gamesBody = document.getElementById('card-games-body');
   const statsRow = document.getElementById('card-stats-row');
   const badge = document.getElementById('card-hit-badge');
-  const histSection = document.getElementById('card-history-section');
-  const histBody = document.getElementById('card-history-body');
   const title = document.getElementById('card-section-title');
 
-  const allPicks = historyData.picks || [];
-  const stats = historyData.stats || {};
-  const decided = (stats.wins || 0) + (stats.losses || 0);
   const today = new Date().toLocaleDateString('en-CA');
-  title.textContent = `Today's Full Card (${today})`;
+  title.textContent = `March Madness Card (${today})`;
 
-  // Stats cards
-  const hr = stats.hit_rate;
-  const roi = stats.roi_pct;
-  const netU = stats.net_units;
-  const wagered = stats.total_wagered;
+  const games = (cardData?.games || []).filter(game => {
+    const key = `${game.home_team}|${game.away_team}`;
+    const scoreRec = scores[key] || scores[`${game.away_team}|${game.home_team}`];
+    return !(scoreRec && scoreRec.completed);
+  });
+
+  const liveCount = games.filter(game => {
+    const key = `${game.home_team}|${game.away_team}`;
+    const scoreRec = scores[key] || scores[`${game.away_team}|${game.home_team}`];
+    return scoreRec && !scoreRec.completed && scoreRec.home_score != null;
+  }).length;
+  const upcomingCount = Math.max(games.length - liveCount, 0);
+  const modelReadyCount = games.filter(game => game.data_available).length;
+  const pickCount = games.reduce((sum, game) => sum + (game.picks || []).length, 0);
   const statCards = [
-    { label: 'Hit Rate', value: decided ? `${(hr*100).toFixed(0)}%` : '—', sub: `${decided} decided`, color: decided?(hr>=.55?'var(--green)':hr<.45?'var(--red)':''):'' },
-    { label: 'Record', value: `${stats.wins||0}W-${stats.losses||0}L`, sub: `${stats.pushes||0} push${(stats.pushes||0)!==1?'es':''}` },
-    { label: 'Net Units', value: wagered ? `${netU>=0?'+':''}${netU.toFixed(1)}u` : '—', sub: wagered ? `${wagered.toFixed(1)}u wagered` : 'no settled picks', color: wagered?(netU>0?'var(--green)':netU<0?'var(--red)':''):'' },
-    { label: 'ROI', value: wagered ? `${roi>=0?'+':''}${roi.toFixed(1)}%` : '—', sub: 'on settled picks', color: wagered?(roi>0?'var(--green)':roi<0?'var(--red)':''):'' },
-    { label: 'Total Picks', value: allPicks.length, sub: `${allPicks.filter(p=>!p.result).length} pending` },
+    { label: 'Games', value: games.length, sub: 'tournament matchups' },
+    { label: 'Model Ready', value: modelReadyCount, sub: `${games.length - modelReadyCount} missing data` },
+    { label: 'Live', value: liveCount, sub: `${upcomingCount} upcoming` },
+    { label: 'Markets', value: pickCount, sub: 'ML, spread, total leans' },
   ];
   statsRow.innerHTML = statCards.map(c => `<div class="stat-card">
     <div class="sc-label">${c.label}</div>
-    <div class="sc-value" style="${c.color?`color:${c.color}`:''}"}>${c.value}</div>
+    <div class="sc-value">${c.value}</div>
     <div class="sc-sub">${c.sub}</div>
   </div>`).join('');
 
-  // Hit rate badge
-  if (decided) {
-    badge.textContent = `${(hr*100).toFixed(0)}% (${stats.wins}W-${stats.losses}L)`;
-    badge.className = 'hit-rate-badge ' + (hr >= .55 ? 'good' : hr < .45 ? 'bad' : '');
-  } else {
-    badge.textContent = 'No results yet';
-    badge.className = 'hit-rate-badge';
-  }
-
-  // Today's card — game grid
-  const games = cardData?.games || [];
   if (!cardData?.available || games.length === 0) {
-    gamesBody.innerHTML = '<div class="picks-empty">No games on today\'s card yet. Check back soon!</div>';
+    badge.textContent = 'No active games';
+    badge.className = 'hit-rate-badge';
+    gamesBody.innerHTML = '<div class="picks-empty">No active March Madness games on the card right now.</div>';
   } else {
-    const todayCardPicks = allPicks.filter(p => p.date === today);
-    const resultByKey = {};
-    todayCardPicks.forEach(p => {
-      const side = p.bet_side || p.bet_team || '';
-      const k = `${p.home_team}|${p.away_team}|${p.bet_type}|${side}`;
-      resultByKey[k] = p;
-    });
-
-    gamesBody.innerHTML = `<div class="card-grid">${games.map(game => _matchupCardHtml(game, resultByKey, scores)).join('')}</div>`;
+    badge.textContent = `${games.length} active`;
+    badge.className = 'hit-rate-badge good';
+    gamesBody.innerHTML = `<div class="card-grid">${games.map(game => _matchupCardHtml(game, scores)).join('')}</div>`;
   }
 
   // Card badge on tab button
@@ -2218,36 +2213,12 @@ function renderCard(cardData, historyData, scores) {
   if (games.length > 0) {
     cardBadge.textContent = games.length;
     cardBadge.style.display = 'inline';
-  }
-
-  // History
-  const histPicks = allPicks.filter(p => p.date !== today);
-  if (histPicks.length > 0) {
-    histSection.style.display = 'block';
-    const byDate = {};
-    [...histPicks].reverse().forEach(p => {
-      const d = p.date || '';
-      if (!byDate[d]) byDate[d] = [];
-      byDate[d].push(p);
-    });
-    let html = '';
-    Object.keys(byDate).sort().reverse().forEach(date => {
-      const label = date ? _formatHistoryDate(date) : 'Other';
-      html += `<div class="history-date-group"><div class="history-date-header">${label}</div>`;
-      byDate[date].forEach(p => {
-        const key = `${p.home_team}|${p.away_team}`;
-        const scoreOverlay = scores[key] || scores[`${p.away_team}|${p.home_team}`];
-        html += _pickRowHtml(p, true, scoreOverlay);
-      });
-      html += '</div>';
-    });
-    histBody.innerHTML = html;
   } else {
-    histSection.style.display = 'none';
+    cardBadge.style.display = 'none';
   }
 }
 
-function _matchupCardHtml(game, resultByKey, scores) {
+function _matchupCardHtml(game, scores) {
   const timeStr = _formatCommenceTime(game.commence_time);
   const scoreKey = `${game.home_team}|${game.away_team}`;
   const scoreRec = scores[scoreKey] || scores[`${game.away_team}|${game.home_team}`];
@@ -2270,12 +2241,20 @@ function _matchupCardHtml(game, resultByKey, scores) {
   }
 
   const picks = game.picks || [];
+  const _formatUnits = v => {
+    if (v == null) return '';
+    const n = Number(v);
+    if (!Number.isFinite(n)) return '';
+    return `${parseFloat(n.toFixed(2)).toString()}u`;
+  };
+  const _formatEdge = (bt, edge) => {
+    if (edge == null) return '';
+    if (bt === 'ml') return `${(edge * 100).toFixed(1)}% edge`;
+    return `${Number(edge).toFixed(1)} pt edge`;
+  };
   const rows = picks.map(p => {
     const bt = p.bet_type;
     const side = p.bet_side || p.bet_team || '';
-    const rKey = `${game.home_team}|${game.away_team}|${bt}|${side}`;
-    const settled = resultByKey[rKey];
-    const result = settled?.result || null;
 
     let desc = side;
     if (bt === 'spread' && p.bet_spread != null)
@@ -2284,6 +2263,8 @@ function _matchupCardHtml(game, resultByKey, scores) {
       desc = `${side} ${p.vegas_total.toFixed(1)}`;
     const odds = p.bet_odds != null ? `(${p.bet_odds > 0 ? '+' : ''}${Math.round(p.bet_odds)})` : '';
     const stars = p.stars || '';
+    const units = _formatUnits(p.kelly_units);
+    const edgeLabel = _formatEdge(bt, p.edge);
 
     let proj = '';
     if (bt === 'ml' && p.model_prob != null && p.implied_prob != null)
@@ -2293,16 +2274,17 @@ function _matchupCardHtml(game, resultByKey, scores) {
     else if (bt === 'total' && p.model_total != null && p.vegas_total != null)
       proj = `Model ${p.model_total.toFixed(1)} vs line ${p.vegas_total.toFixed(1)}`;
 
-    const resultLabel = result
-      ? `<span class="mc-result ${result}">${result}</span>`
-      : `<span class="mc-result pending">?</span>`;
-
     return `<div class="mc-pick">
-      <span class="bet-type-tag ${bt}">${bt.toUpperCase()}</span>
-      <span class="mc-side">${desc}</span>
-      <span class="mc-odds">${odds}</span>
-      ${stars ? `<span style="font-size:.75rem">${stars}</span>` : ''}
-      ${resultLabel}
+      <div class="mc-topline">
+        <span class="bet-type-tag ${bt}">${bt.toUpperCase()}</span>
+        <span class="mc-side">${desc}</span>
+        ${odds ? `<span class="mc-odds">${odds}</span>` : ''}
+      </div>
+      ${(units || edgeLabel || stars) ? `<div class="mc-meta">
+        ${units ? `<span class="mc-chip units">${units}</span>` : ''}
+        ${edgeLabel ? `<span class="mc-chip edge">${edgeLabel}</span>` : ''}
+        ${stars ? `<span class="mc-chip stars">${stars}</span>` : ''}
+      </div>` : ''}
       ${proj ? `<span class="mc-proj">${proj}</span>` : ''}
     </div>`;
   }).join('');

@@ -6,7 +6,10 @@ import os
 import pytest
 
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
-from engine import calc_momentum_bonus, enrich_team, _normalize_team_for_match, predict_game, ModelConfig
+from engine import (
+    calc_momentum_bonus, enrich_team, _normalize_team_for_match,
+    predict_game, ModelConfig, resolve_ff_pairs,
+)
 
 
 # ---------------------------------------------------------------------------
@@ -177,3 +180,13 @@ def test_predict_game_returns_margin():
     result = predict_game(a, b, config=ModelConfig(num_sims=1))
     assert "predicted_margin" in result
     assert result["predicted_margin"] > 0  # strong team should be favored
+
+
+def test_resolve_ff_pairs_uses_layout_matchups():
+    qo = ["East", "West", "Midwest", "South"]
+    assert resolve_ff_pairs(qo, [[0, 3], [1, 2]]) == [("East", "South"), ("West", "Midwest")]
+
+
+def test_resolve_ff_pairs_falls_back_to_legacy_layout():
+    qo = ["East", "West", "Midwest", "South"]
+    assert resolve_ff_pairs(qo, None) == [("East", "South"), ("West", "Midwest")]

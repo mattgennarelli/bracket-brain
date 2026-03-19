@@ -2152,6 +2152,32 @@ def _game_id_for_pick(region, round_of, game_index, quadrant_order=None):
     return f"{region}-{round_of}-{game_index}"
 
 
+def resolve_ff_pairs(quadrant_order, ff_matchups=None):
+    """Resolve Final Four region pairings from bracket layout metadata.
+
+    `quadrant_order` is [TL, TR, BR, BL]. `ff_matchups` is expected to be a
+    pair of index pairs referencing `quadrant_order`, e.g. [[0, 3], [1, 2]].
+    Falls back to the legacy TL-vs-BL and TR-vs-BR mapping when layout metadata
+    is missing or malformed.
+    """
+    if not quadrant_order or len(quadrant_order) < 4:
+        return []
+    if ff_matchups:
+        pairs = []
+        for pair in ff_matchups[:2]:
+            if not isinstance(pair, (list, tuple)) or len(pair) != 2:
+                continue
+            try:
+                a_idx, b_idx = int(pair[0]), int(pair[1])
+            except (TypeError, ValueError):
+                continue
+            if 0 <= a_idx < len(quadrant_order) and 0 <= b_idx < len(quadrant_order):
+                pairs.append((quadrant_order[a_idx], quadrant_order[b_idx]))
+        if len(pairs) == 2:
+            return pairs
+    return [(quadrant_order[0], quadrant_order[3]), (quadrant_order[1], quadrant_order[2])]
+
+
 def _should_pick_upset(prob_a, seed_a, seed_b, aggression):
     """Decide whether to pick an upset based on aggression level."""
     if aggression <= 0:
@@ -2378,14 +2404,15 @@ def _make_pick_dict(game_num, round_of, round_name, region, a, b, result, pick_t
 
 
 def generate_bracket_picks(bracket, config=DEFAULT_CONFIG, upset_aggression=0.0, quadrant_order=None,
-                          data_dir=None, year=None, locked_picks=None):
+                          ff_matchups=None, data_dir=None, year=None, locked_picks=None):
     """Generate a complete 63-game bracket with analysis for every pick.
 
     Args:
         bracket: dict of region -> {seed: team_dict}
         config: ModelConfig
         upset_aggression: 0.0 (always pick favorite) to 1.0 (chaos mode)
-        quadrant_order: [TL, TR, BR, BL] region names for FF pairing
+        quadrant_order: [TL, TR, BR, BL] region names for bracket layout
+        ff_matchups: optional pairings as quadrant index pairs, e.g. [[0, 3], [1, 2]]
         data_dir: path to data dir for head-to-head lookup
         year: current bracket year for head-to-head
         locked_picks: optional dict of game_id -> team_name for user-locked picks
@@ -2470,9 +2497,7 @@ def generate_bracket_picks(bracket, config=DEFAULT_CONFIG, upset_aggression=0.0,
         if e8_winners:
             region_winners[region] = e8_winners[0]
 
-    # Final Four — TL vs BL, TR vs BR (quadrant_order = [TL, TR, BR, BL])
-    qo = quadrant_order
-    ff_pairs = [(qo[0], qo[3]), (qo[1], qo[2])]
+    ff_pairs = resolve_ff_pairs(quadrant_order, ff_matchups)
     ff_winners = []
     for ff_gi, (r_a, r_b) in enumerate(ff_pairs):
         a = region_winners.get(r_a)
@@ -2518,7 +2543,12 @@ def generate_bracket_picks(bracket, config=DEFAULT_CONFIG, upset_aggression=0.0,
         picks.append(pd)
         champion = pick_team["team"]
 
-    final_four = [region_winners[r]["team"] for r in quadrant_order if r in region_winners]
+    final_four = []
+    for r_a, r_b in ff_pairs:
+        if r_a in region_winners:
+            final_four.append(region_winners[r_a]["team"])
+        if r_b in region_winners:
+            final_four.append(region_winners[r_b]["team"])
     biggest_upsets = sorted([p for p in picks if p["upset_rating"] > 0.3], key=lambda x: -x["upset_rating"])[:8]
     most_uncertain = sorted([p for p in picks if p["confidence"] == "tossup"], key=lambda x: x["win_prob"])[:8]
 

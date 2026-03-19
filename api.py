@@ -42,7 +42,7 @@ from engine import (
     predict_game, enrich_team, run_monte_carlo, load_bracket,
     generate_bracket_picks, load_teams_merged, _normalize_team_for_match,
     get_matchup_analysis_display, is_ncaa_tournament_game,
-    ModelConfig, DEFAULT_CONFIG,
+    ModelConfig, DEFAULT_CONFIG, resolve_ff_pairs,
 )
 from espn_scores import fetch_scores_for_picks, _scores_key as espn_scores_key
 from best_bets import get_full_card_json
@@ -368,7 +368,7 @@ def health():
 @app.get("/debug/picks-sample")
 def debug_picks_sample(year: int = 2026, upset_aggression: float = 0.0):
     """Return first 8 R64 picks for direct local vs Render comparison."""
-    bracket, _, quadrant_order = _load_bracket_for_year(year)
+    bracket, ff_matchups, quadrant_order = _load_bracket_for_year(year)
     config = _load_config()
     with contextlib.redirect_stdout(io.StringIO()):
         result = generate_bracket_picks(
@@ -376,6 +376,7 @@ def debug_picks_sample(year: int = 2026, upset_aggression: float = 0.0):
             config=config,
             upset_aggression=upset_aggression,
             quadrant_order=quadrant_order,
+            ff_matchups=ff_matchups,
             data_dir=DATA_DIR,
             year=year,
         )
@@ -450,18 +451,17 @@ def get_bracket(
             config=config,
             upset_aggression=upset_aggression,
             quadrant_order=quadrant_order,
+            ff_matchups=ff_matchups,
             data_dir=DATA_DIR,
             year=year,
         )
-
-    # ff_pairs: [(TL_region, BL_region), (TR_region, BR_region)]
-    qo = quadrant_order
+    ff_pairs = [list(pair) for pair in resolve_ff_pairs(quadrant_order, ff_matchups)]
     result = {
         "year": year,
         "upset_aggression": upset_aggression,
         "picks": picks,
-        "quadrant_order": qo,
-        "ff_pairs": [[qo[0], qo[3]], [qo[1], qo[2]]],
+        "quadrant_order": quadrant_order,
+        "ff_pairs": ff_pairs,
     }
     _cache_set(cache_key, result)
     return result
@@ -479,17 +479,18 @@ def simulate_bracket(year: int, req: SimulateRequest):
             config=config,
             upset_aggression=req.upset_aggression,
             quadrant_order=quadrant_order,
+            ff_matchups=ff_matchups,
             data_dir=DATA_DIR,
             year=year,
             locked_picks=req.locked_picks,
         )
-    qo = quadrant_order
+    ff_pairs = [list(pair) for pair in resolve_ff_pairs(quadrant_order, ff_matchups)]
     return {
         "year": year,
         "upset_aggression": req.upset_aggression,
         "picks": bracket_result,
-        "quadrant_order": qo,
-        "ff_pairs": [[qo[0], qo[3]], [qo[1], qo[2]]],
+        "quadrant_order": quadrant_order,
+        "ff_pairs": ff_pairs,
     }
 
 
@@ -895,7 +896,7 @@ def get_bets_card(year: int = Query(default=2026)):
     if os.path.isfile(daily_path):
         with open(daily_path) as f:
             data = json.load(f)
-        games = data.get("games", [])
+        games = _filter_tournament_card_games(data.get("games", []), year=year)
         card_date = os.path.basename(daily_path).replace("card_", "").replace(".json", "")
         return {"date": card_date, "games": games, "available": bool(games)}
 
@@ -910,10 +911,27 @@ def get_bets_card(year: int = Query(default=2026)):
     if entry and (time.time() - entry.get("cached_at", 0)) < CARD_CACHE_TTL:
         return entry.get("result", {})
 
-    games = get_full_card_json(api_key, year=year)
+    games = _filter_tournament_card_games(get_full_card_json(api_key, year=year), year=year)
     result = {"date": today, "games": games, "available": bool(games)}
     _cache[cache_key] = {"result": result, "cached_at": time.time()}
     return result
+
+
+def _filter_tournament_card_games(games, year: int = 2026):
+    """Keep only NCAA tournament games on the card payload."""
+    out = []
+    for game in games or []:
+        home = game.get("home_team", "")
+        away = game.get("away_team", "")
+        is_tourney = game.get("ncaa_tournament")
+        if is_tourney is None:
+            is_tourney = is_ncaa_tournament_game(home, away, year=year)
+        if not is_tourney:
+            continue
+        rec = dict(game)
+        rec["ncaa_tournament"] = True
+        out.append(rec)
+    return out
 
 
 @app.get("/bets/card/history")

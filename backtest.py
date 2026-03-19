@@ -239,11 +239,11 @@ def run_year(year: int, config=DEFAULT_CONFIG, upset_aggression: float = 0.0,
         print(f"  [{year}] BACKTEST (chaos={upset_aggression:.0%})")
         print(f"{'='*60}")
 
-    bracket, _, quadrant_order = load_bracket(bracket_path, data_dir=DATA_DIR, year=year)
+    bracket, ff_matchups, quadrant_order = load_bracket(bracket_path, data_dir=DATA_DIR, year=year)
 
     # Generate bracket picks
     bracket_result = generate_bracket_picks(bracket, config, upset_aggression=upset_aggression,
-                                            quadrant_order=quadrant_order,
+                                            quadrant_order=quadrant_order, ff_matchups=ff_matchups,
                                             data_dir=DATA_DIR, year=year)
     picks = bracket_result["picks"]
     if verbose:

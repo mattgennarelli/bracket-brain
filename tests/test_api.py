@@ -3,11 +3,14 @@ API endpoint tests using FastAPI's TestClient (no live server needed).
 """
 import sys
 import os
+import json
+from datetime import datetime
 import pytest
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 sys.path.insert(0, ROOT)
 
 from fastapi.testclient import TestClient
+import api
 from api import app
 
 client = TestClient(app)
@@ -139,3 +142,30 @@ def test_monte_carlo_2026():
 def test_monte_carlo_sims_limit():
     r = client.get("/bracket/2026/monte-carlo?sims=200000")  # over max
     assert r.status_code == 422
+
+
+def test_bets_card_filters_to_tournament_games(tmp_path, monkeypatch):
+    today = datetime.now().strftime("%Y-%m-%d")
+    card_path = tmp_path / f"card_{today}.json"
+    card_path.write_text(json.dumps({
+        "games": [
+            {"home_team": "Duke", "away_team": "Mount St. Mary's", "picks": []},
+            {"home_team": "North Texas", "away_team": "UAB", "picks": []},
+        ]
+    }))
+
+    monkeypatch.setattr(api, "DATA_DIR", str(tmp_path))
+    monkeypatch.setattr(api, "_cache", {})
+    monkeypatch.setattr(
+        api,
+        "is_ncaa_tournament_game",
+        lambda home, away, year=2026: {home, away} == {"Duke", "Mount St. Mary's"},
+    )
+
+    r = client.get("/bets/card")
+    assert r.status_code == 200
+    d = r.json()
+    assert d["available"] is True
+    assert len(d["games"]) == 1
+    assert d["games"][0]["home_team"] == "Duke"
+    assert d["games"][0]["ncaa_tournament"] is True
