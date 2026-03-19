@@ -248,12 +248,27 @@ def _find_torvik_key(team_name, torvik_keys):
             if _normalize_team_for_match(k) == norm_st:
                 return k
     # Fallback: prefix match for mascot-appended names ("wisconsin badgers" -> "wisconsin")
+    # Check BOTH directions but require >= 65% length overlap to prevent
+    # "florida international" matching "florida"
     best, best_len = None, 0
     for candidate in (norm, norm_st):
         for k in torvik_keys:
             nk = _normalize_team_for_match(k)
-            if nk and candidate.startswith(nk + " ") and len(nk) > best_len:
-                best, best_len = k, len(nk)
+            if not nk:
+                continue
+            matched = False
+            if candidate.startswith(nk + " "):
+                # candidate is longer (e.g. "wisconsin badgers" startswith "wisconsin")
+                # Require the torvik key to be >= 65% of the candidate length
+                if len(nk) >= 0.65 * len(candidate) and len(nk) > best_len:
+                    matched = True
+            elif nk.startswith(candidate + " "):
+                # torvik key is longer (e.g. "florida st" startswith "florida")
+                # Only match if candidate is >= 65% of torvik key length
+                if len(candidate) >= 0.65 * len(nk) and len(candidate) > best_len:
+                    matched = True
+            if matched:
+                best, best_len = k, max(len(nk), len(candidate))
     return best
 
 
