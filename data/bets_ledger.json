@@ -423,6 +423,31 @@
       "actual_score_away": null,
       "settled_at": null,
       "ncaa_tournament": true
+    },
+    {
+      "home_team": "Michigan Wolverines",
+      "away_team": "Howard Bison",
+      "commence_time": "2026-03-19T23:10:42Z",
+      "model_prob_home": 0.9988,
+      "model_margin": 37.5,
+      "model_total": 159.4,
+      "bet_type": "spread",
+      "bet_team": "Michigan Wolverines",
+      "bet_spread": -30.5,
+      "bet_odds": -109,
+      "vegas_spread": -30.5,
+      "cover_margin": 7.0,
+      "kelly_size": 0.0452,
+      "kelly_units": 4.52,
+      "edge": 7.0,
+      "stars": "\u2605",
+      "date": "2026-03-19",
+      "generated_at": "2026-03-19T16:27:47.106841+00:00",
+      "result": null,
+      "actual_score_home": null,
+      "actual_score_away": null,
+      "settled_at": null,
+      "ncaa_tournament": true
     }
   ],
   "stats": {
