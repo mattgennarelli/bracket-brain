@@ -448,6 +448,28 @@
       "actual_score_away": null,
       "settled_at": null,
       "ncaa_tournament": true
+    },
+    {
+      "home_team": "Wake Forest Demon Deacons",
+      "away_team": "Illinois St Redbirds",
+      "commence_time": "2026-03-22T20:30:00Z",
+      "model_prob_home": 0.0594,
+      "model_margin": -18.2,
+      "model_total": 159.0,
+      "bet_type": "total",
+      "bet_side": "OVER",
+      "vegas_total": 148.0,
+      "kelly_size": 0.05,
+      "kelly_units": 5.0,
+      "edge": 11.0,
+      "stars": "\u2605",
+      "date": "2026-03-19",
+      "generated_at": "2026-03-19T22:05:01.389234+00:00",
+      "result": null,
+      "actual_score_home": null,
+      "actual_score_away": null,
+      "settled_at": null,
+      "ncaa_tournament": false
     }
   ],
   "stats": {
