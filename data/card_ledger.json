@@ -4389,10 +4389,10 @@
       "away_team": "Miami (OH) RedHawks",
       "commence_time": "2026-03-19T01:15:00Z",
       "date": "2026-03-17",
-      "result": null,
-      "actual_score_home": null,
-      "actual_score_away": null,
-      "settled_at": null
+      "result": "L",
+      "actual_score_home": 79.0,
+      "actual_score_away": 89.0,
+      "settled_at": "2026-03-19T03:39:29.195882+00:00"
     },
     {
       "bet_type": "spread",
@@ -4411,10 +4411,10 @@
       "away_team": "Miami (OH) RedHawks",
       "commence_time": "2026-03-19T01:15:00Z",
       "date": "2026-03-17",
-      "result": null,
-      "actual_score_home": null,
-      "actual_score_away": null,
-      "settled_at": null
+      "result": "L",
+      "actual_score_home": 79.0,
+      "actual_score_away": 89.0,
+      "settled_at": "2026-03-19T03:39:29.195922+00:00"
     },
     {
       "bet_type": "total",
@@ -4431,10 +4431,10 @@
       "away_team": "Miami (OH) RedHawks",
       "commence_time": "2026-03-19T01:15:00Z",
       "date": "2026-03-17",
-      "result": null,
-      "actual_score_home": null,
-      "actual_score_away": null,
-      "settled_at": null
+      "result": "W",
+      "actual_score_home": 79.0,
+      "actual_score_away": 89.0,
+      "settled_at": "2026-03-19T03:39:29.195937+00:00"
     },
     {
       "bet_type": "ml",
@@ -6437,10 +6437,10 @@
       "away_team": "Miami (OH) RedHawks",
       "commence_time": "2026-03-19T01:15:00Z",
       "date": "2026-03-18",
-      "result": null,
-      "actual_score_home": null,
-      "actual_score_away": null,
-      "settled_at": null
+      "result": "L",
+      "actual_score_home": 79.0,
+      "actual_score_away": 89.0,
+      "settled_at": "2026-03-19T03:39:29.197190+00:00"
     },
     {
       "bet_type": "spread",
@@ -6459,10 +6459,10 @@
       "away_team": "Miami (OH) RedHawks",
       "commence_time": "2026-03-19T01:15:00Z",
       "date": "2026-03-18",
-      "result": null,
-      "actual_score_home": null,
-      "actual_score_away": null,
-      "settled_at": null
+      "result": "L",
+      "actual_score_home": 79.0,
+      "actual_score_away": 89.0,
+      "settled_at": "2026-03-19T03:39:29.197210+00:00"
     },
     {
       "bet_type": "total",
@@ -6479,10 +6479,10 @@
       "away_team": "Miami (OH) RedHawks",
       "commence_time": "2026-03-19T01:15:00Z",
       "date": "2026-03-18",
-      "result": null,
-      "actual_score_home": null,
-      "actual_score_away": null,
-      "settled_at": null
+      "result": "W",
+      "actual_score_home": 79.0,
+      "actual_score_away": 89.0,
+      "settled_at": "2026-03-19T03:39:29.197223+00:00"
     },
     {
       "bet_type": "ml",
@@ -8687,53 +8687,53 @@
   ],
   "stats": {
     "total_picks": 407,
-    "settled": 73,
-    "wins": 38,
-    "losses": 35,
+    "settled": 79,
+    "wins": 40,
+    "losses": 39,
     "pushes": 0,
-    "hit_rate": 0.5205,
+    "hit_rate": 0.5063,
     "by_type": {
       "ml": {
-        "picks": 24,
+        "picks": 26,
         "wins": 16,
-        "losses": 8,
+        "losses": 10,
         "pushes": 0,
-        "net_units": -0.35,
-        "total_wagered": 16.98,
-        "hit_rate": 0.6667,
-        "roi_pct": -2.08
+        "net_units": -2.08,
+        "total_wagered": 18.71,
+        "hit_rate": 0.6154,
+        "roi_pct": -11.13
       },
       "spread": {
-        "picks": 24,
+        "picks": 26,
         "wins": 9,
-        "losses": 15,
+        "losses": 17,
         "pushes": 0,
-        "net_units": -7.35,
-        "total_wagered": 22.7,
-        "hit_rate": 0.375,
-        "roi_pct": -32.38
+        "net_units": -9.75,
+        "total_wagered": 25.1,
+        "hit_rate": 0.3462,
+        "roi_pct": -38.85
       },
       "total": {
-        "picks": 25,
-        "wins": 13,
+        "picks": 27,
+        "wins": 15,
         "losses": 12,
         "pushes": 0,
-        "net_units": -11.07,
-        "total_wagered": 73.71,
-        "hit_rate": 0.52,
-        "roi_pct": -15.02
+        "net_units": -2.22,
+        "total_wagered": 83.45,
+        "hit_rate": 0.5556,
+        "roi_pct": -2.66
       }
     },
     "by_stars": {
       "\u2605": {
-        "picks": 71,
-        "wins": 38,
-        "losses": 33,
+        "picks": 77,
+        "wins": 40,
+        "losses": 37,
         "pushes": 0,
-        "net_units": -8.78,
-        "total_wagered": 103.39,
-        "hit_rate": 0.5352,
-        "roi_pct": -8.49
+        "net_units": -4.05,
+        "total_wagered": 117.26,
+        "hit_rate": 0.5195,
+        "roi_pct": -3.46
       },
       "\u2605\u2605": {
         "picks": 2,
@@ -8756,8 +8756,8 @@
         "roi_pct": null
       }
     },
-    "total_wagered": 113.39,
-    "net_units": -18.78,
-    "roi_pct": -16.56
+    "total_wagered": 127.26,
+    "net_units": -14.05,
+    "roi_pct": -11.04
   }
 }
