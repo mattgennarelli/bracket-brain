@@ -34,8 +34,18 @@ except ImportError:
 
 from best_bets import _normalize_team_for_match, _american_to_decimal
 from odds_provider import fetch_scores_betstack, get_api_key
+from engine import is_ncaa_tournament_game
 
 LEDGER_PATH = os.path.join(DATA_DIR, "bets_ledger.json")
+
+
+def _tag_tournament_picks(picks, year=2026):
+    """Tag each pick with ncaa_tournament=True/False by matching against bracket."""
+    for p in picks:
+        if "ncaa_tournament" not in p:
+            p["ncaa_tournament"] = is_ncaa_tournament_game(
+                p.get("home_team", ""), p.get("away_team", ""), year=year
+            )
 ODDS_API_BASE = "https://api.the-odds-api.com/v4"
 SPORT_KEY = "basketball_ncaab"
 
@@ -206,8 +216,13 @@ def _american_to_decimal_safe(odds):
         return 1.909  # default -110
 
 
-def compute_stats(picks):
-    """Compute hit rate and odds-weighted ROI stats from a list of pick dicts."""
+def compute_stats(picks, tournament_only=False):
+    """Compute hit rate and odds-weighted ROI stats from a list of pick dicts.
+
+    If tournament_only=True, only include picks tagged with ncaa_tournament=True.
+    """
+    if tournament_only:
+        picks = [p for p in picks if p.get("ncaa_tournament") is True]
     by_type = {t: {"picks": 0, "wins": 0, "losses": 0, "pushes": 0,
                    "net_units": 0.0, "total_wagered": 0.0}
                for t in ("ml", "spread", "total")}
@@ -507,13 +522,18 @@ def main():
     else:
         print(f"\n  Settled {settled_count} pick(s).")
 
-    # Recompute stats and save
+    # Tag picks with ncaa_tournament flag (idempotent)
+    _tag_tournament_picks(ledger["picks"])
+
+    # Recompute stats: overall + tournament-only
     ledger["stats"] = compute_stats(ledger["picks"])
+    ledger["tournament_stats"] = compute_stats(ledger["picks"], tournament_only=True)
     with open(LEDGER_PATH, "w") as f:
         json.dump(ledger, f, indent=2)
 
-    _print_stats(ledger["stats"])
-    _write_diagnostics(ledger["picks"], ledger["stats"])
+    print("\n  --- Tournament picks only ---")
+    _print_stats(ledger["tournament_stats"])
+    _write_diagnostics(ledger["picks"], ledger["tournament_stats"])
 
 
 def _write_diagnostics(picks, stats):

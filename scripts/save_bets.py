@@ -28,6 +28,7 @@ DATA_DIR = os.path.join(ROOT, "data")
 sys.path.insert(0, SCRIPT_DIR)
 
 from best_bets import get_best_bets_json, DEFAULT_ML_EDGE, DEFAULT_SPREAD_EDGE, DEFAULT_TOTAL_EDGE
+from engine import is_ncaa_tournament_game
 
 LEDGER_PATH = os.path.join(DATA_DIR, "bets_ledger.json")
 
@@ -103,6 +104,9 @@ def main():
         pick["actual_score_home"] = None
         pick["actual_score_away"] = None
         pick["settled_at"] = None
+        pick["ncaa_tournament"] = is_ncaa_tournament_game(
+            pick.get("home_team", ""), pick.get("away_team", ""), year=args.year
+        )
 
     # Save daily snapshot
     daily_path = os.path.join(DATA_DIR, f"bets_{today}.json")

@@ -1567,7 +1567,84 @@ _NAME_ALIASES = {
     "masslowell": "massachusetts lowell",
     "s dakota st": "south dakota st",
     "uta": "ut arlington",
+    # Odds API / ESPN full-name variants
+    "queens university": "queens",
 }
+
+# Mascots used by Odds API / ESPN that should be stripped for matching.
+_MASCOT_SUFFIXES = {
+    "blue devils", "tar heels", "bulldogs", "wildcats", "hoosiers", "boilermakers",
+    "jayhawks", "bears", "cougars", "longhorns", "tigers", "aggies", "seminoles",
+    "cavaliers", "huskies", "volunteers", "razorbacks", "fighting irish",
+    "golden eagles", "bruins", "trojans", "beavers", "ducks", "cardinals",
+    "red raiders", "cyclones", "sooners", "mountaineers", "cowboys", "panthers",
+    "demon deacons", "wolfpack", "yellow jackets", "orange", "hokies",
+    "commodores", "crimson tide", "gators", "rebels", "gamecocks", "hurricanes",
+    "owls", "spartans", "wolverines", "hawkeyes", "badgers", "cornhuskers",
+    "golden gophers", "nittany lions", "fighting illini", "terrapins", "scarlet knights",
+    "buckeyes", "redbirds", "golden flashes", "braves", "flyers", "mustangs",
+    "redhawks", "billikens", "saints", "sharks", "royals", "bison", "peacocks",
+    "gaels", "friars", "musketeers", "blue jays", "pirates", "explorers",
+    "eagles", "raiders", "broncos", "rams", "bobcats", "catamounts", "phoenix",
+    "anteaters", "gauchos", "matadors", "tritons", "highlanders", "titans",
+    "lumberjacks", "flames", "paladins", "thundering herd", "red storm",
+    "racers", "colonels", "penguins", "bearcats", "shockers", "salukis",
+    "leathernecks", "jackrabbits", "coyotes", "norse", "chippewas",
+    "rockets", "falcons", "zips", "hilltoppers", "jaguars",
+    "knights", "49ers", "monarchs", "dukes", "keydets", "retrievers",
+    "terriers", "greyhounds", "spiders", "pilots", "toreros", "dons",
+    "waves", "lions", "leopards", "big green", "crimson", "quakers",
+    "engineers", "bantams", "mean green", "roadrunners",
+    "chanticleers", "thunderbirds", "aces", "sycamores",
+}
+
+
+def _strip_mascot(name):
+    """Strip trailing mascot from Odds API / ESPN team names.
+
+    'Duke Blue Devils' -> 'Duke', 'Michigan St Spartans' -> 'Michigan St'
+    """
+    if not name:
+        return name
+    low = name.lower().strip()
+    for mascot in sorted(_MASCOT_SUFFIXES, key=len, reverse=True):
+        if low.endswith(" " + mascot):
+            return name[: len(name) - len(mascot) - 1].strip()
+    return name
+
+
+def is_ncaa_tournament_game(home_team, away_team, year=2026):
+    """Check if a game is an NCAA tournament matchup by matching both teams against the bracket.
+
+    Uses mascot stripping + normalization to match Odds API names ('Duke Blue Devils')
+    against bracket short names ('Duke').
+    """
+    data_dir = os.path.join(os.path.dirname(os.path.abspath(__file__)), "data")
+    bracket_path = os.path.join(data_dir, f"bracket_{year}.json")
+    if not os.path.isfile(bracket_path):
+        return False
+    try:
+        with open(bracket_path) as f:
+            bracket = json.load(f)
+    except Exception:
+        return False
+
+    bracket_teams = set()
+    for region_entries in bracket.get("regions", {}).values():
+        if isinstance(region_entries, list):
+            for entry in region_entries:
+                t = entry.get("team", "") if isinstance(entry, dict) else ""
+                if t:
+                    bracket_teams.add(_normalize_team_for_match(t))
+        elif isinstance(region_entries, dict):
+            for entry in region_entries.values():
+                t = entry.get("team", "") if isinstance(entry, dict) else ""
+                if t:
+                    bracket_teams.add(_normalize_team_for_match(t))
+
+    h_norm = _normalize_team_for_match(_strip_mascot(home_team))
+    a_norm = _normalize_team_for_match(_strip_mascot(away_team))
+    return h_norm in bracket_teams and a_norm in bracket_teams
 
 
 def _normalize_team_for_match(name):

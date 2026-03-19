@@ -41,7 +41,7 @@ from pydantic import BaseModel, Field
 from engine import (
     predict_game, enrich_team, run_monte_carlo, load_bracket,
     generate_bracket_picks, load_teams_merged, _normalize_team_for_match,
-    get_matchup_analysis_display,
+    get_matchup_analysis_display, is_ncaa_tournament_game,
     ModelConfig, DEFAULT_CONFIG,
 )
 from espn_scores import fetch_scores_for_picks, _scores_key as espn_scores_key
@@ -553,25 +553,50 @@ def _lookup_vegas_lines(team_a: str, team_b: str):
 
 
 @app.get("/bets/today")
-def get_bets_today():
+def get_bets_today(tournament_only: bool = Query(default=True)):
     today = datetime.now().strftime("%Y-%m-%d")
     if not os.path.isfile(LEDGER_PATH):
         return {"date": today, "picks": [], "available": False}
     with open(LEDGER_PATH) as f:
         ledger = json.load(f)
     picks = [p for p in ledger.get("picks", []) if p.get("date") == today]
+    # Tag picks that haven't been tagged yet
+    for p in picks:
+        if "ncaa_tournament" not in p:
+            p["ncaa_tournament"] = is_ncaa_tournament_game(
+                p.get("home_team", ""), p.get("away_team", ""), year=2026
+            )
+    if tournament_only:
+        picks = [p for p in picks if p.get("ncaa_tournament") is True]
     picks = sorted(picks, key=lambda p: p.get("commence_time", ""))
     return {"date": today, "picks": picks, "available": bool(picks)}
 
 
 @app.get("/bets/history")
-def get_bets_history():
+def get_bets_history(tournament_only: bool = Query(default=True)):
+    """Return betting history with stats.
+
+    tournament_only (default True): filter picks and stats to NCAA tournament games only.
+    """
     if not os.path.isfile(LEDGER_PATH):
         return {"picks": [], "stats": {}, "model_epoch": None}
     with open(LEDGER_PATH) as f:
         data = json.load(f)
+
+    # Ensure all picks are tagged (idempotent)
+    for p in data.get("picks", []):
+        if "ncaa_tournament" not in p:
+            p["ncaa_tournament"] = is_ncaa_tournament_game(
+                p.get("home_team", ""), p.get("away_team", ""), year=2026
+            )
+
+    # Use pre-computed tournament_stats if available, otherwise compute
+    if tournament_only:
+        data["picks"] = [p for p in data["picks"] if p.get("ncaa_tournament") is True]
+        data["stats"] = data.get("tournament_stats") or data.get("stats", {})
+    data.pop("tournament_stats", None)
+
     # Attach model_epoch: the date calibrated_config.json was last written.
-    # Picks generated before this date used a different (possibly worse) model.
     cal_path = os.path.join(DATA_DIR, "calibrated_config.json")
     if os.path.isfile(cal_path):
         epoch_ts = os.path.getmtime(cal_path)
@@ -844,12 +869,21 @@ def get_bets_card(year: int = Query(default=2026)):
 
 
 @app.get("/bets/card/history")
-def get_bets_card_history():
+def get_bets_card_history(tournament_only: bool = Query(default=True)):
     """Return card ledger — all card picks with results and stats."""
     if not os.path.isfile(CARD_LEDGER_PATH):
         return {"picks": [], "stats": {}}
     with open(CARD_LEDGER_PATH) as f:
-        return json.load(f)
+        data = json.load(f)
+    if tournament_only:
+        picks = data.get("picks", [])
+        for p in picks:
+            if "ncaa_tournament" not in p:
+                p["ncaa_tournament"] = is_ncaa_tournament_game(
+                    p.get("home_team", ""), p.get("away_team", ""), year=2026
+                )
+        data["picks"] = [p for p in picks if p.get("ncaa_tournament") is True]
+    return data
 
 
 @app.get("/bets/card/scores")
