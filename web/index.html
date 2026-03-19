@@ -113,12 +113,15 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sa
 .team-slot .sd { color:var(--muted); font-size:.62rem; font-weight:700; min-width:14px;
   text-align:right; flex-shrink:0; }
 .team-slot .tm { flex:1; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; font-weight:500; }
+.team-slot .sc { color:var(--muted); font-size:.68rem; font-weight:700; min-width:18px; text-align:right; flex-shrink:0; }
 .team-slot.empty { opacity:.35; cursor:default; }
 .team-slot.upset-pick { border-color:var(--red); }
 .team-slot.upset-pick.picked { background:var(--red-bg); }
 .team-slot.upset-pick.picked .tm { color:var(--red); }
+.team-slot.picked .sc { color:inherit; }
 .region-bracket.flipped .team-slot { flex-direction:row-reverse; text-align:right; }
 .region-bracket.flipped .team-slot .sd { text-align:left; }
+.game-status { min-height:14px; margin-top:2px; text-align:center; font-size:.62rem; color:var(--muted); }
 .ff-center { display:flex; flex-direction:column; align-items:center; justify-content:center;
   min-width:200px; gap:8px; padding:10px 8px; }
 .ff-center .game { width:180px; }
@@ -668,6 +671,7 @@ let FF_PAIRS = [['South','East'],['Midwest','West']]; // [[TL,BL],[TR,BR]] — o
 let lockedPicks = {};
 let simPicks = {};
 let bracketState = {};
+let bracketScores = {};
 let upsetAggression = 0.0;
 let _simTimer = null;
 let currentYear = null;
@@ -708,6 +712,50 @@ async function apiFetch(path) {
     throw new Error(err.detail || r.statusText);
   }
   return r.json();
+}
+
+function _lookupBracketScore(teamA, teamB) {
+  if (!teamA || !teamB) return null;
+  return bracketScores[`${teamA}|${teamB}`] || bracketScores[`${teamB}|${teamA}`] || null;
+}
+
+function _resolveGameOutcome(teamA, teamB, fallbackPick) {
+  const scoreRec = _lookupBracketScore(teamA, teamB);
+  const scoreA = scoreRec?.score_a;
+  const scoreB = scoreRec?.score_b;
+  const hasScore = scoreA != null && scoreB != null;
+  const completed = !!(scoreRec && scoreRec.completed && hasScore);
+  const live = !!(scoreRec && !scoreRec.completed && hasScore);
+  let actualWinner = null;
+  if (completed && scoreA !== scoreB) actualWinner = scoreA > scoreB ? teamA : teamB;
+  return {
+    scoreRec,
+    scoreA,
+    scoreB,
+    completed,
+    live,
+    actualWinner,
+    resolvedPick: actualWinner || fallbackPick,
+  };
+}
+
+async function loadBracketScores(year, silent = false) {
+  try {
+    const data = await apiFetch(`/bracket/${year}/scores`);
+    bracketScores = data?.scores || {};
+    if (Object.keys(bracketState).length) recomputeBracket();
+    _startBracketScoresPoll(year);
+  } catch (e) {
+    if (!silent) console.warn('Bracket scores unavailable', e);
+  }
+}
+
+function _startBracketScoresPoll(year) {
+  if (_bracketScoresInterval) clearInterval(_bracketScoresInterval);
+  _bracketScoresInterval = setInterval(async () => {
+    if (!document.getElementById('tab-bracket')?.classList?.contains('active')) return;
+    await loadBracketScores(year, true);
+  }, 90000);
 }
 
 // ---------------------------------------------------------------------------
@@ -753,6 +801,7 @@ async function loadYear(year) {
   currentYear = year;
   lockedPicks = {};
   simPicks = {};
+  bracketScores = {};
   showLoading('Loading ' + year + ' bracket...');
   try {
     const data = await apiFetch(`/bracket/${year}?upset_aggression=${upsetAggression.toFixed(2)}`);
@@ -764,6 +813,7 @@ async function loadYear(year) {
 
     // Championship odds in background (non-blocking)
     fetchOdds(year);
+    loadBracketScores(year, true);
   } catch (e) {
     showError('Failed to load bracket: ' + e.message);
   } finally {
@@ -807,6 +857,7 @@ async function fetchBracket() {
     }
     renderBracket();
     updateSimButtonLabel();
+    if (currentYear) loadBracketScores(currentYear, true);
   } catch (e) {
     showError('Simulation failed: ' + e.message);
   } finally {
@@ -1070,13 +1121,23 @@ function recomputeBracket() {
       const gid = `${region}-64-${gi}`;
       const p = PICKS.find(pp => pp.region === region && pp.round === 64 &&
         (pp.team_a === tA.team || pp.team_b === tA.team));
+      const suggestedPick = lockedPicks[gid] || simPicks[gid] || null;
+      const outcome = _resolveGameOutcome(tA.team, tB.team, suggestedPick);
       bracketState[gid] = {
         teamA: tA.team, seedA: tA.seed,
         teamB: tB.team, seedB: tB.seed,
         probA: _probForTeam(p, tA.team),
         margin: p?.projected_spread || 0,
-        pick: lockedPicks[gid] || simPicks[gid] || null,
-        isLocked: !!lockedPicks[gid],
+        pick: outcome.resolvedPick,
+        modelPick: suggestedPick,
+        isLocked: !!lockedPicks[gid] && !outcome.completed,
+        completed: outcome.completed,
+        live: outcome.live,
+        actualWinner: outcome.actualWinner,
+        scoreA: outcome.scoreA,
+        scoreB: outcome.scoreB,
+        statusDetail: outcome.scoreRec?.status_detail || '',
+        displayClock: outcome.scoreRec?.display_clock || '',
       };
     }
   }
@@ -1106,11 +1167,21 @@ function recomputeBracket() {
           (pp.team_a === teamA || pp.team_b === teamA));
         const probA = p && teamA ? _probForTeam(p, teamA)
           : (seedA && seedB ? seedWinProb(seedA, seedB) : 0.5);
+        const suggestedPick = lockedPicks[gid] || simPicks[gid] || null;
+        const outcome = _resolveGameOutcome(teamA, teamB, suggestedPick);
         bracketState[gid] = {
           teamA, seedA, teamB, seedB, probA,
           margin: p?.projected_spread || (seedA && seedB ? Math.abs(seedB - seedA) : 0),
-          pick: lockedPicks[gid] || simPicks[gid] || null,
-          isLocked: !!lockedPicks[gid],
+          pick: outcome.resolvedPick,
+          modelPick: suggestedPick,
+          isLocked: !!lockedPicks[gid] && !outcome.completed,
+          completed: outcome.completed,
+          live: outcome.live,
+          actualWinner: outcome.actualWinner,
+          scoreA: outcome.scoreA,
+          scoreB: outcome.scoreB,
+          statusDetail: outcome.scoreRec?.status_detail || '',
+          displayClock: outcome.scoreRec?.display_clock || '',
         };
       }
     } else if (step.type === 'ff') {
@@ -1128,11 +1199,21 @@ function recomputeBracket() {
             (pp.team_a === teamA || pp.team_b === teamA));
           const probA = p && teamA ? _probForTeam(p, teamA)
             : (seedA && seedB ? seedWinProb(seedA, seedB) : 0.5);
+          const suggestedPick = lockedPicks[gid] || simPicks[gid] || null;
+          const outcome = _resolveGameOutcome(teamA, teamB, suggestedPick);
           bracketState[gid] = {
             teamA, seedA, teamB, seedB, probA,
             margin: p?.projected_spread || 0,
-            pick: lockedPicks[gid] || simPicks[gid] || null,
-            isLocked: !!lockedPicks[gid],
+            pick: outcome.resolvedPick,
+            modelPick: suggestedPick,
+            isLocked: !!lockedPicks[gid] && !outcome.completed,
+            completed: outcome.completed,
+            live: outcome.live,
+            actualWinner: outcome.actualWinner,
+            scoreA: outcome.scoreA,
+            scoreB: outcome.scoreB,
+            statusDetail: outcome.scoreRec?.status_detail || '',
+            displayClock: outcome.scoreRec?.display_clock || '',
           };
         }
       } else if (roundOf === 2) {
@@ -1144,11 +1225,21 @@ function recomputeBracket() {
           (pp.team_a === teamA || pp.team_b === teamA));
         const probA = p && teamA ? _probForTeam(p, teamA)
           : (seedA && seedB ? seedWinProb(seedA, seedB) : 0.5);
+        const suggestedPick = lockedPicks['FF-2-0'] || simPicks['FF-2-0'] || null;
+        const outcome = _resolveGameOutcome(teamA, teamB, suggestedPick);
         bracketState['FF-2-0'] = {
           teamA, seedA, teamB, seedB, probA,
           margin: p?.projected_spread || 0,
-          pick: lockedPicks['FF-2-0'] || simPicks['FF-2-0'] || null,
-          isLocked: !!lockedPicks['FF-2-0'],
+          pick: outcome.resolvedPick,
+          modelPick: suggestedPick,
+          isLocked: !!lockedPicks['FF-2-0'] && !outcome.completed,
+          completed: outcome.completed,
+          live: outcome.live,
+          actualWinner: outcome.actualWinner,
+          scoreA: outcome.scoreA,
+          scoreB: outcome.scoreB,
+          statusDetail: outcome.scoreRec?.status_detail || '',
+          displayClock: outcome.scoreRec?.display_clock || '',
         };
       }
     }
@@ -1165,6 +1256,7 @@ function renderBracket() {
     const st = bracketState[gid];
     const slots = el.querySelectorAll('.team-slot');
     const infoBtn = el.querySelector('.info-btn');
+    const statusEl = el.querySelector('.game-status');
     if (st && (st.teamA || st.teamB)) {
       const teams = [{ name: st.teamA, seed: st.seedA }, { name: st.teamB, seed: st.seedB }];
       slots.forEach((slot, idx) => {
@@ -1173,6 +1265,11 @@ function renderBracket() {
           slot.dataset.team = t.name; slot.dataset.seed = t.seed || '';
           slot.querySelector('.sd').textContent = t.seed || '';
           slot.querySelector('.tm').textContent = t.name;
+          slot.querySelector('.sc').textContent = st.scoreA != null && idx === 0
+            ? Math.round(st.scoreA)
+            : st.scoreB != null && idx === 1
+              ? Math.round(st.scoreB)
+              : '';
           slot.classList.remove('empty');
           slot.classList.toggle('picked', st.pick === t.name);
           slot.classList.toggle('locked', st.isLocked && st.pick === t.name);
@@ -1190,22 +1287,30 @@ function renderBracket() {
           slot.dataset.team = ''; slot.dataset.seed = '';
           slot.querySelector('.sd').textContent = '';
           slot.querySelector('.tm').textContent = '\u2014';
+          slot.querySelector('.sc').textContent = '';
           slot.classList.add('empty');
           slot.classList.remove('picked', 'locked', 'upset-pick');
           slot.onclick = null;
         }
       });
       if (infoBtn) infoBtn.style.display = (st.teamA && st.teamB) ? 'flex' : 'none';
+      if (statusEl) {
+        if (st.completed) statusEl.textContent = 'Final';
+        else if (st.live) statusEl.textContent = `LIVE ${st.displayClock || st.statusDetail || ''}`.trim();
+        else statusEl.textContent = '';
+      }
     } else {
       slots.forEach(slot => {
         slot.dataset.team = ''; slot.dataset.seed = '';
         slot.querySelector('.sd').textContent = '';
         slot.querySelector('.tm').textContent = '\u2014';
+        slot.querySelector('.sc').textContent = '';
         slot.classList.add('empty');
         slot.classList.remove('picked', 'locked', 'upset-pick');
         slot.onclick = null;
       });
       if (infoBtn) infoBtn.style.display = 'none';
+      if (statusEl) statusEl.textContent = '';
     }
   });
   const cs = bracketState['FF-2-0'];
@@ -1222,6 +1327,12 @@ function renderBracket() {
 // User interaction
 // ---------------------------------------------------------------------------
 function handleGameClick(e, gameId) {
+  const st = bracketState[gameId];
+  if (st?.completed) {
+    e.stopPropagation();
+    showAnalysis(gameId);
+    return;
+  }
   const slot = e.target.closest('.team-slot');
   if (slot && !slot.classList.contains('empty') && slot.dataset.team) {
     e.stopPropagation();
@@ -1234,6 +1345,7 @@ function handleGameClick(e, gameId) {
 
 function togglePick(gameId, teamName) {
   if (!teamName) return;
+  if (bracketState[gameId]?.completed) return;
   const currentPick = lockedPicks[gameId] || simPicks[gameId] || null;
   if (currentPick === teamName) {
     delete lockedPicks[gameId]; delete simPicks[gameId];
@@ -1313,13 +1425,14 @@ function buildRegionHTML(region, flipped) {
       html += `<div class="game" data-game-id="${gid}" onclick="handleGameClick(event,'${gid}')">`;
       if (ri === 0) {
         const tA = teams[gi * 2], tB = teams[gi * 2 + 1];
-        html += `<div class="team-slot" data-team="${tA?.team || ''}" data-seed="${tA?.seed || ''}"><span class="sd">${tA?.seed || ''}</span><span class="tm">${tA?.team || '\u2014'}</span></div>`;
-        html += `<div class="team-slot" data-team="${tB?.team || ''}" data-seed="${tB?.seed || ''}"><span class="sd">${tB?.seed || ''}</span><span class="tm">${tB?.team || '\u2014'}</span></div>`;
+        html += `<div class="team-slot" data-team="${tA?.team || ''}" data-seed="${tA?.seed || ''}"><span class="sd">${tA?.seed || ''}</span><span class="tm">${tA?.team || '\u2014'}</span><span class="sc"></span></div>`;
+        html += `<div class="team-slot" data-team="${tB?.team || ''}" data-seed="${tB?.seed || ''}"><span class="sd">${tB?.seed || ''}</span><span class="tm">${tB?.team || '\u2014'}</span><span class="sc"></span></div>`;
       } else {
-        html += '<div class="team-slot empty" data-team="" data-seed=""><span class="sd"></span><span class="tm">\u2014</span></div>';
-        html += '<div class="team-slot empty" data-team="" data-seed=""><span class="sd"></span><span class="tm">\u2014</span></div>';
+        html += '<div class="team-slot empty" data-team="" data-seed=""><span class="sd"></span><span class="tm">\u2014</span><span class="sc"></span></div>';
+        html += '<div class="team-slot empty" data-team="" data-seed=""><span class="sd"></span><span class="tm">\u2014</span><span class="sc"></span></div>';
       }
       html += `<div class="info-btn" style="display:${ri === 0 ? 'flex' : 'none'}" title="Matchup details">i</div>`;
+      html += '<div class="game-status"></div>';
       html += '</div>';
       if (gi % 2 === 1 || gi === numGames - 1) html += '</div>';
     }
@@ -1333,16 +1446,18 @@ function buildFinalFourHTML() {
   let html = '<div class="ff-center"><div class="ff-label">Final Four</div>';
   ['FF-4-0', 'FF-4-1'].forEach(gid => {
     html += `<div class="game" data-game-id="${gid}" onclick="handleGameClick(event,'${gid}')">`;
-    html += '<div class="team-slot empty" data-team="" data-seed=""><span class="sd"></span><span class="tm">\u2014</span></div>';
-    html += '<div class="team-slot empty" data-team="" data-seed=""><span class="sd"></span><span class="tm">\u2014</span></div>';
+    html += '<div class="team-slot empty" data-team="" data-seed=""><span class="sd"></span><span class="tm">\u2014</span><span class="sc"></span></div>';
+    html += '<div class="team-slot empty" data-team="" data-seed=""><span class="sd"></span><span class="tm">\u2014</span><span class="sc"></span></div>';
     html += `<div class="info-btn" style="display:none" title="Matchup details">i</div>`;
+    html += '<div class="game-status"></div>';
     html += '</div>';
   });
   html += '<div class="ff-label">Championship</div>';
   html += '<div class="game" data-game-id="FF-2-0" onclick="handleGameClick(event,\'FF-2-0\')">';
-  html += '<div class="team-slot empty" data-team="" data-seed=""><span class="sd"></span><span class="tm">\u2014</span></div>';
-  html += '<div class="team-slot empty" data-team="" data-seed=""><span class="sd"></span><span class="tm">\u2014</span></div>';
+  html += '<div class="team-slot empty" data-team="" data-seed=""><span class="sd"></span><span class="tm">\u2014</span><span class="sc"></span></div>';
+  html += '<div class="team-slot empty" data-team="" data-seed=""><span class="sd"></span><span class="tm">\u2014</span><span class="sc"></span></div>';
   html += '<div class="info-btn" style="display:none" title="Matchup details">i</div>';
+  html += '<div class="game-status"></div>';
   html += '</div>';
   html += '<div class="champ-banner"><div class="trophy">&#127942;</div><div class="champ-team" id="champ-banner-name">\u2014</div></div>';
   html += '</div>';
@@ -2079,6 +2194,7 @@ function switchTab(name) {
 // ---------------------------------------------------------------------------
 let _picksScoresInterval = null;
 let _picksFullRefreshInterval = null;
+let _bracketScoresInterval = null;
 
 // Return today's date in ET regardless of browser timezone
 function _todayET() {
@@ -2162,6 +2278,81 @@ function _startCardScoresPoll(cardData) {
   }, 90000);
 }
 
+function _gradeCardPick(p, scoreRec) {
+  if (!scoreRec || !scoreRec.completed || scoreRec.home_score == null || scoreRec.away_score == null) return null;
+  const home = Number(scoreRec.home_score);
+  const away = Number(scoreRec.away_score);
+  if (!Number.isFinite(home) || !Number.isFinite(away)) return null;
+
+  if (p.bet_type === 'ml') {
+    const winner = home > away ? p.home_team : away > home ? p.away_team : null;
+    if (!winner) return 'P';
+    const side = p.bet_side || p.bet_team;
+    return winner === side ? 'W' : 'L';
+  }
+
+  if (p.bet_type === 'spread') {
+    const betTeam = p.bet_team;
+    const spread = Number(p.bet_spread || 0);
+    const margin = betTeam === p.home_team ? (home - away) : (away - home);
+    const net = margin + spread;
+    if (Math.abs(net) < 1e-9) return 'P';
+    return net > 0 ? 'W' : 'L';
+  }
+
+  if (p.bet_type === 'total') {
+    const total = home + away;
+    const line = Number(p.vegas_total);
+    if (!Number.isFinite(line)) return null;
+    if (Math.abs(total - line) < 1e-9) return 'P';
+    return p.bet_side === 'OVER'
+      ? (total > line ? 'W' : 'L')
+      : (total < line ? 'W' : 'L');
+  }
+  return null;
+}
+
+function _computeCardStats(games, scores) {
+  let wins = 0, losses = 0, pushes = 0, wagered = 0, net = 0;
+  let live = 0, upcoming = 0;
+
+  (games || []).forEach(game => {
+    const key = `${game.home_team}|${game.away_team}`;
+    const scoreRec = scores[key] || scores[`${game.away_team}|${game.home_team}`];
+    if (scoreRec && !scoreRec.completed && scoreRec.home_score != null) live += 1;
+    else if (!(scoreRec && scoreRec.completed)) upcoming += 1;
+
+    (game.picks || []).forEach(p => {
+      const result = _gradeCardPick(p, scoreRec);
+      if (result === 'W' || result === 'L') {
+        const ku = Number(p.kelly_units || 0);
+        const dec = p.bet_odds != null
+          ? (p.bet_odds > 0 ? p.bet_odds / 100 + 1 : 100 / Math.abs(p.bet_odds) + 1)
+          : 1.909;
+        wagered += ku;
+        if (result === 'W') {
+          wins += 1;
+          net += ku * (dec - 1);
+        } else {
+          losses += 1;
+          net -= ku;
+        }
+      } else if (result === 'P') {
+        pushes += 1;
+      }
+    });
+  });
+
+  const decided = wins + losses;
+  return {
+    wins, losses, pushes, decided, live, upcoming,
+    net_units: net,
+    total_wagered: wagered,
+    hit_rate: decided ? wins / decided : null,
+    roi_pct: wagered ? (net / wagered) * 100 : null,
+  };
+}
+
 function renderCard(cardData, scores) {
   scores = scores || {};
   const gamesBody = document.getElementById('card-games-body');
@@ -2172,25 +2363,26 @@ function renderCard(cardData, scores) {
   const today = new Date().toLocaleDateString('en-CA');
   title.textContent = `March Madness Card (${today})`;
 
-  const games = (cardData?.games || []).filter(game => {
-    const key = `${game.home_team}|${game.away_team}`;
-    const scoreRec = scores[key] || scores[`${game.away_team}|${game.home_team}`];
-    return !(scoreRec && scoreRec.completed);
+  const games = [...(cardData?.games || [])].sort((a, b) => {
+    const aKey = `${a.home_team}|${a.away_team}`;
+    const bKey = `${b.home_team}|${b.away_team}`;
+    const aScore = scores[aKey] || scores[`${a.away_team}|${a.home_team}`];
+    const bScore = scores[bKey] || scores[`${b.away_team}|${b.home_team}`];
+    const aDone = !!(aScore && aScore.completed);
+    const bDone = !!(bScore && bScore.completed);
+    if (aDone !== bDone) return aDone - bDone;
+    return (a.commence_time || '').localeCompare(b.commence_time || '');
   });
 
-  const liveCount = games.filter(game => {
-    const key = `${game.home_team}|${game.away_team}`;
-    const scoreRec = scores[key] || scores[`${game.away_team}|${game.home_team}`];
-    return scoreRec && !scoreRec.completed && scoreRec.home_score != null;
-  }).length;
-  const upcomingCount = Math.max(games.length - liveCount, 0);
+  const cardStats = _computeCardStats(games, scores);
   const modelReadyCount = games.filter(game => game.data_available).length;
   const pickCount = games.reduce((sum, game) => sum + (game.picks || []).length, 0);
   const statCards = [
     { label: 'Games', value: games.length, sub: 'tournament matchups' },
+    { label: 'Record', value: cardStats.decided ? `${cardStats.wins}W-${cardStats.losses}L` : '—', sub: `${cardStats.pushes} push${cardStats.pushes === 1 ? '' : 'es'}` },
+    { label: 'Net Units', value: cardStats.total_wagered ? `${cardStats.net_units >= 0 ? '+' : ''}${cardStats.net_units.toFixed(1)}u` : '—', sub: cardStats.total_wagered ? `${cardStats.total_wagered.toFixed(1)}u wagered` : 'no settled picks' },
+    { label: 'Live', value: cardStats.live, sub: `${cardStats.upcoming} upcoming · ${pickCount} markets` },
     { label: 'Model Ready', value: modelReadyCount, sub: `${games.length - modelReadyCount} missing data` },
-    { label: 'Live', value: liveCount, sub: `${upcomingCount} upcoming` },
-    { label: 'Markets', value: pickCount, sub: 'ML, spread, total leans' },
   ];
   statsRow.innerHTML = statCards.map(c => `<div class="stat-card">
     <div class="sc-label">${c.label}</div>
@@ -2199,12 +2391,18 @@ function renderCard(cardData, scores) {
   </div>`).join('');
 
   if (!cardData?.available || games.length === 0) {
-    badge.textContent = 'No active games';
+    badge.textContent = 'No games';
     badge.className = 'hit-rate-badge';
-    gamesBody.innerHTML = '<div class="picks-empty">No active March Madness games on the card right now.</div>';
+    gamesBody.innerHTML = '<div class="picks-empty">No March Madness games on the card right now.</div>';
   } else {
-    badge.textContent = `${games.length} active`;
-    badge.className = 'hit-rate-badge good';
+    if (cardStats.decided) {
+      const hr = ((cardStats.hit_rate || 0) * 100).toFixed(0);
+      badge.textContent = `${hr}% (${cardStats.wins}W-${cardStats.losses}L)`;
+      badge.className = 'hit-rate-badge ' + ((cardStats.hit_rate || 0) >= .55 ? 'good' : (cardStats.hit_rate || 0) < .45 ? 'bad' : '');
+    } else {
+      badge.textContent = `${games.length} games`;
+      badge.className = 'hit-rate-badge';
+    }
     gamesBody.innerHTML = `<div class="card-grid">${games.map(game => _matchupCardHtml(game, scores)).join('')}</div>`;
   }
 
@@ -2255,6 +2453,7 @@ function _matchupCardHtml(game, scores) {
   const rows = picks.map(p => {
     const bt = p.bet_type;
     const side = p.bet_side || p.bet_team || '';
+    const result = _gradeCardPick(p, scoreRec);
 
     let desc = side;
     if (bt === 'spread' && p.bet_spread != null)
@@ -2279,6 +2478,7 @@ function _matchupCardHtml(game, scores) {
         <span class="bet-type-tag ${bt}">${bt.toUpperCase()}</span>
         <span class="mc-side">${desc}</span>
         ${odds ? `<span class="mc-odds">${odds}</span>` : ''}
+        ${result ? `<span class="mc-result ${result}">${result}</span>` : ''}
       </div>
       ${(units || edgeLabel || stars) ? `<div class="mc-meta">
         ${units ? `<span class="mc-chip units">${units}</span>` : ''}
@@ -2723,6 +2923,8 @@ function renderMobileBracket() {
     const pA = st.probA != null ? st.probA : 0.5;
     const probAStr = (pA * 100).toFixed(0) + '%';
     const probBStr = ((1 - pA) * 100).toFixed(0) + '%';
+    const metaAStr = st.scoreA != null ? `${Math.round(st.scoreA)} · ${probAStr}` : probAStr;
+    const metaBStr = st.scoreB != null ? `${Math.round(st.scoreB)} · ${probBStr}` : probBStr;
     const seedDiff = Math.abs((st.seedA || 0) - (st.seedB || 0));
     const isUpsetA = st.pick === st.teamA && pA < 0.5 && seedDiff >= 3;
     const isUpsetB = st.pick === st.teamB && pA >= 0.5 && seedDiff >= 3;
@@ -2737,7 +2939,7 @@ function renderMobileBracket() {
            onclick="${emptyA ? '' : `togglePick('${gid}','${teamAEsc}')`}">
         <div class="mobile-seed-badge">${st.seedA || '—'}</div>
         <div class="mobile-tm">${st.teamA || '—'}</div>
-        <div class="mobile-prob">${st.teamA ? probAStr : ''}</div>
+        <div class="mobile-prob">${st.teamA ? metaAStr : ''}</div>
       </div>
       <div class="mobile-prob-bar">
         <div class="mobile-prob-fill" style="width:${st.teamA ? probAStr : '50%'}"></div>
@@ -2747,7 +2949,7 @@ function renderMobileBracket() {
            onclick="${emptyB ? '' : `togglePick('${gid}','${teamBEsc}')`}">
         <div class="mobile-seed-badge">${st.seedB || '—'}</div>
         <div class="mobile-tm">${st.teamB || '—'}</div>
-        <div class="mobile-prob">${st.teamB ? probBStr : ''}</div>
+        <div class="mobile-prob">${st.teamB ? metaBStr : ''}</div>
       </div>
       <div class="mobile-analysis-btn" onclick="showAnalysis('${gid}')">ⓘ See Analysis</div>
     </div>`;
@@ -2768,6 +2970,7 @@ function renderMobileBracket() {
 window.addEventListener('beforeunload', () => {
   if (_picksScoresInterval) clearInterval(_picksScoresInterval);
   if (_cardScoresInterval)  clearInterval(_cardScoresInterval);
+  if (_bracketScoresInterval) clearInterval(_bracketScoresInterval);
 });
 
 // ---------------------------------------------------------------------------

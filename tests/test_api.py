@@ -169,3 +169,35 @@ def test_bets_card_filters_to_tournament_games(tmp_path, monkeypatch):
     assert len(d["games"]) == 1
     assert d["games"][0]["home_team"] == "Duke"
     assert d["games"][0]["ncaa_tournament"] is True
+
+
+def test_bracket_scores_maps_to_bracket_team_names(tmp_path, monkeypatch):
+    bracket_path = tmp_path / "bracket_2026.json"
+    bracket_path.write_text(json.dumps({
+        "regions": {
+            "East": [{"team": "Duke"}],
+            "West": [{"team": "Arizona"}],
+        },
+        "first_four": [{"team_a": "Mount St. Mary's", "team_b": "American"}],
+    }))
+
+    monkeypatch.setattr(api, "DATA_DIR", str(tmp_path))
+    monkeypatch.setattr(api, "_cache", {})
+    monkeypatch.setattr(api, "fetch_espn_scoreboard", lambda dates: [{
+        "home_team": "Duke",
+        "away_team": "Arizona",
+        "home_score": 81,
+        "away_score": 77,
+        "completed": True,
+        "status_detail": "Final",
+        "display_clock": "",
+        "period": 2,
+    }])
+
+    r = client.get("/bracket/2026/scores")
+    assert r.status_code == 200
+    d = r.json()
+    assert d["scores"]["Duke|Arizona"]["score_a"] == 81
+    assert d["scores"]["Duke|Arizona"]["score_b"] == 77
+    assert d["scores"]["Arizona|Duke"]["score_a"] == 77
+    assert d["scores"]["Arizona|Duke"]["score_b"] == 81

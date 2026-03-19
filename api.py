@@ -44,7 +44,10 @@ from engine import (
     get_matchup_analysis_display, is_ncaa_tournament_game,
     ModelConfig, DEFAULT_CONFIG, resolve_ff_pairs,
 )
-from espn_scores import fetch_scores_for_picks, _scores_key as espn_scores_key
+from espn_scores import (
+    fetch_scores_for_picks, fetch_espn_scoreboard,
+    _scores_key as espn_scores_key,
+)
 from best_bets import get_full_card_json
 from odds_provider import get_api_key
 from scripts.fetch_data import build_merged_teams
@@ -237,6 +240,74 @@ def _add_final_four_by_region(result: dict, year: int) -> dict:
         team_probs.sort(key=lambda x: -x[1])
         by_region[region] = [(t, round(p, 4)) for t, p in team_probs[:8]]
     result["final_four_by_region"] = by_region
+    return result
+
+
+def _load_bracket_file(year: int) -> dict:
+    path = os.path.join(DATA_DIR, f"bracket_{year}.json")
+    if not os.path.isfile(path):
+        raise HTTPException(status_code=404, detail=f"No bracket found for {year}")
+    with open(path) as f:
+        return json.load(f)
+
+
+def _tournament_team_map(year: int) -> Dict[str, str]:
+    """Return normalized team name -> canonical bracket name for the tournament field."""
+    raw = _load_bracket_file(year)
+    out: Dict[str, str] = {}
+    for entries in raw.get("regions", {}).values():
+        if not isinstance(entries, list):
+            continue
+        for entry in entries:
+            if not isinstance(entry, dict):
+                continue
+            team = entry.get("team")
+            if team:
+                out[_normalize_team_for_match(team)] = team
+    for ff in raw.get("first_four", []):
+        if not isinstance(ff, dict):
+            continue
+        for key in ("team_a", "team_b"):
+            team = ff.get(key)
+            if team:
+                out[_normalize_team_for_match(team)] = team
+    return out
+
+
+def _build_bracket_scores_result(year: int, days: int = 21) -> dict:
+    team_map = _tournament_team_map(year)
+    if not team_map:
+        return {"scores": {}}
+
+    today = datetime.now(timezone.utc)
+    dates = [(today - timedelta(days=i)).strftime("%Y%m%d") for i in range(days + 1)]
+    games = fetch_espn_scoreboard(dates)
+    result = {"scores": {}}
+    for game in games:
+        home_norm = _normalize_team_for_match(game.get("home_team", ""))
+        away_norm = _normalize_team_for_match(game.get("away_team", ""))
+        home = team_map.get(home_norm)
+        away = team_map.get(away_norm)
+        if not home or not away:
+            continue
+        rec = {
+            "team_a": home,
+            "team_b": away,
+            "score_a": game.get("home_score"),
+            "score_b": game.get("away_score"),
+            "completed": game.get("completed", False),
+            "status_detail": game.get("status_detail", ""),
+            "display_clock": game.get("display_clock", ""),
+            "period": game.get("period", 0),
+        }
+        result["scores"][f"{home}|{away}"] = rec
+        result["scores"][f"{away}|{home}"] = {
+            **rec,
+            "team_a": away,
+            "team_b": home,
+            "score_a": game.get("away_score"),
+            "score_b": game.get("home_score"),
+        }
     return result
 
 
@@ -873,6 +944,19 @@ def get_monte_carlo(
     }
     result = _add_final_four_by_region(result, year)
     _cache_set(cache_key, result)
+    return result
+
+
+@app.get("/bracket/{year}/scores")
+def get_bracket_scores(year: int, days: int = Query(default=21, ge=0, le=30)):
+    """Live/final tournament scores keyed by bracket team names in both team orders."""
+    cache_key = f"bracket_scores_{year}_{days}"
+    entry = _cache.get(cache_key)
+    if entry and (time.time() - entry.get("cached_at", 0)) < SCORES_CACHE_TTL:
+        return entry.get("result", {})
+
+    result = _build_bracket_scores_result(year, days=days)
+    _cache[cache_key] = {"result": result, "cached_at": time.time()}
     return result
 
 
