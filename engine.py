@@ -1631,11 +1631,20 @@ def enrich_bracket_with_teams(bracket, teams_merged):
                       "efg_pct", "efg_d",
                       "wins", "losses", "games", "ppg", "opp_ppg",
                       "em_depth_score", "em_big_bpr", "em_guard_bpr", "em_creator_count",
+                      "em_adj_o", "em_adj_d", "em_opponent_adjust",
+                      "em_runs_margin", "em_runs_per_game", "em_runs_conceded",
+                      "em_star_concentration", "em_top5_bpr", "em_poss_weighted_bpr",
+                      "em_bpr", "em_obpr", "em_dbpr",
+                      "em_off_rank", "em_def_rank", "em_home_rank", "em_tempo_rank",
+                      "em_pace_adjust",
+                      "ppp_off", "ppp_def", "raw_tempo",
+                      "ft_rate_d", "three_pt_rate", "three_pt_rate_d", "two_pt_pct_d",
+                      "opp_ast_rate", "opp_ft_pct", "blked_rate",
                       "wab", "elite_sos", "qual_o", "qual_d", "qual_barthag",
                       "conf_adj_o", "conf_adj_d", "win_pct", "conf_win_pct", "conf_rating", "conf_strength_score",
                       "momentum", "conf_tourney_momentum", "adj_o_recent", "adj_d_recent", "injuries", "injury_impact",
                       "em_o_rate", "em_d_rate", "em_rel_rating", "em_roster_rank",
-                      "em_tempo", "top_player", "top_player_bpr"):
+                      "em_tempo", "top_player", "top_player_bpr", "roster"):
                 if k in merged and merged[k] is not None:
                     team_obj[k] = merged[k]
             # Attach school lat/lon for proximity calculations
