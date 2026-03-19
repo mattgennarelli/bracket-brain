@@ -850,6 +850,12 @@ function ingestPicks(picks, champion, ffPairs, quadrantOrder) {
 function applyPicksFromServer() {
   simPicks = {};
   for (const p of PICKS) {
+    // Use game_id directly when available (robust, no index/identity issues)
+    if (p.game_id && p.pick) {
+      simPicks[p.game_id] = p.pick;
+      continue;
+    }
+    // Fallback for picks without game_id (legacy cached data)
     const region = p.region;
     const roundOf = p.round;
     let gid = null;
@@ -928,7 +934,11 @@ const _analyzeCache = {};
 
 // After recomputeBracket, fetch real predictions for any novel matchups
 // that fell back to seedWinProb. Updates bracketState + DOM when responses arrive.
+let _enrichRunning = false;
 async function enrichNovelMatchups() {
+  if (_enrichRunning) return; // prevent concurrent mutation
+  _enrichRunning = true;
+  try {
   const promises = [];
   for (const [gid, st] of Object.entries(bracketState)) {
     if (!st.teamA || !st.teamB) continue;
@@ -970,17 +980,9 @@ async function enrichNovelMatchups() {
         const margin = data.projected_spread || 0;
         st.probA = probA;
         st.margin = margin;
-        _analyzeCache[cacheKey] = { probA, margin };
-        // Inject into PICKS so the analysis popup finds it without re-fetching
+        // Cache in _analyzeCache only — do NOT mutate PICKS array
         data.game_id = gid;
-        const existing = PICKS.findIndex(pp => pp.game_id === gid &&
-          ((pp.team_a === st.teamA && pp.team_b === st.teamB) ||
-           (pp.team_b === st.teamA && pp.team_a === st.teamB)));
-        if (existing >= 0) {
-          PICKS[existing] = data;
-        } else {
-          PICKS.push(data);
-        }
+        _analyzeCache[cacheKey] = { probA, margin, data };
       }).catch(() => {})
     );
   }
@@ -988,6 +990,7 @@ async function enrichNovelMatchups() {
     await Promise.all(promises);
     renderBracket(); // re-render with real probabilities
   }
+  } finally { _enrichRunning = false; }
 }
 
 // Returns the MODEL's win probability for teamName based on pick p.
