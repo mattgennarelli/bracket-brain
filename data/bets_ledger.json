@@ -470,6 +470,28 @@
       "actual_score_away": null,
       "settled_at": null,
       "ncaa_tournament": false
+    },
+    {
+      "home_team": "Arkansas Razorbacks",
+      "away_team": "High Point Panthers",
+      "commence_time": "2026-03-21T16:00:00Z",
+      "model_prob_home": 0.8984,
+      "model_margin": 15.7,
+      "model_total": 180.8,
+      "bet_type": "total",
+      "bet_side": "OVER",
+      "vegas_total": 169.0,
+      "kelly_size": 0.05,
+      "kelly_units": 5.0,
+      "edge": 11.800000000000011,
+      "stars": "\u2605",
+      "date": "2026-03-19",
+      "generated_at": "2026-03-19T22:45:35.898423+00:00",
+      "result": null,
+      "actual_score_home": null,
+      "actual_score_away": null,
+      "settled_at": null,
+      "ncaa_tournament": true
     }
   ],
   "stats": {
