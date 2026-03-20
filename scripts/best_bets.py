@@ -118,6 +118,19 @@ def _american_to_decimal(odds):
         return 1 + odds / 100
 
 
+def _prob_to_american(prob):
+    """Convert implied probability to approximate American odds."""
+    try:
+        p = float(prob)
+    except (TypeError, ValueError):
+        return None
+    if p <= 0 or p >= 1:
+        return None
+    if p >= 0.5:
+        return int(round(-100 * p / (1 - p)))
+    return int(round(100 * (1 - p) / p))
+
+
 # ---------------------------------------------------------------------------
 # MODEL LOOKUP
 # ---------------------------------------------------------------------------
@@ -660,36 +673,34 @@ def get_full_card_json(api_key, year=None):
         game_rec["model_margin"] = round(model_margin, 1)
         game_rec["model_total"] = round(model_total, 1)
 
-        # ML pick — only surface when one side actually has positive edge
+        # ML pick — always surface the stronger lean, even if edge is negative
         if game["ml_home"] is not None and game["ml_away"] is not None:
             raw_h = _american_to_prob(game["ml_home"])
             raw_a = _american_to_prob(game["ml_away"])
             ih, ia = _devig(raw_h, raw_a)
             h_edge, a_edge = ml_edge(model_prob_home, game["ml_home"], game["ml_away"])
-            ml_options = []
-            if h_edge and h_edge > 0:
-                ml_options.append((h_edge, home_name, game["ml_home"], model_prob_home, ih))
-            if a_edge and a_edge > 0:
-                ml_options.append((a_edge, away_name, game["ml_away"], 1 - model_prob_home, ia))
-            if ml_options:
-                edge_val, bet_side, bet_odds, model_p, implied_p = max(ml_options, key=lambda x: x[0])
-                dec = _american_to_decimal(bet_odds)
-                k = kelly_fraction(model_p, dec)
-                stars = star_rating(edge_val, [DEFAULT_ML_EDGE, DEFAULT_ML_EDGE * 1.5, DEFAULT_ML_EDGE * 2.5])
-                game_rec["picks"].append({
-                    "bet_type": "ml",
-                    "bet_side": bet_side,
-                    "bet_odds": bet_odds,
-                    "model_prob": round(model_p, 4),
-                    "implied_prob": round(implied_p, 4),
-                    "edge": round(edge_val, 4),
-                    "stars": stars,
-                    "kelly_units": round(k * 100, 2),
-                    "model_margin": round(model_margin, 1),
-                    "model_total": round(model_total, 1),
-                    "vegas_spread": game["spread_home"],
-                    "vegas_total": game["total_line"],
-                })
+            ml_options = [
+                (h_edge, home_name, game["ml_home"], model_prob_home, ih),
+                (a_edge, away_name, game["ml_away"], 1 - model_prob_home, ia),
+            ]
+            edge_val, bet_side, bet_odds, model_p, implied_p = max(ml_options, key=lambda x: x[0])
+            dec = _american_to_decimal(bet_odds)
+            k = kelly_fraction(model_p, dec) if edge_val > 0 else 0.0
+            stars = star_rating(edge_val, [DEFAULT_ML_EDGE, DEFAULT_ML_EDGE * 1.5, DEFAULT_ML_EDGE * 2.5])
+            game_rec["picks"].append({
+                "bet_type": "ml",
+                "bet_side": bet_side,
+                "bet_odds": bet_odds,
+                "model_prob": round(model_p, 4),
+                "implied_prob": round(implied_p, 4),
+                "edge": round(edge_val, 4),
+                "stars": stars,
+                "kelly_units": round(k * 100, 2),
+                "model_margin": round(model_margin, 1),
+                "model_total": round(model_total, 1),
+                "vegas_spread": game["spread_home"],
+                "vegas_total": game["total_line"],
+            })
 
         # Spread pick — take the side the model favors vs the line
         if game["spread_home"] is not None:
@@ -814,38 +825,42 @@ def refresh_saved_card_games(games, year=None):
             away_implied = 1 - home_implied
             home_edge = model_prob_home - home_implied
             away_edge = (1 - model_prob_home) - away_implied
-            if old_side == home_name and home_edge > 0 and (home_edge >= away_edge or away_edge <= 0):
-                dec = _american_to_decimal(ml_old["bet_odds"])
-                rec["picks"].append({
-                    "bet_type": "ml",
-                    "bet_side": home_name,
-                    "bet_odds": ml_old["bet_odds"],
-                    "model_prob": round(model_prob_home, 4),
-                    "implied_prob": round(home_implied, 4),
-                    "edge": round(home_edge, 4),
-                    "stars": star_rating(home_edge, [DEFAULT_ML_EDGE, DEFAULT_ML_EDGE * 1.5, DEFAULT_ML_EDGE * 2.5]),
-                    "kelly_units": round(kelly_fraction(model_prob_home, dec) * 100, 2),
-                    "model_margin": round(model_margin, 1),
-                    "model_total": round(model_total, 1),
-                    "vegas_spread": ml_old.get("vegas_spread"),
-                    "vegas_total": ml_old.get("vegas_total"),
-                })
-            elif old_side == away_name and away_edge > 0 and (away_edge >= home_edge or home_edge <= 0):
-                dec = _american_to_decimal(ml_old["bet_odds"])
-                rec["picks"].append({
-                    "bet_type": "ml",
-                    "bet_side": away_name,
-                    "bet_odds": ml_old["bet_odds"],
-                    "model_prob": round(1 - model_prob_home, 4),
-                    "implied_prob": round(away_implied, 4),
-                    "edge": round(away_edge, 4),
-                    "stars": star_rating(away_edge, [DEFAULT_ML_EDGE, DEFAULT_ML_EDGE * 1.5, DEFAULT_ML_EDGE * 2.5]),
-                    "kelly_units": round(kelly_fraction(1 - model_prob_home, dec) * 100, 2),
-                    "model_margin": round(model_margin, 1),
-                    "model_total": round(model_total, 1),
-                    "vegas_spread": ml_old.get("vegas_spread"),
-                    "vegas_total": ml_old.get("vegas_total"),
-                })
+
+            if home_edge >= away_edge:
+                bet_side = home_name
+                implied_prob = home_implied
+                model_prob = model_prob_home
+                edge_val = home_edge
+            else:
+                bet_side = away_name
+                implied_prob = away_implied
+                model_prob = 1 - model_prob_home
+                edge_val = away_edge
+
+            if old_side == bet_side and ml_old.get("bet_odds") is not None:
+                bet_odds = ml_old.get("bet_odds")
+            else:
+                bet_odds = _prob_to_american(implied_prob)
+
+            dec = _american_to_decimal(bet_odds) if bet_odds is not None else None
+            kelly_units = 0.0
+            if dec is not None and edge_val > 0:
+                kelly_units = round(kelly_fraction(model_prob, dec) * 100, 2)
+
+            rec["picks"].append({
+                "bet_type": "ml",
+                "bet_side": bet_side,
+                "bet_odds": bet_odds,
+                "model_prob": round(model_prob, 4),
+                "implied_prob": round(implied_prob, 4),
+                "edge": round(edge_val, 4),
+                "stars": star_rating(edge_val, [DEFAULT_ML_EDGE, DEFAULT_ML_EDGE * 1.5, DEFAULT_ML_EDGE * 2.5]),
+                "kelly_units": kelly_units,
+                "model_margin": round(model_margin, 1),
+                "model_total": round(model_total, 1),
+                "vegas_spread": ml_old.get("vegas_spread"),
+                "vegas_total": ml_old.get("vegas_total"),
+            })
 
         sp_old = old_picks.get("spread")
         if sp_old and sp_old.get("vegas_spread") is not None:

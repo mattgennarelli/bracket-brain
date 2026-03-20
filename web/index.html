@@ -2753,22 +2753,11 @@ function renderPicks(todayData, historyData, scores) {
   const histBody = document.getElementById('picks-history-body');
   const sectionTitle = document.getElementById('picks-section-title');
 
-  const allPicksRaw = historyData.picks || [];
-  const modelEpoch = historyData.model_epoch || null; // YYYY-MM-DD when last calibration ran
+  const allPicks = historyData.picks || [];
+  const modelEpoch = historyData.model_epoch || null;
 
-  // Only show picks generated after the current model epoch (calibration date).
-  // Picks with no generated_at fall back to their date field for comparison.
-  const validPicks = modelEpoch
-    ? allPicksRaw.filter(p => {
-        const pickTs = p.generated_at || (p.date ? p.date + 'T23:59:59Z' : null);
-        return !pickTs || pickTs >= modelEpoch;
-      })
-    : allPicksRaw;
-  // allPicks = what we display everywhere (only valid picks)
-  const allPicks = validPicks;
-
-  // Compute stats on valid picks only
-  const stats = _computePickStats(validPicks);
+  // Tracker mode: show every logged pick, even across recalibrations.
+  const stats = _computePickStats(allPicks);
 
   // Stats cards — just the 4 core metrics, clean layout
   const hr = stats.hit_rate;
@@ -2779,7 +2768,7 @@ function renderPicks(todayData, historyData, scores) {
     { label: 'Hit Rate', value: stats.decided ? `${(hr*100).toFixed(0)}%` : '—',
       sub: `${stats.decided} decided`, color: stats.decided?(hr>=.55?'var(--green)':hr<.45?'var(--red)':''):'' },
     { label: 'Record', value: `${stats.wins}W‑${stats.losses}L`,
-      sub: stats.pushes ? `${stats.pushes} push` : `${validPicks.filter(p=>!p.result).length} pending` },
+      sub: stats.pushes ? `${stats.pushes} push` : `${allPicks.filter(p=>!p.result).length} pending` },
     { label: 'Net Units', value: wagered ? `${netU>=0?'+':''}${netU.toFixed(1)}u` : '—',
       sub: wagered ? `${wagered.toFixed(1)}u wagered` : 'no settled picks',
       color: wagered?(netU>0?'var(--green)':netU<0?'var(--red)':''):'' },
@@ -2790,7 +2779,7 @@ function renderPicks(todayData, historyData, scores) {
 
   // Per-type breakdown as a secondary row (not separate cards)
   const byType = {};
-  validPicks.forEach(p => {
+  allPicks.forEach(p => {
     const bt = p.bet_type || 'ml';
     if (!byType[bt]) byType[bt] = [];
     byType[bt].push(p);
@@ -2821,7 +2810,7 @@ function renderPicks(todayData, historyData, scores) {
     badge.textContent = `${(hr*100).toFixed(0)}% (${stats.wins}W‑${stats.losses}L)`;
     badge.className = 'hit-rate-badge ' + (hr >= .55 ? 'good' : hr < .45 ? 'bad' : '');
   } else {
-    badge.textContent = modelEpoch ? `Since ${modelEpoch}` : 'No results yet';
+    badge.textContent = modelEpoch ? `Tracked · cfg ${modelEpoch}` : 'Tracked';
     badge.className = 'hit-rate-badge';
   }
 
