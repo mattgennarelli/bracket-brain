@@ -828,11 +828,13 @@ def get_bets_scores():
     if entry and (time.time() - entry.get("cached_at", 0)) < SCORES_CACHE_TTL:
         return entry.get("result", {})
 
-    picks = _load_retro_best_bets(2026)
-    if not picks and os.path.isfile(LEDGER_PATH):
+    picks = []
+    if os.path.isfile(LEDGER_PATH):
         with open(LEDGER_PATH) as f:
             ledger = json.load(f)
         picks = _dedupe_picks([_normalize_pick_date(p) for p in ledger.get("picks", [])])
+    if not picks:
+        picks = _load_retro_best_bets(2026)
     # Focus on recent picks (today + last 2 days)
     recent = [p for p in picks if p.get("date") and p.get("date") >= _days_ago(2)]
 
@@ -1567,11 +1569,13 @@ def get_bets_card_scores():
     if entry and (time.time() - entry.get("cached_at", 0)) < SCORES_CACHE_TTL:
         return entry.get("result", {})
 
-    picks = _load_retro_card_picks(2026)
-    if not picks and os.path.isfile(CARD_LEDGER_PATH):
+    picks = []
+    if os.path.isfile(CARD_LEDGER_PATH):
         with open(CARD_LEDGER_PATH) as f:
             ledger = json.load(f)
         picks = _dedupe_picks([_normalize_pick_date(p) for p in ledger.get("picks", [])])
+    if not picks:
+        picks = _load_retro_card_picks(2026)
     recent = picks
     recent = [p for p in recent if p.get("date") and p.get("date") >= _days_ago(2)]
     scores_by_key = fetch_scores_for_picks(recent, days=2)

@@ -2313,8 +2313,8 @@ async function loadPicks(silent = false) {
     document.getElementById('picks-today-body').innerHTML = '<div class="picks-empty">Loading...</div>';
   try {
     const [todayData, historyData, benchmarkData, scoresData] = await Promise.all([
-      apiFetch('/bets/today?retro=true').catch(() => ({ picks: [], available: false })),
-      apiFetch('/bets/history?retro=true').catch(() => ({ picks: [], stats: {} })),
+      apiFetch('/bets/today').catch(() => ({ picks: [], available: false })),
+      apiFetch('/bets/history').catch(() => ({ picks: [], stats: {} })),
       apiFetch('/benchmark').catch(() => ({ available: false })),
       apiFetch('/bets/scores').catch(() => ({ scores: {} })),
     ]);
@@ -2337,8 +2337,8 @@ function _startPicksPoll() {
     if (!document.getElementById('tab-picks')?.classList?.contains('active')) return;
     try {
       const [todayData, historyData, scoresData] = await Promise.all([
-        apiFetch('/bets/today?retro=true').catch(() => ({ picks: [], available: false })),
-        apiFetch('/bets/history?retro=true').catch(() => ({ picks: [], stats: {} })),
+        apiFetch('/bets/today').catch(() => ({ picks: [], available: false })),
+        apiFetch('/bets/history').catch(() => ({ picks: [], stats: {} })),
         apiFetch('/bets/scores').catch(() => ({ scores: {} })),
       ]);
       renderPicks(todayData, historyData, scoresData?.scores || {});
@@ -2362,7 +2362,7 @@ async function loadCard() {
   try {
     const [cardData, historyData, scoresData] = await Promise.all([
       apiFetch('/bets/card').catch(() => ({ games: [], available: false })),
-      apiFetch('/bets/card/history?retro=true').catch(() => ({ picks: [], stats: {} })),
+      apiFetch('/bets/card/history').catch(() => ({ picks: [], stats: {} })),
       apiFetch('/bets/card/scores').catch(() => ({ scores: {} })),
     ]);
     renderCard(cardData, historyData, scoresData?.scores || {});
