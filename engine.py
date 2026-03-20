@@ -2097,8 +2097,37 @@ def get_matchup_analysis_display(team_a, team_b, data_dir=None, year=None, confi
     game_site: [lat, lon] of game location for proximity calculation.
     venue_city: human-readable city name for display.
     """
-    a = enrich_team(team_a) if isinstance(team_a, dict) else enrich_team({"team": team_a})
-    b = enrich_team(team_b) if isinstance(team_b, dict) else enrich_team({"team": team_b})
+    def _resolve_team_input(team):
+        if isinstance(team, dict):
+            return enrich_team(team)
+        base = {"team": team}
+        if not data_dir or not year:
+            return enrich_team(base)
+
+        teams = load_teams_merged(data_dir, year)
+        if not teams:
+            return enrich_team(base)
+
+        keys = []
+        for candidate in (team, _strip_mascot(team)):
+            key = _normalize_team_for_match(candidate)
+            if key and key not in keys:
+                keys.append(key)
+
+        for key in keys:
+            row = teams.get(key)
+            if row is not None:
+                return enrich_team(dict(row))
+
+        for key in keys:
+            for team_key, row in teams.items():
+                if len(key) <= len(team_key) and key in team_key and len(key) >= len(team_key) * 0.65:
+                    return enrich_team(dict(row))
+
+        return enrich_team(base)
+
+    a = _resolve_team_input(team_a)
+    b = _resolve_team_input(team_b)
     a.setdefault("seed", 8)
     b.setdefault("seed", 8)
     # If game_site not provided, try to infer from venues

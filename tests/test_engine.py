@@ -210,6 +210,55 @@ def test_final_four_analysis_infers_venue_without_region(monkeypatch):
     assert result["venue_city"] == "Indianapolis, IN"
 
 
+def test_matchup_analysis_resolves_string_team_names_from_merged_data(monkeypatch):
+    teams_merged = {
+        "kentucky": {
+            "team": "Kentucky",
+            "adj_o": 120.0,
+            "adj_d": 100.0,
+            "adj_tempo": 68.0,
+            "barthag": 0.82,
+            "wins": 21,
+            "games": 34,
+            "ppg": 79.0,
+            "three_pt_pct": 34.1,
+            "top_player": "Otega Oweh",
+            "em_bpr": 20.2,
+        },
+        "santa clara": {
+            "team": "Santa Clara",
+            "adj_o": 125.0,
+            "adj_d": 104.0,
+            "adj_tempo": 70.0,
+            "barthag": 0.78,
+            "wins": 25,
+            "games": 33,
+            "ppg": 82.5,
+            "three_pt_pct": 34.9,
+            "top_player": "Allen Graves",
+            "em_bpr": 16.8,
+        },
+    }
+    monkeypatch.setattr("engine.load_teams_merged", lambda data_dir, year: teams_merged)
+
+    result = get_matchup_analysis_display(
+        "Kentucky Wildcats",
+        "Santa Clara Broncos",
+        data_dir="data",
+        year=2026,
+        round_name="Round of 64",
+        config=ModelConfig(num_sims=1),
+    )
+
+    assert result["team_a"] == "Kentucky"
+    assert result["team_b"] == "Santa Clara"
+    assert result["stats_a"]["wins"] == 21
+    assert result["stats_a"]["ppg"] == 79.0
+    assert result["stats_a"]["top_player"] == "Otega Oweh"
+    assert result["stats_b"]["three_pt_pct"] == pytest.approx(34.9)
+    assert result["stats_b"]["em_bpr"] == pytest.approx(16.8)
+
+
 def test_enrich_bracket_with_teams_overlays_canonical_team_fields():
     bracket = {"East": {1: {"team": "Duke", "seed": 1, "momentum": -0.875}}}
     teams_merged = {
