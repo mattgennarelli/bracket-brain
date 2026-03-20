@@ -1573,6 +1573,7 @@ _NAME_ALIASES = {
     "fresno state": "fresno st",
     "norfolk state": "norfolk st",
     "alabama state": "alabama st",
+    "mcneese": "mcneese st",
     "mcneese state": "mcneese st",
     "morehead state": "morehead st",
     "montana state": "montana st",

@@ -50,8 +50,10 @@ from espn_scores import (
     _scores_key as espn_scores_key,
 )
 from best_bets import get_full_card_json, refresh_saved_card_games
+from best_bets import extract_best_bets_from_games
 from odds_provider import get_api_key
 from scripts.fetch_data import build_merged_teams
+from settle_bets import compute_stats, settle_pick
 
 LEDGER_PATH = os.path.join(DATA_DIR, "bets_ledger.json")
 CARD_LEDGER_PATH = os.path.join(DATA_DIR, "card_ledger.json")
@@ -280,6 +282,7 @@ def _tournament_team_map(year: int) -> Dict[str, str]:
 
 
 def _resolve_tournament_team(team_map: Dict[str, str], *names: str) -> Optional[str]:
+    candidates = []
     for raw_name in names:
         if not raw_name:
             continue
@@ -287,6 +290,13 @@ def _resolve_tournament_team(team_map: Dict[str, str], *names: str) -> Optional[
             norm = _normalize_team_for_match(candidate)
             if norm in team_map:
                 return team_map[norm]
+            if norm:
+                candidates.append(norm)
+    for candidate in candidates:
+        for key, team in team_map.items():
+            shorter, longer = (candidate, key) if len(candidate) <= len(key) else (key, candidate)
+            if len(shorter) >= 6 and shorter in longer and len(shorter) >= len(longer) * 0.80:
+                return team
     return None
 
 
@@ -660,46 +670,50 @@ def analyze_matchup_endpoint(
 
 
 def _lookup_vegas_lines(team_a: str, team_b: str):
-    """Find Vegas spread/total from today's card for a given matchup."""
-    today = datetime.now().strftime("%Y-%m-%d")
-    card_path = os.path.join(DATA_DIR, f"card_{today}.json")
-    if not os.path.isfile(card_path):
-        import glob as _glob
-        card_files = sorted(_glob.glob(os.path.join(DATA_DIR, "card_2*.json")))
-        if not card_files:
-            return None
-        card_path = card_files[-1]
-    try:
-        with open(card_path) as f:
-            card = json.load(f)
-    except (json.JSONDecodeError, IOError):
-        return None
-    a_lower = team_a.lower()
-    b_lower = team_b.lower()
-    for game in card.get("games", []):
-        home = game.get("home_team", "").lower()
-        away = game.get("away_team", "").lower()
-        if ((a_lower in home or a_lower in away) and
-                (b_lower in home or b_lower in away)):
-            for pick in game.get("picks", []):
-                if pick.get("vegas_spread") is not None:
-                    return {
-                        "vegas_spread": pick["vegas_spread"],
-                        "vegas_total": pick.get("vegas_total"),
-                        "home_team": game["home_team"],
-                    }
+    """Find Vegas spread/total from the retro card history for a given matchup."""
+    a_norms = {
+        _normalize_team_for_match(team_a),
+        _normalize_team_for_match(_strip_mascot(team_a)),
+    }
+    b_norms = {
+        _normalize_team_for_match(team_b),
+        _normalize_team_for_match(_strip_mascot(team_b)),
+    }
+    for game in reversed(_load_retro_card_games(2026)):
+        home = game.get("home_team", "")
+        away = game.get("away_team", "")
+        home_norms = {
+            _normalize_team_for_match(home),
+            _normalize_team_for_match(_strip_mascot(home)),
+        }
+        away_norms = {
+            _normalize_team_for_match(away),
+            _normalize_team_for_match(_strip_mascot(away)),
+        }
+        if not (a_norms & (home_norms | away_norms)) or not (b_norms & (home_norms | away_norms)):
+            continue
+        for pick in game.get("picks", []):
+            if pick.get("vegas_spread") is not None or pick.get("vegas_total") is not None:
+                return {
+                    "vegas_spread": pick.get("vegas_spread"),
+                    "vegas_total": pick.get("vegas_total"),
+                    "home_team": home,
+                }
     return None
 
 
 @app.get("/bets/today")
-def get_bets_today(tournament_only: bool = Query(default=True)):
+def get_bets_today(tournament_only: bool = Query(default=True), retro: bool = Query(default=False)):
     today = _today_et_str()
-    if not os.path.isfile(LEDGER_PATH):
-        return {"date": today, "picks": [], "available": False}
-    with open(LEDGER_PATH) as f:
-        ledger = json.load(f)
-    picks = [_normalize_pick_date(p) for p in ledger.get("picks", [])]
-    picks = _dedupe_picks(picks)
+    if retro:
+        picks = _load_retro_best_bets(2026)
+    else:
+        if not os.path.isfile(LEDGER_PATH):
+            return {"date": today, "picks": [], "available": False}
+        with open(LEDGER_PATH) as f:
+            ledger = json.load(f)
+        picks = [_normalize_pick_date(p) for p in ledger.get("picks", [])]
+        picks = _dedupe_picks(picks)
     picks = [p for p in picks if p.get("date") == today]
     # Tag picks that haven't been tagged yet
     for p in picks:
@@ -714,16 +728,21 @@ def get_bets_today(tournament_only: bool = Query(default=True)):
 
 
 @app.get("/bets/history")
-def get_bets_history(tournament_only: bool = Query(default=True)):
+def get_bets_history(tournament_only: bool = Query(default=True), retro: bool = Query(default=False)):
     """Return betting history with stats.
 
     tournament_only (default True): filter picks and stats to NCAA tournament games only.
     """
-    if not os.path.isfile(LEDGER_PATH):
-        return {"picks": [], "stats": {}, "model_epoch": None}
-    with open(LEDGER_PATH) as f:
-        data = json.load(f)
-    data["picks"] = _dedupe_picks([_normalize_pick_date(p) for p in data.get("picks", [])])
+    if retro:
+        data = {"picks": _load_retro_best_bets(2026)}
+        data["stats"] = compute_stats(data["picks"])
+        data["tournament_stats"] = compute_stats(data["picks"], tournament_only=True)
+    else:
+        if not os.path.isfile(LEDGER_PATH):
+            return {"picks": [], "stats": {}, "model_epoch": None}
+        with open(LEDGER_PATH) as f:
+            data = json.load(f)
+        data["picks"] = _dedupe_picks([_normalize_pick_date(p) for p in data.get("picks", [])])
 
     # Ensure all picks are tagged (idempotent)
     for p in data.get("picks", []):
@@ -760,13 +779,11 @@ def get_bets_scores():
     if entry and (time.time() - entry.get("cached_at", 0)) < SCORES_CACHE_TTL:
         return entry.get("result", {})
 
-    if not os.path.isfile(LEDGER_PATH):
-        return {"scores": {}}
-
-    with open(LEDGER_PATH) as f:
-        ledger = json.load(f)
-
-    picks = _dedupe_picks([_normalize_pick_date(p) for p in ledger.get("picks", [])])
+    picks = _load_retro_best_bets(2026)
+    if not picks and os.path.isfile(LEDGER_PATH):
+        with open(LEDGER_PATH) as f:
+            ledger = json.load(f)
+        picks = _dedupe_picks([_normalize_pick_date(p) for p in ledger.get("picks", [])])
     # Focus on recent picks (today + last 2 days)
     recent = [p for p in picks if p.get("date") and p.get("date") >= _days_ago(2)]
 
@@ -895,6 +912,141 @@ def _dedupe_picks(picks):
         if current is None or _pick_preference_key(pick) > _pick_preference_key(current):
             deduped[key] = pick
     return list(deduped.values())
+
+
+def _retro_snapshot_paths():
+    import glob as _glob
+    return sorted(_glob.glob(os.path.join(DATA_DIR, "card_2*.json")))
+
+
+def _retro_snapshot_date(path: str) -> str:
+    return os.path.basename(path).replace("card_", "").replace(".json", "")
+
+
+def _retro_game_identity(game: dict):
+    return (
+        game.get("home_team", ""),
+        game.get("away_team", ""),
+        game.get("commence_time", ""),
+    )
+
+
+def _retro_seed_score_map(items):
+    score_map = {}
+    for ledger_path in (CARD_LEDGER_PATH, LEDGER_PATH):
+        if not os.path.isfile(ledger_path):
+            continue
+        with open(ledger_path) as f:
+            ledger = json.load(f)
+        for pick in ledger.get("picks", []):
+            if pick.get("actual_score_home") is None or pick.get("actual_score_away") is None:
+                continue
+            key = espn_scores_key(pick.get("home_team", ""), pick.get("away_team", ""))
+            score_map[key] = {
+                "home_score": pick.get("actual_score_home"),
+                "away_score": pick.get("actual_score_away"),
+                "completed": True,
+                "status_detail": "Final",
+                "display_clock": "",
+                "period": 0,
+                "scheduled_at": pick.get("commence_time"),
+            }
+    placeholders = []
+    for item in items:
+        key = espn_scores_key(item.get("home_team", ""), item.get("away_team", ""))
+        if key in score_map:
+            continue
+        placeholders.append({
+            "home_team": item.get("home_team", ""),
+            "away_team": item.get("away_team", ""),
+            "date": item.get("date") or _pick_game_date(item),
+        })
+    if placeholders:
+        fetched = fetch_scores_for_picks(placeholders, days=21)
+        for item in placeholders:
+            key = espn_scores_key(item.get("home_team", ""), item.get("away_team", ""))
+            rec = fetched.get(key)
+            if rec:
+                score_map[key] = rec
+    return score_map
+
+
+def _apply_score_to_pick(pick: dict, score_map: dict) -> dict:
+    rec = score_map.get(espn_scores_key(pick.get("home_team", ""), pick.get("away_team", "")))
+    out = dict(pick)
+    if not rec:
+        return out
+    home_score = rec.get("home_score")
+    away_score = rec.get("away_score")
+    out["actual_score_home"] = home_score
+    out["actual_score_away"] = away_score
+    if rec.get("completed") and home_score is not None and away_score is not None:
+        try:
+            out["result"] = settle_pick(out, float(home_score), float(away_score))
+        except Exception:
+            pass
+    return out
+
+
+def _flatten_card_games(games):
+    picks = []
+    for game in games:
+        for pick in game.get("picks", []):
+            rec = dict(pick)
+            rec["home_team"] = game.get("home_team")
+            rec["away_team"] = game.get("away_team")
+            rec["commence_time"] = game.get("commence_time")
+            rec["date"] = _pick_game_date(rec)
+            picks.append(rec)
+    return picks
+
+
+def _load_retro_card_games(year: int = 2026):
+    cache_key = f"retro_card_games_{year}_{_config_mtime()}"
+    cached = _cache_get(cache_key, ttl=300)
+    if cached is not None:
+        return cached
+
+    latest_by_game = {}
+    for path in _retro_snapshot_paths():
+        try:
+            with open(path) as f:
+                data = json.load(f)
+        except (OSError, json.JSONDecodeError):
+            continue
+        games = _filter_tournament_card_games(data.get("games", []), year=year)
+        refreshed = refresh_saved_card_games(games, year=year)
+        snapshot_date = _retro_snapshot_date(path)
+        for game in refreshed:
+            rec = dict(game)
+            rec["snapshot_date"] = snapshot_date
+            rec["date"] = _pick_game_date({"commence_time": game.get("commence_time"), "date": snapshot_date})
+            latest_by_game[_retro_game_identity(rec)] = rec
+
+    games = sorted(
+        latest_by_game.values(),
+        key=lambda g: (g.get("date", ""), g.get("commence_time", ""), g.get("home_team", ""), g.get("away_team", "")),
+    )
+    _cache_set(cache_key, games)
+    return games
+
+
+def _load_retro_card_picks(year: int = 2026):
+    games = _load_retro_card_games(year)
+    picks = _flatten_card_games(games)
+    score_map = _retro_seed_score_map(picks)
+    picks = [_apply_score_to_pick(p, score_map) for p in picks]
+    return _dedupe_picks(picks)
+
+
+def _load_retro_best_bets(year: int = 2026):
+    games = _load_retro_card_games(year)
+    picks = extract_best_bets_from_games(games)
+    for pick in picks:
+        pick["date"] = _pick_game_date(pick)
+    score_map = _retro_seed_score_map(picks)
+    picks = [_apply_score_to_pick(p, score_map) for p in picks]
+    return _dedupe_picks(picks)
 
 
 @app.get("/injuries/{year}")
@@ -1135,13 +1287,17 @@ def _filter_tournament_card_games(games, year: int = 2026):
 
 
 @app.get("/bets/card/history")
-def get_bets_card_history(tournament_only: bool = Query(default=True)):
+def get_bets_card_history(tournament_only: bool = Query(default=True), retro: bool = Query(default=False)):
     """Return card ledger — all card picks with results and stats."""
-    if not os.path.isfile(CARD_LEDGER_PATH):
-        return {"picks": [], "stats": {}}
-    with open(CARD_LEDGER_PATH) as f:
-        data = json.load(f)
-    data["picks"] = _dedupe_picks([_normalize_pick_date(p) for p in data.get("picks", [])])
+    if retro:
+        data = {"picks": _load_retro_card_picks(2026)}
+        data["stats"] = compute_stats(data["picks"])
+    else:
+        if not os.path.isfile(CARD_LEDGER_PATH):
+            return {"picks": [], "stats": {}}
+        with open(CARD_LEDGER_PATH) as f:
+            data = json.load(f)
+        data["picks"] = _dedupe_picks([_normalize_pick_date(p) for p in data.get("picks", [])])
     if tournament_only:
         picks = data.get("picks", [])
         for p in picks:
@@ -1161,13 +1317,11 @@ def get_bets_card_scores():
     if entry and (time.time() - entry.get("cached_at", 0)) < SCORES_CACHE_TTL:
         return entry.get("result", {})
 
-    if not os.path.isfile(CARD_LEDGER_PATH):
-        return {"scores": {}}
-
-    with open(CARD_LEDGER_PATH) as f:
-        ledger = json.load(f)
-
-    picks = _dedupe_picks([_normalize_pick_date(p) for p in ledger.get("picks", [])])
+    picks = _load_retro_card_picks(2026)
+    if not picks and os.path.isfile(CARD_LEDGER_PATH):
+        with open(CARD_LEDGER_PATH) as f:
+            ledger = json.load(f)
+        picks = _dedupe_picks([_normalize_pick_date(p) for p in ledger.get("picks", [])])
     recent = picks
     recent = [p for p in recent if p.get("date") and p.get("date") >= _days_ago(2)]
     scores_by_key = fetch_scores_for_picks(recent, days=2)

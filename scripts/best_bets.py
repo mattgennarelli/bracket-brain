@@ -67,6 +67,22 @@ DEFAULT_MAX_ML_PRICE = -200  # skip ML bets with juice worse than -200
 # Calibrated on 187 tournament games 2023-2025 (total_bias = -1.8 pts).
 TOTAL_BIAS_CORRECTION = 1.8
 
+# Historical rescue lines for snapshots that were saved before team matching was fixed.
+# These are only used when the daily card snapshot has no market rows for a matchup.
+_MANUAL_HISTORICAL_LINES = {
+    (
+        _normalize_team_for_match("Vanderbilt Commodores"),
+        _normalize_team_for_match("McNeese Cowboys"),
+        "2026-03-19T19:15:00Z",
+    ): {
+        "ml_home": -800,
+        "ml_away": 525,
+        "spread_home": -11.5,
+        "spread_line": -110,
+        "total_line": 149.5,
+    },
+}
+
 
 # ---------------------------------------------------------------------------
 # ODDS FETCHING (via odds_provider)
@@ -154,6 +170,8 @@ _ODDS_MANUAL = {
     "texas a m":          "texas a&m",
     "vmi":                "virginia military",
     "iupui":              "iupui",
+    "mcneese":            "mcneese st.",
+    "mcneese cowboys":    "mcneese st.",
 }
 
 
@@ -199,6 +217,14 @@ def _candidate_lookup_keys(name):
         if not shorter:
             break
         yield from add(shorter)
+
+
+def _manual_historical_lines(home_name, away_name, commence_time):
+    return _MANUAL_HISTORICAL_LINES.get((
+        _normalize_team_for_match(home_name),
+        _normalize_team_for_match(away_name),
+        commence_time or "",
+    ))
 
 
 def load_team_stats(year):
@@ -590,6 +616,82 @@ def get_best_bets_json(api_key, year=None, ml_min=None, spread_min=None, total_m
     return out
 
 
+def extract_best_bets_from_games(games, ml_min=None, spread_min=None, total_min=None,
+                                 min_ml_prob_for_dog=None, min_spread_cover=None,
+                                 max_3star=None, max_2star=None):
+    """Filter a refreshed full-card game list down to the same best-bet format as get_best_bets_json."""
+    min_ml = ml_min if ml_min is not None else DEFAULT_ML_EDGE
+    min_spread = spread_min if spread_min is not None else DEFAULT_SPREAD_EDGE
+    min_total = total_min if total_min is not None else DEFAULT_TOTAL_EDGE
+    min_ml_dog = min_ml_prob_for_dog if min_ml_prob_for_dog is not None else DEFAULT_MIN_ML_PROB_FOR_DOG
+    min_cover = min_spread_cover if min_spread_cover is not None else DEFAULT_MIN_SPREAD_COVER_MARGIN
+    cap_3 = max_3star if max_3star is not None else DEFAULT_MAX_3STAR_PICKS
+    cap_2 = max_2star if max_2star is not None else DEFAULT_MAX_2STAR_PICKS
+    min_conf = DEFAULT_MIN_MODEL_CONFIDENCE
+
+    bets = []
+    for game in games or []:
+        if not game.get("data_available"):
+            continue
+        base = {
+            "home_team": game.get("home_team"),
+            "away_team": game.get("away_team"),
+            "commence_time": game.get("commence_time"),
+            "model_prob_home": game.get("model_prob_home"),
+            "model_margin": game.get("model_margin"),
+            "model_total": game.get("model_total"),
+        }
+        for pick in game.get("picks", []):
+            bt = pick.get("bet_type")
+            if bt == "ml":
+                edge = float(pick.get("edge") or 0)
+                model_prob = float(pick.get("model_prob") or 0)
+                implied_prob = float(pick.get("implied_prob") or 0)
+                odds = pick.get("bet_odds")
+                price_ok = odds is None or odds >= DEFAULT_MAX_ML_PRICE
+                if implied_prob < 0.5 and model_prob < min_ml_dog:
+                    continue
+                if edge < min_ml or model_prob < min_conf or not price_ok:
+                    continue
+                rec = {**base, **pick}
+                rec["edge"] = edge
+                rec["stars"] = star_rating(edge, [min_ml, min_ml * 1.5, min_ml * 2.5])
+                bets.append((rec, edge))
+            elif bt == "spread":
+                edge = abs(float(pick.get("edge") or 0))
+                if edge < min_spread or edge < min_cover:
+                    continue
+                rec = {**base, **pick}
+                rec["edge"] = float(pick.get("edge") or 0)
+                rec["stars"] = star_rating(edge, [min_spread, min_spread * 1.5, min_spread * 2.0])
+                bets.append((rec, edge))
+            elif bt == "total":
+                edge = abs(float(pick.get("edge") or 0))
+                if edge < min_total:
+                    continue
+                rec = {**base, **pick}
+                rec["edge"] = float(pick.get("edge") or 0)
+                rec["stars"] = star_rating(edge, [min_total, min_total * 1.4, min_total * 2.0])
+                bets.append((rec, edge))
+
+    bets.sort(key=lambda x: (x[0].get("commence_time", ""), -abs(x[1])))
+
+    out = []
+    count_3 = count_2 = 0
+    for rec, edge in bets:
+        s = rec.get("stars", "")
+        if s == "★★★":
+            if count_3 >= cap_3:
+                continue
+            count_3 += 1
+        elif s == "★★":
+            if count_2 >= cap_2:
+                continue
+            count_2 += 1
+        out.append(rec)
+    return out
+
+
 def get_full_card_json(api_key, year=None):
     """Return every game today with the model's best lean for each market.
 
@@ -780,6 +882,7 @@ def refresh_saved_card_games(games, year=None):
         home_name = rec["home_team"]
         away_name = rec["away_team"]
         old_picks = {p.get("bet_type"): dict(p) for p in game.get("picks", [])}
+        line_override = _manual_historical_lines(home_name, away_name, rec["commence_time"])
 
         home_stats = lookup_team(home_name, teams)
         away_stats = lookup_team(away_name, teams)
@@ -861,6 +964,37 @@ def refresh_saved_card_games(games, year=None):
                 "vegas_spread": ml_old.get("vegas_spread"),
                 "vegas_total": ml_old.get("vegas_total"),
             })
+        elif line_override and line_override.get("ml_home") is not None and line_override.get("ml_away") is not None:
+            raw_h = _american_to_prob(line_override["ml_home"])
+            raw_a = _american_to_prob(line_override["ml_away"])
+            ih, ia = _devig(raw_h, raw_a)
+            h_edge, a_edge = ml_edge(model_prob_home, line_override["ml_home"], line_override["ml_away"])
+            if h_edge >= a_edge:
+                bet_side = home_name
+                bet_odds = line_override["ml_home"]
+                model_prob = model_prob_home
+                implied_prob = ih
+                edge_val = h_edge
+            else:
+                bet_side = away_name
+                bet_odds = line_override["ml_away"]
+                model_prob = 1 - model_prob_home
+                implied_prob = ia
+                edge_val = a_edge
+            rec["picks"].append({
+                "bet_type": "ml",
+                "bet_side": bet_side,
+                "bet_odds": bet_odds,
+                "model_prob": round(model_prob, 4),
+                "implied_prob": round(implied_prob, 4),
+                "edge": round(edge_val, 4),
+                "stars": star_rating(edge_val, [DEFAULT_ML_EDGE, DEFAULT_ML_EDGE * 1.5, DEFAULT_ML_EDGE * 2.5]),
+                "kelly_units": round(kelly_fraction(model_prob, _american_to_decimal(bet_odds)) * 100, 2) if edge_val > 0 else 0.0,
+                "model_margin": round(model_margin, 1),
+                "model_total": round(model_total, 1),
+                "vegas_spread": line_override.get("spread_home"),
+                "vegas_total": line_override.get("total_line"),
+            })
 
         sp_old = old_picks.get("spread")
         if sp_old and sp_old.get("vegas_spread") is not None:
@@ -886,6 +1020,29 @@ def refresh_saved_card_games(games, year=None):
                     "model_total": round(model_total, 1),
                     "vegas_total": sp_old.get("vegas_total"),
                 })
+        elif line_override and line_override.get("spread_home") is not None:
+            sp_edge_val = spread_edge(model_margin, line_override["spread_home"])
+            if sp_edge_val is not None:
+                if sp_edge_val > 0:
+                    bet_team, bet_spread = home_name, line_override["spread_home"]
+                else:
+                    bet_team, bet_spread = away_name, -line_override["spread_home"]
+                cp = cover_prob(abs(sp_edge_val))
+                dec_sp = _american_to_decimal(line_override.get("spread_line", -110))
+                rec["picks"].append({
+                    "bet_type": "spread",
+                    "bet_team": bet_team,
+                    "bet_spread": round(bet_spread, 1),
+                    "bet_odds": line_override.get("spread_line", -110),
+                    "edge": round(sp_edge_val, 2),
+                    "stars": star_rating(abs(sp_edge_val), [DEFAULT_SPREAD_EDGE, DEFAULT_SPREAD_EDGE * 1.5, DEFAULT_SPREAD_EDGE * 2.0]),
+                    "kelly_units": round(kelly_fraction(cp, dec_sp) * 100, 2),
+                    "cover_margin": round(abs(sp_edge_val), 1),
+                    "model_margin": round(model_margin, 1),
+                    "vegas_spread": line_override["spread_home"],
+                    "model_total": round(model_total, 1),
+                    "vegas_total": line_override.get("total_line"),
+                })
 
         tot_old = old_picks.get("total")
         if tot_old and tot_old.get("vegas_total") is not None:
@@ -903,6 +1060,22 @@ def refresh_saved_card_games(games, year=None):
                     "vegas_total": tot_old["vegas_total"],
                     "model_margin": round(model_margin, 1),
                     "vegas_spread": tot_old.get("vegas_spread"),
+                })
+        elif line_override and line_override.get("total_line") is not None:
+            tot_e = total_edge(model_total, line_override["total_line"])
+            if tot_e is not None:
+                cp_tot = cover_prob(abs(tot_e))
+                rec["picks"].append({
+                    "bet_type": "total",
+                    "bet_side": "OVER" if tot_e > 0 else "UNDER",
+                    "bet_odds": -110,
+                    "edge": round(tot_e, 2),
+                    "stars": star_rating(abs(tot_e), [DEFAULT_TOTAL_EDGE, DEFAULT_TOTAL_EDGE * 1.4, DEFAULT_TOTAL_EDGE * 2.0]),
+                    "kelly_units": round(kelly_fraction(cp_tot, 1.909) * 100, 2),
+                    "model_total": round(model_total, 1),
+                    "vegas_total": line_override["total_line"],
+                    "model_margin": round(model_margin, 1),
+                    "vegas_spread": line_override.get("spread_home"),
                 })
 
         out.append(rec)

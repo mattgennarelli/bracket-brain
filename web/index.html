@@ -628,6 +628,10 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sa
         <span class="hit-rate-badge" id="card-hit-badge"></span>
       </div>
       <div id="card-games-body"><div class="picks-empty">Loading...</div></div>
+      <div style="margin-top:20px;display:none" id="card-history-section">
+        <h3 style="font-size:.9rem;font-weight:700;margin:0 0 10px">Full Card History</h3>
+        <div id="card-history-body"></div>
+      </div>
     </div>
   </div>
 </div>
@@ -1620,8 +1624,10 @@ async function showAnalysis(gameId) {
   const factorsB = flipped ? (orig?.factors_a || {}) : fB;
 
   const spread = Math.abs(st.margin || 0).toFixed(1);
-  const scoreA = flipped ? orig?.predicted_score_b : orig?.predicted_score_a;
-  const scoreB = flipped ? orig?.predicted_score_a : orig?.predicted_score_b;
+  const projectedScoreA = flipped ? orig?.predicted_score_b : orig?.predicted_score_a;
+  const projectedScoreB = flipped ? orig?.predicted_score_a : orig?.predicted_score_b;
+  const actualScoreA = st.scoreA != null ? Number(st.scoreA) : null;
+  const actualScoreB = st.scoreB != null ? Number(st.scoreB) : null;
   const total  = orig?.predicted_total;
   const insight = orig?.insight || '';
   const keyFactors = orig?.key_factors || [];
@@ -1956,9 +1962,23 @@ async function showAnalysis(gameId) {
   }
 
   const spreadLabel = orig?.spread_fav || `${favA ? st.teamA : st.teamB} −${spread}`;
-  const scoreHtml = (scoreA && scoreB)
+  const scoreHtml = (st.completed && actualScoreA != null && actualScoreB != null)
     ? `<div class="ap-score-line">
-        <strong>${scoreA.toFixed(0)}</strong><span>–</span><strong>${scoreB.toFixed(0)}</strong>
+        <strong>${actualScoreA.toFixed(0)}</strong><span>–</span><strong>${actualScoreB.toFixed(0)}</strong>
+        <span class="spread-chip">Final</span>
+        ${hasVegas ? `<span class="vegas-chip">Vegas: ${vegasLabel}</span>` : ''}
+        ${projectedScoreA != null && projectedScoreB != null ? `<span>Model ${projectedScoreA.toFixed(0)}–${projectedScoreB.toFixed(0)}</span>` : ''}
+       </div>`
+    : (st.live && actualScoreA != null && actualScoreB != null)
+    ? `<div class="ap-score-line">
+        <strong>${actualScoreA.toFixed(0)}</strong><span>–</span><strong>${actualScoreB.toFixed(0)}</strong>
+        <span class="spread-chip">${escapeHtml(st.statusLabel || 'Live')}</span>
+        ${hasVegas ? `<span class="vegas-chip">Vegas: ${vegasLabel}</span>` : ''}
+        ${projectedScoreA != null && projectedScoreB != null ? `<span>Model ${projectedScoreA.toFixed(0)}–${projectedScoreB.toFixed(0)}</span>` : ''}
+       </div>`
+    : (projectedScoreA != null && projectedScoreB != null)
+    ? `<div class="ap-score-line">
+        <strong>${projectedScoreA.toFixed(0)}</strong><span>–</span><strong>${projectedScoreB.toFixed(0)}</strong>
         <span class="spread-chip">${spreadLabel}</span>
         ${hasVegas ? `<span class="vegas-chip">Vegas: ${vegasLabel}</span>` : ''}
         ${total ? `<span>O/U ${total.toFixed(0)}</span>` : ''}
@@ -2293,8 +2313,8 @@ async function loadPicks(silent = false) {
     document.getElementById('picks-today-body').innerHTML = '<div class="picks-empty">Loading...</div>';
   try {
     const [todayData, historyData, benchmarkData, scoresData] = await Promise.all([
-      apiFetch('/bets/today').catch(() => ({ picks: [], available: false })),
-      apiFetch('/bets/history').catch(() => ({ picks: [], stats: {} })),
+      apiFetch('/bets/today?retro=true').catch(() => ({ picks: [], available: false })),
+      apiFetch('/bets/history?retro=true').catch(() => ({ picks: [], stats: {} })),
       apiFetch('/benchmark').catch(() => ({ available: false })),
       apiFetch('/bets/scores').catch(() => ({ scores: {} })),
     ]);
@@ -2317,8 +2337,8 @@ function _startPicksPoll() {
     if (!document.getElementById('tab-picks')?.classList?.contains('active')) return;
     try {
       const [todayData, historyData, scoresData] = await Promise.all([
-        apiFetch('/bets/today').catch(() => ({ picks: [], available: false })),
-        apiFetch('/bets/history').catch(() => ({ picks: [], stats: {} })),
+        apiFetch('/bets/today?retro=true').catch(() => ({ picks: [], available: false })),
+        apiFetch('/bets/history?retro=true').catch(() => ({ picks: [], stats: {} })),
         apiFetch('/bets/scores').catch(() => ({ scores: {} })),
       ]);
       renderPicks(todayData, historyData, scoresData?.scores || {});
@@ -2340,26 +2360,28 @@ let _cardScoresInterval = null;
 async function loadCard() {
   document.getElementById('card-games-body').innerHTML = '<div class="picks-empty">Loading March Madness card...</div>';
   try {
-    const [cardData, scoresData] = await Promise.all([
+    const [cardData, historyData, scoresData] = await Promise.all([
       apiFetch('/bets/card').catch(() => ({ games: [], available: false })),
+      apiFetch('/bets/card/history?retro=true').catch(() => ({ picks: [], stats: {} })),
       apiFetch('/bets/card/scores').catch(() => ({ scores: {} })),
     ]);
-    renderCard(cardData, scoresData?.scores || {});
-    _startCardScoresPoll(cardData);
+    renderCard(cardData, historyData, scoresData?.scores || {});
+    _startCardScoresPoll(cardData, historyData);
   } catch (e) {
     document.getElementById('card-games-body').innerHTML = `<div class="picks-empty">Error loading card: ${escapeHtml(e.message)}</div>`;
   }
 }
 
-function _startCardScoresPoll(cardData) {
+function _startCardScoresPoll(cardData, historyData) {
   if (_cardScoresInterval) clearInterval(_cardScoresInterval);
   const hasGames = (cardData?.games || []).length > 0;
-  if (!hasGames) return;
+  const hasHistory = (historyData?.picks || []).length > 0;
+  if (!hasGames && !hasHistory) return;
   _cardScoresInterval = setInterval(async () => {
     if (document.getElementById('tab-card')?.classList?.contains('active')) {
       try {
         const scoresData = await apiFetch('/bets/card/scores').catch(() => ({ scores: {} }));
-        renderCard(cardData, scoresData?.scores || {});
+        renderCard(cardData, historyData, scoresData?.scores || {});
       } catch (_) {}
     }
   }, 90000);
@@ -2440,12 +2462,14 @@ function _computeCardStats(games, scores) {
   };
 }
 
-function renderCard(cardData, scores) {
+function renderCard(cardData, historyData, scores) {
   scores = scores || {};
   const gamesBody = document.getElementById('card-games-body');
   const statsRow = document.getElementById('card-stats-row');
   const badge = document.getElementById('card-hit-badge');
   const title = document.getElementById('card-section-title');
+  const histSection = document.getElementById('card-history-section');
+  const histBody = document.getElementById('card-history-body');
 
   const today = new Date().toLocaleDateString('en-CA');
   title.textContent = `March Madness Card (${today})`;
@@ -2500,6 +2524,42 @@ function renderCard(cardData, scores) {
     cardBadge.style.display = 'inline';
   } else {
     cardBadge.style.display = 'none';
+  }
+
+  const histPicks = historyData?.picks || [];
+  if (histPicks.length > 0) {
+    histSection.style.display = 'block';
+    const byDate = {};
+    [...histPicks].sort((a, b) => (b.commence_time || '').localeCompare(a.commence_time || '')).forEach(p => {
+      const d = p.date || '';
+      if (!byDate[d]) byDate[d] = [];
+      byDate[d].push(p);
+    });
+    let html = '';
+    Object.keys(byDate).sort().reverse().forEach(date => {
+      html += `<div class="history-date-group" data-date="${date}"><div class="history-date-header">${_formatHistoryDate(date)}</div>`;
+      byDate[date].forEach(p => {
+        const key = `${p.home_team}|${p.away_team}`;
+        const scoreOverlay = scores[key] || scores[`${p.away_team}|${p.home_team}`] || (
+          p.actual_score_home != null && p.actual_score_away != null
+            ? {
+                home_score: p.actual_score_home,
+                away_score: p.actual_score_away,
+                completed: true,
+                status_detail: 'Final',
+                display_clock: '',
+                period: 0,
+                scheduled_at: p.commence_time,
+              }
+            : null
+        );
+        html += _pickRowHtml(p, true, scoreOverlay);
+      });
+      html += '</div>';
+    });
+    histBody.innerHTML = html;
+  } else {
+    histSection.style.display = 'none';
   }
 }
 
