@@ -832,12 +832,13 @@ def _calc_upset_tolerance_bonus(team_a, team_b, margin, config, round_name=None)
             indicators += 1
 
     # 11. coach_tourney_score: dog > fav (March-proven coach)
-    cd = dog.get("coach_tourney_score")
-    cf = fav.get("coach_tourney_score")
-    if cd is not None and cf is not None:
-        total += 1
-        if cd > cf:
-            indicators += 1
+    if getattr(config, "coach_tourney_max_bonus", 0.0) > 0:
+        cd = dog.get("coach_tourney_score")
+        cf = fav.get("coach_tourney_score")
+        if cd is not None and cf is not None:
+            total += 1
+            if cd > cf:
+                indicators += 1
 
     # 12. experience: dog > fav (tournament-tested roster)
     ed = dog.get("experience")
@@ -848,12 +849,13 @@ def _calc_upset_tolerance_bonus(team_a, team_b, margin, config, round_name=None)
             indicators += 1
 
     # 13. pedigree_score: dog > fav (program history)
-    pd = dog.get("pedigree_score")
-    pf = fav.get("pedigree_score")
-    if pd is not None and pf is not None:
-        total += 1
-        if pd > pf:
-            indicators += 1
+    if getattr(config, "pedigree_max_bonus", 0.0) > 0:
+        pd = dog.get("pedigree_score")
+        pf = fav.get("pedigree_score")
+        if pd is not None and pf is not None:
+            total += 1
+            if pd > pf:
+                indicators += 1
 
     # 14. three_pct: dog > fav (better 3PT shooting)
     tp_d = dog.get("three_pct") or dog.get("three_pt_pct")

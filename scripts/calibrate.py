@@ -225,8 +225,39 @@ ROUND_WEIGHTS = {
     "Championship": 3.0,
 }
 
+FULL_TOURNAMENT_GAMES = 63
 
-def score_model(pairs, config, recency_weight=None, round_weight=None):
+
+def _partial_year_weight_cap(n_games):
+    """Return the maximum effective weight for a partial tournament year."""
+    if n_games < 16:
+        return 16
+    if n_games < 32:
+        return 32
+    if n_games < 48:
+        return 48
+    return FULL_TOURNAMENT_GAMES
+
+
+def build_partial_year_weight_overrides(pairs):
+    """Return {year: per-game-weight} for any partial tournament seasons."""
+    counts = {}
+    for _, _, _, _, yr, _ in pairs:
+        counts[yr] = counts.get(yr, 0) + 1
+
+    overrides = {}
+    for yr, n_games in counts.items():
+        if 0 < n_games < FULL_TOURNAMENT_GAMES:
+            overrides[yr] = _partial_year_weight_cap(n_games) / n_games
+    return overrides
+
+
+def partial_years_from_pairs(pairs):
+    """Return partial tournament years present in pairs."""
+    return sorted(build_partial_year_weight_overrides(pairs))
+
+
+def score_model(pairs, config, recency_weight=None, round_weight=None, year_weights=None):
     """Evaluate model on all game pairs. Returns metrics dict.
 
     Also returns brier_close (Brier on games with |pred_margin| < 3), brier_upset
@@ -237,6 +268,7 @@ def score_model(pairs, config, recency_weight=None, round_weight=None):
     """
     recency_weight = recency_weight if recency_weight is not None else SCORING_OPTIONS.get("recency_weight", False)
     round_weight = round_weight if round_weight is not None else SCORING_OPTIONS.get("round_weight", False)
+    year_weights = year_weights if year_weights is not None else build_partial_year_weight_overrides(pairs)
     brier_sum = 0.0
     log_loss_sum = 0.0
     correct = 0
@@ -255,6 +287,7 @@ def score_model(pairs, config, recency_weight=None, round_weight=None):
     for a, b, a_won, actual_margin, yr, g in pairs:
         rname = g.get("round_name", "Unknown")
         w = 1.0
+        w *= year_weights.get(yr, 1.0)
         if recency_weight:
             w *= 1.0 + 0.05 * (yr - 2010)
         if round_weight:
@@ -331,6 +364,16 @@ def score_model(pairs, config, recency_weight=None, round_weight=None):
 PRIOR_GATE_RECENT_YEARS = (2023, 2024, 2025)
 
 
+def _resolve_prior_gate_recent_years(pairs, recent_years=None):
+    """Use the standard recent slice plus any newer available seasons."""
+    if recent_years is not None:
+        return tuple(recent_years)
+    years = sorted({p[4] for p in pairs})
+    resolved = list(PRIOR_GATE_RECENT_YEARS)
+    resolved.extend(y for y in years if y > PRIOR_GATE_RECENT_YEARS[-1])
+    return tuple(dict.fromkeys(resolved))
+
+
 def _filter_pairs_by_years(pairs, years):
     """Return only pairs whose season is in years."""
     allowed = set(years)
@@ -347,12 +390,13 @@ def _build_prior_variants(config):
     }
 
 
-def evaluate_prior_gate(pairs, config, recent_years=PRIOR_GATE_RECENT_YEARS):
+def evaluate_prior_gate(pairs, config, recent_years=None):
     """Evaluate whether coach/pedigree should survive launch gating.
 
     Keep a prior only if the base config beats the corresponding zeroed variant on
     both all-years and the recent-year slice.
     """
+    recent_years = _resolve_prior_gate_recent_years(pairs, recent_years)
     recent_pairs = _filter_pairs_by_years(pairs, recent_years)
     variants = _build_prior_variants(config)
     report = {}
@@ -380,8 +424,9 @@ def evaluate_prior_gate(pairs, config, recent_years=PRIOR_GATE_RECENT_YEARS):
     return report, keep_coach, keep_pedigree, gated
 
 
-def print_prior_gate_report(report, keep_coach, keep_pedigree, recent_years=PRIOR_GATE_RECENT_YEARS):
+def print_prior_gate_report(report, keep_coach, keep_pedigree, recent_years=None):
     """Print a concise coach/pedigree ablation report."""
+    recent_years = tuple(recent_years or PRIOR_GATE_RECENT_YEARS)
     recent_label = f"{recent_years[0]}-{recent_years[-1]}"
     print(f"\n{'=' * 60}")
     print("  COACH / PEDIGREE ABLATION")
@@ -400,6 +445,21 @@ def print_prior_gate_report(report, keep_coach, keep_pedigree, recent_years=PRIO
         )
     print(f"\n  Coach gate:    {'KEEP' if keep_coach else 'ZERO'}")
     print(f"  Pedigree gate: {'KEEP' if keep_pedigree else 'ZERO'}")
+
+
+def apply_prior_gate(pairs, config, optimized=None, recent_years=None, enabled=True):
+    """Run the coach/pedigree ablation gate and return gated config + params."""
+    if not enabled:
+        return None, None, None, config, dict(optimized or {})
+
+    recent_years = _resolve_prior_gate_recent_years(pairs, recent_years)
+    gate_report, keep_coach, keep_pedigree, gated_config = evaluate_prior_gate(
+        pairs, config, recent_years=recent_years
+    )
+    gated_optimized = dict(optimized or {})
+    gated_optimized["coach_tourney_max_bonus"] = round(float(gated_config.coach_tourney_max_bonus), 4)
+    gated_optimized["pedigree_max_bonus"] = round(float(gated_config.pedigree_max_bonus), 4)
+    return gate_report, keep_coach, keep_pedigree, gated_config, gated_optimized
 
 
 PARAM_SPEC = [
@@ -910,7 +970,10 @@ def calibrate_walk_forward(pairs, objective_name="brier", maxiter=100, popsize=1
         print("  Not enough years for walk-forward; falling back to single calibration.")
         return calibrate_single(pairs, PARAM_SPEC, objective_name, maxiter, popsize, seed, min_floor=min_floor, reg_lambda=reg_lambda)
 
-    test_years = [y for y in sorted(pairs_by_year.keys()) if y >= 2017]
+    partial_years = set(partial_years_from_pairs(pairs))
+    test_years = [y for y in sorted(pairs_by_year.keys()) if y >= 2017 and y not in partial_years]
+    if partial_years:
+        print(f"  Skipping partial years in CV folds: {sorted(partial_years)}")
     defaults = {name: getattr(ModelConfig(), name) for name, _, _ in PARAM_SPEC}
     bounds = []
     for name, lo, hi in PARAM_SPEC:
@@ -983,9 +1046,14 @@ def calibrate_walk_forward(pairs, objective_name="brier", maxiter=100, popsize=1
         reduced_spec = [(n, lo, hi) for n, lo, hi in PARAM_SPEC if n in keep]
     print(f"\n  Reduced to {len(reduced_spec)} params (target ≤20): {[p[0] for p in reduced_spec]}")
 
-    # Final calibration on all data except max year (warm start from CV-optimized if available)
-    all_train = [p for p in pairs if p[4] < max(years)]
-    print(f"\n--- Final calibration on {len(all_train)} games (all years except {max(years)}) ---")
+    # Final calibration on all historical years, plus any partial current-year data if present.
+    if partial_years:
+        all_train = list(pairs)
+        partial_label = ", ".join(str(y) for y in sorted(partial_years))
+        print(f"\n--- Final calibration on {len(all_train)} games (including partial years: {partial_label}) ---")
+    else:
+        all_train = [p for p in pairs if p[4] < max(years)]
+        print(f"\n--- Final calibration on {len(all_train)} games (all years except {max(years)}) ---")
     init_vals = optimized if use_cv_objective else None
     optimized, config = calibrate_single(
         all_train, reduced_spec, objective_name, maxiter, popsize, seed, init_values=init_vals, min_floor=min_floor,
@@ -1162,6 +1230,10 @@ def main():
     print("Building game pairs (matching teams to stats)...")
     pairs = build_game_pairs(games, teams_by_year)
     print(f"  {len(pairs)} matchable games")
+    partial_weights = build_partial_year_weight_overrides(pairs)
+    if partial_weights:
+        shown = ", ".join(f"{yr}x{mult:.2f}" for yr, mult in sorted(partial_weights.items()))
+        print(f"  Partial-year weighting: {shown}")
     if reg_lambda > 0:
         print(f"  L2 regularization: λ={reg_lambda}")
 
@@ -1244,17 +1316,22 @@ def main():
         default_val = getattr(DEFAULT_CONFIG, k)
         print(f"  {k}: {default_val} -> {v}")
 
-    if priors_only and not no_gate:
-        gate_report, keep_coach, keep_pedigree, gated_config = evaluate_prior_gate(pairs, opt_config)
-        print_prior_gate_report(gate_report, keep_coach, keep_pedigree)
-        opt_config = gated_config
-        optimized["coach_tourney_max_bonus"] = round(float(opt_config.coach_tourney_max_bonus), 4)
-        optimized["pedigree_max_bonus"] = round(float(opt_config.pedigree_max_bonus), 4)
+    gate_report = None
+    if not no_gate:
+        gate_report, keep_coach, keep_pedigree, opt_config, optimized = apply_prior_gate(
+            pairs, opt_config, optimized=optimized, enabled=True
+        )
+        print_prior_gate_report(
+            gate_report,
+            keep_coach,
+            keep_pedigree,
+            recent_years=_resolve_prior_gate_recent_years(pairs),
+        )
 
     # Score with optimized config (full data)
     opt_metrics = score_model(pairs, opt_config)
     label = "OPTIMIZED CONFIG (all data)"
-    if priors_only:
+    if gate_report is not None:
         label = "OPTIMIZED + GATED CONFIG (all data)"
     print_report(opt_metrics, label)
 

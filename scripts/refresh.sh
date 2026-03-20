@@ -11,43 +11,44 @@ ROOT="$(cd "$(dirname "$0")/.." && pwd)"
 cd "$ROOT"
 
 YEAR="${1:-2026}"
+PYTHON_BIN="${PYTHON_BIN:-python3}"
 echo "=== Refreshing data for $YEAR ==="
 
 # 1. Torvik (efficiency, four factors, experience)
 echo ""
 echo "--- Torvik ---"
-python scripts/fetch_torvik.py "$YEAR"
+"$PYTHON_BIN" scripts/fetch_torvik.py "$YEAR"
 
 # 2. EvanMiya (star ratings, depth, player BPR)
 #    Requires manual CSV download from evanmiya.com → data/evanmiya_teams_YYYY.csv
 echo ""
 echo "--- EvanMiya ---"
-python scripts/fetch_evanmiya.py "$YEAR" || echo "  (skipped — place evanmiya_teams_${YEAR}.csv in data/ to enable)"
+"$PYTHON_BIN" scripts/fetch_evanmiya.py "$YEAR" || echo "  (skipped — place evanmiya_teams_${YEAR}.csv in data/ to enable)"
 
 # 3. Merge all sources into teams_merged_YYYY.json
 echo ""
 echo "--- Merging sources ---"
-python scripts/fetch_data.py --no-fetch "$YEAR"
+"$PYTHON_BIN" scripts/fetch_data.py --no-fetch "$YEAR"
 
 # 4. Validate: every bracket team has real stats
 echo ""
 echo "--- Validating bracket coverage ---"
-python scripts/validate_data.py "$YEAR"
+"$PYTHON_BIN" scripts/validate_data.py "$YEAR"
 
 # 5. Settle yesterday's pending picks (requires ODDS_API_KEY)
 if [ -n "${ODDS_API_KEY:-}" ]; then
   echo ""
   echo "--- Settling yesterday's picks ---"
-  python scripts/settle_bets.py || echo "  (settle failed — check ODDS_API_KEY)"
+  "$PYTHON_BIN" scripts/settle_bets.py || echo "  (settle failed — check ODDS_API_KEY)"
 
   # 6. Save today's picks
   echo ""
   echo "--- Saving today's picks ---"
-  python scripts/save_bets.py || echo "  (no picks today or API error)"
+  "$PYTHON_BIN" scripts/save_bets.py || echo "  (no picks today or API error)"
 else
   echo ""
   echo "--- Skipping picks (no ODDS_API_KEY set) ---"
 fi
 
 echo ""
-echo "=== Done. Run: python run.py --bracket data/bracket_${YEAR}.json ==="
+echo "=== Done. Run: ${PYTHON_BIN} run.py --bracket data/bracket_${YEAR}.json ==="

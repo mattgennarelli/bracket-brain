@@ -9,7 +9,7 @@ sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 from engine import (
     calc_momentum_bonus, enrich_team, _normalize_team_for_match,
     predict_game, ModelConfig, resolve_ff_pairs, get_matchup_analysis_display,
-    enrich_bracket_with_teams,
+    enrich_bracket_with_teams, _calc_upset_tolerance_bonus,
 )
 
 
@@ -227,3 +227,36 @@ def test_enrich_bracket_with_teams_overlays_canonical_team_fields():
     duke = bracket["East"][1]
     assert duke["coach"] == "Jon Scheyer"
     assert duke["momentum"] is None
+
+
+def test_upset_tolerance_ignores_gated_coach_and_pedigree():
+    favored = {"team": "Fav", "seed": 5, "coach_tourney_score": 0.1, "pedigree_score": 0.1}
+    underdog = {"team": "Dog", "seed": 12, "coach_tourney_score": 1.0, "pedigree_score": 1.0}
+
+    enabled = _calc_upset_tolerance_bonus(
+        favored,
+        underdog,
+        margin=2.0,
+        config=ModelConfig(
+            num_sims=1,
+            upset_tolerance_max_bonus=4.0,
+            upset_spread_threshold=6.0,
+            coach_tourney_max_bonus=1.5,
+            pedigree_max_bonus=1.0,
+        ),
+    )
+    disabled = _calc_upset_tolerance_bonus(
+        favored,
+        underdog,
+        margin=2.0,
+        config=ModelConfig(
+            num_sims=1,
+            upset_tolerance_max_bonus=4.0,
+            upset_spread_threshold=6.0,
+            coach_tourney_max_bonus=0.0,
+            pedigree_max_bonus=0.0,
+        ),
+    )
+
+    assert enabled < 0
+    assert disabled == 0.0
