@@ -5398,10 +5398,10 @@
       "away_team": "Saint Louis Billikens",
       "commence_time": "2026-03-20T01:45:00Z",
       "date": "2026-03-17",
-      "result": null,
-      "actual_score_home": null,
-      "actual_score_away": null,
-      "settled_at": null,
+      "result": "W",
+      "actual_score_home": 77.0,
+      "actual_score_away": 102.0,
+      "settled_at": "2026-03-20T04:41:30.994953+00:00",
       "ncaa_tournament": true
     },
     {
@@ -5421,10 +5421,10 @@
       "away_team": "Saint Louis Billikens",
       "commence_time": "2026-03-20T01:45:00Z",
       "date": "2026-03-17",
-      "result": null,
-      "actual_score_home": null,
-      "actual_score_away": null,
-      "settled_at": null,
+      "result": "W",
+      "actual_score_home": 77.0,
+      "actual_score_away": 102.0,
+      "settled_at": "2026-03-20T04:41:30.995005+00:00",
       "ncaa_tournament": true
     },
     {
@@ -5442,10 +5442,10 @@
       "away_team": "Saint Louis Billikens",
       "commence_time": "2026-03-20T01:45:00Z",
       "date": "2026-03-17",
-      "result": null,
-      "actual_score_home": null,
-      "actual_score_away": null,
-      "settled_at": null,
+      "result": "W",
+      "actual_score_home": 77.0,
+      "actual_score_away": 102.0,
+      "settled_at": "2026-03-20T04:41:30.995023+00:00",
       "ncaa_tournament": true
     },
     {
@@ -5532,10 +5532,10 @@
       "away_team": "Idaho Vandals",
       "commence_time": "2026-03-20T02:10:00Z",
       "date": "2026-03-17",
-      "result": null,
-      "actual_score_home": null,
-      "actual_score_away": null,
-      "settled_at": null,
+      "result": "W",
+      "actual_score_home": 78.0,
+      "actual_score_away": 47.0,
+      "settled_at": "2026-03-20T04:41:30.995089+00:00",
       "ncaa_tournament": false
     },
     {
@@ -5555,10 +5555,10 @@
       "away_team": "Idaho Vandals",
       "commence_time": "2026-03-20T02:10:00Z",
       "date": "2026-03-17",
-      "result": null,
-      "actual_score_home": null,
-      "actual_score_away": null,
-      "settled_at": null,
+      "result": "L",
+      "actual_score_home": 78.0,
+      "actual_score_away": 47.0,
+      "settled_at": "2026-03-20T04:41:30.995109+00:00",
       "ncaa_tournament": false
     },
     {
@@ -5576,10 +5576,10 @@
       "away_team": "Idaho Vandals",
       "commence_time": "2026-03-20T02:10:00Z",
       "date": "2026-03-17",
-      "result": null,
-      "actual_score_home": null,
-      "actual_score_away": null,
-      "settled_at": null,
+      "result": "W",
+      "actual_score_home": 78.0,
+      "actual_score_away": 47.0,
+      "settled_at": "2026-03-20T04:41:30.995123+00:00",
       "ncaa_tournament": false
     },
     {
@@ -7743,10 +7743,10 @@
       "away_team": "Saint Louis Billikens",
       "commence_time": "2026-03-20T01:45:00Z",
       "date": "2026-03-18",
-      "result": null,
-      "actual_score_home": null,
-      "actual_score_away": null,
-      "settled_at": null,
+      "result": "W",
+      "actual_score_home": 77.0,
+      "actual_score_away": 102.0,
+      "settled_at": "2026-03-20T04:41:30.996016+00:00",
       "ncaa_tournament": true
     },
     {
@@ -7766,10 +7766,10 @@
       "away_team": "Saint Louis Billikens",
       "commence_time": "2026-03-20T01:45:00Z",
       "date": "2026-03-18",
-      "result": null,
-      "actual_score_home": null,
-      "actual_score_away": null,
-      "settled_at": null,
+      "result": "W",
+      "actual_score_home": 77.0,
+      "actual_score_away": 102.0,
+      "settled_at": "2026-03-20T04:41:30.996037+00:00",
       "ncaa_tournament": true
     },
     {
@@ -7787,10 +7787,10 @@
       "away_team": "Saint Louis Billikens",
       "commence_time": "2026-03-20T01:45:00Z",
       "date": "2026-03-18",
-      "result": null,
-      "actual_score_home": null,
-      "actual_score_away": null,
-      "settled_at": null,
+      "result": "W",
+      "actual_score_home": 77.0,
+      "actual_score_away": 102.0,
+      "settled_at": "2026-03-20T04:41:30.996050+00:00",
       "ncaa_tournament": true
     },
     {
@@ -7877,10 +7877,10 @@
       "away_team": "Idaho Vandals",
       "commence_time": "2026-03-20T02:10:00Z",
       "date": "2026-03-18",
-      "result": null,
-      "actual_score_home": null,
-      "actual_score_away": null,
-      "settled_at": null,
+      "result": "W",
+      "actual_score_home": 78.0,
+      "actual_score_away": 47.0,
+      "settled_at": "2026-03-20T04:41:30.996111+00:00",
       "ncaa_tournament": false
     },
     {
@@ -7900,10 +7900,10 @@
       "away_team": "Idaho Vandals",
       "commence_time": "2026-03-20T02:10:00Z",
       "date": "2026-03-18",
-      "result": null,
-      "actual_score_home": null,
-      "actual_score_away": null,
-      "settled_at": null,
+      "result": "L",
+      "actual_score_home": 78.0,
+      "actual_score_away": 47.0,
+      "settled_at": "2026-03-20T04:41:30.996129+00:00",
       "ncaa_tournament": false
     },
     {
@@ -7921,10 +7921,10 @@
       "away_team": "Idaho Vandals",
       "commence_time": "2026-03-20T02:10:00Z",
       "date": "2026-03-18",
-      "result": null,
-      "actual_score_home": null,
-      "actual_score_away": null,
-      "settled_at": null,
+      "result": "W",
+      "actual_score_home": 78.0,
+      "actual_score_away": 47.0,
+      "settled_at": "2026-03-20T04:41:30.996142+00:00",
       "ncaa_tournament": false
     },
     {
@@ -8974,10 +8974,10 @@
       "away_team": "Idaho Vandals",
       "commence_time": "2026-03-20T02:10:00Z",
       "date": "2026-03-18",
-      "result": null,
-      "actual_score_home": null,
-      "actual_score_away": null,
-      "settled_at": null,
+      "result": "W",
+      "actual_score_home": 78.0,
+      "actual_score_away": 47.0,
+      "settled_at": "2026-03-20T04:41:30.996764+00:00",
       "ncaa_tournament": false
     },
     {
@@ -9812,10 +9812,10 @@
       "away_team": "Saint Louis Billikens",
       "commence_time": "2026-03-20T01:45:00Z",
       "date": "2026-03-19",
-      "result": null,
-      "actual_score_home": null,
-      "actual_score_away": null,
-      "settled_at": null
+      "result": "W",
+      "actual_score_home": 77.0,
+      "actual_score_away": 102.0,
+      "settled_at": "2026-03-20T04:41:30.996888+00:00"
     },
     {
       "bet_type": "spread",
@@ -9834,10 +9834,10 @@
       "away_team": "Saint Louis Billikens",
       "commence_time": "2026-03-20T01:45:00Z",
       "date": "2026-03-19",
-      "result": null,
-      "actual_score_home": null,
-      "actual_score_away": null,
-      "settled_at": null
+      "result": "W",
+      "actual_score_home": 77.0,
+      "actual_score_away": 102.0,
+      "settled_at": "2026-03-20T04:41:30.996907+00:00"
     },
     {
       "bet_type": "total",
@@ -9854,10 +9854,10 @@
       "away_team": "Saint Louis Billikens",
       "commence_time": "2026-03-20T01:45:00Z",
       "date": "2026-03-19",
-      "result": null,
-      "actual_score_home": null,
-      "actual_score_away": null,
-      "settled_at": null
+      "result": "W",
+      "actual_score_home": 77.0,
+      "actual_score_away": 102.0,
+      "settled_at": "2026-03-20T04:41:30.996920+00:00"
     },
     {
       "bet_type": "ml",
@@ -9940,10 +9940,10 @@
       "away_team": "Idaho Vandals",
       "commence_time": "2026-03-20T02:10:00Z",
       "date": "2026-03-19",
-      "result": null,
-      "actual_score_home": null,
-      "actual_score_away": null,
-      "settled_at": null
+      "result": "W",
+      "actual_score_home": 78.0,
+      "actual_score_away": 47.0,
+      "settled_at": "2026-03-20T04:41:30.996990+00:00"
     },
     {
       "bet_type": "spread",
@@ -9962,10 +9962,10 @@
       "away_team": "Idaho Vandals",
       "commence_time": "2026-03-20T02:10:00Z",
       "date": "2026-03-19",
-      "result": null,
-      "actual_score_home": null,
-      "actual_score_away": null,
-      "settled_at": null
+      "result": "W",
+      "actual_score_home": 78.0,
+      "actual_score_away": 47.0,
+      "settled_at": "2026-03-20T04:41:30.997008+00:00"
     },
     {
       "bet_type": "total",
@@ -9982,10 +9982,10 @@
       "away_team": "Idaho Vandals",
       "commence_time": "2026-03-20T02:10:00Z",
       "date": "2026-03-19",
-      "result": null,
-      "actual_score_home": null,
-      "actual_score_away": null,
-      "settled_at": null
+      "result": "L",
+      "actual_score_home": 78.0,
+      "actual_score_away": 47.0,
+      "settled_at": "2026-03-20T04:41:30.997020+00:00"
     },
     {
       "bet_type": "ml",
@@ -11090,10 +11090,10 @@
       "away_team": "Idaho Vandals",
       "commence_time": "2026-03-20T02:10:00Z",
       "date": "2026-03-19",
-      "result": null,
-      "actual_score_home": null,
-      "actual_score_away": null,
-      "settled_at": null
+      "result": "W",
+      "actual_score_home": 78.0,
+      "actual_score_away": 47.0,
+      "settled_at": "2026-03-20T04:41:30.997736+00:00"
     },
     {
       "bet_type": "ml",
@@ -12650,63 +12650,63 @@
   ],
   "stats": {
     "total_picks": 574,
-    "settled": 171,
-    "wins": 95,
-    "losses": 74,
+    "settled": 191,
+    "wins": 112,
+    "losses": 77,
     "pushes": 2,
-    "hit_rate": 0.5621,
+    "hit_rate": 0.5926,
     "by_type": {
       "ml": {
-        "picks": 57,
-        "wins": 35,
+        "picks": 63,
+        "wins": 41,
         "losses": 22,
         "pushes": 0,
-        "net_units": -4.63,
-        "total_wagered": 54.62,
-        "hit_rate": 0.614,
-        "roi_pct": -8.47
+        "net_units": -1.58,
+        "total_wagered": 57.7,
+        "hit_rate": 0.6508,
+        "roi_pct": -2.74
       },
       "spread": {
-        "picks": 57,
-        "wins": 26,
-        "losses": 30,
+        "picks": 64,
+        "wins": 31,
+        "losses": 32,
         "pushes": 1,
-        "net_units": -14.79,
-        "total_wagered": 66.26,
-        "hit_rate": 0.4643,
-        "roi_pct": -22.33
+        "net_units": -7.68,
+        "total_wagered": 75.44,
+        "hit_rate": 0.4921,
+        "roi_pct": -10.18
       },
       "total": {
-        "picks": 57,
-        "wins": 34,
-        "losses": 22,
+        "picks": 64,
+        "wins": 40,
+        "losses": 23,
         "pushes": 1,
-        "net_units": 20.34,
-        "total_wagered": 161.27,
-        "hit_rate": 0.6071,
-        "roi_pct": 12.61
+        "net_units": 34.56,
+        "total_wagered": 176.91,
+        "hit_rate": 0.6349,
+        "roi_pct": 19.54
       }
     },
     "by_stars": {
       "\u2605": {
-        "picks": 169,
-        "wins": 95,
-        "losses": 72,
+        "picks": 188,
+        "wins": 111,
+        "losses": 75,
         "pushes": 2,
-        "net_units": 10.92,
-        "total_wagered": 272.15,
-        "hit_rate": 0.5689,
-        "roi_pct": 4.01
+        "net_units": 30.76,
+        "total_wagered": 295.05,
+        "hit_rate": 0.5968,
+        "roi_pct": 10.42
       },
       "\u2605\u2605": {
-        "picks": 2,
-        "wins": 0,
+        "picks": 3,
+        "wins": 1,
         "losses": 2,
         "pushes": 0,
-        "net_units": -10.0,
-        "total_wagered": 10.0,
-        "hit_rate": 0.0,
-        "roi_pct": -100.0
+        "net_units": -5.45,
+        "total_wagered": 15.0,
+        "hit_rate": 0.3333,
+        "roi_pct": -36.36
       },
       "\u2605\u2605\u2605": {
         "picks": 0,
@@ -12719,8 +12719,8 @@
         "roi_pct": null
       }
     },
-    "total_wagered": 282.15,
-    "net_units": 0.92,
-    "roi_pct": 0.33
+    "total_wagered": 310.05,
+    "net_units": 25.3,
+    "roi_pct": 8.16
   }
 }
