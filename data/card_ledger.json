@@ -7676,10 +7676,10 @@
       "away_team": "Pennsylvania Quakers",
       "commence_time": "2026-03-20T01:25:00Z",
       "date": "2026-03-18",
-      "result": null,
-      "actual_score_home": null,
-      "actual_score_away": null,
-      "settled_at": null,
+      "result": "W",
+      "actual_score_home": 105.0,
+      "actual_score_away": 70.0,
+      "settled_at": "2026-03-20T04:00:10.723803+00:00",
       "ncaa_tournament": true
     },
     {
@@ -7699,10 +7699,10 @@
       "away_team": "Pennsylvania Quakers",
       "commence_time": "2026-03-20T01:25:00Z",
       "date": "2026-03-18",
-      "result": null,
-      "actual_score_home": null,
-      "actual_score_away": null,
-      "settled_at": null,
+      "result": "L",
+      "actual_score_home": 105.0,
+      "actual_score_away": 70.0,
+      "settled_at": "2026-03-20T04:00:10.723847+00:00",
       "ncaa_tournament": true
     },
     {
@@ -7720,10 +7720,10 @@
       "away_team": "Pennsylvania Quakers",
       "commence_time": "2026-03-20T01:25:00Z",
       "date": "2026-03-18",
-      "result": null,
-      "actual_score_home": null,
-      "actual_score_away": null,
-      "settled_at": null,
+      "result": "W",
+      "actual_score_home": 105.0,
+      "actual_score_away": 70.0,
+      "settled_at": "2026-03-20T04:00:10.723866+00:00",
       "ncaa_tournament": true
     },
     {
@@ -8951,10 +8951,10 @@
       "away_team": "Pennsylvania Quakers",
       "commence_time": "2026-03-20T01:25:00Z",
       "date": "2026-03-18",
-      "result": null,
-      "actual_score_home": null,
-      "actual_score_away": null,
-      "settled_at": null,
+      "result": "W",
+      "actual_score_home": 105.0,
+      "actual_score_away": 70.0,
+      "settled_at": "2026-03-20T04:00:10.724651+00:00",
       "ncaa_tournament": true
     },
     {
@@ -9748,10 +9748,10 @@
       "away_team": "Pennsylvania Quakers",
       "commence_time": "2026-03-20T01:25:00Z",
       "date": "2026-03-19",
-      "result": null,
-      "actual_score_home": null,
-      "actual_score_away": null,
-      "settled_at": null
+      "result": "W",
+      "actual_score_home": 105.0,
+      "actual_score_away": 70.0,
+      "settled_at": "2026-03-20T04:00:10.724796+00:00"
     },
     {
       "bet_type": "spread",
@@ -9770,10 +9770,10 @@
       "away_team": "Pennsylvania Quakers",
       "commence_time": "2026-03-20T01:25:00Z",
       "date": "2026-03-19",
-      "result": null,
-      "actual_score_home": null,
-      "actual_score_away": null,
-      "settled_at": null
+      "result": "W",
+      "actual_score_home": 105.0,
+      "actual_score_away": 70.0,
+      "settled_at": "2026-03-20T04:00:10.724818+00:00"
     },
     {
       "bet_type": "total",
@@ -9790,10 +9790,10 @@
       "away_team": "Pennsylvania Quakers",
       "commence_time": "2026-03-20T01:25:00Z",
       "date": "2026-03-19",
-      "result": null,
-      "actual_score_home": null,
-      "actual_score_away": null,
-      "settled_at": null
+      "result": "W",
+      "actual_score_home": 105.0,
+      "actual_score_away": 70.0,
+      "settled_at": "2026-03-20T04:00:10.724832+00:00"
     },
     {
       "bet_type": "ml",
@@ -12650,53 +12650,53 @@
   ],
   "stats": {
     "total_picks": 574,
-    "settled": 164,
-    "wins": 89,
-    "losses": 73,
+    "settled": 171,
+    "wins": 95,
+    "losses": 74,
     "pushes": 2,
-    "hit_rate": 0.5494,
+    "hit_rate": 0.5621,
     "by_type": {
       "ml": {
-        "picks": 55,
-        "wins": 33,
+        "picks": 57,
+        "wins": 35,
         "losses": 22,
         "pushes": 0,
         "net_units": -4.63,
         "total_wagered": 54.62,
-        "hit_rate": 0.6,
+        "hit_rate": 0.614,
         "roi_pct": -8.47
       },
       "spread": {
-        "picks": 54,
-        "wins": 24,
-        "losses": 29,
+        "picks": 57,
+        "wins": 26,
+        "losses": 30,
         "pushes": 1,
-        "net_units": -17.9,
-        "total_wagered": 62.84,
-        "hit_rate": 0.4528,
-        "roi_pct": -28.49
+        "net_units": -14.79,
+        "total_wagered": 66.26,
+        "hit_rate": 0.4643,
+        "roi_pct": -22.33
       },
       "total": {
-        "picks": 55,
-        "wins": 32,
+        "picks": 57,
+        "wins": 34,
         "losses": 22,
         "pushes": 1,
-        "net_units": 18.71,
-        "total_wagered": 159.47,
-        "hit_rate": 0.5926,
-        "roi_pct": 11.73
+        "net_units": 20.34,
+        "total_wagered": 161.27,
+        "hit_rate": 0.6071,
+        "roi_pct": 12.61
       }
     },
     "by_stars": {
       "\u2605": {
-        "picks": 162,
-        "wins": 89,
-        "losses": 71,
+        "picks": 169,
+        "wins": 95,
+        "losses": 72,
         "pushes": 2,
-        "net_units": 6.18,
-        "total_wagered": 266.93,
-        "hit_rate": 0.5563,
-        "roi_pct": 2.31
+        "net_units": 10.92,
+        "total_wagered": 272.15,
+        "hit_rate": 0.5689,
+        "roi_pct": 4.01
       },
       "\u2605\u2605": {
         "picks": 2,
@@ -12719,8 +12719,8 @@
         "roi_pct": null
       }
     },
-    "total_wagered": 276.93,
-    "net_units": -3.82,
-    "roi_pct": -1.38
+    "total_wagered": 282.15,
+    "net_units": 0.92,
+    "roi_pct": 0.33
   }
 }
