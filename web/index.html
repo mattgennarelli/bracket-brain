@@ -381,6 +381,10 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sa
 .mc-teams { font-weight:700; font-size:.85rem; }
 .mc-time { font-size:.68rem; color:var(--muted); }
 .mc-nodata { padding:10px 14px; font-size:.72rem; color:var(--muted); font-style:italic; }
+.mc-context { display:flex; flex-wrap:wrap; gap:6px; padding:0 14px 10px; border-bottom:1px solid var(--border); }
+.mc-summary { display:inline-flex; align-items:center; gap:4px; border-radius:999px; padding:3px 8px;
+  font-size:.65rem; font-weight:600; color:var(--muted); background:var(--surface2); border:1px solid var(--border); }
+.mc-summary strong { color:var(--text); font-weight:700; }
 .mc-pick { padding:10px 14px; border-bottom:1px solid var(--border); }
 .mc-pick:last-child { border-bottom:none; }
 .mc-topline { display:flex; align-items:center; gap:8px; flex-wrap:wrap; }
@@ -680,6 +684,8 @@ let upsetAggression = 0.0;
 let _simTimer = null;
 let currentYear = null;
 let BAD_STATS = { adj_o: 85, adj_d: 112, adj_tempo: 64, seed: 16 };
+let _activeAnalysisGameId = null;
+let _activeAnalysisContext = null;
 
 // Mobile bracket state
 const ROUND_ORDER = [64, 32, 16, 8, 4, 2];
@@ -794,6 +800,57 @@ function _getScoreDisplayState(scoreRec, fallbackCommenceTime = '') {
     showScores: !!(scoreRec.completed || live),
     label,
   };
+}
+
+function _analysisScoreHtml(st, ctx) {
+  if (!ctx) return '';
+  const projectedScoreA = ctx.projectedScoreA;
+  const projectedScoreB = ctx.projectedScoreB;
+  const actualScoreA = st?.scoreA != null ? Number(st.scoreA) : null;
+  const actualScoreB = st?.scoreB != null ? Number(st.scoreB) : null;
+  const hasVegas = !!ctx.hasVegas;
+  const vegasLabel = ctx.vegasLabel || '';
+  const spreadLabel = ctx.spreadLabel || '';
+  const total = ctx.total;
+
+  if (st?.completed && actualScoreA != null && actualScoreB != null) {
+    return `<div class="ap-score-line">
+      <strong>${actualScoreA.toFixed(0)}</strong><span>–</span><strong>${actualScoreB.toFixed(0)}</strong>
+      <span class="spread-chip">Final</span>
+      ${hasVegas ? `<span class="vegas-chip">Vegas: ${vegasLabel}</span>` : ''}
+      ${projectedScoreA != null && projectedScoreB != null ? `<span>Model ${projectedScoreA.toFixed(0)}–${projectedScoreB.toFixed(0)}</span>` : ''}
+     </div>`;
+  }
+
+  if (st?.live && actualScoreA != null && actualScoreB != null) {
+    return `<div class="ap-score-line">
+      <strong>${actualScoreA.toFixed(0)}</strong><span>–</span><strong>${actualScoreB.toFixed(0)}</strong>
+      <span class="spread-chip">${escapeHtml(st.statusLabel || 'Live')}</span>
+      ${hasVegas ? `<span class="vegas-chip">Vegas: ${vegasLabel}</span>` : ''}
+      ${projectedScoreA != null && projectedScoreB != null ? `<span>Model ${projectedScoreA.toFixed(0)}–${projectedScoreB.toFixed(0)}</span>` : ''}
+     </div>`;
+  }
+
+  if (projectedScoreA != null && projectedScoreB != null) {
+    return `<div class="ap-score-line">
+      <strong>${projectedScoreA.toFixed(0)}</strong><span>–</span><strong>${projectedScoreB.toFixed(0)}</strong>
+      <span class="spread-chip">${spreadLabel}</span>
+      ${hasVegas ? `<span class="vegas-chip">Vegas: ${vegasLabel}</span>` : ''}
+      ${total != null ? `<span>O/U ${total.toFixed(0)}</span>` : ''}
+     </div>`;
+  }
+
+  return `<div class="ap-score-line"><span class="spread-chip">${spreadLabel}</span></div>`;
+}
+
+function _refreshOpenAnalysisScore() {
+  if (!_activeAnalysisGameId || !_activeAnalysisContext) return;
+  const panel = document.getElementById('analysis-panel');
+  const scoreEl = document.getElementById('analysis-live-score');
+  if (!panel?.classList?.contains('show') || !scoreEl) return;
+  const st = bracketState[_activeAnalysisGameId];
+  if (!st) return;
+  scoreEl.innerHTML = _analysisScoreHtml(st, _activeAnalysisContext);
 }
 
 function _resolveGameOutcome(gameId, teamA, teamB, fallbackPick) {
@@ -1409,6 +1466,7 @@ function renderBracket() {
   // Keep mobile bracket in sync
   renderMobileBracket();
   updateSimButtonLabel();
+  _refreshOpenAnalysisScore();
 }
 
 // ---------------------------------------------------------------------------
@@ -1563,6 +1621,8 @@ async function showAnalysis(gameId) {
   const panel = document.getElementById('analysis-panel');
   const overlay = document.getElementById('analysis-overlay');
   const content = document.getElementById('analysis-content');
+  _activeAnalysisGameId = gameId;
+  _activeAnalysisContext = null;
 
   // Always fetch live /analyze for consistency — injury overrides use the same
   // computation path, so baseline and overridden results are always comparable.
@@ -2032,28 +2092,15 @@ async function showAnalysis(gameId) {
     </div>` : '';
 
   const spreadLabel = orig?.spread_fav || `${favA ? st.teamA : st.teamB} −${spread}`;
-  const scoreHtml = (st.completed && actualScoreA != null && actualScoreB != null)
-    ? `<div class="ap-score-line">
-        <strong>${actualScoreA.toFixed(0)}</strong><span>–</span><strong>${actualScoreB.toFixed(0)}</strong>
-        <span class="spread-chip">Final</span>
-        ${hasVegas ? `<span class="vegas-chip">Vegas: ${vegasLabel}</span>` : ''}
-        ${projectedScoreA != null && projectedScoreB != null ? `<span>Model ${projectedScoreA.toFixed(0)}–${projectedScoreB.toFixed(0)}</span>` : ''}
-       </div>`
-    : (st.live && actualScoreA != null && actualScoreB != null)
-    ? `<div class="ap-score-line">
-        <strong>${actualScoreA.toFixed(0)}</strong><span>–</span><strong>${actualScoreB.toFixed(0)}</strong>
-        <span class="spread-chip">${escapeHtml(st.statusLabel || 'Live')}</span>
-        ${hasVegas ? `<span class="vegas-chip">Vegas: ${vegasLabel}</span>` : ''}
-        ${projectedScoreA != null && projectedScoreB != null ? `<span>Model ${projectedScoreA.toFixed(0)}–${projectedScoreB.toFixed(0)}</span>` : ''}
-       </div>`
-    : (projectedScoreA != null && projectedScoreB != null)
-    ? `<div class="ap-score-line">
-        <strong>${projectedScoreA.toFixed(0)}</strong><span>–</span><strong>${projectedScoreB.toFixed(0)}</strong>
-        <span class="spread-chip">${spreadLabel}</span>
-        ${hasVegas ? `<span class="vegas-chip">Vegas: ${vegasLabel}</span>` : ''}
-        ${total ? `<span>O/U ${total.toFixed(0)}</span>` : ''}
-       </div>`
-    : `<div class="ap-score-line"><span class="spread-chip">${spreadLabel}</span></div>`;
+  _activeAnalysisContext = {
+    projectedScoreA,
+    projectedScoreB,
+    total,
+    hasVegas,
+    vegasLabel,
+    spreadLabel,
+  };
+  const scoreHtml = _analysisScoreHtml(st, _activeAnalysisContext);
 
   const isUpsetPick = modelPick !== (favA ? st.teamA : st.teamB);
   const pickDampened = orig?.pick_dampened;
@@ -2169,7 +2216,7 @@ async function showAnalysis(gameId) {
           <div class="ap-bar-a" style="width:${probA}%"></div>
           <div class="ap-bar-b" style="width:${probB}%"></div>
         </div>
-        ${scoreHtml}
+        <div id="analysis-live-score">${scoreHtml}</div>
       </div>
       ${upsetHtml}
       ${pickBoxHtml}
@@ -2229,15 +2276,17 @@ async function showAnalysis(gameId) {
         const barB = content.querySelector('.ap-bar-b');
         if (barA) barA.style.width = pctA + '%';
         if (barB) barB.style.width = pctB + '%';
-        // Update spread
-        const spreadChip = content.querySelector('.spread-chip');
-        if (spreadChip && updated.spread_fav) spreadChip.textContent = updated.spread_fav;
-        // Update score line
-        const scoreLine = content.querySelector('.ap-score-line');
-        if (scoreLine) {
-          const strongs = scoreLine.querySelectorAll('strong');
-          if (strongs[0] && updated.predicted_score_a != null) strongs[0].textContent = updated.predicted_score_a.toFixed(0);
-          if (strongs[1] && updated.predicted_score_b != null) strongs[1].textContent = updated.predicted_score_b.toFixed(0);
+        _activeAnalysisContext = {
+          projectedScoreA: updated.predicted_score_a,
+          projectedScoreB: updated.predicted_score_b,
+          total: updated.predicted_total,
+          hasVegas,
+          vegasLabel,
+          spreadLabel: updated.spread_fav || spreadLabel,
+        };
+        const liveScoreEl = content.querySelector('#analysis-live-score');
+        if (liveScoreEl) {
+          liveScoreEl.innerHTML = _analysisScoreHtml(bracketState[_activeAnalysisGameId] || st, _activeAnalysisContext);
         }
         // Update pick box
         const pickBox = content.querySelector('.pick-box');
@@ -2339,6 +2388,8 @@ async function showAnalysis(gameId) {
 function closeAnalysis() {
   document.getElementById('analysis-panel').classList.remove('show');
   document.getElementById('analysis-overlay').classList.remove('show');
+  _activeAnalysisGameId = null;
+  _activeAnalysisContext = null;
 }
 
 document.addEventListener('keydown', e => { if (e.key === 'Escape') closeAnalysis(); });
@@ -2660,6 +2711,33 @@ function _matchupCardHtml(game, scores) {
   }
 
   const picks = game.picks || [];
+  const lineRef = picks.find(p => p.vegas_spread != null || p.vegas_total != null) || {};
+  const modelProbHome = Number(game.model_prob_home);
+  const homeProb = Number.isFinite(modelProbHome) ? modelProbHome : null;
+  const awayProb = homeProb != null ? (1 - homeProb) : null;
+  const modelFavTeam = homeProb == null ? '' : (homeProb >= 0.5 ? game.home_team : game.away_team);
+  const modelFavProb = homeProb == null ? null : Math.max(homeProb, awayProb) * 100;
+  const modelMargin = Number(game.model_margin);
+  const modelSpreadLabel = Number.isFinite(modelMargin) && Math.abs(modelMargin) > 0.05
+    ? `${modelFavTeam} -${Math.abs(modelMargin).toFixed(1)}`
+    : 'Pick\'em';
+  const vegasSpread = lineRef.vegas_spread;
+  let vegasSpreadLabel = '';
+  if (vegasSpread != null) {
+    if (vegasSpread < 0) vegasSpreadLabel = `${game.home_team} -${Math.abs(vegasSpread).toFixed(1)}`;
+    else if (vegasSpread > 0) vegasSpreadLabel = `${game.away_team} -${Math.abs(vegasSpread).toFixed(1)}`;
+    else vegasSpreadLabel = 'Pick\'em';
+  }
+  const modelTotal = Number(game.model_total);
+  const vegasTotal = lineRef.vegas_total;
+  const contextBits = [
+    game.round_name ? `<span class="mc-summary"><strong>${escapeHtml(game.round_name)}</strong></span>` : '',
+    modelFavProb != null ? `<span class="mc-summary">Model Pick <strong>${escapeHtml(modelFavTeam)}</strong> ${modelFavProb.toFixed(0)}%</span>` : '',
+    Number.isFinite(modelMargin) ? `<span class="mc-summary">Model Spread <strong>${escapeHtml(modelSpreadLabel)}</strong></span>` : '',
+    vegasSpreadLabel ? `<span class="mc-summary">Vegas <strong>${escapeHtml(vegasSpreadLabel)}</strong></span>` : '',
+    Number.isFinite(modelTotal) ? `<span class="mc-summary">Model Total <strong>${modelTotal.toFixed(1)}</strong>${vegasTotal != null ? ` vs ${Number(vegasTotal).toFixed(1)}` : ''}</span>` : '',
+  ].filter(Boolean).join('');
+  const contextHtml = contextBits ? `<div class="mc-context">${contextBits}</div>` : '';
   const _formatUnits = v => {
     if (v == null) return '';
     const n = Number(v);
@@ -2710,7 +2788,7 @@ function _matchupCardHtml(game, scores) {
     </div>`;
   }).join('');
 
-  return `<div class="matchup-card">${header}${rows || '<div class="mc-nodata">No picks generated</div>'}</div>`;
+  return `<div class="matchup-card">${header}${contextHtml}${rows || '<div class="mc-nodata">No picks generated</div>'}</div>`;
 }
 
 function renderBenchmark(data) {

@@ -66,10 +66,11 @@ DEFAULT_SIDE_PREFERENCE_RATIO = 0.80  # prefer a side when it's close to the bes
 # on tournament favorites; tighter than this was filtering out too many viable MLs.
 DEFAULT_MAX_ML_PRICE = -250  # skip ML bets with juice worse than -250
 
-# Betting-path total correction. We previously added +1.8 and ended up flooding the
-# pick set with overs. Until totals are re-fit specifically for market pricing, leave
-# the selection path unshifted.
-TOTAL_BIAS_CORRECTION = 0.0
+# Betting-path total correction. Settled tournament card results still show the
+# raw model running several points above both the market total and the realized
+# score, so apply a conservative downward adjustment in the betting path until
+# totals are re-fit specifically for market pricing.
+TOTAL_BIAS_CORRECTION = -2.5
 ROUND_NAME_BY_SIZE = {
     68: "First Four",
     64: "Round of 64",

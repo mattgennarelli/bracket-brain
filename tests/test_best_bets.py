@@ -200,6 +200,58 @@ def test_refresh_saved_card_games_keeps_ml_when_model_flips_side(monkeypatch):
     assert ml_pick["bet_odds"] is not None
 
 
+def test_refresh_saved_card_games_applies_total_bias_correction(monkeypatch):
+    monkeypatch.setattr(best_bets, "load_team_stats", lambda year: {"dummy": {}})
+    monkeypatch.setattr(best_bets, "lookup_team", lambda name, teams: {
+        "team": name,
+        "adj_o": 120.0,
+        "adj_d": 95.0,
+    })
+    monkeypatch.setattr(best_bets, "run_model", lambda home, away, config, round_name=None, region=None, year=None: {
+        "win_prob_a": 0.61,
+        "predicted_margin": 4.5,
+        "predicted_score_a": 75.0,
+        "predicted_score_b": 71.0,
+    })
+
+    refreshed = best_bets.refresh_saved_card_games([{
+        "home_team": "Duke Blue Devils",
+        "away_team": "VCU Rams",
+        "commence_time": "2026-03-20T18:50:00Z",
+        "data_available": True,
+        "picks": [
+            {
+                "bet_type": "ml",
+                "bet_side": "Duke Blue Devils",
+                "bet_odds": -150,
+                "implied_prob": 0.58,
+                "vegas_spread": -3.5,
+                "vegas_total": 145.5,
+            },
+            {
+                "bet_type": "spread",
+                "bet_team": "Duke Blue Devils",
+                "bet_spread": -3.5,
+                "bet_odds": -110,
+                "vegas_spread": -3.5,
+                "vegas_total": 145.5,
+            },
+            {
+                "bet_type": "total",
+                "bet_side": "OVER",
+                "bet_odds": -110,
+                "vegas_total": 145.5,
+                "vegas_spread": -3.5,
+            },
+        ],
+    }], year=2026)
+
+    total_pick = next(p for p in refreshed[0]["picks"] if p["bet_type"] == "total")
+    assert total_pick["model_total"] == 143.5
+    assert total_pick["edge"] == -2.0
+    assert total_pick["bet_side"] == "UNDER"
+
+
 def test_run_model_uses_analysis_pipeline_for_tournament_games(monkeypatch):
     captured = {}
 

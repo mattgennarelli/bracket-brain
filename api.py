@@ -760,7 +760,7 @@ def get_bets_today(tournament_only: bool = Query(default=True), retro: bool = Qu
     if retro:
         picks = _load_retro_best_bets(2026)
     else:
-        picks = _load_current_best_bets(2026) or _load_logged_bets()
+        picks = _load_live_pick_history(2026)
     picks = [p for p in picks if p.get("date") == today]
     if tournament_only:
         filtered = []
@@ -1193,13 +1193,21 @@ def _load_logged_bets() -> list[dict]:
 
 
 def _load_live_pick_history(year: int = 2026):
-    """Return pick history with today's entries recomputed from the current card when available."""
+    """Return pick history, preferring logged picks as the source of truth.
+
+    When today's official picks have already been saved to the ledger, keep
+    serving those exact picks. Fall back to recomputing from the saved card only
+    when there are no logged picks for today yet.
+    """
     logged = _load_logged_bets()
+    today = _today_et_str()
+    if any(_pick_game_date(p) == today for p in logged):
+        return logged
+
     current = _load_current_best_bets(year)
     if not current:
         return logged
 
-    today = _today_et_str()
     history = [p for p in logged if _pick_game_date(p) != today]
     history.extend(current)
     return _dedupe_picks([_normalize_pick_date(p) for p in history])
