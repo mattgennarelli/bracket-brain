@@ -66,6 +66,25 @@ CACHE_TTL_SECONDS = 3600
 SCORES_CACHE_TTL = 90
 BRACKET_RESPONSE_VERSION = 2
 ET_TZ = ZoneInfo("America/New_York")
+ROUND_NAME_BY_SIZE = {
+    68: "First Four",
+    64: "Round of 64",
+    32: "Round of 32",
+    16: "Sweet 16",
+    8: "Elite 8",
+    4: "Final Four",
+    2: "Championship",
+}
+REGION_R64_SEED_PAIRS = (
+    (1, 16),
+    (8, 9),
+    (5, 12),
+    (4, 13),
+    (6, 11),
+    (3, 14),
+    (7, 10),
+    (2, 15),
+)
 
 # Cache: key -> {"result": ..., "cached_at": timestamp}
 # Uses OrderedDict so we can evict the oldest entry when size limit is hit.
@@ -310,12 +329,12 @@ def _build_bracket_scores_result(year: int, days: int = 21) -> dict:
     games = fetch_espn_scoreboard(dates)
     result = {"scores": {}}
     for game in games:
-        round_of = _infer_tournament_round(year, game.get("scheduled_at"))
-        if round_of is None:
-            continue
         home = _resolve_tournament_team(team_map, game.get("home_team", ""), *game.get("home_aliases", []))
         away = _resolve_tournament_team(team_map, game.get("away_team", ""), *game.get("away_aliases", []))
         if not home or not away or home == away:
+            continue
+        round_of = _exact_tournament_round_for_matchup(home, away, game.get("scheduled_at"), year=year)
+        if round_of is None:
             continue
         rec = {
             "team_a": home,
@@ -715,14 +734,15 @@ def get_bets_today(tournament_only: bool = Query(default=True), retro: bool = Qu
         picks = [_normalize_pick_date(p) for p in ledger.get("picks", [])]
         picks = _dedupe_picks(picks)
     picks = [p for p in picks if p.get("date") == today]
-    # Tag picks that haven't been tagged yet
-    for p in picks:
-        if "ncaa_tournament" not in p:
-            p["ncaa_tournament"] = is_ncaa_tournament_game(
-                p.get("home_team", ""), p.get("away_team", ""), year=2026
-            )
     if tournament_only:
-        picks = [p for p in picks if p.get("ncaa_tournament") is True]
+        filtered = []
+        for pick in picks:
+            annotated = _annotate_tournament_record(pick, year=2026)
+            if annotated is not None:
+                filtered.append({**pick, **{k: v for k, v in annotated.items() if k in {"ncaa_tournament", "round_of", "round_name"}}})
+        picks = filtered
+    else:
+        picks = [{**pick, **({k: v for k, v in (_annotate_tournament_record(pick, year=2026) or {}).items() if k in {"ncaa_tournament", "round_of", "round_name"}})} for pick in picks]
     picks = sorted(picks, key=lambda p: p.get("commence_time", ""))
     return {"date": today, "picks": picks, "available": bool(picks)}
 
@@ -744,17 +764,16 @@ def get_bets_history(tournament_only: bool = Query(default=True), retro: bool = 
             data = json.load(f)
         data["picks"] = _dedupe_picks([_normalize_pick_date(p) for p in data.get("picks", [])])
 
-    # Ensure all picks are tagged (idempotent)
-    for p in data.get("picks", []):
-        if "ncaa_tournament" not in p:
-            p["ncaa_tournament"] = is_ncaa_tournament_game(
-                p.get("home_team", ""), p.get("away_team", ""), year=2026
-            )
-
-    # Use pre-computed tournament_stats if available, otherwise compute
     if tournament_only:
-        data["picks"] = [p for p in data["picks"] if p.get("ncaa_tournament") is True]
+        filtered = []
+        for pick in data["picks"]:
+            annotated = _annotate_tournament_record(pick, year=2026)
+            if annotated is not None:
+                filtered.append({**pick, **{k: v for k, v in annotated.items() if k in {"ncaa_tournament", "round_of", "round_name"}}})
+        data["picks"] = filtered
         data["stats"] = data.get("tournament_stats") or data.get("stats", {})
+    else:
+        data["picks"] = [{**pick, **({k: v for k, v in (_annotate_tournament_record(pick, year=2026) or {}).items() if k in {"ncaa_tournament", "round_of", "round_name"}})} for pick in data["picks"]]
     data.pop("tournament_stats", None)
 
     # Attach model_epoch: the date calibrated_config.json was last written.
@@ -837,7 +856,9 @@ def _nth_weekday_of_month(year: int, month: int, weekday: int, occurrence: int):
 
 def _tournament_round_windows(year: int):
     r64_start = _nth_weekday_of_month(year, 3, 3, 3)  # third Thursday of March
+    first_four_start = r64_start - timedelta(days=2)
     return {
+        68: (first_four_start, first_four_start + timedelta(days=1)),
         64: (r64_start, r64_start + timedelta(days=1)),
         32: (r64_start + timedelta(days=2), r64_start + timedelta(days=3)),
         16: (r64_start + timedelta(days=7), r64_start + timedelta(days=8)),
@@ -858,6 +879,152 @@ def _infer_tournament_round(year: int, scheduled_at: str):
         if start <= dt <= end:
             return round_of
     return None
+
+
+def _matchup_key(team_a: str, team_b: str):
+    a = _normalize_team_for_match(_strip_mascot(team_a))
+    b = _normalize_team_for_match(_strip_mascot(team_b))
+    if not a or not b or a == b:
+        return None
+    return tuple(sorted((a, b)))
+
+
+def _add_matchups(matchups: set, teams_a, teams_b):
+    for team_a in teams_a or []:
+        for team_b in teams_b or []:
+            key = _matchup_key(team_a, team_b)
+            if key:
+                matchups.add(key)
+
+
+def _exact_tournament_matchups(year: int):
+    bracket_path = os.path.join(DATA_DIR, f"bracket_{year}.json")
+    if not os.path.isfile(bracket_path):
+        return {}
+
+    raw_bracket = _load_bracket_file(year)
+    regions = {}
+    for region, teams in (raw_bracket.get("regions") or {}).items():
+        seed_map = {}
+        if isinstance(teams, list):
+            for entry in teams:
+                try:
+                    seed = int(entry.get("seed"))
+                except (TypeError, ValueError, AttributeError):
+                    continue
+                if entry.get("team"):
+                    seed_map[seed] = entry.get("team")
+        elif isinstance(teams, dict):
+            for seed, entry in teams.items():
+                try:
+                    seed = int(seed)
+                except (TypeError, ValueError):
+                    continue
+                if isinstance(entry, dict) and entry.get("team"):
+                    seed_map[seed] = entry.get("team")
+        regions[region] = seed_map
+    first_four_slots = {}
+    matchups = collections.defaultdict(set)
+
+    for ff in raw_bracket.get("first_four", []):
+        team_a = ff.get("team_a")
+        team_b = ff.get("team_b")
+        key = _matchup_key(team_a, team_b)
+        if key:
+            matchups[68].add(key)
+        region = ff.get("region")
+        seed = ff.get("seed")
+        if region and seed is not None:
+            try:
+                seed = int(seed)
+            except (TypeError, ValueError):
+                continue
+            slot_teams = [t for t in (team_a, team_b) if t]
+            if slot_teams:
+                first_four_slots[(region, seed)] = slot_teams
+
+    region_winner_sets = {}
+    for region, teams_by_seed in regions.items():
+        def slot_teams(seed: int):
+            out = set(first_four_slots.get((region, seed), []))
+            entry = teams_by_seed.get(seed)
+            if isinstance(entry, str):
+                out.add(entry)
+            return out
+
+        round_slots = []
+        for seed_a, seed_b in REGION_R64_SEED_PAIRS:
+            teams_a = slot_teams(seed_a)
+            teams_b = slot_teams(seed_b)
+            _add_matchups(matchups[64], teams_a, teams_b)
+            round_slots.append(set(teams_a) | set(teams_b))
+
+        next_slots = []
+        for idx in range(0, len(round_slots), 2):
+            left = round_slots[idx]
+            right = round_slots[idx + 1]
+            _add_matchups(matchups[32], left, right)
+            next_slots.append(set(left) | set(right))
+        round_slots = next_slots
+
+        next_slots = []
+        for idx in range(0, len(round_slots), 2):
+            left = round_slots[idx]
+            right = round_slots[idx + 1]
+            _add_matchups(matchups[16], left, right)
+            next_slots.append(set(left) | set(right))
+        round_slots = next_slots
+
+        if len(round_slots) == 2:
+            left, right = round_slots
+            _add_matchups(matchups[8], left, right)
+            region_winner_sets[region] = set(left) | set(right)
+
+    quadrant_order = raw_bracket.get("quadrant_order") or list(regions.keys())
+    ff_regions = resolve_ff_pairs(quadrant_order, raw_bracket.get("final_four_matchups"))
+    semifinal_winner_sets = []
+    for region_a, region_b in ff_regions:
+        winners_a = region_winner_sets.get(region_a, set())
+        winners_b = region_winner_sets.get(region_b, set())
+        _add_matchups(matchups[4], winners_a, winners_b)
+        semifinal_winner_sets.append(set(winners_a) | set(winners_b))
+
+    if len(semifinal_winner_sets) == 2:
+        _add_matchups(matchups[2], semifinal_winner_sets[0], semifinal_winner_sets[1])
+
+    return matchups
+
+
+def _exact_tournament_round_for_matchup(team_a: str, team_b: str, scheduled_at: str, year: int = 2026):
+    round_of = _infer_tournament_round(year, scheduled_at)
+    if round_of is None:
+        return None
+    matchup_key = _matchup_key(team_a, team_b)
+    if matchup_key is None:
+        return None
+    matchups = _exact_tournament_matchups(year)
+    if not matchups:
+        return None
+    return round_of if matchup_key in matchups.get(round_of, set()) else None
+
+
+def _annotate_tournament_record(record: dict, year: int = 2026):
+    home = record.get("home_team", "")
+    away = record.get("away_team", "")
+    scheduled_at = record.get("commence_time") or record.get("scheduled_at")
+    round_of = _exact_tournament_round_for_matchup(home, away, scheduled_at, year=year)
+    if round_of is None:
+        bracket_path = os.path.join(DATA_DIR, f"bracket_{year}.json")
+        if scheduled_at and os.path.isfile(bracket_path):
+            return None
+        if not is_ncaa_tournament_game(home, away, year=year):
+            return None
+    out = dict(record)
+    out["ncaa_tournament"] = True
+    if round_of is not None:
+        out["round_of"] = round_of
+        out["round_name"] = ROUND_NAME_BY_SIZE.get(round_of, "")
+    return out
 
 
 def _today_et_str() -> str:
@@ -883,6 +1050,16 @@ def _normalize_pick_date(pick: dict) -> dict:
 
 def _pick_identity(pick: dict):
     side = pick.get("bet_side") or pick.get("bet_team", "")
+    matchup_key = _matchup_key(pick.get("home_team", ""), pick.get("away_team", ""))
+    round_of = pick.get("round_of")
+    if matchup_key and round_of is not None:
+        return (
+            matchup_key[0],
+            matchup_key[1],
+            round_of,
+            pick.get("bet_type", ""),
+            side,
+        )
     return (
         pick.get("home_team", ""),
         pick.get("away_team", ""),
@@ -924,6 +1101,10 @@ def _retro_snapshot_date(path: str) -> str:
 
 
 def _retro_game_identity(game: dict):
+    matchup_key = _matchup_key(game.get("home_team", ""), game.get("away_team", ""))
+    round_of = game.get("round_of")
+    if matchup_key and round_of is not None:
+        return (matchup_key[0], matchup_key[1], round_of)
     return (
         game.get("home_team", ""),
         game.get("away_team", ""),
@@ -996,6 +1177,9 @@ def _flatten_card_games(games):
             rec["home_team"] = game.get("home_team")
             rec["away_team"] = game.get("away_team")
             rec["commence_time"] = game.get("commence_time")
+            rec["ncaa_tournament"] = game.get("ncaa_tournament", True)
+            rec["round_of"] = game.get("round_of")
+            rec["round_name"] = game.get("round_name")
             rec["date"] = _pick_game_date(rec)
             picks.append(rec)
     return picks
@@ -1044,6 +1228,11 @@ def _load_retro_best_bets(year: int = 2026):
     picks = extract_best_bets_from_games(games)
     for pick in picks:
         pick["date"] = _pick_game_date(pick)
+        annotated = _annotate_tournament_record(pick, year=year)
+        if annotated is not None:
+            for key in ("ncaa_tournament", "round_of", "round_name"):
+                if key in annotated:
+                    pick[key] = annotated[key]
     score_map = _retro_seed_score_map(picks)
     picks = [_apply_score_to_pick(p, score_map) for p in picks]
     return _dedupe_picks(picks)
@@ -1273,16 +1462,10 @@ def _filter_tournament_card_games(games, year: int = 2026):
     """Keep only NCAA tournament games on the card payload."""
     out = []
     for game in games or []:
-        home = game.get("home_team", "")
-        away = game.get("away_team", "")
-        is_tourney = game.get("ncaa_tournament")
-        if is_tourney is None:
-            is_tourney = is_ncaa_tournament_game(home, away, year=year)
-        if not is_tourney:
+        annotated = _annotate_tournament_record(game, year=year)
+        if annotated is None:
             continue
-        rec = dict(game)
-        rec["ncaa_tournament"] = True
-        out.append(rec)
+        out.append(annotated)
     return out
 
 
@@ -1299,13 +1482,14 @@ def get_bets_card_history(tournament_only: bool = Query(default=True), retro: bo
             data = json.load(f)
         data["picks"] = _dedupe_picks([_normalize_pick_date(p) for p in data.get("picks", [])])
     if tournament_only:
-        picks = data.get("picks", [])
-        for p in picks:
-            if "ncaa_tournament" not in p:
-                p["ncaa_tournament"] = is_ncaa_tournament_game(
-                    p.get("home_team", ""), p.get("away_team", ""), year=2026
-                )
-        data["picks"] = [p for p in picks if p.get("ncaa_tournament") is True]
+        filtered = []
+        for pick in data.get("picks", []):
+            annotated = _annotate_tournament_record(pick, year=2026)
+            if annotated is not None:
+                filtered.append({**pick, **{k: v for k, v in annotated.items() if k in {"ncaa_tournament", "round_of", "round_name"}}})
+        data["picks"] = filtered
+    else:
+        data["picks"] = [{**pick, **({k: v for k, v in (_annotate_tournament_record(pick, year=2026) or {}).items() if k in {"ncaa_tournament", "round_of", "round_name"}})} for pick in data.get("picks", [])]
     return data
 
 

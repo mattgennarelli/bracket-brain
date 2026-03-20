@@ -171,6 +171,51 @@ def test_bets_card_filters_to_tournament_games(tmp_path, monkeypatch):
     assert d["games"][0]["ncaa_tournament"] is True
 
 
+def test_filter_tournament_card_games_requires_exact_round_window(tmp_path, monkeypatch):
+    bracket_path = tmp_path / "bracket_2026.json"
+    bracket_path.write_text(json.dumps({
+        "regions": {
+            "South": [
+                {"team": "Florida", "seed": 1},
+                {"team": "Team 16", "seed": 16},
+                {"team": "Team 8", "seed": 8},
+                {"team": "Team 9", "seed": 9},
+                {"team": "Team 5", "seed": 5},
+                {"team": "Vanderbilt", "seed": 12},
+                {"team": "Team 4", "seed": 4},
+                {"team": "Team 13", "seed": 13},
+            ],
+            "East": [],
+            "West": [],
+            "Midwest": [],
+        },
+        "quadrant_order": ["South", "East", "West", "Midwest"],
+        "final_four_matchups": [[0, 3], [1, 2]],
+        "first_four": [],
+    }))
+
+    monkeypatch.setattr(api, "DATA_DIR", str(tmp_path))
+
+    games = api._filter_tournament_card_games([
+        {
+            "home_team": "Florida Gators",
+            "away_team": "Vanderbilt Commodores",
+            "commence_time": "2026-03-15T17:00:00Z",
+            "picks": [],
+        },
+        {
+            "home_team": "Florida Gators",
+            "away_team": "Vanderbilt Commodores",
+            "commence_time": "2026-03-26T23:00:00Z",
+            "picks": [],
+        },
+    ], year=2026)
+
+    assert len(games) == 1
+    assert games[0]["round_of"] == 16
+    assert games[0]["round_name"] == "Sweet 16"
+
+
 def test_bets_today_uses_game_date_from_commence_time(tmp_path, monkeypatch):
     ledger_path = tmp_path / "bets_ledger.json"
     ledger_path.write_text(json.dumps({
@@ -246,21 +291,74 @@ def test_bets_history_dedupes_same_pick_across_date_changes(tmp_path, monkeypatc
     assert d["picks"][0]["generated_at"] == "2026-03-19T22:00:00Z"
 
 
+def test_load_retro_card_games_dedupes_rescheduled_matchup(tmp_path, monkeypatch):
+    bracket_path = tmp_path / "bracket_2026.json"
+    bracket_path.write_text(json.dumps({
+        "regions": {
+            "South": [
+                {"team": "Nebraska", "seed": 3},
+                {"team": "Team 14", "seed": 14},
+                {"team": "Team 6", "seed": 6},
+                {"team": "Vanderbilt", "seed": 11},
+            ],
+            "East": [],
+            "West": [],
+            "Midwest": [],
+        },
+        "quadrant_order": ["South", "East", "West", "Midwest"],
+        "final_four_matchups": [[0, 3], [1, 2]],
+        "first_four": [],
+    }))
+    (tmp_path / "card_2026-03-20.json").write_text(json.dumps({
+        "games": [{
+            "home_team": "Nebraska Cornhuskers",
+            "away_team": "Vanderbilt Commodores",
+            "commence_time": "2026-03-21T16:00:00Z",
+            "picks": [],
+        }],
+    }))
+    (tmp_path / "card_2026-03-21.json").write_text(json.dumps({
+        "games": [{
+            "home_team": "Nebraska Cornhuskers",
+            "away_team": "Vanderbilt Commodores",
+            "commence_time": "2026-03-22T00:45:00Z",
+            "picks": [],
+        }],
+    }))
+
+    monkeypatch.setattr(api, "DATA_DIR", str(tmp_path))
+    monkeypatch.setattr(api, "_cache", {})
+    monkeypatch.setattr(api, "refresh_saved_card_games", lambda games, year=None: games)
+
+    games = api._load_retro_card_games(2026)
+
+    assert len(games) == 1
+    assert games[0]["commence_time"] == "2026-03-22T00:45:00Z"
+    assert games[0]["round_of"] == 32
+
+
 def test_bracket_scores_maps_to_bracket_team_names(tmp_path, monkeypatch):
     bracket_path = tmp_path / "bracket_2026.json"
     bracket_path.write_text(json.dumps({
         "regions": {
-            "East": [{"team": "Duke"}],
-            "West": [{"team": "Arizona"}],
+            "East": [
+                {"team": "Duke", "seed": 1},
+                {"team": "American", "seed": 16},
+            ],
+            "West": [],
+            "South": [],
+            "Midwest": [],
         },
-        "first_four": [{"team_a": "Mount St. Mary's", "team_b": "American"}],
+        "quadrant_order": ["East", "West", "Midwest", "South"],
+        "final_four_matchups": [[0, 3], [1, 2]],
+        "first_four": [{"team_a": "Mount St. Mary's", "team_b": "American", "seed": 16, "region": "East"}],
     }))
 
     monkeypatch.setattr(api, "DATA_DIR", str(tmp_path))
     monkeypatch.setattr(api, "_cache", {})
     monkeypatch.setattr(api, "fetch_espn_scoreboard", lambda dates: [{
         "home_team": "Duke",
-        "away_team": "Arizona",
+        "away_team": "Mount St. Mary's",
         "scheduled_at": "2026-03-19T23:00:00Z",
         "home_score": 81,
         "away_score": 77,
@@ -273,20 +371,24 @@ def test_bracket_scores_maps_to_bracket_team_names(tmp_path, monkeypatch):
     r = client.get("/bracket/2026/scores")
     assert r.status_code == 200
     d = r.json()
-    assert d["scores"]["Duke|Arizona"]["score_a"] == 81
-    assert d["scores"]["Duke|Arizona"]["score_b"] == 77
-    assert d["scores"]["Duke|Arizona"]["round_of"] == 64
-    assert d["scores"]["Arizona|Duke"]["score_a"] == 77
-    assert d["scores"]["Arizona|Duke"]["score_b"] == 81
+    assert d["scores"]["Duke|Mount St. Mary's"]["score_a"] == 81
+    assert d["scores"]["Duke|Mount St. Mary's"]["score_b"] == 77
+    assert d["scores"]["Duke|Mount St. Mary's"]["round_of"] == 64
+    assert d["scores"]["Mount St. Mary's|Duke"]["score_a"] == 77
+    assert d["scores"]["Mount St. Mary's|Duke"]["score_b"] == 81
 
 
 def test_bracket_scores_strip_espn_mascots_and_aliases(tmp_path, monkeypatch):
     bracket_path = tmp_path / "bracket_2026.json"
     bracket_path.write_text(json.dumps({
         "regions": {
-            "East": [{"team": "Duke"}],
-            "South": [{"team": "Florida"}],
+            "East": [{"team": "Duke", "seed": 1}],
+            "West": [{"team": "Arizona", "seed": 1}],
+            "Midwest": [{"team": "Houston", "seed": 1}],
+            "South": [{"team": "Florida", "seed": 1}],
         },
+        "quadrant_order": ["East", "West", "Midwest", "South"],
+        "final_four_matchups": [[0, 3], [1, 2]],
         "first_four": [],
     }))
 

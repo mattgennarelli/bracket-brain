@@ -27,12 +27,14 @@ import os
 import re
 import sys
 from functools import lru_cache
-from datetime import datetime, timezone
+from datetime import datetime, timezone, timedelta
+from zoneinfo import ZoneInfo
 
 SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
 ROOT = os.path.dirname(SCRIPT_DIR)
 DATA_DIR = os.path.join(ROOT, "data")
 sys.path.insert(0, ROOT)
+ET_TZ = ZoneInfo("America/New_York")
 
 try:
     import requests
@@ -44,7 +46,7 @@ except ImportError:
 from engine import (
     predict_game, ModelConfig, DEFAULT_CONFIG, _normalize_team_for_match,
     _strip_mascot, enrich_team, load_teams_merged, is_ncaa_tournament_game,
-    get_matchup_analysis_display,
+    get_matchup_analysis_display, resolve_ff_pairs,
 )
 from odds_provider import get_provider, get_api_key
 
@@ -66,6 +68,25 @@ DEFAULT_MAX_ML_PRICE = -200  # skip ML bets with juice worse than -200
 # Applied before edge calculation: model_total_corrected = model_total + TOTAL_BIAS_CORRECTION
 # Calibrated on 187 tournament games 2023-2025 (total_bias = -1.8 pts).
 TOTAL_BIAS_CORRECTION = 1.8
+ROUND_NAME_BY_SIZE = {
+    68: "First Four",
+    64: "Round of 64",
+    32: "Round of 32",
+    16: "Sweet 16",
+    8: "Elite 8",
+    4: "Final Four",
+    2: "Championship",
+}
+REGION_R64_SEED_PAIRS = (
+    (1, 16),
+    (8, 9),
+    (5, 12),
+    (4, 13),
+    (6, 11),
+    (3, 14),
+    (7, 10),
+    (2, 15),
+)
 
 # Historical rescue lines for snapshots that were saved before team matching was fixed.
 # These are only used when the daily card snapshot has no market rows for a matchup.
@@ -219,6 +240,14 @@ def _candidate_lookup_keys(name):
         yield from add(shorter)
 
 
+def _matchup_key(team_a, team_b):
+    a = _normalize_team_for_match(_strip_mascot(team_a))
+    b = _normalize_team_for_match(_strip_mascot(team_b))
+    if not a or not b or a == b:
+        return None
+    return tuple(sorted((a, b)))
+
+
 def _manual_historical_lines(home_name, away_name, commence_time):
     return _MANUAL_HISTORICAL_LINES.get((
         _normalize_team_for_match(home_name),
@@ -265,7 +294,146 @@ def _load_bracket_context(year):
     return seed_map, region_map
 
 
-def _tournament_context(home_name, away_name, year):
+@lru_cache(maxsize=8)
+def _exact_tournament_matchups(year):
+    path = os.path.join(DATA_DIR, f"bracket_{year}.json")
+    if not os.path.isfile(path):
+        return {}
+    with open(path) as f:
+        raw = json.load(f)
+
+    regions = {}
+    for region, teams in (raw.get("regions") or {}).items():
+        seed_map = {}
+        for entry in teams or []:
+            try:
+                seed = int(entry.get("seed"))
+            except (TypeError, ValueError, AttributeError):
+                continue
+            if entry.get("team"):
+                seed_map[seed] = entry.get("team")
+        regions[region] = seed_map
+
+    def matchup_key(team_a, team_b):
+        a = _normalize_team_for_match(_strip_mascot(team_a))
+        b = _normalize_team_for_match(_strip_mascot(team_b))
+        if not a or not b or a == b:
+            return None
+        return tuple(sorted((a, b)))
+
+    def add_matchups(target, teams_a, teams_b):
+        for team_a in teams_a or []:
+            for team_b in teams_b or []:
+                key = matchup_key(team_a, team_b)
+                if key:
+                    target.add(key)
+
+    first_four_slots = {}
+    matchups = {}
+    for ff in raw.get("first_four", []):
+        key = matchup_key(ff.get("team_a"), ff.get("team_b"))
+        if key:
+            matchups.setdefault(68, set()).add(key)
+        region = ff.get("region")
+        seed = ff.get("seed")
+        if region and seed is not None:
+            try:
+                seed = int(seed)
+            except (TypeError, ValueError):
+                continue
+            first_four_slots[(region, seed)] = [t for t in (ff.get("team_a"), ff.get("team_b")) if t]
+
+    region_winners = {}
+    for region, seed_map in regions.items():
+        def slot_teams(seed):
+            out = set(first_four_slots.get((region, seed), []))
+            if seed_map.get(seed):
+                out.add(seed_map[seed])
+            return out
+
+        round_slots = []
+        for seed_a, seed_b in REGION_R64_SEED_PAIRS:
+            teams_a = slot_teams(seed_a)
+            teams_b = slot_teams(seed_b)
+            add_matchups(matchups.setdefault(64, set()), teams_a, teams_b)
+            round_slots.append(set(teams_a) | set(teams_b))
+
+        next_slots = []
+        for idx in range(0, len(round_slots), 2):
+            left = round_slots[idx]
+            right = round_slots[idx + 1]
+            add_matchups(matchups.setdefault(32, set()), left, right)
+            next_slots.append(set(left) | set(right))
+        round_slots = next_slots
+
+        next_slots = []
+        for idx in range(0, len(round_slots), 2):
+            left = round_slots[idx]
+            right = round_slots[idx + 1]
+            add_matchups(matchups.setdefault(16, set()), left, right)
+            next_slots.append(set(left) | set(right))
+        round_slots = next_slots
+
+        if len(round_slots) == 2:
+            add_matchups(matchups.setdefault(8, set()), round_slots[0], round_slots[1])
+            region_winners[region] = set(round_slots[0]) | set(round_slots[1])
+
+    quadrant_order = raw.get("quadrant_order") or list(regions.keys())
+    semifinal_winners = []
+    for region_a, region_b in resolve_ff_pairs(quadrant_order, raw.get("final_four_matchups")):
+        winners_a = region_winners.get(region_a, set())
+        winners_b = region_winners.get(region_b, set())
+        add_matchups(matchups.setdefault(4, set()), winners_a, winners_b)
+        semifinal_winners.append(set(winners_a) | set(winners_b))
+    if len(semifinal_winners) == 2:
+        add_matchups(matchups.setdefault(2, set()), semifinal_winners[0], semifinal_winners[1])
+
+    return matchups
+
+
+def _nth_weekday_of_month(year: int, month: int, weekday: int, occurrence: int):
+    d = datetime(year, month, 1)
+    while d.weekday() != weekday:
+        d += timedelta(days=1)
+    d += timedelta(days=7 * (occurrence - 1))
+    return d.date()
+
+
+def _infer_tournament_round(year: int, scheduled_at: str):
+    if not scheduled_at:
+        return None
+    try:
+        dt = datetime.fromisoformat(str(scheduled_at).replace("Z", "+00:00")).astimezone(ET_TZ).date()
+    except ValueError:
+        return None
+    r64_start = _nth_weekday_of_month(year, 3, 3, 3)
+    first_four_start = r64_start - timedelta(days=2)
+    windows = {
+        68: (first_four_start, first_four_start + timedelta(days=1)),
+        64: (r64_start, r64_start + timedelta(days=1)),
+        32: (r64_start + timedelta(days=2), r64_start + timedelta(days=3)),
+        16: (r64_start + timedelta(days=7), r64_start + timedelta(days=8)),
+        8: (r64_start + timedelta(days=9), r64_start + timedelta(days=10)),
+        4: (_nth_weekday_of_month(year, 4, 5, 1), _nth_weekday_of_month(year, 4, 5, 1)),
+        2: (_nth_weekday_of_month(year, 4, 0, 1), _nth_weekday_of_month(year, 4, 0, 1)),
+    }
+    for round_of, (start, end) in windows.items():
+        if start <= dt <= end:
+            return round_of
+    return None
+
+
+def _exact_tournament_round_for_matchup(home_name, away_name, year, scheduled_at=None):
+    round_of = _infer_tournament_round(year, scheduled_at)
+    if round_of is None:
+        return None
+    key = _matchup_key(home_name, away_name)
+    if key is None:
+        return None
+    return round_of if key in _exact_tournament_matchups(year).get(round_of, set()) else None
+
+
+def _tournament_context(home_name, away_name, year, scheduled_at=None):
     seed_map, region_map = _load_bracket_context(year)
     home_keys = list(_candidate_lookup_keys(_prep_odds_name(home_name))) + list(_candidate_lookup_keys(home_name))
     away_keys = list(_candidate_lookup_keys(_prep_odds_name(away_name))) + list(_candidate_lookup_keys(away_name))
@@ -273,18 +441,22 @@ def _tournament_context(home_name, away_name, year):
     away_seed = next((seed_map[k] for k in away_keys if k in seed_map), None)
     home_region = next((region_map[k] for k in home_keys if k in region_map), None)
     away_region = next((region_map[k] for k in away_keys if k in region_map), None)
+    round_of = _exact_tournament_round_for_matchup(home_name, away_name, year, scheduled_at=scheduled_at)
+    region = home_region if home_region and home_region == away_region else None
     if home_region and home_region == away_region:
         return {
             "seed_home": home_seed,
             "seed_away": away_seed,
             "region": home_region,
-            "round_name": "Round of 64",
+            "round_name": ROUND_NAME_BY_SIZE.get(round_of),
+            "round_of": round_of,
         }
     return {
         "seed_home": home_seed,
         "seed_away": away_seed,
-        "region": None,
-        "round_name": "Round of 64" if home_seed is not None and away_seed is not None else None,
+        "region": region,
+        "round_name": ROUND_NAME_BY_SIZE.get(round_of),
+        "round_of": round_of,
     }
 
 
@@ -481,7 +653,7 @@ def get_best_bets_json(api_key, year=None, ml_min=None, spread_min=None, total_m
 
         round_name = None
         if is_ncaa_tournament_game(home_name, away_name, year=year):
-            ctx = _tournament_context(home_name, away_name, year)
+            ctx = _tournament_context(home_name, away_name, year, scheduled_at=game["commence_time"])
             if ctx["seed_home"] is not None:
                 home_stats["seed"] = ctx["seed_home"]
             if ctx["seed_away"] is not None:
@@ -752,7 +924,7 @@ def get_full_card_json(api_key, year=None):
 
         round_name = None
         if is_ncaa_tournament_game(home_name, away_name, year=year):
-            ctx = _tournament_context(home_name, away_name, year)
+            ctx = _tournament_context(home_name, away_name, year, scheduled_at=game["commence_time"])
             if ctx["seed_home"] is not None:
                 home_stats["seed"] = ctx["seed_home"]
             if ctx["seed_away"] is not None:
@@ -876,6 +1048,8 @@ def refresh_saved_card_games(games, year=None):
             "commence_time": game.get("commence_time"),
             "data_available": False,
             "ncaa_tournament": game.get("ncaa_tournament", True),
+            "round_of": game.get("round_of"),
+            "round_name": game.get("round_name"),
             "picks": [],
         }
 
@@ -898,7 +1072,7 @@ def refresh_saved_card_games(games, year=None):
 
         round_name = None
         if is_ncaa_tournament_game(home_name, away_name, year=year):
-            ctx = _tournament_context(home_name, away_name, year)
+            ctx = _tournament_context(home_name, away_name, year, scheduled_at=rec["commence_time"])
             if ctx["seed_home"] is not None:
                 home_stats["seed"] = ctx["seed_home"]
             if ctx["seed_away"] is not None:

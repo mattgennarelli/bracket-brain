@@ -236,3 +236,47 @@ def test_run_model_uses_analysis_pipeline_for_tournament_games(monkeypatch):
         "region": "Midwest",
         "round_name": "Round of 64",
     }
+
+
+def test_tournament_context_uses_actual_round_from_schedule(tmp_path, monkeypatch):
+    (tmp_path / "bracket_2026.json").write_text("""
+{
+  "regions": {
+    "South": [
+      {"team": "Florida", "seed": 1},
+      {"team": "Team 16", "seed": 16},
+      {"team": "Team 8", "seed": 8},
+      {"team": "Team 9", "seed": 9},
+      {"team": "Team 5", "seed": 5},
+      {"team": "Vanderbilt", "seed": 12},
+      {"team": "Team 4", "seed": 4},
+      {"team": "Team 13", "seed": 13}
+    ],
+    "East": [],
+    "West": [],
+    "Midwest": []
+  },
+  "quadrant_order": ["South", "East", "West", "Midwest"],
+  "final_four_matchups": [[0, 3], [1, 2]],
+  "first_four": []
+}
+""".strip())
+
+    monkeypatch.setattr(best_bets, "DATA_DIR", str(tmp_path))
+    best_bets._load_bracket_context.cache_clear()
+    best_bets._exact_tournament_matchups.cache_clear()
+
+    ctx = best_bets._tournament_context(
+        "Florida Gators",
+        "Vanderbilt Commodores",
+        2026,
+        scheduled_at="2026-03-26T23:00:00Z",
+    )
+
+    assert ctx["seed_home"] == 1
+    assert ctx["seed_away"] == 12
+    assert ctx["region"] == "South"
+    assert ctx["round_of"] == 16
+    assert ctx["round_name"] == "Sweet 16"
+    best_bets._load_bracket_context.cache_clear()
+    best_bets._exact_tournament_matchups.cache_clear()
