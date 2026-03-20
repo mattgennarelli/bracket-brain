@@ -5264,10 +5264,10 @@
       "away_team": "VCU Rams",
       "commence_time": "2026-03-19T22:50:00Z",
       "date": "2026-03-17",
-      "result": null,
-      "actual_score_home": null,
-      "actual_score_away": null,
-      "settled_at": null,
+      "result": "W",
+      "actual_score_home": 78.0,
+      "actual_score_away": 82.0,
+      "settled_at": "2026-03-20T01:55:47.560394+00:00",
       "ncaa_tournament": true
     },
     {
@@ -5287,10 +5287,10 @@
       "away_team": "VCU Rams",
       "commence_time": "2026-03-19T22:50:00Z",
       "date": "2026-03-17",
-      "result": null,
-      "actual_score_home": null,
-      "actual_score_away": null,
-      "settled_at": null,
+      "result": "W",
+      "actual_score_home": 78.0,
+      "actual_score_away": 82.0,
+      "settled_at": "2026-03-20T01:55:47.560435+00:00",
       "ncaa_tournament": true
     },
     {
@@ -5308,10 +5308,10 @@
       "away_team": "VCU Rams",
       "commence_time": "2026-03-19T22:50:00Z",
       "date": "2026-03-17",
-      "result": null,
-      "actual_score_home": null,
-      "actual_score_away": null,
-      "settled_at": null,
+      "result": "W",
+      "actual_score_home": 78.0,
+      "actual_score_away": 82.0,
+      "settled_at": "2026-03-20T01:55:47.560451+00:00",
       "ncaa_tournament": true
     },
     {
@@ -5331,10 +5331,10 @@
       "away_team": "Texas A&M Aggies",
       "commence_time": "2026-03-19T23:35:00Z",
       "date": "2026-03-17",
-      "result": null,
-      "actual_score_home": null,
-      "actual_score_away": null,
-      "settled_at": null,
+      "result": "L",
+      "actual_score_home": 50.0,
+      "actual_score_away": 63.0,
+      "settled_at": "2026-03-20T01:55:47.560473+00:00",
       "ncaa_tournament": true
     },
     {
@@ -5354,10 +5354,10 @@
       "away_team": "Texas A&M Aggies",
       "commence_time": "2026-03-19T23:35:00Z",
       "date": "2026-03-17",
-      "result": null,
-      "actual_score_home": null,
-      "actual_score_away": null,
-      "settled_at": null,
+      "result": "W",
+      "actual_score_home": 50.0,
+      "actual_score_away": 63.0,
+      "settled_at": "2026-03-20T01:55:47.560494+00:00",
       "ncaa_tournament": true
     },
     {
@@ -5375,10 +5375,10 @@
       "away_team": "Texas A&M Aggies",
       "commence_time": "2026-03-19T23:35:00Z",
       "date": "2026-03-17",
-      "result": null,
-      "actual_score_home": null,
-      "actual_score_away": null,
-      "settled_at": null,
+      "result": "L",
+      "actual_score_home": 50.0,
+      "actual_score_away": 63.0,
+      "settled_at": "2026-03-20T01:55:47.560507+00:00",
       "ncaa_tournament": true
     },
     {
@@ -7408,10 +7408,10 @@
       "away_team": "VCU Rams",
       "commence_time": "2026-03-19T22:50:00Z",
       "date": "2026-03-18",
-      "result": null,
-      "actual_score_home": null,
-      "actual_score_away": null,
-      "settled_at": null,
+      "result": "W",
+      "actual_score_home": 78.0,
+      "actual_score_away": 82.0,
+      "settled_at": "2026-03-20T01:55:47.561443+00:00",
       "ncaa_tournament": true
     },
     {
@@ -7431,10 +7431,10 @@
       "away_team": "VCU Rams",
       "commence_time": "2026-03-19T22:50:00Z",
       "date": "2026-03-18",
-      "result": null,
-      "actual_score_home": null,
-      "actual_score_away": null,
-      "settled_at": null,
+      "result": "W",
+      "actual_score_home": 78.0,
+      "actual_score_away": 82.0,
+      "settled_at": "2026-03-20T01:55:47.561463+00:00",
       "ncaa_tournament": true
     },
     {
@@ -7452,10 +7452,10 @@
       "away_team": "VCU Rams",
       "commence_time": "2026-03-19T22:50:00Z",
       "date": "2026-03-18",
-      "result": null,
-      "actual_score_home": null,
-      "actual_score_away": null,
-      "settled_at": null,
+      "result": "W",
+      "actual_score_home": 78.0,
+      "actual_score_away": 82.0,
+      "settled_at": "2026-03-20T01:55:47.561475+00:00",
       "ncaa_tournament": true
     },
     {
@@ -7475,10 +7475,10 @@
       "away_team": "Howard Bison",
       "commence_time": "2026-03-19T23:10:42Z",
       "date": "2026-03-18",
-      "result": null,
-      "actual_score_home": null,
-      "actual_score_away": null,
-      "settled_at": null,
+      "result": "W",
+      "actual_score_home": 101.0,
+      "actual_score_away": 80.0,
+      "settled_at": "2026-03-20T01:55:47.561492+00:00",
       "ncaa_tournament": true
     },
     {
@@ -7498,10 +7498,10 @@
       "away_team": "Howard Bison",
       "commence_time": "2026-03-19T23:10:42Z",
       "date": "2026-03-18",
-      "result": null,
-      "actual_score_home": null,
-      "actual_score_away": null,
-      "settled_at": null,
+      "result": "L",
+      "actual_score_home": 101.0,
+      "actual_score_away": 80.0,
+      "settled_at": "2026-03-20T01:55:47.561510+00:00",
       "ncaa_tournament": true
     },
     {
@@ -7519,10 +7519,10 @@
       "away_team": "Howard Bison",
       "commence_time": "2026-03-19T23:10:42Z",
       "date": "2026-03-18",
-      "result": null,
-      "actual_score_home": null,
-      "actual_score_away": null,
-      "settled_at": null,
+      "result": "W",
+      "actual_score_home": 101.0,
+      "actual_score_away": 80.0,
+      "settled_at": "2026-03-20T01:55:47.561520+00:00",
       "ncaa_tournament": true
     },
     {
@@ -7542,10 +7542,10 @@
       "away_team": "Texas Longhorns",
       "commence_time": "2026-03-19T23:25:00Z",
       "date": "2026-03-18",
-      "result": null,
-      "actual_score_home": null,
-      "actual_score_away": null,
-      "settled_at": null,
+      "result": "L",
+      "actual_score_home": 71.0,
+      "actual_score_away": 79.0,
+      "settled_at": "2026-03-20T01:55:47.561537+00:00",
       "ncaa_tournament": true
     },
     {
@@ -7565,10 +7565,10 @@
       "away_team": "Texas Longhorns",
       "commence_time": "2026-03-19T23:25:00Z",
       "date": "2026-03-18",
-      "result": null,
-      "actual_score_home": null,
-      "actual_score_away": null,
-      "settled_at": null,
+      "result": "L",
+      "actual_score_home": 71.0,
+      "actual_score_away": 79.0,
+      "settled_at": "2026-03-20T01:55:47.561555+00:00",
       "ncaa_tournament": true
     },
     {
@@ -7586,10 +7586,10 @@
       "away_team": "Texas Longhorns",
       "commence_time": "2026-03-19T23:25:00Z",
       "date": "2026-03-18",
-      "result": null,
-      "actual_score_home": null,
-      "actual_score_away": null,
-      "settled_at": null,
+      "result": "L",
+      "actual_score_home": 71.0,
+      "actual_score_away": 79.0,
+      "settled_at": "2026-03-20T01:55:47.561566+00:00",
       "ncaa_tournament": true
     },
     {
@@ -7609,10 +7609,10 @@
       "away_team": "Texas A&M Aggies",
       "commence_time": "2026-03-19T23:35:00Z",
       "date": "2026-03-18",
-      "result": null,
-      "actual_score_home": null,
-      "actual_score_away": null,
-      "settled_at": null,
+      "result": "L",
+      "actual_score_home": 50.0,
+      "actual_score_away": 63.0,
+      "settled_at": "2026-03-20T01:55:47.561585+00:00",
       "ncaa_tournament": true
     },
     {
@@ -7632,10 +7632,10 @@
       "away_team": "Texas A&M Aggies",
       "commence_time": "2026-03-19T23:35:00Z",
       "date": "2026-03-18",
-      "result": null,
-      "actual_score_home": null,
-      "actual_score_away": null,
-      "settled_at": null,
+      "result": "W",
+      "actual_score_home": 50.0,
+      "actual_score_away": 63.0,
+      "settled_at": "2026-03-20T01:55:47.561603+00:00",
       "ncaa_tournament": true
     },
     {
@@ -7653,10 +7653,10 @@
       "away_team": "Texas A&M Aggies",
       "commence_time": "2026-03-19T23:35:00Z",
       "date": "2026-03-18",
-      "result": null,
-      "actual_score_home": null,
-      "actual_score_away": null,
-      "settled_at": null,
+      "result": "L",
+      "actual_score_home": 50.0,
+      "actual_score_away": 63.0,
+      "settled_at": "2026-03-20T01:55:47.561615+00:00",
       "ncaa_tournament": true
     },
     {
@@ -8928,10 +8928,10 @@
       "away_team": "VCU Rams",
       "commence_time": "2026-03-19T22:50:00Z",
       "date": "2026-03-18",
-      "result": null,
-      "actual_score_home": null,
-      "actual_score_away": null,
-      "settled_at": null,
+      "result": "L",
+      "actual_score_home": 78.0,
+      "actual_score_away": 82.0,
+      "settled_at": "2026-03-20T01:55:47.562347+00:00",
       "ncaa_tournament": true
     },
     {
@@ -9492,10 +9492,10 @@
       "away_team": "VCU Rams",
       "commence_time": "2026-03-19T22:50:00Z",
       "date": "2026-03-19",
-      "result": null,
-      "actual_score_home": null,
-      "actual_score_away": null,
-      "settled_at": null
+      "result": "L",
+      "actual_score_home": 78.0,
+      "actual_score_away": 82.0,
+      "settled_at": "2026-03-20T01:55:47.562492+00:00"
     },
     {
       "bet_type": "spread",
@@ -9514,10 +9514,10 @@
       "away_team": "VCU Rams",
       "commence_time": "2026-03-19T22:50:00Z",
       "date": "2026-03-19",
-      "result": null,
-      "actual_score_home": null,
-      "actual_score_away": null,
-      "settled_at": null
+      "result": "W",
+      "actual_score_home": 78.0,
+      "actual_score_away": 82.0,
+      "settled_at": "2026-03-20T01:55:47.562510+00:00"
     },
     {
       "bet_type": "total",
@@ -9534,10 +9534,10 @@
       "away_team": "VCU Rams",
       "commence_time": "2026-03-19T22:50:00Z",
       "date": "2026-03-19",
-      "result": null,
-      "actual_score_home": null,
-      "actual_score_away": null,
-      "settled_at": null
+      "result": "W",
+      "actual_score_home": 78.0,
+      "actual_score_away": 82.0,
+      "settled_at": "2026-03-20T01:55:47.562522+00:00"
     },
     {
       "bet_type": "ml",
@@ -9556,10 +9556,10 @@
       "away_team": "Howard Bison",
       "commence_time": "2026-03-19T23:10:42Z",
       "date": "2026-03-19",
-      "result": null,
-      "actual_score_home": null,
-      "actual_score_away": null,
-      "settled_at": null
+      "result": "W",
+      "actual_score_home": 101.0,
+      "actual_score_away": 80.0,
+      "settled_at": "2026-03-20T01:55:47.562540+00:00"
     },
     {
       "bet_type": "spread",
@@ -9578,10 +9578,10 @@
       "away_team": "Howard Bison",
       "commence_time": "2026-03-19T23:10:42Z",
       "date": "2026-03-19",
-      "result": null,
-      "actual_score_home": null,
-      "actual_score_away": null,
-      "settled_at": null
+      "result": "L",
+      "actual_score_home": 101.0,
+      "actual_score_away": 80.0,
+      "settled_at": "2026-03-20T01:55:47.562557+00:00"
     },
     {
       "bet_type": "total",
@@ -9598,10 +9598,10 @@
       "away_team": "Howard Bison",
       "commence_time": "2026-03-19T23:10:42Z",
       "date": "2026-03-19",
-      "result": null,
-      "actual_score_home": null,
-      "actual_score_away": null,
-      "settled_at": null
+      "result": "W",
+      "actual_score_home": 101.0,
+      "actual_score_away": 80.0,
+      "settled_at": "2026-03-20T01:55:47.562567+00:00"
     },
     {
       "bet_type": "ml",
@@ -9620,10 +9620,10 @@
       "away_team": "Texas Longhorns",
       "commence_time": "2026-03-19T23:25:00Z",
       "date": "2026-03-19",
-      "result": null,
-      "actual_score_home": null,
-      "actual_score_away": null,
-      "settled_at": null
+      "result": "L",
+      "actual_score_home": 71.0,
+      "actual_score_away": 79.0,
+      "settled_at": "2026-03-20T01:55:47.562584+00:00"
     },
     {
       "bet_type": "spread",
@@ -9642,10 +9642,10 @@
       "away_team": "Texas Longhorns",
       "commence_time": "2026-03-19T23:25:00Z",
       "date": "2026-03-19",
-      "result": null,
-      "actual_score_home": null,
-      "actual_score_away": null,
-      "settled_at": null
+      "result": "W",
+      "actual_score_home": 71.0,
+      "actual_score_away": 79.0,
+      "settled_at": "2026-03-20T01:55:47.562601+00:00"
     },
     {
       "bet_type": "total",
@@ -9662,10 +9662,10 @@
       "away_team": "Texas Longhorns",
       "commence_time": "2026-03-19T23:25:00Z",
       "date": "2026-03-19",
-      "result": null,
-      "actual_score_home": null,
-      "actual_score_away": null,
-      "settled_at": null
+      "result": "L",
+      "actual_score_home": 71.0,
+      "actual_score_away": 79.0,
+      "settled_at": "2026-03-20T01:55:47.562612+00:00"
     },
     {
       "bet_type": "ml",
@@ -9684,10 +9684,10 @@
       "away_team": "Texas A&M Aggies",
       "commence_time": "2026-03-19T23:35:00Z",
       "date": "2026-03-19",
-      "result": null,
-      "actual_score_home": null,
-      "actual_score_away": null,
-      "settled_at": null
+      "result": "L",
+      "actual_score_home": 50.0,
+      "actual_score_away": 63.0,
+      "settled_at": "2026-03-20T01:55:47.562630+00:00"
     },
     {
       "bet_type": "spread",
@@ -9706,10 +9706,10 @@
       "away_team": "Texas A&M Aggies",
       "commence_time": "2026-03-19T23:35:00Z",
       "date": "2026-03-19",
-      "result": null,
-      "actual_score_home": null,
-      "actual_score_away": null,
-      "settled_at": null
+      "result": "L",
+      "actual_score_home": 50.0,
+      "actual_score_away": 63.0,
+      "settled_at": "2026-03-20T01:55:47.562648+00:00"
     },
     {
       "bet_type": "total",
@@ -9726,10 +9726,10 @@
       "away_team": "Texas A&M Aggies",
       "commence_time": "2026-03-19T23:35:00Z",
       "date": "2026-03-19",
-      "result": null,
-      "actual_score_home": null,
-      "actual_score_away": null,
-      "settled_at": null
+      "result": "L",
+      "actual_score_home": 50.0,
+      "actual_score_away": 63.0,
+      "settled_at": "2026-03-20T01:55:47.562659+00:00"
     },
     {
       "bet_type": "ml",
@@ -11048,10 +11048,10 @@
       "away_team": "Texas Longhorns",
       "commence_time": "2026-03-19T23:25:00Z",
       "date": "2026-03-19",
-      "result": null,
-      "actual_score_home": null,
-      "actual_score_away": null,
-      "settled_at": null
+      "result": "W",
+      "actual_score_home": 71.0,
+      "actual_score_away": 79.0,
+      "settled_at": "2026-03-20T01:55:47.563481+00:00"
     },
     {
       "bet_type": "spread",
@@ -12650,53 +12650,53 @@
   ],
   "stats": {
     "total_picks": 574,
-    "settled": 132,
-    "wins": 73,
-    "losses": 57,
+    "settled": 164,
+    "wins": 89,
+    "losses": 73,
     "pushes": 2,
-    "hit_rate": 0.5615,
+    "hit_rate": 0.5494,
     "by_type": {
       "ml": {
-        "picks": 43,
-        "wins": 28,
-        "losses": 15,
+        "picks": 55,
+        "wins": 33,
+        "losses": 22,
         "pushes": 0,
-        "net_units": -7.13,
-        "total_wagered": 40.81,
-        "hit_rate": 0.6512,
-        "roi_pct": -17.48
+        "net_units": -4.63,
+        "total_wagered": 54.62,
+        "hit_rate": 0.6,
+        "roi_pct": -8.47
       },
       "spread": {
-        "picks": 44,
-        "wins": 18,
-        "losses": 25,
+        "picks": 54,
+        "wins": 24,
+        "losses": 29,
         "pushes": 1,
-        "net_units": -14.87,
-        "total_wagered": 49.31,
-        "hit_rate": 0.4186,
-        "roi_pct": -30.16
+        "net_units": -17.9,
+        "total_wagered": 62.84,
+        "hit_rate": 0.4528,
+        "roi_pct": -28.49
       },
       "total": {
-        "picks": 45,
-        "wins": 27,
-        "losses": 17,
+        "picks": 55,
+        "wins": 32,
+        "losses": 22,
         "pushes": 1,
-        "net_units": 22.25,
-        "total_wagered": 120.57,
-        "hit_rate": 0.6136,
-        "roi_pct": 18.45
+        "net_units": 18.71,
+        "total_wagered": 159.47,
+        "hit_rate": 0.5926,
+        "roi_pct": 11.73
       }
     },
     "by_stars": {
       "\u2605": {
-        "picks": 130,
-        "wins": 73,
-        "losses": 55,
+        "picks": 162,
+        "wins": 89,
+        "losses": 71,
         "pushes": 2,
-        "net_units": 10.24,
-        "total_wagered": 200.69,
-        "hit_rate": 0.5703,
-        "roi_pct": 5.1
+        "net_units": 6.18,
+        "total_wagered": 266.93,
+        "hit_rate": 0.5563,
+        "roi_pct": 2.31
       },
       "\u2605\u2605": {
         "picks": 2,
@@ -12719,8 +12719,8 @@
         "roi_pct": null
       }
     },
-    "total_wagered": 210.69,
-    "net_units": 0.24,
-    "roi_pct": 0.11
+    "total_wagered": 276.93,
+    "net_units": -3.82,
+    "roi_pct": -1.38
   }
 }
