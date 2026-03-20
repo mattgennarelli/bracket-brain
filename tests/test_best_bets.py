@@ -252,6 +252,58 @@ def test_refresh_saved_card_games_applies_total_bias_correction(monkeypatch):
     assert total_pick["bet_side"] == "UNDER"
 
 
+def test_refresh_saved_card_games_carries_analysis_signals(monkeypatch):
+    monkeypatch.setattr(best_bets, "load_team_stats", lambda year: {"dummy": {}})
+    monkeypatch.setattr(best_bets, "lookup_team", lambda name, teams: {
+        "team": name,
+        "adj_o": 120.0,
+        "adj_d": 95.0,
+    })
+    monkeypatch.setattr(best_bets, "run_model", lambda home, away, config, round_name=None, region=None, year=None: {
+        "win_prob_a": 0.61,
+        "predicted_margin": 4.5,
+        "predicted_score_a": 75.0,
+        "predicted_score_b": 71.0,
+        "confidence": "lean",
+        "variability": "high",
+        "upset_rating": "medium",
+        "efficiency_prob": 0.6123,
+        "seed_prob": 0.5544,
+        "volatility": 1.111,
+        "game_stdev": 11.8,
+        "insight": "Spacing edge favors the favorite.",
+        "key_factors": ["Shot quality", "Turnover pressure"],
+    })
+
+    refreshed = best_bets.refresh_saved_card_games([{
+        "home_team": "Duke Blue Devils",
+        "away_team": "VCU Rams",
+        "commence_time": "2026-03-20T18:50:00Z",
+        "data_available": True,
+        "picks": [
+            {
+                "bet_type": "ml",
+                "bet_side": "Duke Blue Devils",
+                "bet_odds": -180,
+                "implied_prob": 0.62,
+                "vegas_spread": -3.5,
+                "vegas_total": 145.5,
+            }
+        ],
+    }], year=2026)
+
+    game = refreshed[0]
+    assert game["confidence"] == "lean"
+    assert game["variability"] == "high"
+    assert game["upset_rating"] == "medium"
+    assert game["efficiency_prob"] == 0.6123
+    assert game["seed_prob"] == 0.5544
+    assert game["volatility"] == 1.111
+    assert game["game_stdev"] == 11.8
+    assert game["insight"] == "Spacing edge favors the favorite."
+    assert game["key_factors"] == ["Shot quality", "Turnover pressure"]
+
+
 def test_run_model_uses_analysis_pipeline_for_tournament_games(monkeypatch):
     captured = {}
 

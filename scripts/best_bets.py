@@ -528,6 +528,15 @@ def run_model(home_stats, away_stats, config=DEFAULT_CONFIG, round_name=None, re
             "predicted_margin": analysis["predicted_margin"],
             "predicted_score_a": analysis["predicted_score_a"],
             "predicted_score_b": analysis["predicted_score_b"],
+            "confidence": analysis.get("confidence"),
+            "variability": analysis.get("variability"),
+            "upset_rating": analysis.get("upset_rating"),
+            "efficiency_prob": analysis.get("efficiency_prob"),
+            "seed_prob": analysis.get("seed_prob"),
+            "volatility": analysis.get("volatility"),
+            "game_stdev": analysis.get("game_stdev"),
+            "insight": analysis.get("insight"),
+            "key_factors": analysis.get("key_factors"),
         }
     return predict_game(home, away, config=config, round_name=round_name)
 
@@ -922,6 +931,15 @@ def get_full_card_json(api_key, year=None):
         game_rec["model_prob_home"] = round(model_prob_home, 4)
         game_rec["model_margin"] = round(model_margin, 1)
         game_rec["model_total"] = round(model_total, 1)
+        game_rec["confidence"] = result.get("confidence")
+        game_rec["variability"] = result.get("variability")
+        game_rec["upset_rating"] = result.get("upset_rating")
+        game_rec["efficiency_prob"] = round(result["efficiency_prob"], 4) if result.get("efficiency_prob") is not None else None
+        game_rec["seed_prob"] = round(result["seed_prob"], 4) if result.get("seed_prob") is not None else None
+        game_rec["volatility"] = round(result["volatility"], 3) if result.get("volatility") is not None else None
+        game_rec["game_stdev"] = round(result["game_stdev"], 1) if result.get("game_stdev") is not None else None
+        game_rec["insight"] = result.get("insight")
+        game_rec["key_factors"] = result.get("key_factors") or []
 
         # ML pick — always surface the stronger lean, even if edge is negative
         if game["ml_home"] is not None and game["ml_away"] is not None:
@@ -1069,6 +1087,15 @@ def refresh_saved_card_games(games, year=None):
         rec["model_prob_home"] = round(model_prob_home, 4)
         rec["model_margin"] = round(model_margin, 1)
         rec["model_total"] = round(model_total, 1)
+        rec["confidence"] = result.get("confidence")
+        rec["variability"] = result.get("variability")
+        rec["upset_rating"] = result.get("upset_rating")
+        rec["efficiency_prob"] = round(result["efficiency_prob"], 4) if result.get("efficiency_prob") is not None else None
+        rec["seed_prob"] = round(result["seed_prob"], 4) if result.get("seed_prob") is not None else None
+        rec["volatility"] = round(result["volatility"], 3) if result.get("volatility") is not None else None
+        rec["game_stdev"] = round(result["game_stdev"], 1) if result.get("game_stdev") is not None else None
+        rec["insight"] = result.get("insight")
+        rec["key_factors"] = result.get("key_factors") or []
 
         ml_old = old_picks.get("ml")
         if ml_old and ml_old.get("implied_prob") is not None:
