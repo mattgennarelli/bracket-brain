@@ -19,6 +19,17 @@ client = TestClient(app)
 HAS_TEAM_DATA = os.path.isfile(os.path.join(ROOT, "data", "teams_merged_2026.json"))
 
 
+@pytest.fixture(autouse=True)
+def clear_bracket_caches():
+    api._load_bracket_file.cache_clear()
+    api._tournament_team_map.cache_clear()
+    api._exact_tournament_matchups.cache_clear()
+    yield
+    api._load_bracket_file.cache_clear()
+    api._tournament_team_map.cache_clear()
+    api._exact_tournament_matchups.cache_clear()
+
+
 def test_health():
     r = client.get("/health")
     assert r.status_code == 200

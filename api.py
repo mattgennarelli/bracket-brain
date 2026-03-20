@@ -24,6 +24,7 @@ import sys
 import contextlib
 import re
 import time
+from functools import lru_cache
 from datetime import datetime, timezone, timedelta
 from typing import Optional, Dict
 from zoneinfo import ZoneInfo
@@ -267,6 +268,7 @@ def _add_final_four_by_region(result: dict, year: int) -> dict:
     return result
 
 
+@lru_cache(maxsize=8)
 def _load_bracket_file(year: int) -> dict:
     path = os.path.join(DATA_DIR, f"bracket_{year}.json")
     if not os.path.isfile(path):
@@ -275,6 +277,7 @@ def _load_bracket_file(year: int) -> dict:
         return json.load(f)
 
 
+@lru_cache(maxsize=8)
 def _tournament_team_map(year: int) -> Dict[str, str]:
     """Return normalized team name -> canonical bracket name for the tournament field."""
     raw = _load_bracket_file(year)
@@ -929,6 +932,7 @@ def _add_matchups(matchups: set, teams_a, teams_b):
                 matchups.add(key)
 
 
+@lru_cache(maxsize=8)
 def _exact_tournament_matchups(year: int):
     bracket_path = os.path.join(DATA_DIR, f"bracket_{year}.json")
     if not os.path.isfile(bracket_path):
