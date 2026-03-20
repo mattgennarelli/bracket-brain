@@ -4600,10 +4600,10 @@
       "away_team": "Hofstra Pride",
       "commence_time": "2026-03-20T19:15:56Z",
       "date": "2026-03-18",
-      "result": null,
-      "actual_score_home": null,
-      "actual_score_away": null,
-      "settled_at": null,
+      "result": "W",
+      "actual_score_home": 90.0,
+      "actual_score_away": 70.0,
+      "settled_at": "2026-03-20T21:42:14.877212+00:00",
       "ncaa_tournament": true
     },
     {
@@ -6055,10 +6055,10 @@
       "away_team": "Hofstra Pride",
       "commence_time": "2026-03-20T19:15:56Z",
       "date": "2026-03-20",
-      "result": null,
-      "actual_score_home": null,
-      "actual_score_away": null,
-      "settled_at": null
+      "result": "W",
+      "actual_score_home": 90.0,
+      "actual_score_away": 70.0,
+      "settled_at": "2026-03-20T21:42:14.877570+00:00"
     },
     {
       "bet_type": "spread",
@@ -6077,10 +6077,10 @@
       "away_team": "Hofstra Pride",
       "commence_time": "2026-03-20T19:15:56Z",
       "date": "2026-03-20",
-      "result": null,
-      "actual_score_home": null,
-      "actual_score_away": null,
-      "settled_at": null
+      "result": "L",
+      "actual_score_home": 90.0,
+      "actual_score_away": 70.0,
+      "settled_at": "2026-03-20T21:42:14.877594+00:00"
     },
     {
       "bet_type": "total",
@@ -6097,10 +6097,10 @@
       "away_team": "Hofstra Pride",
       "commence_time": "2026-03-20T19:15:56Z",
       "date": "2026-03-20",
-      "result": null,
-      "actual_score_home": null,
-      "actual_score_away": null,
-      "settled_at": null
+      "result": "W",
+      "actual_score_home": 90.0,
+      "actual_score_away": 70.0,
+      "settled_at": "2026-03-20T21:42:14.877612+00:00"
     },
     {
       "bet_type": "ml",
@@ -7329,10 +7329,10 @@
       "away_team": "Hofstra Pride",
       "commence_time": "2026-03-20T19:15:56Z",
       "date": "2026-03-20",
-      "result": null,
-      "actual_score_home": null,
-      "actual_score_away": null,
-      "settled_at": null
+      "result": "L",
+      "actual_score_home": 90.0,
+      "actual_score_away": 70.0,
+      "settled_at": "2026-03-20T21:42:14.878467+00:00"
     },
     {
       "bet_type": "ml",
@@ -8277,53 +8277,53 @@
   ],
   "stats": {
     "total_picks": 378,
-    "settled": 122,
-    "wins": 70,
-    "losses": 50,
+    "settled": 127,
+    "wins": 73,
+    "losses": 52,
     "pushes": 2,
-    "hit_rate": 0.5833,
+    "hit_rate": 0.584,
     "by_type": {
       "ml": {
-        "picks": 39,
-        "wins": 27,
-        "losses": 12,
+        "picks": 41,
+        "wins": 28,
+        "losses": 13,
         "pushes": 0,
-        "net_units": 5.24,
-        "total_wagered": 37.82,
-        "hit_rate": 0.6923,
-        "roi_pct": 13.86
+        "net_units": 5.18,
+        "total_wagered": 37.88,
+        "hit_rate": 0.6829,
+        "roi_pct": 13.68
       },
       "spread": {
-        "picks": 44,
-        "wins": 20,
-        "losses": 23,
+        "picks": 46,
+        "wins": 21,
+        "losses": 24,
         "pushes": 1,
-        "net_units": -7.96,
-        "total_wagered": 49.28,
-        "hit_rate": 0.4651,
-        "roi_pct": -16.15
+        "net_units": -9.29,
+        "total_wagered": 51.97,
+        "hit_rate": 0.4667,
+        "roi_pct": -17.88
       },
       "total": {
-        "picks": 39,
-        "wins": 23,
+        "picks": 40,
+        "wins": 24,
         "losses": 15,
         "pushes": 1,
-        "net_units": 21.32,
-        "total_wagered": 107.2,
-        "hit_rate": 0.6053,
-        "roi_pct": 19.89
+        "net_units": 25.87,
+        "total_wagered": 112.2,
+        "hit_rate": 0.6154,
+        "roi_pct": 23.05
       }
     },
     "by_stars": {
       "\u2605": {
-        "picks": 119,
-        "wins": 69,
-        "losses": 48,
+        "picks": 124,
+        "wins": 72,
+        "losses": 50,
         "pushes": 2,
-        "net_units": 21.69,
-        "total_wagered": 181.67,
-        "hit_rate": 0.5897,
-        "roi_pct": 11.94
+        "net_units": 24.84,
+        "total_wagered": 189.42,
+        "hit_rate": 0.5902,
+        "roi_pct": 13.11
       },
       "\u2605\u2605": {
         "picks": 3,
@@ -8346,8 +8346,8 @@
         "roi_pct": null
       }
     },
-    "total_wagered": 194.3,
-    "net_units": 18.6,
-    "roi_pct": 9.58
+    "total_wagered": 202.05,
+    "net_units": 21.76,
+    "roi_pct": 10.77
   }
 }
