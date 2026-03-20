@@ -38,7 +38,8 @@ ET_TZ = ZoneInfo("America/New_York")
 def _pick_id(pick):
     """Stable dedup key for a single card pick."""
     side = pick.get("bet_side") or pick.get("bet_team", "")
-    return f"{pick['date']}|{pick['home_team']}|{pick['away_team']}|{pick['bet_type']}|{side}"
+    commence = pick.get("commence_time") or pick.get("date", "")
+    return f"{commence}|{pick['home_team']}|{pick['away_team']}|{pick['bet_type']}|{side}"
 
 
 def load_ledger():

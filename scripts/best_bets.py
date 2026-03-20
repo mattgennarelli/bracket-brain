@@ -26,6 +26,7 @@ import math
 import os
 import re
 import sys
+from functools import lru_cache
 from datetime import datetime, timezone
 
 SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
@@ -40,7 +41,11 @@ except ImportError:
     # Instead, defer the error to runtime so tests can safely import this module.
     requests = None  # type: ignore[assignment]
 
-from engine import predict_game, ModelConfig, _normalize_team_for_match, enrich_team, load_teams_merged
+from engine import (
+    predict_game, ModelConfig, DEFAULT_CONFIG, _normalize_team_for_match,
+    _strip_mascot, enrich_team, load_teams_merged, is_ncaa_tournament_game,
+    get_matchup_analysis_display,
+)
 from odds_provider import get_provider, get_api_key
 
 # Default edge thresholds to flag as a "bet"
@@ -152,6 +157,37 @@ def _prep_odds_name(name):
     return name.strip()
 
 
+def _contract_state_suffix(name):
+    """Convert trailing 'State' to 'St.' for our canonical team keys."""
+    words = str(name or "").split()
+    if words and words[-1].lower() == "state":
+        words[-1] = "St."
+        return " ".join(words)
+    return ""
+
+
+def _candidate_lookup_keys(name):
+    """Yield normalized lookup keys for a raw odds name and stripped variants."""
+    seen = set()
+
+    def add(candidate):
+        if not candidate:
+            return
+        for variant in (candidate, _contract_state_suffix(candidate)):
+            key = _normalize_team_for_match(variant)
+            if key and key not in seen:
+                seen.add(key)
+                yield key
+
+    yield from add(name)
+    words = str(name or "").split()
+    for n in range(1, min(4, len(words))):
+        shorter = " ".join(words[:-n])
+        if not shorter:
+            break
+        yield from add(shorter)
+
+
 def load_team_stats(year):
     """Load teams_merged for the given year."""
     teams = load_teams_merged(DATA_DIR, year)
@@ -162,6 +198,55 @@ def load_team_stats(year):
                 print(f"  Warning: using {y} team data (no {year} data found)")
                 break
     return teams
+
+
+@lru_cache(maxsize=8)
+def _load_bracket_context(year):
+    path = os.path.join(DATA_DIR, f"bracket_{year}.json")
+    if not os.path.isfile(path):
+        return {}, {}
+    with open(path) as f:
+        bracket = json.load(f)
+    seed_map = {}
+    region_map = {}
+    regions = bracket.get("regions", {})
+    if isinstance(regions, dict):
+        for region, teams in regions.items():
+            for team in teams or []:
+                name = team.get("team") or team.get("name")
+                seed = team.get("seed")
+                if not name:
+                    continue
+                for variant in (name, _strip_mascot(name)):
+                    norm = _normalize_team_for_match(variant)
+                    if not norm:
+                        continue
+                    seed_map[norm] = seed
+                    region_map[norm] = region
+    return seed_map, region_map
+
+
+def _tournament_context(home_name, away_name, year):
+    seed_map, region_map = _load_bracket_context(year)
+    home_keys = list(_candidate_lookup_keys(_prep_odds_name(home_name))) + list(_candidate_lookup_keys(home_name))
+    away_keys = list(_candidate_lookup_keys(_prep_odds_name(away_name))) + list(_candidate_lookup_keys(away_name))
+    home_seed = next((seed_map[k] for k in home_keys if k in seed_map), None)
+    away_seed = next((seed_map[k] for k in away_keys if k in seed_map), None)
+    home_region = next((region_map[k] for k in home_keys if k in region_map), None)
+    away_region = next((region_map[k] for k in away_keys if k in region_map), None)
+    if home_region and home_region == away_region:
+        return {
+            "seed_home": home_seed,
+            "seed_away": away_seed,
+            "region": home_region,
+            "round_name": "Round of 64",
+        }
+    return {
+        "seed_home": home_seed,
+        "seed_away": away_seed,
+        "region": None,
+        "round_name": "Round of 64" if home_seed is not None and away_seed is not None else None,
+    }
 
 
 def lookup_team(name, teams_merged):
@@ -177,60 +262,60 @@ def lookup_team(name, teams_merged):
     def _try(key):
         return teams_merged.get(key)
 
-    # Step 1: as-is
-    key = _normalize_team_for_match(name)
-    if _try(key):
-        return dict(_try(key))
+    # Step 1: as-is + mascot stripping on the raw provider name
+    raw_keys = list(_candidate_lookup_keys(name))
+    for key in raw_keys:
+        if _try(key):
+            return dict(_try(key))
 
-    # Step 2: with abbreviation expansion
+    # Step 2: with abbreviation expansion + stripped variants
     prepped = _prep_odds_name(name)
-    key2 = _normalize_team_for_match(prepped)
-    if key2 != key and _try(key2):
-        return dict(_try(key2))
-
-    # Step 3: progressive mascot stripping on the expanded name
-    words = prepped.split()
-    for n in range(1, min(4, len(words))):
-        shorter = " ".join(words[:-n])
-        if not shorter:
-            break
-        k = _normalize_team_for_match(shorter)
-        if _try(k):
-            return dict(_try(k))
+    prepped_keys = list(_candidate_lookup_keys(prepped))
+    for key in prepped_keys:
+        if key not in raw_keys and _try(key):
+            return dict(_try(key))
 
     # Step 4: manual overrides — check all candidate keys
-    for candidate in (key, key2):
+    for candidate in raw_keys + prepped_keys:
         manual_key = _ODDS_MANUAL.get(candidate)
-        if manual_key:
-            mk = _normalize_team_for_match(manual_key)
-            if _try(mk):
-                return dict(_try(mk))
-    # Also try stripping words then checking manual map
-    words2 = prepped.split()
-    for n in range(1, min(4, len(words2))):
-        shorter_key = _normalize_team_for_match(" ".join(words2[:-n]))
-        manual_key = _ODDS_MANUAL.get(shorter_key)
         if manual_key:
             mk = _normalize_team_for_match(manual_key)
             if _try(mk):
                 return dict(_try(mk))
 
     # Step 5: conservative substring match — both keys must be ≥80% of longer
-    for k, v in teams_merged.items():
-        shorter, longer = (key2, k) if len(key2) <= len(k) else (k, key2)
-        if len(shorter) >= 6 and shorter in longer and len(shorter) >= len(longer) * 0.80:
-            return dict(v)
+    for candidate in prepped_keys or raw_keys:
+        for k, v in teams_merged.items():
+            shorter, longer = (candidate, k) if len(candidate) <= len(k) else (k, candidate)
+            if len(shorter) >= 6 and shorter in longer and len(shorter) >= len(longer) * 0.80:
+                return dict(v)
 
     return None
 
 
-def run_model(home_stats, away_stats, config):
-    """Run predict_game and return result dict."""
+def run_model(home_stats, away_stats, config=DEFAULT_CONFIG, round_name=None, region=None, year=None):
+    """Run the same matchup pipeline used by the bracket for tournament games."""
     home = enrich_team(dict(home_stats))
     away = enrich_team(dict(away_stats))
     home.setdefault("seed", 8)
     away.setdefault("seed", 8)
-    return predict_game(home, away, config=config)
+    if round_name and year:
+        analysis = get_matchup_analysis_display(
+            home,
+            away,
+            data_dir=DATA_DIR,
+            year=year,
+            region=region,
+            round_name=round_name,
+            config=config,
+        )
+        return {
+            "win_prob_a": analysis["win_prob_a"],
+            "predicted_margin": analysis["predicted_margin"],
+            "predicted_score_a": analysis["predicted_score_a"],
+            "predicted_score_b": analysis["predicted_score_b"],
+        }
+    return predict_game(home, away, config=config, round_name=round_name)
 
 
 # ---------------------------------------------------------------------------
@@ -330,7 +415,7 @@ def get_best_bets_json(api_key, year=None, ml_min=None, spread_min=None, total_m
         return []
 
     teams = load_team_stats(year)
-    config = ModelConfig()
+    config = DEFAULT_CONFIG
     bets = []
     now_utc = datetime.now(timezone.utc)
 
@@ -355,9 +440,22 @@ def get_best_bets_json(api_key, year=None, ml_min=None, spread_min=None, total_m
         if away_stats.get("adj_o") is None or away_stats.get("adj_d") is None:
             continue
 
-        home_stats["team"] = home_name
-        away_stats["team"] = away_name
-        result = run_model(home_stats, away_stats, config)
+        round_name = None
+        if is_ncaa_tournament_game(home_name, away_name, year=year):
+            ctx = _tournament_context(home_name, away_name, year)
+            if ctx["seed_home"] is not None:
+                home_stats["seed"] = ctx["seed_home"]
+            if ctx["seed_away"] is not None:
+                away_stats["seed"] = ctx["seed_away"]
+            round_name = ctx["round_name"]
+        result = run_model(
+            home_stats,
+            away_stats,
+            config,
+            round_name=round_name,
+            region=ctx["region"] if round_name else None,
+            year=year if round_name else None,
+        )
         model_prob_home = result["win_prob_a"]
         model_margin = result["predicted_margin"]
         model_total_raw = result["predicted_score_a"] + result["predicted_score_b"]
@@ -500,7 +598,7 @@ def get_full_card_json(api_key, year=None):
         return []
 
     teams = load_team_stats(year)
-    config = ModelConfig()
+    config = DEFAULT_CONFIG
     now_utc = datetime.now(timezone.utc)
     out = []
 
@@ -537,9 +635,22 @@ def get_full_card_json(api_key, year=None):
             out.append(game_rec)
             continue
 
-        home_stats["team"] = home_name
-        away_stats["team"] = away_name
-        result = run_model(home_stats, away_stats, config)
+        round_name = None
+        if is_ncaa_tournament_game(home_name, away_name, year=year):
+            ctx = _tournament_context(home_name, away_name, year)
+            if ctx["seed_home"] is not None:
+                home_stats["seed"] = ctx["seed_home"]
+            if ctx["seed_away"] is not None:
+                away_stats["seed"] = ctx["seed_away"]
+            round_name = ctx["round_name"]
+        result = run_model(
+            home_stats,
+            away_stats,
+            config,
+            round_name=round_name,
+            region=ctx["region"] if round_name else None,
+            year=year if round_name else None,
+        )
         model_prob_home = result["win_prob_a"]
         model_margin = result["predicted_margin"]
         model_total_raw = result["predicted_score_a"] + result["predicted_score_b"]
@@ -549,35 +660,36 @@ def get_full_card_json(api_key, year=None):
         game_rec["model_margin"] = round(model_margin, 1)
         game_rec["model_total"] = round(model_total, 1)
 
-        # ML pick — always take the side with higher model probability
+        # ML pick — only surface when one side actually has positive edge
         if game["ml_home"] is not None and game["ml_away"] is not None:
             raw_h = _american_to_prob(game["ml_home"])
             raw_a = _american_to_prob(game["ml_away"])
             ih, ia = _devig(raw_h, raw_a)
             h_edge, a_edge = ml_edge(model_prob_home, game["ml_home"], game["ml_away"])
-            if model_prob_home >= 0.5:
-                bet_side, bet_odds, model_p, implied_p, edge_val = \
-                    home_name, game["ml_home"], model_prob_home, ih, (h_edge or 0)
-            else:
-                bet_side, bet_odds, model_p, implied_p, edge_val = \
-                    away_name, game["ml_away"], 1 - model_prob_home, ia, (a_edge or 0)
-            dec = _american_to_decimal(bet_odds)
-            k = kelly_fraction(model_p, dec)
-            stars = star_rating(abs(edge_val), [DEFAULT_ML_EDGE, DEFAULT_ML_EDGE * 1.5, DEFAULT_ML_EDGE * 2.5])
-            game_rec["picks"].append({
-                "bet_type": "ml",
-                "bet_side": bet_side,
-                "bet_odds": bet_odds,
-                "model_prob": round(model_p, 4),
-                "implied_prob": round(implied_p, 4),
-                "edge": round(edge_val, 4),
-                "stars": stars,
-                "kelly_units": round(k * 100, 2),
-                "model_margin": round(model_margin, 1),
-                "model_total": round(model_total, 1),
-                "vegas_spread": game["spread_home"],
-                "vegas_total": game["total_line"],
-            })
+            ml_options = []
+            if h_edge and h_edge > 0:
+                ml_options.append((h_edge, home_name, game["ml_home"], model_prob_home, ih))
+            if a_edge and a_edge > 0:
+                ml_options.append((a_edge, away_name, game["ml_away"], 1 - model_prob_home, ia))
+            if ml_options:
+                edge_val, bet_side, bet_odds, model_p, implied_p = max(ml_options, key=lambda x: x[0])
+                dec = _american_to_decimal(bet_odds)
+                k = kelly_fraction(model_p, dec)
+                stars = star_rating(edge_val, [DEFAULT_ML_EDGE, DEFAULT_ML_EDGE * 1.5, DEFAULT_ML_EDGE * 2.5])
+                game_rec["picks"].append({
+                    "bet_type": "ml",
+                    "bet_side": bet_side,
+                    "bet_odds": bet_odds,
+                    "model_prob": round(model_p, 4),
+                    "implied_prob": round(implied_p, 4),
+                    "edge": round(edge_val, 4),
+                    "stars": stars,
+                    "kelly_units": round(k * 100, 2),
+                    "model_margin": round(model_margin, 1),
+                    "model_total": round(model_total, 1),
+                    "vegas_spread": game["spread_home"],
+                    "vegas_total": game["total_line"],
+                })
 
         # Spread pick — take the side the model favors vs the line
         if game["spread_home"] is not None:
@@ -628,6 +740,157 @@ def get_full_card_json(api_key, year=None):
                 })
 
         out.append(game_rec)
+
+    out.sort(key=lambda g: g.get("commence_time", ""))
+    return out
+
+
+def refresh_saved_card_games(games, year=None):
+    """Re-score a saved card snapshot against the current model/team matcher.
+
+    This lets the API serve corrected model leans even when we only have a saved
+    daily card file and no live odds pull available.
+    """
+    year = year or datetime.now().year
+    teams = load_team_stats(year)
+    config = DEFAULT_CONFIG
+    out = []
+
+    for game in games or []:
+        rec = {
+            "home_team": game.get("home_team"),
+            "away_team": game.get("away_team"),
+            "commence_time": game.get("commence_time"),
+            "data_available": False,
+            "ncaa_tournament": game.get("ncaa_tournament", True),
+            "picks": [],
+        }
+
+        home_name = rec["home_team"]
+        away_name = rec["away_team"]
+        old_picks = {p.get("bet_type"): dict(p) for p in game.get("picks", [])}
+
+        home_stats = lookup_team(home_name, teams)
+        away_stats = lookup_team(away_name, teams)
+        data_ok = (
+            home_stats is not None and away_stats is not None
+            and home_stats.get("adj_o") is not None and home_stats.get("adj_d") is not None
+            and away_stats.get("adj_o") is not None and away_stats.get("adj_d") is not None
+        )
+        rec["data_available"] = data_ok
+        if not data_ok:
+            out.append(rec)
+            continue
+
+        round_name = None
+        if is_ncaa_tournament_game(home_name, away_name, year=year):
+            ctx = _tournament_context(home_name, away_name, year)
+            if ctx["seed_home"] is not None:
+                home_stats["seed"] = ctx["seed_home"]
+            if ctx["seed_away"] is not None:
+                away_stats["seed"] = ctx["seed_away"]
+            round_name = ctx["round_name"]
+        result = run_model(
+            home_stats,
+            away_stats,
+            config,
+            round_name=round_name,
+            region=ctx["region"] if round_name else None,
+            year=year if round_name else None,
+        )
+        model_prob_home = result["win_prob_a"]
+        model_margin = result["predicted_margin"]
+        model_total = result["predicted_score_a"] + result["predicted_score_b"] + TOTAL_BIAS_CORRECTION
+
+        rec["model_prob_home"] = round(model_prob_home, 4)
+        rec["model_margin"] = round(model_margin, 1)
+        rec["model_total"] = round(model_total, 1)
+
+        ml_old = old_picks.get("ml")
+        if ml_old and ml_old.get("implied_prob") is not None:
+            old_side = ml_old.get("bet_side")
+            old_implied = float(ml_old.get("implied_prob") or 0)
+            home_implied = old_implied if old_side == home_name else 1 - old_implied
+            away_implied = 1 - home_implied
+            home_edge = model_prob_home - home_implied
+            away_edge = (1 - model_prob_home) - away_implied
+            if old_side == home_name and home_edge > 0 and (home_edge >= away_edge or away_edge <= 0):
+                dec = _american_to_decimal(ml_old["bet_odds"])
+                rec["picks"].append({
+                    "bet_type": "ml",
+                    "bet_side": home_name,
+                    "bet_odds": ml_old["bet_odds"],
+                    "model_prob": round(model_prob_home, 4),
+                    "implied_prob": round(home_implied, 4),
+                    "edge": round(home_edge, 4),
+                    "stars": star_rating(home_edge, [DEFAULT_ML_EDGE, DEFAULT_ML_EDGE * 1.5, DEFAULT_ML_EDGE * 2.5]),
+                    "kelly_units": round(kelly_fraction(model_prob_home, dec) * 100, 2),
+                    "model_margin": round(model_margin, 1),
+                    "model_total": round(model_total, 1),
+                    "vegas_spread": ml_old.get("vegas_spread"),
+                    "vegas_total": ml_old.get("vegas_total"),
+                })
+            elif old_side == away_name and away_edge > 0 and (away_edge >= home_edge or home_edge <= 0):
+                dec = _american_to_decimal(ml_old["bet_odds"])
+                rec["picks"].append({
+                    "bet_type": "ml",
+                    "bet_side": away_name,
+                    "bet_odds": ml_old["bet_odds"],
+                    "model_prob": round(1 - model_prob_home, 4),
+                    "implied_prob": round(away_implied, 4),
+                    "edge": round(away_edge, 4),
+                    "stars": star_rating(away_edge, [DEFAULT_ML_EDGE, DEFAULT_ML_EDGE * 1.5, DEFAULT_ML_EDGE * 2.5]),
+                    "kelly_units": round(kelly_fraction(1 - model_prob_home, dec) * 100, 2),
+                    "model_margin": round(model_margin, 1),
+                    "model_total": round(model_total, 1),
+                    "vegas_spread": ml_old.get("vegas_spread"),
+                    "vegas_total": ml_old.get("vegas_total"),
+                })
+
+        sp_old = old_picks.get("spread")
+        if sp_old and sp_old.get("vegas_spread") is not None:
+            sp_edge_val = spread_edge(model_margin, sp_old["vegas_spread"])
+            if sp_edge_val is not None:
+                if sp_edge_val > 0:
+                    bet_team, bet_spread = home_name, sp_old["vegas_spread"]
+                else:
+                    bet_team, bet_spread = away_name, -sp_old["vegas_spread"]
+                cp = cover_prob(abs(sp_edge_val))
+                dec_sp = _american_to_decimal(sp_old["bet_odds"]) if sp_old.get("bet_odds") else 1.909
+                rec["picks"].append({
+                    "bet_type": "spread",
+                    "bet_team": bet_team,
+                    "bet_spread": round(bet_spread, 1),
+                    "bet_odds": sp_old.get("bet_odds"),
+                    "edge": round(sp_edge_val, 2),
+                    "stars": star_rating(abs(sp_edge_val), [DEFAULT_SPREAD_EDGE, DEFAULT_SPREAD_EDGE * 1.5, DEFAULT_SPREAD_EDGE * 2.0]),
+                    "kelly_units": round(kelly_fraction(cp, dec_sp) * 100, 2),
+                    "cover_margin": round(abs(sp_edge_val), 1),
+                    "model_margin": round(model_margin, 1),
+                    "vegas_spread": sp_old["vegas_spread"],
+                    "model_total": round(model_total, 1),
+                    "vegas_total": sp_old.get("vegas_total"),
+                })
+
+        tot_old = old_picks.get("total")
+        if tot_old and tot_old.get("vegas_total") is not None:
+            tot_e = total_edge(model_total, tot_old["vegas_total"])
+            if tot_e is not None:
+                cp_tot = cover_prob(abs(tot_e))
+                rec["picks"].append({
+                    "bet_type": "total",
+                    "bet_side": "OVER" if tot_e > 0 else "UNDER",
+                    "bet_odds": tot_old.get("bet_odds", -110),
+                    "edge": round(tot_e, 2),
+                    "stars": star_rating(abs(tot_e), [DEFAULT_TOTAL_EDGE, DEFAULT_TOTAL_EDGE * 1.4, DEFAULT_TOTAL_EDGE * 2.0]),
+                    "kelly_units": round(kelly_fraction(cp_tot, 1.909) * 100, 2),
+                    "model_total": round(model_total, 1),
+                    "vegas_total": tot_old["vegas_total"],
+                    "model_margin": round(model_margin, 1),
+                    "vegas_spread": tot_old.get("vegas_spread"),
+                })
+
+        out.append(rec)
 
     out.sort(key=lambda g: g.get("commence_time", ""))
     return out

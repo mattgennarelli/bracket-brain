@@ -209,6 +209,43 @@ def test_bets_today_uses_game_date_from_commence_time(tmp_path, monkeypatch):
     assert d["picks"][0]["date"] == "2026-03-20"
 
 
+def test_bets_history_dedupes_same_pick_across_date_changes(tmp_path, monkeypatch):
+    ledger_path = tmp_path / "bets_ledger.json"
+    ledger_path.write_text(json.dumps({
+        "picks": [
+            {
+                "date": "2026-03-19",
+                "home_team": "Duke",
+                "away_team": "Arizona",
+                "commence_time": "2026-03-20T17:00:00Z",
+                "bet_type": "ml",
+                "bet_side": "Duke",
+                "generated_at": "2026-03-19T14:00:00Z",
+            },
+            {
+                "date": "2026-03-20",
+                "home_team": "Duke",
+                "away_team": "Arizona",
+                "commence_time": "2026-03-20T17:00:00Z",
+                "bet_type": "ml",
+                "bet_side": "Duke",
+                "generated_at": "2026-03-19T22:00:00Z",
+            },
+        ]
+    }))
+
+    monkeypatch.setattr(api, "DATA_DIR", str(tmp_path))
+    monkeypatch.setattr(api, "LEDGER_PATH", str(ledger_path))
+    monkeypatch.setattr(api, "is_ncaa_tournament_game", lambda home, away, year=2026: True)
+
+    r = client.get("/bets/history")
+    assert r.status_code == 200
+    d = r.json()
+    assert len(d["picks"]) == 1
+    assert d["picks"][0]["date"] == "2026-03-20"
+    assert d["picks"][0]["generated_at"] == "2026-03-19T22:00:00Z"
+
+
 def test_bracket_scores_maps_to_bracket_team_names(tmp_path, monkeypatch):
     bracket_path = tmp_path / "bracket_2026.json"
     bracket_path.write_text(json.dumps({
@@ -224,6 +261,7 @@ def test_bracket_scores_maps_to_bracket_team_names(tmp_path, monkeypatch):
     monkeypatch.setattr(api, "fetch_espn_scoreboard", lambda dates: [{
         "home_team": "Duke",
         "away_team": "Arizona",
+        "scheduled_at": "2026-03-19T23:00:00Z",
         "home_score": 81,
         "away_score": 77,
         "completed": True,
@@ -237,6 +275,7 @@ def test_bracket_scores_maps_to_bracket_team_names(tmp_path, monkeypatch):
     d = r.json()
     assert d["scores"]["Duke|Arizona"]["score_a"] == 81
     assert d["scores"]["Duke|Arizona"]["score_b"] == 77
+    assert d["scores"]["Duke|Arizona"]["round_of"] == 64
     assert d["scores"]["Arizona|Duke"]["score_a"] == 77
     assert d["scores"]["Arizona|Duke"]["score_b"] == 81
 
@@ -258,6 +297,7 @@ def test_bracket_scores_strip_espn_mascots_and_aliases(tmp_path, monkeypatch):
         "away_team": "Florida Gators",
         "home_aliases": ["Duke", "Duke Blue Devils"],
         "away_aliases": ["Florida", "Florida Gators"],
+        "scheduled_at": "2026-04-04T23:00:00Z",
         "home_score": 71,
         "away_score": 68,
         "completed": True,
@@ -271,3 +311,34 @@ def test_bracket_scores_strip_espn_mascots_and_aliases(tmp_path, monkeypatch):
     d = r.json()
     assert d["scores"]["Duke|Florida"]["score_a"] == 71
     assert d["scores"]["Florida|Duke"]["score_b"] == 71
+    assert d["scores"]["Duke|Florida"]["round_of"] == 4
+
+
+def test_bracket_scores_skip_pre_tournament_game_for_same_pair(tmp_path, monkeypatch):
+    bracket_path = tmp_path / "bracket_2026.json"
+    bracket_path.write_text(json.dumps({
+        "regions": {
+            "West": [{"team": "Florida"}],
+            "South": [{"team": "Vanderbilt"}],
+        },
+        "first_four": [],
+    }))
+
+    monkeypatch.setattr(api, "DATA_DIR", str(tmp_path))
+    monkeypatch.setattr(api, "_cache", {})
+    monkeypatch.setattr(api, "fetch_espn_scoreboard", lambda dates: [{
+        "home_team": "Florida",
+        "away_team": "Vanderbilt",
+        "scheduled_at": "2026-03-15T20:00:00Z",
+        "home_score": 74,
+        "away_score": 71,
+        "completed": True,
+        "status_detail": "Final",
+        "display_clock": "",
+        "period": 2,
+    }])
+
+    r = client.get("/bracket/2026/scores")
+    assert r.status_code == 200
+    d = r.json()
+    assert d["scores"] == {}

@@ -719,6 +719,15 @@ function _lookupBracketScore(teamA, teamB) {
   return bracketScores[`${teamA}|${teamB}`] || bracketScores[`${teamB}|${teamA}`] || null;
 }
 
+function _gameRoundOf(gameId) {
+  if (!gameId) return null;
+  if (gameId === 'FF-2-0') return 2;
+  if (gameId.startsWith('FF-4-')) return 4;
+  const parts = gameId.split('-');
+  const roundOf = Number(parts[1] || 0);
+  return Number.isFinite(roundOf) && roundOf > 0 ? roundOf : null;
+}
+
 function _formatCommenceDateTime(commenceTime, includeDate = true) {
   if (!commenceTime) return '';
   try {
@@ -783,8 +792,12 @@ function _getScoreDisplayState(scoreRec, fallbackCommenceTime = '') {
   };
 }
 
-function _resolveGameOutcome(teamA, teamB, fallbackPick) {
-  const scoreRec = _lookupBracketScore(teamA, teamB);
+function _resolveGameOutcome(gameId, teamA, teamB, fallbackPick) {
+  const expectedRound = _gameRoundOf(gameId);
+  const rawScoreRec = _lookupBracketScore(teamA, teamB);
+  const scoreRec = rawScoreRec && (!expectedRound || !rawScoreRec.round_of || Number(rawScoreRec.round_of) === expectedRound)
+    ? rawScoreRec
+    : null;
   const state = _getScoreDisplayState(scoreRec);
   const scoreA = state.showScores ? state.scoreA : null;
   const scoreB = state.showScores ? state.scoreB : null;
@@ -1199,7 +1212,7 @@ function recomputeBracket() {
       const p = PICKS.find(pp => pp.region === region && pp.round === 64 &&
         (pp.team_a === tA.team || pp.team_b === tA.team));
       const suggestedPick = lockedPicks[gid] || simPicks[gid] || null;
-      const outcome = _resolveGameOutcome(tA.team, tB.team, suggestedPick);
+      const outcome = _resolveGameOutcome(gid, tA.team, tB.team, suggestedPick);
       bracketState[gid] = {
         teamA: tA.team, seedA: tA.seed,
         teamB: tB.team, seedB: tB.seed,
@@ -1244,7 +1257,7 @@ function recomputeBracket() {
         const probA = p && teamA ? _probForTeam(p, teamA)
           : (seedA && seedB ? seedWinProb(seedA, seedB) : 0.5);
         const suggestedPick = lockedPicks[gid] || simPicks[gid] || null;
-        const outcome = _resolveGameOutcome(teamA, teamB, suggestedPick);
+        const outcome = _resolveGameOutcome(gid, teamA, teamB, suggestedPick);
         bracketState[gid] = {
           teamA, seedA, teamB, seedB, probA,
           margin: p?.projected_spread || (seedA && seedB ? Math.abs(seedB - seedA) : 0),
@@ -1275,7 +1288,7 @@ function recomputeBracket() {
           const probA = p && teamA ? _probForTeam(p, teamA)
             : (seedA && seedB ? seedWinProb(seedA, seedB) : 0.5);
           const suggestedPick = lockedPicks[gid] || simPicks[gid] || null;
-          const outcome = _resolveGameOutcome(teamA, teamB, suggestedPick);
+          const outcome = _resolveGameOutcome(gid, teamA, teamB, suggestedPick);
           bracketState[gid] = {
             teamA, seedA, teamB, seedB, probA,
             margin: p?.projected_spread || 0,
@@ -1300,7 +1313,7 @@ function recomputeBracket() {
         const probA = p && teamA ? _probForTeam(p, teamA)
           : (seedA && seedB ? seedWinProb(seedA, seedB) : 0.5);
         const suggestedPick = lockedPicks['FF-2-0'] || simPicks['FF-2-0'] || null;
-        const outcome = _resolveGameOutcome(teamA, teamB, suggestedPick);
+        const outcome = _resolveGameOutcome('FF-2-0', teamA, teamB, suggestedPick);
         bracketState['FF-2-0'] = {
           teamA, seedA, teamB, seedB, probA,
           margin: p?.projected_spread || 0,
@@ -2639,7 +2652,9 @@ function _pickRowHtml(p, showDate, scoreOverlay) {
     desc += ` ${p.bet_spread > 0 ? '+' : ''}${p.bet_spread.toFixed(1)}`;
   if (bt === 'total') desc = `${side} ${p.vegas_total != null ? p.vegas_total.toFixed(1) : ''}`;
   const odds = p.bet_odds != null ? `${p.bet_odds > 0 ? '+' : ''}${Math.round(p.bet_odds)}` : '';
-  const edge = p.edge != null ? `${(p.edge * 100).toFixed(1)}%` : '';
+  const edgeLabel = p.edge != null
+    ? (bt === 'ml' ? `${(p.edge * 100).toFixed(1)}% edge` : `${Number(p.edge).toFixed(1)} pt edge`)
+    : '';
   // Model projection label — shows what the model actually predicts vs the market
   let projLabel = '';
   if (bt === 'ml' && p.model_prob != null && p.implied_prob != null) {
@@ -2672,12 +2687,17 @@ function _pickRowHtml(p, showDate, scoreOverlay) {
   const rowId = `${p.date||'x'}-${p.home_team||''}-${p.away_team||''}-${bt}-${side}`.replace(/[^a-z0-9]/gi, '_');
   const whyLines = [];
   if (modelProb && impliedProb) whyLines.push(`Model probability: <strong>${modelProb}</strong> vs market implied: <strong>${impliedProb}</strong>`);
-  if (edge) whyLines.push(`Edge: <strong>${edge}</strong> — the model sees more value than the market`);
+  if (edgeLabel) whyLines.push(`Edge: <strong>${edgeLabel}</strong>`);
   if (kelly) whyLines.push(`Kelly sizing: <strong>${kelly} units</strong> (tenth-Kelly, capped at 5u)`);
   if (p.insight) whyLines.push(p.insight);
   const whyHtml = whyLines.length ? `<div id="why-${rowId}" style="display:none;margin-top:6px;padding:8px 10px;background:var(--surface2);border-radius:6px;border:1px solid var(--border);font-size:.75rem;color:var(--muted);line-height:1.6">
     ${whyLines.map(l => `<div>• ${l}</div>`).join('')}
   </div>` : '';
+  const analyticsBits = [
+    projLabel ? `<span class="bet-edge">${projLabel}</span>` : '',
+    edgeLabel ? `<span style="font-size:.7rem;color:var(--muted)">${edgeLabel}</span>` : '',
+    kelly ? `<span style="font-size:.7rem;color:var(--muted)">Bet <strong style="color:var(--text)">${kelly}u</strong></span>` : '',
+  ].filter(Boolean).join('<span style="color:var(--border)">·</span>');
 
   const resultKey = result || 'pending';
   const starCount = (stars.match(/★/g) || []).length;
@@ -2692,8 +2712,7 @@ function _pickRowHtml(p, showDate, scoreOverlay) {
       </div>
       <div class="bet-sub">${gameStr}${actualStr}</div>
       <div style="display:flex;align-items:center;gap:10px;margin-top:2px;flex-wrap:wrap">
-        ${projLabel ? `<div class="bet-edge" title="${edge} edge">${projLabel}</div>` : edge ? `<div class="bet-edge">${edge} edge</div>` : ''}
-        ${kelly ? `<div style="font-size:.7rem;color:var(--muted)">Bet <strong style="color:var(--text)">${kelly}u</strong></div>` : ''}
+        ${analyticsBits ? `<div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap">${analyticsBits}</div>` : ''}
         ${whyLines.length ? `<button onclick="toggleWhy('${rowId}')" style="background:none;border:none;font-size:.7rem;color:var(--primary);cursor:pointer;padding:0">Why this pick? ›</button>` : ''}
       </div>
       ${whyHtml}

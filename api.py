@@ -49,7 +49,7 @@ from espn_scores import (
     fetch_scores_for_picks, fetch_espn_scoreboard,
     _scores_key as espn_scores_key,
 )
-from best_bets import get_full_card_json
+from best_bets import get_full_card_json, refresh_saved_card_games
 from odds_provider import get_api_key
 from scripts.fetch_data import build_merged_teams
 
@@ -300,6 +300,9 @@ def _build_bracket_scores_result(year: int, days: int = 21) -> dict:
     games = fetch_espn_scoreboard(dates)
     result = {"scores": {}}
     for game in games:
+        round_of = _infer_tournament_round(year, game.get("scheduled_at"))
+        if round_of is None:
+            continue
         home = _resolve_tournament_team(team_map, game.get("home_team", ""), *game.get("home_aliases", []))
         away = _resolve_tournament_team(team_map, game.get("away_team", ""), *game.get("away_aliases", []))
         if not home or not away or home == away:
@@ -314,9 +317,15 @@ def _build_bracket_scores_result(year: int, days: int = 21) -> dict:
             "status_detail": game.get("status_detail", ""),
             "display_clock": game.get("display_clock", ""),
             "period": game.get("period", 0),
+            "round_of": round_of,
         }
-        result["scores"][f"{home}|{away}"] = rec
-        result["scores"][f"{away}|{home}"] = {
+        home_key = f"{home}|{away}"
+        away_key = f"{away}|{home}"
+        existing = result["scores"].get(home_key)
+        if existing and str(existing.get("scheduled_at") or "") > str(rec.get("scheduled_at") or ""):
+            continue
+        result["scores"][home_key] = rec
+        result["scores"][away_key] = {
             **rec,
             "team_a": away,
             "team_b": home,
@@ -690,6 +699,7 @@ def get_bets_today(tournament_only: bool = Query(default=True)):
     with open(LEDGER_PATH) as f:
         ledger = json.load(f)
     picks = [_normalize_pick_date(p) for p in ledger.get("picks", [])]
+    picks = _dedupe_picks(picks)
     picks = [p for p in picks if p.get("date") == today]
     # Tag picks that haven't been tagged yet
     for p in picks:
@@ -713,7 +723,7 @@ def get_bets_history(tournament_only: bool = Query(default=True)):
         return {"picks": [], "stats": {}, "model_epoch": None}
     with open(LEDGER_PATH) as f:
         data = json.load(f)
-    data["picks"] = [_normalize_pick_date(p) for p in data.get("picks", [])]
+    data["picks"] = _dedupe_picks([_normalize_pick_date(p) for p in data.get("picks", [])])
 
     # Ensure all picks are tagged (idempotent)
     for p in data.get("picks", []):
@@ -756,9 +766,8 @@ def get_bets_scores():
     with open(LEDGER_PATH) as f:
         ledger = json.load(f)
 
-    picks = ledger.get("picks", [])
+    picks = _dedupe_picks([_normalize_pick_date(p) for p in ledger.get("picks", [])])
     # Focus on recent picks (today + last 2 days)
-    today = _today_et_str()
     recent = [p for p in picks if p.get("date") and p.get("date") >= _days_ago(2)]
 
     scores_by_key = fetch_scores_for_picks(recent, days=2)
@@ -801,6 +810,39 @@ def _days_ago(n):
     return d.strftime("%Y-%m-%d")
 
 
+def _nth_weekday_of_month(year: int, month: int, weekday: int, occurrence: int):
+    d = datetime(year, month, 1, tzinfo=ET_TZ)
+    while d.weekday() != weekday:
+        d += timedelta(days=1)
+    d += timedelta(days=7 * (occurrence - 1))
+    return d.date()
+
+
+def _tournament_round_windows(year: int):
+    r64_start = _nth_weekday_of_month(year, 3, 3, 3)  # third Thursday of March
+    return {
+        64: (r64_start, r64_start + timedelta(days=1)),
+        32: (r64_start + timedelta(days=2), r64_start + timedelta(days=3)),
+        16: (r64_start + timedelta(days=7), r64_start + timedelta(days=8)),
+        8: (r64_start + timedelta(days=9), r64_start + timedelta(days=10)),
+        4: (_nth_weekday_of_month(year, 4, 5, 1), _nth_weekday_of_month(year, 4, 5, 1)),
+        2: (_nth_weekday_of_month(year, 4, 0, 1), _nth_weekday_of_month(year, 4, 0, 1)),
+    }
+
+
+def _infer_tournament_round(year: int, scheduled_at: str):
+    if not scheduled_at:
+        return None
+    try:
+        dt = datetime.fromisoformat(str(scheduled_at).replace("Z", "+00:00")).astimezone(ET_TZ).date()
+    except ValueError:
+        return None
+    for round_of, (start, end) in _tournament_round_windows(year).items():
+        if start <= dt <= end:
+            return round_of
+    return None
+
+
 def _today_et_str() -> str:
     return datetime.now(ET_TZ).strftime("%Y-%m-%d")
 
@@ -820,6 +862,39 @@ def _normalize_pick_date(pick: dict) -> dict:
     normalized = dict(pick)
     normalized["date"] = _pick_game_date(pick)
     return normalized
+
+
+def _pick_identity(pick: dict):
+    side = pick.get("bet_side") or pick.get("bet_team", "")
+    return (
+        pick.get("home_team", ""),
+        pick.get("away_team", ""),
+        pick.get("bet_type", ""),
+        side,
+        pick.get("commence_time", "") or "",
+    )
+
+
+def _pick_preference_key(pick: dict):
+    settled = 1 if pick.get("result") in {"W", "L", "P"} else 0
+    scored = 1 if pick.get("actual_score_home") is not None and pick.get("actual_score_away") is not None else 0
+    return (
+        settled,
+        scored,
+        str(pick.get("settled_at") or ""),
+        str(pick.get("generated_at") or ""),
+        _pick_game_date(pick),
+    )
+
+
+def _dedupe_picks(picks):
+    deduped = {}
+    for pick in picks:
+        key = _pick_identity(pick)
+        current = deduped.get(key)
+        if current is None or _pick_preference_key(pick) > _pick_preference_key(current):
+            deduped[key] = pick
+    return list(deduped.values())
 
 
 @app.get("/injuries/{year}")
@@ -1021,6 +1096,7 @@ def get_bets_card(year: int = Query(default=2026)):
         with open(daily_path) as f:
             data = json.load(f)
         games = _filter_tournament_card_games(data.get("games", []), year=year)
+        games = refresh_saved_card_games(games, year=year)
         card_date = os.path.basename(daily_path).replace("card_", "").replace(".json", "")
         return {"date": card_date, "games": games, "available": bool(games)}
 
@@ -1065,6 +1141,7 @@ def get_bets_card_history(tournament_only: bool = Query(default=True)):
         return {"picks": [], "stats": {}}
     with open(CARD_LEDGER_PATH) as f:
         data = json.load(f)
+    data["picks"] = _dedupe_picks([_normalize_pick_date(p) for p in data.get("picks", [])])
     if tournament_only:
         picks = data.get("picks", [])
         for p in picks:
@@ -1090,8 +1167,8 @@ def get_bets_card_scores():
     with open(CARD_LEDGER_PATH) as f:
         ledger = json.load(f)
 
-    picks = ledger.get("picks", [])
-    recent = [_normalize_pick_date(p) for p in picks]
+    picks = _dedupe_picks([_normalize_pick_date(p) for p in ledger.get("picks", [])])
+    recent = picks
     recent = [p for p in recent if p.get("date") and p.get("date") >= _days_ago(2)]
     scores_by_key = fetch_scores_for_picks(recent, days=2)
 
