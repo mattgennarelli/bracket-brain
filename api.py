@@ -427,12 +427,25 @@ def _lookup_team(name: str, year: int) -> dict:
     teams = load_teams_merged(DATA_DIR, year)
     if not teams:
         raise HTTPException(status_code=404, detail=f"No team data for {year}")
-    key = _normalize_team_for_match(name)
-    stats = teams.get(key)
+    keys = []
+    for candidate in (name, _strip_mascot(name)):
+        key = _normalize_team_for_match(candidate)
+        if key and key not in keys:
+            keys.append(key)
+
+    stats = None
+    for key in keys:
+        stats = teams.get(key)
+        if stats is not None:
+            break
+
     if stats is None:
-        for k, v in teams.items():
-            if len(key) <= len(k) and key in k and len(key) >= len(k) * 0.65:
-                stats = v
+        for key in keys:
+            for team_key, team_stats in teams.items():
+                if len(key) <= len(team_key) and key in team_key and len(key) >= len(team_key) * 0.65:
+                    stats = team_stats
+                    break
+            if stats is not None:
                 break
     if stats is None:
         raise HTTPException(status_code=404, detail=f"Team not found: '{name}' (year {year})")
@@ -635,6 +648,18 @@ def analyze_matchup_endpoint(
       e.g. '{"Duke|Kyle Filipowski":"out","Duke|Jared McCain":"healthy"}'
       Use status "healthy" to remove a player from the injury list entirely.
     """
+    cache_key = None
+    if not injury_overrides:
+        cache_key = (
+            f"analyze_{year}_{_config_mtime()}_"
+            f"{_normalize_team_for_match(_strip_mascot(team_a))}_"
+            f"{_normalize_team_for_match(_strip_mascot(team_b))}_"
+            f"{seed_a}_{seed_b}_{region or ''}_{round_name or ''}"
+        )
+        cached = _cache_get(cache_key, ttl=300)
+        if cached is not None:
+            return cached
+
     raw_a = _lookup_team(team_a, year)
     raw_b = _lookup_team(team_b, year)
     if seed_a is not None:
@@ -685,6 +710,8 @@ def analyze_matchup_endpoint(
         analysis["vegas_spread"] = vegas["vegas_spread"]
         analysis["vegas_total"] = vegas["vegas_total"]
         analysis["vegas_home"] = vegas["home_team"]
+    if cache_key:
+        _cache_set(cache_key, analysis)
     return analysis
 
 
@@ -698,26 +725,29 @@ def _lookup_vegas_lines(team_a: str, team_b: str):
         _normalize_team_for_match(team_b),
         _normalize_team_for_match(_strip_mascot(team_b)),
     }
-    for game in reversed(_load_retro_card_games(2026)):
-        home = game.get("home_team", "")
-        away = game.get("away_team", "")
-        home_norms = {
-            _normalize_team_for_match(home),
-            _normalize_team_for_match(_strip_mascot(home)),
-        }
-        away_norms = {
-            _normalize_team_for_match(away),
-            _normalize_team_for_match(_strip_mascot(away)),
-        }
-        if not (a_norms & (home_norms | away_norms)) or not (b_norms & (home_norms | away_norms)):
-            continue
-        for pick in game.get("picks", []):
-            if pick.get("vegas_spread") is not None or pick.get("vegas_total") is not None:
-                return {
-                    "vegas_spread": pick.get("vegas_spread"),
-                    "vegas_total": pick.get("vegas_total"),
-                    "home_team": home,
-                }
+    _, latest_games = _load_saved_card_snapshot(2026, refresh=False)
+    search_sets = [latest_games, _load_retro_card_games(2026)]
+    for games in search_sets:
+        for game in reversed(games):
+            home = game.get("home_team", "")
+            away = game.get("away_team", "")
+            home_norms = {
+                _normalize_team_for_match(home),
+                _normalize_team_for_match(_strip_mascot(home)),
+            }
+            away_norms = {
+                _normalize_team_for_match(away),
+                _normalize_team_for_match(_strip_mascot(away)),
+            }
+            if not (a_norms & (home_norms | away_norms)) or not (b_norms & (home_norms | away_norms)):
+                continue
+            for pick in game.get("picks", []):
+                if pick.get("vegas_spread") is not None or pick.get("vegas_total") is not None:
+                    return {
+                        "vegas_spread": pick.get("vegas_spread"),
+                        "vegas_total": pick.get("vegas_total"),
+                        "home_team": home,
+                    }
     return None
 
 
@@ -1100,6 +1130,41 @@ def _retro_snapshot_date(path: str) -> str:
     return os.path.basename(path).replace("card_", "").replace(".json", "")
 
 
+def _retro_inputs_mtime(year: int = 2026) -> str:
+    latest = 0
+    for path in [os.path.join(DATA_DIR, "calibrated_config.json"), LEDGER_PATH, CARD_LEDGER_PATH, *_retro_snapshot_paths()]:
+        if os.path.isfile(path):
+            latest = max(latest, int(os.path.getmtime(path)))
+    return str(latest)
+
+
+def _latest_saved_card_path(year: int = 2026) -> Optional[str]:
+    today = _today_et_str()
+    daily_path = os.path.join(DATA_DIR, f"card_{today}.json")
+    if os.path.isfile(daily_path):
+        return daily_path
+    import glob as _glob
+    card_files = sorted(_glob.glob(os.path.join(DATA_DIR, f"card_{year}-*.json")))
+    return card_files[-1] if card_files else None
+
+
+def _load_saved_card_snapshot(year: int = 2026, *, refresh: bool = False):
+    path = _latest_saved_card_path(year)
+    if not path or not os.path.isfile(path):
+        return None, []
+    cache_key = f"saved_card_snapshot_{year}_{int(os.path.getmtime(path))}_{int(refresh)}"
+    cached = _cache_get(cache_key, ttl=300)
+    if cached is not None:
+        return path, cached
+    with open(path) as f:
+        data = json.load(f)
+    games = _filter_tournament_card_games(data.get("games", []), year=year)
+    if refresh:
+        games = refresh_saved_card_games(games, year=year)
+    _cache_set(cache_key, games)
+    return path, games
+
+
 def _retro_game_identity(game: dict):
     matchup_key = _matchup_key(game.get("home_team", ""), game.get("away_team", ""))
     round_of = game.get("round_of")
@@ -1216,14 +1281,24 @@ def _load_retro_card_games(year: int = 2026):
 
 
 def _load_retro_card_picks(year: int = 2026):
+    cache_key = f"retro_card_picks_{year}_{_retro_inputs_mtime(year)}"
+    cached = _cache_get(cache_key, ttl=300)
+    if cached is not None:
+        return cached
     games = _load_retro_card_games(year)
     picks = _flatten_card_games(games)
     score_map = _retro_seed_score_map(picks)
     picks = [_apply_score_to_pick(p, score_map) for p in picks]
-    return _dedupe_picks(picks)
+    picks = _dedupe_picks(picks)
+    _cache_set(cache_key, picks)
+    return picks
 
 
 def _load_retro_best_bets(year: int = 2026):
+    cache_key = f"retro_best_bets_{year}_{_retro_inputs_mtime(year)}"
+    cached = _cache_get(cache_key, ttl=300)
+    if cached is not None:
+        return cached
     games = _load_retro_card_games(year)
     picks = extract_best_bets_from_games(games)
     for pick in picks:
@@ -1235,7 +1310,9 @@ def _load_retro_best_bets(year: int = 2026):
                     pick[key] = annotated[key]
     score_map = _retro_seed_score_map(picks)
     picks = [_apply_score_to_pick(p, score_map) for p in picks]
-    return _dedupe_picks(picks)
+    picks = _dedupe_picks(picks)
+    _cache_set(cache_key, picks)
+    return picks
 
 
 @app.get("/injuries/{year}")
@@ -1425,19 +1502,8 @@ def get_bets_card(year: int = Query(default=2026)):
     """
     today = _today_et_str()
 
-    # Serve from saved daily snapshot (committed by GH Actions each morning)
-    # Fall back to most recent card file if today's doesn't exist yet (UTC vs ET mismatch)
-    daily_path = os.path.join(DATA_DIR, f"card_{today}.json")
-    if not os.path.isfile(daily_path):
-        import glob as _glob
-        card_files = sorted(_glob.glob(os.path.join(DATA_DIR, "card_2*.json")))
-        if card_files:
-            daily_path = card_files[-1]
-    if os.path.isfile(daily_path):
-        with open(daily_path) as f:
-            data = json.load(f)
-        games = _filter_tournament_card_games(data.get("games", []), year=year)
-        games = refresh_saved_card_games(games, year=year)
+    daily_path, games = _load_saved_card_snapshot(year, refresh=True)
+    if daily_path:
         card_date = os.path.basename(daily_path).replace("card_", "").replace(".json", "")
         return {"date": card_date, "games": games, "available": bool(games)}
 

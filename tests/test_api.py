@@ -104,6 +104,33 @@ def test_predict_unknown_year():
     assert r.status_code == 404
 
 
+def test_lookup_team_accepts_mascot_display_name(monkeypatch):
+    monkeypatch.setattr(api, "load_teams_merged", lambda data_dir, year: {
+        "kentucky": {"team": "Kentucky"},
+        "santa clara": {"team": "Santa Clara"},
+    })
+
+    team = api._lookup_team("Kentucky Wildcats", 2026)
+
+    assert team["team"] == "Kentucky"
+
+
+@pytest.mark.skipif(not HAS_TEAM_DATA, reason="teams_merged_2026.json not available in CI")
+def test_analyze_accepts_team_display_name_with_mascot():
+    r = client.get("/analyze", params={
+        "team_a": "Kentucky Wildcats",
+        "team_b": "Santa Clara Broncos",
+        "year": 2026,
+        "round_name": "Round of 64",
+        "region": "Midwest",
+    })
+
+    assert r.status_code == 200
+    d = r.json()
+    assert d["team_a"] == "Kentucky"
+    assert d["team_b"] == "Santa Clara"
+
+
 def test_bracket_picks_2026():
     r = client.get("/bracket/2026")
     assert r.status_code == 200
