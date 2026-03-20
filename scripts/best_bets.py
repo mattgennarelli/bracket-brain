@@ -51,23 +51,25 @@ from engine import (
 from odds_provider import get_provider, get_api_key
 
 # Default edge thresholds to flag as a "bet"
-DEFAULT_ML_EDGE = 0.10      # 10% win probability edge over implied odds (raised from 7%)
-DEFAULT_SPREAD_EDGE = 7.0   # model cover margin must exceed 7 pts
-DEFAULT_TOTAL_EDGE = 10.0   # model total differs from Vegas total by 10+ pts
-DEFAULT_MIN_MODEL_CONFIDENCE = 0.58  # skip ML bets when model probability < 58%
+DEFAULT_ML_EDGE = 0.07      # 7% win probability edge over implied odds
+DEFAULT_SPREAD_EDGE = 4.0   # model cover margin must exceed 4 pts
+DEFAULT_TOTAL_EDGE = 12.0   # require a larger total gap before issuing a totals bet
+DEFAULT_MIN_MODEL_CONFIDENCE = 0.55  # skip ML bets when model probability < 55%
 DEFAULT_MIN_ML_PROB_FOR_DOG = 0.40   # skip ML when betting underdog with model prob < 40%
 DEFAULT_MIN_SPREAD_COVER_MARGIN = 3.0  # skip spread when cover margin < 3 pts
 DEFAULT_MAX_3STAR_PICKS = 0   # 3-star picks disabled: 0/3 hit rate (0% ROI). Re-enable when positive.
 DEFAULT_MAX_2STAR_PICKS = 8   # cap 2-star picks per day
+DEFAULT_SIDE_PREFERENCE_RATIO = 0.80  # prefer a side when it's close to the best total on the same game
 
 # Maximum moneyline price to bet — don't chase heavy chalk beyond this.
-# At -200, break-even accuracy is 66.7%. Our model rarely beats that on big favorites.
-DEFAULT_MAX_ML_PRICE = -200  # skip ML bets with juice worse than -200
+# At -250, break-even accuracy is 71.4%. Our model can occasionally justify that
+# on tournament favorites; tighter than this was filtering out too many viable MLs.
+DEFAULT_MAX_ML_PRICE = -250  # skip ML bets with juice worse than -250
 
-# Bias correction: model consistently predicts totals ~1.8 pts too LOW vs actuals.
-# Applied before edge calculation: model_total_corrected = model_total + TOTAL_BIAS_CORRECTION
-# Calibrated on 187 tournament games 2023-2025 (total_bias = -1.8 pts).
-TOTAL_BIAS_CORRECTION = 1.8
+# Betting-path total correction. We previously added +1.8 and ended up flooding the
+# pick set with overs. Until totals are re-fit specifically for market pricing, leave
+# the selection path unshifted.
+TOTAL_BIAS_CORRECTION = 0.0
 ROUND_NAME_BY_SIZE = {
     68: "First Four",
     64: "Round of 64",
@@ -771,21 +773,7 @@ def get_best_bets_json(api_key, year=None, ml_min=None, spread_min=None, total_m
         rec["stars"] = star_rating(abs(edge), thresh)
         rated.append(rec)
 
-    # Apply star-tier issuance caps (3-star underperforming per audit)
-    count_3, count_2 = 0, 0
-    out = []
-    for rec in rated:
-        s = rec.get("stars", "")
-        if s == "★★★":
-            if count_3 >= cap_3:
-                continue
-            count_3 += 1
-        elif s == "★★":
-            if count_2 >= cap_2:
-                continue
-            count_2 += 1
-        out.append(rec)
-    return out
+    return _curate_best_bets(rated, min_ml, min_spread, min_total, cap_3, cap_2)
 
 
 def extract_best_bets_from_games(games, ml_min=None, spread_min=None, total_min=None,
@@ -847,21 +835,8 @@ def extract_best_bets_from_games(games, ml_min=None, spread_min=None, total_min=
                 bets.append((rec, edge))
 
     bets.sort(key=lambda x: (x[0].get("commence_time", ""), -abs(x[1])))
-
-    out = []
-    count_3 = count_2 = 0
-    for rec, edge in bets:
-        s = rec.get("stars", "")
-        if s == "★★★":
-            if count_3 >= cap_3:
-                continue
-            count_3 += 1
-        elif s == "★★":
-            if count_2 >= cap_2:
-                continue
-            count_2 += 1
-        out.append(rec)
-    return out
+    rated = [rec for rec, _ in bets]
+    return _curate_best_bets(rated, min_ml, min_spread, min_total, cap_3, cap_2)
 
 
 def get_full_card_json(api_key, year=None):
@@ -1267,6 +1242,80 @@ def star_rating(edge_abs, thresholds):
     if edge_abs >= thresholds[0]:
         return "★"
     return ""
+
+
+def _pick_threshold(pick, min_ml, min_spread, min_total):
+    bt = pick.get("bet_type")
+    if bt == "ml":
+        return min_ml
+    if bt == "spread":
+        return min_spread
+    return min_total
+
+
+def _normalized_pick_score(pick, min_ml, min_spread, min_total):
+    threshold = _pick_threshold(pick, min_ml, min_spread, min_total)
+    edge = abs(float(pick.get("edge") or 0))
+    if threshold <= 0:
+        return edge
+    return edge / threshold
+
+
+def _pick_game_key(pick):
+    return (
+        pick.get("commence_time", ""),
+        pick.get("home_team", ""),
+        pick.get("away_team", ""),
+    )
+
+
+def _curate_best_bets(records, min_ml, min_spread, min_total, cap_3, cap_2):
+    grouped = {}
+    for rec in records:
+        grouped.setdefault(_pick_game_key(rec), []).append(rec)
+
+    curated = []
+    for group in grouped.values():
+        ranked = sorted(
+            group,
+            key=lambda rec: (
+                _normalized_pick_score(rec, min_ml, min_spread, min_total),
+                abs(float(rec.get("edge") or 0)),
+            ),
+            reverse=True,
+        )
+        best_total = next((rec for rec in ranked if rec.get("bet_type") == "total"), None)
+        best_side = next((rec for rec in ranked if rec.get("bet_type") in {"ml", "spread"}), None)
+        chosen = ranked[0]
+        if best_total and best_side:
+            total_score = _normalized_pick_score(best_total, min_ml, min_spread, min_total)
+            side_score = _normalized_pick_score(best_side, min_ml, min_spread, min_total)
+            if side_score >= total_score * DEFAULT_SIDE_PREFERENCE_RATIO:
+                chosen = best_side
+        curated.append(chosen)
+
+    curated.sort(
+        key=lambda rec: (
+            rec.get("commence_time", ""),
+            -_normalized_pick_score(rec, min_ml, min_spread, min_total),
+            -abs(float(rec.get("edge") or 0)),
+        )
+    )
+
+    out = []
+    count_3 = count_2 = 0
+    for rec in curated:
+        s = rec.get("stars", "")
+        if s == "★★★":
+            if count_3 >= cap_3:
+                continue
+            count_3 += 1
+        elif s == "★★":
+            if count_2 >= cap_2:
+                continue
+            count_2 += 1
+        out.append(rec)
+    return out
 
 
 # ---------------------------------------------------------------------------

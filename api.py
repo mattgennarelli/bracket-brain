@@ -760,12 +760,7 @@ def get_bets_today(tournament_only: bool = Query(default=True), retro: bool = Qu
     if retro:
         picks = _load_retro_best_bets(2026)
     else:
-        if not os.path.isfile(LEDGER_PATH):
-            return {"date": today, "picks": [], "available": False}
-        with open(LEDGER_PATH) as f:
-            ledger = json.load(f)
-        picks = [_normalize_pick_date(p) for p in ledger.get("picks", [])]
-        picks = _dedupe_picks(picks)
+        picks = _load_current_best_bets(2026) or _load_logged_bets()
     picks = [p for p in picks if p.get("date") == today]
     if tournament_only:
         filtered = []
@@ -791,11 +786,12 @@ def get_bets_history(tournament_only: bool = Query(default=True), retro: bool = 
         data["stats"] = compute_stats(data["picks"])
         data["tournament_stats"] = compute_stats(data["picks"], tournament_only=True)
     else:
-        if not os.path.isfile(LEDGER_PATH):
-            return {"picks": [], "stats": {}, "model_epoch": None}
-        with open(LEDGER_PATH) as f:
-            data = json.load(f)
-        data["picks"] = _dedupe_picks([_normalize_pick_date(p) for p in data.get("picks", [])])
+        picks = _load_live_pick_history(2026)
+        data = {
+            "picks": picks,
+            "stats": compute_stats(picks),
+            "tournament_stats": compute_stats(picks, tournament_only=True),
+        }
 
     if tournament_only:
         filtered = []
@@ -832,10 +828,7 @@ def get_bets_scores():
         return entry.get("result", {})
 
     picks = []
-    if os.path.isfile(LEDGER_PATH):
-        with open(LEDGER_PATH) as f:
-            ledger = json.load(f)
-        picks = _dedupe_picks([_normalize_pick_date(p) for p in ledger.get("picks", [])])
+    picks = _load_live_pick_history(2026)
     if not picks:
         picks = _load_retro_best_bets(2026)
     # Focus on recent picks (today + last 2 days)
@@ -1169,6 +1162,47 @@ def _load_saved_card_snapshot(year: int = 2026, *, refresh: bool = False):
         games = refresh_saved_card_games(games, year=year)
     _cache_set(cache_key, games)
     return path, games
+
+
+def _load_current_best_bets(year: int = 2026):
+    path, games = _load_saved_card_snapshot(year, refresh=True)
+    if not path or not games:
+        return []
+    cache_key = f"current_best_bets_{year}_{_retro_inputs_mtime(year)}"
+    cached = _cache_get(cache_key, ttl=300)
+    if cached is not None:
+        return cached
+    picks = extract_best_bets_from_games(games)
+    for pick in picks:
+        pick["date"] = _pick_game_date(pick)
+        annotated = _annotate_tournament_record(pick, year=year)
+        if annotated is not None:
+            for key in ("ncaa_tournament", "round_of", "round_name"):
+                if key in annotated:
+                    pick[key] = annotated[key]
+    _cache_set(cache_key, picks)
+    return picks
+
+
+def _load_logged_bets() -> list[dict]:
+    if not os.path.isfile(LEDGER_PATH):
+        return []
+    with open(LEDGER_PATH) as f:
+        ledger = json.load(f)
+    return _dedupe_picks([_normalize_pick_date(p) for p in ledger.get("picks", [])])
+
+
+def _load_live_pick_history(year: int = 2026):
+    """Return pick history with today's entries recomputed from the current card when available."""
+    logged = _load_logged_bets()
+    current = _load_current_best_bets(year)
+    if not current:
+        return logged
+
+    today = _today_et_str()
+    history = [p for p in logged if _pick_game_date(p) != today]
+    history.extend(current)
+    return _dedupe_picks([_normalize_pick_date(p) for p in history])
 
 
 def _retro_game_identity(game: dict):
