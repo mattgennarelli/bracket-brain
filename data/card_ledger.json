@@ -4621,10 +4621,10 @@
       "away_team": "Utah State Aggies",
       "commence_time": "2026-03-20T20:10:00Z",
       "date": "2026-03-18",
-      "result": null,
-      "actual_score_home": null,
-      "actual_score_away": null,
-      "settled_at": null,
+      "result": "L",
+      "actual_score_home": 76.0,
+      "actual_score_away": 86.0,
+      "settled_at": "2026-03-20T23:12:48.836502+00:00",
       "ncaa_tournament": true
     },
     {
@@ -6119,10 +6119,10 @@
       "away_team": "Utah State Aggies",
       "commence_time": "2026-03-20T20:10:00Z",
       "date": "2026-03-20",
-      "result": null,
-      "actual_score_home": null,
-      "actual_score_away": null,
-      "settled_at": null
+      "result": "W",
+      "actual_score_home": 76.0,
+      "actual_score_away": 86.0,
+      "settled_at": "2026-03-20T23:12:48.836862+00:00"
     },
     {
       "bet_type": "spread",
@@ -6141,10 +6141,10 @@
       "away_team": "Utah State Aggies",
       "commence_time": "2026-03-20T20:10:00Z",
       "date": "2026-03-20",
-      "result": null,
-      "actual_score_home": null,
-      "actual_score_away": null,
-      "settled_at": null
+      "result": "W",
+      "actual_score_home": 76.0,
+      "actual_score_away": 86.0,
+      "settled_at": "2026-03-20T23:12:48.836889+00:00"
     },
     {
       "bet_type": "total",
@@ -6161,10 +6161,10 @@
       "away_team": "Utah State Aggies",
       "commence_time": "2026-03-20T20:10:00Z",
       "date": "2026-03-20",
-      "result": null,
-      "actual_score_home": null,
-      "actual_score_away": null,
-      "settled_at": null
+      "result": "W",
+      "actual_score_home": 76.0,
+      "actual_score_away": 86.0,
+      "settled_at": "2026-03-20T23:12:48.836904+00:00"
     },
     {
       "bet_type": "ml",
@@ -6183,10 +6183,10 @@
       "away_team": "Miami (OH) RedHawks",
       "commence_time": "2026-03-20T20:25:38Z",
       "date": "2026-03-20",
-      "result": null,
-      "actual_score_home": null,
-      "actual_score_away": null,
-      "settled_at": null
+      "result": "W",
+      "actual_score_home": 78.0,
+      "actual_score_away": 56.0,
+      "settled_at": "2026-03-20T23:12:48.836926+00:00"
     },
     {
       "bet_type": "spread",
@@ -6205,10 +6205,10 @@
       "away_team": "Miami (OH) RedHawks",
       "commence_time": "2026-03-20T20:25:38Z",
       "date": "2026-03-20",
-      "result": null,
-      "actual_score_home": null,
-      "actual_score_away": null,
-      "settled_at": null
+      "result": "W",
+      "actual_score_home": 78.0,
+      "actual_score_away": 56.0,
+      "settled_at": "2026-03-20T23:12:48.836947+00:00"
     },
     {
       "bet_type": "total",
@@ -6225,10 +6225,10 @@
       "away_team": "Miami (OH) RedHawks",
       "commence_time": "2026-03-20T20:25:38Z",
       "date": "2026-03-20",
-      "result": null,
-      "actual_score_home": null,
-      "actual_score_away": null,
-      "settled_at": null
+      "result": "L",
+      "actual_score_home": 78.0,
+      "actual_score_away": 56.0,
+      "settled_at": "2026-03-20T23:12:48.836961+00:00"
     },
     {
       "bet_type": "ml",
@@ -7351,10 +7351,10 @@
       "away_team": "Utah State Aggies",
       "commence_time": "2026-03-20T20:10:00Z",
       "date": "2026-03-20",
-      "result": null,
-      "actual_score_home": null,
-      "actual_score_away": null,
-      "settled_at": null
+      "result": "L",
+      "actual_score_home": 76.0,
+      "actual_score_away": 86.0,
+      "settled_at": "2026-03-20T23:12:48.837691+00:00"
     },
     {
       "bet_type": "spread",
@@ -7373,10 +7373,10 @@
       "away_team": "Utah State Aggies",
       "commence_time": "2026-03-20T20:10:00Z",
       "date": "2026-03-20",
-      "result": null,
-      "actual_score_home": null,
-      "actual_score_away": null,
-      "settled_at": null
+      "result": "L",
+      "actual_score_home": 76.0,
+      "actual_score_away": 86.0,
+      "settled_at": "2026-03-20T23:12:48.837712+00:00"
     },
     {
       "bet_type": "total",
@@ -8277,53 +8277,53 @@
   ],
   "stats": {
     "total_picks": 378,
-    "settled": 127,
-    "wins": 73,
-    "losses": 52,
+    "settled": 136,
+    "wins": 78,
+    "losses": 56,
     "pushes": 2,
-    "hit_rate": 0.584,
+    "hit_rate": 0.5821,
     "by_type": {
       "ml": {
-        "picks": 41,
-        "wins": 28,
-        "losses": 13,
+        "picks": 44,
+        "wins": 30,
+        "losses": 14,
         "pushes": 0,
-        "net_units": 5.18,
-        "total_wagered": 37.88,
-        "hit_rate": 0.6829,
-        "roi_pct": 13.68
+        "net_units": 6.62,
+        "total_wagered": 45.34,
+        "hit_rate": 0.6818,
+        "roi_pct": 14.61
       },
       "spread": {
-        "picks": 46,
-        "wins": 21,
-        "losses": 24,
+        "picks": 49,
+        "wins": 23,
+        "losses": 25,
         "pushes": 1,
-        "net_units": -9.29,
-        "total_wagered": 51.97,
-        "hit_rate": 0.4667,
-        "roi_pct": -17.88
+        "net_units": -5.35,
+        "total_wagered": 58.28,
+        "hit_rate": 0.4792,
+        "roi_pct": -9.19
       },
       "total": {
-        "picks": 40,
-        "wins": 24,
-        "losses": 15,
+        "picks": 43,
+        "wins": 25,
+        "losses": 17,
         "pushes": 1,
-        "net_units": 25.87,
-        "total_wagered": 112.2,
-        "hit_rate": 0.6154,
-        "roi_pct": 23.05
+        "net_units": 20.85,
+        "total_wagered": 117.22,
+        "hit_rate": 0.5952,
+        "roi_pct": 17.78
       }
     },
     "by_stars": {
       "\u2605": {
-        "picks": 124,
-        "wins": 72,
-        "losses": 50,
+        "picks": 133,
+        "wins": 77,
+        "losses": 54,
         "pushes": 2,
-        "net_units": 24.84,
-        "total_wagered": 189.42,
-        "hit_rate": 0.5902,
-        "roi_pct": 13.11
+        "net_units": 25.2,
+        "total_wagered": 208.21,
+        "hit_rate": 0.5878,
+        "roi_pct": 12.1
       },
       "\u2605\u2605": {
         "picks": 3,
@@ -8346,8 +8346,8 @@
         "roi_pct": null
       }
     },
-    "total_wagered": 202.05,
-    "net_units": 21.76,
-    "roi_pct": 10.77
+    "total_wagered": 220.84,
+    "net_units": 22.12,
+    "roi_pct": 10.01
   }
 }
