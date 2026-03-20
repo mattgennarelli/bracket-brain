@@ -1878,6 +1878,28 @@ async function showAnalysis(gameId) {
       </ul>
     </div>` : '';
 
+  // ── Model signals & context ───────────────────────────────────────────────
+  const confTag = orig?.confidence ? String(orig.confidence).replace(/_/g, ' ') : null;
+  const variabilityTag = orig?.variability ? String(orig.variability).replace(/_/g, ' ') : null;
+  const upsetRisk = orig?.upset_rating != null ? `${(orig.upset_rating * 100).toFixed(0)}%` : null;
+  const effProb = orig?.efficiency_prob != null ? `${(orig.efficiency_prob * 100).toFixed(1)}%` : null;
+  const seedProb = orig?.seed_prob != null ? `${(orig.seed_prob * 100).toFixed(1)}%` : null;
+  const volTag = orig?.volatility != null ? orig.volatility.toFixed(2) : null;
+  const stdevTag = orig?.game_stdev != null ? `${orig.game_stdev.toFixed(1)} pts` : null;
+  const signalsSection = [confTag, variabilityTag, upsetRisk, effProb, seedProb, volTag, stdevTag].some(Boolean) ? `
+    <div class="ap-section">
+      <div class="ap-section-title">Model Signals</div>
+      <div class="stat-grid">
+        ${confTag ? `<div class="stat-tile"><div class="st-label">Confidence</div><div class="st-value">${escapeHtml(confTag)}</div><div class="st-sub">current pick tier</div></div>` : ''}
+        ${variabilityTag ? `<div class="stat-tile"><div class="st-label">Variability</div><div class="st-value">${escapeHtml(variabilityTag)}</div><div class="st-sub">game chaos profile</div></div>` : ''}
+        ${upsetRisk ? `<div class="stat-tile"><div class="st-label">Upset Risk</div><div class="st-value">${upsetRisk}</div><div class="st-sub">underdog path</div></div>` : ''}
+        ${effProb ? `<div class="stat-tile"><div class="st-label">Efficiency Prob</div><div class="st-value">${effProb}</div><div class="st-sub">${st.teamA} win chance from efficiency only</div></div>` : ''}
+        ${seedProb ? `<div class="stat-tile"><div class="st-label">Seed Prior</div><div class="st-value">${seedProb}</div><div class="st-sub">${st.teamA} win chance from seed history</div></div>` : ''}
+        ${volTag ? `<div class="stat-tile"><div class="st-label">Volatility</div><div class="st-value">${volTag}</div><div class="st-sub">3PT / variance multiplier</div></div>` : ''}
+        ${stdevTag ? `<div class="stat-tile"><div class="st-label">Game Stdev</div><div class="st-value">${stdevTag}</div><div class="st-sub">margin uncertainty</div></div>` : ''}
+      </div>
+    </div>` : '';
+
   // ── Injuries (interactive status override) ──────────────────────────────────
   const injA = statsA?.injuries, injB = statsB?.injuries;
   const impA = statsA?.injury_impact, impB = statsB?.injury_impact;
@@ -1918,22 +1940,59 @@ async function showAnalysis(gameId) {
   const histWin = orig?.historical_win_pct;
   const histMargin = orig?.historical_avg_margin;
   const hist = orig?.historical;
+  const higherSeed = Math.min(st.seedA, st.seedB);
+  const lowerSeed = Math.max(st.seedA, st.seedB);
+  const histUpset = histWin != null && st.seedA !== st.seedB ? `${((1 - histWin) * 100).toFixed(0)}%` : null;
   const histSection = (histWin != null || hist) ? `
     <div class="ap-section">
       <div class="ap-section-title">Historical Context</div>
       ${histWin != null ? `<div class="stat-grid">
         <div class="stat-tile">
-          <div class="st-label">Seed #${st.seedA} Win%</div>
-          <div class="st-value">${(histWin * 100).toFixed(0)}%</div>
-          <div class="st-sub">vs seed #${st.seedB} historically</div>
+          <div class="st-label">Seed Record</div>
+          <div class="st-value">${escapeHtml(hist)}</div>
+          <div class="st-sub">higher seed vs lower seed</div>
         </div>
+        <div class="stat-tile">
+          <div class="st-label">Higher Seed Win%</div>
+          <div class="st-value">${(histWin * 100).toFixed(0)}%</div>
+          <div class="st-sub">#${higherSeed} vs #${lowerSeed}</div>
+        </div>
+        ${histUpset ? `<div class="stat-tile">
+          <div class="st-label">Upset Rate</div>
+          <div class="st-value">${histUpset}</div>
+          <div class="st-sub">lower seed wins</div>
+        </div>` : ''}
         ${histMargin != null ? `<div class="stat-tile">
           <div class="st-label">Avg. Margin</div>
           <div class="st-value">${histMargin >= 0 ? '+' : ''}${histMargin.toFixed(1)}</div>
-          <div class="st-sub">pts (seed #${st.seedA} POV)</div>
+          <div class="st-sub">pts (higher-seed POV)</div>
         </div>` : ''}
       </div>` : ''}
       ${hist ? `<div class="ap-insight" style="margin-top:8px">${hist}</div>` : ''}
+    </div>` : '';
+
+  const headToHead = orig?.head_to_head || {};
+  const pastTournament = Array.isArray(headToHead.past_tournament) ? headToHead.past_tournament.slice(0, 3) : [];
+  const thisSeason = Array.isArray(headToHead.this_season) ? [...headToHead.this_season].slice(-3).reverse() : [];
+  const _fmtMeeting = (meeting, label) => {
+    const scoreKnown = meeting?.score_a != null && meeting?.score_b != null;
+    const score = scoreKnown ? `${meeting.team_a} ${meeting.score_a}-${meeting.score_b} ${meeting.team_b}` : 'Result unavailable';
+    const winner = meeting?.winner ? `Winner: ${meeting.winner}` : '';
+    const when = meeting?.date || meeting?.year || '';
+    const stage = meeting?.round_name || meeting?.round || meeting?.location || label;
+    return `<div class="ap-insight" style="margin-top:8px">
+      <div style="font-weight:700;color:var(--text)">${escapeHtml(String(when))}${stage ? ` · ${escapeHtml(String(stage))}` : ''}</div>
+      <div>${escapeHtml(score)}</div>
+      ${winner ? `<div style="color:var(--muted)">${escapeHtml(winner)}</div>` : ''}
+    </div>`;
+  };
+  const h2hSection = (pastTournament.length || thisSeason.length) ? `
+    <div class="ap-section">
+      <div class="ap-section-title">Head-to-Head</div>
+      ${thisSeason.length ? `<div style="font-size:.76rem;font-weight:700;color:var(--muted);margin-bottom:4px">This Season</div>
+        ${thisSeason.map(meeting => _fmtMeeting(meeting, 'This season')).join('')}` : ''}
+      ${pastTournament.length ? `<div style="font-size:.76rem;font-weight:700;color:var(--muted);margin:${thisSeason.length ? '10px' : '0'} 0 4px">Past Tournament Meetings</div>
+        ${pastTournament.map(meeting => _fmtMeeting(meeting, 'Tournament')).join('')}` : ''}
     </div>` : '';
 
   // ── Fixed pieces ───────────────────────────────────────────────────────────
@@ -2104,6 +2163,7 @@ async function showAnalysis(gameId) {
       ${upsetHtml}
       ${pickBoxHtml}
       ${insightHtml}
+      ${signalsSection}
       ${marginBreakdown}
       ${situationalSection}
       ${factorsSection}
@@ -2115,6 +2175,7 @@ async function showAnalysis(gameId) {
       ${shootingSection}
       ${rebSection}
       ${scoringSection}
+      ${h2hSection}
       ${histSection}
     </div>
   `;
