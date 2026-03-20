@@ -2019,6 +2019,17 @@ async function showAnalysis(gameId) {
       vegasLabel = 'Pick\'em';
     }
   }
+  const marketSection = (orig?.spread_fav || orig?.spread_dog || total != null || hasVegas || vegasTotal != null) ? `
+    <div class="ap-section">
+      <div class="ap-section-title">Market Context</div>
+      <div class="stat-grid">
+        ${orig?.spread_fav ? `<div class="stat-tile"><div class="st-label">Model Spread</div><div class="st-value">${escapeHtml(orig.spread_fav)}</div><div class="st-sub">favorite line</div></div>` : ''}
+        ${orig?.spread_dog ? `<div class="stat-tile"><div class="st-label">Dog Line</div><div class="st-value">${escapeHtml(orig.spread_dog)}</div><div class="st-sub">other side</div></div>` : ''}
+        ${total != null ? `<div class="stat-tile"><div class="st-label">Model Total</div><div class="st-value">${total.toFixed(1)}</div><div class="st-sub">projected combined points</div></div>` : ''}
+        ${hasVegas ? `<div class="stat-tile"><div class="st-label">Vegas Spread</div><div class="st-value">${escapeHtml(vegasLabel)}</div><div class="st-sub">market favorite line</div></div>` : ''}
+        ${vegasTotal != null ? `<div class="stat-tile"><div class="st-label">Vegas Total</div><div class="st-value">${vegasTotal.toFixed(1)}</div><div class="st-sub">market O/U</div></div>` : ''}
+      </div>
+    </div>` : '';
 
   const spreadLabel = orig?.spread_fav || `${favA ? st.teamA : st.teamB} −${spread}`;
   const scoreHtml = (st.completed && actualScoreA != null && actualScoreB != null)
@@ -2164,6 +2175,7 @@ async function showAnalysis(gameId) {
       ${pickBoxHtml}
       ${insightHtml}
       ${signalsSection}
+      ${marketSection}
       ${marginBreakdown}
       ${situationalSection}
       ${factorsSection}
