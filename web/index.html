@@ -381,24 +381,12 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sa
 .mc-teams { font-weight:700; font-size:.85rem; }
 .mc-time { font-size:.68rem; color:var(--muted); }
 .mc-nodata { padding:10px 14px; font-size:.72rem; color:var(--muted); font-style:italic; }
-.card-meta-row { display:flex; flex-wrap:wrap; gap:8px; margin:-2px 0 14px; }
-.card-meta-chip { display:inline-flex; align-items:center; gap:6px; padding:7px 10px; border-radius:999px;
-  border:1px solid var(--border); background:var(--surface2); font-size:.72rem; color:var(--muted); font-weight:600; }
-.card-meta-chip strong { color:var(--text); font-weight:800; }
 .mc-context { display:flex; flex-wrap:wrap; gap:6px; padding:0 14px 10px; border-bottom:1px solid var(--border); }
 .mc-summary { display:inline-flex; align-items:center; gap:4px; border-radius:999px; padding:3px 8px;
   font-size:.65rem; font-weight:600; color:var(--muted); background:var(--surface2); border:1px solid var(--border); }
 .mc-summary strong { color:var(--text); font-weight:700; }
 .mc-pick { padding:10px 14px; border-bottom:1px solid var(--border); }
 .mc-pick:last-child { border-bottom:none; }
-.mc-pick.featured { background:rgba(26,109,204,.04); }
-.mc-pick.featured.lean { background:rgba(217,119,6,.06); }
-.mc-kicker { display:flex; align-items:center; gap:8px; flex-wrap:wrap; margin-bottom:8px; }
-.mc-strength { display:inline-flex; align-items:center; border-radius:999px; padding:2px 8px; font-size:.62rem;
-  font-weight:800; letter-spacing:.04em; text-transform:uppercase; }
-.mc-strength.actionable { background:rgba(26,135,84,.10); color:var(--green); border:1px solid rgba(26,135,84,.22); }
-.mc-strength.lean { background:rgba(217,119,6,.10); color:#b45309; border:1px solid rgba(217,119,6,.22); }
-.mc-note { font-size:.68rem; color:var(--muted); }
 .mc-topline { display:flex; align-items:center; gap:8px; flex-wrap:wrap; }
 .mc-side { font-size:.82rem; font-weight:650; flex:1; min-width:120px; }
 .mc-odds { font-size:.72rem; color:var(--muted); font-weight:500; }
@@ -408,13 +396,7 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sa
 .mc-chip.units { color:var(--text); border-color:rgba(26,109,204,.18); background:rgba(26,109,204,.08); }
 .mc-chip.edge { color:var(--green); border-color:rgba(26,135,84,.22); background:rgba(26,135,84,.10); }
 .mc-chip.stars { color:var(--gold); border-color:rgba(217,119,6,.22); background:rgba(217,119,6,.10); letter-spacing:.03em; }
-.mc-chip.threshold { color:var(--muted); }
 .mc-proj { display:block; font-size:.68rem; color:var(--muted); margin-top:6px; line-height:1.35; }
-.mc-why { margin-top:8px; display:grid; gap:4px; }
-.mc-why-item { font-size:.7rem; color:var(--muted); line-height:1.45; }
-.mc-secondary-wrap { padding:10px 14px; border-bottom:1px solid var(--border); background:rgba(255,255,255,.35); }
-.mc-secondary-title { font-size:.62rem; font-weight:800; color:var(--muted); letter-spacing:.06em; text-transform:uppercase; margin-bottom:8px; }
-.mc-lean-note { padding:10px 14px; font-size:.7rem; color:var(--muted); line-height:1.45; border-top:1px dashed var(--border); background:rgba(107,114,128,.04); }
 .mc-result { font-size:.65rem; font-weight:700; padding:1px 5px; border-radius:4px;
   margin-left:auto; }
 .mc-result.W { background:#d1fae5; color:#065f46; }
@@ -645,7 +627,6 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sa
   <div class="odds-section">
     <div class="picks-panel" id="card-panel">
       <div id="card-stats-row" class="picks-stats-grid"></div>
-      <div id="card-meta-row"></div>
       <div class="picks-header">
         <h3 id="card-section-title">March Madness Card</h3>
         <span class="hit-rate-badge" id="card-hit-badge"></span>
@@ -1957,28 +1938,6 @@ async function showAnalysis(gameId) {
       </ul>
     </div>` : '';
 
-  // ── Model signals & context ───────────────────────────────────────────────
-  const confTag = orig?.confidence ? String(orig.confidence).replace(/_/g, ' ') : null;
-  const variabilityTag = orig?.variability ? String(orig.variability).replace(/_/g, ' ') : null;
-  const upsetRisk = orig?.upset_rating != null ? `${(orig.upset_rating * 100).toFixed(0)}%` : null;
-  const effProb = orig?.efficiency_prob != null ? `${(orig.efficiency_prob * 100).toFixed(1)}%` : null;
-  const seedProb = orig?.seed_prob != null ? `${(orig.seed_prob * 100).toFixed(1)}%` : null;
-  const volTag = orig?.volatility != null ? orig.volatility.toFixed(2) : null;
-  const stdevTag = orig?.game_stdev != null ? `${orig.game_stdev.toFixed(1)} pts` : null;
-  const signalsSection = [confTag, variabilityTag, upsetRisk, effProb, seedProb, volTag, stdevTag].some(Boolean) ? `
-    <div class="ap-section">
-      <div class="ap-section-title">Model Signals</div>
-      <div class="stat-grid">
-        ${confTag ? `<div class="stat-tile"><div class="st-label">Confidence</div><div class="st-value">${escapeHtml(confTag)}</div><div class="st-sub">current pick tier</div></div>` : ''}
-        ${variabilityTag ? `<div class="stat-tile"><div class="st-label">Variability</div><div class="st-value">${escapeHtml(variabilityTag)}</div><div class="st-sub">game chaos profile</div></div>` : ''}
-        ${upsetRisk ? `<div class="stat-tile"><div class="st-label">Upset Risk</div><div class="st-value">${upsetRisk}</div><div class="st-sub">underdog path</div></div>` : ''}
-        ${effProb ? `<div class="stat-tile"><div class="st-label">Efficiency Prob</div><div class="st-value">${effProb}</div><div class="st-sub">${st.teamA} win chance from efficiency only</div></div>` : ''}
-        ${seedProb ? `<div class="stat-tile"><div class="st-label">Seed Prior</div><div class="st-value">${seedProb}</div><div class="st-sub">${st.teamA} win chance from seed history</div></div>` : ''}
-        ${volTag ? `<div class="stat-tile"><div class="st-label">Volatility</div><div class="st-value">${volTag}</div><div class="st-sub">3PT / variance multiplier</div></div>` : ''}
-        ${stdevTag ? `<div class="stat-tile"><div class="st-label">Game Stdev</div><div class="st-value">${stdevTag}</div><div class="st-sub">margin uncertainty</div></div>` : ''}
-      </div>
-    </div>` : '';
-
   // ── Injuries (interactive status override) ──────────────────────────────────
   const injA = statsA?.injuries, injB = statsB?.injuries;
   const impA = statsA?.injury_impact, impB = statsB?.injury_impact;
@@ -2098,18 +2057,6 @@ async function showAnalysis(gameId) {
       vegasLabel = 'Pick\'em';
     }
   }
-  const marketSection = (orig?.spread_fav || orig?.spread_dog || total != null || hasVegas || vegasTotal != null) ? `
-    <div class="ap-section">
-      <div class="ap-section-title">Market Context</div>
-      <div class="stat-grid">
-        ${orig?.spread_fav ? `<div class="stat-tile"><div class="st-label">Model Spread</div><div class="st-value">${escapeHtml(orig.spread_fav)}</div><div class="st-sub">favorite line</div></div>` : ''}
-        ${orig?.spread_dog ? `<div class="stat-tile"><div class="st-label">Dog Line</div><div class="st-value">${escapeHtml(orig.spread_dog)}</div><div class="st-sub">other side</div></div>` : ''}
-        ${total != null ? `<div class="stat-tile"><div class="st-label">Model Total</div><div class="st-value">${total.toFixed(1)}</div><div class="st-sub">projected combined points</div></div>` : ''}
-        ${hasVegas ? `<div class="stat-tile"><div class="st-label">Vegas Spread</div><div class="st-value">${escapeHtml(vegasLabel)}</div><div class="st-sub">market favorite line</div></div>` : ''}
-        ${vegasTotal != null ? `<div class="stat-tile"><div class="st-label">Vegas Total</div><div class="st-value">${vegasTotal.toFixed(1)}</div><div class="st-sub">market O/U</div></div>` : ''}
-      </div>
-    </div>` : '';
-
   const spreadLabel = orig?.spread_fav || `${favA ? st.teamA : st.teamB} −${spread}`;
   _activeAnalysisContext = {
     projectedScoreA,
@@ -2240,8 +2187,6 @@ async function showAnalysis(gameId) {
       ${upsetHtml}
       ${pickBoxHtml}
       ${insightHtml}
-      ${signalsSection}
-      ${marketSection}
       ${marginBreakdown}
       ${situationalSection}
       ${factorsSection}
@@ -2605,148 +2550,17 @@ function _computeCardStats(games, scores) {
   };
 }
 
-const CARD_PICK_THRESHOLDS = Object.freeze({ ml: 0.07, spread: 4.0, total: 12.0 });
-const CARD_SIDE_PREFERENCE_RATIO = 0.80;
-const CARD_LEAN_SIDE_PREFERENCE_RATIO = 0.60;
-const CARD_MIN_MODEL_CONFIDENCE = 0.55;
-const CARD_MIN_ML_PROB_FOR_DOG = 0.40;
-const CARD_MIN_SPREAD_COVER = 3.0;
-const CARD_MAX_ML_PRICE = -250;
-
-function _cardPickThreshold(bt) {
-  return CARD_PICK_THRESHOLDS[bt] || CARD_PICK_THRESHOLDS.total;
-}
-
-function _cardPickEdgeAbs(p) {
-  return Math.abs(Number(p?.edge || 0));
-}
-
-function _cardPickScore(p) {
-  const threshold = _cardPickThreshold(p?.bet_type);
-  const edge = _cardPickEdgeAbs(p);
-  return threshold > 0 ? edge / threshold : edge;
-}
-
-function _cardPickIsActionable(p) {
-  if (!p) return false;
-  const bt = p.bet_type;
-  const edge = _cardPickEdgeAbs(p);
-  if (bt === 'ml') {
-    const modelProb = Number(p.model_prob || 0);
-    const impliedProb = Number(p.implied_prob || 0);
-    const odds = p.bet_odds;
-    const priceOk = odds == null || odds >= CARD_MAX_ML_PRICE;
-    if (impliedProb < 0.5 && modelProb < CARD_MIN_ML_PROB_FOR_DOG) return false;
-    return edge >= CARD_PICK_THRESHOLDS.ml && modelProb >= CARD_MIN_MODEL_CONFIDENCE && priceOk;
-  }
-  if (bt === 'spread') {
-    return edge >= CARD_PICK_THRESHOLDS.spread && edge >= CARD_MIN_SPREAD_COVER;
-  }
-  if (bt === 'total') {
-    return edge >= CARD_PICK_THRESHOLDS.total;
-  }
-  return false;
-}
-
-function _selectFeaturedCardPick(picks) {
-  const actionable = (picks || []).filter(_cardPickIsActionable);
-  const pool = actionable.length ? actionable : (picks || []);
-  const ranked = [...pool].sort((a, b) => {
-    const scoreDiff = _cardPickScore(b) - _cardPickScore(a);
-    if (Math.abs(scoreDiff) > 1e-9) return scoreDiff;
-    return _cardPickEdgeAbs(b) - _cardPickEdgeAbs(a);
-  });
-  let chosen = ranked[0] || null;
-  const bestTotal = ranked.find(p => p.bet_type === 'total');
-  const bestSide = ranked.find(p => p.bet_type === 'ml' || p.bet_type === 'spread');
-  if (bestTotal && bestSide) {
-    const ratio = actionable.length ? CARD_SIDE_PREFERENCE_RATIO : CARD_LEAN_SIDE_PREFERENCE_RATIO;
-    if (_cardPickScore(bestSide) >= _cardPickScore(bestTotal) * ratio) {
-      chosen = bestSide;
-    }
-  }
-  return { pick: chosen, actionable: !!(chosen && _cardPickIsActionable(chosen)), actionablePicks: actionable };
-}
-
-function _cardPickDescription(p) {
-  const side = p.bet_side || p.bet_team || '';
-  if (p.bet_type === 'spread' && p.bet_spread != null) {
-    return `${side} ${p.bet_spread >= 0 ? '+' : ''}${Number(p.bet_spread).toFixed(1)}`;
-  }
-  if (p.bet_type === 'total' && p.vegas_total != null) {
-    return `${side} ${Number(p.vegas_total).toFixed(1)}`;
-  }
-  return side;
-}
-
-function _cardPickProjection(p) {
-  if (p.bet_type === 'ml' && p.model_prob != null && p.implied_prob != null) {
-    return `Model ${(Number(p.model_prob) * 100).toFixed(1)}% vs market ${(Number(p.implied_prob) * 100).toFixed(1)}%`;
-  }
-  if (p.bet_type === 'spread' && p.model_margin != null && p.vegas_spread != null) {
-    return `Model margin ${Number(p.model_margin) >= 0 ? '+' : ''}${Number(p.model_margin).toFixed(1)} vs line ${Number(p.vegas_spread) >= 0 ? '+' : ''}${Number(p.vegas_spread).toFixed(1)}`;
-  }
-  if (p.bet_type === 'total' && p.model_total != null && p.vegas_total != null) {
-    return `Model ${Number(p.model_total).toFixed(1)} vs line ${Number(p.vegas_total).toFixed(1)}`;
-  }
-  return '';
-}
-
-function _cardWhyLines(game, p, actionable) {
-  const lines = [];
-  if (game?.insight) lines.push(game.insight);
-  const proj = _cardPickProjection(p);
-  if (proj) lines.push(proj);
-  if (game?.key_factors?.length) lines.push(game.key_factors.slice(0, 2).join(' • '));
-  if (!actionable) {
-    const edgeAbs = _cardPickEdgeAbs(p);
-    const threshold = _cardPickThreshold(p.bet_type);
-    lines.push(`Lean only: ${edgeAbs.toFixed(1)} against a ${threshold.toFixed(1)} ${p.bet_type === 'ml' ? 'probability' : 'point'} threshold.`);
-  }
-  return lines.slice(0, 3);
-}
-
-function _computeCardAnalytics(games) {
-  const featuredByType = { ml: 0, spread: 0, total: 0 };
-  const totalLeans = { OVER: 0, UNDER: 0 };
-  const actionableTotalLeans = { OVER: 0, UNDER: 0 };
-  let featured = 0;
-  let suppressedTotals = 0;
-  let totalMarkets = 0;
-
-  (games || []).forEach(game => {
-    const picks = game.picks || [];
-    const featuredPick = _selectFeaturedCardPick(picks);
-    if (featuredPick.actionable && featuredPick.pick) {
-      featured += 1;
-      featuredByType[featuredPick.pick.bet_type] = (featuredByType[featuredPick.pick.bet_type] || 0) + 1;
-    }
-    const totalPick = picks.find(p => p.bet_type === 'total');
-    if (!totalPick) return;
-    totalMarkets += 1;
-    const side = (totalPick.bet_side || '').toUpperCase();
-    if (side === 'OVER' || side === 'UNDER') {
-      totalLeans[side] = (totalLeans[side] || 0) + 1;
-      if (_cardPickIsActionable(totalPick)) actionableTotalLeans[side] = (actionableTotalLeans[side] || 0) + 1;
-      else suppressedTotals += 1;
-    }
-  });
-
-  return { featured, featuredByType, totalLeans, actionableTotalLeans, suppressedTotals, totalMarkets };
-}
-
 function renderCard(cardData, historyData, scores) {
   scores = scores || {};
   const gamesBody = document.getElementById('card-games-body');
   const statsRow = document.getElementById('card-stats-row');
-  const metaRow = document.getElementById('card-meta-row');
   const badge = document.getElementById('card-hit-badge');
   const title = document.getElementById('card-section-title');
   const histSection = document.getElementById('card-history-section');
   const histBody = document.getElementById('card-history-body');
 
-  const cardDate = cardData?.date || new Date().toLocaleDateString('en-CA', { timeZone: 'America/New_York' });
-  title.textContent = `March Madness Card (${_formatHistoryDate(cardDate) || cardDate})`;
+  const today = new Date().toLocaleDateString('en-CA');
+  title.textContent = `March Madness Card (${today})`;
 
   const games = [...(cardData?.games || [])].sort((a, b) => {
     const aKey = `${a.home_team}|${a.away_team}`;
@@ -2760,15 +2574,13 @@ function renderCard(cardData, historyData, scores) {
   });
 
   const cardStats = _computeCardStats(games, scores);
-  const cardAnalytics = _computeCardAnalytics(games);
   const modelReadyCount = games.filter(game => game.data_available).length;
   const pickCount = games.reduce((sum, game) => sum + (game.picks || []).length, 0);
   const statCards = [
     { label: 'Games', value: games.length, sub: 'tournament matchups' },
-    { label: 'Actionable', value: cardAnalytics.featured, sub: `ML ${cardAnalytics.featuredByType.ml || 0} · Spread ${cardAnalytics.featuredByType.spread || 0} · Total ${cardAnalytics.featuredByType.total || 0}` },
     { label: 'Record', value: cardStats.decided ? `${cardStats.wins}W-${cardStats.losses}L` : '—', sub: `${cardStats.pushes} push${cardStats.pushes === 1 ? '' : 'es'}` },
     { label: 'Net Units', value: cardStats.total_wagered ? `${cardStats.net_units >= 0 ? '+' : ''}${cardStats.net_units.toFixed(1)}u` : '—', sub: cardStats.total_wagered ? `${cardStats.total_wagered.toFixed(1)}u wagered` : 'no settled picks' },
-    { label: 'Live', value: cardStats.live, sub: `${cardStats.upcoming} upcoming · ${pickCount} raw markets` },
+    { label: 'Live', value: cardStats.live, sub: `${cardStats.upcoming} upcoming · ${pickCount} markets` },
     { label: 'Model Ready', value: modelReadyCount, sub: `${games.length - modelReadyCount} missing data` },
   ];
   statsRow.innerHTML = statCards.map(c => `<div class="stat-card">
@@ -2776,14 +2588,6 @@ function renderCard(cardData, historyData, scores) {
     <div class="sc-value">${c.value}</div>
     <div class="sc-sub">${c.sub}</div>
   </div>`).join('');
-
-  metaRow.innerHTML = games.length ? `<div class="card-meta-row">
-    <span class="card-meta-chip">Featured card <strong>${cardAnalytics.featured}</strong></span>
-    <span class="card-meta-chip">Mix <strong>ML ${cardAnalytics.featuredByType.ml || 0}</strong> <strong>Spread ${cardAnalytics.featuredByType.spread || 0}</strong> <strong>Total ${cardAnalytics.featuredByType.total || 0}</strong></span>
-    <span class="card-meta-chip">Actionable totals <strong>O${cardAnalytics.actionableTotalLeans.OVER || 0}</strong> <strong>U${cardAnalytics.actionableTotalLeans.UNDER || 0}</strong></span>
-    <span class="card-meta-chip">All total leans <strong>O${cardAnalytics.totalLeans.OVER || 0}</strong> <strong>U${cardAnalytics.totalLeans.UNDER || 0}</strong></span>
-    <span class="card-meta-chip"><strong>${cardAnalytics.suppressedTotals}</strong> totals sit below the ${CARD_PICK_THRESHOLDS.total.toFixed(0)}-point threshold</span>
-  </div>` : '';
 
   if (!cardData?.available || games.length === 0) {
     badge.textContent = 'No games';
@@ -2795,7 +2599,7 @@ function renderCard(cardData, historyData, scores) {
       badge.textContent = `${hr}% (${cardStats.wins}W-${cardStats.losses}L)`;
       badge.className = 'hit-rate-badge ' + ((cardStats.hit_rate || 0) >= .55 ? 'good' : (cardStats.hit_rate || 0) < .45 ? 'bad' : '');
     } else {
-      badge.textContent = `${cardAnalytics.featured} actionable`;
+      badge.textContent = `${games.length} games`;
       badge.className = 'hit-rate-badge';
     }
     gamesBody.innerHTML = `<div class="card-grid">${games.map(game => _matchupCardHtml(game, scores)).join('')}</div>`;
@@ -2870,8 +2674,6 @@ function _matchupCardHtml(game, scores) {
   }
 
   const picks = game.picks || [];
-  const featured = _selectFeaturedCardPick(picks);
-  const featuredPick = featured.pick;
   const lineRef = picks.find(p => p.vegas_spread != null || p.vegas_total != null) || {};
   const modelProbHome = Number(game.model_prob_home);
   const homeProb = Number.isFinite(modelProbHome) ? modelProbHome : null;
@@ -2894,9 +2696,6 @@ function _matchupCardHtml(game, scores) {
   const contextBits = [
     game.round_name ? `<span class="mc-summary"><strong>${escapeHtml(game.round_name)}</strong></span>` : '',
     modelFavProb != null ? `<span class="mc-summary">Model Pick <strong>${escapeHtml(modelFavTeam)}</strong> ${modelFavProb.toFixed(0)}%</span>` : '',
-    game.confidence ? `<span class="mc-summary">Confidence <strong>${escapeHtml(game.confidence)}</strong></span>` : '',
-    game.variability ? `<span class="mc-summary">Variability <strong>${escapeHtml(game.variability)}</strong></span>` : '',
-    game.efficiency_prob != null ? `<span class="mc-summary">Eff <strong>${(Number(game.efficiency_prob) * 100).toFixed(0)}%</strong></span>` : '',
     Number.isFinite(modelMargin) ? `<span class="mc-summary">Model Spread <strong>${escapeHtml(modelSpreadLabel)}</strong></span>` : '',
     vegasSpreadLabel ? `<span class="mc-summary">Vegas <strong>${escapeHtml(vegasSpreadLabel)}</strong></span>` : '',
     Number.isFinite(modelTotal) ? `<span class="mc-summary">Model Total <strong>${modelTotal.toFixed(1)}</strong>${vegasTotal != null ? ` vs ${Number(vegasTotal).toFixed(1)}` : ''}</span>` : '',
@@ -2913,32 +2712,30 @@ function _matchupCardHtml(game, scores) {
     if (bt === 'ml') return `${(edge * 100).toFixed(1)}% edge`;
     return `${Number(edge).toFixed(1)} pt edge`;
   };
-  const _renderPick = (p, opts = {}) => {
+  const rows = picks.map(p => {
     const bt = p.bet_type;
     const result = _gradeCardPick(p, scoreRec);
-    const actionable = !!opts.actionable;
-    const featuredRow = !!opts.featured;
 
-    const desc = _cardPickDescription(p);
+    const side = p.bet_side || p.bet_team || '';
+    let desc = side;
+    if (bt === 'spread' && p.bet_spread != null)
+      desc += ` ${p.bet_spread >= 0 ? '+' : ''}${p.bet_spread.toFixed(1)}`;
+    if (bt === 'total' && p.vegas_total != null)
+      desc = `${side} ${p.vegas_total.toFixed(1)}`;
     const odds = p.bet_odds != null ? `(${p.bet_odds > 0 ? '+' : ''}${Math.round(p.bet_odds)})` : '';
     const stars = p.stars || '';
     const units = _formatUnits(p.kelly_units);
     const edgeLabel = _formatEdge(bt, p.edge);
-    const proj = _cardPickProjection(p);
-    const threshold = _cardPickThreshold(bt);
-    const whyLines = featuredRow ? _cardWhyLines(game, p, actionable) : [];
-    const kickerLabel = featuredRow
-      ? (actionable ? 'Actionable Angle' : 'Lean Only')
-      : (actionable ? 'Also Playable' : 'Secondary Lean');
-    const kickerNote = featuredRow
-      ? (actionable ? `Clears ${threshold.toFixed(bt === 'ml' ? 2 : 1)} ${bt === 'ml' ? 'edge' : 'pt'} threshold` : `Best available lean; below ${threshold.toFixed(bt === 'ml' ? 2 : 1)} ${bt === 'ml' ? 'edge' : 'pt'} threshold`)
-      : 'Additional market context';
 
-    return `<div class="mc-pick${featuredRow ? ` featured${actionable ? '' : ' lean'}` : ''}">
-      <div class="mc-kicker">
-        <span class="mc-strength ${actionable ? 'actionable' : 'lean'}">${kickerLabel}</span>
-        <span class="mc-note">${kickerNote}</span>
-      </div>
+    let proj = '';
+    if (bt === 'ml' && p.model_prob != null && p.implied_prob != null)
+      proj = `Model ${(p.model_prob*100).toFixed(1)}% vs mkt ${(p.implied_prob*100).toFixed(1)}%`;
+    else if (bt === 'spread' && p.model_margin != null && p.vegas_spread != null)
+      proj = `Model margin ${p.model_margin >= 0 ? '+' : ''}${p.model_margin.toFixed(1)} vs line ${p.vegas_spread >= 0 ? '+' : ''}${p.vegas_spread.toFixed(1)}`;
+    else if (bt === 'total' && p.model_total != null && p.vegas_total != null)
+      proj = `Model ${p.model_total.toFixed(1)} vs line ${p.vegas_total.toFixed(1)}`;
+
+    return `<div class="mc-pick">
       <div class="mc-topline">
         <span class="bet-type-tag ${bt}">${bt.toUpperCase()}</span>
         <span class="mc-side">${desc}</span>
@@ -2949,28 +2746,12 @@ function _matchupCardHtml(game, scores) {
         ${units ? `<span class="mc-chip units">${units}</span>` : ''}
         ${edgeLabel ? `<span class="mc-chip edge">${edgeLabel}</span>` : ''}
         ${stars ? `<span class="mc-chip stars">${stars}</span>` : ''}
-        <span class="mc-chip threshold">Threshold ${threshold.toFixed(bt === 'ml' ? 2 : 1)}</span>
       </div>` : ''}
       ${proj ? `<span class="mc-proj">${proj}</span>` : ''}
-      ${whyLines.length ? `<div class="mc-why">${whyLines.map(line => `<div class="mc-why-item">${line}</div>`).join('')}</div>` : ''}
     </div>`;
-  };
+  }).join('');
 
-  const otherActionable = picks.filter(p => p !== featuredPick && _cardPickIsActionable(p));
-  const totalPick = picks.find(p => p.bet_type === 'total');
-  const totalSuppressed = totalPick && totalPick !== featuredPick && !_cardPickIsActionable(totalPick);
-  const passiveNote = totalSuppressed
-    ? `Total lean only: <strong>${escapeHtml(_cardPickDescription(totalPick))}</strong> with ${_formatEdge('total', totalPick.edge)}. It stays out of the featured card until it clears the ${CARD_PICK_THRESHOLDS.total.toFixed(0)}-point total threshold.`
-    : (!featured.actionable && featuredPick ? `No market clears the featured-card threshold here. The best lean is shown for context, not as an official play.` : '');
-  const featuredHtml = featuredPick
-    ? _renderPick(featuredPick, { featured: true, actionable: featured.actionable })
-    : '<div class="mc-nodata">No picks generated</div>';
-  const secondaryHtml = otherActionable.length
-    ? `<div class="mc-secondary-wrap"><div class="mc-secondary-title">Other Actionable Markets</div>${otherActionable.map(p => _renderPick(p, { actionable: true })).join('')}</div>`
-    : '';
-  const leanNoteHtml = passiveNote ? `<div class="mc-lean-note">${passiveNote}</div>` : '';
-
-  return `<div class="matchup-card">${header}${contextHtml}${featuredHtml}${secondaryHtml}${leanNoteHtml}</div>`;
+  return `<div class="matchup-card">${header}${contextHtml}${rows || '<div class="mc-nodata">No picks generated</div>'}</div>`;
 }
 
 function renderBenchmark(data) {
