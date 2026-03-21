@@ -1002,6 +1002,54 @@ def test_get_bets_card_history_hydrates_scores_and_stats(tmp_path, monkeypatch):
     assert d["stats"]["settled"] == 1
 
 
+def test_hydrate_picks_with_scores_settles_tennessee_state_alias(tmp_path, monkeypatch):
+    ledger_path = tmp_path / "bets_ledger.json"
+    ledger_path.write_text(json.dumps({"picks": []}))
+    card_ledger_path = tmp_path / "card_ledger.json"
+    card_ledger_path.write_text(json.dumps({"picks": []}))
+
+    monkeypatch.setattr(api, "LEDGER_PATH", str(ledger_path))
+    monkeypatch.setattr(api, "CARD_LEDGER_PATH", str(card_ledger_path))
+
+    import espn_scores
+
+    monkeypatch.setattr(
+        api,
+        "fetch_scores_for_picks",
+        lambda picks, days=21: espn_scores.build_scores_by_key([
+            {
+                "home_team": "Iowa State Cyclones",
+                "away_team": "Tennessee State Tigers",
+                "home_aliases": ["Iowa State", "Iowa State Cyclones"],
+                "away_aliases": ["Tennessee State", "Tennessee State Tigers"],
+                "home_score": 82,
+                "away_score": 55,
+                "completed": True,
+                "status_detail": "Final",
+                "display_clock": "",
+                "period": 2,
+                "scheduled_at": "2026-03-20T19:00:00Z",
+            }
+        ]),
+    )
+
+    hydrated = api._hydrate_picks_with_scores([
+        {
+            "date": "2026-03-20",
+            "home_team": "Iowa State Cyclones",
+            "away_team": "Tennessee St Tigers",
+            "commence_time": "2026-03-20T19:00:00Z",
+            "bet_type": "spread",
+            "bet_team": "Iowa State Cyclones",
+            "vegas_spread": -25.0,
+        }
+    ])
+
+    assert hydrated[0]["actual_score_home"] == 82
+    assert hydrated[0]["actual_score_away"] == 55
+    assert hydrated[0]["result"] == "W"
+
+
 def test_bracket_scores_maps_to_bracket_team_names(tmp_path, monkeypatch):
     bracket_path = tmp_path / "bracket_2026.json"
     bracket_path.write_text(json.dumps({

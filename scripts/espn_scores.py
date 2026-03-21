@@ -36,7 +36,9 @@ def _norm(name):
     """Normalize team name for matching."""
     if not name or not isinstance(name, str):
         return ""
-    n = _normalize_team_for_match(name)
+    # Picks often store full display names ("Tennessee St Tigers"), while
+    # bracket/team data uses the school name. Strip mascots before matching.
+    n = _normalize_team_for_match(_strip_mascot(name))
     return _ESPN_ALIASES.get(n, n)
 
 

@@ -140,6 +140,10 @@ def test_normalize_iowa_state_to_iowa_st():
     assert _normalize_team_for_match("Iowa State") == "iowa st"
 
 
+def test_normalize_tennessee_state_to_tennessee_st():
+    assert _normalize_team_for_match("Tennessee State") == "tennessee st"
+
+
 def test_normalize_strips_periods():
     assert _normalize_team_for_match("St. John's") == "st johns"
 

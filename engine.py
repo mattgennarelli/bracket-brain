@@ -1627,6 +1627,7 @@ _NAME_ALIASES = {
     "murray state": "murray st",
     "south dakota state": "south dakota st",
     "north dakota state": "north dakota st",
+    "tennessee state": "tennessee st",
     "jacksonville state": "jacksonville st",
     "appalachian state": "appalachian st",
     "kennesaw state": "kennesaw st",
