@@ -1645,6 +1645,7 @@ _MASCOT_SUFFIXES = {
     "engineers", "bantams", "mean green", "roadrunners",
     "chanticleers", "thunderbirds", "aces", "sycamores",
     "mountain hawks", "pride",
+    "horned frogs", "seahawks",
 }
 
 

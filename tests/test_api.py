@@ -499,6 +499,193 @@ def test_get_bets_card_falls_back_to_today_card_ledger(tmp_path, monkeypatch):
     assert len(d["games"][0]["picks"]) == 3
 
 
+def test_annotate_tournament_record_accepts_mascot_variant_matchup(tmp_path, monkeypatch):
+    bracket_path = tmp_path / "bracket_2026.json"
+    bracket_path.write_text(json.dumps({
+        "regions": {
+            "East": [
+                {"team": "Duke", "seed": 1},
+                {"team": "Team 16", "seed": 16},
+                {"team": "Team 8", "seed": 8},
+                {"team": "TCU", "seed": 9},
+            ],
+            "West": [],
+            "South": [],
+            "Midwest": [],
+        },
+        "quadrant_order": ["East", "West", "South", "Midwest"],
+        "final_four_matchups": [[0, 3], [1, 2]],
+        "first_four": [],
+    }))
+
+    monkeypatch.setattr(api, "DATA_DIR", str(tmp_path))
+
+    annotated = api._annotate_tournament_record({
+        "home_team": "Duke Blue Devils",
+        "away_team": "TCU Horned Frogs",
+        "commence_time": "2026-03-21T21:15:00Z",
+    }, year=2026)
+
+    assert annotated is not None
+    assert annotated["round_of"] == 32
+    assert annotated["round_name"] == "Round of 32"
+
+
+def test_load_current_card_games_from_ledger_prefers_latest_market_snapshot(tmp_path, monkeypatch):
+    bracket_path = tmp_path / "bracket_2026.json"
+    bracket_path.write_text(json.dumps({
+        "regions": {
+            "East": [
+                {"team": "Michigan St.", "seed": 3},
+                {"team": "Team 14", "seed": 14},
+                {"team": "Team 6", "seed": 6},
+                {"team": "Louisville", "seed": 11},
+            ],
+            "West": [],
+            "South": [],
+            "Midwest": [],
+        },
+        "quadrant_order": ["East", "West", "South", "Midwest"],
+        "final_four_matchups": [[0, 3], [1, 2]],
+        "first_four": [],
+    }))
+    card_ledger_path = tmp_path / "card_ledger.json"
+    card_ledger_path.write_text(json.dumps({
+        "picks": [
+            {
+                "home_team": "Michigan St Spartans",
+                "away_team": "Louisville Cardinals",
+                "commence_time": "2026-03-21T16:00:00Z",
+                "date": "2026-03-21",
+                "bet_type": "ml",
+                "bet_side": "Michigan St Spartans",
+            },
+            {
+                "home_team": "Michigan St Spartans",
+                "away_team": "Louisville Cardinals",
+                "commence_time": "2026-03-21T16:00:00Z",
+                "date": "2026-03-21",
+                "bet_type": "spread",
+                "bet_team": "Michigan St Spartans",
+            },
+            {
+                "home_team": "Michigan St Spartans",
+                "away_team": "Louisville Cardinals",
+                "commence_time": "2026-03-21T16:00:00Z",
+                "date": "2026-03-21",
+                "bet_type": "total",
+                "bet_side": "OVER",
+            },
+            {
+                "home_team": "Michigan St Spartans",
+                "away_team": "Louisville Cardinals",
+                "commence_time": "2026-03-21T18:45:00Z",
+                "date": "2026-03-21",
+                "bet_type": "ml",
+                "bet_side": "Louisville Cardinals",
+            },
+            {
+                "home_team": "Michigan St Spartans",
+                "away_team": "Louisville Cardinals",
+                "commence_time": "2026-03-21T18:45:00Z",
+                "date": "2026-03-21",
+                "bet_type": "spread",
+                "bet_team": "Louisville Cardinals",
+            },
+            {
+                "home_team": "Michigan St Spartans",
+                "away_team": "Louisville Cardinals",
+                "commence_time": "2026-03-21T18:45:00Z",
+                "date": "2026-03-21",
+                "bet_type": "total",
+                "bet_side": "UNDER",
+            },
+        ]
+    }))
+
+    monkeypatch.setattr(api, "DATA_DIR", str(tmp_path))
+    monkeypatch.setattr(api, "CARD_LEDGER_PATH", str(card_ledger_path))
+    monkeypatch.setattr(api, "_today_et_str", lambda: "2026-03-21")
+
+    games = api._load_current_card_games_from_ledger(2026, refresh=False)
+
+    assert len(games) == 1
+    assert games[0]["commence_time"] == "2026-03-21T18:45:00Z"
+    assert [p["bet_type"] for p in games[0]["picks"]] == ["ml", "spread", "total"]
+
+
+def test_get_bets_card_prefers_current_ledger_over_saved_snapshot(tmp_path, monkeypatch):
+    bracket_path = tmp_path / "bracket_2026.json"
+    bracket_path.write_text(json.dumps({
+        "regions": {
+            "East": [
+                {"team": "Duke", "seed": 1},
+                {"team": "Team 16", "seed": 16},
+                {"team": "Team 8", "seed": 8},
+                {"team": "TCU", "seed": 9},
+            ],
+            "West": [],
+            "South": [],
+            "Midwest": [],
+        },
+        "quadrant_order": ["East", "West", "South", "Midwest"],
+        "final_four_matchups": [[0, 3], [1, 2]],
+        "first_four": [],
+    }))
+    (tmp_path / "card_2026-03-21.json").write_text(json.dumps({
+        "games": [
+            {
+                "home_team": "Duke Blue Devils",
+                "away_team": "TCU Horned Frogs",
+                "commence_time": "2026-03-21T16:00:00Z",
+                "picks": [],
+            }
+        ]
+    }))
+    card_ledger_path = tmp_path / "card_ledger.json"
+    card_ledger_path.write_text(json.dumps({
+        "picks": [
+            {
+                "home_team": "Duke Blue Devils",
+                "away_team": "TCU Horned Frogs",
+                "commence_time": "2026-03-21T21:15:00Z",
+                "date": "2026-03-21",
+                "bet_type": "ml",
+                "bet_side": "Duke Blue Devils",
+            },
+            {
+                "home_team": "Duke Blue Devils",
+                "away_team": "TCU Horned Frogs",
+                "commence_time": "2026-03-21T21:15:00Z",
+                "date": "2026-03-21",
+                "bet_type": "spread",
+                "bet_team": "Duke Blue Devils",
+            },
+            {
+                "home_team": "Duke Blue Devils",
+                "away_team": "TCU Horned Frogs",
+                "commence_time": "2026-03-21T21:15:00Z",
+                "date": "2026-03-21",
+                "bet_type": "total",
+                "bet_side": "UNDER",
+            },
+        ]
+    }))
+
+    monkeypatch.setattr(api, "DATA_DIR", str(tmp_path))
+    monkeypatch.setattr(api, "CARD_LEDGER_PATH", str(card_ledger_path))
+    monkeypatch.setattr(api, "_today_et_str", lambda: "2026-03-21")
+    monkeypatch.setattr(api, "_cache", {})
+    monkeypatch.setattr(api, "refresh_saved_card_games", lambda games, year=None: games)
+
+    r = client.get("/bets/card")
+    assert r.status_code == 200
+    d = r.json()
+    assert d["date"] == "2026-03-21"
+    assert len(d["games"]) == 1
+    assert d["games"][0]["commence_time"] == "2026-03-21T21:15:00Z"
+
+
 def test_bracket_scores_maps_to_bracket_team_names(tmp_path, monkeypatch):
     bracket_path = tmp_path / "bracket_2026.json"
     bracket_path.write_text(json.dumps({

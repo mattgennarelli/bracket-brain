@@ -1105,8 +1105,9 @@ def _pick_preference_key(pick: dict):
         settled,
         scored,
         str(pick.get("settled_at") or ""),
-        str(pick.get("generated_at") or ""),
         _pick_game_date(pick),
+        str(pick.get("commence_time") or ""),
+        str(pick.get("generated_at") or ""),
     )
 
 
@@ -1189,8 +1190,7 @@ def _load_current_card_games_from_ledger(year: int = 2026, *, refresh: bool = Fa
         for key in ("ncaa_tournament", "round_of", "round_name"):
             if key in annotated:
                 merged_pick[key] = annotated[key]
-        side = merged_pick.get("bet_side") or merged_pick.get("bet_team") or ""
-        market_key = (matchup[0], matchup[1], merged_pick.get("round_of"), merged_pick.get("bet_type"), side)
+        market_key = (matchup[0], matchup[1], merged_pick.get("round_of"), merged_pick.get("bet_type"))
         current = latest_market.get(market_key)
         if current is None or _pick_preference_key(merged_pick) > _pick_preference_key(current):
             latest_market[market_key] = merged_pick
@@ -1627,19 +1627,20 @@ def get_bracket_scores(year: int, days: int = Query(default=21, ge=0, le=30)):
 def get_bets_card(year: int = Query(default=2026)):
     """Return today's full card — every NCAAB game with the model's best lean per market.
 
-    Reads from saved daily file (data/card_YYYY-MM-DD.json) written by save_card.py /
-    GitHub Actions.  Falls back to live Odds API fetch only if no saved file exists.
+    Prefer the current-day card ledger so schedule updates and matchup corrections
+    show up even when the saved daily snapshot is stale. Fall back to the saved
+    daily file, then live odds fetch if neither exists.
     """
     today = _today_et_str()
+
+    games = _load_current_card_games_from_ledger(year, refresh=True)
+    if games:
+        return {"date": today, "games": games, "available": True}
 
     daily_path, games = _load_saved_card_snapshot(year, refresh=True)
     if daily_path:
         card_date = os.path.basename(daily_path).replace("card_", "").replace(".json", "")
         return {"date": card_date, "games": games, "available": bool(games)}
-
-    games = _load_current_card_games_from_ledger(year, refresh=True)
-    if games:
-        return {"date": today, "games": games, "available": True}
 
     # Fall back to live odds fetch if no saved file (e.g. before Actions runs)
     api_key = get_api_key()
