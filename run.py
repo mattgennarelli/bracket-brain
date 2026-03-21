@@ -12,6 +12,7 @@ import json
 import os
 import sys
 import argparse
+import hashlib
 from datetime import datetime
 
 sys.path.insert(0, os.path.dirname(__file__))
@@ -26,6 +27,25 @@ from engine import (
 
 ROOT = os.path.dirname(os.path.abspath(__file__))
 DATA_DIR = os.path.join(ROOT, "data")
+
+
+def _prediction_inputs_hash(year: int) -> str:
+    """Stable hash of files that affect bracket and Monte Carlo predictions."""
+    paths = [
+        os.path.join(DATA_DIR, f"bracket_{year}.json"),
+        os.path.join(DATA_DIR, f"teams_merged_{year}.json"),
+        os.path.join(DATA_DIR, f"injuries_{year}.json"),
+        os.path.join(DATA_DIR, "calibrated_config.json"),
+    ]
+    h = hashlib.sha256()
+    for path in paths:
+        h.update(path.encode("utf-8"))
+        if not os.path.isfile(path):
+            h.update(b"<missing>")
+            continue
+        with open(path, "rb") as f:
+            h.update(f.read())
+    return h.hexdigest()[:16]
 
 
 def _year_from_bracket_path(path):
@@ -1227,6 +1247,7 @@ def main():
         mc_export = {
             "year": year,
             "num_simulations": args.sims,
+            "prediction_inputs_hash": _prediction_inputs_hash(year),
             "champion_probs": mc_results["champion_probs"],
             "final_four_probs": mc_results["final_four_probs"],
             "elite_eight_probs": mc_results["elite_eight_probs"],

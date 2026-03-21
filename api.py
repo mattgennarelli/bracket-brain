@@ -244,6 +244,25 @@ def _prediction_inputs_mtime(year: int) -> str:
     return str(latest)
 
 
+def _prediction_inputs_hash(year: int) -> str:
+    """Stable hash of files that affect bracket and Monte Carlo predictions."""
+    paths = [
+        os.path.join(DATA_DIR, f"bracket_{year}.json"),
+        os.path.join(DATA_DIR, f"teams_merged_{year}.json"),
+        os.path.join(DATA_DIR, f"injuries_{year}.json"),
+        os.path.join(DATA_DIR, "calibrated_config.json"),
+    ]
+    h = hashlib.sha256()
+    for path in paths:
+        h.update(path.encode("utf-8"))
+        if not os.path.isfile(path):
+            h.update(b"<missing>")
+            continue
+        with open(path, "rb") as f:
+            h.update(f.read())
+    return h.hexdigest()[:16]
+
+
 def _add_final_four_by_region(result: dict, year: int) -> dict:
     """Compute final_four_by_region from bracket + final_four_probs. Modifies result in place."""
     ff_probs = result.get("final_four_probs", {})
@@ -1573,23 +1592,27 @@ def get_monte_carlo(
             raise HTTPException(status_code=429, detail="Too many Monte Carlo requests. Try again in a minute.")
 
     inputs_mtime = _prediction_inputs_mtime(year)
-    cache_key = f"mc_{year}_{sims}_{inputs_mtime}"
+    inputs_hash = _prediction_inputs_hash(year)
+    cache_key = f"mc_{year}_{sims}_{inputs_mtime}_{inputs_hash}"
     cached = _cache_get(cache_key)
     if cached is not None:
         return cached
 
     # Use pre-computed file when available (sims=10000) for fast load; fallback to live
     precomputed_path = os.path.join(DATA_DIR, f"monte_carlo_{year}.json")
-    precomputed_fresh = (
-        os.path.isfile(precomputed_path)
-        and int(os.path.getmtime(precomputed_path)) >= int(inputs_mtime or "0")
-    )
-    if sims == 10000 and precomputed_fresh:
+    if sims == 10000 and os.path.isfile(precomputed_path):
         with open(precomputed_path) as f:
-            result = json.load(f)
-        result = _add_final_four_by_region(result, year)
-        _cache_set(cache_key, result)
-        return result
+            precomputed = json.load(f)
+        precomputed_hash = str(precomputed.get("prediction_inputs_hash") or "")
+        precomputed_fresh = (
+            precomputed_hash == inputs_hash
+            if precomputed_hash
+            else int(os.path.getmtime(precomputed_path)) >= int(inputs_mtime or "0")
+        )
+        if precomputed_fresh:
+            result = _add_final_four_by_region(precomputed, year)
+            _cache_set(cache_key, result)
+            return result
 
     bracket, _, _ = _load_bracket_for_year(year)
     config = _load_config(num_sims=sims)
@@ -1604,6 +1627,7 @@ def get_monte_carlo(
         "elite_eight_probs": mc["elite_eight_probs"],
         "sweet_sixteen_probs": mc["sweet_sixteen_probs"],
         "round_of_32_probs": mc["round_of_32_probs"],
+        "prediction_inputs_hash": inputs_hash,
     }
     result = _add_final_four_by_region(result, year)
     _cache_set(cache_key, result)

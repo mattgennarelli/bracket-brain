@@ -217,6 +217,41 @@ def test_monte_carlo_2026():
     assert 0.95 <= total <= 1.05  # some rounding OK
 
 
+def test_monte_carlo_recomputes_when_precomputed_hash_is_stale(tmp_path, monkeypatch):
+    mc_path = tmp_path / "monte_carlo_2026.json"
+    mc_path.write_text(json.dumps({
+        "year": 2026,
+        "num_simulations": 10000,
+        "prediction_inputs_hash": "stalehash",
+        "champion_probs": {"Old Team": 1.0},
+        "final_four_probs": {"Old Team": 1.0},
+        "elite_eight_probs": {"Old Team": 1.0},
+        "sweet_sixteen_probs": {"Old Team": 1.0},
+        "round_of_32_probs": {"Old Team": 1.0},
+    }))
+
+    monkeypatch.setattr(api, "DATA_DIR", str(tmp_path))
+    monkeypatch.setattr(api, "_cache", collections.OrderedDict())
+    monkeypatch.setattr(api, "_prediction_inputs_hash", lambda year: "freshhash")
+    monkeypatch.setattr(api, "_prediction_inputs_mtime", lambda year: "123")
+    monkeypatch.setattr(api, "_load_bracket_for_year", lambda year: ({}, [], ["East", "West", "South", "Midwest"]))
+    monkeypatch.setattr(api, "_load_config", lambda num_sims=10000: object())
+    monkeypatch.setattr(api, "_add_final_four_by_region", lambda result, year: result)
+    monkeypatch.setattr(api, "run_monte_carlo", lambda bracket, config=None: {
+        "champion_probs": {"New Team": 1.0},
+        "final_four_probs": {"New Team": 1.0},
+        "elite_eight_probs": {"New Team": 1.0},
+        "sweet_sixteen_probs": {"New Team": 1.0},
+        "round_of_32_probs": {"New Team": 1.0},
+    })
+
+    r = client.get("/bracket/2026/monte-carlo?sims=10000")
+    assert r.status_code == 200
+    d = r.json()
+    assert d["champion_probs"] == {"New Team": 1.0}
+    assert d["prediction_inputs_hash"] == "freshhash"
+
+
 def test_monte_carlo_sims_limit():
     r = client.get("/bracket/2026/monte-carlo?sims=200000")  # over max
     assert r.status_code == 422
