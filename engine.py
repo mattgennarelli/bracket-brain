@@ -2349,11 +2349,7 @@ def resolve_ff_pairs(quadrant_order, ff_matchups=None):
 
 def _should_pick_upset(prob_a, seed_a, seed_b, aggression):
     """Decide whether to pick an upset based on aggression level."""
-    tie_window = 0.005  # break only near true coin-flips (49.5% to 50.5%)
-    if abs(prob_a - 0.5) <= tie_window and seed_a != seed_b:
-        favorite_is_a = seed_a < seed_b
-    else:
-        favorite_is_a = prob_a >= 0.5
+    favorite_is_a = prob_a >= 0.5
     if aggression <= 0:
         return favorite_is_a
     seed_diff = abs(seed_a - seed_b)
@@ -2363,6 +2359,17 @@ def _should_pick_upset(prob_a, seed_a, seed_b, aggression):
     else:
         adjusted = prob_a + aggression * upset_boost
     return random.random() < adjusted
+
+
+def _pick_team_for_bracket(result, team_a, team_b, upset_aggression):
+    """Bracket-only chooser with a deterministic upset tiebreak on 0.0 margins."""
+    margin = float(result.get("predicted_margin") or 0.0)
+    seed_a = team_a.get("seed")
+    seed_b = team_b.get("seed")
+    if abs(margin) < 0.05 and seed_a is not None and seed_b is not None and seed_a != seed_b:
+        return team_a if seed_a > seed_b else team_b
+    pick_a = _should_pick_upset(result["win_prob_a"], seed_a, seed_b, upset_aggression)
+    return team_a if pick_a else team_b
 
 
 def _compute_upset_alert(seed_a, seed_b, projected_margin, win_prob_a, hist):
@@ -2630,8 +2637,7 @@ def generate_bracket_picks(bracket, config=DEFAULT_CONFIG, upset_aggression=0.0,
             if locked_team in (a["team"], b["team"]):
                 pick_team = a if locked_team == a["team"] else b
             else:
-                pick_a = _should_pick_upset(result["win_prob_a"], a["seed"], b["seed"], upset_aggression)
-                pick_team = a if pick_a else b
+                pick_team = _pick_team_for_bracket(result, a, b, upset_aggression)
             pd = _make_pick_dict(game_num, 64, "Round of 64", region, a, b, result, pick_team, game_id=gid, **_h2h_kw)
             pd["venue_city"] = venue_city
             picks.append(pd)
@@ -2657,8 +2663,7 @@ def generate_bracket_picks(bracket, config=DEFAULT_CONFIG, upset_aggression=0.0,
                 if locked_team in (a["team"], b["team"]):
                     pick_team = a if locked_team == a["team"] else b
                 else:
-                    pick_a = _should_pick_upset(result["win_prob_a"], a["seed"], b["seed"], upset_aggression)
-                    pick_team = a if pick_a else b
+                    pick_team = _pick_team_for_bracket(result, a, b, upset_aggression)
                 pd = _make_pick_dict(game_num, round_of, round_name, region, a, b, result, pick_team, game_id=gid, **_h2h_kw)
                 pd["venue_city"] = venue_city
                 picks.append(pd)
@@ -2690,8 +2695,7 @@ def generate_bracket_picks(bracket, config=DEFAULT_CONFIG, upset_aggression=0.0,
         if locked_team in (a["team"], b["team"]):
             pick_team = a if locked_team == a["team"] else b
         else:
-            pick_a = _should_pick_upset(result["win_prob_a"], a["seed"], b["seed"], upset_aggression)
-            pick_team = a if pick_a else b
+            pick_team = _pick_team_for_bracket(result, a, b, upset_aggression)
         pd = _make_pick_dict(game_num, 4, "Final Four", None, a, b, result, pick_team, game_id=gid)
         pd["venue_city"] = f4_city
         picks.append(pd)
@@ -2710,8 +2714,7 @@ def generate_bracket_picks(bracket, config=DEFAULT_CONFIG, upset_aggression=0.0,
         if locked_team in (a["team"], b["team"]):
             pick_team = a if locked_team == a["team"] else b
         else:
-            pick_a = _should_pick_upset(result["win_prob_a"], a["seed"], b["seed"], upset_aggression)
-            pick_team = a if pick_a else b
+            pick_team = _pick_team_for_bracket(result, a, b, upset_aggression)
         pd = _make_pick_dict(game_num, 2, "Championship", None, a, b, result, pick_team, game_id=gid, **_h2h_kw)
         pd["venue_city"] = champ_city
         picks.append(pd)

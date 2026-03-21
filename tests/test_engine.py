@@ -10,7 +10,7 @@ from engine import (
     calc_momentum_bonus, enrich_team, _normalize_team_for_match,
     predict_game, ModelConfig, resolve_ff_pairs, get_matchup_analysis_display,
     enrich_bracket_with_teams, _calc_upset_tolerance_bonus,
-    build_locked_picks_from_results, simulate_region, _should_pick_upset,
+    build_locked_picks_from_results, simulate_region, _pick_team_for_bracket,
 )
 
 
@@ -184,10 +184,14 @@ def test_predict_game_returns_margin():
     assert result["predicted_margin"] > 0  # strong team should be favored
 
 
-def test_should_pick_upset_breaks_near_coin_flip_to_higher_seed():
-    assert _should_pick_upset(0.5, 11, 6, 0.0) is False
-    assert _should_pick_upset(0.5, 6, 11, 0.0) is True
-    assert _should_pick_upset(0.504, 11, 6, 0.0) is False
+def test_pick_team_for_bracket_breaks_zero_margin_to_higher_number_seed():
+    result = {"predicted_margin": 0.0, "win_prob_a": 0.5}
+    team_a = _base_team(team="Fav", seed=6)
+    team_b = _base_team(team="Dog", seed=11)
+
+    pick = _pick_team_for_bracket(result, team_a, team_b, 0.0)
+
+    assert pick["team"] == "Dog"
 
 
 def test_resolve_ff_pairs_uses_layout_matchups():
