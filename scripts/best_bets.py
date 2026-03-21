@@ -57,7 +57,7 @@ DEFAULT_TOTAL_EDGE = 12.0   # require a larger total gap before issuing a totals
 DEFAULT_MIN_MODEL_CONFIDENCE = 0.55  # skip ML bets when model probability < 55%
 DEFAULT_MIN_ML_PROB_FOR_DOG = 0.40   # skip ML when betting underdog with model prob < 40%
 DEFAULT_MIN_SPREAD_COVER_MARGIN = 3.0  # skip spread when cover margin < 3 pts
-DEFAULT_MAX_3STAR_PICKS = 0   # 3-star picks disabled: 0/3 hit rate (0% ROI). Re-enable when positive.
+DEFAULT_MAX_3STAR_PICKS = 3   # allow a small number of strongest edges onto the official card
 DEFAULT_MAX_2STAR_PICKS = 8   # cap 2-star picks per day
 DEFAULT_SIDE_PREFERENCE_RATIO = 0.80  # prefer a side when it's close to the best total on the same game
 

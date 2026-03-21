@@ -252,6 +252,49 @@ def test_refresh_saved_card_games_applies_total_bias_correction(monkeypatch):
     assert total_pick["bet_side"] == "UNDER"
 
 
+def test_extract_best_bets_from_games_keeps_three_star_pick_by_default():
+    games = [{
+        "home_team": "Michigan Wolverines",
+        "away_team": "Saint Louis Billikens",
+        "commence_time": "2026-03-21T16:10:00Z",
+        "data_available": True,
+        "model_prob_home": 0.90,
+        "model_margin": 22.8,
+        "model_total": 160.0,
+        "picks": [
+            {
+                "bet_type": "ml",
+                "bet_side": "Michigan Wolverines",
+                "edge": 0.03,
+                "model_prob": 0.90,
+                "implied_prob": 0.87,
+                "bet_odds": -700,
+                "stars": "★",
+            },
+            {
+                "bet_type": "spread",
+                "bet_team": "Michigan Wolverines",
+                "bet_spread": -12.5,
+                "edge": 10.3,
+                "stars": "★★★",
+            },
+            {
+                "bet_type": "total",
+                "bet_side": "OVER",
+                "edge": 3.4,
+                "stars": "",
+            },
+        ],
+    }]
+
+    picks = best_bets.extract_best_bets_from_games(games)
+
+    assert len(picks) == 1
+    assert picks[0]["bet_type"] == "spread"
+    assert picks[0]["bet_team"] == "Michigan Wolverines"
+    assert picks[0]["stars"] == "★★★"
+
+
 def test_run_model_uses_analysis_pipeline_for_tournament_games(monkeypatch):
     captured = {}
 
