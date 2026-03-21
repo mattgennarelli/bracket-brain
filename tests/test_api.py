@@ -143,6 +143,22 @@ def test_analyze_accepts_team_display_name_with_mascot():
     assert d["team_b"] == "Santa Clara"
 
 
+def test_apply_betting_total_projection_replaces_raw_analysis_total():
+    analysis = {
+        "predicted_score_a": 75.0,
+        "predicted_score_b": 71.0,
+        "predicted_total": 146.0,
+        "vegas_total": 145.5,
+    }
+
+    updated = api._apply_betting_total_projection(analysis)
+
+    assert updated["raw_predicted_total"] == 146.0
+    assert updated["predicted_total"] == 143.3
+    assert updated["predicted_score_a"] == 73.7
+    assert updated["predicted_score_b"] == 69.7
+
+
 def test_bracket_picks_2026():
     r = client.get("/bracket/2026")
     assert r.status_code == 200

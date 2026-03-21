@@ -50,7 +50,7 @@ from espn_scores import (
     fetch_scores_for_picks, fetch_espn_scoreboard,
     _scores_key as espn_scores_key,
 )
-from best_bets import get_full_card_json, refresh_saved_card_games
+from best_bets import get_full_card_json, refresh_saved_card_games, corrected_total_projection
 from best_bets import extract_best_bets_from_games
 from odds_provider import get_api_key
 from scripts.fetch_data import build_merged_teams
@@ -768,6 +768,7 @@ def analyze_matchup_endpoint(
         analysis["vegas_spread"] = vegas["vegas_spread"]
         analysis["vegas_total"] = vegas["vegas_total"]
         analysis["vegas_home"] = vegas["home_team"]
+    analysis = _apply_betting_total_projection(analysis)
     if cache_key:
         _cache_set(cache_key, analysis)
     return analysis
@@ -807,6 +808,32 @@ def _lookup_vegas_lines(team_a: str, team_b: str):
                         "home_team": home,
                     }
     return None
+
+
+def _apply_betting_total_projection(analysis: dict) -> dict:
+    """Replace raw matchup-card total with the same corrected total used in betting paths."""
+    try:
+        score_a = float(analysis.get("predicted_score_a"))
+        score_b = float(analysis.get("predicted_score_b"))
+    except (TypeError, ValueError):
+        return analysis
+
+    raw_total = score_a + score_b
+    vegas_total = analysis.get("vegas_total")
+    corrected_total = corrected_total_projection(raw_total, vegas_total)
+    margin = score_a - score_b
+    corrected_score_a = round((corrected_total + margin) / 2, 1)
+    corrected_score_b = round((corrected_total - margin) / 2, 1)
+
+    updated = dict(analysis)
+    updated["raw_predicted_total"] = round(raw_total, 1)
+    updated["raw_predicted_score_a"] = round(score_a, 1)
+    updated["raw_predicted_score_b"] = round(score_b, 1)
+    updated["predicted_total"] = round(corrected_total, 1)
+    updated["predicted_score_a"] = corrected_score_a
+    updated["predicted_score_b"] = corrected_score_b
+    updated["projected_score"] = f"{corrected_score_a:.0f}-{corrected_score_b:.0f}"
+    return updated
 
 
 @app.get("/bets/today")

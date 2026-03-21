@@ -2349,11 +2349,16 @@ def resolve_ff_pairs(quadrant_order, ff_matchups=None):
 
 def _should_pick_upset(prob_a, seed_a, seed_b, aggression):
     """Decide whether to pick an upset based on aggression level."""
+    tie_window = 0.005  # break only near true coin-flips (49.5% to 50.5%)
+    if abs(prob_a - 0.5) <= tie_window and seed_a != seed_b:
+        favorite_is_a = seed_a < seed_b
+    else:
+        favorite_is_a = prob_a >= 0.5
     if aggression <= 0:
-        return prob_a >= 0.5
+        return favorite_is_a
     seed_diff = abs(seed_a - seed_b)
     upset_boost = min(seed_diff / 15, 1.0) * 0.3
-    if prob_a >= 0.5:
+    if favorite_is_a:
         adjusted = prob_a - aggression * upset_boost
     else:
         adjusted = prob_a + aggression * upset_boost
