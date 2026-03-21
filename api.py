@@ -1153,6 +1153,27 @@ def _pick_identity(pick: dict):
     )
 
 
+def _pick_market_identity(pick: dict, year: int = 2026):
+    annotated = pick
+    if pick.get("round_of") is None:
+        annotated = _annotate_tournament_record(pick, year=year) or pick
+    matchup_key = _matchup_key(pick.get("home_team", ""), pick.get("away_team", ""))
+    round_of = annotated.get("round_of")
+    if matchup_key and round_of is not None:
+        return (
+            matchup_key[0],
+            matchup_key[1],
+            round_of,
+            pick.get("bet_type", ""),
+        )
+    return (
+        pick.get("home_team", ""),
+        pick.get("away_team", ""),
+        pick.get("bet_type", ""),
+        _pick_game_date(pick),
+    )
+
+
 def _pick_preference_key(pick: dict):
     settled = 1 if pick.get("result") in {"W", "L", "P"} else 0
     scored = 1 if pick.get("actual_score_home") is not None and pick.get("actual_score_away") is not None else 0
@@ -1174,6 +1195,51 @@ def _dedupe_picks(picks):
         if current is None or _pick_preference_key(pick) > _pick_preference_key(current):
             deduped[key] = pick
     return list(deduped.values())
+
+
+def _pick_has_started(pick: dict) -> bool:
+    commence_time = pick.get("commence_time")
+    if not commence_time:
+        return False
+    try:
+        dt = datetime.fromisoformat(str(commence_time).replace("Z", "+00:00"))
+    except ValueError:
+        return False
+    return dt <= datetime.now(timezone.utc)
+
+
+def _pick_is_locked(pick: dict) -> bool:
+    return (
+        pick.get("result") in {"W", "L", "P"}
+        or (pick.get("actual_score_home") is not None and pick.get("actual_score_away") is not None)
+        or _pick_has_started(pick)
+    )
+
+
+def _merge_today_picks(logged_today: list[dict], current_today: list[dict], year: int = 2026) -> list[dict]:
+    """Keep started/settled logged picks, but overlay fresher current picks for unstarted markets."""
+    merged = {}
+    locked_market_keys = set()
+
+    for pick in logged_today:
+        market_key = _pick_market_identity(pick, year=year)
+        if _pick_is_locked(pick):
+            merged[market_key] = pick
+            locked_market_keys.add(market_key)
+
+    for pick in current_today:
+        market_key = _pick_market_identity(pick, year=year)
+        if market_key in locked_market_keys:
+            continue
+        merged[market_key] = pick
+
+    if not current_today:
+        for pick in logged_today:
+            market_key = _pick_market_identity(pick, year=year)
+            if market_key not in merged:
+                merged[market_key] = pick
+
+    return list(merged.values())
 
 
 def _retro_snapshot_paths():
@@ -1300,10 +1366,10 @@ def _load_current_card_games_from_ledger(year: int = 2026, *, refresh: bool = Fa
 
 
 def _load_current_best_bets(year: int = 2026):
-    path, games = _load_saved_card_snapshot(year, refresh=True)
-    if not path or not games:
-        games = _load_current_card_games_from_ledger(year, refresh=True)
-        if not games:
+    games = _load_current_card_games_from_ledger(year, refresh=True)
+    if not games:
+        path, games = _load_saved_card_snapshot(year, refresh=True)
+        if not path or not games:
             return []
     cache_key = f"current_best_bets_{year}_{_retro_inputs_mtime(year)}"
     cached = _cache_get(cache_key, ttl=300)
@@ -1330,23 +1396,22 @@ def _load_logged_bets() -> list[dict]:
 
 
 def _load_live_pick_history(year: int = 2026):
-    """Return pick history, preferring logged picks as the source of truth.
-
-    When today's official picks have already been saved to the ledger, keep
-    serving those exact picks. Fall back to recomputing from the saved card only
-    when there are no logged picks for today yet.
-    """
+    """Return pick history, preserving locked logged picks but refreshing unstarted today markets."""
     logged = _load_logged_bets()
     today = _today_et_str()
-    if any(_pick_game_date(p) == today for p in logged):
-        return logged
-
     current = _load_current_best_bets(year)
     if not current:
         return logged
 
+    logged_today = [p for p in logged if _pick_game_date(p) == today]
     history = [p for p in logged if _pick_game_date(p) != today]
-    history.extend(current)
+    current_today = [p for p in current if _pick_game_date(p) == today]
+
+    if logged_today:
+        history.extend(_merge_today_picks(logged_today, current_today, year=year))
+    else:
+        history.extend(current_today)
+
     return _dedupe_picks([_normalize_pick_date(p) for p in history])
 
 
