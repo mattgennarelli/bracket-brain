@@ -2556,7 +2556,7 @@ function _computeCardStats(games, scores) {
     else if (!(scoreRec && scoreRec.completed)) upcoming += 1;
 
     (game.picks || []).forEach(p => {
-      const result = _gradeCardPick(p, scoreRec);
+      const result = p.result || _gradeCardPick(p, scoreRec);
       if (result === 'W' || result === 'L') {
         const ku = Number(p.kelly_units || 0);
         const dec = p.bet_odds != null
@@ -2610,12 +2610,28 @@ function renderCard(cardData, historyData, scores) {
   });
 
   const cardStats = _computeCardStats(games, scores);
+  const historyStats = historyData?.stats || {};
   const modelReadyCount = games.filter(game => game.data_available).length;
   const pickCount = games.reduce((sum, game) => sum + (game.picks || []).length, 0);
   const statCards = [
     { label: 'Games', value: games.length, sub: 'tournament matchups' },
-    { label: 'Record', value: cardStats.decided ? `${cardStats.wins}W-${cardStats.losses}L` : '—', sub: `${cardStats.pushes} push${cardStats.pushes === 1 ? '' : 'es'}` },
-    { label: 'Net Units', value: cardStats.total_wagered ? `${cardStats.net_units >= 0 ? '+' : ''}${cardStats.net_units.toFixed(1)}u` : '—', sub: cardStats.total_wagered ? `${cardStats.total_wagered.toFixed(1)}u wagered` : 'no settled picks' },
+    {
+      label: 'All-Time Record',
+      value: historyStats.settled ? `${historyStats.wins}W-${historyStats.losses}L` : '—',
+      sub: historyStats.settled
+        ? `${historyStats.pushes} push${historyStats.pushes === 1 ? '' : 'es'}`
+        : 'no settled picks',
+    },
+    {
+      label: 'Today',
+      value: cardStats.decided ? `${cardStats.wins}W-${cardStats.losses}L` : '—',
+      sub: `${cardStats.pushes} push${cardStats.pushes === 1 ? '' : 'es'}`,
+    },
+    {
+      label: 'Net Units',
+      value: historyStats.total_wagered ? `${historyStats.net_units >= 0 ? '+' : ''}${historyStats.net_units.toFixed(1)}u` : '—',
+      sub: historyStats.total_wagered ? `${historyStats.total_wagered.toFixed(1)}u all-time` : 'no settled picks',
+    },
     { label: 'Live', value: cardStats.live, sub: `${cardStats.upcoming} upcoming · ${pickCount} markets` },
     { label: 'Model Ready', value: modelReadyCount, sub: `${games.length - modelReadyCount} missing data` },
   ];
@@ -2631,9 +2647,12 @@ function renderCard(cardData, historyData, scores) {
     gamesBody.innerHTML = '<div class="picks-empty">No March Madness games on the card right now.</div>';
   } else {
     if (cardStats.decided) {
-      const hr = ((cardStats.hit_rate || 0) * 100).toFixed(0);
-      badge.textContent = `${hr}% (${cardStats.wins}W-${cardStats.losses}L)`;
+      badge.textContent = `Today ${cardStats.wins}W-${cardStats.losses}L`;
       badge.className = 'hit-rate-badge ' + ((cardStats.hit_rate || 0) >= .55 ? 'good' : (cardStats.hit_rate || 0) < .45 ? 'bad' : '');
+    } else if (historyStats.settled) {
+      const hr = ((historyStats.hit_rate || 0) * 100).toFixed(0);
+      badge.textContent = `All-time ${hr}%`;
+      badge.className = 'hit-rate-badge ' + ((historyStats.hit_rate || 0) >= .55 ? 'good' : (historyStats.hit_rate || 0) < .45 ? 'bad' : '');
     } else {
       badge.textContent = `${games.length} games`;
       badge.className = 'hit-rate-badge';
