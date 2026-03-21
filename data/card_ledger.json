@@ -7479,10 +7479,10 @@
       "away_team": "Saint Louis Billikens",
       "commence_time": "2026-03-21T16:10:00Z",
       "date": "2026-03-21",
-      "result": null,
-      "actual_score_home": null,
-      "actual_score_away": null,
-      "settled_at": null
+      "result": "W",
+      "actual_score_home": 95.0,
+      "actual_score_away": 72.0,
+      "settled_at": "2026-03-21T18:25:39.693127+00:00"
     },
     {
       "bet_type": "spread",
@@ -7501,10 +7501,10 @@
       "away_team": "Saint Louis Billikens",
       "commence_time": "2026-03-21T16:10:00Z",
       "date": "2026-03-21",
-      "result": null,
-      "actual_score_home": null,
-      "actual_score_away": null,
-      "settled_at": null
+      "result": "W",
+      "actual_score_home": 95.0,
+      "actual_score_away": 72.0,
+      "settled_at": "2026-03-21T18:25:39.693170+00:00"
     },
     {
       "bet_type": "total",
@@ -7521,10 +7521,10 @@
       "away_team": "Saint Louis Billikens",
       "commence_time": "2026-03-21T16:10:00Z",
       "date": "2026-03-21",
-      "result": null,
-      "actual_score_home": null,
-      "actual_score_away": null,
-      "settled_at": null
+      "result": "W",
+      "actual_score_home": 95.0,
+      "actual_score_away": 72.0,
+      "settled_at": "2026-03-21T18:25:39.693188+00:00"
     },
     {
       "bet_type": "ml",
@@ -8277,63 +8277,63 @@
   ],
   "stats": {
     "total_picks": 378,
-    "settled": 163,
-    "wins": 92,
+    "settled": 166,
+    "wins": 95,
     "losses": 69,
     "pushes": 2,
-    "hit_rate": 0.5714,
+    "hit_rate": 0.5793,
     "by_type": {
       "ml": {
-        "picks": 53,
-        "wins": 36,
+        "picks": 54,
+        "wins": 37,
         "losses": 17,
         "pushes": 0,
         "net_units": 8.63,
         "total_wagered": 57.96,
-        "hit_rate": 0.6792,
+        "hit_rate": 0.6852,
         "roi_pct": 14.89
       },
       "spread": {
-        "picks": 58,
-        "wins": 27,
+        "picks": 59,
+        "wins": 28,
         "losses": 30,
         "pushes": 1,
-        "net_units": -2.1,
-        "total_wagered": 72.27,
-        "hit_rate": 0.4737,
-        "roi_pct": -2.91
+        "net_units": 0.02,
+        "total_wagered": 74.61,
+        "hit_rate": 0.4828,
+        "roi_pct": 0.03
       },
       "total": {
-        "picks": 52,
-        "wins": 29,
+        "picks": 53,
+        "wins": 30,
         "losses": 22,
         "pushes": 1,
-        "net_units": 14.81,
-        "total_wagered": 133.45,
-        "hit_rate": 0.5686,
-        "roi_pct": 11.1
+        "net_units": 19.36,
+        "total_wagered": 138.45,
+        "hit_rate": 0.5769,
+        "roi_pct": 13.98
       }
     },
     "by_stars": {
       "\u2605": {
-        "picks": 159,
-        "wins": 90,
+        "picks": 161,
+        "wins": 92,
         "losses": 67,
         "pushes": 2,
-        "net_units": 21.48,
-        "total_wagered": 247.23,
-        "hit_rate": 0.5732,
-        "roi_pct": 8.69
+        "net_units": 23.61,
+        "total_wagered": 249.57,
+        "hit_rate": 0.5786,
+        "roi_pct": 9.46
       },
       "\u2605\u2605": {
-        "picks": 4,
-        "wins": 2,
+        "picks": 5,
+        "wins": 3,
         "losses": 2,
         "pushes": 0,
-        "net_units": -0.15,
-        "total_wagered": 16.45,
-        "hit_rate": 0.5,
-        "roi_pct": -0.89
+        "net_units": 4.4,
+        "total_wagered": 21.45,
+        "hit_rate": 0.6,
+        "roi_pct": 20.51
       },
       "\u2605\u2605\u2605": {
         "picks": 0,
@@ -8346,8 +8346,8 @@
         "roi_pct": null
       }
     },
-    "total_wagered": 263.68,
-    "net_units": 21.33,
-    "roi_pct": 8.09
+    "total_wagered": 271.02,
+    "net_units": 28.01,
+    "roi_pct": 10.33
   }
 }
