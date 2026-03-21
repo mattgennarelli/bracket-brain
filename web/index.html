@@ -2478,6 +2478,35 @@ function _startCardScoresPoll(cardData, historyData) {
   }, 90000);
 }
 
+function _normalizePickTeamName(name) {
+  return String(name || '')
+    .toLowerCase()
+    .replace(/&/g, ' and ')
+    .replace(/[^a-z0-9 ]+/g, ' ')
+    .replace(/\s+/g, ' ')
+    .trim();
+}
+
+function _pickTeamSide(label, homeTeam, awayTeam) {
+  const target = _normalizePickTeamName(label);
+  if (!target) return null;
+  const scoreMatch = team => {
+    const norm = _normalizePickTeamName(team);
+    if (!norm) return 0;
+    if (norm === target) return 3;
+    const targetParts = target.split(' ');
+    const normParts = norm.split(' ');
+    if (targetParts.length <= normParts.length && targetParts.join(' ') === normParts.slice(0, targetParts.length).join(' ')) return 2;
+    if (normParts.length <= targetParts.length && normParts.join(' ') === targetParts.slice(0, normParts.length).join(' ')) return 1;
+    return 0;
+  };
+  const homeScore = scoreMatch(homeTeam);
+  const awayScore = scoreMatch(awayTeam);
+  if (homeScore > awayScore && homeScore > 0) return 'home';
+  if (awayScore > homeScore && awayScore > 0) return 'away';
+  return null;
+}
+
 function _gradeCardPick(p, scoreRec) {
   if (!scoreRec || !scoreRec.completed || scoreRec.home_score == null || scoreRec.away_score == null) return null;
   const home = Number(scoreRec.home_score);
@@ -2485,16 +2514,20 @@ function _gradeCardPick(p, scoreRec) {
   if (!Number.isFinite(home) || !Number.isFinite(away)) return null;
 
   if (p.bet_type === 'ml') {
-    const winner = home > away ? p.home_team : away > home ? p.away_team : null;
+    const winner = home > away ? 'home' : away > home ? 'away' : null;
     if (!winner) return 'P';
     const side = p.bet_side || p.bet_team;
-    return winner === side ? 'W' : 'L';
+    const pickedSide = _pickTeamSide(side, p.home_team, p.away_team);
+    if (pickedSide) return winner === pickedSide ? 'W' : 'L';
+    return null;
   }
 
   if (p.bet_type === 'spread') {
     const betTeam = p.bet_team;
     const spread = Number(p.bet_spread || 0);
-    const margin = betTeam === p.home_team ? (home - away) : (away - home);
+    const pickedSide = _pickTeamSide(betTeam, p.home_team, p.away_team);
+    if (!pickedSide) return null;
+    const margin = pickedSide === 'home' ? (home - away) : (away - home);
     const net = margin + spread;
     if (Math.abs(net) < 1e-9) return 'P';
     return net > 0 ? 'W' : 'L';
@@ -2716,8 +2749,8 @@ function _matchupCardHtml(game, scores) {
     return `${Number(edge).toFixed(1)} pt edge`;
   };
   const rows = picks.map(p => {
-    const bt = p.bet_type;
-    const result = _gradeCardPick(p, scoreRec);
+  const bt = p.bet_type;
+    const result = p.result || _gradeCardPick(p, scoreRec);
 
     const side = p.bet_side || p.bet_team || '';
     let desc = side;

@@ -842,7 +842,7 @@ def get_bets_today(tournament_only: bool = Query(default=True), retro: bool = Qu
     if retro:
         picks = _load_retro_best_bets(2026)
     else:
-        picks = _load_live_pick_history(2026)
+        picks = _load_current_best_bets(2026) or _load_live_pick_history(2026)
     picks = [p for p in picks if p.get("date") == today]
     if tournament_only:
         filtered = []
@@ -853,6 +853,7 @@ def get_bets_today(tournament_only: bool = Query(default=True), retro: bool = Qu
         picks = filtered
     else:
         picks = [{**pick, **({k: v for k, v in (_annotate_tournament_record(pick, year=2026) or {}).items() if k in {"ncaa_tournament", "round_of", "round_name"}})} for pick in picks]
+    picks = _hydrate_picks_with_scores(picks)
     picks = sorted(picks, key=lambda p: p.get("commence_time", ""))
     return {"date": today, "picks": picks, "available": bool(picks)}
 
@@ -885,6 +886,8 @@ def get_bets_history(tournament_only: bool = Query(default=True), retro: bool = 
         data["stats"] = data.get("tournament_stats") or data.get("stats", {})
     else:
         data["picks"] = [{**pick, **({k: v for k, v in (_annotate_tournament_record(pick, year=2026) or {}).items() if k in {"ncaa_tournament", "round_of", "round_name"}})} for pick in data["picks"]]
+    data["picks"] = _hydrate_picks_with_scores(data["picks"])
+    data["stats"] = compute_stats(data["picks"])
     data.pop("tournament_stats", None)
 
     # Attach model_epoch: the date calibrated_config.json was last written.
@@ -1239,12 +1242,11 @@ def _pick_is_locked(pick: dict) -> bool:
     return (
         pick.get("result") in {"W", "L", "P"}
         or (pick.get("actual_score_home") is not None and pick.get("actual_score_away") is not None)
-        or _pick_has_started(pick)
     )
 
 
 def _merge_today_picks(logged_today: list[dict], current_today: list[dict], year: int = 2026) -> list[dict]:
-    """Keep started/settled logged picks, but overlay fresher current picks for unstarted markets."""
+    """Keep settled logged picks, but overlay fresher current picks for unsettled markets."""
     merged = {}
     locked_market_keys = set()
 
@@ -1511,6 +1513,13 @@ def _apply_score_to_pick(pick: dict, score_map: dict) -> dict:
     return out
 
 
+def _hydrate_picks_with_scores(picks: list[dict]) -> list[dict]:
+    if not picks:
+        return []
+    score_map = _retro_seed_score_map(picks)
+    return [_apply_score_to_pick(pick, score_map) for pick in picks]
+
+
 def _flatten_card_games(games):
     picks = []
     for game in games:
@@ -1525,6 +1534,38 @@ def _flatten_card_games(games):
             rec["date"] = _pick_game_date(rec)
             picks.append(rec)
     return picks
+
+
+def _hydrate_card_games_with_scores(games: list[dict]) -> list[dict]:
+    if not games:
+        return []
+    score_map = _retro_seed_score_map(_flatten_card_games(games))
+    hydrated_games = []
+    for game in games:
+        updated_game = dict(game)
+        updated_picks = []
+        for pick in game.get("picks", []):
+            temp_pick = {
+                **pick,
+                "home_team": game.get("home_team"),
+                "away_team": game.get("away_team"),
+                "commence_time": game.get("commence_time"),
+                "date": pick.get("date") or _pick_game_date({
+                    **pick,
+                    "home_team": game.get("home_team"),
+                    "away_team": game.get("away_team"),
+                    "commence_time": game.get("commence_time"),
+                }),
+            }
+            scored_pick = _apply_score_to_pick(temp_pick, score_map)
+            pick_view = dict(pick)
+            for key in ("result", "actual_score_home", "actual_score_away"):
+                if scored_pick.get(key) is not None:
+                    pick_view[key] = scored_pick.get(key)
+            updated_picks.append(pick_view)
+        updated_game["picks"] = updated_picks
+        hydrated_games.append(updated_game)
+    return hydrated_games
 
 
 def _load_retro_card_games(year: int = 2026):
@@ -1795,11 +1836,13 @@ def get_bets_card(year: int = Query(default=2026)):
 
     games = _load_current_card_games_from_ledger(year, refresh=True)
     if games:
+        games = _hydrate_card_games_with_scores(games)
         return {"date": today, "games": games, "available": True}
 
     daily_path, games = _load_saved_card_snapshot(year, refresh=True)
     if daily_path:
         card_date = os.path.basename(daily_path).replace("card_", "").replace(".json", "")
+        games = _hydrate_card_games_with_scores(games)
         return {"date": card_date, "games": games, "available": bool(games)}
 
     # Fall back to live odds fetch if no saved file (e.g. before Actions runs)
@@ -1814,6 +1857,7 @@ def get_bets_card(year: int = Query(default=2026)):
         return entry.get("result", {})
 
     games = _filter_tournament_card_games(get_full_card_json(api_key, year=year), year=year)
+    games = _hydrate_card_games_with_scores(games)
     result = {"date": today, "games": games, "available": bool(games)}
     _cache[cache_key] = {"result": result, "cached_at": time.time()}
     return result
@@ -1851,6 +1895,8 @@ def get_bets_card_history(tournament_only: bool = Query(default=True), retro: bo
         data["picks"] = filtered
     else:
         data["picks"] = [{**pick, **({k: v for k, v in (_annotate_tournament_record(pick, year=2026) or {}).items() if k in {"ncaa_tournament", "round_of", "round_name"}})} for pick in data.get("picks", [])]
+    data["picks"] = _hydrate_picks_with_scores(data.get("picks", []))
+    data["stats"] = compute_stats(data["picks"])
     return data
 
 
