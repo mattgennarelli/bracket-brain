@@ -319,6 +319,7 @@ def test_bets_history_dedupes_same_pick_across_date_changes(tmp_path, monkeypatc
 
     monkeypatch.setattr(api, "DATA_DIR", str(tmp_path))
     monkeypatch.setattr(api, "LEDGER_PATH", str(ledger_path))
+    monkeypatch.setattr(api, "CARD_LEDGER_PATH", str(tmp_path / "card_ledger.json"))
     monkeypatch.setattr(api, "is_ncaa_tournament_game", lambda home, away, year=2026: True)
 
     r = client.get("/bets/history")
@@ -373,6 +374,89 @@ def test_load_retro_card_games_dedupes_rescheduled_matchup(tmp_path, monkeypatch
     assert len(games) == 1
     assert games[0]["commence_time"] == "2026-03-22T00:45:00Z"
     assert games[0]["round_of"] == 32
+
+
+def test_get_bets_card_falls_back_to_today_card_ledger(tmp_path, monkeypatch):
+    bracket_path = tmp_path / "bracket_2026.json"
+    bracket_path.write_text(json.dumps({
+        "regions": {
+            "East": [
+                {"team": "Duke", "seed": 1},
+                {"team": "American", "seed": 16},
+            ],
+            "West": [],
+            "South": [],
+            "Midwest": [],
+        },
+        "quadrant_order": ["East", "West", "Midwest", "South"],
+        "final_four_matchups": [[0, 3], [1, 2]],
+        "first_four": [],
+    }))
+    card_ledger_path = tmp_path / "card_ledger.json"
+    card_ledger_path.write_text(json.dumps({
+        "picks": [
+            {
+                "home_team": "Duke",
+                "away_team": "American",
+                "commence_time": "2026-03-20T18:50:00Z",
+                "date": "2026-03-20",
+                "generated_at": "2026-03-20T14:00:00Z",
+                "bet_type": "ml",
+                "bet_side": "Duke",
+                "bet_odds": -600,
+                "model_prob": 0.91,
+                "implied_prob": 0.84,
+                "model_margin": 18.5,
+                "model_total": 143.0,
+                "vegas_spread": -17.5,
+                "vegas_total": 145.5,
+            },
+            {
+                "home_team": "Duke",
+                "away_team": "American",
+                "commence_time": "2026-03-20T18:50:00Z",
+                "date": "2026-03-20",
+                "generated_at": "2026-03-20T14:00:00Z",
+                "bet_type": "spread",
+                "bet_team": "Duke",
+                "bet_spread": -17.5,
+                "bet_odds": -110,
+                "model_margin": 18.5,
+                "model_total": 143.0,
+                "vegas_spread": -17.5,
+                "vegas_total": 145.5,
+            },
+            {
+                "home_team": "Duke",
+                "away_team": "American",
+                "commence_time": "2026-03-20T18:50:00Z",
+                "date": "2026-03-20",
+                "generated_at": "2026-03-20T14:00:00Z",
+                "bet_type": "total",
+                "bet_side": "UNDER",
+                "bet_odds": -110,
+                "model_margin": 18.5,
+                "model_total": 143.0,
+                "vegas_spread": -17.5,
+                "vegas_total": 145.5,
+            },
+        ],
+    }))
+
+    monkeypatch.setattr(api, "DATA_DIR", str(tmp_path))
+    monkeypatch.setattr(api, "CARD_LEDGER_PATH", str(card_ledger_path))
+    monkeypatch.setattr(api, "_cache", {})
+    monkeypatch.setattr(api, "_today_et_str", lambda: "2026-03-20")
+    monkeypatch.setattr(api, "refresh_saved_card_games", lambda games, year=None: games)
+
+    r = client.get("/bets/card")
+    assert r.status_code == 200
+    d = r.json()
+    assert d["date"] == "2026-03-20"
+    assert d["available"] is True
+    assert len(d["games"]) == 1
+    assert d["games"][0]["round_name"] == "Round of 64"
+    assert len(d["games"][0]["picks"]) == 3
 
 
 def test_bracket_scores_maps_to_bracket_team_names(tmp_path, monkeypatch):

@@ -66,11 +66,12 @@ DEFAULT_SIDE_PREFERENCE_RATIO = 0.80  # prefer a side when it's close to the bes
 # on tournament favorites; tighter than this was filtering out too many viable MLs.
 DEFAULT_MAX_ML_PRICE = -250  # skip ML bets with juice worse than -250
 
-# Betting-path total correction. Settled total plays in the live/card ledgers
-# are still running about five to six points above both market and realized
-# scores on average, so apply a stronger downward adjustment until totals are
-# re-fit specifically for market pricing.
-TOTAL_BIAS_CORRECTION = -5.5
+# Betting-path total correction. Totals are materially better when we shrink our
+# raw projection back toward market instead of trusting the full raw edge 1:1.
+# Keep a modest intercept to handle the remaining global high-total bias.
+TOTAL_MARKET_SHRINK = 0.60
+TOTAL_MARKET_INTERCEPT = -2.5
+TOTAL_FALLBACK_CORRECTION = -5.5
 ROUND_NAME_BY_SIZE = {
     68: "First Four",
     64: "Round of 64",
@@ -570,6 +571,20 @@ def total_edge(model_total, vegas_total):
     return model_total - vegas_total
 
 
+def corrected_total_projection(raw_model_total, vegas_total=None):
+    """Shrink raw totals toward market before evaluating a total bet.
+
+    The model already captures tempo and efficiency, so a direct tempo multiplier
+    would double-count pace.  Empirically, shrinking toward the posted market and
+    then applying a small downward intercept is a better correction.
+    """
+    if raw_model_total is None:
+        return None
+    if vegas_total is None:
+        return raw_model_total + TOTAL_FALLBACK_CORRECTION
+    return vegas_total + TOTAL_MARKET_SHRINK * (raw_model_total - vegas_total) + TOTAL_MARKET_INTERCEPT
+
+
 def kelly_fraction(model_prob, decimal_odds, fraction=0.10):
     """Compute fractional Kelly bet size.
 
@@ -673,8 +688,7 @@ def get_best_bets_json(api_key, year=None, ml_min=None, spread_min=None, total_m
         model_prob_home = result["win_prob_a"]
         model_margin = result["predicted_margin"]
         model_total_raw = result["predicted_score_a"] + result["predicted_score_b"]
-        # Apply bias correction: model under-predicts totals by ~1.8 pts on avg
-        model_total = model_total_raw + TOTAL_BIAS_CORRECTION
+        model_total = corrected_total_projection(model_total_raw, game["total_line"])
 
         base = {
             "home_team": home_name,
@@ -917,7 +931,7 @@ def get_full_card_json(api_key, year=None):
         model_prob_home = result["win_prob_a"]
         model_margin = result["predicted_margin"]
         model_total_raw = result["predicted_score_a"] + result["predicted_score_b"]
-        model_total = model_total_raw + TOTAL_BIAS_CORRECTION
+        model_total = corrected_total_projection(model_total_raw, game["total_line"])
 
         game_rec["model_prob_home"] = round(model_prob_home, 4)
         game_rec["model_margin"] = round(model_margin, 1)
@@ -1064,7 +1078,13 @@ def refresh_saved_card_games(games, year=None):
         )
         model_prob_home = result["win_prob_a"]
         model_margin = result["predicted_margin"]
-        model_total = result["predicted_score_a"] + result["predicted_score_b"] + TOTAL_BIAS_CORRECTION
+        model_total_raw = result["predicted_score_a"] + result["predicted_score_b"]
+        market_total = None
+        if old_picks.get("total") and old_picks["total"].get("vegas_total") is not None:
+            market_total = old_picks["total"]["vegas_total"]
+        elif line_override and line_override.get("total_line") is not None:
+            market_total = line_override["total_line"]
+        model_total = corrected_total_projection(model_total_raw, market_total)
 
         rec["model_prob_home"] = round(model_prob_home, 4)
         rec["model_margin"] = round(model_margin, 1)

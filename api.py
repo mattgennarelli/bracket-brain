@@ -1166,10 +1166,90 @@ def _load_saved_card_snapshot(year: int = 2026, *, refresh: bool = False, allow_
     return path, games
 
 
+def _load_current_card_games_from_ledger(year: int = 2026, *, refresh: bool = False):
+    if not os.path.isfile(CARD_LEDGER_PATH):
+        return []
+
+    with open(CARD_LEDGER_PATH) as f:
+        ledger = json.load(f)
+
+    today = _today_et_str()
+    latest_market = {}
+    latest_game_meta = {}
+    for pick in _dedupe_picks([_normalize_pick_date(p) for p in ledger.get("picks", [])]):
+        if _pick_game_date(pick) != today:
+            continue
+        annotated = _annotate_tournament_record(pick, year=year)
+        if annotated is None:
+            continue
+        matchup = _matchup_key(pick.get("home_team", ""), pick.get("away_team", ""))
+        if matchup is None:
+            continue
+        merged_pick = dict(pick)
+        for key in ("ncaa_tournament", "round_of", "round_name"):
+            if key in annotated:
+                merged_pick[key] = annotated[key]
+        side = merged_pick.get("bet_side") or merged_pick.get("bet_team") or ""
+        market_key = (matchup[0], matchup[1], merged_pick.get("round_of"), merged_pick.get("bet_type"), side)
+        current = latest_market.get(market_key)
+        if current is None or _pick_preference_key(merged_pick) > _pick_preference_key(current):
+            latest_market[market_key] = merged_pick
+
+        game_key = (matchup[0], matchup[1], merged_pick.get("round_of"))
+        game_meta = latest_game_meta.get(game_key)
+        if game_meta is None or _pick_preference_key(merged_pick) > _pick_preference_key(game_meta):
+            latest_game_meta[game_key] = merged_pick
+
+    grouped = {}
+    for market_key, pick in latest_market.items():
+        game_key = market_key[:3]
+        grouped.setdefault(game_key, []).append(pick)
+
+    games = []
+    pick_order = {"ml": 0, "spread": 1, "total": 2}
+    for game_key, picks in grouped.items():
+        meta = latest_game_meta[game_key]
+        picks = sorted(picks, key=lambda p: pick_order.get(p.get("bet_type"), 9))
+        game = {
+            "home_team": meta.get("home_team"),
+            "away_team": meta.get("away_team"),
+            "commence_time": meta.get("commence_time"),
+            "data_available": True,
+            "ncaa_tournament": True,
+            "round_of": meta.get("round_of"),
+            "round_name": meta.get("round_name"),
+            "picks": picks,
+        }
+
+        ml_pick = next((p for p in picks if p.get("bet_type") == "ml" and p.get("model_prob") is not None), None)
+        if ml_pick is not None:
+            model_prob = float(ml_pick.get("model_prob") or 0)
+            game["model_prob_home"] = round(
+                model_prob if ml_pick.get("bet_side") == game["home_team"] else 1 - model_prob,
+                4,
+            )
+
+        ref_pick = next((p for p in picks if p.get("model_margin") is not None or p.get("model_total") is not None), None)
+        if ref_pick is not None:
+            if ref_pick.get("model_margin") is not None:
+                game["model_margin"] = round(float(ref_pick.get("model_margin")), 1)
+            if ref_pick.get("model_total") is not None:
+                game["model_total"] = round(float(ref_pick.get("model_total")), 1)
+
+        games.append(game)
+
+    games.sort(key=lambda g: (g.get("commence_time", ""), g.get("home_team", ""), g.get("away_team", "")))
+    if refresh and games:
+        games = refresh_saved_card_games(games, year=year)
+    return games
+
+
 def _load_current_best_bets(year: int = 2026):
     path, games = _load_saved_card_snapshot(year, refresh=True)
     if not path or not games:
-        return []
+        games = _load_current_card_games_from_ledger(year, refresh=True)
+        if not games:
+            return []
     cache_key = f"current_best_bets_{year}_{_retro_inputs_mtime(year)}"
     cached = _cache_get(cache_key, ttl=300)
     if cached is not None:
@@ -1556,6 +1636,10 @@ def get_bets_card(year: int = Query(default=2026)):
     if daily_path:
         card_date = os.path.basename(daily_path).replace("card_", "").replace(".json", "")
         return {"date": card_date, "games": games, "available": bool(games)}
+
+    games = _load_current_card_games_from_ledger(year, refresh=True)
+    if games:
+        return {"date": today, "games": games, "available": True}
 
     # Fall back to live odds fetch if no saved file (e.g. before Actions runs)
     api_key = get_api_key()

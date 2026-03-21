@@ -247,8 +247,8 @@ def test_refresh_saved_card_games_applies_total_bias_correction(monkeypatch):
     }], year=2026)
 
     total_pick = next(p for p in refreshed[0]["picks"] if p["bet_type"] == "total")
-    assert total_pick["model_total"] == 140.5
-    assert total_pick["edge"] == -5.0
+    assert total_pick["model_total"] == 143.3
+    assert total_pick["edge"] == -2.2
     assert total_pick["bet_side"] == "UNDER"
 
 
