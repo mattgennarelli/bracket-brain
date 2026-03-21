@@ -2462,13 +2462,16 @@ async function loadCard() {
 
 function _startCardScoresPoll(cardData, historyData) {
   if (_cardScoresInterval) clearInterval(_cardScoresInterval);
-  const hasGames = (cardData?.games || []).length > 0;
-  const hasHistory = (historyData?.picks || []).length > 0;
-  if (!hasGames && !hasHistory) return;
   _cardScoresInterval = setInterval(async () => {
     if (document.getElementById('tab-card')?.classList?.contains('active')) {
       try {
-        const scoresData = await apiFetch('/bets/card/scores').catch(() => ({ scores: {} }));
+        const [nextCardData, nextHistoryData, scoresData] = await Promise.all([
+          apiFetch('/bets/card').catch(() => cardData || { games: [], available: false }),
+          apiFetch('/bets/card/history').catch(() => historyData || { picks: [], stats: {} }),
+          apiFetch('/bets/card/scores').catch(() => ({ scores: {} })),
+        ]);
+        cardData = nextCardData;
+        historyData = nextHistoryData;
         renderCard(cardData, historyData, scoresData?.scores || {});
       } catch (_) {}
     }

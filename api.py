@@ -728,7 +728,7 @@ def _lookup_vegas_lines(team_a: str, team_b: str):
         _normalize_team_for_match(team_b),
         _normalize_team_for_match(_strip_mascot(team_b)),
     }
-    _, latest_games = _load_saved_card_snapshot(2026, refresh=False)
+    _, latest_games = _load_saved_card_snapshot(2026, refresh=False, allow_previous=True)
     search_sets = [latest_games, _load_retro_card_games(2026)]
     for games in search_sets:
         for game in reversed(games):
@@ -1137,18 +1137,20 @@ def _retro_inputs_mtime(year: int = 2026) -> str:
     return str(latest)
 
 
-def _latest_saved_card_path(year: int = 2026) -> Optional[str]:
+def _latest_saved_card_path(year: int = 2026, *, allow_previous: bool = False) -> Optional[str]:
     today = _today_et_str()
     daily_path = os.path.join(DATA_DIR, f"card_{today}.json")
     if os.path.isfile(daily_path):
         return daily_path
+    if not allow_previous:
+        return None
     import glob as _glob
     card_files = sorted(_glob.glob(os.path.join(DATA_DIR, f"card_{year}-*.json")))
     return card_files[-1] if card_files else None
 
 
-def _load_saved_card_snapshot(year: int = 2026, *, refresh: bool = False):
-    path = _latest_saved_card_path(year)
+def _load_saved_card_snapshot(year: int = 2026, *, refresh: bool = False, allow_previous: bool = False):
+    path = _latest_saved_card_path(year, allow_previous=allow_previous)
     if not path or not os.path.isfile(path):
         return None, []
     cache_key = f"saved_card_snapshot_{year}_{int(os.path.getmtime(path))}_{int(refresh)}"
