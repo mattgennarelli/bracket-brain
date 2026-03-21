@@ -3792,10 +3792,10 @@
       "away_team": "Northern Iowa Panthers",
       "commence_time": "2026-03-20T23:10:00Z",
       "date": "2026-03-17",
-      "result": null,
-      "actual_score_home": null,
-      "actual_score_away": null,
-      "settled_at": null,
+      "result": "L",
+      "actual_score_home": 79.0,
+      "actual_score_away": 53.0,
+      "settled_at": "2026-03-21T01:35:05.950599+00:00",
       "ncaa_tournament": true
     },
     {
@@ -4642,10 +4642,10 @@
       "away_team": "Northern Iowa Panthers",
       "commence_time": "2026-03-20T23:10:00Z",
       "date": "2026-03-18",
-      "result": null,
-      "actual_score_home": null,
-      "actual_score_away": null,
-      "settled_at": null,
+      "result": "L",
+      "actual_score_home": 79.0,
+      "actual_score_away": 53.0,
+      "settled_at": "2026-03-21T01:35:05.950941+00:00",
       "ncaa_tournament": true
     },
     {
@@ -5691,10 +5691,10 @@
       "away_team": "Iowa Hawkeyes",
       "commence_time": "2026-03-20T22:50:00Z",
       "date": "2026-03-19",
-      "result": null,
-      "actual_score_home": null,
-      "actual_score_away": null,
-      "settled_at": null
+      "result": "L",
+      "actual_score_home": 61.0,
+      "actual_score_away": 67.0,
+      "settled_at": "2026-03-21T01:35:05.951115+00:00"
     },
     {
       "bet_type": "spread",
@@ -6247,10 +6247,10 @@
       "away_team": "Iowa Hawkeyes",
       "commence_time": "2026-03-20T22:50:00Z",
       "date": "2026-03-20",
-      "result": null,
-      "actual_score_home": null,
-      "actual_score_away": null,
-      "settled_at": null
+      "result": "W",
+      "actual_score_home": 61.0,
+      "actual_score_away": 67.0,
+      "settled_at": "2026-03-21T01:35:05.951283+00:00"
     },
     {
       "bet_type": "spread",
@@ -6269,10 +6269,10 @@
       "away_team": "Iowa Hawkeyes",
       "commence_time": "2026-03-20T22:50:00Z",
       "date": "2026-03-20",
-      "result": null,
-      "actual_score_home": null,
-      "actual_score_away": null,
-      "settled_at": null
+      "result": "L",
+      "actual_score_home": 61.0,
+      "actual_score_away": 67.0,
+      "settled_at": "2026-03-21T01:35:05.951303+00:00"
     },
     {
       "bet_type": "total",
@@ -6289,10 +6289,10 @@
       "away_team": "Iowa Hawkeyes",
       "commence_time": "2026-03-20T22:50:00Z",
       "date": "2026-03-20",
-      "result": null,
-      "actual_score_home": null,
-      "actual_score_away": null,
-      "settled_at": null
+      "result": "W",
+      "actual_score_home": 61.0,
+      "actual_score_away": 67.0,
+      "settled_at": "2026-03-21T01:35:05.951318+00:00"
     },
     {
       "bet_type": "ml",
@@ -6311,10 +6311,10 @@
       "away_team": "Northern Iowa Panthers",
       "commence_time": "2026-03-20T23:10:00Z",
       "date": "2026-03-20",
-      "result": null,
-      "actual_score_home": null,
-      "actual_score_away": null,
-      "settled_at": null
+      "result": "W",
+      "actual_score_home": 79.0,
+      "actual_score_away": 53.0,
+      "settled_at": "2026-03-21T01:35:05.951344+00:00"
     },
     {
       "bet_type": "spread",
@@ -6333,10 +6333,10 @@
       "away_team": "Northern Iowa Panthers",
       "commence_time": "2026-03-20T23:10:00Z",
       "date": "2026-03-20",
-      "result": null,
-      "actual_score_home": null,
-      "actual_score_away": null,
-      "settled_at": null
+      "result": "W",
+      "actual_score_home": 79.0,
+      "actual_score_away": 53.0,
+      "settled_at": "2026-03-21T01:35:05.951367+00:00"
     },
     {
       "bet_type": "total",
@@ -6353,10 +6353,10 @@
       "away_team": "Northern Iowa Panthers",
       "commence_time": "2026-03-20T23:10:00Z",
       "date": "2026-03-20",
-      "result": null,
-      "actual_score_home": null,
-      "actual_score_away": null,
-      "settled_at": null
+      "result": "W",
+      "actual_score_home": 79.0,
+      "actual_score_away": 53.0,
+      "settled_at": "2026-03-21T01:35:05.951380+00:00"
     },
     {
       "bet_type": "ml",
@@ -6439,10 +6439,10 @@
       "away_team": "Queens University Royals",
       "commence_time": "2026-03-20T23:35:00Z",
       "date": "2026-03-20",
-      "result": null,
-      "actual_score_home": null,
-      "actual_score_away": null,
-      "settled_at": null
+      "result": "W",
+      "actual_score_home": 104.0,
+      "actual_score_away": 71.0,
+      "settled_at": "2026-03-21T01:35:05.951440+00:00"
     },
     {
       "bet_type": "spread",
@@ -6461,10 +6461,10 @@
       "away_team": "Queens University Royals",
       "commence_time": "2026-03-20T23:35:00Z",
       "date": "2026-03-20",
-      "result": null,
-      "actual_score_home": null,
-      "actual_score_away": null,
-      "settled_at": null
+      "result": "W",
+      "actual_score_home": 104.0,
+      "actual_score_away": 71.0,
+      "settled_at": "2026-03-21T01:35:05.951458+00:00"
     },
     {
       "bet_type": "total",
@@ -6481,10 +6481,10 @@
       "away_team": "Queens University Royals",
       "commence_time": "2026-03-20T23:35:00Z",
       "date": "2026-03-20",
-      "result": null,
-      "actual_score_home": null,
-      "actual_score_away": null,
-      "settled_at": null
+      "result": "W",
+      "actual_score_home": 104.0,
+      "actual_score_away": 71.0,
+      "settled_at": "2026-03-21T01:35:05.951470+00:00"
     },
     {
       "bet_type": "ml",
@@ -7393,10 +7393,10 @@
       "away_team": "Iowa Hawkeyes",
       "commence_time": "2026-03-20T22:50:00Z",
       "date": "2026-03-20",
-      "result": null,
-      "actual_score_home": null,
-      "actual_score_away": null,
-      "settled_at": null
+      "result": "L",
+      "actual_score_home": 61.0,
+      "actual_score_away": 67.0,
+      "settled_at": "2026-03-21T01:35:05.952031+00:00"
     },
     {
       "bet_type": "total",
@@ -8249,10 +8249,10 @@
       "away_team": "Northern Iowa Panthers",
       "commence_time": "2026-03-20T23:10:00Z",
       "date": "2026-03-20",
-      "result": null,
-      "actual_score_home": null,
-      "actual_score_away": null,
-      "settled_at": null
+      "result": "L",
+      "actual_score_home": 79.0,
+      "actual_score_away": 53.0,
+      "settled_at": "2026-03-21T01:35:05.952617+00:00"
     },
     {
       "bet_type": "total",
@@ -8277,53 +8277,53 @@
   ],
   "stats": {
     "total_picks": 378,
-    "settled": 136,
-    "wins": 78,
-    "losses": 56,
+    "settled": 150,
+    "wins": 86,
+    "losses": 62,
     "pushes": 2,
-    "hit_rate": 0.5821,
+    "hit_rate": 0.5811,
     "by_type": {
       "ml": {
-        "picks": 44,
-        "wins": 30,
-        "losses": 14,
+        "picks": 49,
+        "wins": 33,
+        "losses": 16,
         "pushes": 0,
-        "net_units": 6.62,
-        "total_wagered": 45.34,
-        "hit_rate": 0.6818,
-        "roi_pct": 14.61
+        "net_units": 6.03,
+        "total_wagered": 50.98,
+        "hit_rate": 0.6735,
+        "roi_pct": 11.84
       },
       "spread": {
-        "picks": 49,
-        "wins": 23,
-        "losses": 25,
+        "picks": 53,
+        "wins": 25,
+        "losses": 27,
         "pushes": 1,
-        "net_units": -5.35,
-        "total_wagered": 58.28,
-        "hit_rate": 0.4792,
-        "roi_pct": -9.19
+        "net_units": -1.28,
+        "total_wagered": 65.11,
+        "hit_rate": 0.4808,
+        "roi_pct": -1.97
       },
       "total": {
-        "picks": 43,
-        "wins": 25,
-        "losses": 17,
+        "picks": 48,
+        "wins": 28,
+        "losses": 19,
         "pushes": 1,
-        "net_units": 20.85,
-        "total_wagered": 117.22,
-        "hit_rate": 0.5952,
-        "roi_pct": 17.78
+        "net_units": 21.87,
+        "total_wagered": 125.74,
+        "hit_rate": 0.5957,
+        "roi_pct": 17.39
       }
     },
     "by_stars": {
       "\u2605": {
-        "picks": 133,
-        "wins": 77,
-        "losses": 54,
+        "picks": 147,
+        "wins": 85,
+        "losses": 60,
         "pushes": 2,
-        "net_units": 25.2,
-        "total_wagered": 208.21,
-        "hit_rate": 0.5878,
-        "roi_pct": 12.1
+        "net_units": 29.71,
+        "total_wagered": 229.2,
+        "hit_rate": 0.5862,
+        "roi_pct": 12.96
       },
       "\u2605\u2605": {
         "picks": 3,
@@ -8346,8 +8346,8 @@
         "roi_pct": null
       }
     },
-    "total_wagered": 220.84,
-    "net_units": 22.12,
-    "roi_pct": 10.01
+    "total_wagered": 241.83,
+    "net_units": 26.62,
+    "roi_pct": 11.01
   }
 }
