@@ -1609,6 +1609,7 @@ _NAME_ALIASES = {
     # Sports Reference / conf tourney variants
     "ualr": "arkansas little rock",
     "college of charleston": "charleston",
+    "california baptist": "cal baptist",
     "pennsylvania": "penn",
     "pennsylvania quakers": "penn",
     "mass lowell": "massachusetts lowell",

@@ -252,12 +252,12 @@ def _tournament_round_windows(year):
 
 
 def _record_date(record):
-    raw = record.get("date")
-    if raw:
-        return date.fromisoformat(str(raw))
     scheduled_at = record.get("scheduled_at")
     if scheduled_at:
         return datetime.fromisoformat(str(scheduled_at).replace("Z", "+00:00")).astimezone(ET_TZ).date()
+    raw = record.get("date")
+    if raw:
+        return date.fromisoformat(str(raw))
     return None
 
 

@@ -76,3 +76,72 @@ def test_extract_partial_results_excludes_pre_tournament_matchups(monkeypatch):
     )
 
     assert result["games"] == []
+
+
+def test_game_from_score_record_prefers_scheduled_at_for_round_inference():
+    context = {
+        "team_map": {
+            "duke": "Duke",
+            "siena": "Siena",
+        },
+        "team_meta": {
+            "Duke": {"seed": 1, "region": "East"},
+            "Siena": {"seed": 16, "region": "East"},
+        },
+        "matchup_info": {
+            ("duke", "siena"): {"round": 64, "region": "East"},
+        },
+    }
+
+    game = extract_results._game_from_score_record(
+        2026,
+        {
+            "home_team": "Duke Blue Devils",
+            "away_team": "Siena Saints",
+            "home_score": 71,
+            "away_score": 65,
+            "date": "2026-03-18",
+            "scheduled_at": "2026-03-19T18:50:50Z",
+        },
+        context,
+    )
+
+    assert game is not None
+    assert game["team_a"] == "Duke"
+    assert game["team_b"] == "Siena"
+    assert game["round"] == 64
+    assert game["date"] == "2026-03-19"
+
+
+def test_game_from_score_record_accepts_california_baptist_alias():
+    context = {
+        "team_map": {
+            "kansas": "Kansas",
+            "cal baptist": "Cal Baptist",
+        },
+        "team_meta": {
+            "Kansas": {"seed": 4, "region": "East"},
+            "Cal Baptist": {"seed": 13, "region": "East"},
+        },
+        "matchup_info": {
+            ("cal baptist", "kansas"): {"round": 64, "region": "East"},
+        },
+    }
+
+    game = extract_results._game_from_score_record(
+        2026,
+        {
+            "home_team": "Kansas Jayhawks",
+            "away_team": "California Baptist",
+            "away_aliases": ["California Baptist Lancers"],
+            "home_score": 79,
+            "away_score": 61,
+            "scheduled_at": "2026-03-20T20:15:00Z",
+        },
+        context,
+    )
+
+    assert game is not None
+    assert game["team_a"] == "Kansas"
+    assert game["team_b"] == "Cal Baptist"
+    assert game["round"] == 64
