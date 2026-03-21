@@ -1,6 +1,7 @@
 """
 API endpoint tests using FastAPI's TestClient (no live server needed).
 """
+import collections
 import sys
 import os
 import json
@@ -163,6 +164,45 @@ def test_bracket_missing_year():
 def test_bracket_upset_aggression_range():
     r = client.get("/bracket/2026?upset_aggression=1.5")  # out of range
     assert r.status_code == 422  # FastAPI validation error
+
+
+def test_bracket_cache_busts_when_prediction_inputs_change(monkeypatch):
+    monkeypatch.setattr(api, "_cache", collections.OrderedDict())
+
+    current_inputs = {"mtime": "100"}
+    calls = {"count": 0}
+
+    monkeypatch.setattr(api, "_prediction_inputs_mtime", lambda year: current_inputs["mtime"])
+    monkeypatch.setattr(api, "_load_bracket_for_year", lambda year: ({}, [], ["East", "West", "South", "Midwest"]))
+    monkeypatch.setattr(api, "_load_config", lambda num_sims=10000: object())
+
+    def fake_generate_bracket_picks(*args, **kwargs):
+        calls["count"] += 1
+        return {
+            "picks": [],
+            "champion": f"Champion {calls['count']}",
+            "final_four": [],
+            "biggest_upsets": [],
+            "most_uncertain_games": [],
+        }
+
+    monkeypatch.setattr(api, "generate_bracket_picks", fake_generate_bracket_picks)
+
+    first = client.get("/bracket/2026")
+    assert first.status_code == 200
+    assert first.json()["picks"]["champion"] == "Champion 1"
+    assert calls["count"] == 1
+
+    second = client.get("/bracket/2026")
+    assert second.status_code == 200
+    assert second.json()["picks"]["champion"] == "Champion 1"
+    assert calls["count"] == 1
+
+    current_inputs["mtime"] = "200"
+    third = client.get("/bracket/2026")
+    assert third.status_code == 200
+    assert third.json()["picks"]["champion"] == "Champion 2"
+    assert calls["count"] == 2
 
 
 def test_monte_carlo_2026():

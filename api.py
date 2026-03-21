@@ -578,7 +578,7 @@ def get_bracket(
     year: int,
     upset_aggression: float = Query(default=0.0, ge=0.0, le=1.0),
 ):
-    cache_key = f"bracket_v{BRACKET_RESPONSE_VERSION}_{year}_{upset_aggression:.2f}_{_config_mtime()}"
+    cache_key = f"bracket_v{BRACKET_RESPONSE_VERSION}_{year}_{upset_aggression:.2f}_{_prediction_inputs_mtime(year)}"
     cached = _cache_get(cache_key)
     if cached is not None:
         return cached
@@ -654,7 +654,7 @@ def analyze_matchup_endpoint(
     cache_key = None
     if not injury_overrides:
         cache_key = (
-            f"analyze_{year}_{_config_mtime()}_"
+            f"analyze_{year}_{_prediction_inputs_mtime(year)}_"
             f"{_normalize_team_for_match(_strip_mascot(team_a))}_"
             f"{_normalize_team_for_match(_strip_mascot(team_b))}_"
             f"{seed_a}_{seed_b}_{region or ''}_{round_name or ''}"
