@@ -205,6 +205,32 @@ def test_bracket_cache_busts_when_prediction_inputs_change(monkeypatch):
     assert calls["count"] == 2
 
 
+def test_bracket_uses_completed_tournament_locked_picks(monkeypatch):
+    monkeypatch.setattr(api, "_cache", collections.OrderedDict())
+    monkeypatch.setattr(api, "_prediction_inputs_mtime", lambda year: "100")
+    monkeypatch.setattr(api, "_load_bracket_for_year", lambda year: ({}, [], ["East", "West", "South", "Midwest"]))
+    monkeypatch.setattr(api, "_load_config", lambda num_sims=10000: object())
+    monkeypatch.setattr(api, "_completed_tournament_locked_picks", lambda year, bracket, quadrant_order, ff_matchups: {"East-64-0": "Alpha"})
+
+    seen = {}
+
+    def fake_generate_bracket_picks(*args, **kwargs):
+        seen["locked_picks"] = kwargs.get("locked_picks")
+        return {
+            "picks": [],
+            "champion": "Alpha",
+            "final_four": [],
+            "biggest_upsets": [],
+            "most_uncertain_games": [],
+        }
+
+    monkeypatch.setattr(api, "generate_bracket_picks", fake_generate_bracket_picks)
+
+    r = client.get("/bracket/2026")
+    assert r.status_code == 200
+    assert seen["locked_picks"] == {"East-64-0": "Alpha"}
+
+
 def test_monte_carlo_2026():
     r = client.get("/bracket/2026/monte-carlo?sims=200")
     assert r.status_code == 200
@@ -237,7 +263,7 @@ def test_monte_carlo_recomputes_when_precomputed_hash_is_stale(tmp_path, monkeyp
     monkeypatch.setattr(api, "_load_bracket_for_year", lambda year: ({}, [], ["East", "West", "South", "Midwest"]))
     monkeypatch.setattr(api, "_load_config", lambda num_sims=10000: object())
     monkeypatch.setattr(api, "_add_final_four_by_region", lambda result, year: result)
-    monkeypatch.setattr(api, "run_monte_carlo", lambda bracket, config=None: {
+    monkeypatch.setattr(api, "run_monte_carlo", lambda bracket, config=None, year=None, locked_picks=None, quadrant_order=None, ff_matchups=None: {
         "champion_probs": {"New Team": 1.0},
         "final_four_probs": {"New Team": 1.0},
         "elite_eight_probs": {"New Team": 1.0},
@@ -250,6 +276,35 @@ def test_monte_carlo_recomputes_when_precomputed_hash_is_stale(tmp_path, monkeyp
     d = r.json()
     assert d["champion_probs"] == {"New Team": 1.0}
     assert d["prediction_inputs_hash"] == "freshhash"
+
+
+def test_monte_carlo_uses_completed_tournament_locked_picks(tmp_path, monkeypatch):
+    monkeypatch.setattr(api, "DATA_DIR", str(tmp_path))
+    monkeypatch.setattr(api, "_cache", collections.OrderedDict())
+    monkeypatch.setattr(api, "_prediction_inputs_hash", lambda year: "freshhash")
+    monkeypatch.setattr(api, "_prediction_inputs_mtime", lambda year: "123")
+    monkeypatch.setattr(api, "_load_bracket_for_year", lambda year: ({}, [], ["East", "West", "South", "Midwest"]))
+    monkeypatch.setattr(api, "_load_config", lambda num_sims=10000: object())
+    monkeypatch.setattr(api, "_add_final_four_by_region", lambda result, year: result)
+    monkeypatch.setattr(api, "_completed_tournament_locked_picks", lambda year, bracket, quadrant_order, ff_matchups: {"East-64-0": "Alpha"})
+
+    seen = {}
+
+    def fake_run_monte_carlo(bracket, config=None, year=None, locked_picks=None, quadrant_order=None, ff_matchups=None):
+        seen["locked_picks"] = locked_picks
+        return {
+            "champion_probs": {"New Team": 1.0},
+            "final_four_probs": {"New Team": 1.0},
+            "elite_eight_probs": {"New Team": 1.0},
+            "sweet_sixteen_probs": {"New Team": 1.0},
+            "round_of_32_probs": {"New Team": 1.0},
+        }
+
+    monkeypatch.setattr(api, "run_monte_carlo", fake_run_monte_carlo)
+
+    r = client.get("/bracket/2026/monte-carlo?sims=10000")
+    assert r.status_code == 200
+    assert seen["locked_picks"] == {"East-64-0": "Alpha"}
 
 
 def test_monte_carlo_sims_limit():

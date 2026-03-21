@@ -22,7 +22,7 @@ import re
 from engine import (
     generate_bracket_picks, run_monte_carlo, load_bracket, analyze_matchup,
     REGIONS, FIRST_ROUND_MATCHUPS, DEFAULT_NUM_SIMS, SEED_WEIGHT,
-    ModelConfig, DEFAULT_CONFIG,
+    ModelConfig, DEFAULT_CONFIG, build_locked_picks_from_results,
 )
 
 ROOT = os.path.dirname(os.path.abspath(__file__))
@@ -35,6 +35,7 @@ def _prediction_inputs_hash(year: int) -> str:
         os.path.join(DATA_DIR, f"bracket_{year}.json"),
         os.path.join(DATA_DIR, f"teams_merged_{year}.json"),
         os.path.join(DATA_DIR, f"injuries_{year}.json"),
+        os.path.join(DATA_DIR, f"results_{year}.json"),
         os.path.join(DATA_DIR, "calibrated_config.json"),
     ]
     h = hashlib.sha256()
@@ -51,6 +52,24 @@ def _prediction_inputs_hash(year: int) -> str:
 def _year_from_bracket_path(path):
     m = re.search(r"bracket_(\d{4})", path)
     return int(m.group(1)) if m else 2026
+
+
+def _load_results_games(year: int):
+    path = os.path.join(DATA_DIR, f"results_{year}.json")
+    if not os.path.isfile(path):
+        return []
+    try:
+        with open(path) as f:
+            data = json.load(f)
+    except Exception:
+        return []
+    if isinstance(data, dict):
+        games = data.get("games", [])
+    elif isinstance(data, list):
+        games = data
+    else:
+        games = []
+    return [game for game in games if isinstance(game, dict)]
 
 
 def _find_team_seed(team_name, bracket):
@@ -1194,10 +1213,19 @@ def main():
                 setattr(config, k, v)
         print("Loaded calibrated model parameters")
 
+    locked_picks = build_locked_picks_from_results(
+        bracket,
+        _load_results_games(year),
+        quadrant_order=quadrant_order,
+        ff_matchups=ff_matchups,
+    )
+    if locked_picks:
+        print(f"Conditioning on {len(locked_picks)} completed tournament games")
+
     print("Generating bracket picks (63 games)...")
     bracket_result = generate_bracket_picks(bracket, config, upset_aggression=args.upset,
                                            quadrant_order=quadrant_order, ff_matchups=ff_matchups,
-                                           data_dir=DATA_DIR, year=year)
+                                           data_dir=DATA_DIR, year=year, locked_picks=locked_picks)
     picks = bracket_result["picks"]
 
     print(f"\n  Champion: {bracket_result['champion']}")
@@ -1235,7 +1263,14 @@ def main():
           f"{conf_counts.get('lean',0)} leans, {conf_counts.get('tossup',0)} tossups")
 
     print(f"\nRunning {args.sims:,} Monte Carlo simulations...")
-    mc_results = run_monte_carlo(bracket, config=config)
+    mc_results = run_monte_carlo(
+        bracket,
+        config=config,
+        year=year,
+        locked_picks=locked_picks,
+        quadrant_order=quadrant_order,
+        ff_matchups=ff_matchups,
+    )
 
     print("\n  Championship odds (top 8):")
     for i, (team, prob) in enumerate(list(mc_results["champion_probs"].items())[:8]):

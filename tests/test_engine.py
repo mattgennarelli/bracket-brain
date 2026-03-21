@@ -10,6 +10,7 @@ from engine import (
     calc_momentum_bonus, enrich_team, _normalize_team_for_match,
     predict_game, ModelConfig, resolve_ff_pairs, get_matchup_analysis_display,
     enrich_bracket_with_teams, _calc_upset_tolerance_bonus,
+    build_locked_picks_from_results, simulate_region,
 )
 
 
@@ -191,6 +192,43 @@ def test_resolve_ff_pairs_uses_layout_matchups():
 def test_resolve_ff_pairs_falls_back_to_legacy_layout():
     qo = ["East", "West", "Midwest", "South"]
     assert resolve_ff_pairs(qo, None) == [("East", "South"), ("West", "Midwest")]
+
+
+def test_build_locked_picks_from_results_maps_completed_games():
+    south = {
+        seed: _base_team(team=f"Seed{seed}", seed=seed, adj_o=110.0 - seed, adj_d=100.0 + seed)
+        for seed in range(1, 17)
+    }
+    bracket = {"South": south}
+    results = [
+        {"round": 64, "region": "South", "team_a": "Seed1", "team_b": "Seed16", "winner": "Seed1"},
+        {"round": 64, "region": "South", "team_a": "Seed8", "team_b": "Seed9", "winner": "Seed9"},
+        {"round": 32, "region": "South", "team_a": "Seed1", "team_b": "Seed9", "winner": "Seed1"},
+    ]
+
+    locked = build_locked_picks_from_results(bracket, results)
+
+    assert locked["South-64-0"] == "Seed1"
+    assert locked["South-64-1"] == "Seed9"
+    assert locked["South-32-0"] == "Seed1"
+
+
+def test_simulate_region_respects_locked_round_of_64_winner(monkeypatch):
+    south = {
+        seed: _base_team(team=f"Seed{seed}", seed=seed, adj_o=110.0 - seed, adj_d=100.0 + seed)
+        for seed in range(1, 17)
+    }
+
+    monkeypatch.setattr("engine.simulate_game", lambda a, b, game_site=None, config=None: a)
+
+    _, results = simulate_region(
+        south,
+        config=ModelConfig(num_sims=1),
+        region_name="South",
+        locked_picks={"South-64-0": "Seed16"},
+    )
+
+    assert results["Round of 64"][0]["winner"] == "Seed16"
 
 
 def test_final_four_analysis_infers_venue_without_region(monkeypatch):

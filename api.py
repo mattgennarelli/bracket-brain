@@ -44,7 +44,7 @@ from engine import (
     predict_game, enrich_team, run_monte_carlo, load_bracket,
     generate_bracket_picks, load_teams_merged, _normalize_team_for_match,
     get_matchup_analysis_display, is_ncaa_tournament_game, _strip_mascot,
-    ModelConfig, DEFAULT_CONFIG, resolve_ff_pairs,
+    ModelConfig, DEFAULT_CONFIG, resolve_ff_pairs, build_locked_picks_from_results,
 )
 from espn_scores import (
     fetch_scores_for_picks, fetch_espn_scoreboard,
@@ -235,6 +235,7 @@ def _prediction_inputs_mtime(year: int) -> str:
         os.path.join(DATA_DIR, f"bracket_{year}.json"),
         os.path.join(DATA_DIR, f"teams_merged_{year}.json"),
         os.path.join(DATA_DIR, f"injuries_{year}.json"),
+        os.path.join(DATA_DIR, f"results_{year}.json"),
         os.path.join(DATA_DIR, "calibrated_config.json"),
     ]
     latest = 0
@@ -250,6 +251,7 @@ def _prediction_inputs_hash(year: int) -> str:
         os.path.join(DATA_DIR, f"bracket_{year}.json"),
         os.path.join(DATA_DIR, f"teams_merged_{year}.json"),
         os.path.join(DATA_DIR, f"injuries_{year}.json"),
+        os.path.join(DATA_DIR, f"results_{year}.json"),
         os.path.join(DATA_DIR, "calibrated_config.json"),
     ]
     h = hashlib.sha256()
@@ -285,6 +287,33 @@ def _add_final_four_by_region(result: dict, year: int) -> dict:
         by_region[region] = [(t, round(p, 4)) for t, p in team_probs[:8]]
     result["final_four_by_region"] = by_region
     return result
+
+
+def _load_results_games(year: int) -> list[dict]:
+    path = os.path.join(DATA_DIR, f"results_{year}.json")
+    if not os.path.isfile(path):
+        return []
+    try:
+        with open(path) as f:
+            data = json.load(f)
+    except Exception:
+        return []
+    if isinstance(data, dict):
+        games = data.get("games", [])
+    elif isinstance(data, list):
+        games = data
+    else:
+        games = []
+    return [game for game in games if isinstance(game, dict)]
+
+
+def _completed_tournament_locked_picks(year: int, bracket: dict, quadrant_order=None, ff_matchups=None) -> Dict[str, str]:
+    return build_locked_picks_from_results(
+        bracket,
+        _load_results_games(year),
+        quadrant_order=quadrant_order,
+        ff_matchups=ff_matchups,
+    )
 
 
 @lru_cache(maxsize=8)
@@ -419,6 +448,7 @@ def _data_hash_and_meta(year: int) -> dict:
     files = [
         os.path.join(DATA_DIR, f"bracket_{year}.json"),
         os.path.join(DATA_DIR, f"teams_merged_{year}.json"),
+        os.path.join(DATA_DIR, f"results_{year}.json"),
         os.path.join(DATA_DIR, "calibrated_config.json"),
     ]
     for path in files:
@@ -529,6 +559,7 @@ def debug_picks_sample(year: int = 2026, upset_aggression: float = 0.0):
     """Return first 8 R64 picks for direct local vs Render comparison."""
     bracket, ff_matchups, quadrant_order = _load_bracket_for_year(year)
     config = _load_config()
+    locked_picks = _completed_tournament_locked_picks(year, bracket, quadrant_order, ff_matchups)
     with contextlib.redirect_stdout(io.StringIO()):
         result = generate_bracket_picks(
             bracket,
@@ -538,6 +569,7 @@ def debug_picks_sample(year: int = 2026, upset_aggression: float = 0.0):
             ff_matchups=ff_matchups,
             data_dir=DATA_DIR,
             year=year,
+            locked_picks=locked_picks,
         )
     picks = [p for p in result["picks"] if p.get("round") == 64][:8]
     return {
@@ -604,6 +636,7 @@ def get_bracket(
 
     bracket, ff_matchups, quadrant_order = _load_bracket_for_year(year)
     config = _load_config()
+    locked_picks = _completed_tournament_locked_picks(year, bracket, quadrant_order, ff_matchups)
     with contextlib.redirect_stdout(io.StringIO()):
         picks = generate_bracket_picks(
             bracket,
@@ -613,6 +646,7 @@ def get_bracket(
             ff_matchups=ff_matchups,
             data_dir=DATA_DIR,
             year=year,
+            locked_picks=locked_picks,
         )
     ff_pairs = [list(pair) for pair in resolve_ff_pairs(quadrant_order, ff_matchups)]
     result = {
@@ -632,6 +666,8 @@ def simulate_bracket(year: int, req: SimulateRequest):
     locked some picks and wants to re-simulate the rest."""
     bracket, ff_matchups, quadrant_order = _load_bracket_for_year(year)
     config = _load_config()
+    completed_locked = _completed_tournament_locked_picks(year, bracket, quadrant_order, ff_matchups)
+    locked_picks = {**req.locked_picks, **completed_locked}
     with contextlib.redirect_stdout(io.StringIO()):
         bracket_result = generate_bracket_picks(
             bracket,
@@ -641,7 +677,7 @@ def simulate_bracket(year: int, req: SimulateRequest):
             ff_matchups=ff_matchups,
             data_dir=DATA_DIR,
             year=year,
-            locked_picks=req.locked_picks,
+            locked_picks=locked_picks,
         )
     ff_pairs = [list(pair) for pair in resolve_ff_pairs(quadrant_order, ff_matchups)]
     return {
@@ -1614,10 +1650,18 @@ def get_monte_carlo(
             _cache_set(cache_key, result)
             return result
 
-    bracket, _, _ = _load_bracket_for_year(year)
+    bracket, ff_matchups, quadrant_order = _load_bracket_for_year(year)
     config = _load_config(num_sims=sims)
+    locked_picks = _completed_tournament_locked_picks(year, bracket, quadrant_order, ff_matchups)
     with contextlib.redirect_stdout(io.StringIO()):
-        mc = run_monte_carlo(bracket, config=config)
+        mc = run_monte_carlo(
+            bracket,
+            config=config,
+            year=year,
+            locked_picks=locked_picks,
+            quadrant_order=quadrant_order,
+            ff_matchups=ff_matchups,
+        )
 
     result = {
         "year": year,

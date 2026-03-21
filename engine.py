@@ -1201,17 +1201,23 @@ REGIONS = ["South", "East", "Midwest", "West"]
 SEED_TO_POD = {1:'A',16:'A',8:'A',9:'A', 5:'B',12:'B',4:'B',13:'B',
                6:'C',11:'C',3:'C',14:'C', 7:'D',10:'D',2:'D',15:'D'}
 
-def simulate_region(teams_by_seed, config=DEFAULT_CONFIG, region_name=None, venues=None):
+def simulate_region(teams_by_seed, config=DEFAULT_CONFIG, region_name=None, venues=None, locked_picks=None):
     enriched = {s: enrich_team(t) for s, t in teams_by_seed.items()}
     matchups = [(enriched[a], enriched[b]) for a, b in FIRST_ROUND_MATCHUPS if a in enriched and b in enriched]
     results = {"Round of 64": [], "Round of 32": [], "Sweet 16": [], "Elite 8": []}
+    locked_picks = locked_picks or {}
 
-    def play_round(teams, round_name):
+    def play_round(teams, round_name, round_of):
         winners = []
         for i in range(0, len(teams), 2):
             sa, sb = teams[i].get("seed"), teams[i+1].get("seed")
             site = _get_game_site(venues, region_name, round_name, seed_a=sa, seed_b=sb) if venues else None
-            w = simulate_game(teams[i], teams[i+1], game_site=site, config=config)
+            gid = _game_id_for_pick(region_name, round_of, i // 2)
+            locked_team = locked_picks.get(gid)
+            if locked_team in (teams[i]["team"], teams[i+1]["team"]):
+                w = teams[i] if locked_team == teams[i]["team"] else teams[i+1]
+            else:
+                w = simulate_game(teams[i], teams[i+1], game_site=site, config=config)
             results[round_name].append({
                 "team_a": teams[i]["team"], "seed_a": teams[i]["seed"],
                 "team_b": teams[i+1]["team"], "seed_b": teams[i+1]["seed"],
@@ -1221,34 +1227,55 @@ def simulate_region(teams_by_seed, config=DEFAULT_CONFIG, region_name=None, venu
         return winners
 
     r64_winners = []
-    for a, b in matchups:
+    for gi, (a, b) in enumerate(matchups):
         r64_site = _get_game_site(venues, region_name, "Round of 64", seed_a=a.get("seed"), seed_b=b.get("seed")) if venues else None
-        w = simulate_game(a, b, game_site=r64_site, config=config)
+        gid = _game_id_for_pick(region_name, 64, gi)
+        locked_team = locked_picks.get(gid)
+        if locked_team in (a["team"], b["team"]):
+            w = a if locked_team == a["team"] else b
+        else:
+            w = simulate_game(a, b, game_site=r64_site, config=config)
         results["Round of 64"].append({"team_a": a["team"], "seed_a": a["seed"],
             "team_b": b["team"], "seed_b": b["seed"], "winner": w["team"]})
         r64_winners.append(w)
 
-    r32_winners = play_round(r64_winners, "Round of 32")
-    s16_winners = play_round(r32_winners, "Sweet 16")
-    e8_winners = play_round(s16_winners, "Elite 8")
+    r32_winners = play_round(r64_winners, "Round of 32", 32)
+    s16_winners = play_round(r32_winners, "Sweet 16", 16)
+    e8_winners = play_round(s16_winners, "Elite 8", 8)
     return e8_winners[0], results
 
-def simulate_tournament(bracket, config=DEFAULT_CONFIG, venues=None):
+def simulate_tournament(bracket, config=DEFAULT_CONFIG, venues=None, locked_picks=None,
+                        quadrant_order=None, ff_matchups=None):
     results = {}
     final_four = []
+    locked_picks = locked_picks or {}
+    quadrant_order = quadrant_order or REGIONS[:4]
     for region in REGIONS:
         if region not in bracket: continue
-        winner, rr = simulate_region(bracket[region], config, region_name=region, venues=venues)
+        winner, rr = simulate_region(
+            bracket[region],
+            config,
+            region_name=region,
+            venues=venues,
+            locked_picks=locked_picks,
+        )
         results[region] = rr
         final_four.append((region, winner))
 
     results["Final Four"] = []
     champ_teams = []
     f4_site = _get_game_site(venues, None, "Final Four") if venues else None
-    for i, j in [(0,1),(2,3)]:
-        if i < len(final_four) and j < len(final_four):
-            _, a = final_four[i]; _, b = final_four[j]
-            w = simulate_game(a, b, game_site=f4_site, config=config)
+    final_four_by_region = {region: winner for region, winner in final_four}
+    for ff_gi, (region_a, region_b) in enumerate(resolve_ff_pairs(quadrant_order, ff_matchups)):
+        a = final_four_by_region.get(region_a)
+        b = final_four_by_region.get(region_b)
+        if a and b:
+            gid = _game_id_for_pick(None, 4, ff_gi)
+            locked_team = locked_picks.get(gid)
+            if locked_team in (a["team"], b["team"]):
+                w = a if locked_team == a["team"] else b
+            else:
+                w = simulate_game(a, b, game_site=f4_site, config=config)
             results["Final Four"].append({"team_a": a["team"], "seed_a": a["seed"],
                 "team_b": b["team"], "seed_b": b["seed"], "winner": w["team"]})
             champ_teams.append(w)
@@ -1256,15 +1283,22 @@ def simulate_tournament(bracket, config=DEFAULT_CONFIG, venues=None):
     results["Championship"] = []
     champ_site = _get_game_site(venues, None, "Championship") if venues else None
     if len(champ_teams) == 2:
-        w = simulate_game(champ_teams[0], champ_teams[1], game_site=champ_site, config=config)
+        a, b = champ_teams[0], champ_teams[1]
+        locked_team = locked_picks.get("FF-2-0")
+        if locked_team in (a["team"], b["team"]):
+            w = a if locked_team == a["team"] else b
+        else:
+            w = simulate_game(a, b, game_site=champ_site, config=config)
         results["Championship"].append({"team_a": champ_teams[0]["team"], "seed_a": champ_teams[0]["seed"],
             "team_b": champ_teams[1]["team"], "seed_b": champ_teams[1]["seed"], "winner": w["team"]})
         return w, results
     return None, results
 
-def run_monte_carlo(bracket, config=DEFAULT_CONFIG, year=None):
+def run_monte_carlo(bracket, config=DEFAULT_CONFIG, year=None, locked_picks=None,
+                    quadrant_order=None, ff_matchups=None):
     counts = {k: defaultdict(int) for k in ["champ","ff","e8","s16","r32"]}
     game_results = defaultdict(lambda: defaultdict(int))
+    locked_picks = locked_picks or {}
 
     # Load venue data for proximity bonus (uses year from bracket if not provided)
     if year is None:
@@ -1279,7 +1313,14 @@ def run_monte_carlo(bracket, config=DEFAULT_CONFIG, year=None):
     for sim in range(config.num_sims):
         if (sim+1) % 2000 == 0:
             print(f"  {sim+1:,}/{config.num_sims:,}")
-        champ, results = simulate_tournament(bracket, config, venues=venues)
+        champ, results = simulate_tournament(
+            bracket,
+            config,
+            venues=venues,
+            locked_picks=locked_picks,
+            quadrant_order=quadrant_order,
+            ff_matchups=ff_matchups,
+        )
         if champ: counts["champ"][champ["team"]] += 1
 
         for rname, rdata in results.items():
@@ -2167,6 +2208,117 @@ def _game_id_for_pick(region, round_of, game_index, quadrant_order=None):
     if round_of == 2:
         return "FF-2-0"
     return f"{region}-{round_of}-{game_index}"
+
+
+def _result_matchup_key(team_a, team_b):
+    norm_a = _normalize_team_for_match(team_a)
+    norm_b = _normalize_team_for_match(team_b)
+    if not norm_a or not norm_b or norm_a == norm_b:
+        return None
+    return tuple(sorted((norm_a, norm_b)))
+
+
+def _completed_winner_for_slot(results_lookup, round_of, region, team_a, team_b):
+    key = _result_matchup_key(team_a.get("team", ""), team_b.get("team", ""))
+    if key is None:
+        return None
+    bucket = results_lookup.get((round_of, region if round_of in (64, 32, 16, 8) else None, key))
+    if not bucket:
+        return None
+    winner = _normalize_team_for_match(bucket.get("winner", ""))
+    if winner == _normalize_team_for_match(team_a.get("team", "")):
+        return team_a["team"]
+    if winner == _normalize_team_for_match(team_b.get("team", "")):
+        return team_b["team"]
+    return None
+
+
+def build_locked_picks_from_results(bracket, results, quadrant_order=None, ff_matchups=None):
+    """Map completed tournament results onto frontend game ids."""
+    quadrant_order = quadrant_order or REGIONS[:4]
+    results_lookup = {}
+    for game in results or []:
+        if not isinstance(game, dict):
+            continue
+        try:
+            round_of = int(game.get("round"))
+        except (TypeError, ValueError):
+            continue
+        if round_of not in (64, 32, 16, 8, 4, 2):
+            continue
+        key = _result_matchup_key(game.get("team_a", ""), game.get("team_b", ""))
+        if key is None:
+            continue
+        region = game.get("region") if round_of in (64, 32, 16, 8) else None
+        results_lookup[(round_of, region, key)] = game
+
+    locked_picks = {}
+    region_winners = {}
+
+    for region in REGIONS:
+        if region not in bracket:
+            continue
+        teams = {seed: enrich_team(team) for seed, team in bracket[region].items()}
+
+        def _advance_round(teams_in, round_of):
+            winners = []
+            for idx in range(0, len(teams_in), 2):
+                if idx + 1 >= len(teams_in):
+                    winners.append(None)
+                    continue
+                team_a = teams_in[idx]
+                team_b = teams_in[idx + 1]
+                if not team_a or not team_b:
+                    winners.append(None)
+                    continue
+                winner = _completed_winner_for_slot(results_lookup, round_of, region, team_a, team_b)
+                if not winner:
+                    winners.append(None)
+                    continue
+                gid = _game_id_for_pick(region, round_of, idx // 2)
+                locked_picks[gid] = winner
+                winners.append(team_a if winner == team_a["team"] else team_b)
+            return winners
+
+        r64_winners = []
+        for gi, (seed_a, seed_b) in enumerate(FIRST_ROUND_MATCHUPS):
+            team_a = teams.get(seed_a)
+            team_b = teams.get(seed_b)
+            if not team_a or not team_b:
+                continue
+            winner = _completed_winner_for_slot(results_lookup, 64, region, team_a, team_b)
+            if not winner:
+                r64_winners.append(None)
+                continue
+            locked_picks[_game_id_for_pick(region, 64, gi)] = winner
+            r64_winners.append(team_a if winner == team_a["team"] else team_b)
+
+        r32_winners = _advance_round(r64_winners, 32)
+        s16_winners = _advance_round(r32_winners, 16)
+        e8_winners = _advance_round(s16_winners, 8)
+        if e8_winners and e8_winners[0]:
+            region_winners[region] = e8_winners[0]
+
+    ff_winners = []
+    for ff_gi, (region_a, region_b) in enumerate(resolve_ff_pairs(quadrant_order, ff_matchups)):
+        team_a = region_winners.get(region_a)
+        team_b = region_winners.get(region_b)
+        if not team_a or not team_b:
+            ff_winners.append(None)
+            continue
+        winner = _completed_winner_for_slot(results_lookup, 4, None, team_a, team_b)
+        if not winner:
+            ff_winners.append(None)
+            continue
+        locked_picks[_game_id_for_pick(None, 4, ff_gi)] = winner
+        ff_winners.append(team_a if winner == team_a["team"] else team_b)
+
+    if len(ff_winners) >= 2 and ff_winners[0] and ff_winners[1]:
+        winner = _completed_winner_for_slot(results_lookup, 2, None, ff_winners[0], ff_winners[1])
+        if winner:
+            locked_picks["FF-2-0"] = winner
+
+    return locked_picks
 
 
 def resolve_ff_pairs(quadrant_order, ff_matchups=None):
