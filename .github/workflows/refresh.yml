@@ -40,8 +40,8 @@ jobs:
       - name: Merge team stats
         run: python scripts/fetch_data.py --no-fetch 2026
 
-      - name: Validate bracket coverage
-        run: python scripts/validate_data.py 2026 || true
+      - name: Validate merged team data
+        run: python scripts/validate_data.py 2026
 
       - name: Commit updated data
         run: |
