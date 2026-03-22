@@ -1,33 +1,33 @@
 {
   "date": "2026-03-22",
-  "generated_at": "2026-03-22T02:40:03.559900+00:00",
+  "generated_at": "2026-03-22T03:31:57.520636+00:00",
   "stats": {
     "total_picks": 22,
-    "settled": 17,
-    "wins": 11,
-    "losses": 6,
+    "settled": 20,
+    "wins": 13,
+    "losses": 7,
     "pushes": 0,
-    "hit_rate": 0.6471,
+    "hit_rate": 0.65,
     "by_type": {
       "ml": {
-        "picks": 1,
+        "picks": 2,
         "wins": 0,
-        "losses": 1,
+        "losses": 2,
         "pushes": 0,
-        "net_units": -2.72,
-        "total_wagered": 2.72,
+        "net_units": -4.07,
+        "total_wagered": 4.07,
         "hit_rate": 0.0,
         "roi_pct": -100.0
       },
       "spread": {
-        "picks": 8,
-        "wins": 5,
+        "picks": 10,
+        "wins": 7,
         "losses": 3,
         "pushes": 0,
-        "net_units": 6.74,
-        "total_wagered": 34.23,
-        "hit_rate": 0.625,
-        "roi_pct": 19.69
+        "net_units": 12.25,
+        "total_wagered": 40.24,
+        "hit_rate": 0.7,
+        "roi_pct": 30.44
       },
       "total": {
         "picks": 8,
@@ -42,14 +42,14 @@
     },
     "by_stars": {
       "\u2605": {
-        "picks": 11,
-        "wins": 6,
-        "losses": 5,
+        "picks": 14,
+        "wins": 8,
+        "losses": 6,
         "pushes": 0,
-        "net_units": 3.01,
-        "total_wagered": 48.88,
-        "hit_rate": 0.5455,
-        "roi_pct": 6.15
+        "net_units": 7.17,
+        "total_wagered": 56.24,
+        "hit_rate": 0.5714,
+        "roi_pct": 12.75
       },
       "\u2605\u2605": {
         "picks": 6,
@@ -72,9 +72,9 @@
         "roi_pct": null
       }
     },
-    "total_wagered": 76.95,
-    "net_units": 21.29,
-    "roi_pct": 27.67
+    "total_wagered": 84.31,
+    "net_units": 25.45,
+    "roi_pct": 30.19
   },
-  "settled_count": 19
+  "settled_count": 22
 }
