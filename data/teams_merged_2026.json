@@ -1139,8 +1139,19 @@
     "coach_resume_points_pre": 10.0,
     "coach_tourney_score": 0.8975,
     "conf_tourney_momentum": 0.4,
-    "injuries": [],
-    "injury_impact": 0.0
+    "injuries": [
+      {
+        "player": "Joshua Jefferson",
+        "status": "out",
+        "bpr": 10.5541,
+        "poss": 1840.0,
+        "bpr_share": 0.2118,
+        "importance": 0.2118,
+        "source": "manual",
+        "updated_at": "2026-03-22T17:50:39.308035+00:00"
+      }
+    ],
+    "injury_impact": 3.3601157555816124
   },
   {
     "team": "Purdue",
@@ -55830,36 +55841,6 @@
     "em_creator_count": 1,
     "em_adj_o": 107.1967,
     "em_adj_d": 104.1151,
-    "coach": "Jeremy Ballard",
-    "coach_source": "sports_reference_2026_coaches",
-    "career_ncaa_pre": 0.0,
-    "career_s16_pre": 0.0,
-    "career_ff_pre": 0.0,
-    "career_titles_pre": 0.0,
-    "school_ncaa_pre": 0.0,
-    "school_s16_pre": 0.0,
-    "school_ff_pre": 0.0,
-    "school_titles_pre": 0.0,
-    "coach_resume_points_pre": 0.0,
-    "coach_tourney_score": 0.2568,
-    "injuries": [
-      {
-        "player": "Amarion Nimmers",
-        "status": "out",
-        "bpr": -1.9359,
-        "poss": 20.0,
-        "bpr_share": 0.0,
-        "importance": 0.0
-      },
-      {
-        "player": "Gvidas Gicevicius",
-        "status": "out",
-        "bpr": -1.4985,
-        "poss": 0.0,
-        "bpr_share": 0.0,
-        "importance": 0.0
-      }
-    ],
     "roster": [
       {
         "player": "corey stephenson",
@@ -55920,6 +55901,36 @@
         "player": "renato ruiz",
         "bpr": -4.1277,
         "poss": 11.0
+      }
+    ],
+    "coach": "Jeremy Ballard",
+    "coach_source": "sports_reference_2026_coaches",
+    "career_ncaa_pre": 0.0,
+    "career_s16_pre": 0.0,
+    "career_ff_pre": 0.0,
+    "career_titles_pre": 0.0,
+    "school_ncaa_pre": 0.0,
+    "school_s16_pre": 0.0,
+    "school_ff_pre": 0.0,
+    "school_titles_pre": 0.0,
+    "coach_resume_points_pre": 0.0,
+    "coach_tourney_score": 0.2568,
+    "injuries": [
+      {
+        "player": "Amarion Nimmers",
+        "status": "out",
+        "bpr": -1.9359,
+        "poss": 20.0,
+        "bpr_share": 0.0,
+        "importance": 0.0
+      },
+      {
+        "player": "Gvidas Gicevicius",
+        "status": "out",
+        "bpr": -1.4985,
+        "poss": 0.0,
+        "bpr_share": 0.0,
+        "importance": 0.0
       }
     ],
     "injury_impact": 0.0,

@@ -69,6 +69,14 @@ jobs:
         if: steps.action.outputs.action == 'save' || steps.action.outputs.action == 'both'
         run: python scripts/fetch_injuries_live.py 2026 --merge || echo "Injury refresh failed (non-fatal)"
 
+      - name: Parse ESPN news for injury updates
+        if: steps.action.outputs.action == 'save' || steps.action.outputs.action == 'both'
+        run: python scripts/fetch_injuries_live.py 2026 --news || echo "Injury news refresh failed (non-fatal)"
+
+      - name: Rebuild merged teams after injury refresh
+        if: steps.action.outputs.action == 'save' || steps.action.outputs.action == 'both'
+        run: python scripts/fetch_data.py --no-fetch 2026 || echo "Teams merge rebuild failed (non-fatal)"
+
       - name: Save today's picks (best bets)
         if: steps.action.outputs.action == 'save' || steps.action.outputs.action == 'both'
         env:
@@ -94,6 +102,7 @@ jobs:
           if [ -f "$CARD_DAILY" ]; then git add "$CARD_DAILY"; fi
           # Include injury updates if changed
           if [ -f "data/injuries_2026.json" ]; then git add data/injuries_2026.json; fi
+          if [ -f "data/teams_merged_2026.json" ]; then git add data/teams_merged_2026.json; fi
           # Include betting diagnostics if written
           DIAG="data/betting_diagnostics_$(date -u +%Y-%m-%d).json"
           if [ -f "$DIAG" ]; then git add "$DIAG"; fi

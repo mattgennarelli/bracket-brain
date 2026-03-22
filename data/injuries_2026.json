@@ -81,7 +81,18 @@
     "roster": []
   },
   "Iowa St.": {
-    "injuries": [],
+    "injuries": [
+      {
+        "player": "Joshua Jefferson",
+        "status": "out",
+        "bpr": 10.5541,
+        "poss": 1840.0,
+        "bpr_share": 0.2118,
+        "importance": 0.2118,
+        "source": "manual",
+        "updated_at": "2026-03-22T17:50:39.308035+00:00"
+      }
+    ],
     "roster": []
   },
   "Purdue": {
