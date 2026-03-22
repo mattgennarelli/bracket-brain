@@ -59,9 +59,7 @@ jobs:
 
       - name: Settle yesterday's picks (best bets)
         if: steps.action.outputs.action == 'settle' || steps.action.outputs.action == 'both'
-        env:
-          ODDS_API_KEY: ${{ secrets.ODDS_API_KEY }}
-        run: python scripts/settle_bets.py || echo "Settle step failed (no pending picks or API error)"
+        run: python scripts/settle_bets.py --source espn || echo "Settle step failed (no pending picks or ESPN error)"
 
       - name: Settle yesterday's card picks
         if: steps.action.outputs.action == 'settle' || steps.action.outputs.action == 'both'

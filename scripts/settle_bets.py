@@ -8,7 +8,7 @@ Uses ESPN first (free), then Odds API or BetStack as fallback for unmatched pick
 Matches against pending picks in data/bets_ledger.json and marks each as W / L / P (push).
 
 Usage:
-  python scripts/settle_bets.py                    # ESPN + Odds API fallback (if ODDS_API_KEY)
+  python scripts/settle_bets.py                    # ESPN only (free)
   python scripts/settle_bets.py --source odds     # Odds API only (ODDS_API_KEY)
   python scripts/settle_bets.py --source betstack # BetStack only (BETSTACK_API_KEY)
   python scripts/settle_bets.py --days 3
@@ -324,7 +324,7 @@ def compute_stats(picks, tournament_only=False):
 def main():
     parser = argparse.ArgumentParser(description="Settle pending bets with actual scores")
     parser.add_argument("--source", choices=["espn", "odds", "betstack"], default="espn",
-                        help="Score source: espn (free), odds (ODDS_API_KEY), or betstack (BETSTACK_API_KEY). Default: ESPN + Odds API fallback.")
+                        help="Score source: espn (free), odds (ODDS_API_KEY), or betstack (BETSTACK_API_KEY). Default: ESPN only.")
     parser.add_argument("--api-key", default=None,
                         help="API key (default: ODDS_API_KEY or BETSTACK_API_KEY per --source)")
     parser.add_argument("--days", type=int, default=3,
@@ -433,76 +433,6 @@ def main():
         side = pick.get("bet_side") or pick.get("bet_team", "?")
         print(f"  [{result}] {pick['bet_type'].upper()} {side}  "
               f"({pick['home_team']} {int(home_score)}-{int(away_score)} {pick['away_team']})")
-
-    # Phase 2: Odds API fallback for still-pending (mid-major games ESPN may not have)
-    still_pending = [p for p in ledger["picks"] if p.get("result") is None]
-    if still_pending and args.source == "espn":
-        odds_key = get_api_key("odds_api")
-        if odds_key:
-            print(f"\n  {len(still_pending)} pick(s) still pending. Trying Odds API fallback...")
-            all_odds = []
-            for d in range(0, min(args.days + 1, 4)):
-                try:
-                    scores = fetch_scores_odds(odds_key, days_from=d)
-                    all_odds.extend(scores)
-                except Exception as e:
-                    print(f"  Warning: could not fetch Odds API for daysFrom={d}: {e}")
-            for g in all_odds:
-                k = _scores_key(g["home_team"], g["away_team"])
-                if k not in scores_by_key:
-                    scores_by_key[k] = g
-            print(f"  {len(all_odds)} game(s) from Odds API")
-
-        # Phase 2b: BetStack fallback if still pending
-        still_pending = [p for p in ledger["picks"] if p.get("result") is None]
-        betstack_key = get_api_key("betstack") if still_pending else None
-        if still_pending and betstack_key:
-            print(f"\n  {len(still_pending)} pick(s) still pending. Trying BetStack fallback...")
-            all_betstack = fetch_scores_betstack(betstack_key, days_back=args.days)
-            for g in all_betstack:
-                k = _scores_key(g["home_team"], g["away_team"])
-                if k not in scores_by_key:
-                    scores_by_key[k] = g
-            print(f"  {len(all_betstack)} game(s) from BetStack")
-
-        for pick in ledger["picks"]:
-            if pick.get("result") is not None:
-                continue
-            score_rec = match_score(pick, scores_by_key)
-            if not score_rec:
-                if args.debug:
-                    print(f"  [UNMATCHED] {pick['away_team']} @ {pick['home_team']} (no fallback match)")
-                continue
-
-            home_score, away_score = get_scores_from_record(score_rec)
-            if home_score is None or away_score is None:
-                continue
-
-            result = settle_pick(pick, home_score, away_score)
-            if result is None:
-                continue
-
-            pick["result"] = result
-            pick["actual_score_home"] = home_score
-            pick["actual_score_away"] = away_score
-            pick["settled_at"] = now
-            settled_count += 1
-
-            settle_log_entries.append({
-                "pick_idx": ledger["picks"].index(pick),
-                "home_team": pick["home_team"],
-                "away_team": pick["away_team"],
-                "bet_type": pick["bet_type"],
-                "bet_side": pick.get("bet_side") or pick.get("bet_team"),
-                "result": result,
-                "home_score": home_score,
-                "away_score": away_score,
-                "settled_at": now,
-            })
-
-            side = pick.get("bet_side") or pick.get("bet_team", "?")
-            print(f"  [{result}] {pick['bet_type'].upper()} {side}  "
-                  f"({pick['home_team']} {int(home_score)}-{int(away_score)} {pick['away_team']})")
 
     # Write settle log (even if 0 settled, for midnight run audit trail)
     log_date = datetime.now(timezone.utc).strftime("%Y-%m-%d")
