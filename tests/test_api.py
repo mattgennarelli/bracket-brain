@@ -1045,7 +1045,7 @@ def test_get_bets_card_history_hydrates_scores_and_stats(tmp_path, monkeypatch):
     assert d["stats"]["settled"] == 1
 
 
-def test_get_bets_card_history_replaces_same_day_stale_card_picks(monkeypatch, tmp_path):
+def test_get_bets_card_history_keeps_final_saved_same_day_card_pick(monkeypatch, tmp_path):
     card_ledger_path = tmp_path / "card_ledger.json"
     card_ledger_path.write_text(json.dumps({
         "picks": [
@@ -1111,7 +1111,7 @@ def test_get_bets_card_history_replaces_same_day_stale_card_picks(monkeypatch, t
     picks = [p for p in r.json()["picks"] if p["date"] == "2026-03-22"]
     assert len(picks) == 1
     assert picks[0]["bet_type"] == "total"
-    assert picks[0]["bet_side"] == "UNDER"
+    assert picks[0]["bet_side"] == "OVER"
 
 
 def test_get_bets_card_history_keeps_only_latest_market_pick_when_side_changes(monkeypatch, tmp_path):

@@ -1464,48 +1464,17 @@ def _load_logged_bets() -> list[dict]:
 
 
 def _load_live_pick_history(year: int = 2026):
-    """Return pick history, preserving locked logged picks but refreshing unstarted today markets."""
-    logged = _load_logged_bets()
-    today = _today_et_str()
-    current = _load_current_best_bets(year)
-    if not current:
-        return logged
-
-    logged_today = [p for p in logged if _pick_game_date(p) == today]
-    history = [p for p in logged if _pick_game_date(p) != today]
-    current_today = [p for p in current if _pick_game_date(p) == today]
-
-    if logged_today:
-        history.extend(_merge_today_picks(logged_today, current_today, year=year))
-    else:
-        history.extend(current_today)
-
-    return _dedupe_pick_markets(history, year=year)
+    """Return official logged pick history, locked to the final saved market decision."""
+    return _load_logged_bets()
 
 
 def _load_live_card_history(year: int = 2026):
-    """Return card history, preserving locked logged picks but refreshing unstarted today markets."""
+    """Return official logged card history, locked to the final saved market decision."""
     if not os.path.isfile(CARD_LEDGER_PATH):
         return []
     with open(CARD_LEDGER_PATH) as f:
         ledger = json.load(f)
-
-    logged = _dedupe_pick_markets([_normalize_pick_date(p) for p in ledger.get("picks", [])], year=year)
-    today = _today_et_str()
-    current_games = _load_current_card_games_from_ledger(year, refresh=True)
-    current_today = _flatten_card_games(current_games)
-    if not current_today:
-        return logged
-
-    logged_today = [p for p in logged if _pick_game_date(p) == today]
-    history = [p for p in logged if _pick_game_date(p) != today]
-
-    if logged_today:
-        history.extend(_merge_today_picks(logged_today, current_today, year=year))
-    else:
-        history.extend(current_today)
-
-    return _dedupe_pick_markets(history, year=year)
+    return _dedupe_pick_markets([_normalize_pick_date(p) for p in ledger.get("picks", [])], year=year)
 
 
 def _retro_game_identity(game: dict):
