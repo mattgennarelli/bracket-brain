@@ -1,6 +1,6 @@
 {
   "date": "2026-03-22",
-  "fetched_at": "2026-03-22T22:04:39.780830+00:00",
+  "fetched_at": "2026-03-22T22:08:08.361785+00:00",
   "games": [
     {
       "home_team": "Virginia Cavaliers",
@@ -259,10 +259,10 @@
           "bet_type": "spread",
           "bet_team": "Florida Gators",
           "bet_spread": -10.0,
-          "bet_odds": -110,
+          "bet_odds": -107,
           "edge": 4.6,
           "stars": "\u2605",
-          "kelly_units": 2.9,
+          "kelly_units": 3.01,
           "cover_margin": 4.6,
           "model_margin": 14.6,
           "vegas_spread": -10.0,
