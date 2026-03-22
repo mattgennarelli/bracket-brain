@@ -42,6 +42,11 @@ def _pick_id(pick):
     return f"{commence}|{pick['home_team']}|{pick['away_team']}|{pick['bet_type']}|{side}"
 
 
+def _market_id(pick):
+    game_date = _game_date_et(pick.get("commence_time", ""), pick.get("date", ""))
+    return f"{game_date}|{pick.get('home_team','')}|{pick.get('away_team','')}|{pick.get('bet_type','')}"
+
+
 def load_ledger():
     if os.path.isfile(CARD_LEDGER_PATH):
         with open(CARD_LEDGER_PATH) as f:
@@ -62,6 +67,67 @@ def _game_date_et(commence_time: str, fallback: str) -> str:
         except ValueError:
             pass
     return fallback
+
+
+def _pick_has_started(pick) -> bool:
+    commence_time = pick.get("commence_time")
+    if not commence_time:
+        return False
+    try:
+        dt = datetime.fromisoformat(str(commence_time).replace("Z", "+00:00"))
+    except ValueError:
+        return False
+    return dt <= datetime.now(timezone.utc)
+
+
+def _pick_is_locked(pick) -> bool:
+    return (
+        pick.get("result") in {"W", "L", "P"}
+        or (pick.get("actual_score_home") is not None and pick.get("actual_score_away") is not None)
+    )
+
+
+def _pick_generated_before_start(pick) -> bool:
+    generated_at = pick.get("generated_at")
+    commence_time = pick.get("commence_time")
+    if not generated_at or not commence_time:
+        return False
+    try:
+        generated_dt = datetime.fromisoformat(str(generated_at).replace("Z", "+00:00"))
+        commence_dt = datetime.fromisoformat(str(commence_time).replace("Z", "+00:00"))
+    except ValueError:
+        return False
+    return generated_dt <= commence_dt
+
+
+def _official_pick_preference_key(pick):
+    return (
+        1 if _pick_generated_before_start(pick) else 0,
+        1 if _pick_is_locked(pick) else 0,
+        1 if _pick_has_started(pick) else 0,
+        str(pick.get("generated_at") or ""),
+        str(pick.get("settled_at") or ""),
+        str(pick.get("commence_time") or ""),
+        _game_date_et(pick.get("commence_time", ""), pick.get("date", "")),
+    )
+
+
+def _merge_market_picks(existing_picks, new_picks):
+    merged = {}
+    for pick in existing_picks:
+        key = _market_id(pick)
+        current = merged.get(key)
+        if current is None or _official_pick_preference_key(pick) > _official_pick_preference_key(current):
+            merged[key] = pick
+
+    for pick in new_picks:
+        key = _market_id(pick)
+        current = merged.get(key)
+        if current is not None and (_pick_is_locked(current) or _pick_has_started(current)):
+            continue
+        merged[key] = pick
+
+    return list(merged.values())
 
 
 def main():
@@ -112,20 +178,17 @@ def main():
         }, f, indent=2)
     print(f"  Saved daily snapshot → {os.path.basename(daily_path)}")
 
-    # Append new picks to ledger (skip duplicates)
+    # Replace superseded same-market picks; preserve started/settled markets.
     ledger = load_ledger()
-    existing_ids = {_pick_id(p) for p in ledger["picks"]}
-    added = 0
-    for pick in all_picks:
-        pid = _pick_id(pick)
-        if pid not in existing_ids:
-            ledger["picks"].append(pick)
-            existing_ids.add(pid)
-            added += 1
-
+    before_count = len(ledger["picks"])
+    ledger["picks"] = _merge_market_picks(ledger["picks"], all_picks)
     ledger["stats"] = compute_stats(ledger["picks"])
     save_ledger(ledger)
-    print(f"  Added {added} new pick(s) to card ledger ({len(ledger['picks'])} total)")
+    delta = len(ledger["picks"]) - before_count
+    if delta >= 0:
+        print(f"  Added {delta} new pick(s) to card ledger ({len(ledger['picks'])} total)")
+    else:
+        print(f"  Replaced {-delta} superseded pick(s) in card ledger ({len(ledger['picks'])} total)")
 
     # Summary by game
     for game in games:

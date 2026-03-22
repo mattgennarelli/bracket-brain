@@ -478,6 +478,49 @@ def test_bets_history_dedupes_same_pick_across_date_changes(tmp_path, monkeypatc
     assert d["picks"][0]["generated_at"] == "2026-03-19T22:00:00Z"
 
 
+def test_bets_history_keeps_only_latest_market_pick_when_side_changes(tmp_path, monkeypatch):
+    ledger_path = tmp_path / "bets_ledger.json"
+    ledger_path.write_text(json.dumps({
+        "picks": [
+            {
+                "date": "2026-03-21",
+                "home_team": "Michigan St Spartans",
+                "away_team": "Louisville Cardinals",
+                "commence_time": "2026-03-21T18:45:00Z",
+                "bet_type": "ml",
+                "bet_side": "Louisville Cardinals",
+                "generated_at": "2026-03-21T13:00:00Z",
+            },
+            {
+                "date": "2026-03-21",
+                "home_team": "Michigan St Spartans",
+                "away_team": "Louisville Cardinals",
+                "commence_time": "2026-03-21T18:45:00Z",
+                "bet_type": "ml",
+                "bet_side": "Michigan St Spartans",
+                "generated_at": "2026-03-21T16:00:00Z",
+            },
+        ]
+    }))
+
+    monkeypatch.setattr(api, "DATA_DIR", str(tmp_path))
+    monkeypatch.setattr(api, "LEDGER_PATH", str(ledger_path))
+    monkeypatch.setattr(api, "CARD_LEDGER_PATH", str(tmp_path / "card_ledger.json"))
+    monkeypatch.setattr(api, "_today_et_str", lambda: "2026-03-22")
+    monkeypatch.setattr(api, "is_ncaa_tournament_game", lambda home, away, year=2026: True)
+    monkeypatch.setattr(api, "_load_current_best_bets", lambda year=2026: [])
+    monkeypatch.setattr(api, "_hydrate_picks_with_scores", lambda picks: picks)
+
+    r = client.get("/bets/history")
+
+    assert r.status_code == 200
+    picks = r.json()["picks"]
+    assert len(picks) == 1
+    assert picks[0]["bet_type"] == "ml"
+    assert picks[0]["bet_side"] == "Michigan St Spartans"
+    assert picks[0]["generated_at"] == "2026-03-21T16:00:00Z"
+
+
 def test_load_retro_card_games_dedupes_rescheduled_matchup(tmp_path, monkeypatch):
     bracket_path = tmp_path / "bracket_2026.json"
     bracket_path.write_text(json.dumps({
@@ -1000,6 +1043,122 @@ def test_get_bets_card_history_hydrates_scores_and_stats(tmp_path, monkeypatch):
     assert d["picks"][0]["actual_score_home"] == 95
     assert d["stats"]["wins"] == 1
     assert d["stats"]["settled"] == 1
+
+
+def test_get_bets_card_history_replaces_same_day_stale_card_picks(monkeypatch, tmp_path):
+    card_ledger_path = tmp_path / "card_ledger.json"
+    card_ledger_path.write_text(json.dumps({
+        "picks": [
+            {
+                "date": "2026-03-22",
+                "home_team": "Duke Blue Devils",
+                "away_team": "TCU Horned Frogs",
+                "commence_time": "2026-03-22T21:15:00Z",
+                "bet_type": "total",
+                "bet_side": "OVER",
+                "vegas_total": 139.5,
+            },
+            {
+                "date": "2026-03-21",
+                "home_team": "Michigan Wolverines",
+                "away_team": "Saint Louis Billikens",
+                "commence_time": "2026-03-21T16:10:00Z",
+                "bet_type": "spread",
+                "bet_team": "Michigan Wolverines",
+                "bet_spread": -12.5,
+            },
+        ]
+    }))
+
+    monkeypatch.setattr(api, "CARD_LEDGER_PATH", str(card_ledger_path))
+    monkeypatch.setattr(api, "_today_et_str", lambda: "2026-03-22")
+    monkeypatch.setattr(
+        api,
+        "_load_current_card_games_from_ledger",
+        lambda year=2026, refresh=True: [
+            {
+                "home_team": "Duke Blue Devils",
+                "away_team": "TCU Horned Frogs",
+                "commence_time": "2026-03-22T21:15:00Z",
+                "round_of": 32,
+                "round_name": "Round of 32",
+                "picks": [
+                    {
+                        "bet_type": "total",
+                        "bet_side": "UNDER",
+                        "vegas_total": 139.5,
+                        "date": "2026-03-22",
+                    }
+                ],
+            }
+        ],
+    )
+    monkeypatch.setattr(api, "_hydrate_picks_with_scores", lambda picks: picks)
+    monkeypatch.setattr(
+        api,
+        "_annotate_tournament_record",
+        lambda pick, year=2026: {
+            **pick,
+            "ncaa_tournament": True,
+            "round_of": 32,
+            "round_name": "Round of 32",
+        },
+    )
+
+    r = client.get("/bets/card/history")
+
+    assert r.status_code == 200
+    picks = [p for p in r.json()["picks"] if p["date"] == "2026-03-22"]
+    assert len(picks) == 1
+    assert picks[0]["bet_type"] == "total"
+    assert picks[0]["bet_side"] == "UNDER"
+
+
+def test_get_bets_card_history_keeps_only_latest_market_pick_when_side_changes(monkeypatch, tmp_path):
+    card_ledger_path = tmp_path / "card_ledger.json"
+    card_ledger_path.write_text(json.dumps({
+        "picks": [
+            {
+                "date": "2026-03-20",
+                "home_team": "Iowa State Cyclones",
+                "away_team": "Tennessee St Tigers",
+                "commence_time": "2026-03-20T19:00:00Z",
+                "bet_type": "spread",
+                "bet_team": "Tennessee St Tigers",
+                "bet_spread": 25.0,
+                "generated_at": "2026-03-20T12:00:00Z",
+            },
+            {
+                "date": "2026-03-20",
+                "home_team": "Iowa State Cyclones",
+                "away_team": "Tennessee St Tigers",
+                "commence_time": "2026-03-20T19:00:00Z",
+                "bet_type": "spread",
+                "bet_team": "Iowa State Cyclones",
+                "bet_spread": -25.0,
+                "generated_at": "2026-03-20T16:00:00Z",
+            },
+        ]
+    }))
+
+    monkeypatch.setattr(api, "CARD_LEDGER_PATH", str(card_ledger_path))
+    monkeypatch.setattr(api, "_today_et_str", lambda: "2026-03-22")
+    monkeypatch.setattr(api, "_load_current_card_games_from_ledger", lambda year=2026, refresh=True: [])
+    monkeypatch.setattr(api, "_hydrate_picks_with_scores", lambda picks: picks)
+    monkeypatch.setattr(
+        api,
+        "_annotate_tournament_record",
+        lambda pick, year=2026: {**pick, "ncaa_tournament": True, "round_of": 64, "round_name": "Round of 64"},
+    )
+
+    r = client.get("/bets/card/history")
+
+    assert r.status_code == 200
+    picks = r.json()["picks"]
+    assert len(picks) == 1
+    assert picks[0]["bet_type"] == "spread"
+    assert picks[0]["bet_team"] == "Iowa State Cyclones"
+    assert picks[0]["generated_at"] == "2026-03-20T16:00:00Z"
 
 
 def test_hydrate_picks_with_scores_settles_tennessee_state_alias(tmp_path, monkeypatch):

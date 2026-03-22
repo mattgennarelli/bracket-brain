@@ -1217,6 +1217,32 @@ def _pick_preference_key(pick: dict):
     )
 
 
+def _pick_generated_before_start(pick: dict) -> bool:
+    generated_at = pick.get("generated_at")
+    commence_time = pick.get("commence_time")
+    if not generated_at or not commence_time:
+        return False
+    try:
+        generated_dt = datetime.fromisoformat(str(generated_at).replace("Z", "+00:00"))
+        commence_dt = datetime.fromisoformat(str(commence_time).replace("Z", "+00:00"))
+    except ValueError:
+        return False
+    return generated_dt <= commence_dt
+
+
+def _official_pick_preference_key(pick: dict):
+    """Choose the single official pick for a market: latest pre-start save wins."""
+    return (
+        1 if _pick_generated_before_start(pick) else 0,
+        1 if _pick_is_locked(pick) else 0,
+        1 if _pick_has_started(pick) else 0,
+        str(pick.get("generated_at") or ""),
+        str(pick.get("settled_at") or ""),
+        str(pick.get("commence_time") or ""),
+        _pick_game_date(pick),
+    )
+
+
 def _dedupe_picks(picks):
     deduped = {}
     for pick in picks:
@@ -1224,6 +1250,18 @@ def _dedupe_picks(picks):
         current = deduped.get(key)
         if current is None or _pick_preference_key(pick) > _pick_preference_key(current):
             deduped[key] = pick
+    return list(deduped.values())
+
+
+def _dedupe_pick_markets(picks, year: int = 2026):
+    """Collapse superseded sides for the same market into one official pick."""
+    deduped = {}
+    for pick in picks:
+        normalized = _normalize_pick_date(pick)
+        key = _pick_market_identity(normalized, year=year)
+        current = deduped.get(key)
+        if current is None or _official_pick_preference_key(normalized) > _official_pick_preference_key(current):
+            deduped[key] = normalized
     return list(deduped.values())
 
 
@@ -1421,7 +1459,8 @@ def _load_logged_bets() -> list[dict]:
         return []
     with open(LEDGER_PATH) as f:
         ledger = json.load(f)
-    return _dedupe_picks([_normalize_pick_date(p) for p in ledger.get("picks", [])])
+    picks = _dedupe_picks([_normalize_pick_date(p) for p in ledger.get("picks", [])])
+    return _dedupe_pick_markets(picks, year=2026)
 
 
 def _load_live_pick_history(year: int = 2026):
@@ -1441,7 +1480,32 @@ def _load_live_pick_history(year: int = 2026):
     else:
         history.extend(current_today)
 
-    return _dedupe_picks([_normalize_pick_date(p) for p in history])
+    return _dedupe_pick_markets(history, year=year)
+
+
+def _load_live_card_history(year: int = 2026):
+    """Return card history, preserving locked logged picks but refreshing unstarted today markets."""
+    if not os.path.isfile(CARD_LEDGER_PATH):
+        return []
+    with open(CARD_LEDGER_PATH) as f:
+        ledger = json.load(f)
+
+    logged = _dedupe_pick_markets([_normalize_pick_date(p) for p in ledger.get("picks", [])], year=year)
+    today = _today_et_str()
+    current_games = _load_current_card_games_from_ledger(year, refresh=True)
+    current_today = _flatten_card_games(current_games)
+    if not current_today:
+        return logged
+
+    logged_today = [p for p in logged if _pick_game_date(p) == today]
+    history = [p for p in logged if _pick_game_date(p) != today]
+
+    if logged_today:
+        history.extend(_merge_today_picks(logged_today, current_today, year=year))
+    else:
+        history.extend(current_today)
+
+    return _dedupe_pick_markets(history, year=year)
 
 
 def _retro_game_identity(game: dict):
@@ -1881,11 +1945,7 @@ def get_bets_card_history(tournament_only: bool = Query(default=True), retro: bo
         data = {"picks": _load_retro_card_picks(2026)}
         data["stats"] = compute_stats(data["picks"])
     else:
-        if not os.path.isfile(CARD_LEDGER_PATH):
-            return {"picks": [], "stats": {}}
-        with open(CARD_LEDGER_PATH) as f:
-            data = json.load(f)
-        data["picks"] = _dedupe_picks([_normalize_pick_date(p) for p in data.get("picks", [])])
+        data = {"picks": _load_live_card_history(2026)}
     if tournament_only:
         filtered = []
         for pick in data.get("picks", []):
