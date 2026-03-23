@@ -843,7 +843,7 @@
     }
   ],
   "stats": {
-    "total_picks": 31,
+    "total_picks": 35,
     "settled": 21,
     "wins": 14,
     "losses": 7,
@@ -918,7 +918,7 @@
     "roi_pct": 27.37
   },
   "tournament_stats": {
-    "total_picks": 27,
+    "total_picks": 31,
     "settled": 19,
     "wins": 13,
     "losses": 6,
