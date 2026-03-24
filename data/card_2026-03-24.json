@@ -1,6 +1,6 @@
 {
   "date": "2026-03-24",
-  "fetched_at": "2026-03-24T22:14:47.744297+00:00",
+  "fetched_at": "2026-03-24T22:30:25.295566+00:00",
   "games": [
     {
       "home_team": "Tulsa Golden Hurricane",
@@ -259,10 +259,10 @@
           "bet_type": "spread",
           "bet_team": "Nevada Wolf Pack",
           "bet_spread": 9.5,
-          "bet_odds": -105,
+          "bet_odds": -108,
           "edge": -2.8,
           "stars": "",
-          "kelly_units": 1.81,
+          "kelly_units": 1.69,
           "cover_margin": 2.8,
           "model_margin": 6.7,
           "vegas_spread": -9.5,
