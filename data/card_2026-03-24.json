@@ -1,6 +1,6 @@
 {
   "date": "2026-03-24",
-  "fetched_at": "2026-03-24T22:08:23.322853+00:00",
+  "fetched_at": "2026-03-24T22:14:47.744297+00:00",
   "games": [
     {
       "home_team": "Tulsa Golden Hurricane",
@@ -13,8 +13,8 @@
           "bet_side": "Wichita St Shockers",
           "bet_odds": 167,
           "model_prob": 0.4427,
-          "implied_prob": 0.3629,
-          "edge": 0.0798,
+          "implied_prob": 0.3617,
+          "edge": 0.081,
           "stars": "\u2605",
           "kelly_units": 1.09,
           "model_margin": 1.6,
