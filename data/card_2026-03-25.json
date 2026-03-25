@@ -1,6 +1,6 @@
 {
   "date": "2026-03-25",
-  "fetched_at": "2026-03-25T22:10:00.662060+00:00",
+  "fetched_at": "2026-03-25T22:14:08.533827+00:00",
   "games": [
     {
       "home_team": "Dayton Flyers",
@@ -409,7 +409,7 @@
           "bet_type": "spread",
           "bet_team": "Illinois Fighting Illini",
           "bet_spread": 3.0,
-          "bet_odds": -110,
+          "bet_odds": -108,
           "edge": -0.4,
           "stars": "",
           "kelly_units": 0.0,
