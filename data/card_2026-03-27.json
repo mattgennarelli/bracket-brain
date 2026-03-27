@@ -1,6 +1,6 @@
 {
   "date": "2026-03-27",
-  "fetched_at": "2026-03-27T22:27:21.654699+00:00",
+  "fetched_at": "2026-03-27T22:46:16.387627+00:00",
   "games": [
     {
       "home_team": "Duke Blue Devils",
@@ -236,12 +236,12 @@
         {
           "bet_type": "ml",
           "bet_side": "Tennessee Volunteers",
-          "bet_odds": 151,
+          "bet_odds": 150,
           "model_prob": 0.4721,
-          "implied_prob": 0.3817,
-          "edge": 0.0904,
+          "implied_prob": 0.3845,
+          "edge": 0.0876,
           "stars": "\u2605",
-          "kelly_units": 1.22,
+          "kelly_units": 1.2,
           "model_margin": 0.8,
           "model_total": 135.7,
           "vegas_spread": -3.5,
