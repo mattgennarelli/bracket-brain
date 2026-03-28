@@ -1,6 +1,6 @@
 {
   "date": "2026-03-28",
-  "fetched_at": "2026-03-28T22:45:23.377869+00:00",
+  "fetched_at": "2026-03-28T22:59:33.951524+00:00",
   "games": [
     {
       "home_team": "Arizona Wildcats",
@@ -18,9 +18,9 @@
           "stars": "",
           "kelly_units": 1.16,
           "model_margin": 8.3,
-          "model_total": 148.6,
+          "model_total": 148.8,
           "vegas_spread": -5.5,
-          "vegas_total": 152.5,
+          "vegas_total": 153.0,
           "home_team": "Arizona Wildcats",
           "away_team": "Purdue Boilermakers",
           "commence_time": "2026-03-29T00:49:00Z",
@@ -41,8 +41,8 @@
           "cover_margin": 2.8,
           "model_margin": 8.3,
           "vegas_spread": -5.5,
-          "model_total": 148.6,
-          "vegas_total": 152.5,
+          "model_total": 148.8,
+          "vegas_total": 153.0,
           "home_team": "Arizona Wildcats",
           "away_team": "Purdue Boilermakers",
           "commence_time": "2026-03-29T00:49:00Z",
@@ -56,11 +56,11 @@
           "bet_type": "total",
           "bet_side": "UNDER",
           "bet_odds": -110,
-          "edge": -3.94,
+          "edge": -4.24,
           "stars": "",
-          "kelly_units": 2.44,
-          "model_total": 148.6,
-          "vegas_total": 152.5,
+          "kelly_units": 2.65,
+          "model_total": 148.8,
+          "vegas_total": 153.0,
           "model_margin": 8.3,
           "vegas_spread": -5.5,
           "home_team": "Arizona Wildcats",
@@ -75,7 +75,7 @@
       ],
       "model_prob_home": 0.7642,
       "model_margin": 8.3,
-      "model_total": 148.6
+      "model_total": 148.8
     },
     {
       "home_team": "Michigan Wolverines",
