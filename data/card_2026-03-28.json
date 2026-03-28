@@ -1,11 +1,11 @@
 {
   "date": "2026-03-28",
-  "fetched_at": "2026-03-28T22:05:25.853069+00:00",
+  "fetched_at": "2026-03-28T22:10:16.939619+00:00",
   "games": [
     {
       "home_team": "Illinois Fighting Illini",
       "away_team": "Iowa Hawkeyes",
-      "commence_time": "2026-03-28T22:09:00Z",
+      "commence_time": "2026-03-28T22:11:00Z",
       "data_available": true,
       "picks": [
         {
@@ -13,8 +13,8 @@
           "bet_side": "Illinois Fighting Illini",
           "bet_odds": -355,
           "model_prob": 0.7926,
-          "implied_prob": 0.7448,
-          "edge": 0.0478,
+          "implied_prob": 0.7427,
+          "edge": 0.0499,
           "stars": "",
           "kelly_units": 0.56,
           "model_margin": 9.1,
@@ -23,7 +23,7 @@
           "vegas_total": 138.5,
           "home_team": "Illinois Fighting Illini",
           "away_team": "Iowa Hawkeyes",
-          "commence_time": "2026-03-28T22:09:00Z",
+          "commence_time": "2026-03-28T22:11:00Z",
           "date": "2026-03-28",
           "result": null,
           "actual_score_home": null,
@@ -45,7 +45,7 @@
           "vegas_total": 138.5,
           "home_team": "Illinois Fighting Illini",
           "away_team": "Iowa Hawkeyes",
-          "commence_time": "2026-03-28T22:09:00Z",
+          "commence_time": "2026-03-28T22:11:00Z",
           "date": "2026-03-28",
           "result": null,
           "actual_score_home": null,
@@ -65,7 +65,7 @@
           "vegas_spread": -7.0,
           "home_team": "Illinois Fighting Illini",
           "away_team": "Iowa Hawkeyes",
-          "commence_time": "2026-03-28T22:09:00Z",
+          "commence_time": "2026-03-28T22:11:00Z",
           "date": "2026-03-28",
           "result": null,
           "actual_score_home": null,
