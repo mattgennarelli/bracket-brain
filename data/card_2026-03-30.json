@@ -1,6 +1,6 @@
 {
   "date": "2026-03-30",
-  "fetched_at": "2026-03-30T22:14:32.111889+00:00",
+  "fetched_at": "2026-03-30T22:30:35.114546+00:00",
   "games": [
     {
       "home_team": "Colorado Buffaloes",
@@ -471,10 +471,10 @@
           "bet_type": "spread",
           "bet_team": "Michigan Wolverines",
           "bet_spread": -1.5,
-          "bet_odds": -110,
+          "bet_odds": -109,
           "edge": -1.8,
           "stars": "",
-          "kelly_units": 0.86,
+          "kelly_units": 0.91,
           "cover_margin": 1.8,
           "model_margin": -3.3,
           "vegas_spread": 1.5,
