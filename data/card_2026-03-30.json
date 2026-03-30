@@ -1,6 +1,6 @@
 {
   "date": "2026-03-30",
-  "fetched_at": "2026-03-30T22:30:35.114546+00:00",
+  "fetched_at": "2026-03-30T22:51:41.534123+00:00",
   "games": [
     {
       "home_team": "Colorado Buffaloes",
@@ -252,9 +252,9 @@
           "stars": "\u2605",
           "kelly_units": 2.66,
           "model_margin": 9.3,
-          "model_total": 147.7,
+          "model_total": 147.5,
           "vegas_spread": -6.5,
-          "vegas_total": 149.5,
+          "vegas_total": 149.0,
           "home_team": "Auburn Tigers",
           "away_team": "Illinois St Redbirds",
           "commence_time": "2026-04-03T01:30:00Z",
@@ -275,8 +275,8 @@
           "cover_margin": 2.8,
           "model_margin": 9.3,
           "vegas_spread": -6.5,
-          "model_total": 147.7,
-          "vegas_total": 149.5,
+          "model_total": 147.5,
+          "vegas_total": 149.0,
           "home_team": "Auburn Tigers",
           "away_team": "Illinois St Redbirds",
           "commence_time": "2026-04-03T01:30:00Z",
@@ -290,11 +290,11 @@
           "bet_type": "total",
           "bet_side": "UNDER",
           "bet_odds": -110,
-          "edge": -1.78,
+          "edge": -1.48,
           "stars": "",
-          "kelly_units": 0.85,
-          "model_total": 147.7,
-          "vegas_total": 149.5,
+          "kelly_units": 0.62,
+          "model_total": 147.5,
+          "vegas_total": 149.0,
           "model_margin": 9.3,
           "vegas_spread": -6.5,
           "home_team": "Auburn Tigers",
@@ -309,7 +309,7 @@
       ],
       "model_prob_home": 0.8156,
       "model_margin": 9.3,
-      "model_total": 147.7
+      "model_total": 147.5
     },
     {
       "home_team": "Creighton Bluejays",
