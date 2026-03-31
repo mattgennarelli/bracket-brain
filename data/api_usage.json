@@ -1,19 +1,9 @@
 {
-  "requests_remaining": 131,
-  "requests_used": 813,
-  "last_updated": "2026-03-30T22:51:41.301414+00:00",
+  "requests_remaining": 125,
+  "requests_used": 819,
+  "last_updated": "2026-03-31T14:31:32.404470+00:00",
   "billing_period_start": "2026-03",
   "call_log": [
-    {
-      "ts": "2026-03-23T16:28:04.562875+00:00",
-      "endpoint": "odds/games",
-      "remaining": 437
-    },
-    {
-      "ts": "2026-03-23T16:28:05.167957+00:00",
-      "endpoint": "odds/games",
-      "remaining": 434
-    },
     {
       "ts": "2026-03-23T22:06:50.077725+00:00",
       "endpoint": "odds/games",
@@ -503,6 +493,16 @@
       "ts": "2026-03-30T22:51:41.301414+00:00",
       "endpoint": "odds/games",
       "remaining": 131
+    },
+    {
+      "ts": "2026-03-31T14:31:31.800171+00:00",
+      "endpoint": "odds/games",
+      "remaining": 128
+    },
+    {
+      "ts": "2026-03-31T14:31:32.404470+00:00",
+      "endpoint": "odds/games",
+      "remaining": 125
     }
   ]
 }
