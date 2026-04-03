@@ -1,6 +1,6 @@
 {
   "date": "2026-04-03",
-  "fetched_at": "2026-04-03T22:14:55.433169+00:00",
+  "fetched_at": "2026-04-03T22:32:38.322779+00:00",
   "games": [
     {
       "home_team": "Baylor Bears",
@@ -311,12 +311,12 @@
         {
           "bet_type": "ml",
           "bet_side": "Auburn Tigers",
-          "bet_odds": -225,
+          "bet_odds": -220,
           "model_prob": 0.7671,
-          "implied_prob": 0.6636,
-          "edge": 0.1035,
-          "stars": "\u2605",
-          "kelly_units": 2.43,
+          "implied_prob": 0.6581,
+          "edge": 0.109,
+          "stars": "\u2605\u2605",
+          "kelly_units": 2.55,
           "model_margin": 7.6,
           "model_total": 160.6,
           "vegas_spread": -5.5,
