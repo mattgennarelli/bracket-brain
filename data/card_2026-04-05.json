@@ -1,6 +1,6 @@
 {
   "date": "2026-04-05",
-  "fetched_at": "2026-04-05T22:31:34.379874+00:00",
+  "fetched_at": "2026-04-05T22:51:30.180045+00:00",
   "games": [
     {
       "home_team": "Auburn Tigers",
@@ -34,10 +34,10 @@
           "bet_type": "spread",
           "bet_team": "Auburn Tigers",
           "bet_spread": -5.5,
-          "bet_odds": -110,
+          "bet_odds": -107,
           "edge": 2.1,
           "stars": "",
-          "kelly_units": 1.09,
+          "kelly_units": 1.22,
           "cover_margin": 2.1,
           "model_margin": 7.6,
           "vegas_spread": -5.5,
