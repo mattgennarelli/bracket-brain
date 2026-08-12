@@ -7,73 +7,73 @@
   "bins": [
     {
       "bin": "50-55%",
-      "n_games": 17,
+      "n_games": 30,
       "predicted_midpoint": 0.525,
-      "actual_win_rate": 0.471,
-      "calibration_error": -0.0544
+      "actual_win_rate": 0.667,
+      "calibration_error": 0.1417
     },
     {
       "bin": "55-60%",
-      "n_games": 24,
+      "n_games": 14,
       "predicted_midpoint": 0.575,
-      "actual_win_rate": 0.458,
-      "calibration_error": -0.1167
+      "actual_win_rate": 0.643,
+      "calibration_error": 0.0679
     },
     {
       "bin": "60-65%",
-      "n_games": 21,
+      "n_games": 19,
       "predicted_midpoint": 0.625,
-      "actual_win_rate": 0.667,
-      "calibration_error": 0.0417
+      "actual_win_rate": 0.737,
+      "calibration_error": 0.1118
     },
     {
       "bin": "65-70%",
-      "n_games": 25,
+      "n_games": 17,
       "predicted_midpoint": 0.675,
-      "actual_win_rate": 0.64,
-      "calibration_error": -0.035
+      "actual_win_rate": 0.706,
+      "calibration_error": 0.0309
     },
     {
       "bin": "70-75%",
-      "n_games": 19,
+      "n_games": 24,
       "predicted_midpoint": 0.725,
-      "actual_win_rate": 0.632,
-      "calibration_error": -0.0934
+      "actual_win_rate": 0.583,
+      "calibration_error": -0.1417
     },
     {
       "bin": "75-80%",
-      "n_games": 22,
+      "n_games": 13,
       "predicted_midpoint": 0.775,
-      "actual_win_rate": 0.955,
-      "calibration_error": 0.1795
+      "actual_win_rate": 0.692,
+      "calibration_error": -0.0827
     },
     {
       "bin": "80-85%",
-      "n_games": 11,
+      "n_games": 20,
       "predicted_midpoint": 0.825,
       "actual_win_rate": 1.0,
       "calibration_error": 0.175
     },
     {
       "bin": "85-90%",
-      "n_games": 15,
+      "n_games": 12,
       "predicted_midpoint": 0.875,
       "actual_win_rate": 1.0,
       "calibration_error": 0.125
     },
     {
       "bin": "90-95%",
-      "n_games": 14,
+      "n_games": 16,
       "predicted_midpoint": 0.925,
-      "actual_win_rate": 0.786,
-      "calibration_error": -0.1393
+      "actual_win_rate": 0.812,
+      "calibration_error": -0.1125
     },
     {
       "bin": "95-100%",
-      "n_games": 21,
+      "n_games": 24,
       "predicted_midpoint": 0.975,
-      "actual_win_rate": 0.952,
-      "calibration_error": -0.0226
+      "actual_win_rate": 0.958,
+      "calibration_error": -0.0167
     }
   ]
 }
