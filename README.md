@@ -1,6 +1,26 @@
-# Bracket Brain — March Madness Bracket Picker
+# Bracket Brain — March Madness Prediction Engine
 
-A prediction engine that generates a complete 63-game bracket with picks, projected spreads, confidence ratings, and matchup analysis for every game. Trained on 945 historical tournament games (2010-2025) with calibrated model parameters.
+**Live demo: [bracket-brain.onrender.com](https://bracket-brain.onrender.com)**
+
+A prediction engine that generates a complete 63-game NCAA tournament bracket — picks, projected spreads, win probabilities, and matchup analysis for every game — calibrated against 1,071 historical tournament games (2008–2025).
+
+## Methodology
+
+The model computes a win probability for each matchup from tempo-adjusted efficiency, schedule strength, coaching pedigree, and possession-level factors, then converts the projected margin to a probability via a Gaussian CDF blended with historical seed-performance priors.
+
+Parameters are tuned with **leave-one-year-out cross-validated calibration**: each candidate parameter set is scored by averaging its Brier score across every tournament year held out in turn, and the search (`scipy.optimize.differential_evolution`) directly minimizes that cross-validated score rather than in-sample error. A true sequential walk-forward mode also exists (`scripts/calibrate.py --no-cv`, training strictly on prior years only) but is not the default and is not what produced the deployed model — the codebase's own docs mark it "legacy... may overfit." The config actually served is a separate final fit on all years except the single most recent one.
+
+**Cross-validated Brier score: 0.1646 · Accuracy: 73.9%** (1,071 games, 2008–2025, 2020 excluded — no tournament was played that year)
+
+```bash
+python backtest.py 2017 2019 2021 2023 2024 2025   # score picks against actual results
+python scripts/reliability_diagram.py               # per-probability-bin calibration check
+```
+
+Backtest and reliability output isn't shipped in the repo (it's tens of thousands of lines of per-game data) — regenerate it with the commands above.
+
+### Known limitations
+Cross-validation folds are single tournament years (63 games each), so per-year Brier estimates carry real variance — the aggregate 1,071-game figure is more stable than any individual year's number. The "upset aggressiveness" slider is a user-facing heuristic that shifts which side of a close call gets picked; it doesn't change the underlying win probabilities. A tournament year in progress (like the current one before Selection Sunday) runs on incomplete injury and roster data, so accuracy improves as the season fills in.
 
 ## What It Does
 
@@ -8,6 +28,7 @@ A prediction engine that generates a complete 63-game bracket with picks, projec
 - Picks every game in the bracket (all 63), not just the championship
 - Projects a spread and score for each matchup
 - Rates each pick with a confidence tier: Lock / Strong / Lean / Tossup
+- **Pick provenance labeling** — for any year with completed games, each matchup is marked as an actual historical result or a model projection, with a running scoreboard of the model's own picks against real outcomes, overall and per round
 - **Upset aggressiveness slider** — tune how many upsets the model picks (0% = chalk, 100% = chaos)
 - **Manual pick locking** — click any team to lock your pick, then re-simulate the rest
 - **Claude-powered analysis** — optional LLM-generated matchup insights (with caching)
@@ -74,10 +95,10 @@ Analysis is cached in `data/analysis_cache_YYYY.json` to avoid redundant API cal
 ### Extract historical results
 
 ```bash
-python scripts/extract_results.py    # downloads 2010-2025 results (danvk + Sports-Reference)
+python scripts/extract_results.py    # downloads 2008-2025 results (danvk + Sports-Reference)
 ```
 
-Produces `data/results_all.json` with 945 games including teams, seeds, scores, winners, margins, and upset flags.
+Produces `data/results_all.json` with 1,071 games (17 tournament years, 2020 excluded) including teams, seeds, scores, winners, margins, and upset flags.
 
 ### Calibrate model parameters
 
@@ -85,7 +106,7 @@ Produces `data/results_all.json` with 945 games including teams, seeds, scores, 
 python scripts/calibrate.py
 ```
 
-Optimizes `ModelConfig` parameters against all historical games using Brier score minimization. Saves to `data/calibrated_config.json`.
+Optimizes `ModelConfig` parameters via leave-one-year-out cross-validated Brier score minimization (see Methodology above). Saves to `data/calibrated_config.json`.
 
 ### Backtest
 
@@ -125,20 +146,21 @@ run.py                       # Main entry — generates interactive bracket HTML
 backtest.py                  # Score picks against actual historical results
 scripts/
   extract_results.py         # Extract game results (danvk 2010-2024, SR 2025+)
-  calibrate.py               # Optimize model parameters via Brier score
+  calibrate.py               # Optimize model parameters via cross-validated Brier score
   generate_analysis.py       # Claude-powered matchup analysis with caching
   fetch_torvik.py            # Torvik T-Rank CSV parser
   fetch_conf_tourney.py      # Conference tournament results (champions/finalists)
-  fetch_data.py              # Merge team data sources
+  fetch_data.py               # Merge team data sources
   fetch_brackets.py          # Historical + projected brackets
   merge_bracket_stats.py     # Enrich bracket with team stats
+  reliability_diagram.py     # Per-probability-bin calibration check
   sources/
     sports_reference.py      # SR bracket scraper (brackets + results)
     danvk_brackets.py        # danvk GitHub data fetcher
     bracket_matrix.py        # BracketMatrix projected bracket scraper
 data/
   calibrated_config.json     # Trained model parameters
-  results_all.json           # 945 historical game results (2010-2025)
+  results_all.json           # 1,071 historical game results (2008-2025)
   analysis_cache_YYYY.json   # Cached Claude analyses
   torvik_YYYY.json           # Parsed team stats
   conf_tourney_YYYY.json     # Conference tournament results (optional)
