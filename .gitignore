@@ -24,11 +24,16 @@ data/torvik_*.csv
 # Keep everything needed for the API to serve (Render has no local data)
 !data/bracket_*.json
 !data/results_*.json
-!data/backtest_*.json
 !data/calibrated_config.json
 !data/teams_merged_*.json
 
-# Betting — daily snapshots are local only; ledger is committed
+# Backtest output — regenerate with `python backtest.py <years...>` (README);
+# raw per-game dumps are large and not meant to be shipped in the repo
+data/backtest_*.json
+
+# Betting infra lives in the private bracket-brain-betting repo
+bracket_brain_improvements.md
+.cursor/
 data/bets_????-??-??.json
 data/settle_log_*.json
 

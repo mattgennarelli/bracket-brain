@@ -90,62 +90,9 @@ def _available_bracket_years():
     return sorted(years)
 
 
-def _format_bet_time(iso_str):
-    """Format ISO commence_time to local time e.g. 12:30pm."""
-    try:
-        dt = datetime.fromisoformat(iso_str.replace("Z", "+00:00"))
-        local = dt.astimezone()
-        h = local.hour % 12 or 12
-        suffix = "pm" if local.hour >= 12 else "am"
-        return f"{h}:{local.minute:02d}{suffix}"
-    except Exception:
-        return iso_str[:16] if iso_str else ""
-
-
-def _build_bets_table(best_bets):
-    """Build HTML table of best bets sorted by start time."""
-    if not best_bets:
-        return '''
-    <div class="bets-empty">
-      <div class="icon">📊</div>
-      <h3>No betting picks yet</h3>
-      <p>Run <code>python run.py --best-bets</code> with <code>ODDS_API_KEY</code> set to fetch today's games and model edges.</p>
-      <p><a href="https://the-odds-api.com" target="_blank">Get a free API key</a> (500 req/month)</p>
-    </div>'''
-    rows = []
-    for i, b in enumerate(best_bets, 1):
-        time_str = _format_bet_time(b.get("commence_time", ""))
-        matchup = f"{b.get('away_team', '')} @ {b.get('home_team', '')}"
-        bt = b.get("bet_type", "")
-        if bt == "ml":
-            pick = b.get("bet_side", "")
-            odds = b.get("bet_odds")
-            odds_str = f"{'+' if odds and odds > 0 else ''}{int(odds)}" if odds else "—"
-            edge = f"{b.get('edge', 0)*100:+.1f}%"
-        elif bt == "spread":
-            pick = f"{b.get('bet_team', '')} {b.get('bet_spread', 0):+.1f}"
-            odds = b.get("bet_odds")
-            odds_str = f"{'+' if odds and odds > 0 else ''}{int(odds)}" if odds else "—"
-            edge = f"{b.get('cover_margin', 0):.1f} pts"
-        else:
-            pick = f"{b.get('bet_side', '')} {b.get('vegas_total', 0):.1f}"
-            odds_str = "—"
-            edge = f"{b.get('edge', 0):+.1f} pts"
-        stars = b.get("stars", "")
-        rows.append(
-            f'<tr><td class="bet-time">{time_str}</td><td class="bet-matchup">{matchup}</td>'
-            f'<td class="bet-pick">{pick}</td><td>{odds_str}</td>'
-            f'<td class="bet-edge">{edge}</td><td class="bet-stars">{stars}</td></tr>'
-        )
-    return f'''
-    <table class="bets-table">
-      <thead><tr><th>Time</th><th>Matchup</th><th>Pick</th><th>Odds</th><th>Edge</th><th></th></tr></thead>
-      <tbody>{''.join(rows)}</tbody>
-    </table>'''
-
 
 def generate_html(bracket_result, mc_results, bracket, config, num_sims,
-                  upset_aggression=0.0, quadrant_order=None, year=2026, best_bets=None):
+                  upset_aggression=0.0, quadrant_order=None, year=2026):
     """Generate an interactive bracket HTML page."""
     if quadrant_order is None:
         quadrant_order = REGIONS[:4]
@@ -233,8 +180,6 @@ def generate_html(bracket_result, mc_results, bracket, config, num_sims,
         conf_counts[p["confidence"]] = conf_counts.get(p["confidence"], 0) + 1
 
     quadrant_order_json = json.dumps(quadrant_order)
-    best_bets = best_bets or []
-    best_bets_json = json.dumps(best_bets)
 
     html = f"""<!DOCTYPE html>
 <html lang="en">
@@ -412,25 +357,6 @@ body {{ font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sys
 .tab.active {{ color:var(--primary); border-bottom-color:var(--primary); }}
 .tab-pane {{ display:none; }}
 .tab-pane.active {{ display:block; }}
-.bets-panel {{ max-width:720px; margin:0 auto; padding:24px 20px; }}
-.bets-panel h2 {{ font-size:1.1rem; margin-bottom:16px; }}
-.bets-table {{ width:100%; border-collapse:collapse; font-size:.82rem; }}
-.bets-table th {{ text-align:left; padding:8px 10px; border-bottom:2px solid var(--border); color:var(--muted); font-weight:600; }}
-.bets-table td {{ padding:10px; border-bottom:1px solid var(--border); vertical-align:middle; }}
-.bets-table tr:hover {{ background:var(--surface2); }}
-.bet-time {{ font-variant-numeric:tabular-nums; color:var(--muted); white-space:nowrap; }}
-.bet-matchup {{ font-weight:600; }}
-.bet-pick {{ color:var(--green); font-weight:700; }}
-.bet-edge {{ color:var(--primary); font-weight:600; }}
-.bet-stars {{ color:var(--gold); letter-spacing:1px; }}
-.bets-empty {{ background:var(--surface); border:1px solid var(--border); border-radius:10px;
-  padding:32px 24px; margin:0 auto; max-width:420px; text-align:center; }}
-.bets-empty .icon {{ font-size:2rem; margin-bottom:12px; opacity:.5; }}
-.bets-empty h3 {{ font-size:.95rem; margin:0 0 8px; color:var(--text); }}
-.bets-empty p {{ margin:6px 0; font-size:.85rem; color:var(--muted); line-height:1.5; }}
-.bets-empty code {{ background:var(--surface2); padding:3px 8px; border-radius:4px; font-size:.8rem; border:1px solid var(--border); }}
-.bets-empty a {{ color:var(--primary); text-decoration:none; }}
-.bets-empty a:hover {{ text-decoration:underline; }}
 
 @media (max-width:1400px) {{
   .bracket-wrap {{ min-width:100%; }}
@@ -447,14 +373,13 @@ body {{ font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sys
   <p class="sub">Interactive March Madness Bracket Picker</p>
   <div class="meta">
     <span>{num_sims:,} Monte Carlo sims</span>
-    <span>Calibrated on 945 games</span>
+    <span>Calibrated on 1,071 games</span>
     <span>{timestamp}</span>
   </div>
 </div>
 
 <div class="tabs">
   <div class="tab active" data-tab="bracket" onclick="switchTab('bracket')">Bracket</div>
-  <div class="tab" data-tab="bets" onclick="switchTab('bets')">Top Bets</div>
 </div>
 
 <div class="controls" id="controls">
@@ -492,15 +417,8 @@ body {{ font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sys
   </div>
 </div>
 
-<div class="tab-pane" id="tab-bets">
-  <div class="bets-panel">
-    <h2>Today's Top Betting Picks</h2>
-    {_build_bets_table(best_bets)}
-  </div>
-</div>
-
 <div class="footer">
-  <p>Built by Matt Gennarelli &middot; Calibrated on 945 tournament games (2010-2025) &middot; Data: Bart Torvik T-Rank</p>
+  <p>Built by Matt Gennarelli &middot; Calibrated on 1,071 tournament games (2008-2025) &middot; Data: Bart Torvik T-Rank</p>
 </div>
 
 <div class="analysis-overlay" id="analysis-overlay" onclick="closeAnalysis()"></div>
@@ -1166,8 +1084,6 @@ def main():
                         help="Output HTML file path (default: output/bracket_YYYY.html)")
     parser.add_argument("--upset", type=float, default=0.0,
                         help="Upset aggressiveness 0.0-1.0 (default: 0.0)")
-    parser.add_argument("--best-bets", action="store_true",
-                        help="Fetch today's odds and include Top Bets tab (requires ODDS_API_KEY)")
     parser.add_argument("--all", action="store_true",
                         help="Generate HTML for all available bracket years")
     parser.add_argument("--write-monte-carlo", action="store_true", default=True,
@@ -1293,28 +1209,8 @@ def main():
             json.dump(mc_export, f)
         print(f"  Wrote {mc_path} for API")
 
-    best_bets = []
-    if args.best_bets:
-        sys.path.insert(0, os.path.join(ROOT, "scripts"))
-        from odds_provider import get_api_key
-        api_key = get_api_key()
-        if api_key:
-            try:
-                import importlib.util
-                spec = importlib.util.spec_from_file_location(
-                    "best_bets", os.path.join(ROOT, "scripts", "best_bets.py"))
-                mod = importlib.util.module_from_spec(spec)
-                spec.loader.exec_module(mod)
-                print("Fetching today's odds for Top Bets tab...")
-                best_bets = mod.get_best_bets_json(api_key, year=year)
-                print(f"  Found {len(best_bets)} qualifying bet(s)")
-            except Exception as e:
-                print(f"  Warning: Could not fetch best bets: {e}")
-        else:
-            print("  No odds API key set (ODDS_API_KEY or BETSTACK_API_KEY) — skipping Top Bets tab")
-
     print("\nGenerating HTML...")
-    html = generate_html(bracket_result, mc_results, bracket, config, args.sims, args.upset, quadrant_order, year=year, best_bets=best_bets)
+    html = generate_html(bracket_result, mc_results, bracket, config, args.sims, args.upset, quadrant_order, year=year)
 
     os.makedirs(os.path.dirname(args.output) or "output", exist_ok=True)
     with open(args.output, "w") as f:

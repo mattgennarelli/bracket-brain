@@ -151,10 +151,10 @@ def main():
               f"{[r['bin'] for r in large_errors]}")
         if over_bins:
             print(f"  Overconfident (actual < predicted): {[r['bin'] for r in over_bins]}")
-            print(f"    → Consider: inflate stdev, reduce factor bonuses, raise bet thresholds")
+            print(f"    → Consider: inflate stdev, reduce factor bonuses")
         if under_bins:
             print(f"  Underconfident (actual > predicted): {[r['bin'] for r in under_bins]}")
-            print(f"    → Model is conservative; can bet more aggressively in these ranges")
+            print(f"    → Model is conservative in these probability ranges")
     else:
         print(f"  All bins within 5% calibration error — model is well calibrated!")
 
