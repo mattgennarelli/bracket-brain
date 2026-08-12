@@ -1,0 +1,175 @@
+{
+  "baseline": {
+    "n_games": 1119,
+    "accuracy": 0.7587131367292225,
+    "brier_score": 0.16344254925435658,
+    "log_loss": 0.4956976552758796,
+    "spread_mae": 8.505361930294907,
+    "total_bias": -1.5689008042895436,
+    "total_mae": 13.37354781054513,
+    "round_stats": {
+      "Round of 64": {
+        "correct": 453,
+        "total": 576,
+        "brier": 0.15316989752821175
+      },
+      "Round of 32": {
+        "correct": 221,
+        "total": 288,
+        "brier": 0.1626067879144965
+      },
+      "Sweet 16": {
+        "correct": 88,
+        "total": 136,
+        "brier": 0.18708209404411769
+      },
+      "Elite 8": {
+        "correct": 46,
+        "total": 68,
+        "brier": 0.2043937270588235
+      },
+      "Final Four": {
+        "correct": 27,
+        "total": 34,
+        "brier": 0.15932101499999998
+      },
+      "Championship": {
+        "correct": 14,
+        "total": 17,
+        "brier": 0.18098493999999998
+      }
+    }
+  },
+  "optimized": {
+    "n_games": 1119,
+    "accuracy": 0.7497765862377123,
+    "brier_score": 0.16473010964253795,
+    "log_loss": 0.4986963891907732,
+    "spread_mae": 8.499195710455764,
+    "total_bias": -1.5697050938337809,
+    "total_mae": 13.376675603217159,
+    "round_stats": {
+      "Round of 64": {
+        "correct": 444,
+        "total": 576,
+        "brier": 0.1545517984244792
+      },
+      "Round of 32": {
+        "correct": 218,
+        "total": 288,
+        "brier": 0.16509225558159735
+      },
+      "Sweet 16": {
+        "correct": 93,
+        "total": 136,
+        "brier": 0.18287637757352943
+      },
+      "Elite 8": {
+        "correct": 45,
+        "total": 68,
+        "brier": 0.2066238877941176
+      },
+      "Final Four": {
+        "correct": 26,
+        "total": 34,
+        "brier": 0.16124031852941179
+      },
+      "Championship": {
+        "correct": 13,
+        "total": 17,
+        "brier": 0.1976943905882353
+      }
+    }
+  },
+  "cv_folds": [
+    {
+      "year": 2017,
+      "brier": 0.14940365031746033,
+      "accuracy": 0.7777777777777778
+    },
+    {
+      "year": 2018,
+      "brier": 0.17096250793650797,
+      "accuracy": 0.7301587301587301
+    },
+    {
+      "year": 2019,
+      "brier": 0.1412824387301587,
+      "accuracy": 0.7619047619047619
+    },
+    {
+      "year": 2021,
+      "brier": 0.17794987634920642,
+      "accuracy": 0.746031746031746
+    },
+    {
+      "year": 2022,
+      "brier": 0.1806948923809524,
+      "accuracy": 0.746031746031746
+    },
+    {
+      "year": 2023,
+      "brier": 0.19657046777777767,
+      "accuracy": 0.6984126984126984
+    },
+    {
+      "year": 2024,
+      "brier": 0.17366810746031738,
+      "accuracy": 0.7142857142857143
+    },
+    {
+      "year": 2025,
+      "brier": 0.12449768841269844,
+      "accuracy": 0.8095238095238095
+    },
+    {
+      "year": 2026,
+      "brier": 0.15929013187500005,
+      "accuracy": 0.8125
+    }
+  ],
+  "params": {
+    "base_scoring_stdev": 9.8169,
+    "sos_max_bonus": 3.9081,
+    "experience_max_bonus": 6.4844,
+    "coach_tourney_max_bonus": 1.9378,
+    "pedigree_max_bonus": 0.0,
+    "three_pt_volatility_factor": 0.4409,
+    "tempo_volatility_weight": 0.3521,
+    "star_player_max_bonus": 1.0026,
+    "proximity_max_bonus": 0.1697,
+    "proximity_neutral_distance": 1365.343,
+    "proximity_home_threshold_mi": 104.3988,
+    "proximity_home_bonus": 1.8159,
+    "win_pct_max_bonus": 1.7662,
+    "depth_max_bonus": 0.7876,
+    "em_opp_adjust_max_bonus": 2.3126,
+    "em_runs_margin_max_bonus": 0.4027,
+    "guard_bpr_max_bonus": 0.2464,
+    "creator_count_max_bonus": 1.893,
+    "ft_foul_rate_max_bonus": 0.2681,
+    "upset_tolerance_max_bonus": 5.9541,
+    "seed_weight": 0.0,
+    "possession_edge_max_bonus": 4.0,
+    "ft_clutch_max_bonus": 3.0,
+    "momentum_max_bonus": 1.5,
+    "conf_rating_max_bonus": 0.3,
+    "conf_tourney_max_bonus": 0.5,
+    "em_adj_o_weight": 0.3,
+    "big_bpr_max_bonus": 0.0,
+    "score_scale": 0.942,
+    "score_scale_r64": 0.96,
+    "score_scale_r32": 0.95,
+    "score_scale_s16": 0.935,
+    "score_scale_e8": 0.92,
+    "score_scale_ff": 0.91,
+    "round_stdev_inflation_r64": 1.0,
+    "round_stdev_inflation_r32": 1.03,
+    "round_stdev_inflation_s16": 1.06,
+    "round_stdev_inflation_e8": 1.1,
+    "round_stdev_inflation_ff": 1.12,
+    "late_round_dampening": 0.0,
+    "upset_spread_threshold": 6.0,
+    "close_game_stdev_boost": 0.0
+  }
+}
