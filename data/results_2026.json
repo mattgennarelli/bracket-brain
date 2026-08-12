@@ -840,6 +840,48 @@
       "winner": "Arizona",
       "margin": 15,
       "upset": false
+    },
+    {
+      "round": 4,
+      "round_name": "Final Four",
+      "region": "Final Four",
+      "team_a": "UConn",
+      "seed_a": 2,
+      "score_a": 71,
+      "team_b": "Illinois",
+      "seed_b": 3,
+      "score_b": 62,
+      "winner": "UConn",
+      "margin": 9,
+      "upset": false
+    },
+    {
+      "round": 4,
+      "round_name": "Final Four",
+      "region": "Final Four",
+      "team_a": "Michigan",
+      "seed_a": 1,
+      "score_a": 91,
+      "team_b": "Arizona",
+      "seed_b": 1,
+      "score_b": 73,
+      "winner": "Michigan",
+      "margin": 18,
+      "upset": false
+    },
+    {
+      "round": 2,
+      "round_name": "Championship",
+      "region": "Championship",
+      "team_a": "UConn",
+      "seed_a": 2,
+      "score_a": 63,
+      "team_b": "Michigan",
+      "seed_b": 1,
+      "score_b": 69,
+      "winner": "Michigan",
+      "margin": 6,
+      "upset": false
     }
   ]
 }
