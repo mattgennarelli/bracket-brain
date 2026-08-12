@@ -1660,6 +1660,7 @@ _NAME_ALIASES = {
     "uta": "ut arlington",
     # Odds API / ESPN full-name variants
     "queens university": "queens",
+    "queens nc": "queens",
 }
 
 # Mascots used by Odds API / ESPN that should be stripped for matching.
@@ -2219,11 +2220,21 @@ def _result_matchup_key(team_a, team_b):
     return tuple(sorted((norm_a, norm_b)))
 
 
-def _completed_winner_for_slot(results_lookup, round_of, region, team_a, team_b):
+def _completed_winner_for_slot(results_lookup, round_of, team_a, team_b):
+    """Look up the actual winner of a completed game by (round, team pair).
+
+    Region is deliberately not part of the match key: within a single
+    tournament year, two specific teams can meet at most once (single
+    elimination), so (round, normalized team pair) already uniquely
+    identifies a game. Region labels are not reliably consistent between
+    bracket_YYYY.json (positional slot labels) and results_YYYY.json (real
+    NCAA region names) across years, so requiring an exact region match
+    caused real completed games to go unmatched — see engine.py history.
+    """
     key = _result_matchup_key(team_a.get("team", ""), team_b.get("team", ""))
     if key is None:
         return None
-    bucket = results_lookup.get((round_of, region if round_of in (64, 32, 16, 8) else None, key))
+    bucket = results_lookup.get((round_of, key))
     if not bucket:
         return None
     winner = _normalize_team_for_match(bucket.get("winner", ""))
@@ -2250,8 +2261,7 @@ def build_locked_picks_from_results(bracket, results, quadrant_order=None, ff_ma
         key = _result_matchup_key(game.get("team_a", ""), game.get("team_b", ""))
         if key is None:
             continue
-        region = game.get("region") if round_of in (64, 32, 16, 8) else None
-        results_lookup[(round_of, region, key)] = game
+        results_lookup[(round_of, key)] = game
 
     locked_picks = {}
     region_winners = {}
@@ -2272,7 +2282,7 @@ def build_locked_picks_from_results(bracket, results, quadrant_order=None, ff_ma
                 if not team_a or not team_b:
                     winners.append(None)
                     continue
-                winner = _completed_winner_for_slot(results_lookup, round_of, region, team_a, team_b)
+                winner = _completed_winner_for_slot(results_lookup, round_of, team_a, team_b)
                 if not winner:
                     winners.append(None)
                     continue
@@ -2287,7 +2297,7 @@ def build_locked_picks_from_results(bracket, results, quadrant_order=None, ff_ma
             team_b = teams.get(seed_b)
             if not team_a or not team_b:
                 continue
-            winner = _completed_winner_for_slot(results_lookup, 64, region, team_a, team_b)
+            winner = _completed_winner_for_slot(results_lookup, 64, team_a, team_b)
             if not winner:
                 r64_winners.append(None)
                 continue
@@ -2307,7 +2317,7 @@ def build_locked_picks_from_results(bracket, results, quadrant_order=None, ff_ma
         if not team_a or not team_b:
             ff_winners.append(None)
             continue
-        winner = _completed_winner_for_slot(results_lookup, 4, None, team_a, team_b)
+        winner = _completed_winner_for_slot(results_lookup, 4, team_a, team_b)
         if not winner:
             ff_winners.append(None)
             continue
@@ -2315,7 +2325,7 @@ def build_locked_picks_from_results(bracket, results, quadrant_order=None, ff_ma
         ff_winners.append(team_a if winner == team_a["team"] else team_b)
 
     if len(ff_winners) >= 2 and ff_winners[0] and ff_winners[1]:
-        winner = _completed_winner_for_slot(results_lookup, 2, None, ff_winners[0], ff_winners[1])
+        winner = _completed_winner_for_slot(results_lookup, 2, ff_winners[0], ff_winners[1])
         if winner:
             locked_picks["FF-2-0"] = winner
 
@@ -2428,8 +2438,17 @@ def _compute_upset_alert(seed_a, seed_b, projected_margin, win_prob_a, hist):
 
 
 def _make_pick_dict(game_num, round_of, round_name, region, a, b, result, pick_team,
-                    data_dir=None, year=None, game_id=None):
-    """Build a pick dict from prediction result."""
+                    data_dir=None, year=None, game_id=None, model_pick_team=None, is_locked=False):
+    """Build a pick dict from prediction result.
+
+    model_pick_team: the model's own choice for this game, independent of any
+    lock — always the actual model output, even when `pick_team` is locked to
+    a real historical result. Defaults to `pick_team` when not provided (i.e.
+    the game genuinely wasn't locked, so the model's pick and the recorded
+    pick are the same team).
+    is_locked: True when `pick_team` came from `build_locked_picks_from_results`
+    (a real historical outcome) rather than the model's own prediction.
+    """
     hist = get_seed_matchup_history(a["seed"], b["seed"])
     upset_alert = _compute_upset_alert(
         a["seed"], b["seed"], result["predicted_margin"],
@@ -2531,6 +2550,15 @@ def _make_pick_dict(game_num, round_of, round_name, region, a, b, result, pick_t
         "team_b": b["team"], "seed_b": b["seed"],
         "pick": pick_team["team"],
         "pick_seed": pick_team["seed"],
+        # Provenance: was this game locked to a real historical result, or is
+        # it the model's own projection? "model_pick" is always the model's
+        # independent choice, even when "pick" is locked to the actual winner.
+        "source": "actual_result" if is_locked else "model_projection",
+        "model_pick": (model_pick_team or pick_team)["team"],
+        "is_correct": (
+            (model_pick_team or pick_team)["team"] == pick_team["team"]
+            if is_locked else None
+        ),
         # Win probabilities (both sides, not just the higher)
         "win_prob":   round(max(result["win_prob_a"], result["win_prob_b"]), 4),
         "win_prob_a": round(result["win_prob_a"], 4),
@@ -2635,11 +2663,11 @@ def generate_bracket_picks(bracket, config=DEFAULT_CONFIG, upset_aggression=0.0,
             venue_city = _get_venue_city(venues, region, "Round of 64", seed_a=seed_a, seed_b=seed_b)
             result = predict_game(a, b, game_site=game_site, config=config, round_name="Round of 64")
             locked_team = locked_picks.get(gid)
-            if locked_team in (a["team"], b["team"]):
-                pick_team = a if locked_team == a["team"] else b
-            else:
-                pick_team = _pick_team_for_bracket(result, a, b, upset_aggression)
-            pd = _make_pick_dict(game_num, 64, "Round of 64", region, a, b, result, pick_team, game_id=gid, **_h2h_kw)
+            model_pick_team = _pick_team_for_bracket(result, a, b, upset_aggression)
+            is_locked = locked_team in (a["team"], b["team"])
+            pick_team = (a if locked_team == a["team"] else b) if is_locked else model_pick_team
+            pd = _make_pick_dict(game_num, 64, "Round of 64", region, a, b, result, pick_team, game_id=gid,
+                                  model_pick_team=model_pick_team, is_locked=is_locked, **_h2h_kw)
             pd["venue_city"] = venue_city
             picks.append(pd)
             r64_winners.append(pick_team)
@@ -2661,11 +2689,11 @@ def generate_bracket_picks(bracket, config=DEFAULT_CONFIG, upset_aggression=0.0,
                 venue_city = _get_venue_city(venues, region, round_name, seed_a=sa, seed_b=sb)
                 result = predict_game(a, b, game_site=game_site, config=config, round_name=round_name)
                 locked_team = locked_picks.get(gid)
-                if locked_team in (a["team"], b["team"]):
-                    pick_team = a if locked_team == a["team"] else b
-                else:
-                    pick_team = _pick_team_for_bracket(result, a, b, upset_aggression)
-                pd = _make_pick_dict(game_num, round_of, round_name, region, a, b, result, pick_team, game_id=gid, **_h2h_kw)
+                model_pick_team = _pick_team_for_bracket(result, a, b, upset_aggression)
+                is_locked = locked_team in (a["team"], b["team"])
+                pick_team = (a if locked_team == a["team"] else b) if is_locked else model_pick_team
+                pd = _make_pick_dict(game_num, round_of, round_name, region, a, b, result, pick_team, game_id=gid,
+                                      model_pick_team=model_pick_team, is_locked=is_locked, **_h2h_kw)
                 pd["venue_city"] = venue_city
                 picks.append(pd)
                 winners.append(pick_team)
@@ -2693,11 +2721,11 @@ def generate_bracket_picks(bracket, config=DEFAULT_CONFIG, upset_aggression=0.0,
         f4_city = _get_venue_city(venues, None, "Final Four")
         result = predict_game(a, b, game_site=f4_site, config=config, round_name="Final Four")
         locked_team = locked_picks.get(gid)
-        if locked_team in (a["team"], b["team"]):
-            pick_team = a if locked_team == a["team"] else b
-        else:
-            pick_team = _pick_team_for_bracket(result, a, b, upset_aggression)
-        pd = _make_pick_dict(game_num, 4, "Final Four", None, a, b, result, pick_team, game_id=gid)
+        model_pick_team = _pick_team_for_bracket(result, a, b, upset_aggression)
+        is_locked = locked_team in (a["team"], b["team"])
+        pick_team = (a if locked_team == a["team"] else b) if is_locked else model_pick_team
+        pd = _make_pick_dict(game_num, 4, "Final Four", None, a, b, result, pick_team, game_id=gid,
+                              model_pick_team=model_pick_team, is_locked=is_locked)
         pd["venue_city"] = f4_city
         picks.append(pd)
         ff_winners.append(pick_team)
@@ -2712,11 +2740,11 @@ def generate_bracket_picks(bracket, config=DEFAULT_CONFIG, upset_aggression=0.0,
         champ_city = _get_venue_city(venues, None, "Championship")
         result = predict_game(a, b, game_site=champ_site, config=config, round_name="Championship")
         locked_team = locked_picks.get(gid)
-        if locked_team in (a["team"], b["team"]):
-            pick_team = a if locked_team == a["team"] else b
-        else:
-            pick_team = _pick_team_for_bracket(result, a, b, upset_aggression)
-        pd = _make_pick_dict(game_num, 2, "Championship", None, a, b, result, pick_team, game_id=gid, **_h2h_kw)
+        model_pick_team = _pick_team_for_bracket(result, a, b, upset_aggression)
+        is_locked = locked_team in (a["team"], b["team"])
+        pick_team = (a if locked_team == a["team"] else b) if is_locked else model_pick_team
+        pd = _make_pick_dict(game_num, 2, "Championship", None, a, b, result, pick_team, game_id=gid,
+                              model_pick_team=model_pick_team, is_locked=is_locked, **_h2h_kw)
         pd["venue_city"] = champ_city
         picks.append(pd)
         champion = pick_team["team"]

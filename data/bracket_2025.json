@@ -586,13 +586,18 @@
   },
   "final_four_matchups": [
     [
-      0,
-      1
+      1,
+      2
     ],
     [
-      2,
+      0,
       3
     ]
   ],
-  "quadrant_order": ["South", "East", "Midwest", "West"]
+  "quadrant_order": [
+    "South",
+    "East",
+    "Midwest",
+    "West"
+  ]
 }
