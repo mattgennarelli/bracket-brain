@@ -1052,31 +1052,29 @@ def get_monte_carlo(
     if cached is not None:
         return cached
 
-    # Use pre-computed file when available (sims=10000) for fast load; fallback to live
+    # Use pre-computed file when available (sims=10000) for fast load; fallback to live.
+    # prediction_inputs_hash is required for a precomputed file to count as fresh -- a
+    # missing or mismatched hash is treated as stale and falls through to a live
+    # recompute. (Previously fell back to comparing file mtimes, which is meaningless
+    # after a git checkout: every file gets stamped with the deploy time, so a
+    # months-old precomputed file looked "fresh" forever on Render.)
     precomputed_path = os.path.join(DATA_DIR, f"monte_carlo_{year}.json")
     if sims == 10000 and os.path.isfile(precomputed_path):
         with open(precomputed_path) as f:
             precomputed = json.load(f)
-        precomputed_hash = str(precomputed.get("prediction_inputs_hash") or "")
-        precomputed_fresh = (
-            precomputed_hash == inputs_hash
-            if precomputed_hash
-            else int(os.path.getmtime(precomputed_path)) >= int(inputs_mtime or "0")
-        )
-        if precomputed_fresh:
+        precomputed_hash = precomputed.get("prediction_inputs_hash")
+        if precomputed_hash and precomputed_hash == inputs_hash:
             result = _add_final_four_by_region(precomputed, year)
             _cache_set(cache_key, result)
             return result
 
     bracket, ff_matchups, quadrant_order = _load_bracket_for_year(year)
     config = _load_config(num_sims=sims)
-    locked_picks = _completed_tournament_locked_picks(year, bracket, quadrant_order, ff_matchups)
     with contextlib.redirect_stdout(io.StringIO()):
         mc = run_monte_carlo(
             bracket,
             config=config,
             year=year,
-            locked_picks=locked_picks,
             quadrant_order=quadrant_order,
             ff_matchups=ff_matchups,
         )

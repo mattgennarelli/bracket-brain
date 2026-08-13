@@ -227,22 +227,35 @@ def test_build_locked_picks_from_results_maps_completed_games():
     assert locked["South-32-0"] == "Seed1"
 
 
-def test_simulate_region_respects_locked_round_of_64_winner(monkeypatch):
+def test_simulate_region_always_uses_model_simulation(monkeypatch):
+    """simulate_region (the Monte Carlo path) must never be conditioned on real
+    results -- see engine.py history around 'Condition simulations on completed
+    results' (fc82525) and its later removal. Round of 64 winners should come
+    straight from simulate_game, never overridden by an actual-result lock."""
     south = {
         seed: _base_team(team=f"Seed{seed}", seed=seed, adj_o=110.0 - seed, adj_d=100.0 + seed)
         for seed in range(1, 17)
     }
 
-    monkeypatch.setattr("engine.simulate_game", lambda a, b, game_site=None, config=None: a)
+    monkeypatch.setattr("engine.simulate_game", lambda a, b, game_site=None, config=None: b)
 
     _, results = simulate_region(
         south,
         config=ModelConfig(num_sims=1),
         region_name="South",
-        locked_picks={"South-64-0": "Seed16"},
     )
 
+    # simulate_game is stubbed to always return the second team ("b") -- if
+    # this test ever sees the first team win, something is short-circuiting
+    # simulate_game with an outside "actual result".
     assert results["Round of 64"][0]["winner"] == "Seed16"
+
+
+def test_simulate_region_rejects_locked_picks_kwarg():
+    """Guard against locked_picks being silently reintroduced to the Monte
+    Carlo path (it belongs only to generate_bracket_picks)."""
+    with pytest.raises(TypeError):
+        simulate_region({}, locked_picks={"South-64-0": "Seed16"})
 
 
 def test_final_four_analysis_infers_venue_without_region(monkeypatch):

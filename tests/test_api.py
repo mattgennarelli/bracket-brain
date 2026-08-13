@@ -278,7 +278,13 @@ def test_monte_carlo_recomputes_when_precomputed_hash_is_stale(tmp_path, monkeyp
     assert d["prediction_inputs_hash"] == "freshhash"
 
 
-def test_monte_carlo_uses_completed_tournament_locked_picks(tmp_path, monkeypatch):
+def test_monte_carlo_never_passes_locked_picks(tmp_path, monkeypatch):
+    """The Monte Carlo / Championship & F4 Odds path must always be the
+    model's own clean simulation -- never conditioned on real results (that
+    belongs only to generate_bracket_picks / the bracket-picks display).
+    fake_run_monte_carlo has no locked_picks parameter, so if the route ever
+    tries to pass one again, this call raises TypeError and the request
+    fails instead of silently succeeding."""
     monkeypatch.setattr(api, "DATA_DIR", str(tmp_path))
     monkeypatch.setattr(api, "_cache", collections.OrderedDict())
     monkeypatch.setattr(api, "_prediction_inputs_hash", lambda year: "freshhash")
@@ -286,12 +292,8 @@ def test_monte_carlo_uses_completed_tournament_locked_picks(tmp_path, monkeypatc
     monkeypatch.setattr(api, "_load_bracket_for_year", lambda year: ({}, [], ["East", "West", "South", "Midwest"]))
     monkeypatch.setattr(api, "_load_config", lambda num_sims=10000: object())
     monkeypatch.setattr(api, "_add_final_four_by_region", lambda result, year: result)
-    monkeypatch.setattr(api, "_completed_tournament_locked_picks", lambda year, bracket, quadrant_order, ff_matchups: {"East-64-0": "Alpha"})
 
-    seen = {}
-
-    def fake_run_monte_carlo(bracket, config=None, year=None, locked_picks=None, quadrant_order=None, ff_matchups=None):
-        seen["locked_picks"] = locked_picks
+    def fake_run_monte_carlo(bracket, config=None, year=None, quadrant_order=None, ff_matchups=None):
         return {
             "champion_probs": {"New Team": 1.0},
             "final_four_probs": {"New Team": 1.0},
@@ -304,7 +306,7 @@ def test_monte_carlo_uses_completed_tournament_locked_picks(tmp_path, monkeypatc
 
     r = client.get("/bracket/2026/monte-carlo?sims=10000")
     assert r.status_code == 200
-    assert seen["locked_picks"] == {"East-64-0": "Alpha"}
+    assert r.json()["champion_probs"] == {"New Team": 1.0}
 
 
 def test_monte_carlo_sims_limit():

@@ -1183,7 +1183,6 @@ def main():
         bracket,
         config=config,
         year=year,
-        locked_picks=locked_picks,
         quadrant_order=quadrant_order,
         ff_matchups=ff_matchups,
     )
