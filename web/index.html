@@ -730,27 +730,12 @@ function _analysisScoreHtml(st, ctx) {
   if (!ctx) return '';
   const projectedScoreA = ctx.projectedScoreA;
   const projectedScoreB = ctx.projectedScoreB;
-  const actualScoreA = st?.scoreA != null ? Number(st.scoreA) : null;
-  const actualScoreB = st?.scoreB != null ? Number(st.scoreB) : null;
   const spreadLabel = ctx.spreadLabel || '';
   const total = ctx.total;
 
-  if (st?.completed && actualScoreA != null && actualScoreB != null) {
-    return `<div class="ap-score-line">
-      <strong>${actualScoreA.toFixed(0)}</strong><span>–</span><strong>${actualScoreB.toFixed(0)}</strong>
-      <span class="spread-chip">Final</span>
-      ${projectedScoreA != null && projectedScoreB != null ? `<span>Model ${projectedScoreA.toFixed(0)}–${projectedScoreB.toFixed(0)}</span>` : ''}
-     </div>`;
-  }
-
-  if (st?.live && actualScoreA != null && actualScoreB != null) {
-    return `<div class="ap-score-line">
-      <strong>${actualScoreA.toFixed(0)}</strong><span>–</span><strong>${actualScoreB.toFixed(0)}</strong>
-      <span class="spread-chip">${escapeHtml(st.statusLabel || 'Live')}</span>
-      ${projectedScoreA != null && projectedScoreB != null ? `<span>Model ${projectedScoreA.toFixed(0)}–${projectedScoreB.toFixed(0)}</span>` : ''}
-     </div>`;
-  }
-
+  // No real-life score here -- see the desktop renderBracket() note. This
+  // panel always shows the model's own projected score for whichever two
+  // teams the simulator has advanced, never a real result.
   if (projectedScoreA != null && projectedScoreB != null) {
     return `<div class="ap-score-line">
       <strong>${projectedScoreA.toFixed(0)}</strong><span>–</span><strong>${projectedScoreB.toFixed(0)}</strong>
@@ -1394,11 +1379,12 @@ function renderBracket() {
           slot.dataset.team = t.name; slot.dataset.seed = t.seed || '';
           slot.querySelector('.sd').textContent = t.seed || '';
           slot.querySelector('.tm').textContent = t.name;
-          slot.querySelector('.sc').textContent = (st.live || st.completed) && st.scoreA != null && idx === 0
-            ? Math.round(st.scoreA)
-            : (st.live || st.completed) && st.scoreB != null && idx === 1
-              ? Math.round(st.scoreB)
-              : '';
+          // No real-life score here: this is the simulator, the two teams
+          // shown often never actually played each other (the model/user's
+          // own pick advances, not the real winner), so a real score would
+          // contradict the highlighted pick. Real scores only belong in the
+          // Actual Results tab.
+          slot.querySelector('.sc').textContent = '';
           slot.classList.remove('empty');
           slot.classList.toggle('picked', st.pick === t.name);
           slot.classList.toggle('locked', st.isLocked && st.pick === t.name);
@@ -1424,10 +1410,13 @@ function renderBracket() {
       });
       if (infoBtn) infoBtn.style.display = (st.teamA && st.teamB) ? 'flex' : 'none';
       if (statusEl) {
-        if (st.statusLabel) {
-          statusEl.textContent = st.statusLabel;
-          statusEl.className = 'game-status';
-        } else if (st.gradedWinner) {
+        // "Final"/"LIVE" real-game status used to take priority here and
+        // silently suppressed the ✓/✗ grading badge on every game with a
+        // real score (e.g. every Round of 64 game, always a real matchup).
+        // The simulator shows real-result info only as the grading badge --
+        // never a live/final status tied to the two teams currently shown,
+        // which often didn't actually play each other.
+        if (st.gradedWinner) {
           // st.pick is always the model's own choice here (the simulator never
           // lets a real result override advancement) -- this badge only grades
           // that choice against the real outcome, never changes what's shown
@@ -1713,8 +1702,6 @@ async function showAnalysis(gameId) {
   const spread = Math.abs(st.margin || 0).toFixed(1);
   const projectedScoreA = flipped ? orig?.predicted_score_b : orig?.predicted_score_a;
   const projectedScoreB = flipped ? orig?.predicted_score_a : orig?.predicted_score_b;
-  const actualScoreA = st.scoreA != null ? Number(st.scoreA) : null;
-  const actualScoreB = st.scoreB != null ? Number(st.scoreB) : null;
   const total  = orig?.predicted_total;
   const insight = orig?.insight || '';
   const keyFactors = orig?.key_factors || [];
@@ -2678,8 +2665,9 @@ function renderMobileBracket() {
     const pA = st.probA != null ? st.probA : 0.5;
     const probAStr = (pA * 100).toFixed(0) + '%';
     const probBStr = ((1 - pA) * 100).toFixed(0) + '%';
-    const metaAStr = (st.live || st.completed) && st.scoreA != null ? `${Math.round(st.scoreA)} · ${probAStr}` : probAStr;
-    const metaBStr = (st.live || st.completed) && st.scoreB != null ? `${Math.round(st.scoreB)} · ${probBStr}` : probBStr;
+    // No real-life score here -- see the desktop renderBracket() note.
+    const metaAStr = probAStr;
+    const metaBStr = probBStr;
     const seedDiff = Math.abs((st.seedA || 0) - (st.seedB || 0));
     const isUpsetA = st.pick === st.teamA && pA < 0.5 && seedDiff >= 3;
     const isUpsetB = st.pick === st.teamB && pA >= 0.5 && seedDiff >= 3;
