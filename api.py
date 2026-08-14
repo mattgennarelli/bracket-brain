@@ -607,7 +607,7 @@ def debug_picks_sample(year: int = 2026, upset_aggression: float = 0.0):
     """Return first 8 R64 picks for direct local vs Render comparison."""
     bracket, ff_matchups, quadrant_order = _load_bracket_for_year(year)
     config = _load_config()
-    locked_picks = _completed_tournament_locked_picks(year, bracket, quadrant_order, ff_matchups)
+    grading_locks = _completed_tournament_locked_picks(year, bracket, quadrant_order, ff_matchups)
     with contextlib.redirect_stdout(io.StringIO()):
         result = generate_bracket_picks(
             bracket,
@@ -617,7 +617,8 @@ def debug_picks_sample(year: int = 2026, upset_aggression: float = 0.0):
             ff_matchups=ff_matchups,
             data_dir=DATA_DIR,
             year=year,
-            locked_picks=locked_picks,
+            locked_picks=None,
+            grading_locks=grading_locks,
         )
     picks = [p for p in result["picks"] if p.get("round") == 64][:8]
     return {
@@ -676,12 +677,23 @@ def predict(req: PredictRequest):
 def get_bracket(
     year: int,
     upset_aggression: float = Query(default=0.0, ge=0.0, le=1.0),
+    live: bool = Query(default=False),
 ):
-    # Default (chalk, upset_aggression=0.0) is the page-load path: serve the
-    # precomputed artifact directly, no per-request generate_bracket_picks() call
-    # (63 predict_game evaluations) at all. Any other value means the user moved
-    # the chaos slider -- a deliberate live action, stays live-computed below.
-    if upset_aggression == 0.0:
+    """The simulator view: the model's own bracket. `pick` always advances the
+    model's choice, regardless of real results -- see generate_bracket_picks'
+    locked_picks=None below. actual_winner/is_correct are a grading overlay
+    only, never influence which team advances. For the real historical
+    bracket instead, see GET /bracket/{year}/actual.
+
+    `live=true` is sent by the frontend for every interactive action (chaos
+    slider, Simulate) so those always bypass the precomputed/cached artifact
+    -- only the automatic initial page load (which omits `live`) takes the
+    fast path.
+    """
+    # Page-load path only: default aggression, not an explicit interactive
+    # request. Serves the precomputed artifact directly, no per-request
+    # generate_bracket_picks() call (63 predict_game evaluations) at all.
+    if upset_aggression == 0.0 and not live:
         cached = _static_artifact_cache.get(f"bracket_{year}")
         if cached is not None:
             return _static_json_response(cached)
@@ -699,7 +711,10 @@ def get_bracket(
 
     bracket, ff_matchups, quadrant_order = _load_bracket_for_year(year)
     config = _load_config()
-    locked_picks = _completed_tournament_locked_picks(year, bracket, quadrant_order, ff_matchups)
+    # grading_locks (real results) is cheap -- no predict_game calls, just a
+    # walk over already-loaded results/bracket data -- so it's fine to
+    # recompute per request rather than cache. It never drives advancement.
+    grading_locks = _completed_tournament_locked_picks(year, bracket, quadrant_order, ff_matchups)
     with contextlib.redirect_stdout(io.StringIO()):
         picks = generate_bracket_picks(
             bracket,
@@ -709,7 +724,8 @@ def get_bracket(
             ff_matchups=ff_matchups,
             data_dir=DATA_DIR,
             year=year,
-            locked_picks=locked_picks,
+            locked_picks=None,
+            grading_locks=grading_locks,
         )
     ff_pairs = [list(pair) for pair in resolve_ff_pairs(quadrant_order, ff_matchups)]
     result = {
@@ -723,14 +739,34 @@ def get_bracket(
     return result
 
 
+@app.get("/bracket/{year}/actual")
+def get_bracket_actual(year: int):
+    """The historical view: what actually happened. `pick` is the real winner
+    of every completed game (falling back to the model's own projection for
+    any game with no known result yet). is_correct grades the model's own
+    independent pick against that real outcome. Static precomputed artifact,
+    doesn't depend on upset_aggression -- real results don't change."""
+    cached = _static_artifact_cache.get(f"bracket_actual_{year}")
+    if cached is not None:
+        return _static_json_response(cached)
+    precomputed_path = os.path.join(DATA_DIR, f"bracket_actual_{year}.json")
+    if os.path.isfile(precomputed_path):
+        with open(precomputed_path) as f:
+            precomputed = json.load(f)
+        _static_artifact_cache[f"bracket_actual_{year}"] = precomputed
+        return _static_json_response(precomputed)
+    raise HTTPException(status_code=404, detail=f"No historical results artifact for {year}")
+
+
 @app.post("/bracket/{year}/simulate")
 def simulate_bracket(year: int, req: SimulateRequest):
-    """Generate bracket picks respecting locked picks. Use when user has manually
-    locked some picks and wants to re-simulate the rest."""
+    """Generate bracket picks respecting the user's own manually-locked picks
+    (click a team to lock it, re-simulate the rest). Real historical results
+    are NOT merged into advancement here -- only the user's own locks are;
+    actual results still show as a grading overlay via grading_locks."""
     bracket, ff_matchups, quadrant_order = _load_bracket_for_year(year)
     config = _load_config()
-    completed_locked = _completed_tournament_locked_picks(year, bracket, quadrant_order, ff_matchups)
-    locked_picks = {**req.locked_picks, **completed_locked}
+    grading_locks = _completed_tournament_locked_picks(year, bracket, quadrant_order, ff_matchups)
     with contextlib.redirect_stdout(io.StringIO()):
         bracket_result = generate_bracket_picks(
             bracket,
@@ -740,7 +776,8 @@ def simulate_bracket(year: int, req: SimulateRequest):
             ff_matchups=ff_matchups,
             data_dir=DATA_DIR,
             year=year,
-            locked_picks=locked_picks,
+            locked_picks=req.locked_picks,
+            grading_locks=grading_locks,
         )
     ff_pairs = [list(pair) for pair in resolve_ff_pairs(quadrant_order, ff_matchups)]
     return {

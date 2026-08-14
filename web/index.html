@@ -78,6 +78,28 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sa
 .prov-chip strong { color:var(--text); font-weight:600; }
 .prov-note { margin-top:8px; font-size:.72rem; color:var(--muted); }
 
+.actual-note { max-width:900px; margin:12px auto 0; padding:10px 16px; background:var(--surface);
+  border:1px solid var(--gold); border-radius:10px; font-size:.8rem; color:var(--text); }
+.actual-note strong { color:var(--gold); }
+.actual-bracket-scroll { overflow-x:auto; padding:16px 20px 24px; }
+.actual-bracket-row { display:flex; gap:28px; align-items:flex-start; min-width:max-content; }
+.actual-region { min-width:200px; }
+.actual-region-label { font-weight:700; font-size:.78rem; color:var(--primary); text-align:center;
+  margin-bottom:8px; text-transform:uppercase; letter-spacing:.03em; }
+.actual-rounds { display:flex; gap:16px; }
+.actual-round { display:flex; flex-direction:column; gap:10px; min-width:150px; }
+.actual-round-header { font-size:.68rem; color:var(--muted); text-align:center; font-weight:600; }
+.actual-game { background:var(--surface); border:1px solid var(--border); border-radius:6px;
+  padding:3px; display:flex; flex-direction:column; gap:1px; }
+.actual-game.empty { min-height:38px; background:var(--surface2); border-style:dashed; }
+.actual-team { display:flex; align-items:center; gap:4px; padding:3px 6px; border-radius:4px;
+  font-size:.72rem; color:var(--muted); }
+.actual-team.picked { background:var(--primary-bg); color:var(--text); font-weight:700; }
+.actual-team .tm { overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+.actual-ff { min-width:180px; display:flex; flex-direction:column; gap:10px; align-self:center; }
+.actual-champ { margin-top:8px; text-align:center; font-weight:800; font-size:.9rem;
+  color:var(--gold); }
+
 .bracket-wrap { display:flex; align-items:center; justify-content:center; padding:16px 8px; min-width:1400px; }
 .bracket-grid { display:grid; grid-template-columns:minmax(0,1fr) auto minmax(0,1fr); grid-template-rows:auto auto; align-items:center; width:100%; }
 .bracket-cell--tl { grid-column:1; grid-row:1; }
@@ -521,6 +543,7 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sa
 <nav class="tab-nav" role="tablist" aria-label="Main navigation">
   <button class="tab-btn active" role="tab" aria-selected="true"  aria-controls="tab-bracket" onclick="switchTab('bracket')">Bracket</button>
   <button class="tab-btn"        role="tab" aria-selected="false" aria-controls="tab-odds"    onclick="switchTab('odds')">Championship &amp; F4 Odds</button>
+  <button class="tab-btn"        role="tab" aria-selected="false" aria-controls="tab-actual"  onclick="switchTab('actual')">Actual Results</button>
 </nav>
 
 <div class="tab-panel active" id="tab-bracket">
@@ -530,6 +553,11 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sa
     <div class="mobile-round-tabs" id="mobile-round-tabs"></div>
     <div class="mobile-bracket-body" id="mobile-bracket-body"></div>
   </div>
+</div>
+
+<div class="tab-panel" id="tab-actual">
+  <div class="actual-note"><strong>Historical view.</strong> This shows what actually happened in the <span id="actual-year-label"></span> tournament, for reference. It's read-only and never affects the Bracket tab, which is always your own simulated bracket.</div>
+  <div class="actual-bracket-scroll" id="actual-bracket-wrap"><div style="padding:24px;color:var(--muted)">Loading actual results...</div></div>
 </div>
 
 <div class="tab-panel" id="tab-odds">
@@ -577,6 +605,7 @@ function escapeHtml(str) {
 // State
 // ---------------------------------------------------------------------------
 let PICKS = [];
+let PICKS_BY_GAME_ID = {}; // {game_id: pick} -- direct lookup, no name-matching
 let BRACKET = {};        // {region: [{team, seed}, ...]}
 let TEAM_STATS = {};     // {teamName: stats}
 let QUADRANT = ['South', 'East', 'West', 'Midwest'];
@@ -901,7 +930,7 @@ async function fetchBracket() {
     } else {
       lockedPicks = {};
       simPicks = {};
-      data = await apiFetch(`/bracket/${currentYear}?upset_aggression=${upsetAggression.toFixed(2)}`);
+      data = await apiFetch(`/bracket/${currentYear}?upset_aggression=${upsetAggression.toFixed(2)}&live=true`);
       ingestPicks(data.picks.picks, data.picks.champion, data.ff_pairs, data.quadrant_order);
       applyPicksFromServer();
     }
@@ -949,6 +978,10 @@ async function fetchOdds(year) {
 // ---------------------------------------------------------------------------
 function ingestPicks(picks, champion, ffPairs, quadrantOrder) {
   PICKS = picks || [];
+  PICKS_BY_GAME_ID = {};
+  for (const p of PICKS) {
+    if (p.game_id) PICKS_BY_GAME_ID[p.game_id] = p;
+  }
   BRACKET = {};
   TEAM_STATS = {};
   // quadrantOrder = [TL, TR, BR, BL] = [#1, #2, #3, #4] overall seed regions
@@ -983,7 +1016,7 @@ function ingestPicks(picks, champion, ffPairs, quadrantOrder) {
 function renderProvenanceSummary() {
   const el = document.getElementById('provenance-summary');
   if (!el) return;
-  const graded = PICKS.filter(p => p.source === 'actual_result' && p.is_correct !== null);
+  const graded = PICKS.filter(p => p.actual_winner != null && p.is_correct !== null);
   if (!graded.length) { el.style.display = 'none'; el.innerHTML = ''; return; }
 
   const roundOrder = ['Round of 64', 'Round of 32', 'Sweet 16', 'Elite 8', 'Final Four', 'Championship'];
@@ -996,7 +1029,7 @@ function renderProvenanceSummary() {
   }
   const overallCorrect = graded.filter(p => p.is_correct).length;
   const overallPct = ((overallCorrect / graded.length) * 100).toFixed(1);
-  const projectedCount = PICKS.length - graded.length;
+  const ungradedCount = PICKS.length - graded.length;
 
   const roundChips = roundOrder.filter(r => byRound[r]).map(r => {
     const { correct, total } = byRound[r];
@@ -1012,9 +1045,7 @@ function renderProvenanceSummary() {
         <strong>${overallCorrect}/${graded.length} (${overallPct}%)</strong>
       </div>
       <div class="prov-chips">${roundChips}</div>
-      ${projectedCount > 0
-        ? `<div class="prov-note">${projectedCount} game${projectedCount === 1 ? '' : 's'} on this bracket ${projectedCount === 1 ? 'is a' : 'are'} model projection${projectedCount === 1 ? '' : 's'} (no result recorded yet), marked unlabeled on the bracket below.</div>`
-        : `<div class="prov-note">Every game below reflects the actual tournament outcome; ✓/✗ marks show whether the model's own pick matched it.</div>`}
+      <div class="prov-note">This bracket shows the model's own picks -- ✓/✗ marks grade each pick against the real result where one exists (see the Actual Results tab)${ungradedCount > 0 ? `; ${ungradedCount} game${ungradedCount === 1 ? '' : 's'} have no real result to grade against yet or the model's own bracket has diverged from history by that round` : ''}.</div>
     </div>`;
 }
 
@@ -1213,8 +1244,7 @@ function recomputeBracket() {
       const tA = teams[gi * 2], tB = teams[gi * 2 + 1];
       if (!tA || !tB) continue;
       const gid = `${region}-64-${gi}`;
-      const p = PICKS.find(pp => pp.region === region && pp.round === 64 &&
-        (pp.team_a === tA.team || pp.team_b === tA.team));
+      const p = PICKS_BY_GAME_ID[gid];
       const suggestedPick = lockedPicks[gid] || simPicks[gid] || null;
       const outcome = _resolveGameOutcome(gid, tA.team, tB.team, suggestedPick);
       bracketState[gid] = {
@@ -1234,7 +1264,7 @@ function recomputeBracket() {
         // Server-side provenance (distinct from the user-manual-lock
         // fields above): was this pick locked to a real historical
         // result, and what did the model itself say independent of that?
-        pickSource: p?.source || null,
+        gradedWinner: p?.actual_winner || null,
         pickIsCorrect: p?.is_correct ?? null,
         trueModelPick: p?.model_pick || null,
       };
@@ -1262,8 +1292,7 @@ function recomputeBracket() {
         const teamA = stA?.pick || null, teamB = stB?.pick || null;
         const seedA = teamA ? (stA?.pick === stA?.teamA ? stA?.seedA : stA?.seedB) : null;
         const seedB = teamB ? (stB?.pick === stB?.teamA ? stB?.seedA : stB?.seedB) : null;
-        const p = PICKS.find(pp => pp.region === region && pp.round === roundOf &&
-          (pp.team_a === teamA || pp.team_b === teamA));
+        const p = PICKS_BY_GAME_ID[gid];
         const probA = p && teamA ? _probForTeam(p, teamA)
           : (seedA && seedB ? seedWinProb(seedA, seedB) : 0.5);
         const suggestedPick = lockedPicks[gid] || simPicks[gid] || null;
@@ -1280,7 +1309,7 @@ function recomputeBracket() {
           actualWinner: outcome.actualWinner,
           scoreA: outcome.scoreA,
           scoreB: outcome.scoreB,
-          pickSource: p?.source || null,
+          gradedWinner: p?.actual_winner || null,
           pickIsCorrect: p?.is_correct ?? null,
           trueModelPick: p?.model_pick || null,
         };
@@ -1296,8 +1325,7 @@ function recomputeBracket() {
           const teamA = stA?.pick || null, teamB = stB?.pick || null;
           const seedA = teamA ? (stA?.pick === stA?.teamA ? stA?.seedA : stA?.seedB) : null;
           const seedB = teamB ? (stB?.pick === stB?.teamA ? stB?.seedA : stB?.seedB) : null;
-          const p = PICKS.find(pp => pp.round === 4 &&
-            (pp.team_a === teamA || pp.team_b === teamA));
+          const p = PICKS_BY_GAME_ID[gid];
           const probA = p && teamA ? _probForTeam(p, teamA)
             : (seedA && seedB ? seedWinProb(seedA, seedB) : 0.5);
           const suggestedPick = lockedPicks[gid] || simPicks[gid] || null;
@@ -1314,7 +1342,7 @@ function recomputeBracket() {
             actualWinner: outcome.actualWinner,
             scoreA: outcome.scoreA,
             scoreB: outcome.scoreB,
-            pickSource: p?.source || null,
+            gradedWinner: p?.actual_winner || null,
             pickIsCorrect: p?.is_correct ?? null,
             trueModelPick: p?.model_pick || null,
           };
@@ -1324,8 +1352,7 @@ function recomputeBracket() {
         const teamA = stA?.pick || null, teamB = stB?.pick || null;
         const seedA = teamA ? (stA?.pick === stA?.teamA ? stA?.seedA : stA?.seedB) : null;
         const seedB = teamB ? (stB?.pick === stB?.teamA ? stB?.seedA : stB?.seedB) : null;
-        const p = PICKS.find(pp => pp.round === 2 &&
-          (pp.team_a === teamA || pp.team_b === teamA));
+        const p = PICKS_BY_GAME_ID['FF-2-0'];
         const probA = p && teamA ? _probForTeam(p, teamA)
           : (seedA && seedB ? seedWinProb(seedA, seedB) : 0.5);
         const suggestedPick = lockedPicks['FF-2-0'] || simPicks['FF-2-0'] || null;
@@ -1342,7 +1369,7 @@ function recomputeBracket() {
           actualWinner: outcome.actualWinner,
           scoreA: outcome.scoreA,
           scoreB: outcome.scoreB,
-          pickSource: p?.source || null,
+          gradedWinner: p?.actual_winner || null,
           pickIsCorrect: p?.is_correct ?? null,
           trueModelPick: p?.model_pick || null,
         };
@@ -1403,13 +1430,17 @@ function renderBracket() {
         if (st.statusLabel) {
           statusEl.textContent = st.statusLabel;
           statusEl.className = 'game-status';
-        } else if (st.pickSource === 'actual_result') {
+        } else if (st.gradedWinner) {
+          // st.pick is always the model's own choice here (the simulator never
+          // lets a real result override advancement) -- this badge only grades
+          // that choice against the real outcome, never changes what's shown
+          // advancing.
           const wrong = st.pickIsCorrect === false;
-          statusEl.textContent = wrong ? '✗ actual result' : '✓ actual result';
+          statusEl.textContent = wrong ? '✗ vs actual' : '✓ vs actual';
           statusEl.className = 'game-status provenance ' + (wrong ? 'provenance-wrong' : 'provenance-actual');
           statusEl.title = wrong
-            ? `Model projected ${st.trueModelPick || 'the other team'} instead`
-            : 'Matches the model’s own projection';
+            ? `Actual winner was ${st.gradedWinner}`
+            : 'Model’s pick matches the actual result';
         } else {
           statusEl.textContent = '';
           statusEl.className = 'game-status';
@@ -1497,9 +1528,27 @@ function clearDownstream(gameId, oldWinner) {
   }
 }
 
-function resetPicks() {
+async function resetPicks() {
   lockedPicks = {}; simPicks = {};
-  recomputeBracket();
+  if (!currentYear) { recomputeBracket(); return; }
+  showLoading('Resetting...');
+  for (const k in _analyzeCache) delete _analyzeCache[k];
+  try {
+    // Re-fetch clean model picks live -- clearing lockedPicks/simPicks alone isn't
+    // enough, since PICKS may still hold a previous /simulate response baked with
+    // the locks we're now discarding. Reset must go back to the server's own
+    // unlocked picks at the current chaos level, not just clear override maps.
+    const data = await apiFetch(`/bracket/${currentYear}?upset_aggression=${upsetAggression.toFixed(2)}&live=true`);
+    ingestPicks(data.picks.picks, data.picks.champion, data.ff_pairs, data.quadrant_order);
+    applyPicksFromServer();
+    renderBracket();
+    updateSimButtonLabel();
+    loadBracketScores(currentYear, true);
+  } catch (e) {
+    showError('Reset failed: ' + e.message);
+  } finally {
+    hideLoading();
+  }
 }
 
 function onYearChange(year) {
@@ -2313,12 +2362,91 @@ document.addEventListener('keydown', e => { if (e.key === 'Escape') closeAnalysi
 // ---------------------------------------------------------------------------
 function switchTab(name) {
   document.querySelectorAll('.tab-btn').forEach((b, i) => {
-    const names = ['bracket','odds'];
+    const names = ['bracket','odds','actual'];
     b.classList.toggle('active', names[i] === name);
   });
   document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
   document.getElementById('tab-' + name).classList.add('active');
   if (name === 'bracket' && currentYear) loadBracketScores(currentYear, true);
+  if (name === 'actual' && currentYear) loadActualResults();
+}
+
+// ---------------------------------------------------------------------------
+// Actual Results tab -- read-only historical view, never affects the
+// simulator. Fetched once per year from the precomputed /bracket/{year}/actual
+// artifact and cached client-side.
+// ---------------------------------------------------------------------------
+let ACTUAL_LOADED_YEAR = null;
+let ACTUAL_DATA = null;
+
+async function loadActualResults() {
+  const wrap = document.getElementById('actual-bracket-wrap');
+  const label = document.getElementById('actual-year-label');
+  if (!currentYear) return;
+  if (label) label.textContent = currentYear;
+  if (ACTUAL_LOADED_YEAR === currentYear && ACTUAL_DATA) { renderActualBracket(); return; }
+  wrap.innerHTML = '<div style="padding:24px;color:var(--muted)">Loading actual results...</div>';
+  try {
+    const data = await apiFetch(`/bracket/${currentYear}/actual`);
+    ACTUAL_DATA = data;
+    ACTUAL_LOADED_YEAR = currentYear;
+    renderActualBracket();
+  } catch (e) {
+    ACTUAL_DATA = null;
+    ACTUAL_LOADED_YEAR = null;
+    wrap.innerHTML = `<div style="padding:24px;color:var(--muted)">No real-results data available for ${currentYear} yet.</div>`;
+  }
+}
+
+function renderActualGameHTML(p) {
+  if (!p) return '<div class="actual-game empty"></div>';
+  const teams = [{ name: p.team_a, seed: p.seed_a }, { name: p.team_b, seed: p.seed_b }];
+  const rows = teams.map(t => `<div class="actual-team${t.name && t.name === p.pick ? ' picked' : ''}">
+    <span class="seed-badge">${t.seed ?? ''}</span><span class="tm">${t.name || '—'}</span></div>`).join('');
+  return `<div class="actual-game">${rows}</div>`;
+}
+
+function buildActualRegionHTML(region, byGid) {
+  const rounds = [{ key: 64, label: 'R64', games: 8 }, { key: 32, label: 'R32', games: 4 },
+    { key: 16, label: 'S16', games: 2 }, { key: 8, label: 'E8', games: 1 }];
+  let html = `<div class="actual-region"><div class="actual-region-label">${region}</div><div class="actual-rounds">`;
+  for (const { key, label, games } of rounds) {
+    html += `<div class="actual-round"><div class="actual-round-header">${label}</div>`;
+    for (let gi = 0; gi < games; gi++) html += renderActualGameHTML(byGid[`${region}-${key}-${gi}`]);
+    html += '</div>';
+  }
+  html += '</div></div>';
+  return html;
+}
+
+function buildActualFinalFourHTML(byGid, champion) {
+  let html = '<div class="actual-ff"><div class="actual-region-label">Final Four</div>';
+  html += renderActualGameHTML(byGid['FF-4-0']);
+  html += renderActualGameHTML(byGid['FF-4-1']);
+  html += '<div class="actual-region-label">Championship</div>';
+  html += renderActualGameHTML(byGid['FF-2-0']);
+  html += `<div class="actual-champ">&#127942; ${champion || '—'}</div>`;
+  html += '</div>';
+  return html;
+}
+
+function renderActualBracket() {
+  const wrap = document.getElementById('actual-bracket-wrap');
+  if (!wrap || !ACTUAL_DATA) return;
+  const picks = ACTUAL_DATA.picks?.picks || [];
+  const champion = ACTUAL_DATA.picks?.champion;
+  const quadrantOrder = (Array.isArray(ACTUAL_DATA.quadrant_order) && ACTUAL_DATA.quadrant_order.length === 4)
+    ? ACTUAL_DATA.quadrant_order : QUADRANT;
+  const byGid = {};
+  for (const p of picks) if (p.game_id) byGid[p.game_id] = p;
+
+  let html = '<div class="actual-bracket-row">';
+  quadrantOrder.forEach((region, i) => {
+    html += buildActualRegionHTML(region, byGid);
+    if (i === 1) html += buildActualFinalFourHTML(byGid, champion);
+  });
+  html += '</div>';
+  wrap.innerHTML = html;
 }
 
 // ---------------------------------------------------------------------------

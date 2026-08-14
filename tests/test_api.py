@@ -167,6 +167,58 @@ def test_bracket_upset_aggression_range():
     assert r.status_code == 422  # FastAPI validation error
 
 
+def test_bracket_actual_404_when_no_precomputed_artifact(tmp_path, monkeypatch):
+    monkeypatch.setattr(api, "DATA_DIR", str(tmp_path))
+    monkeypatch.setattr(api, "_static_artifact_cache", {})
+    r = client.get("/bracket/2026/actual")
+    assert r.status_code == 404
+
+
+def test_bracket_actual_serves_precomputed_artifact(tmp_path, monkeypatch):
+    (tmp_path / "bracket_actual_2026.json").write_text(json.dumps({
+        "year": 2026, "upset_aggression": 0.0,
+        "picks": {"picks": [], "champion": "RealChamp", "final_four": [],
+                  "biggest_upsets": [], "most_uncertain_games": []},
+        "quadrant_order": ["East", "West", "South", "Midwest"], "ff_pairs": [],
+    }))
+    monkeypatch.setattr(api, "DATA_DIR", str(tmp_path))
+    monkeypatch.setattr(api, "_static_artifact_cache", {})
+    r = client.get("/bracket/2026/actual")
+    assert r.status_code == 200
+    assert r.json()["picks"]["champion"] == "RealChamp"
+    assert r.headers.get("cache-control") == "public, max-age=3600"
+
+
+def test_simulate_uses_only_user_locks_for_advancement_not_real_results(tmp_path, monkeypatch):
+    """POST /bracket/{year}/simulate must advance strictly on the user's own
+    manually-locked picks -- real completed-game results must never be
+    merged into locked_picks here either, only supplied as grading_locks."""
+    monkeypatch.setattr(api, "DATA_DIR", str(tmp_path))
+    monkeypatch.setattr(api, "_load_bracket_for_year", lambda year: ({}, [], ["East", "West", "South", "Midwest"]))
+    monkeypatch.setattr(api, "_load_config", lambda: object())
+    monkeypatch.setattr(api, "_completed_tournament_locked_picks", lambda year, bracket, quadrant_order, ff_matchups: {"East-64-0": "RealWinner"})
+
+    seen = {}
+
+    def fake_generate_bracket_picks(*args, **kwargs):
+        seen["locked_picks"] = kwargs.get("locked_picks")
+        seen["grading_locks"] = kwargs.get("grading_locks")
+        return {
+            "picks": [], "champion": "UserPick", "final_four": [],
+            "biggest_upsets": [], "most_uncertain_games": [],
+        }
+
+    monkeypatch.setattr(api, "generate_bracket_picks", fake_generate_bracket_picks)
+
+    r = client.post("/bracket/2026/simulate", json={
+        "upset_aggression": 0.3,
+        "locked_picks": {"West-64-0": "UserLockedTeam"},
+    })
+    assert r.status_code == 200
+    assert seen["locked_picks"] == {"West-64-0": "UserLockedTeam"}
+    assert seen["grading_locks"] == {"East-64-0": "RealWinner"}
+
+
 def test_bracket_cache_busts_when_prediction_inputs_change(tmp_path, monkeypatch):
     # DATA_DIR -> tmp_path (no real bracket_picks_2026.json there) so this exercises
     # the live-compute path, not the precomputed-artifact fast path.
@@ -210,7 +262,12 @@ def test_bracket_cache_busts_when_prediction_inputs_change(tmp_path, monkeypatch
     assert calls["count"] == 2
 
 
-def test_bracket_uses_completed_tournament_locked_picks(tmp_path, monkeypatch):
+def test_bracket_never_locks_advancement_to_real_results(tmp_path, monkeypatch):
+    """GET /bracket/{year} (the simulator) must never pass real results as
+    locked_picks -- that would let actual outcomes override the model's own
+    advancement, exactly the bug this test guards against. Real results
+    still flow in, but only as grading_locks (badges/accuracy), never as
+    locked_picks (which team advances)."""
     monkeypatch.setattr(api, "DATA_DIR", str(tmp_path))
     monkeypatch.setattr(api, "_cache", collections.OrderedDict())
     monkeypatch.setattr(api, "_static_artifact_cache", {})
@@ -223,6 +280,7 @@ def test_bracket_uses_completed_tournament_locked_picks(tmp_path, monkeypatch):
 
     def fake_generate_bracket_picks(*args, **kwargs):
         seen["locked_picks"] = kwargs.get("locked_picks")
+        seen["grading_locks"] = kwargs.get("grading_locks")
         return {
             "picks": [],
             "champion": "Alpha",
@@ -233,9 +291,10 @@ def test_bracket_uses_completed_tournament_locked_picks(tmp_path, monkeypatch):
 
     monkeypatch.setattr(api, "generate_bracket_picks", fake_generate_bracket_picks)
 
-    r = client.get("/bracket/2026")
+    r = client.get("/bracket/2026?live=true")
     assert r.status_code == 200
-    assert seen["locked_picks"] == {"East-64-0": "Alpha"}
+    assert seen["locked_picks"] is None
+    assert seen["grading_locks"] == {"East-64-0": "Alpha"}
 
 
 def test_monte_carlo_2026():

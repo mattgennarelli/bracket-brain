@@ -1129,19 +1129,24 @@ def main():
                 setattr(config, k, v)
         print("Loaded calibrated model parameters")
 
-    locked_picks = build_locked_picks_from_results(
+    # grading_locks: real results, used ONLY to grade the model's own picks
+    # (actual_winner/is_correct per game) -- never drives which team advances.
+    # The bracket is a simulator: it always shows the model's own picks. See
+    # generate_bracket_picks(locked_picks=None, ...) below.
+    grading_locks = build_locked_picks_from_results(
         bracket,
         _load_results_games(year),
         quadrant_order=quadrant_order,
         ff_matchups=ff_matchups,
     )
-    if locked_picks:
-        print(f"Conditioning on {len(locked_picks)} completed tournament games")
+    if grading_locks:
+        print(f"Grading model picks against {len(grading_locks)} completed tournament games")
 
     print("Generating bracket picks (63 games)...")
     bracket_result = generate_bracket_picks(bracket, config, upset_aggression=args.upset,
                                            quadrant_order=quadrant_order, ff_matchups=ff_matchups,
-                                           data_dir=DATA_DIR, year=year, locked_picks=locked_picks)
+                                           data_dir=DATA_DIR, year=year, locked_picks=None,
+                                           grading_locks=grading_locks)
     picks = bracket_result["picks"]
 
     print(f"\n  Champion: {bracket_result['champion']}")
@@ -1164,6 +1169,28 @@ def main():
         with open(picks_path, "w") as f:
             json.dump(picks_export, f)
         print(f"  Wrote {picks_path} for API")
+
+        # Historical "what actually happened" view -- real results drive
+        # advancement here (this is the one place they're allowed to), always
+        # at upset_aggression=0.0 since real results don't depend on chaos.
+        # Self-graded: is_correct compares the model's own independent pick
+        # against the very same real outcome.
+        actual_result = generate_bracket_picks(bracket, config, upset_aggression=0.0,
+                                               quadrant_order=quadrant_order, ff_matchups=ff_matchups,
+                                               data_dir=DATA_DIR, year=year, locked_picks=grading_locks,
+                                               grading_locks=grading_locks)
+        actual_path = os.path.join(DATA_DIR, f"bracket_actual_{year}.json")
+        actual_export = {
+            "year": year,
+            "upset_aggression": 0.0,
+            "prediction_inputs_hash": _prediction_inputs_hash(year),
+            "picks": actual_result,
+            "quadrant_order": quadrant_order,
+            "ff_pairs": ff_pairs,
+        }
+        with open(actual_path, "w") as f:
+            json.dump(actual_export, f)
+        print(f"  Wrote {actual_path} for API")
 
     # LLM-powered analysis (when ANTHROPIC_API_KEY is set)
     if os.environ.get("ANTHROPIC_API_KEY"):
