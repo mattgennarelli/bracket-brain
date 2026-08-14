@@ -143,7 +143,8 @@ def test_analyze_accepts_team_display_name_with_mascot():
     assert d["team_b"] == "Santa Clara"
 
 
-def test_bracket_picks_2026():
+def test_bracket_picks_2026(monkeypatch):
+    monkeypatch.setattr(api, "_static_artifact_cache", {})
     r = client.get("/bracket/2026")
     assert r.status_code == 200
     d = r.json()
@@ -166,8 +167,12 @@ def test_bracket_upset_aggression_range():
     assert r.status_code == 422  # FastAPI validation error
 
 
-def test_bracket_cache_busts_when_prediction_inputs_change(monkeypatch):
+def test_bracket_cache_busts_when_prediction_inputs_change(tmp_path, monkeypatch):
+    # DATA_DIR -> tmp_path (no real bracket_picks_2026.json there) so this exercises
+    # the live-compute path, not the precomputed-artifact fast path.
+    monkeypatch.setattr(api, "DATA_DIR", str(tmp_path))
     monkeypatch.setattr(api, "_cache", collections.OrderedDict())
+    monkeypatch.setattr(api, "_static_artifact_cache", {})
 
     current_inputs = {"mtime": "100"}
     calls = {"count": 0}
@@ -205,8 +210,10 @@ def test_bracket_cache_busts_when_prediction_inputs_change(monkeypatch):
     assert calls["count"] == 2
 
 
-def test_bracket_uses_completed_tournament_locked_picks(monkeypatch):
+def test_bracket_uses_completed_tournament_locked_picks(tmp_path, monkeypatch):
+    monkeypatch.setattr(api, "DATA_DIR", str(tmp_path))
     monkeypatch.setattr(api, "_cache", collections.OrderedDict())
+    monkeypatch.setattr(api, "_static_artifact_cache", {})
     monkeypatch.setattr(api, "_prediction_inputs_mtime", lambda year: "100")
     monkeypatch.setattr(api, "_load_bracket_for_year", lambda year: ({}, [], ["East", "West", "South", "Midwest"]))
     monkeypatch.setattr(api, "_load_config", lambda num_sims=10000: object())
@@ -243,39 +250,41 @@ def test_monte_carlo_2026():
     assert 0.95 <= total <= 1.05  # some rounding OK
 
 
-def test_monte_carlo_recomputes_when_precomputed_hash_is_stale(tmp_path, monkeypatch):
+def test_monte_carlo_default_sims_always_serves_precomputed_file(tmp_path, monkeypatch):
+    """Default (sims=10000) must always serve the precomputed artifact as a pure
+    static read -- no per-request hashing, no live recompute, even if a fresh
+    hash would differ from what's stored in the file. Freshness is a
+    regenerate-and-redeploy concern (`python run.py --all`), not a per-request
+    check: a cold free-tier instance must never run a live 10k-sim simulation
+    just to serve a page load."""
     mc_path = tmp_path / "monte_carlo_2026.json"
     mc_path.write_text(json.dumps({
         "year": 2026,
         "num_simulations": 10000,
         "prediction_inputs_hash": "stalehash",
-        "champion_probs": {"Old Team": 1.0},
-        "final_four_probs": {"Old Team": 1.0},
-        "elite_eight_probs": {"Old Team": 1.0},
-        "sweet_sixteen_probs": {"Old Team": 1.0},
-        "round_of_32_probs": {"Old Team": 1.0},
+        "champion_probs": {"Precomputed Team": 1.0},
+        "final_four_probs": {"Precomputed Team": 1.0},
+        "elite_eight_probs": {"Precomputed Team": 1.0},
+        "sweet_sixteen_probs": {"Precomputed Team": 1.0},
+        "round_of_32_probs": {"Precomputed Team": 1.0},
+        "final_four_by_region": {},
     }))
 
     monkeypatch.setattr(api, "DATA_DIR", str(tmp_path))
     monkeypatch.setattr(api, "_cache", collections.OrderedDict())
+    monkeypatch.setattr(api, "_static_artifact_cache", {})
     monkeypatch.setattr(api, "_prediction_inputs_hash", lambda year: "freshhash")
-    monkeypatch.setattr(api, "_prediction_inputs_mtime", lambda year: "123")
-    monkeypatch.setattr(api, "_load_bracket_for_year", lambda year: ({}, [], ["East", "West", "South", "Midwest"]))
-    monkeypatch.setattr(api, "_load_config", lambda num_sims=10000: object())
-    monkeypatch.setattr(api, "_add_final_four_by_region", lambda result, year: result)
-    monkeypatch.setattr(api, "run_monte_carlo", lambda bracket, config=None, year=None, locked_picks=None, quadrant_order=None, ff_matchups=None: {
-        "champion_probs": {"New Team": 1.0},
-        "final_four_probs": {"New Team": 1.0},
-        "elite_eight_probs": {"New Team": 1.0},
-        "sweet_sixteen_probs": {"New Team": 1.0},
-        "round_of_32_probs": {"New Team": 1.0},
-    })
+
+    def fail_if_called(*a, **k):
+        raise AssertionError("live Monte Carlo compute must not run for default sims")
+    monkeypatch.setattr(api, "run_monte_carlo", fail_if_called)
 
     r = client.get("/bracket/2026/monte-carlo?sims=10000")
     assert r.status_code == 200
     d = r.json()
-    assert d["champion_probs"] == {"New Team": 1.0}
-    assert d["prediction_inputs_hash"] == "freshhash"
+    assert d["champion_probs"] == {"Precomputed Team": 1.0}
+    assert d["prediction_inputs_hash"] == "stalehash"
+    assert r.headers.get("cache-control") == "public, max-age=3600"
 
 
 def test_monte_carlo_never_passes_locked_picks(tmp_path, monkeypatch):
@@ -284,9 +293,11 @@ def test_monte_carlo_never_passes_locked_picks(tmp_path, monkeypatch):
     belongs only to generate_bracket_picks / the bracket-picks display).
     fake_run_monte_carlo has no locked_picks parameter, so if the route ever
     tries to pass one again, this call raises TypeError and the request
-    fails instead of silently succeeding."""
+    fails instead of silently succeeding. No precomputed file exists in
+    tmp_path, so sims=10000 still falls through to a live compute here."""
     monkeypatch.setattr(api, "DATA_DIR", str(tmp_path))
     monkeypatch.setattr(api, "_cache", collections.OrderedDict())
+    monkeypatch.setattr(api, "_static_artifact_cache", {})
     monkeypatch.setattr(api, "_prediction_inputs_hash", lambda year: "freshhash")
     monkeypatch.setattr(api, "_prediction_inputs_mtime", lambda year: "123")
     monkeypatch.setattr(api, "_load_bracket_for_year", lambda year: ({}, [], ["East", "West", "South", "Midwest"]))

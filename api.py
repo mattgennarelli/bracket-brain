@@ -36,7 +36,7 @@ sys.path.insert(0, os.path.join(ROOT, "scripts"))
 
 from fastapi import FastAPI, HTTPException, Query, Request
 from fastapi.middleware.cors import CORSMiddleware
-from fastapi.responses import FileResponse
+from fastapi.responses import FileResponse, JSONResponse
 from fastapi.staticfiles import StaticFiles
 from pydantic import BaseModel, Field
 
@@ -79,6 +79,21 @@ REGION_R64_SEED_PAIRS = (
 # Uses OrderedDict so we can evict the oldest entry when size limit is hit.
 _CACHE_MAX_ENTRIES = 50
 _cache: collections.OrderedDict = collections.OrderedDict()
+
+# In-process cache for precomputed per-year artifacts (bracket picks, Monte Carlo).
+# Keyed simply by year -- populated once per process lifetime from a static file
+# read, so repeat requests within the same deploy cost a dict lookup, not even a
+# file read. Cold-start-safe: a free-tier instance restarting just means the next
+# request repopulates it, same file read as always.
+_static_artifact_cache: dict = {}
+
+# Precomputed, rarely-changing artifacts are safe for browsers/Cloudflare to cache
+# and re-serve without ever reaching this (CPU-constrained, free-tier) origin.
+_STATIC_CACHE_CONTROL = "public, max-age=3600"
+
+
+def _static_json_response(data: dict) -> JSONResponse:
+    return JSONResponse(content=data, headers={"Cache-Control": _STATIC_CACHE_CONTROL})
 
 # Structured JSON logging
 _log = logging.getLogger("api")
@@ -358,7 +373,43 @@ def _resolve_tournament_team(team_map: Dict[str, str], *names: str) -> Optional[
     return None
 
 
+def _build_bracket_scores_from_results(results_games: list[dict]) -> dict:
+    """Build the scores response straight from results_{year}.json games -- zero
+    network calls, zero team-name resolution. Used whenever a year's tournament is
+    fully recorded (all 63 games), which is true for every year in this deployment.
+    ESPN's live scoreboard is only needed for a genuinely in-progress season."""
+    result = {"scores": {}}
+    for game in results_games:
+        team_a, team_b = game.get("team_a"), game.get("team_b")
+        if not team_a or not team_b:
+            continue
+        try:
+            round_of = int(game.get("round"))
+        except (TypeError, ValueError):
+            continue
+        rec = {
+            "team_a": team_a, "team_b": team_b,
+            "score_a": game.get("score_a"), "score_b": game.get("score_b"),
+            "scheduled_at": None, "completed": True,
+            "status_detail": "Final", "display_clock": "", "period": 0,
+            "round_of": round_of,
+        }
+        result["scores"][f"{team_a}|{team_b}"] = rec
+        result["scores"][f"{team_b}|{team_a}"] = {
+            **rec, "team_a": team_b, "team_b": team_a,
+            "score_a": game.get("score_b"), "score_b": game.get("score_a"),
+        }
+    return result
+
+
 def _build_bracket_scores_result(year: int, days: int = 21) -> dict:
+    # A fully recorded year never needs a live ESPN fetch -- this used to be the
+    # dominant cost on this route: up to days+1 sequential ESPN HTTP calls, redone
+    # every 90 seconds, for a tournament that ended long ago.
+    results_games = _load_results_games(year)
+    if len(results_games) >= 63:
+        return _build_bracket_scores_from_results(results_games)
+
     team_map = _tournament_team_map(year)
     if not team_map:
         return {"scores": {}}
@@ -527,9 +578,18 @@ def ready():
 
 @app.get("/health")
 def health():
+    # /health is the first thing every page load blocks on. _data_hash_and_meta
+    # hashes several data files (one over 1MB) -- cache it in-process so repeat
+    # hits (the overwhelming majority) cost a dict lookup, not a re-hash.
     years = _available_years()
     current = max(years) if years else None
-    meta = _data_hash_and_meta(current) if current else {}
+    if current is None:
+        meta = {}
+    else:
+        meta = _static_artifact_cache.get(f"health_meta_{current}")
+        if meta is None:
+            meta = _data_hash_and_meta(current)
+            _static_artifact_cache[f"health_meta_{current}"] = meta
     return {
         "status": "ok",
         "version": "2.0.0",
@@ -617,6 +677,21 @@ def get_bracket(
     year: int,
     upset_aggression: float = Query(default=0.0, ge=0.0, le=1.0),
 ):
+    # Default (chalk, upset_aggression=0.0) is the page-load path: serve the
+    # precomputed artifact directly, no per-request generate_bracket_picks() call
+    # (63 predict_game evaluations) at all. Any other value means the user moved
+    # the chaos slider -- a deliberate live action, stays live-computed below.
+    if upset_aggression == 0.0:
+        cached = _static_artifact_cache.get(f"bracket_{year}")
+        if cached is not None:
+            return _static_json_response(cached)
+        precomputed_path = os.path.join(DATA_DIR, f"bracket_picks_{year}.json")
+        if os.path.isfile(precomputed_path):
+            with open(precomputed_path) as f:
+                precomputed = json.load(f)
+            _static_artifact_cache[f"bracket_{year}"] = precomputed
+            return _static_json_response(precomputed)
+
     cache_key = f"bracket_v{BRACKET_RESPONSE_VERSION}_{year}_{upset_aggression:.2f}_{_prediction_inputs_mtime(year)}"
     cached = _cache_get(cache_key)
     if cached is not None:
@@ -1039,34 +1114,35 @@ def get_monte_carlo(
     year: int,
     sims: int = Query(default=10000, ge=100, le=100000),
 ):
-    # Rate limit live simulations (pre-computed file is unaffected)
-    if not (sims == 10000 and os.path.isfile(os.path.join(DATA_DIR, f"monte_carlo_{year}.json"))):
-        ip = request.client.host if request.client else "unknown"
-        if not _check_rate_limit(ip):
-            raise HTTPException(status_code=429, detail="Too many Monte Carlo requests. Try again in a minute.")
+    # Default sims: always serve the precomputed artifact directly, no per-request
+    # computation at all -- this is the page-load path and must be fast even on a
+    # throttled free-tier instance. final_four_by_region is embedded in the file at
+    # generation time (see run.py), so this is a pure static read. Freshness is a
+    # regenerate-and-redeploy concern (`python run.py --all`), not a per-request
+    # check: hashing 5 files (one of them 1MB+) on every hit was itself a real cost.
+    # Live simulation is reserved for an explicit non-default sims value.
+    if sims == 10000:
+        cached = _static_artifact_cache.get(f"mc_{year}")
+        if cached is not None:
+            return _static_json_response(cached)
+        precomputed_path = os.path.join(DATA_DIR, f"monte_carlo_{year}.json")
+        if os.path.isfile(precomputed_path):
+            with open(precomputed_path) as f:
+                precomputed = json.load(f)
+            if "final_four_by_region" not in precomputed:
+                precomputed = _add_final_four_by_region(precomputed, year)
+            _static_artifact_cache[f"mc_{year}"] = precomputed
+            return _static_json_response(precomputed)
+
+    ip = request.client.host if request.client else "unknown"
+    if not _check_rate_limit(ip):
+        raise HTTPException(status_code=429, detail="Too many Monte Carlo requests. Try again in a minute.")
 
     inputs_mtime = _prediction_inputs_mtime(year)
-    inputs_hash = _prediction_inputs_hash(year)
-    cache_key = f"mc_{year}_{sims}_{inputs_mtime}_{inputs_hash}"
+    cache_key = f"mc_live_{year}_{sims}_{inputs_mtime}"
     cached = _cache_get(cache_key)
     if cached is not None:
         return cached
-
-    # Use pre-computed file when available (sims=10000) for fast load; fallback to live.
-    # prediction_inputs_hash is required for a precomputed file to count as fresh -- a
-    # missing or mismatched hash is treated as stale and falls through to a live
-    # recompute. (Previously fell back to comparing file mtimes, which is meaningless
-    # after a git checkout: every file gets stamped with the deploy time, so a
-    # months-old precomputed file looked "fresh" forever on Render.)
-    precomputed_path = os.path.join(DATA_DIR, f"monte_carlo_{year}.json")
-    if sims == 10000 and os.path.isfile(precomputed_path):
-        with open(precomputed_path) as f:
-            precomputed = json.load(f)
-        precomputed_hash = precomputed.get("prediction_inputs_hash")
-        if precomputed_hash and precomputed_hash == inputs_hash:
-            result = _add_final_four_by_region(precomputed, year)
-            _cache_set(cache_key, result)
-            return result
 
     bracket, ff_matchups, quadrant_order = _load_bracket_for_year(year)
     config = _load_config(num_sims=sims)
@@ -1087,7 +1163,7 @@ def get_monte_carlo(
         "elite_eight_probs": mc["elite_eight_probs"],
         "sweet_sixteen_probs": mc["sweet_sixteen_probs"],
         "round_of_32_probs": mc["round_of_32_probs"],
-        "prediction_inputs_hash": inputs_hash,
+        "prediction_inputs_hash": _prediction_inputs_hash(year),
     }
     result = _add_final_four_by_region(result, year)
     _cache_set(cache_key, result)
@@ -1097,6 +1173,17 @@ def get_monte_carlo(
 @app.get("/bracket/{year}/scores")
 def get_bracket_scores(year: int, days: int = Query(default=21, ge=0, le=30)):
     """Live/final tournament scores keyed by bracket team names in both team orders."""
+    # Fully recorded year -> static forever (results_{year}.json doesn't change
+    # without a redeploy). Cached in-process and browser/Cloudflare-cacheable.
+    cached = _static_artifact_cache.get(f"scores_{year}")
+    if cached is not None:
+        return _static_json_response(cached)
+    results_games = _load_results_games(year)
+    if len(results_games) >= 63:
+        cached = _build_bracket_scores_from_results(results_games)
+        _static_artifact_cache[f"scores_{year}"] = cached
+        return _static_json_response(cached)
+
     cache_key = f"bracket_scores_{year}_{days}"
     entry = _cache.get(cache_key)
     if entry and (time.time() - entry.get("cached_at", 0)) < SCORES_CACHE_TTL:

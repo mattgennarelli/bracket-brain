@@ -22,7 +22,7 @@ import re
 from engine import (
     generate_bracket_picks, run_monte_carlo, load_bracket, analyze_matchup,
     REGIONS, FIRST_ROUND_MATCHUPS, DEFAULT_NUM_SIMS, SEED_WEIGHT,
-    ModelConfig, DEFAULT_CONFIG, build_locked_picks_from_results,
+    ModelConfig, DEFAULT_CONFIG, build_locked_picks_from_results, resolve_ff_pairs,
 )
 
 ROOT = os.path.dirname(os.path.abspath(__file__))
@@ -1147,6 +1147,24 @@ def main():
     print(f"\n  Champion: {bracket_result['champion']}")
     print(f"  Final Four: {', '.join(bracket_result['final_four'])}")
 
+    # Precomputed artifact for the API's default page-load path (upset_aggression=0.0
+    # only -- the chaos slider is a deliberate live action and stays live-computed).
+    # Served as-is by GET /bracket/{year}, no per-request computation.
+    if args.upset == 0.0:
+        picks_path = os.path.join(DATA_DIR, f"bracket_picks_{year}.json")
+        ff_pairs = [list(pair) for pair in resolve_ff_pairs(quadrant_order, ff_matchups)]
+        picks_export = {
+            "year": year,
+            "upset_aggression": 0.0,
+            "prediction_inputs_hash": _prediction_inputs_hash(year),
+            "picks": bracket_result,
+            "quadrant_order": quadrant_order,
+            "ff_pairs": ff_pairs,
+        }
+        with open(picks_path, "w") as f:
+            json.dump(picks_export, f)
+        print(f"  Wrote {picks_path} for API")
+
     # LLM-powered analysis (when ANTHROPIC_API_KEY is set)
     if os.environ.get("ANTHROPIC_API_KEY"):
         try:
@@ -1194,6 +1212,20 @@ def main():
 
     if args.write_monte_carlo and args.sims == 10000:
         mc_path = os.path.join(DATA_DIR, f"monte_carlo_{year}.json")
+        # final_four_by_region: top 8 per-region teams by F4 probability. Computed
+        # here (once, at generation time) and embedded in the file so the API can
+        # serve it as a pure static read -- see api.py's now-removed
+        # _add_final_four_by_region, which used to redo this work on every request.
+        ff_probs = mc_results["final_four_probs"]
+        final_four_by_region = {}
+        for region, teams in bracket.items():
+            team_probs = []
+            for seed, team in teams.items():
+                t = team.get("team") if isinstance(team, dict) else None
+                if t and t in ff_probs:
+                    team_probs.append((t, ff_probs[t]))
+            team_probs.sort(key=lambda x: -x[1])
+            final_four_by_region[region] = [[t, round(p, 4)] for t, p in team_probs[:8]]
         mc_export = {
             "year": year,
             "num_simulations": args.sims,
@@ -1203,6 +1235,7 @@ def main():
             "elite_eight_probs": mc_results["elite_eight_probs"],
             "sweet_sixteen_probs": mc_results["sweet_sixteen_probs"],
             "round_of_32_probs": mc_results["round_of_32_probs"],
+            "final_four_by_region": final_four_by_region,
         }
         with open(mc_path, "w") as f:
             json.dump(mc_export, f)
