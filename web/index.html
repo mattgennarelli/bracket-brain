@@ -81,24 +81,10 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sa
 .actual-note { max-width:900px; margin:12px auto 0; padding:10px 16px; background:var(--surface);
   border:1px solid var(--gold); border-radius:10px; font-size:.8rem; color:var(--text); }
 .actual-note strong { color:var(--gold); }
-.actual-bracket-scroll { overflow-x:auto; padding:16px 20px 24px; }
-.actual-bracket-row { display:flex; gap:28px; align-items:flex-start; min-width:max-content; }
-.actual-region { min-width:200px; }
-.actual-region-label { font-weight:700; font-size:.78rem; color:var(--primary); text-align:center;
-  margin-bottom:8px; text-transform:uppercase; letter-spacing:.03em; }
-.actual-rounds { display:flex; gap:16px; }
-.actual-round { display:flex; flex-direction:column; gap:10px; min-width:150px; }
-.actual-round-header { font-size:.68rem; color:var(--muted); text-align:center; font-weight:600; }
-.actual-game { background:var(--surface); border:1px solid var(--border); border-radius:6px;
-  padding:3px; display:flex; flex-direction:column; gap:1px; }
-.actual-game.empty { min-height:38px; background:var(--surface2); border-style:dashed; }
-.actual-team { display:flex; align-items:center; gap:4px; padding:3px 6px; border-radius:4px;
-  font-size:.72rem; color:var(--muted); }
-.actual-team.picked { background:var(--primary-bg); color:var(--text); font-weight:700; }
-.actual-team .tm { overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
-.actual-ff { min-width:180px; display:flex; flex-direction:column; gap:10px; align-self:center; }
-.actual-champ { margin-top:8px; text-align:center; font-weight:800; font-size:.9rem;
-  color:var(--gold); }
+/* Actual Results tab reuses .bracket-grid/.region-bracket/.game etc. (see
+   buildRegionHTML/buildFinalFourHTML readOnly mode) -- no separate layout
+   CSS needed. .game.readonly just drops the pointer affordance. */
+.game.readonly { cursor:default; }
 
 .bracket-wrap { display:flex; align-items:center; justify-content:center; padding:16px 8px; min-width:1400px; }
 .bracket-grid { display:grid; grid-template-columns:minmax(0,1fr) auto minmax(0,1fr); grid-template-rows:auto auto; align-items:center; width:100%; }
@@ -557,7 +543,11 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sa
 
 <div class="tab-panel" id="tab-actual">
   <div class="actual-note"><strong>Historical view.</strong> This shows what actually happened in the <span id="actual-year-label"></span> tournament, for reference. It's read-only and never affects the Bracket tab, which is always your own simulated bracket.</div>
-  <div class="actual-bracket-scroll" id="actual-bracket-wrap"><div style="padding:24px;color:var(--muted)">Loading actual results...</div></div>
+  <div class="bracket-wrap" id="actual-bracket-wrap"><div style="padding:24px;color:var(--muted)">Loading actual results...</div></div>
+  <div class="mobile-bracket" id="actual-mobile-bracket">
+    <div class="mobile-round-tabs" id="actual-mobile-round-tabs"></div>
+    <div class="mobile-bracket-body" id="actual-mobile-bracket-body"></div>
+  </div>
 </div>
 
 <div class="tab-panel" id="tab-odds">
@@ -804,7 +794,14 @@ function _resolveGameOutcome(gameId, teamA, teamB, fallbackPick) {
     scheduled: state.scheduled,
     statusLabel: state.label,
     actualWinner,
-    resolvedPick: actualWinner || fallbackPick,
+    // The simulator always advances the model's/chaos's/user's own pick.
+    // actualWinner (from live or historical ESPN scores) is display info and
+    // grading only -- it must NEVER drive advancement, at any round, for any
+    // year. Previously this fell back to actualWinner when a game was
+    // "completed" -- which is every game in a past year -- silently
+    // collapsing the simulator into a replay of history despite the
+    // server already sending the model's own pick correctly.
+    resolvedPick: fallbackPick,
   };
 }
 
@@ -1579,7 +1576,8 @@ function buildBracket() {
     </div>`;
 }
 
-function buildRegionHTML(region, flipped) {
+function buildRegionHTML(region, flipped, opts = {}) {
+  const { idPrefix = '', readOnly = false } = opts;
   const teams = BRACKET[region] || [];
   const rounds = ['R64', 'R32', 'S16', 'E8'], gamesPerRound = [8, 4, 2, 1];
   let html = `<div class="region-bracket ${flipped ? 'flipped' : ''}">`;
@@ -1593,7 +1591,8 @@ function buildRegionHTML(region, flipped) {
     for (let gi = 0; gi < numGames; gi++) {
       if (gi % 2 === 0) html += '<div class="game-pair">';
       const gid = `${region}-${roundOf}-${gi}`;
-      html += `<div class="game" data-game-id="${gid}" onclick="handleGameClick(event,'${gid}')">`;
+      const clickAttr = readOnly ? '' : ` onclick="handleGameClick(event,'${gid}')"`;
+      html += `<div class="game${readOnly ? ' readonly' : ''}" data-game-id="${idPrefix}${gid}"${clickAttr}>`;
       if (ri === 0) {
         const tA = teams[gi * 2], tB = teams[gi * 2 + 1];
         html += `<div class="team-slot" data-team="${tA?.team || ''}" data-seed="${tA?.seed || ''}"><span class="sd">${tA?.seed || ''}</span><span class="tm">${tA?.team || '\u2014'}</span><span class="sc"></span></div>`;
@@ -1602,7 +1601,7 @@ function buildRegionHTML(region, flipped) {
         html += '<div class="team-slot empty" data-team="" data-seed=""><span class="sd"></span><span class="tm">\u2014</span><span class="sc"></span></div>';
         html += '<div class="team-slot empty" data-team="" data-seed=""><span class="sd"></span><span class="tm">\u2014</span><span class="sc"></span></div>';
       }
-      html += `<div class="info-btn" style="display:${ri === 0 ? 'flex' : 'none'}" title="Matchup details">i</div>`;
+      html += `<div class="info-btn" style="display:${!readOnly && ri === 0 ? 'flex' : 'none'}" title="Matchup details">i</div>`;
       html += '<div class="game-status"></div>';
       html += '</div>';
       if (gi % 2 === 1 || gi === numGames - 1) html += '</div>';
@@ -1613,12 +1612,14 @@ function buildRegionHTML(region, flipped) {
   return html;
 }
 
-function buildFinalFourHTML() {
+function buildFinalFourHTML(opts = {}) {
+  const { idPrefix = '', readOnly = false } = opts;
   let html = '<div class="ff-center"><div class="ff-label">Final Four</div>';
   ['FF-4-0', 'FF-4-1'].forEach((gid, idx) => {
     const ffLabel = Array.isArray(FF_PAIRS[idx]) ? `${FF_PAIRS[idx][0]} vs ${FF_PAIRS[idx][1]}` : 'Semifinal';
+    const clickAttr = readOnly ? '' : ` onclick="handleGameClick(event,'${gid}')"`;
     html += `<div class="ff-game-label">${ffLabel}</div>`;
-    html += `<div class="game" data-game-id="${gid}" onclick="handleGameClick(event,'${gid}')">`;
+    html += `<div class="game${readOnly ? ' readonly' : ''}" data-game-id="${idPrefix}${gid}"${clickAttr}>`;
     html += '<div class="team-slot empty" data-team="" data-seed=""><span class="sd"></span><span class="tm">\u2014</span><span class="sc"></span></div>';
     html += '<div class="team-slot empty" data-team="" data-seed=""><span class="sd"></span><span class="tm">\u2014</span><span class="sc"></span></div>';
     html += `<div class="info-btn" style="display:none" title="Matchup details">i</div>`;
@@ -1626,13 +1627,14 @@ function buildFinalFourHTML() {
     html += '</div>';
   });
   html += '<div class="ff-label">Championship</div>';
-  html += '<div class="game" data-game-id="FF-2-0" onclick="handleGameClick(event,\'FF-2-0\')">';
+  const champClickAttr = readOnly ? '' : ` onclick="handleGameClick(event,'FF-2-0')"`;
+  html += `<div class="game${readOnly ? ' readonly' : ''}" data-game-id="${idPrefix}FF-2-0"${champClickAttr}>`;
   html += '<div class="team-slot empty" data-team="" data-seed=""><span class="sd"></span><span class="tm">\u2014</span><span class="sc"></span></div>';
   html += '<div class="team-slot empty" data-team="" data-seed=""><span class="sd"></span><span class="tm">\u2014</span><span class="sc"></span></div>';
   html += '<div class="info-btn" style="display:none" title="Matchup details">i</div>';
   html += '<div class="game-status"></div>';
   html += '</div>';
-  html += '<div class="champ-banner"><div class="trophy">&#127942;</div><div class="champ-team" id="champ-banner-name">\u2014</div></div>';
+  html += `<div class="champ-banner"><div class="trophy">&#127942;</div><div class="champ-team" id="${idPrefix}champ-banner-name">\u2014</div></div>`;
   html += '</div>';
   return html;
 }
@@ -2374,79 +2376,201 @@ function switchTab(name) {
 // ---------------------------------------------------------------------------
 // Actual Results tab -- read-only historical view, never affects the
 // simulator. Fetched once per year from the precomputed /bracket/{year}/actual
-// artifact and cached client-side.
+// artifact and cached client-side. Reuses the Bracket tab's own grid/round/
+// connector markup (buildRegionHTML/buildFinalFourHTML with readOnly:true,
+// idPrefix:'actual-' so game_id-keyed DOM nodes don't collide with the
+// simulator's) rather than maintaining a second layout implementation.
 // ---------------------------------------------------------------------------
 let ACTUAL_LOADED_YEAR = null;
 let ACTUAL_DATA = null;
+let actualMobileRound = 64;
 
 async function loadActualResults() {
   const wrap = document.getElementById('actual-bracket-wrap');
   const label = document.getElementById('actual-year-label');
   if (!currentYear) return;
   if (label) label.textContent = currentYear;
-  if (ACTUAL_LOADED_YEAR === currentYear && ACTUAL_DATA) { renderActualBracket(); return; }
+  if (ACTUAL_LOADED_YEAR === currentYear && ACTUAL_DATA) {
+    buildActualBracket();
+    renderActualBracket();
+    return;
+  }
   wrap.innerHTML = '<div style="padding:24px;color:var(--muted)">Loading actual results...</div>';
   try {
     const data = await apiFetch(`/bracket/${currentYear}/actual`);
     ACTUAL_DATA = data;
     ACTUAL_LOADED_YEAR = currentYear;
+    buildActualBracket();
     renderActualBracket();
   } catch (e) {
     ACTUAL_DATA = null;
     ACTUAL_LOADED_YEAR = null;
     wrap.innerHTML = `<div style="padding:24px;color:var(--muted)">No real-results data available for ${currentYear} yet.</div>`;
+    const mobileTabs = document.getElementById('actual-mobile-round-tabs');
+    const mobileBody = document.getElementById('actual-mobile-bracket-body');
+    if (mobileTabs) mobileTabs.innerHTML = '';
+    if (mobileBody) mobileBody.innerHTML = '';
   }
 }
 
-function renderActualGameHTML(p) {
-  if (!p) return '<div class="actual-game empty"></div>';
-  const teams = [{ name: p.team_a, seed: p.seed_a }, { name: p.team_b, seed: p.seed_b }];
-  const rows = teams.map(t => `<div class="actual-team${t.name && t.name === p.pick ? ' picked' : ''}">
-    <span class="seed-badge">${t.seed ?? ''}</span><span class="tm">${t.name || '—'}</span></div>`).join('');
-  return `<div class="actual-game">${rows}</div>`;
+// Builds the same .bracket-grid / .region-bracket / .rounds / .game-pair
+// markup as the live simulator (buildBracket), in read-only mode.
+function buildActualBracket() {
+  const wrap = document.getElementById('actual-bracket-wrap');
+  if (!wrap) return;
+  wrap.innerHTML = `
+    <div class="bracket-grid">
+      <div class="bracket-cell--tl">${buildRegionHTML(QUADRANT[0], false, { idPrefix: 'actual-', readOnly: true })}</div>
+      <div class="bracket-cell--tr">${buildRegionHTML(QUADRANT[1], true, { idPrefix: 'actual-', readOnly: true })}</div>
+      <div class="bracket-cell--bl">${buildRegionHTML(QUADRANT[3], false, { idPrefix: 'actual-', readOnly: true })}</div>
+      <div class="bracket-cell--br">${buildRegionHTML(QUADRANT[2], true, { idPrefix: 'actual-', readOnly: true })}</div>
+      <div class="ff-center-wrap">${buildFinalFourHTML({ idPrefix: 'actual-', readOnly: true })}</div>
+    </div>`;
+  buildActualMobileBracket();
 }
 
-function buildActualRegionHTML(region, byGid) {
-  const rounds = [{ key: 64, label: 'R64', games: 8 }, { key: 32, label: 'R32', games: 4 },
-    { key: 16, label: 'S16', games: 2 }, { key: 8, label: 'E8', games: 1 }];
-  let html = `<div class="actual-region"><div class="actual-region-label">${region}</div><div class="actual-rounds">`;
-  for (const { key, label, games } of rounds) {
-    html += `<div class="actual-round"><div class="actual-round-header">${label}</div>`;
-    for (let gi = 0; gi < games; gi++) html += renderActualGameHTML(byGid[`${region}-${key}-${gi}`]);
-    html += '</div>';
+// Real box score for a completed matchup, from the same ESPN score feed the
+// Bracket tab uses. Falls back to a plain "Final" label -- we always know
+// the real winner from p.pick even when no score record is available (e.g.
+// very old years with sparse score coverage).
+function _actualScoreState(p) {
+  const scoreRec = _lookupBracketScore(p.team_a, p.team_b);
+  const state = _getScoreDisplayState(scoreRec);
+  return {
+    scoreA: state.scoreA, scoreB: state.scoreB,
+    showScores: state.showScores,
+    label: state.completed ? 'Final' : (state.label || 'Final'),
+  };
+}
+
+// Fills one read-only .game element (desktop grid) with real teams/pick/score.
+function _renderActualGameSlot(gid, p) {
+  const el = document.querySelector(`.game[data-game-id="actual-${gid}"]`);
+  if (!el) return;
+  const slots = el.querySelectorAll('.team-slot');
+  const statusEl = el.querySelector('.game-status');
+  if (!p || (!p.team_a && !p.team_b)) {
+    slots.forEach(slot => {
+      slot.dataset.team = ''; slot.dataset.seed = '';
+      slot.querySelector('.sd').textContent = '';
+      slot.querySelector('.tm').textContent = '—';
+      slot.querySelector('.sc').textContent = '';
+      slot.classList.add('empty');
+      slot.classList.remove('picked');
+    });
+    if (statusEl) { statusEl.textContent = ''; statusEl.className = 'game-status'; }
+    return;
   }
-  html += '</div></div>';
-  return html;
-}
-
-function buildActualFinalFourHTML(byGid, champion) {
-  let html = '<div class="actual-ff"><div class="actual-region-label">Final Four</div>';
-  html += renderActualGameHTML(byGid['FF-4-0']);
-  html += renderActualGameHTML(byGid['FF-4-1']);
-  html += '<div class="actual-region-label">Championship</div>';
-  html += renderActualGameHTML(byGid['FF-2-0']);
-  html += `<div class="actual-champ">&#127942; ${champion || '—'}</div>`;
-  html += '</div>';
-  return html;
+  const { scoreA, scoreB, label, showScores } = _actualScoreState(p);
+  const teams = [{ name: p.team_a, seed: p.seed_a, score: scoreA }, { name: p.team_b, seed: p.seed_b, score: scoreB }];
+  slots.forEach((slot, idx) => {
+    const t = teams[idx];
+    slot.dataset.team = t.name || ''; slot.dataset.seed = t.seed || '';
+    slot.querySelector('.sd').textContent = t.seed ?? '';
+    slot.querySelector('.tm').textContent = t.name || '—';
+    slot.querySelector('.sc').textContent = showScores && t.score != null ? Math.round(t.score) : '';
+    slot.classList.toggle('empty', !t.name);
+    slot.classList.toggle('picked', !!t.name && t.name === p.pick);
+  });
+  if (statusEl) { statusEl.textContent = label; statusEl.className = 'game-status'; }
 }
 
 function renderActualBracket() {
-  const wrap = document.getElementById('actual-bracket-wrap');
-  if (!wrap || !ACTUAL_DATA) return;
+  if (!ACTUAL_DATA) return;
   const picks = ACTUAL_DATA.picks?.picks || [];
   const champion = ACTUAL_DATA.picks?.champion;
-  const quadrantOrder = (Array.isArray(ACTUAL_DATA.quadrant_order) && ACTUAL_DATA.quadrant_order.length === 4)
-    ? ACTUAL_DATA.quadrant_order : QUADRANT;
   const byGid = {};
   for (const p of picks) if (p.game_id) byGid[p.game_id] = p;
 
-  let html = '<div class="actual-bracket-row">';
-  quadrantOrder.forEach((region, i) => {
-    html += buildActualRegionHTML(region, byGid);
-    if (i === 1) html += buildActualFinalFourHTML(byGid, champion);
+  for (const region of QUADRANT) {
+    for (const roundOf of [64, 32, 16, 8]) {
+      const numGames = { 64: 8, 32: 4, 16: 2, 8: 1 }[roundOf];
+      for (let gi = 0; gi < numGames; gi++) {
+        const gid = `${region}-${roundOf}-${gi}`;
+        _renderActualGameSlot(gid, byGid[gid]);
+      }
+    }
+  }
+  _renderActualGameSlot('FF-4-0', byGid['FF-4-0']);
+  _renderActualGameSlot('FF-4-1', byGid['FF-4-1']);
+  _renderActualGameSlot('FF-2-0', byGid['FF-2-0']);
+
+  const champEl = document.getElementById('actual-champ-banner-name');
+  if (champEl) champEl.textContent = champion || '—';
+
+  renderActualMobileBracket();
+}
+
+// ---- Mobile: read-only mirror of buildMobileBracket/renderMobileBracket ---
+function buildActualMobileBracket() {
+  const tabsEl = document.getElementById('actual-mobile-round-tabs');
+  if (!tabsEl) return;
+  tabsEl.innerHTML = ROUND_ORDER.map(r =>
+    `<button class="mobile-round-tab${r === actualMobileRound ? ' active' : ''}"
+       onclick="setActualMobileRound(${r})">${ROUND_LABELS[r]}</button>`
+  ).join('');
+  renderActualMobileBracket();
+}
+
+function setActualMobileRound(round) {
+  actualMobileRound = round;
+  document.querySelectorAll('#actual-mobile-round-tabs .mobile-round-tab').forEach((btn, i) => {
+    btn.classList.toggle('active', ROUND_ORDER[i] === round);
   });
-  html += '</div>';
-  wrap.innerHTML = html;
+  renderActualMobileBracket();
+}
+
+function renderActualMobileBracket() {
+  const body = document.getElementById('actual-mobile-bracket-body');
+  if (!body || !ACTUAL_DATA) return;
+
+  const picks = ACTUAL_DATA.picks?.picks || [];
+  const champion = ACTUAL_DATA.picks?.champion;
+  const byGid = {};
+  for (const p of picks) if (p.game_id) byGid[p.game_id] = p;
+
+  const r = actualMobileRound;
+  const games = [];
+  if (r === 4) {
+    ['FF-4-0', 'FF-4-1'].forEach(gid => { if (byGid[gid]) games.push({ p: byGid[gid], region: 'Final Four' }); });
+  } else if (r === 2) {
+    if (byGid['FF-2-0']) games.push({ p: byGid['FF-2-0'], region: 'Championship' });
+  } else {
+    const numGames = { 64: 8, 32: 4, 16: 2, 8: 1 }[r] || 0;
+    for (const region of QUADRANT) {
+      for (let gi = 0; gi < numGames; gi++) {
+        const gid = `${region}-${r}-${gi}`;
+        if (byGid[gid]) games.push({ p: byGid[gid], region });
+      }
+    }
+  }
+
+  let html = '';
+  for (const { p, region } of games) {
+    const { scoreA, scoreB, showScores } = _actualScoreState(p);
+    const emptyA = !p.team_a, emptyB = !p.team_b;
+    html += `<div class="mobile-game-card">
+      <div class="mobile-region-tag">${region}</div>
+      <div class="mobile-team-row ${p.pick === p.team_a ? 'picked' : ''} ${emptyA ? 'empty' : ''}">
+        <div class="mobile-seed-badge">${p.seed_a ?? '—'}</div>
+        <div class="mobile-tm">${p.team_a || '—'}</div>
+        <div class="mobile-prob">${showScores && scoreA != null ? Math.round(scoreA) : ''}</div>
+      </div>
+      <div class="mobile-divider"></div>
+      <div class="mobile-team-row ${p.pick === p.team_b ? 'picked' : ''} ${emptyB ? 'empty' : ''}">
+        <div class="mobile-seed-badge">${p.seed_b ?? '—'}</div>
+        <div class="mobile-tm">${p.team_b || '—'}</div>
+        <div class="mobile-prob">${showScores && scoreB != null ? Math.round(scoreB) : ''}</div>
+      </div>
+    </div>`;
+  }
+  if (r === 2 && champion) {
+    html += `<div class="mobile-game-card" style="text-align:center;font-weight:800;color:var(--gold)">&#127942; ${champion}</div>`;
+  }
+  if (!html) {
+    html = '<div style="padding:32px 20px;text-align:center;color:var(--muted);font-size:.85rem">No matchups available</div>';
+  }
+  body.innerHTML = html;
 }
 
 // ---------------------------------------------------------------------------
@@ -2599,8 +2723,6 @@ function renderMobileBracket() {
 // ---------------------------------------------------------------------------
 // Cleanup: clear polling intervals on page unload to prevent memory/network leaks
 window.addEventListener('beforeunload', () => {
-  if (_picksScoresInterval) clearInterval(_picksScoresInterval);
-  if (_cardScoresInterval)  clearInterval(_cardScoresInterval);
   if (_bracketScoresInterval) clearInterval(_bracketScoresInterval);
 });
 
