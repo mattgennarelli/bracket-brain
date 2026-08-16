@@ -2,15 +2,19 @@
 
 **Live demo: [bracket-brain.onrender.com](https://bracket-brain.onrender.com)**
 
-A prediction engine that generates a complete 63-game NCAA tournament bracket — picks, projected spreads, win probabilities, and matchup analysis for every game — calibrated against 1,071 historical tournament games (2008–2025).
+A prediction engine that generates a complete 63-game NCAA tournament bracket — picks, projected spreads, win probabilities, and matchup analysis for every game — calibrated against 1,071 historical tournament games (2008–2025) and validated against a genuine, held-out 2026 season.
 
 ## Methodology
 
 The model computes a win probability for each matchup from tempo-adjusted efficiency, schedule strength, coaching pedigree, and possession-level factors, then converts the projected margin to a probability via a Gaussian CDF blended with historical seed-performance priors.
 
-Parameters are tuned with **leave-one-year-out cross-validated calibration**: each candidate parameter set is scored by averaging its Brier score across every tournament year held out in turn, and the search (`scipy.optimize.differential_evolution`) directly minimizes that cross-validated score rather than in-sample error. A true sequential walk-forward mode also exists (`scripts/calibrate.py --no-cv`, training strictly on prior years only) but is not the default and is not what produced the deployed model — the codebase's own docs mark it "legacy... may overfit." The config actually served is a separate final fit on all years except the single most recent one.
+Parameters are tuned with **leave-one-year-out cross-validated calibration**: each candidate parameter set is scored by averaging its Brier score across every tournament year held out in turn, and the search (`scipy.optimize.differential_evolution`) directly minimizes that cross-validated score rather than in-sample error. A true sequential walk-forward mode also exists (`scripts/calibrate.py --no-cv`, training strictly on prior years only) but is not the default and is not what produced the deployed model — the codebase's own docs mark it "legacy... may overfit." The config actually served is a separate final fit on all years except the single most recent one — currently 2026, which is used only in cross-validation and never touches the trained parameters.
 
-**Cross-validated Brier score: 0.1646 · Accuracy: 73.9%** (1,071 games, 2008–2025, 2020 excluded — no tournament was played that year)
+**Cross-validated Brier score: 0.1661 · Accuracy: 74.8%** (1,071 games, 2008–2025, 2020 excluded — no tournament was played that year)
+
+**2026 held out entirely from the final fit, scored as a true out-of-sample test: Brier 0.1339 · Accuracy 81.0%** (63 games) — the model generalizes to a season it never trained on at least as well as its in-sample average, not worse.
+
+Against a pure seed-only baseline (always pick the better seed, probability from the historical seed-gap win rate) the model beats chalk by **+4.1 points of accuracy and a 14.5% lower Brier score** on 2008–2025, and by **+6.4 points of accuracy and a 20.0% lower Brier score** on the 2026 holdout specifically.
 
 ```bash
 python backtest.py 2017 2019 2021 2023 2024 2025   # score picks against actual results
@@ -20,7 +24,7 @@ python scripts/reliability_diagram.py               # per-probability-bin calibr
 Backtest and reliability output isn't shipped in the repo (it's tens of thousands of lines of per-game data) — regenerate it with the commands above.
 
 ### Known limitations
-Cross-validation folds are single tournament years (63 games each), so per-year Brier estimates carry real variance — the aggregate 1,071-game figure is more stable than any individual year's number. The "upset aggressiveness" slider is a user-facing heuristic that shifts which side of a close call gets picked; it doesn't change the underlying win probabilities. A tournament year in progress (like the current one before Selection Sunday) runs on incomplete injury and roster data, so accuracy improves as the season fills in.
+Cross-validation folds are single tournament years (63 games each), so per-year Brier estimates carry real variance — the aggregate 1,071-game figure is more stable than any individual year's number. The "upset aggressiveness" slider is a user-facing heuristic that shifts which side of a close call gets picked; it doesn't change the underlying win probabilities. A tournament year still in progress (before its Championship game has been played) runs on incomplete injury and roster data, so accuracy improves as the season fills in — 2026 is now complete and reflects final-season data.
 
 ## What It Does
 
@@ -95,10 +99,10 @@ Analysis is cached in `data/analysis_cache_YYYY.json` to avoid redundant API cal
 ### Extract historical results
 
 ```bash
-python scripts/extract_results.py    # downloads 2008-2025 results (danvk + Sports-Reference)
+python scripts/extract_results.py    # downloads 2008-2026 results (danvk + Sports-Reference)
 ```
 
-Produces `data/results_all.json` with 1,071 games (17 tournament years, 2020 excluded) including teams, seeds, scores, winners, margins, and upset flags.
+Produces `data/results_all.json` with 1,134 games (18 tournament years, 2020 excluded) including teams, seeds, scores, winners, margins, and upset flags. Calibration itself still trains on 1,071 games (2008–2025) — the most recent complete year (2026) is automatically held out of the final fit and used only for cross-validation; see Methodology above.
 
 ### Calibrate model parameters
 
@@ -160,7 +164,7 @@ scripts/
     bracket_matrix.py        # BracketMatrix projected bracket scraper
 data/
   calibrated_config.json     # Trained model parameters
-  results_all.json           # 1,071 historical game results (2008-2025)
+  results_all.json           # 1,134 historical game results (2008-2026)
   analysis_cache_YYYY.json   # Cached Claude analyses
   torvik_YYYY.json           # Parsed team stats
   conf_tourney_YYYY.json     # Conference tournament results (optional)
