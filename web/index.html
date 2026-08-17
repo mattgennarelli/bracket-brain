@@ -304,6 +304,8 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sa
 .factors li { font-size:.8rem; color:var(--muted); padding:3px 0; }
 .factors li::before { content:'\2022'; color:var(--primary); margin-right:6px; }
 .odds-section { max-width:720px; margin:0 auto; padding:0 20px 20px; }
+.odds-actual-key { max-width:720px; margin:12px auto 0; padding:0 20px; font-size:.72rem; color:var(--muted); text-align:center; }
+.actual-badge { font-size:.78rem; }
 .odds-panel { background:var(--surface); border:1px solid var(--border); border-radius:10px;
   margin:16px 0; padding:18px; box-shadow:0 1px 3px rgba(0,0,0,.04); }
 .odds-panel h3 { font-size:.9rem; font-weight:700; margin-bottom:10px; }
@@ -498,7 +500,7 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sa
   <p class="sub">NCAA Tournament Predictions</p>
   <div class="meta" id="meta-bar">
     <span id="meta-sims">—</span>
-    <span id="meta-games">Calibrated on 1,071 games (2008–2025)</span>
+    <span id="meta-games">Calibrated on 1,134 games (2008–2026)</span>
     <span id="meta-updated">—</span>
   </div>
 </div>
@@ -551,6 +553,7 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sa
 </div>
 
 <div class="tab-panel" id="tab-odds">
+  <div id="odds-actual-key"></div>
   <div class="odds-section">
     <div class="odds-panel">
       <h3>Championship Odds (<span id="odds-sims">10,000</span> sims)</h3>
@@ -566,7 +569,7 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sa
 <div class="footer">
   <p>Data: <a href="https://barttorvik.com" target="_blank" style="color:var(--primary)">Bart Torvik T-Rank</a> &middot;
      <a href="https://evanmiya.com" target="_blank" style="color:var(--primary)">EvanMiya</a> &middot;
-     Calibrated on 1,071 tournament games (2008–2025)</p>
+     Calibrated on 1,134 tournament games (2008–2026)</p>
 </div>
 
 <div class="analysis-overlay" id="analysis-overlay" onclick="closeAnalysis()"></div>
@@ -934,15 +937,33 @@ function updateSimButtonLabel() {
   btn.title = n > 0 ? 'Re-simulate remaining picks while keeping your locked picks' : 'Generate bracket picks';
 }
 
+// Extract the actual champion and each region's actual Final Four
+// representative from a /bracket/{year}/actual response, for badging the
+// odds panel. Returns null fields when real results aren't available yet
+// (e.g. a future/in-progress year) -- callers must handle that gracefully.
+function _actualOddsHighlights(data) {
+  if (!data || !data.picks) return { champion: null, ffTeams: new Set() };
+  const champion = data.picks.champion || null;
+  const ffTeams = new Set();
+  for (const p of data.picks.picks || []) {
+    if (p.round_name === 'Elite 8' && p.pick) ffTeams.add(p.pick);
+  }
+  return { champion, ffTeams };
+}
+
 async function fetchOdds(year) {
   document.getElementById('odds-table').innerHTML =
     '<tr><td colspan="4" style="color:var(--muted);padding:10px">Loading ' + year + ' odds...</td></tr>';
   document.getElementById('f4-by-region-body').innerHTML =
     '<div style="color:var(--muted);padding:10px">Loading...</div>';
   try {
-    const mc = await apiFetch(`/bracket/${year}/monte-carlo?sims=10000`);
-    renderOdds(mc.champion_probs, mc.num_simulations);
-    renderF4ByRegion(mc.final_four_by_region || {}, mc.num_simulations);
+    const [mc, actualData] = await Promise.all([
+      apiFetch(`/bracket/${year}/monte-carlo?sims=10000`),
+      ensureActualDataLoaded(year),
+    ]);
+    const highlights = _actualOddsHighlights(actualData);
+    renderOdds(mc.champion_probs, mc.num_simulations, highlights);
+    renderF4ByRegion(mc.final_four_by_region || {}, mc.num_simulations, highlights);
     document.getElementById('meta-sims').textContent =
       mc.num_simulations.toLocaleString() + ' Monte Carlo sims';
     document.getElementById('odds-sims').textContent =
@@ -1062,7 +1083,23 @@ function applyPicksFromServer() {
 // ---------------------------------------------------------------------------
 // Rendering — Championship odds table
 // ---------------------------------------------------------------------------
-function renderOdds(champProbs, numSims) {
+// Small badge next to a team name showing what actually happened, when
+// real results exist for this year. Champion and FF-hit are mutually
+// exclusive per team (the champion always also made the FF, so just show
+// the higher one) -- see the key rendered alongside each table.
+function _actualBadge(team, highlights) {
+  if (!highlights) return '';
+  if (highlights.champion && team === highlights.champion) return ' <span class="actual-badge actual-badge-champ" title="Actual champion">🏆</span>';
+  if (highlights.ffTeams && highlights.ffTeams.has(team)) return ' <span class="actual-badge actual-badge-ff" title="Actually made the Final Four">★</span>';
+  return '';
+}
+
+function _actualOddsKey(highlights) {
+  if (!highlights || !highlights.champion) return '';
+  return '<div class="odds-actual-key">🏆 actual champion &nbsp;&middot;&nbsp; ★ actually made the Final Four</div>';
+}
+
+function renderOdds(champProbs, numSims, highlights) {
   const entries = Object.entries(champProbs || {}).sort((a, b) => b[1] - a[1]);
   const maxPct = entries[0]?.[1] || 1;
   const rows = entries.slice(0, 20).map(([team, prob], i) => {
@@ -1071,15 +1108,17 @@ function renderOdds(champProbs, numSims) {
     const seed = TEAM_STATS[team]?.seed || '';
     return `<tr>
       <td class="rank">${i + 1}</td>
-      <td>${seed ? `<span class="seed-badge">${seed}</span>` : ''}${team}</td>
+      <td>${seed ? `<span class="seed-badge">${seed}</span>` : ''}${team}${_actualBadge(team, highlights)}</td>
       <td class="bar-cell"><div class="bar" style="width:${barW}%"></div></td>
       <td class="pct">${pct}%</td>
     </tr>`;
   }).join('');
   document.getElementById('odds-table').innerHTML = rows;
+  const keyEl = document.getElementById('odds-actual-key');
+  if (keyEl) keyEl.innerHTML = _actualOddsKey(highlights);
 }
 
-function renderF4ByRegion(byRegion, numSims) {
+function renderF4ByRegion(byRegion, numSims, highlights) {
   const regionOrder = (Array.isArray(QUADRANT) && QUADRANT.length === 4) ? QUADRANT : ['South', 'East', 'Midwest', 'West'];
   const regions = Object.keys(byRegion).length
     ? [...regionOrder.filter(r => r in byRegion), ...Object.keys(byRegion).filter(r => !regionOrder.includes(r))]
@@ -1097,7 +1136,7 @@ function renderF4ByRegion(byRegion, numSims) {
           const seed = TEAM_STATS[team]?.seed || '';
           return `<tr>
             <td class="rank">${i + 1}</td>
-            <td>${seed ? `<span class="seed-badge">${seed}</span>` : ''}${team}</td>
+            <td>${seed ? `<span class="seed-badge">${seed}</span>` : ''}${team}${_actualBadge(team, highlights)}</td>
             <td class="bar-cell"><div class="bar" style="width:${barW}%"></div></td>
             <td class="pct">${pct}%</td>
           </tr>`;
@@ -1236,7 +1275,7 @@ function recomputeBracket() {
         margin: p?.projected_spread || 0,
         pick: outcome.resolvedPick,
         modelPick: suggestedPick,
-        isLocked: !!lockedPicks[gid] && !outcome.completed,
+        isLocked: !!lockedPicks[gid],
         completed: outcome.completed,
         live: outcome.live,
         statusLabel: outcome.statusLabel,
@@ -1284,7 +1323,7 @@ function recomputeBracket() {
           margin: p?.projected_spread || (seedA && seedB ? Math.abs(seedB - seedA) : 0),
           pick: outcome.resolvedPick,
           modelPick: suggestedPick,
-          isLocked: !!lockedPicks[gid] && !outcome.completed,
+          isLocked: !!lockedPicks[gid],
           completed: outcome.completed,
           live: outcome.live,
           statusLabel: outcome.statusLabel,
@@ -1317,7 +1356,7 @@ function recomputeBracket() {
             margin: p?.projected_spread || 0,
             pick: outcome.resolvedPick,
             modelPick: suggestedPick,
-            isLocked: !!lockedPicks[gid] && !outcome.completed,
+            isLocked: !!lockedPicks[gid],
             completed: outcome.completed,
             live: outcome.live,
             statusLabel: outcome.statusLabel,
@@ -1344,7 +1383,7 @@ function recomputeBracket() {
           margin: p?.projected_spread || 0,
           pick: outcome.resolvedPick,
           modelPick: suggestedPick,
-          isLocked: !!lockedPicks['FF-2-0'] && !outcome.completed,
+          isLocked: !!lockedPicks['FF-2-0'],
           completed: outcome.completed,
           live: outcome.live,
           statusLabel: outcome.statusLabel,
@@ -1466,12 +1505,12 @@ function renderBracket() {
 // User interaction
 // ---------------------------------------------------------------------------
 function handleGameClick(e, gameId) {
-  const st = bracketState[gameId];
-  if (st?.completed) {
-    e.stopPropagation();
-    showAnalysis(gameId);
-    return;
-  }
+  // `completed` (a real game already happened, per ESPN score data) used to
+  // block picking entirely -- for any past year, that's nearly every game,
+  // so the whole bracket was effectively read-only. The simulator advances
+  // the model's/user's own pick regardless of real results (see
+  // _resolveGameOutcome), so clicking a team must always be allowed too --
+  // real results are a grading overlay, never a lock on interaction.
   const slot = e.target.closest('.team-slot');
   if (slot && !slot.classList.contains('empty') && slot.dataset.team) {
     e.stopPropagation();
@@ -1484,7 +1523,6 @@ function handleGameClick(e, gameId) {
 
 function togglePick(gameId, teamName) {
   if (!teamName) return;
-  if (bracketState[gameId]?.completed) return;
   const currentPick = lockedPicks[gameId] || simPicks[gameId] || null;
   if (currentPick === teamName) {
     delete lockedPicks[gameId]; delete simPicks[gameId];
@@ -2372,26 +2410,43 @@ let ACTUAL_LOADED_YEAR = null;
 let ACTUAL_DATA = null;
 let actualMobileRound = 64;
 
+// Fetch+cache /bracket/{year}/actual without touching any tab-specific DOM --
+// shared by the Actual Results tab and the odds panel's actual-winner badges.
+// Returns the cached data (or null if unavailable for this year) and never
+// throws.
+let _actualDataFetchInFlight = null;
+async function ensureActualDataLoaded(year) {
+  if (ACTUAL_LOADED_YEAR === year && ACTUAL_DATA) return ACTUAL_DATA;
+  if (_actualDataFetchInFlight && _actualDataFetchInFlight.year === year) {
+    return _actualDataFetchInFlight.promise;
+  }
+  const promise = (async () => {
+    try {
+      const data = await apiFetch(`/bracket/${year}/actual`);
+      ACTUAL_DATA = data;
+      ACTUAL_LOADED_YEAR = year;
+      return data;
+    } catch (e) {
+      ACTUAL_DATA = null;
+      ACTUAL_LOADED_YEAR = null;
+      return null;
+    }
+  })();
+  _actualDataFetchInFlight = { year, promise };
+  return promise;
+}
+
 async function loadActualResults() {
   const wrap = document.getElementById('actual-bracket-wrap');
   const label = document.getElementById('actual-year-label');
   if (!currentYear) return;
   if (label) label.textContent = currentYear;
-  if (ACTUAL_LOADED_YEAR === currentYear && ACTUAL_DATA) {
-    buildActualBracket();
-    renderActualBracket();
-    return;
-  }
   wrap.innerHTML = '<div style="padding:24px;color:var(--muted)">Loading actual results...</div>';
-  try {
-    const data = await apiFetch(`/bracket/${currentYear}/actual`);
-    ACTUAL_DATA = data;
-    ACTUAL_LOADED_YEAR = currentYear;
+  const data = await ensureActualDataLoaded(currentYear);
+  if (data) {
     buildActualBracket();
     renderActualBracket();
-  } catch (e) {
-    ACTUAL_DATA = null;
-    ACTUAL_LOADED_YEAR = null;
+  } else {
     wrap.innerHTML = `<div style="padding:24px;color:var(--muted)">No real-results data available for ${currentYear} yet.</div>`;
     const mobileTabs = document.getElementById('actual-mobile-round-tabs');
     const mobileBody = document.getElementById('actual-mobile-bracket-body');
